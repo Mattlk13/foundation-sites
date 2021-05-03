@@ -17,7 +17,7 @@ flex: true
 
 <div class="callout training-callout">
   <p>Off-canvas layouts are common and useful for mobile and desktop layouts. Be a navigation guru with our Foundation online webinar training. You’ll learn techniques for creating responsive navigations that work with any type of site. In addition to that you can learn tips and tricks and best practices for all of Foundation’s components.</p>
-  <a href="http://zurb.com/university/foundation-intro" target="_blank">Find out more about Foundation training classes →</a>
+  <a href="https://zurb.com/university/foundation-intro" target="_blank">Find out more about Foundation training classes →</a>
 </div>
 
 <div class="primary callout">
@@ -64,7 +64,7 @@ Along with the Off-canvas container, the main content of your page will be house
 So putting it all together:
 
 <div class="docs-codepen-container">
-  <a class="codepen-logo-link" href="http://codepen.io/ZURBFoundation/pen/ZKjXvQ?editors=1000" target="_blank"><img src="{{root}}assets/img/logos/edit-in-browser.svg" class="" height="" width="" alt="edit on codepen button"></a>
+  <a class="codepen-logo-link" href="https://codepen.io/ZURBFoundation/pen/ZKjXvQ?editors=1000" target="_blank"><img src="{{root}}assets/img/logos/edit-in-browser.svg" class="" height="" width="" alt="edit on codepen button"></a>
 </div>
 
 ```html
@@ -101,7 +101,7 @@ Simply add a container with the class `.off-canvas-wrapper`.
 To create a click trigger that opens the panel, add the attribute `data-open` or `data-toggle` to any element. That element will then open or toggle the panel when clicked on. The value of the data attribute should be the ID of the off-canvas.
 
 <div class="docs-codepen-container">
-  <a class="codepen-logo-link" href="http://codepen.io/ZURBFoundation/pen/ZKjXvQ?editors=1000" target="_blank"><img src="{{root}}assets/img/logos/edit-in-browser.svg" class="" height="" width="" alt="edit on codepen button"></a>
+  <a class="codepen-logo-link" href="https://codepen.io/ZURBFoundation/pen/ZKjXvQ?editors=1000" target="_blank"><img src="{{root}}assets/img/logos/edit-in-browser.svg" class="" height="" width="" alt="edit on codepen button"></a>
 </div>
 
 ```html_example
@@ -113,7 +113,7 @@ To create a click trigger that opens the panel, add the attribute `data-open` or
 Foundation's Close component can be used inside the off-canvas to close it.
 
 <div class="docs-codepen-container">
-  <a class="codepen-logo-link" href="http://codepen.io/ZURBFoundation/pen/QvBQjo?editors=1000" target="_blank"><img src="{{root}}assets/img/logos/edit-in-browser.svg" class="" height="" width="" alt="edit on codepen button"></a>
+  <a class="codepen-logo-link" href="https://codepen.io/ZURBFoundation/pen/QvBQjo?editors=1000" target="_blank"><img src="{{root}}assets/img/logos/edit-in-browser.svg" class="" height="" width="" alt="edit on codepen button"></a>
 </div>
 
 ```html
@@ -344,7 +344,7 @@ If you need a simple bar to contain your hamburger icon/s and toggle the off-can
 
 #### Off-Canvas (Putting it all together)
 
-For an example of off-canvas, checkout this top bar with off-canvas navigation and dropdowns for submenus building block: http://foundation.zurb.com/building-blocks/blocks/multilevel-offcanvas-menu.html
+For an example of off-canvas, checkout this top bar with off-canvas navigation and dropdowns for submenus building block: <https://get.foundation/building-blocks/blocks/multilevel-offcanvas-menu.html>
 
 ---
 
@@ -401,6 +401,81 @@ Advanced off-canvas users may use the new `contentId` option to bind an element 
 </div>
 
 <p>Enim, repudiandae officia dolores temporibus soluta, ipsa saepe tempora ipsum laudantium in mollitia quidem, nisi magni provident hic architecto rem culpa beatae.</p>
+```
+
+---
+
+## Off-canvas Scrollbox
+
+Placing scrollable elements within an off-canvas if `contentScroll: false` is tricky because on touch devices it may become difficult to scroll those elements due to stopped event propagation. There's no continous touch move possible.
+
+However you can still achieve this when you add `data-off-canvas-scrollbox` to the scrollable elements. 
+Once you've reached the start/end of a scrollbox (while touch moving) the off-canvas will continue scrolling the off-cannvas element. You can optionally use a wrapper with `data-off-canvas-scrollbox-outer` which gets scrolled instead of the off-canvas element. This is useful when you nest your scrollable elements into other scrollable elements or work with fix heights.
+
+```html_example
+<div class="off-canvas-wrapper">
+  <div class="off-canvas-content" data-off-canvas-content style="min-height: 300px;">
+    <div class="grid-x">
+      <div class="cell">
+        <div class="primary callout">
+          You have to view this example on a touch device or use e.g. the chrome dev tools with touch emulation.
+        </div>
+        <button type="button" class="button" data-toggle="offCanvasScrollbox">
+          Open Scrollbox Off-canvas
+        </button>
+      </div>
+    </div>
+    <div class="off-canvas-absolute position-left" id="offCanvasScrollbox" data-off-canvas data-content-scroll="false">
+      <div style="padding: 0 1rem;">
+        <article data-off-canvas-scrollbox style="max-height: 290px; overflow: auto; padding: 0.5rem 0; margin-bottom: 1rem; box-shadow: inset 0 -10px 10px -10px rgba(0,0,0,0.65);">
+          <p>The 1st list supports continuous touchmove</p>
+          <ul>
+            <li>bullet 01</li>
+            <li>bullet 02</li>
+            <li>bullet 03</li>
+            <li>bullet 04</li>
+            <li>bullet 05</li>
+            <li>bullet 06</li>
+            <li>bullet 07</li>
+            <li>bullet 08</li>
+            <li>bullet 09</li>
+            <li>bullet 10</li>
+          </ul>
+        </article>
+        <article style="max-height: 290px; overflow: auto; padding: 0.5rem 0; margin-bottom: 1rem; box-shadow: inset 0 -10px 10px -10px rgba(0,0,0,0.65);">
+          <p>The 2nd list doesn't support continuous touchmove</p>
+          <ul>
+            <li>bullet 01</li>
+            <li>bullet 02</li>
+            <li>bullet 03</li>
+            <li>bullet 04</li>
+            <li>bullet 05</li>
+            <li>bullet 06</li>
+            <li>bullet 07</li>
+            <li>bullet 08</li>
+            <li>bullet 09</li>
+            <li>bullet 10</li>
+          </ul>
+        </article>
+        <article style="padding: 0.5rem 0;">
+          <p>The 3rd list is regular content</p>
+          <ul>
+            <li>bullet 01</li>
+            <li>bullet 02</li>
+            <li>bullet 03</li>
+            <li>bullet 04</li>
+            <li>bullet 05</li>
+            <li>bullet 06</li>
+            <li>bullet 07</li>
+            <li>bullet 08</li>
+            <li>bullet 09</li>
+            <li>bullet 10</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </div>
+</div>
 ```
 
 ---
