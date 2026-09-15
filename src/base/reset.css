@@ -95,8 +95,12 @@
 		}
 	}
 
-	/* Reduced motion: collapse durations rather than removing effects,
-	   so end states still apply. */
+	/* Reduced motion for user-agent and third-party animation only. This
+	   cannot reach a Yeti component: a declaration in the components layer
+	   outranks this one. Yeti's own motion collapses through the tokens in
+	   tokens/motion.css and tokens/components.css instead, which is why every
+	   duration and iteration count in a component reads one. Durations are
+	   collapsed rather than effects removed, so end states still apply. */
 	@media (prefers-reduced-motion: reduce) {
 		*, ::before, ::after {
 			animation-duration: 0.01ms;
