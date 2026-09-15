@@ -1,5 +1,6 @@
 /* Carousel: slides on a scroll-snap track, and dots that are ordinary links
-   to each slide's id. The browser does the scrolling, so there is no script.
+   to each slide's id, so the browser scrolls and the CSS needs no script;
+   carousel.js is optional and only keeps those links out of the history.
    Components come after base in the layer order, so a components-layer
    scroll-behavior would outrank the reset's reduced-motion rule; smooth
    scrolling instead reads a token, so the preference reaches the track

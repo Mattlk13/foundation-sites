@@ -24,8 +24,14 @@ document.addEventListener('click', (event) => {
 
 	event.preventDefault();
 	// Measured from the boxes rather than offsetLeft, which depends on whichever
-	// ancestor happens to be positioned. No behavior is passed, so the scroll
-	// takes the track's own scroll-behavior, and that reads the token that
-	// reduced motion collapses.
-	track.scrollBy({ left: slide.getBoundingClientRect().left - track.getBoundingClientRect().left });
+	// ancestor happens to be positioned, and against the start edge for the
+	// writing direction, since that is the edge the slides snap to. The target
+	// is absolute: a relative scrollBy is resolved against a smooth scroll still
+	// in flight, and WebKit then overshoots and does not re-snap, so two dots
+	// pressed in quick succession parked the track between slides. No behavior
+	// is passed, so the scroll takes the track's own scroll-behavior, and that
+	// reads the token that reduced motion collapses.
+	const rtl = getComputedStyle(track).direction === 'rtl';
+	const [own, target] = [track.getBoundingClientRect(), slide.getBoundingClientRect()];
+	track.scrollTo({ left: track.scrollLeft + (rtl ? target.right - own.right : target.left - own.left) });
 });

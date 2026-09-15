@@ -17,7 +17,7 @@ A column of disclosures built on details and summary, each opening to show its p
 <div class="accordion">
 	<details name="faq">
 		<summary>Does Yeti need JavaScript?</summary>
-		<p>Almost never. Three optional modules exist and nothing depends on them.</p>
+		<p>Almost never. A handful of optional modules exist and nothing depends on them.</p>
 	</details>
 	<details name="faq">
 		<summary>Can I use my own class names?</summary>
@@ -95,8 +95,8 @@ None. This is configured through its children and tokens only.
 
 ## Browser support
 
-- Used without guards: details name attribute, individual transform properties, overflow: clip, animating a grid row between 0fr and 1fr
-- Behind `@supports`: discrete transition of content-visibility (fallback: the panel still grows open, and shuts at once rather than shrinking)
+- Used without guards: details name attribute, individual transform properties, overflow: clip, animating a grid row between 0fr and 1fr, discrete transition of content-visibility (where missing, the panel still grows open and shuts at once rather than shrinking)
+- Behind `@supports`: nothing
 
 ## JavaScript
 

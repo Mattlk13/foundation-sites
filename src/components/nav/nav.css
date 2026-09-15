@@ -179,7 +179,7 @@
 	   docks to the foot of the viewport instead: still full width, still
 	   dismissible, still in reach of a thumb. */
 	.nav > ul[popover]:popover-open .dropdown { display: block; }
-	.nav:has(> ul[popover]:popover-open) .dropdown > [popover]:popover-open {
+	.nav > ul[popover]:popover-open .dropdown > [popover]:popover-open {
 		position: fixed;
 		inset-block: auto 0;
 		inset-inline: 0;
@@ -201,7 +201,7 @@
 		   reading the panel's own box keeps every shape right without restating
 		   a single one of their widths. */
 		.nav > ul[popover] { anchor-name: --yeti-nav-panel; }
-		.nav:has(> ul[popover]:popover-open) .dropdown > [popover]:popover-open {
+		.nav > ul[popover]:popover-open .dropdown > [popover]:popover-open {
 			position-area: block-end span-all;
 			align-self: start;
 			justify-self: stretch;

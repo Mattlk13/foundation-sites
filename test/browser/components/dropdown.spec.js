@@ -8,7 +8,7 @@ const open = async (page, width = 1000) => {
 };
 const isOpen = (page, id) => page.evaluate((i) => document.getElementById(i).matches(':popover-open'), id);
 const settle = (page, selector) => page.evaluate((s) => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))
-	.then(() => Promise.all(document.querySelector(s).getAnimations().map((a) => a.finished))), selector);
+	.then(() => Promise.all(document.querySelector(s).getAnimations().map((a) => a.finished.catch(() => {})))), selector);
 const anchored = (page) => page.evaluate(() => CSS.supports('anchor-name: --a') && CSS.supports('anchor-scope: --a') && CSS.supports('position-area', 'block-end'));
 
 test.describe('dropdown', () => {
@@ -124,6 +124,27 @@ test.describe('dropdown', () => {
 		expect(await isOpen(page, 'menu-three')).toBe(false);
 		await page.waitForTimeout(600);
 		expect(await isOpen(page, 'menu-three')).toBe(false);
+	});
+
+	test('that guarantee holds after the panel has once been opened by hover', async ({ page }) => {
+		await open(page);
+		// showPopover queues its own open toggle, so bookkeeping attached right
+		// after the call must not be a once-listener: the open toggle consumed it,
+		// the close never cleared the panel from the set, and every later
+		// keyboard-open was treated as hover's to close.
+		await page.hover('#trigger-three');
+		await becomes(page, 'menu-three', true);
+		await page.hover('h1');
+		await becomes(page, 'menu-three', false);
+		await page.mouse.move(5, 5);
+		await page.focus('#trigger-three');
+		await page.keyboard.press('Enter');
+		expect(await isOpen(page, 'menu-three')).toBe(true);
+		await page.hover('#trigger-three');
+		await page.waitForTimeout(400);
+		await page.mouse.move(5, 5);
+		await page.waitForTimeout(800);
+		expect(await isOpen(page, 'menu-three')).toBe(true);
 	});
 
 	test('a panel opened from the keyboard survives the pointer sweeping over it', async ({ page }) => {

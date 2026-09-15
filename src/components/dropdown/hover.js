@@ -17,6 +17,8 @@ const timers = new WeakMap();
 // stray sweep of the pointer shuts a menu someone opened with Enter, while
 // their focus is still sitting on the trigger.
 const opened = new WeakSet();
+// Panels that already carry the listener below, so it is attached once each.
+const wired = new WeakSet();
 
 const partsOf = (wrapper) => {
 	// The declared relationship is the source of truth, as tabs.js does with
@@ -56,10 +58,16 @@ document.addEventListener('pointerover', (event) => {
 		parts.panel.showPopover();
 		opened.add(parts.panel);
 		// However it closes next, from here, Escape, or a click outside, it
-		// stops being ours, so a later click-open is not ours to undo.
-		parts.panel.addEventListener('toggle', (change) => {
-			if (change.newState === 'closed') opened.delete(parts.panel);
-		}, { once: true });
+		// stops being ours, so a later click-open is not ours to undo. The
+		// listener is persistent, not once: showPopover queues its own open
+		// toggle, which fires after this line runs and would consume a
+		// once-listener before the close it was waiting for ever arrived.
+		if (!wired.has(parts.panel)) {
+			wired.add(parts.panel);
+			parts.panel.addEventListener('toggle', (change) => {
+				if (change.newState === 'closed') opened.delete(parts.panel);
+			});
+		}
 	});
 });
 

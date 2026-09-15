@@ -18,7 +18,7 @@ const open = async (page, width = 1000) => {
 // values. Wait on the element's own running animations instead, as
 // field.spec.js does; Promise.all([]) resolves at once when there is nothing
 // to wait for.
-const settle = (page, selector) => page.evaluate((s) => Promise.all(document.querySelector(s).getAnimations().map((a) => a.finished)), selector);
+const settle = (page, selector) => page.evaluate((s) => Promise.all(document.querySelector(s).getAnimations().map((a) => a.finished.catch(() => {}))), selector);
 
 test.describe('button', () => {
 	test('every button meets the control height and scales with data-size', async ({ page }) => {

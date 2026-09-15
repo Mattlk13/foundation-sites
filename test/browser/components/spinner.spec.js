@@ -41,6 +41,17 @@ test.describe('spinner', () => {
 		await page.emulateMedia({ reducedMotion: 'reduce' });
 		await open(page);
 		expect(parseFloat(await style(page, '#spin', 'animation-duration'))).toBeLessThanOrEqual(0.01);
+		// A short duration alone is not stillness. The shorthand's own infinite
+		// outranks the reset's iteration count the way its duration outranks the
+		// reset's, and an endless 0.01ms animation samples a random angle every
+		// frame: a strobe, which is the opposite of what was asked for.
+		expect(await style(page, '#spin', 'animation-iteration-count')).toBe('1');
+		const angles = await page.evaluate(() => new Promise((resolve) => {
+			const seen = [];
+			const read = () => { seen.push(getComputedStyle(document.getElementById('spin')).rotate); if (seen.length < 6) requestAnimationFrame(read); else resolve(seen); };
+			requestAnimationFrame(read);
+		}));
+		expect(new Set(angles).size).toBe(1);
 	});
 
 	test('has no accessibility violations', async ({ page }) => {

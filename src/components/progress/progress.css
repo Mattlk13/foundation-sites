@@ -29,7 +29,7 @@
 	   a 45-degree stripe pair 1.5rem wide is 1.5rem × √2 along the track. */
 	.progress:indeterminate {
 		background-image: repeating-linear-gradient(-45deg, var(--_yeti-variant-subtle) 0 0.75rem, var(--yeti-color-surface-sunken) 0.75rem 1.5rem);
-		animation: yeti-progress calc(var(--yeti-duration-base) * 4) linear infinite;
+		animation: yeti-progress calc(var(--yeti-duration-base) * 4) linear var(--yeti-motion-iterations);
 	}
 	.progress:indeterminate::-webkit-progress-bar { background-color: transparent; }
 	.progress:indeterminate::-moz-progress-bar { background-color: transparent; }

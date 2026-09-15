@@ -10,7 +10,7 @@
 		border: var(--yeti-spinner-width) solid var(--_yeti-variant-subtle);
 		border-block-start-color: var(--_yeti-variant);
 		border-radius: 50%;
-		animation: yeti-spin var(--yeti-spinner-duration) linear infinite;
+		animation: yeti-spin var(--yeti-spinner-duration) linear var(--yeti-motion-iterations);
 	}
 	.spinner {
 		font-size: var(--_yeti-size-text);

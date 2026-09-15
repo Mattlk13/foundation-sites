@@ -5,12 +5,19 @@
 		--yeti-duration-fast: 150ms;
 		--yeti-duration-base: 250ms;
 		--yeti-ease: cubic-bezier(0.2, 0, 0, 1);
+		/* For the animations that run forever: the spinner, the busy stripes.
+		   A components-layer shorthand outranks the reset's iteration count the
+		   same way it outranks its duration, so a bare infinite in a component
+		   survives reduced motion as an endless 0.01ms animation that samples a
+		   random phase every frame and strobes. This collapses to one run. */
+		--yeti-motion-iterations: infinite;
 	}
 
 	@media (prefers-reduced-motion: reduce) {
 		:root {
 			--yeti-duration-fast: 0.01ms;
 			--yeti-duration-base: 0.01ms;
+			--yeti-motion-iterations: 1;
 		}
 	}
 }
