@@ -6,7 +6,7 @@
   "class": "box",
   "attributes": [
     { "name": "data-gap", "type": "enum", "vocabulary": "gap", "default": "md", "description": "Padding on every side." },
-    { "name": "data-border", "type": "boolean", "description": "Draw a one-pixel border in the border color." }
+    { "name": "data-border", "type": "boolean", "description": "Draw a border of the border width, in the border colour." }
   ],
   "classes": [],
   "children": [],

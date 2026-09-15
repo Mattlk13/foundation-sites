@@ -4,7 +4,7 @@ A box is the thing to reach for when content needs breathing room from its edges
 
 ## How it works
 
-`padding` on all four sides from `data-gap`, and a one-pixel border in `--yeti-color-border` when `data-border` is present. Nothing else. Unlike the spacing layouts, a box does not reset its children's margins, so paragraphs inside it keep their prose rhythm.
+`padding` on all four sides from `data-gap`, and a border of `--yeti-border-width` in `--yeti-color-border` when `data-border` is present. Nothing else. Unlike the spacing layouts, a box does not reset its children's margins, so paragraphs inside it keep their prose rhythm.
 
 ```html
 <div class="box" data-border>

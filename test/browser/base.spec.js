@@ -17,7 +17,7 @@ test.describe('base typography and prose', () => {
 		expect(await px(page, 'body', 'fontSize')).toBeCloseTo(md, 1);
 		expect(await px(page, '#h1', 'fontSize')).toBeCloseTo(await token(page, '--yeti-text-3xl'), 1);
 		expect(await px(page, '#h2', 'fontSize')).toBeCloseTo(await token(page, '--yeti-text-2xl'), 1);
-		expect(await style(page, '#h1', 'fontWeight')).toBe('700');
+		expect(await style(page, '#h1', 'fontWeight')).toBe(await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--yeti-weight-bold').trim()));
 	});
 
 	test('prose rhythm: default gap, heading hug, and heading lead-in', async ({ page }) => {
@@ -66,7 +66,7 @@ test.describe('base controls and media', () => {
 		const form = await page.evaluate(() => document.getElementById('form').getBoundingClientRect().width);
 		expect(await page.evaluate(() => document.getElementById('name').getBoundingClientRect().width)).toBeCloseTo(form, 0);
 		expect(await style(page, '#name', 'borderTopStyle')).toBe('solid');
-		expect(await px(page, '#name', 'borderTopWidth')).toBe(1);
+		expect(await px(page, '#name', 'borderTopWidth')).toBe(await token(page, '--yeti-border-width'));
 		expect(await style(page, '#name', 'borderTopColor')).toBe(await style(page, '#submit', 'borderTopColor'));
 		expect(await style(page, '#submit', 'backgroundColor')).not.toBe(await style(page, '#name', 'backgroundColor'));
 		expect(await style(page, '#disabled', 'opacity')).toBe('0.6');
@@ -74,7 +74,7 @@ test.describe('base controls and media', () => {
 	});
 
 	test('tables have header emphasis, padding, and row rules', async ({ page }) => {
-		expect(await style(page, '#th', 'fontWeight')).toBe('700');
+		expect(await style(page, '#th', 'fontWeight')).toBe(await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--yeti-weight-bold').trim()));
 		expect(await px(page, '#td', 'paddingTop')).toBeCloseTo(await token(page, '--yeti-space-sm'), 1);
 		expect(await style(page, '#td', 'borderBottomStyle')).toBe('solid');
 	});

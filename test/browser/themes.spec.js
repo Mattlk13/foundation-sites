@@ -29,4 +29,17 @@ test.describe('themes', () => {
 		expect(await style(page, '#t-raised-short', 'box-shadow')).not.toBe('none');
 		expect(await axe(page)).toEqual([]);
 	});
+
+	test('sharp reaches bare HTML as well as the components', async ({ page }) => {
+		expect((await page.goto('/test/browser/fixtures/themes/sharp.html')).status()).toBe(200);
+		// The base layer once kept literal widths and weights after the tokens
+		// existed, so under this theme a bare input was 1px beside a 2px field
+		// input, and a bare label 600 beside a 700 one. The card was the only
+		// thing this suite measured, which is how that went unseen.
+		expect(await px(page, '#bare', 'border-top-width')).toBe(await px(page, '#email', 'border-top-width'));
+		expect(await px(page, '#bare', 'border-top-width')).toBe(2);
+		expect(await px(page, '#bare-box', 'border-top-width')).toBe(2);
+		expect(await style(page, '#bare-label', 'font-weight')).toBe(await style(page, '#email-label', 'font-weight'));
+		expect(await style(page, '#bare-label', 'font-weight')).toBe('700');
+	});
 });

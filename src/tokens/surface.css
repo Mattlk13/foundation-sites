@@ -6,6 +6,9 @@
 
 		--yeti-weight-normal: 400;
 		--yeti-weight-strong: 600;
+		/* Headings and strong text. Kept apart from strong so a theme can set
+		   labels and buttons at 600 and leave display text at 700, or the reverse. */
+		--yeti-weight-bold: 700;
 
 		/* Shadows are one colour and two offsets, so a theme can retune either. */
 		--yeti-shadow-color: light-dark(oklch(0 0 0 / 0.14), oklch(0 0 0 / 0.55));

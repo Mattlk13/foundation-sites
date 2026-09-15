@@ -3,5 +3,5 @@
 @layer yeti.layouts {
 	.box { padding: var(--_yeti-gap); }
 	.box:not([data-gap]) { --_yeti-gap: var(--yeti-space-md); }
-	.box[data-border] { border: 1px solid var(--yeti-color-border); }
+	.box[data-border] { border: var(--yeti-border-width) solid var(--yeti-color-border); }
 }
