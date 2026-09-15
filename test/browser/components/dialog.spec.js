@@ -11,7 +11,7 @@ const isModal = (page) => page.evaluate(() => document.getElementById('confirm')
 // The dialog arrives with a fade and a rise, so wait for that to finish
 // before reading colour: a scan mid-transition sees a translucent box.
 const settle = (page, selector) => page.evaluate((s) => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))
-	.then(() => Promise.all(document.querySelector(s).getAnimations().map((a) => a.finished))), selector);
+	.then(() => Promise.all(document.querySelector(s).getAnimations().map((a) => a.finished.catch(() => {})))), selector);
 
 test.describe('dialog', () => {
 	test('data-open opens it modally and Escape closes it', async ({ page }) => {
@@ -29,6 +29,25 @@ test.describe('dialog', () => {
 		await page.click('#opener');
 		await page.click('#confirm-title');
 		expect(await isOpen(page)).toBe(true);
+		await page.mouse.click(5, 5);
+		expect(await isOpen(page)).toBe(false);
+	});
+
+	test('a drag that starts inside and ends on the backdrop does not close it', async ({ page }) => {
+		await open(page);
+		await page.click('#opener');
+		await settle(page, '#confirm');
+		// A click whose press and release land on different elements is delivered
+		// to their common ancestor with the release's coordinates, so selecting
+		// text and overshooting the edge looked exactly like a backdrop click and
+		// threw the dialog and its form away. Both ends have to be outside.
+		const title = await rect(page, '#confirm-title');
+		await page.mouse.move(title.left + 10, title.top + 10);
+		await page.mouse.down();
+		await page.mouse.move(5, 5, { steps: 5 });
+		await page.mouse.up();
+		expect(await isOpen(page)).toBe(true);
+		// And a press that genuinely begins on the backdrop still closes it.
 		await page.mouse.click(5, 5);
 		expect(await isOpen(page)).toBe(false);
 	});

@@ -6,6 +6,21 @@
 // The opener is remembered per dialog rather than once for the page, so a
 // dialog opened from inside another still returns focus to its own trigger.
 const openers = new WeakMap();
+// Whether the last press on each dialog began outside its box. A click whose
+// press and release land on different elements is delivered to their common
+// ancestor with the release's coordinates, so a drag that starts on text in
+// the dialog and ends over the backdrop looks exactly like a backdrop click.
+// Closing needs both ends outside.
+const pressedOutside = new WeakMap();
+const outside = (dialog, event) => {
+	const box = dialog.getBoundingClientRect();
+	return event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom;
+};
+
+document.addEventListener('pointerdown', (event) => {
+	const dialog = event.target?.closest?.('dialog.dialog');
+	if (dialog?.open) pressedOutside.set(dialog, outside(dialog, event));
+}, { capture: true });
 
 document.addEventListener('click', (event) => {
 	const trigger = event.target?.closest?.('[data-open]');
@@ -27,7 +42,5 @@ document.addEventListener('click', (event) => {
 	// at all, so it must not be mistaken for one.
 	const dialog = event.target?.closest?.('dialog.dialog');
 	if (!dialog || !dialog.open || event.detail === 0) return;
-	const box = dialog.getBoundingClientRect();
-	const inside = event.clientX >= box.left && event.clientX <= box.right && event.clientY >= box.top && event.clientY <= box.bottom;
-	if (!inside) dialog.close();
+	if (outside(dialog, event) && pressedOutside.get(dialog)) dialog.close();
 });
