@@ -34,7 +34,7 @@ A set of things of equal weight that would take too much room laid out at once: 
 
 ## How it works
 
-The track is a row that scrolls and snaps, so dragging, swiping, and a trackpad all work with nothing added. The dots underneath are ordinary links to each slide's id, which means the browser scrolls to a slide when one is followed, the keyboard reaches them by Tab, and there is no script anywhere in the component.
+The track is a row that scrolls and snaps, so dragging, swiping, and a trackpad all work with nothing added. The dots underneath are ordinary links to each slide's id, which means the browser scrolls to a slide when one is followed, the keyboard reaches them by Tab, and the CSS needs no script. The one module, described below, is optional.
 
 The scrollbar under the track is hidden, since the dots already say where you are and the bar is noise beneath a track that snaps. Scrolling itself is untouched: dragging, swiping, the trackpad and the arrow keys all still work.
 

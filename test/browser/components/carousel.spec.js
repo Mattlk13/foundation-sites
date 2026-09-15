@@ -53,8 +53,11 @@ test.describe('carousel', () => {
 			return { gutter: el.offsetHeight - el.clientHeight, scrollable: el.scrollWidth > el.clientWidth };
 		});
 		// The bar is hidden, but the track still scrolls: the one must not cost the other.
+		// The gutter alone proves nothing on a system with overlay scrollbars, where
+		// every scroller reports zero, so the computed property is what is asserted.
 		expect(track.gutter).toBe(0);
 		expect(track.scrollable).toBe(true);
+		expect(await style(page, '#track', 'scrollbar-width')).toBe('none');
 	});
 
 	test('following a dot scrolls the track and leaves the history alone', async ({ page }) => {
@@ -78,6 +81,34 @@ test.describe('carousel', () => {
 		// The link is the fallback, so it navigates, and that is what costs the
 		// history entry the module exists to avoid.
 		expect(await page.evaluate(() => location.hash)).toBe('#s3');
+	});
+
+	test('two dots pressed in quick succession still land on a slide', async ({ page }) => {
+		await open(page);
+		// A relative scroll is resolved against the smooth scroll still in flight,
+		// and WebKit then overshoots and does not re-snap, parking the track between
+		// slides. The target has to be absolute.
+		await page.click('#dot3');
+		await page.click('#dot2');
+		await page.waitForTimeout(1500);
+		const offset = await page.evaluate(() => {
+			const track = document.getElementById('track');
+			return document.getElementById('s2').getBoundingClientRect().left - track.getBoundingClientRect().left;
+		});
+		expect(Math.abs(offset)).toBeLessThan(2);
+	});
+
+	test('in a right-to-left carousel a dot brings its slide to the start edge', async ({ page }) => {
+		await open(page);
+		// The slides snap to the start edge, which is the right edge here. A scroll
+		// measured from the left edge would leave the dot's slide second in view.
+		await page.click('#rtl-dot3');
+		await page.waitForTimeout(1500);
+		const offset = await page.evaluate(() => {
+			const track = document.getElementById('track-three');
+			return document.getElementById('r3').getBoundingClientRect().right - track.getBoundingClientRect().right;
+		});
+		expect(Math.abs(offset)).toBeLessThan(2);
 	});
 
 	test('a modified click is left to the browser', async ({ page }) => {
