@@ -1,5 +1,5 @@
 import { test, expect } from 'playwright/test';
-import { PAGE_HELPERS, expectAA } from './lib/contrast.js';
+import { PAGE_HELPERS, expectAA, edgeRatioOf } from './lib/contrast.js';
 import { painted } from './lib/layout.js';
 
 // .button transitions background-color/border-color/color on :hover, so the
@@ -50,6 +50,13 @@ for (const url of PAGES) {
 				return { sel: `[data-contrast-id="${i}"]`, large: el.dataset.contrast === 'large', hover: el.matches('.button'), width: r.width, height: r.height };
 			}));
 			expect(targets.length).toBeGreaterThan(0);
+			// Non-text contrast: an edge that is the only thing identifying a control
+			// needs 3:1. data-contrast-border names the property that draws it.
+			const edges = await page.evaluate(() => [...document.querySelectorAll('[data-contrast-border]')].map((el, i) => {
+				el.dataset.contrastEdgeId = String(i);
+				return { sel: `[data-contrast-edge-id="${i}"]`, property: el.dataset.contrastBorder || 'borderTopColor' };
+			}));
+			for (const e of edges) expect(await edgeRatioOf(page, e.sel, e.property), `${e.sel} edge (${scheme})`).toBeGreaterThanOrEqual(3);
 			for (const t of targets) {
 				expect(t.width, `${t.sel} has zero width (${scheme})`).toBeGreaterThan(0);
 				expect(t.height, `${t.sel} has zero height (${scheme})`).toBeGreaterThan(0);
