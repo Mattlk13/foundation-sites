@@ -34,6 +34,22 @@
       "description": "A child that places itself horizontally: start, center, end, or stretch."
     }
   ],
+  "markers": [
+    {
+      "name": "data-align-self",
+      "type": "enum",
+      "vocabulary": "align",
+      "on": "> *",
+      "description": "Where the child sits vertically: start, center, end, stretch, or baseline."
+    },
+    {
+      "name": "data-justify-self",
+      "type": "enum",
+      "vocabulary": "self",
+      "on": "> *",
+      "description": "Where the child sits horizontally: start, center, end, or stretch."
+    }
+  ],
   "tokens": [
     {
       "name": "--_yeti-align",

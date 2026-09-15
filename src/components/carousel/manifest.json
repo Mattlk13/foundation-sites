@@ -14,15 +14,25 @@
     { "selector": "[data-slide]", "min": 2, "max": null, "description": "One slide each, with an id a dot can link to." },
     { "selector": "> [data-dots]", "min": 0, "max": 1, "description": "A list of links, one per slide, each named with aria-label. With carousel.js loaded the module scrolls the track itself, so following one adds no history entry." }
   ],
+  "markers": [
+    { "name": "data-track", "type": "boolean", "on": "> *", "description": "The scrolling track that holds the slides." },
+    { "name": "data-slide", "type": "boolean", "on": "> [data-track] > *", "description": "One slide, with an id a dot can link to." },
+    { "name": "data-dots", "type": "boolean", "on": "> *", "description": "The list of links to the slides, one per slide." }
+  ],
   "tokens": [
     { "name": "--yeti-carousel-dot", "public": true, "description": "Colour of a dot." },
     { "name": "--yeti-carousel-dot-size", "public": true, "description": "Diameter of a dot." },
     { "name": "--yeti-control-size", "public": true, "description": "The pressable area around a dot." },
+    { "name": "--yeti-space-md", "public": true, "description": "The default gap between slides." },
+    { "name": "--yeti-carousel-scroll", "public": true, "description": "How the track scrolls when a dot is followed." },
+    { "name": "--yeti-space-xs", "public": true, "description": "Gap between the dots." },
+    { "name": "--yeti-duration-fast", "public": true, "description": "How long a dot takes to grow under the pointer." },
+    { "name": "--yeti-ease", "public": true, "description": "The curve of that transition." },
     { "name": "--_yeti-slides", "public": false },
     { "name": "--_yeti-gap", "public": false }
   ],
   "a11y": {
-    "requiredAttributes": ["aria-label"],
+    "requiredAttributes": ["aria-label | aria-labelledby"],
     "keyboard": [
       { "key": "Tab", "action": "Focuses the track, then each dot in turn." },
       { "key": "ArrowLeft / ArrowRight", "action": "Scroll the track." },

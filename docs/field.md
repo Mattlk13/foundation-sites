@@ -64,6 +64,15 @@ The label must point at the control with `for` and the control must carry that `
 | `data-inline` | boolean |  |  | Put the label beside the control. Checkboxes and radios are inline without it. |
 | `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral` | `primary` | The colour of a checked checkbox or radio. |
 
+## Markers
+
+Attributes that descendants carry, not the root.
+
+| Attribute | Type | Values | On | Description |
+| --- | --- | --- | --- | --- |
+| `data-hint` | boolean |  | `> *` | Help text, referenced by the control's aria-describedby. |
+| `data-error` | boolean |  | `> *` | The error message, hidden until the control is invalid. |
+
 ## Children
 
 - `> label`: 0 to 1. The label, with for pointing at the control's id. Required unless the field is a fieldset with a legend.
@@ -87,6 +96,26 @@ The label must point at the control with `for` and the control must carry that `
 | `--yeti-control-surface` | Background of the control. |
 | `--yeti-control-chevron` | The select's chevron image. |
 | `--yeti-color-alert` | Border of an invalid control. |
+| `--yeti-color-primary` | The default variant's colour, when data-variant is absent. |
+| `--yeti-color-primary-subtle` | The default variant's tint. |
+| `--yeti-color-primary-soft` | The default variant's soft stop. |
+| `--yeti-color-primary-strong` | The default variant's strong stop. |
+| `--yeti-color-primary-text` | The default variant's text colour. |
+| `--yeti-on-primary` | Text on the default variant's colour. |
+| `--yeti-text-md` | Text size when data-size is absent. |
+| `--yeti-space-sm` | The space step when data-size is absent; a fieldset's padding follows it. |
+| `--yeti-weight-strong` | Weight of the label or legend. |
+| `--yeti-color-text` | Text of the control. |
+| `--yeti-border-width` | Border width of every control, and of a fieldset. |
+| `--yeti-duration-fast` | How long a control's border and a switch take to change. |
+| `--yeti-ease` | The curve of that transition. |
+| `--yeti-color-border-strong` | Border of a focused control. |
+| `--yeti-radius-full` | Corners of the switch and of the range track. |
+| `--yeti-space-xs` | Gap of an inline field, and a legend's inline padding. |
+| `--yeti-text-sm` | Text size of the hint and the error. |
+| `--yeti-color-text-muted` | The hint. |
+| `--yeti-color-alert-text` | The error, and the required marker. |
+| `--yeti-space-md` | Padding of a fieldset. |
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 
@@ -94,6 +123,10 @@ The label must point at the control with `for` and the control must carry that `
 - `--_yeti-on-variant`
 - `--_yeti-size-text`
 - `--_yeti-size-space`
+- `--_yeti-variant-subtle`
+- `--_yeti-variant-soft`
+- `--_yeti-variant-strong`
+- `--_yeti-variant-text`
 
 </details>
 

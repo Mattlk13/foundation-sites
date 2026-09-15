@@ -74,6 +74,17 @@ Name the tablist, since a page may have more than one. Each tab's `aria-controls
 | `--yeti-tabs-border` | The line under or beside the list. |
 | `--yeti-tabs-padding` | Padding of one tab. |
 | `--yeti-border-width` | Width of that line; the selected mark is twice it. |
+| `--yeti-space-md` | The default gap between the list and the panel. |
+| `--yeti-color-primary` | The default variant's colour, when data-variant is absent. |
+| `--yeti-color-primary-subtle` | The default variant's tint. |
+| `--yeti-color-primary-soft` | The default variant's soft stop. |
+| `--yeti-color-primary-strong` | The default variant's strong stop. |
+| `--yeti-color-primary-text` | The default variant's text colour. |
+| `--yeti-on-primary` | Text on the default variant's colour. |
+| `--yeti-space-xs` | Gap between tabs. |
+| `--yeti-weight-strong` | Weight of a tab's label. |
+| `--yeti-duration-fast` | How long a tab takes to change colour. |
+| `--yeti-ease` | The curve of that transition. |
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 
@@ -81,6 +92,9 @@ Name the tablist, since a page may have more than one. Each tab's `aria-controls
 - `--_yeti-variant-subtle`
 - `--_yeti-variant-text`
 - `--_yeti-gap`
+- `--_yeti-variant-soft`
+- `--_yeti-variant-strong`
+- `--_yeti-on-variant`
 
 </details>
 

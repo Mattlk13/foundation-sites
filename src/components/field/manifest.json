@@ -76,6 +76,20 @@
       "description": "The error message, hidden until the control is invalid."
     }
   ],
+  "markers": [
+    {
+      "name": "data-hint",
+      "type": "boolean",
+      "on": "> *",
+      "description": "Help text, referenced by the control's aria-describedby."
+    },
+    {
+      "name": "data-error",
+      "type": "boolean",
+      "on": "> *",
+      "description": "The error message, hidden until the control is invalid."
+    }
+  ],
   "tokens": [
     {
       "name": "--yeti-field-gap",
@@ -118,6 +132,106 @@
       "description": "Border of an invalid control."
     },
     {
+      "name": "--yeti-color-primary",
+      "public": true,
+      "description": "The default variant's colour, when data-variant is absent."
+    },
+    {
+      "name": "--yeti-color-primary-subtle",
+      "public": true,
+      "description": "The default variant's tint."
+    },
+    {
+      "name": "--yeti-color-primary-soft",
+      "public": true,
+      "description": "The default variant's soft stop."
+    },
+    {
+      "name": "--yeti-color-primary-strong",
+      "public": true,
+      "description": "The default variant's strong stop."
+    },
+    {
+      "name": "--yeti-color-primary-text",
+      "public": true,
+      "description": "The default variant's text colour."
+    },
+    {
+      "name": "--yeti-on-primary",
+      "public": true,
+      "description": "Text on the default variant's colour."
+    },
+    {
+      "name": "--yeti-text-md",
+      "public": true,
+      "description": "Text size when data-size is absent."
+    },
+    {
+      "name": "--yeti-space-sm",
+      "public": true,
+      "description": "The space step when data-size is absent; a fieldset's padding follows it."
+    },
+    {
+      "name": "--yeti-weight-strong",
+      "public": true,
+      "description": "Weight of the label or legend."
+    },
+    {
+      "name": "--yeti-color-text",
+      "public": true,
+      "description": "Text of the control."
+    },
+    {
+      "name": "--yeti-border-width",
+      "public": true,
+      "description": "Border width of every control, and of a fieldset."
+    },
+    {
+      "name": "--yeti-duration-fast",
+      "public": true,
+      "description": "How long a control's border and a switch take to change."
+    },
+    {
+      "name": "--yeti-ease",
+      "public": true,
+      "description": "The curve of that transition."
+    },
+    {
+      "name": "--yeti-color-border-strong",
+      "public": true,
+      "description": "Border of a focused control."
+    },
+    {
+      "name": "--yeti-radius-full",
+      "public": true,
+      "description": "Corners of the switch and of the range track."
+    },
+    {
+      "name": "--yeti-space-xs",
+      "public": true,
+      "description": "Gap of an inline field, and a legend's inline padding."
+    },
+    {
+      "name": "--yeti-text-sm",
+      "public": true,
+      "description": "Text size of the hint and the error."
+    },
+    {
+      "name": "--yeti-color-text-muted",
+      "public": true,
+      "description": "The hint."
+    },
+    {
+      "name": "--yeti-color-alert-text",
+      "public": true,
+      "description": "The error, and the required marker."
+    },
+    {
+      "name": "--yeti-space-md",
+      "public": true,
+      "description": "Padding of a fieldset."
+    },
+    {
       "name": "--_yeti-variant",
       "public": false
     },
@@ -131,6 +245,22 @@
     },
     {
       "name": "--_yeti-size-space",
+      "public": false
+    },
+    {
+      "name": "--_yeti-variant-subtle",
+      "public": false
+    },
+    {
+      "name": "--_yeti-variant-soft",
+      "public": false
+    },
+    {
+      "name": "--_yeti-variant-strong",
+      "public": false
+    },
+    {
+      "name": "--_yeti-variant-text",
       "public": false
     }
   ],

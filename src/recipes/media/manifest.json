@@ -19,6 +19,8 @@
     { "name": "--yeti-width-xs", "public": true, "description": "The default figure width." },
     { "name": "--yeti-space-md", "public": true, "description": "The default gap." },
     { "name": "--yeti-space-sm", "public": true, "description": "The gap between the body's children." },
+    { "name": "--yeti-text-sm", "public": true, "description": "Text size of the caption." },
+    { "name": "--yeti-color-text-muted", "public": true, "description": "The caption." },
     { "name": "--_yeti-gap", "public": false },
     { "name": "--_yeti-width", "public": false },
     { "name": "--_yeti-align", "public": false },

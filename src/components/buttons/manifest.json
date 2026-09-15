@@ -17,7 +17,7 @@
     { "name": "--yeti-border-width", "public": true, "description": "The width the attached members overlap by." },
     { "name": "--_yeti-gap", "public": false }
   ],
-  "a11y": { "role": "group", "requiredAttributes": ["role", "aria-label"], "keyboard": [], "notes": "role=\"group\" with a name, so the set is announced as one thing. A segmented toggle sets aria-pressed on each member; a set of tabs is the tabs component, not this." },
+  "a11y": { "role": "group", "requiredAttributes": ["role", "aria-label | aria-labelledby"], "keyboard": [], "notes": "role=\"group\" with a name, so the set is announced as one thing. A segmented toggle sets aria-pressed on each member; a set of tabs is the tabs component, not this." },
   "js": null,
   "support": { "unguarded": ["flexbox gap", "logical border radii"], "guarded": [] },
   "since": "7.0.0",

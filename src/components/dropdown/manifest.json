@@ -21,7 +21,13 @@
     { "name": "--yeti-shadow-md", "public": true, "description": "The panel's shadow." },
     { "name": "--yeti-control-size", "public": true, "description": "Least height of an item." },
     { "name": "--yeti-dropdown-open-delay", "public": true, "description": "How long the pointer must rest before a hover-triggered panel opens." },
-    { "name": "--yeti-dropdown-close-delay", "public": true, "description": "How long a hover-triggered panel waits after the pointer leaves before closing." }
+    { "name": "--yeti-dropdown-close-delay", "public": true, "description": "How long a hover-triggered panel waits after the pointer leaves before closing." },
+    { "name": "--yeti-color-text", "public": true, "description": "The panel's text." },
+    { "name": "--yeti-duration-fast", "public": true, "description": "How long the panel takes to open." },
+    { "name": "--yeti-ease", "public": true, "description": "The curve of that transition." },
+    { "name": "--yeti-space-xs", "public": true, "description": "Gap between an item's icon and its label, and between the trigger and the panel." },
+    { "name": "--yeti-space-sm", "public": true, "description": "Inline padding of an item." },
+    { "name": "--yeti-color-surface-sunken", "public": true, "description": "Background of an item under the pointer." }
   ],
   "a11y": {
     "requiredAttributes": [],

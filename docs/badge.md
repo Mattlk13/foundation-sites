@@ -51,6 +51,17 @@ Colour is decoration here; the word is the meaning, so "Live" and "Draft" work w
 | --- | --- |
 | `--yeti-badge-radius` | Corner radius; full makes a pill. |
 | `--yeti-badge-weight` | Text weight. |
+| `--yeti-space-xs` | Gap between the icon and the text. |
+| `--yeti-leading-tight` | Line height. |
+| `--yeti-border-width` | Border width. |
+| `--yeti-color-primary` | The default variant's colour, when data-variant is absent. |
+| `--yeti-color-primary-subtle` | The default variant's tint. |
+| `--yeti-color-primary-soft` | The default variant's soft stop. |
+| `--yeti-color-primary-strong` | The default variant's strong stop. |
+| `--yeti-color-primary-text` | The default variant's text colour. |
+| `--yeti-on-primary` | Text on the default variant's colour. |
+| `--yeti-text-md` | Text size when data-size is absent. |
+| `--yeti-space-sm` | The space step when data-size is absent. |
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 
@@ -59,6 +70,9 @@ Colour is decoration here; the word is the meaning, so "Live" and "Draft" work w
 - `--_yeti-variant-text`
 - `--_yeti-on-variant`
 - `--_yeti-size-text`
+- `--_yeti-variant-soft`
+- `--_yeti-variant-strong`
+- `--_yeti-size-space`
 
 </details>
 

@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {
 	validate, formatError, validateElementTree, extractHtmlBlocks, findBareMargin, validateLayers, validateImportOrder, validateImportant, validateTokens,
-	validateVocabulary, validateNoMediaQueries, validateDocsFragments, validateFields, validateThemes,
+	validateVocabulary, validateNoMediaQueries, validateDocsFragments, validateFields, validateThemes, validateMotion, validateAnchorsAndContainers, validateTokenReads,
 } from '../../bin/validate.js';
 import { parseHtml } from '../../bin/lib/html.js';
 import { makeTree, validManifest, validTree, REPO_ROOT, TOKENS_SCHEMA_PATH, VOCABULARY_PATH } from './helpers.js';
@@ -508,4 +508,261 @@ test('validateThemes rejects a media block nested inside another', () => {
 		'src/themes/round.css': theme,
 	});
 	assert.deepEqual(run(tree('@media (prefers-color-scheme: dark) {\n\t@media (prefers-color-scheme: dark) {\n\t}\n}\n')).lines, ['src/themes/round.css:2: themes may only set --yeti-* tokens on :root (found "@media (prefers-color-scheme: dark)")']);
+});
+
+const markerTree = (example) => layoutTree({
+	'src/layouts/rail/manifest.json': validManifest({
+		markers: [
+			{ name: 'data-span', type: 'enum', vocabulary: 'span', on: '> *', description: 'Shares of the row.' },
+			{ name: 'data-split', type: 'boolean', on: '> *', description: 'Pushed to the end.' },
+		],
+	}),
+	'src/layouts/rail/example.html': example,
+});
+
+test('a marker value is checked on descendants of the component that declares it', () => {
+	const bad = run(markerTree('<div class="rail">\n\t<p data-span="9">x</p>\n\t<p data-split="yes">y</p>\n</div>\n'));
+	assert.deepEqual(bad.lines, [
+		'src/layouts/rail/example.html:2: .rail <div>: attribute data-span="9" on <p> is not one of 1, 2, 3, 4, 5, 6',
+		'src/layouts/rail/example.html:3: .rail <div>: attribute data-split on <p> is a boolean attribute and takes no value',
+	]);
+	const ok = run(markerTree('<div class="rail"><p data-span="2">x</p><p data-split>y</p></div>\n'));
+	assert.deepEqual(ok.lines, []);
+});
+
+test('a marker outside its component is left alone', () => {
+	const r = run(componentTree({
+		'src/layouts/rail/manifest.json': validManifest({ markers: [{ name: 'data-span', type: 'enum', vocabulary: 'span', description: 'x' }] }),
+		'src/components/tag/example.html': '<span class="tag" data-span="9">New</span>\n',
+	}));
+	assert.deepEqual(r.lines, []);
+});
+
+test('a marker inside nested components of one kind is reported once', () => {
+	const r = run(markerTree('<div class="rail"><div class="rail"><p data-span="9">x</p></div></div>\n'));
+	assert.equal(r.lines.length, 1);
+});
+
+test('a marker referencing a vocabulary validate does not map is reported', () => {
+	const r = run(layoutTree({
+		'src/layouts/rail/manifest.json': validManifest({ markers: [{ name: 'data-tone', type: 'enum', vocabulary: 'align', description: 'x' }] }),
+	}));
+	assert.deepEqual(r.lines, [
+		'src/layouts/rail/manifest.json: attribute data-tone references vocabulary "align" but validate does not check it; add it to MAPPED or READ_DIRECTLY in bin/validate.js',
+	]);
+});
+
+const manifestTokensTree = (tokens, css = '@layer yeti.layouts {\n\t.rail { display: flex; gap: var(--yeti-space-md); --_yeti-rail-gap: 1rem; }\n}\n') => catalogueTree({
+	'src/tokens/tokens.json': [
+		{ name: '--yeti-base-min', group: 'scale', public: true, default: '1rem', description: 'x' },
+		{ name: '--yeti-base', group: 'scale', public: true, declared: false, default: 'unset', description: 'x' },
+		{ name: '--yeti-space-md', group: 'space', public: true, default: '1rem', description: 'x' },
+		{ name: '--yeti-space-lg', group: 'space', public: true, default: '2rem', description: 'x' },
+	],
+	'src/tokens/scale.css': '@layer yeti.base {\n\t:root {\n\t\t--yeti-base-min: var(--yeti-base, 1rem);\n\t\t--yeti-space-md: 1rem;\n\t\t--yeti-space-lg: 2rem;\n\t\t--_yeti-t: 0;\n\t}\n}\n',
+	'src/layouts/rail/manifest.json': validManifest({ tokens }),
+	'src/layouts/rail/rail.css': css,
+});
+
+test('validateManifestTokens passes when tokens[] matches what the CSS reads and declares', () => {
+	const r = run(manifestTokensTree([
+		{ name: '--yeti-space-md', public: true, description: 'The gap.' },
+		{ name: '--_yeti-rail-gap', public: false },
+	]));
+	assert.deepEqual(r.lines, []);
+});
+
+test('validateManifestTokens reports a public token the CSS reads but the manifest omits', () => {
+	const r = run(manifestTokensTree([{ name: '--_yeti-rail-gap', public: false }]));
+	assert.deepEqual(r.lines, ['src/layouts/rail/manifest.json: CSS reads --yeti-space-md but the manifest does not list it']);
+});
+
+test('validateManifestTokens reports a listed token the CSS never reads, and a missing description', () => {
+	const r = run(manifestTokensTree([
+		{ name: '--yeti-space-md', public: true, description: 'The gap.' },
+		{ name: '--yeti-space-lg', public: true },
+		{ name: '--_yeti-rail-gap', public: false },
+	]));
+	assert.deepEqual(r.lines, [
+		'src/layouts/rail/manifest.json: --yeti-space-lg needs a description: what it controls, in one line',
+		'src/layouts/rail/manifest.json: manifest lists --yeti-space-lg but the CSS never reads it',
+	]);
+});
+
+test('validateManifestTokens diffs private tokens against declarations both ways', () => {
+	const undeclared = run(manifestTokensTree([
+		{ name: '--yeti-space-md', public: true, description: 'The gap.' },
+		{ name: '--_yeti-rail-gap', public: false },
+		{ name: '--_yeti-ghost', public: false },
+	]));
+	assert.deepEqual(undeclared.lines, ['src/layouts/rail/manifest.json: manifest lists --_yeti-ghost but the CSS never declares it']);
+	const unlisted = run(manifestTokensTree([{ name: '--yeti-space-md', public: true, description: 'The gap.' }]));
+	assert.deepEqual(unlisted.lines, ['src/layouts/rail/manifest.json: CSS declares --_yeti-rail-gap but the manifest does not list it']);
+});
+
+test('validateManifestTokens counts a token the JS module reads as read', () => {
+	const r = run(manifestTokensTree(
+		[{ name: '--yeti-space-md', public: true, description: 'The gap.' }, { name: '--yeti-space-lg', public: true, description: 'The wide gap.' }],
+		'@layer yeti.layouts {\n\t.rail { gap: var(--yeti-space-md); }\n}\n',
+	));
+	assert.deepEqual(r.lines, ['src/layouts/rail/manifest.json: manifest lists --yeti-space-lg but the CSS never reads it']);
+	const withJs = run({
+		...manifestTokensTree(
+			[{ name: '--yeti-space-md', public: true, description: 'The gap.' }, { name: '--yeti-space-lg', public: true, description: 'The wide gap.' }],
+			'@layer yeti.layouts {\n\t.rail { gap: var(--yeti-space-md); }\n}\n',
+		),
+		'src/layouts/rail/manifest.json': validManifest({
+			tokens: [{ name: '--yeti-space-md', public: true, description: 'The gap.' }, { name: '--yeti-space-lg', public: true, description: 'The wide gap.' }],
+			js: { module: 'rail.js', optional: true },
+		}),
+		'src/layouts/rail/rail.js': "getComputedStyle(el).getPropertyValue('--yeti-space-lg');\n",
+	});
+	assert.deepEqual(withJs.lines, []);
+});
+
+test('a required attribute written as an alternation is satisfied by any one of its options', () => {
+	const tree = (html) => validTree({
+		'src/layouts/rail/manifest.json': validManifest({ a11y: { requiredAttributes: ['aria-label | aria-labelledby'], keyboard: [] } }),
+		'src/layouts/rail/example.html': html,
+	});
+	assert.deepEqual(run(tree('<div class="rail" aria-label="Rail"><p>x</p></div>')).lines, []);
+	assert.deepEqual(run(tree('<div class="rail" aria-labelledby="h"><p>x</p></div>')).lines, []);
+	assert.deepEqual(run(tree('<div class="rail"><p>x</p></div>')).errors.map((e) => e.message), ['.rail <div>: missing required attribute: one of aria-label, aria-labelledby']);
+});
+
+test('fixtures are validated against the manifests, with the test-only contrast hooks allowed', () => {
+	const fixture = (body) => componentTree({
+		'test/browser/fixtures/components/tag.html': `<!doctype html>\n<html>\n<body>\n${body}\n</body>\n</html>\n`,
+	});
+	assert.deepEqual(run(fixture('<span class="tag" data-contrast data-contrast-border data-contrast-id="a" data-contrast-edge-id="b">New</span>')).lines, []);
+	assert.deepEqual(run(fixture('<span class="tag" data-glow>New</span>')).lines, ['test/browser/fixtures/components/tag.html:4: .tag <span>: unknown attribute data-glow']);
+	assert.deepEqual(run(fixture('<span class="tag" data-variant="loud">New</span>')).lines, ['test/browser/fixtures/components/tag.html:4: .tag <span>: data-variant="loud" is not one of primary, secondary, success, warning, alert, neutral']);
+});
+
+test('a fixture whose body carries the class is validated like any other element', () => {
+	const r = run(componentTree({
+		'test/browser/fixtures/components/tag.html': '<!doctype html>\n<html>\n<body class="tag" data-glow>\n<p>x</p>\n</body>\n</html>\n',
+	}));
+	assert.deepEqual(r.lines, ['test/browser/fixtures/components/tag.html:3: .tag <body>: unknown attribute data-glow']);
+});
+
+const direct = (fn, files, ...args) => {
+	const root = makeTree(files);
+	return fn(root, ...args).map((e) => formatError(root, e));
+};
+
+test('validateTokenReads resolves every public read to the catalogue and every private read to a declaration', () => {
+	const typo = direct(validateTokenReads, catalogueTree({ 'src/layouts/rail/rail.css': '@layer yeti.layouts {\n\t.rail {\n\t\tdisplay: flex;\n\t\tgap: var(--yeti-base-mim);\n\t}\n}\n' }));
+	assert.deepEqual(typo, ['src/layouts/rail/rail.css:4: reads --yeti-base-mim, which is not in the catalogue']);
+	const ghost = direct(validateTokenReads, catalogueTree({ 'src/layouts/rail/rail.css': '@layer yeti.layouts {\n\t.rail { gap: var(--_yeti-gapp, 1rem); }\n}\n' }));
+	assert.deepEqual(ghost, ['src/layouts/rail/rail.css:2: reads --_yeti-gapp, which nothing in src/ declares']);
+	const ok = direct(validateTokenReads, catalogueTree({ 'src/layouts/rail/rail.css': '@layer yeti.layouts {\n\t.rail { gap: var(--_yeti-t); font-size: var(--yeti-base-min); }\n}\n' }));
+	assert.deepEqual(ok, []);
+});
+
+test('validateTokenReads ignores a var() inside a comment', () => {
+	const r = direct(validateTokenReads, catalogueTree({ 'src/layouts/rail/rail.css': '@layer yeti.layouts {\n\t/* was var(--yeti-nope) */\n\t.rail { display: flex; }\n}\n' }));
+	assert.deepEqual(r, []);
+});
+
+test('validateThemes rejects a theme that sets a theme: false token', () => {
+	const tree = (theme) => componentTree({
+		'src/tokens/tokens.json': [
+			{ name: '--yeti-radius-md', group: 'radius', public: true, default: '0.5rem', description: 'x' },
+			{ name: '--yeti-range-value', group: 'field', public: true, theme: false, default: '0%', description: 'x' },
+		],
+		'schema/tokens.schema.json': fs.readFileSync(TOKENS_SCHEMA_PATH, 'utf8'),
+		'src/tokens/radius.css': '@layer yeti.base { :root { --yeti-radius-md: 0.5rem; --yeti-range-value: 0%; } }\n',
+		'src/yeti.css': '@import "layers.css";\n@import "tokens/radius.css";\n@import "layouts/attributes.css";\n@import "layouts/rail/rail.css";\n@import "components/tag/tag.css";\n',
+		'src/themes/round.css': theme,
+	});
+	assert.deepEqual(run(tree(':root { --yeti-radius-md: 0; }\n')).lines, []);
+	assert.deepEqual(run(tree(':root { --yeti-range-value: 50%; }\n')).lines, ['src/themes/round.css:1: theme sets "--yeti-range-value", which is a per-element input, not a theme value']);
+});
+
+const motion = (files) => direct((root) => validateMotion(path.join(root, 'src')), files);
+
+test('validateMotion requires token-based durations, iteration counts and scroll behaviour', () => {
+	const css = (body) => `@layer yeti.components {\n\t.tag { display: inline-flex; }\n\t.tag:hover {\n\t\t${body}\n\t}\n}\n`;
+	const at = (message) => [`src/components/tag/tag.css:4: ${message}`];
+	assert.deepEqual(motion(componentTree({ 'src/components/tag/tag.css': css('transition: color var(--yeti-duration-fast) var(--yeti-ease), background-color var(--yeti-duration-fast) var(--yeti-ease);') })), []);
+	assert.deepEqual(motion(componentTree({ 'src/components/tag/tag.css': css('transition: none; animation: none; scroll-behavior: auto; transition-duration: 0s;') })), []);
+	assert.deepEqual(motion(componentTree({ 'src/components/tag/tag.css': css('animation: spin calc(var(--yeti-duration-base) * 4) linear var(--yeti-motion-iterations);') })), []);
+	assert.deepEqual(motion(componentTree({ 'src/components/tag/tag.css': css('transition: color 150ms var(--yeti-ease);') })), at('transition must read a --yeti-* token or be none (found "150ms")'));
+	assert.deepEqual(motion(componentTree({ 'src/components/tag/tag.css': css('transition-duration: .2s;') })), at('transition-duration must read a --yeti-* token or be none (found ".2s")'));
+	assert.deepEqual(motion(componentTree({ 'src/components/tag/tag.css': css('animation: spin var(--yeti-duration-base) linear infinite;') })), at('animation must read a --yeti-* token or be none (found "infinite")'));
+	assert.deepEqual(motion(componentTree({ 'src/components/tag/tag.css': css('animation-iteration-count: 3;') })), at('animation-iteration-count must read a --yeti-* token or be none (found "3")'));
+	assert.deepEqual(motion(componentTree({ 'src/components/tag/tag.css': css('scroll-behavior: smooth;') })), at('scroll-behavior must read a --yeti-* token or be none (found "smooth")'));
+	assert.deepEqual(motion(componentTree({ 'src/components/tag/tag.css': css('overscroll-behavior-x: contain;') })), []);
+});
+
+test('validateMotion covers layouts as well and reports the property line inside a multi-line value', () => {
+	const r = motion(layoutTree({ 'src/layouts/rail/rail.css': '@layer yeti.layouts {\n\t.rail {\n\t\tdisplay: flex;\n\t\ttransition:\n\t\t\topacity 1s,\n\t\t\tcolor var(--yeti-duration-fast);\n\t}\n}\n' }));
+	assert.deepEqual(r, ['src/layouts/rail/rail.css:4: transition must read a --yeti-* token or be none (found "1s")']);
+});
+
+test('every anchor-name needs an anchor-scope in the same file', () => {
+	const scoped = run(componentTree({ 'src/components/tag/tag.css': '@layer yeti.components {\n\t.tag { anchor-scope: --yeti-tag; }\n\t.tag > button { anchor-name: --yeti-tag; }\n}\n' }));
+	assert.deepEqual(scoped.lines, []);
+	const loose = run(componentTree({ 'src/components/tag/tag.css': '@layer yeti.components {\n\t.tag { display: block; }\n\t.tag > button { anchor-name: --yeti-tag; }\n}\n' }));
+	assert.deepEqual(loose.lines, ['src/components/tag/tag.css:3: anchor-name without anchor-scope; scope every anchor to its component']);
+});
+
+test('container thresholds must be a width token default, a whole multiple of one, or a calc( of one', () => {
+	const css = (query) => `@layer yeti.components {\n\t.tag { container-type: inline-size; }\n\t@container (inline-size ${query}) {\n\t\t.tag > * { display: none; }\n\t}\n}\n`;
+	for (const ok of ['< 16rem', '>= 24rem', '< 32rem', '>= 48rem', '< 64rem', '>= 80rem', '>= 96rem', '>= 240rem', '< calc(24rem + 2 * 1rem)']) {
+		assert.deepEqual(run(componentTree({ 'src/components/tag/tag.css': css(ok) })).lines, [], ok);
+	}
+	assert.deepEqual(run(componentTree({ 'src/components/tag/tag.css': css('< 22rem') })).lines, [
+		'src/components/tag/tag.css:3: @container threshold "22rem" is not a width token\'s default (16, 24, 32, 48, 64, 80rem), a whole multiple of one, or a calc( of one',
+	]);
+	assert.deepEqual(run(componentTree({ 'src/components/tag/tag.css': css('> 400px') })).lines, [
+		'src/components/tag/tag.css:3: @container threshold "400px" is not a width token\'s default (16, 24, 32, 48, 64, 80rem), a whole multiple of one, or a calc( of one',
+	]);
+});
+
+test('the real src/ passes the motion, anchor and container lints', () => {
+	assert.deepEqual(validateMotion(path.join(REPO_ROOT, 'src')), []);
+	assert.deepEqual(validateAnchorsAndContainers(path.join(REPO_ROOT, 'src')), []);
+});
+
+test('findBareMargin catches an attribute selector on the identity class', () => {
+	assert.deepEqual(findBareMargin('.rail[data-raised] { margin: 1rem; }', 'rail'), [1]);
+	assert.deepEqual(findBareMargin('.rail[data-raised] > * { margin: 1rem; }', 'rail'), []);
+});
+
+test('findBareMargin catches :not() and other pseudo-classes on the identity class', () => {
+	assert.deepEqual(findBareMargin('.rail:not([data-x]) { margin: 1rem; }', 'rail'), [1]);
+	assert.deepEqual(findBareMargin('.rail:hover { margin: 1rem; }', 'rail'), [1]);
+	assert.deepEqual(findBareMargin('.rail:not(.grid > .rail) { margin: 1rem; }', 'rail'), [1]);
+	assert.deepEqual(findBareMargin('.other:not(.rail) { margin: 1rem; }', 'rail'), []);
+});
+
+test('findBareMargin catches :is() and :where() wrapping the identity class', () => {
+	assert.deepEqual(findBareMargin(':is(.rail) { margin: 1rem; }', 'rail'), [1]);
+	assert.deepEqual(findBareMargin(':where(.pill, .rail):hover { margin: 1rem; }', 'rail'), [1]);
+	assert.deepEqual(findBareMargin(':is(.rail) > * { margin: 1rem; }', 'rail'), []);
+});
+
+test('findBareMargin catches a nested & block inside the identity class', () => {
+	assert.deepEqual(findBareMargin('.rail {\n  display: flex;\n  &[data-raised] { margin: 1rem; }\n}', 'rail'), [3]);
+	assert.deepEqual(findBareMargin('.rail {\n  &:hover { margin: 1rem; }\n}', 'rail'), [2]);
+	assert.deepEqual(findBareMargin('.rail {\n  @supports (gap: 1rem) {\n    &[data-x] { margin: 1rem; }\n  }\n}', 'rail'), [3]);
+	assert.deepEqual(findBareMargin('.rail {\n  & > [data-x] { margin: 1rem; }\n}', 'rail'), []);
+	assert.deepEqual(findBareMargin('.other {\n  &[data-x] { margin: 1rem; }\n}', 'rail'), []);
+});
+
+test('findBareMargin treats a tag or extra class on the identity class as the same box, and a pseudo-element as another', () => {
+	assert.deepEqual(findBareMargin('article.rail { margin: 1rem; }', 'rail'), [1]);
+	assert.deepEqual(findBareMargin('.rail.wide { margin: 1rem; }', 'rail'), [1]);
+	assert.deepEqual(findBareMargin('.rail::before { margin: 1rem; }', 'rail'), []);
+});
+
+test('validateImportOrder rejects a theme imported into yeti.css', () => {
+	const r = run(validTree({
+		'src/tokens/scale.css': ':root { --yeti-base-min: 1rem; }\n',
+		'src/themes/sharp.css': ':root { --yeti-base-min: 2rem; }\n',
+		'src/yeti.css': '@import "layers.css";\n@import "tokens/scale.css";\n@import "layouts/rail/rail.css";\n@import "themes/sharp.css";\n',
+	}));
+	assert.deepEqual(r.lines, ['src/yeti.css:4: themes are opt-in and must not be imported into yeti.css (found "themes/sharp.css")']);
 });

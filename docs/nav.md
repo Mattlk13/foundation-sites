@@ -67,6 +67,16 @@ Give the `nav` an `aria-label`, since a page often has more than one. The toggle
 | `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral` | `primary` | The hue of the current link and of the hover tint. |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `sm` | Space between the bar's parts and between the links. |
 
+## Markers
+
+Attributes that descendants carry, not the root.
+
+| Attribute | Type | Values | On | Description |
+| --- | --- | --- | --- | --- |
+| `data-brand` | boolean |  | `> *` | The site's name or mark, usually a link home. |
+| `data-close` | boolean |  | `li` | The item holding the button that closes the panel; hidden in the bar. |
+| `data-actions` | boolean |  | `> *` | Buttons at the end of the bar. |
+
 ## Children
 
 - `> [data-brand]`: 0 to 1. The site's name or mark, usually a link home.
@@ -89,6 +99,21 @@ Give the `nav` an `aria-label`, since a page often has more than one. The toggle
 | `--yeti-control-size` | Minimum height of the bar, the toggle, and each link. |
 | `--yeti-shadow-md` | The open panel's shadow. |
 | `--yeti-shadow-color` | The drawer's backdrop. |
+| `--yeti-color-text` | The bar's text, and the open panel's. |
+| `--yeti-border-width` | Width of the bar's bottom edge, and of the sheet's. |
+| `--yeti-space-sm` | The default gap; a link's inline padding and the close item's inset follow it. |
+| `--yeti-color-primary` | The default variant's colour, when data-variant is absent. |
+| `--yeti-color-primary-subtle` | The default variant's tint. |
+| `--yeti-color-primary-soft` | The default variant's soft stop. |
+| `--yeti-color-primary-strong` | The default variant's strong stop. |
+| `--yeti-color-primary-text` | The default variant's text colour. |
+| `--yeti-on-primary` | Text on the default variant's colour. |
+| `--yeti-weight-strong` | Weight of the brand, and of the current page's link. |
+| `--yeti-space-xs` | Block padding of a link, and of the close button. |
+| `--yeti-duration-fast` | How long the panel takes to open. |
+| `--yeti-ease` | The curve of that transition. |
+| `--yeti-text-lg` | Text size of the links in a screen panel. |
+| `--yeti-space-xl` | Inset of a screen panel that has no close item. |
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 
@@ -96,12 +121,15 @@ Give the `nav` an `aria-label`, since a page often has more than one. The toggle
 - `--_yeti-variant`
 - `--_yeti-variant-subtle`
 - `--_yeti-variant-text`
+- `--_yeti-variant-soft`
+- `--_yeti-variant-strong`
+- `--_yeti-on-variant`
 
 </details>
 
 ## Accessibility
 
-- Required attributes: `aria-label`
+- Required attributes: `aria-label` or `aria-labelledby`
 - Give the nav an aria-label, since a page often has more than one. The toggle needs a name (aria-label or visible text); the browser sets its expanded state. Mark the current page's link with aria-current="page". Put role="list" on the ul, because the reset only removes list markers where that role says the list is decorative. With data-panel="screen" there is no outside to click, so include the close item.
 
 | Key | Action |

@@ -13,6 +13,7 @@
   "tokens": [
     { "name": "--yeti-space-md", "public": true, "description": "The default padding." },
     { "name": "--yeti-color-border", "public": true, "description": "The border color when data-border is set." },
+    { "name": "--yeti-border-width", "public": true, "description": "Width of the border when data-border is set." },
     { "name": "--_yeti-gap", "public": false }
   ],
   "a11y": { "requiredAttributes": [], "keyboard": [], "notes": "Purely visual. A box has no semantics; use a section or article element when the content is one." },

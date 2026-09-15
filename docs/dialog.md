@@ -74,6 +74,12 @@ Without the module the dialog never opens. That is a real limitation, not a deta
 | `--yeti-dialog-padding` | Padding inside. |
 | `--yeti-dialog-backdrop` | The wash over the page behind it. |
 | `--yeti-shadow-md` | The dialog's shadow. |
+| `--yeti-space-md` | The least margin kept between the dialog and the viewport's edges. |
+| `--yeti-color-text` | The dialog's text. |
+| `--yeti-width-md` | The default width, when data-width is absent. |
+| `--yeti-space-sm` | Gap between the footer's actions. |
+| `--yeti-duration-fast` | How long the dialog and its backdrop take to appear. |
+| `--yeti-ease` | The curve of that transition. |
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 

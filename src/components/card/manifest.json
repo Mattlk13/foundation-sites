@@ -16,6 +16,9 @@
     { "selector": "> footer", "min": 0, "max": 1, "description": "Actions, pushed to the bottom of the card; in a ranked grid it takes the last row." },
     { "selector": "[data-stretch]", "min": 0, "max": 1, "description": "One link that is stretched over the whole card, so the card is clickable while the link keeps its own name." }
   ],
+  "markers": [
+    { "name": "data-stretch", "type": "boolean", "on": "a", "description": "Stretches the link over the whole card, so the card is clickable while the link keeps its own name." }
+  ],
   "tokens": [
     { "name": "--yeti-card-radius", "public": true, "description": "Corner radius." },
     { "name": "--yeti-card-padding", "public": true, "description": "Padding inside the card; the figure bleeds through it." },
@@ -23,8 +26,14 @@
     { "name": "--yeti-card-border", "public": true, "description": "Border colour." },
     { "name": "--yeti-card-surface", "public": true, "description": "Background." },
     { "name": "--yeti-shadow-sm", "public": true, "description": "The shadow when raised." },
-    { "name": "--_yeti-aspect", "public": false },
-    { "name": "--_yeti-variant", "public": false }
+    { "name": "--yeti-color-text", "public": true, "description": "The card's text, and a caption laid over the figure." },
+    { "name": "--yeti-border-width", "public": true, "description": "Border width; the variant's bar is four of them." },
+    { "name": "--yeti-space-xs", "public": true, "description": "Padding of the caption." },
+    { "name": "--yeti-text-sm", "public": true, "description": "Text size of the caption." },
+    { "name": "--yeti-color-text-muted", "public": true, "description": "The caption under a figure." },
+    { "name": "--yeti-color-surface", "public": true, "description": "Background of a caption laid over the figure." },
+    { "name": "--yeti-space-sm", "public": true, "description": "Gap between the footer's actions." },
+    { "name": "--_yeti-aspect", "public": false }
   ],
   "a11y": { "requiredAttributes": [], "keyboard": [], "notes": "Never wrap a card in a link: the whole card's text would become the link's name. Put the link on the heading and give it data-stretch so the card is clickable and the link is named by the heading. Use article for cards that stand alone and li for cards in a list." },
   "js": null,

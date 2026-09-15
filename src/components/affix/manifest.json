@@ -53,6 +53,26 @@
       "name": "--yeti-border-width",
       "public": true,
       "description": "The width the members overlap by."
+    },
+    {
+      "name": "--yeti-space-sm",
+      "public": true,
+      "description": "Inline padding of an attachment."
+    },
+    {
+      "name": "--yeti-text-md",
+      "public": true,
+      "description": "Text size of an attachment."
+    },
+    {
+      "name": "--yeti-color-text-muted",
+      "public": true,
+      "description": "Text of an attachment."
+    },
+    {
+      "name": "--yeti-color-surface-sunken",
+      "public": true,
+      "description": "Background of an attachment."
     }
   ],
   "a11y": {

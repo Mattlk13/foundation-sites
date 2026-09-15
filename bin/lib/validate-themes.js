@@ -22,6 +22,7 @@ export function validateThemes(root) {
 	const schema = loadSchema(path.join(root, 'schema', 'tokens.schema.json'));
 	const { entries } = loadCatalogue(catalogueFile, schema);
 	const publicNames = new Set(entries.filter((e) => e.public).map((e) => e.name));
+	const notThemable = new Set(entries.filter((e) => e.theme === false).map((e) => e.name));
 	const errors = [];
 	for (const file of walkFiles(themesDir).filter((f) => f.endsWith('.css'))) {
 		const text = stripComments(fs.readFileSync(file, 'utf8'));
@@ -50,6 +51,7 @@ export function validateThemes(root) {
 						if (!prop) continue;
 						if (!prop.startsWith('--yeti-')) errors.push({ file, line: block.line, message: `themes may only set --yeti-* tokens (found "${prop}")` });
 						else if (!publicNames.has(prop)) errors.push({ file, line: block.line, message: `theme sets "${prop}", which is not a public token` });
+						else if (notThemable.has(prop)) errors.push({ file, line: block.line, message: `theme sets "${prop}", which is a per-element input, not a theme value` });
 					}
 				}
 				selector = ''; decls = '';

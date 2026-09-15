@@ -15,12 +15,11 @@
   ],
   "tokens": [
     { "name": "--yeti-space-md", "public": true, "description": "The default gap." },
-    { "name": "--_yeti-gap", "public": false },
-    { "name": "--_yeti-width", "public": false }
+    { "name": "--_yeti-gap", "public": false }
   ],
   "a11y": {
     "role": "region",
-    "requiredAttributes": ["tabindex", "aria-label"],
+    "requiredAttributes": ["tabindex", "aria-label | aria-labelledby"],
     "keyboard": [
       { "key": "Tab", "action": "Focuses the track so the arrow keys can scroll it." },
       { "key": "ArrowLeft / ArrowRight", "action": "Scroll the track." }

@@ -60,6 +60,14 @@ Yeti names layouts for what they do to their children, and what this one gives t
 | `data-justify` | enum | `start`, `center`, `end`, `between`, `around`, `evenly` | `start` | Distribution of the columns along the row when they do not fill it. |
 | `data-limit` | enum | `2`, `3`, `4`, `5` |  | The most columns allowed on one row; further children each take a full row. |
 
+## Markers
+
+Attributes that descendants carry, not the root.
+
+| Attribute | Type | Values | On | Description |
+| --- | --- | --- | --- | --- |
+| `data-span` | enum | `1`, `2`, `3`, `4`, `5`, `6` | `> *` | How many shares of the row the child takes: 2 is twice a plain sibling. Below the threshold it stacks like the rest. |
+
 ## Children
 
 - `> *`: at least 2. The columns. Each gets an equal share of the row.
@@ -78,7 +86,6 @@ Yeti names layouts for what they do to their children, and what this one gives t
 - `--_yeti-threshold`
 - `--_yeti-align`
 - `--_yeti-justify`
-- `--_yeti-span`
 
 </details>
 

@@ -199,3 +199,23 @@ test('the tokens page renders component groups after the framework groups', () =
 	], 0);
 	assert.ok(page.indexOf('## Color') < page.indexOf('## Border') && page.indexOf('## Border') < page.indexOf('## Card'));
 });
+
+test('renderPage renders a Markers table after Attributes, only when the manifest has markers', () => {
+	const none = renderPage({ manifest: validManifest(), exampleHtml, navOrder: 1 });
+	assert.ok(!none.includes('## Markers'));
+	const manifest = validManifest({ markers: [
+		{ name: 'data-span', type: 'enum', values: ['1', '2'], on: '> *', description: 'Shares of the row.' },
+		{ name: 'data-split', type: 'boolean', description: 'Pushed to the end.' },
+	] });
+	const page = renderPage({ manifest, exampleHtml, navOrder: 1 });
+	assert.ok(page.indexOf('## Attributes') < page.indexOf('## Markers'));
+	assert.ok(page.indexOf('## Markers') < page.indexOf('## Children'));
+	assert.ok(page.includes('| `data-span` | enum | `1`, `2` | `> *` | Shares of the row. |'));
+	assert.ok(page.includes('| `data-split` | boolean |  |  | Pushed to the end. |'));
+});
+
+test('renderPage spells a required-attribute alternation with "or"', () => {
+	const manifest = validManifest({ a11y: { requiredAttributes: ['role', 'aria-label | aria-labelledby'], keyboard: [] } });
+	const page = renderPage({ manifest, exampleHtml, navOrder: 1 });
+	assert.ok(page.includes('- Required attributes: `role`, `aria-label` or `aria-labelledby`'));
+});

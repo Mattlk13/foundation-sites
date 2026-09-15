@@ -20,6 +20,11 @@
     { "selector": ".dropdown", "min": 0, "max": null, "description": "A nav item may hold a dropdown for its own children; the panel is in the top layer, so the bar never clips it. In the bar it is the usual card; behind the toggle it becomes a full-width block docked under its trigger and squared off against the open panel's edges." },
     { "selector": "> [data-actions]", "min": 0, "max": 1, "description": "Buttons at the end of the bar." }
   ],
+  "markers": [
+    { "name": "data-brand", "type": "boolean", "on": "> *", "description": "The site's name or mark, usually a link home." },
+    { "name": "data-close", "type": "boolean", "on": "li", "description": "The item holding the button that closes the panel; hidden in the bar." },
+    { "name": "data-actions", "type": "boolean", "on": "> *", "description": "Buttons at the end of the bar." }
+  ],
   "tokens": [
     { "name": "--yeti-nav-padding", "public": true, "description": "Padding of the bar and of the open panel." },
     { "name": "--yeti-nav-radius", "public": true, "description": "Corner of the links and the toggle." },
@@ -29,13 +34,31 @@
     { "name": "--yeti-control-size", "public": true, "description": "Minimum height of the bar, the toggle, and each link." },
     { "name": "--yeti-shadow-md", "public": true, "description": "The open panel's shadow." },
     { "name": "--yeti-shadow-color", "public": true, "description": "The drawer's backdrop." },
+    { "name": "--yeti-color-text", "public": true, "description": "The bar's text, and the open panel's." },
+    { "name": "--yeti-border-width", "public": true, "description": "Width of the bar's bottom edge, and of the sheet's." },
+    { "name": "--yeti-space-sm", "public": true, "description": "The default gap; a link's inline padding and the close item's inset follow it." },
+    { "name": "--yeti-color-primary", "public": true, "description": "The default variant's colour, when data-variant is absent." },
+    { "name": "--yeti-color-primary-subtle", "public": true, "description": "The default variant's tint." },
+    { "name": "--yeti-color-primary-soft", "public": true, "description": "The default variant's soft stop." },
+    { "name": "--yeti-color-primary-strong", "public": true, "description": "The default variant's strong stop." },
+    { "name": "--yeti-color-primary-text", "public": true, "description": "The default variant's text colour." },
+    { "name": "--yeti-on-primary", "public": true, "description": "Text on the default variant's colour." },
+    { "name": "--yeti-weight-strong", "public": true, "description": "Weight of the brand, and of the current page's link." },
+    { "name": "--yeti-space-xs", "public": true, "description": "Block padding of a link, and of the close button." },
+    { "name": "--yeti-duration-fast", "public": true, "description": "How long the panel takes to open." },
+    { "name": "--yeti-ease", "public": true, "description": "The curve of that transition." },
+    { "name": "--yeti-text-lg", "public": true, "description": "Text size of the links in a screen panel." },
+    { "name": "--yeti-space-xl", "public": true, "description": "Inset of a screen panel that has no close item." },
     { "name": "--_yeti-gap", "public": false },
     { "name": "--_yeti-variant", "public": false },
     { "name": "--_yeti-variant-subtle", "public": false },
-    { "name": "--_yeti-variant-text", "public": false }
+    { "name": "--_yeti-variant-text", "public": false },
+    { "name": "--_yeti-variant-soft", "public": false },
+    { "name": "--_yeti-variant-strong", "public": false },
+    { "name": "--_yeti-on-variant", "public": false }
   ],
   "a11y": {
-    "requiredAttributes": ["aria-label"],
+    "requiredAttributes": ["aria-label | aria-labelledby"],
     "keyboard": [
       { "key": "Enter / Space", "action": "On the toggle, opens or closes the list." },
       { "key": "Tab", "action": "From the toggle, into the open list's first link." },

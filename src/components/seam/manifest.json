@@ -14,6 +14,7 @@
   "children": [],
   "tokens": [
     { "name": "--yeti-seam-size", "public": true, "description": "Fix the depth for every size." },
+    { "name": "--yeti-space-sm", "public": true, "description": "The depth when data-size is absent." },
     { "name": "--_yeti-seam", "public": false },
     { "name": "--_yeti-seam-curve-top", "public": false },
     { "name": "--_yeti-seam-curve-bottom", "public": false },
@@ -21,7 +22,9 @@
     { "name": "--_yeti-seam-wave-bottom", "public": false },
     { "name": "--_yeti-seam-wave-top-flip", "public": false },
     { "name": "--_yeti-seam-wave-bottom-flip", "public": false },
-    { "name": "--_yeti-size-space", "public": false }
+    { "name": "--_yeti-size-space", "public": false },
+    { "name": "--_yeti-seam-top", "public": false },
+    { "name": "--_yeti-seam-bottom", "public": false }
   ],
   "a11y": { "requiredAttributes": [], "keyboard": [], "notes": "Decorative only; nothing changes for assistive tech. The seam adds its depth as space on a cut edge so text never sits in the cut." },
   "js": null,

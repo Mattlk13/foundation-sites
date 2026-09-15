@@ -20,6 +20,8 @@
     { "name": "--yeti-width-lg", "public": true, "description": "The default threshold." },
     { "name": "--yeti-space-lg", "public": true, "description": "The default gap." },
     { "name": "--yeti-space-sm", "public": true, "description": "The gap between the copy's children." },
+    { "name": "--yeti-text-sm", "public": true, "description": "Text size of the caption." },
+    { "name": "--yeti-color-text-muted", "public": true, "description": "The caption." },
     { "name": "--_yeti-gap", "public": false },
     { "name": "--_yeti-threshold", "public": false },
     { "name": "--_yeti-align", "public": false },

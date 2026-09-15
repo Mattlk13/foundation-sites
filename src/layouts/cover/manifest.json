@@ -12,6 +12,9 @@
     { "selector": "> *", "min": 1, "max": null, "description": "A header, the centered child, a footer: any of them optional except the centered one." },
     { "selector": "> [data-center]", "min": 1, "max": 1, "description": "Exactly one child carries data-center and is centered in the remaining space." }
   ],
+  "markers": [
+    { "name": "data-center", "type": "boolean", "on": "> *", "description": "Centers the child in the space the others leave; exactly one child carries it." }
+  ],
   "tokens": [
     { "name": "--yeti-cover-height", "public": true, "description": "The minimum block size. Set it to auto for a cover no taller than its content." },
     { "name": "--yeti-space-md", "public": true, "description": "The default gap." },

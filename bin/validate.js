@@ -24,20 +24,27 @@ export function formatError(root, e) {
 	return `${path.relative(root, e.file)}${e.line ? `:${e.line}` : ''}: ${e.message}`;
 }
 
-/** Checks every element carrying a framework identity class against that component's contract. */
-export function validateElementTree(root, merged, file, lineOffset = 0) {
+/**
+ * Checks every element carrying a framework identity class against that component's contract.
+ * `allowed` names attributes that are legal anywhere (a fixture's test-only hooks).
+ */
+export function validateElementTree(root, merged, file, lineOffset = 0, allowed = new Set()) {
 	const errors = [];
 	const byClass = new Map(Object.values(merged).map((m) => [m.class, m]));
 
 	// A child marker such as data-split or data-center is declared by the PARENT
-	// layout's children contract, so it is legal on any element, including one
-	// that is itself a layout. The parent's min/max still counts them.
-	const childMarkers = new Set();
+	// layout's markers (or its children contract), so it is legal on any element,
+	// including one that is itself a layout. Its value is checked below, on the
+	// descendants of the component that declares it.
+	const childMarkers = new Set(allowed);
 	for (const m of Object.values(merged)) {
+		for (const marker of m.markers ?? []) childMarkers.add(marker.name);
 		for (const child of m.children ?? []) {
 			for (const found of child.selector.matchAll(/\[(data-[a-z0-9-]+)\]/g)) childMarkers.add(found[1]);
 		}
 	}
+	// Nested components of one kind share descendants; report each marker once.
+	const checkedMarkers = new Map();
 
 	walkElements(root, (el) => {
 		for (const cls of classList(el)) {
@@ -63,7 +70,11 @@ export function validateElementTree(root, merged, file, lineOffset = 0) {
 				push('data-fold needs data-columns 2, 4, or 6');
 			}
 			for (const required of m.a11y.requiredAttributes) {
-				if (!attrs.has(required)) push(`missing required attribute ${required}`);
+				// "aria-label | aria-labelledby": any one of them satisfies the entry.
+				const options = required.split('|').map((r) => r.trim());
+				if (!options.some((r) => attrs.has(r))) {
+					push(options.length > 1 ? `missing required attribute: one of ${options.join(', ')}` : `missing required attribute ${required}`);
+				}
 			}
 			for (const child of m.children) {
 				const found = countMatches(el, child.selector);
@@ -72,8 +83,36 @@ export function validateElementTree(root, merged, file, lineOffset = 0) {
 				if (found < min) push(`expected at least ${min} of "${child.selector}", found ${found}`);
 				if (max !== null && found > max) push(`expected at most ${max} of "${child.selector}", found ${found}`);
 			}
+			const markers = new Map((m.markers ?? []).map((k) => [k.name, k]));
+			if (!markers.size) continue;
+			walkElements(el, (d) => {
+				for (const [name, value] of attributes(d)) {
+					const marker = markers.get(name);
+					if (!marker) continue;
+					if (!checkedMarkers.has(d)) checkedMarkers.set(d, new Set());
+					if (checkedMarkers.get(d).has(name)) continue;
+					checkedMarkers.get(d).add(name);
+					const at = d.sourceCodeLocation ? d.sourceCodeLocation.startLine + lineOffset : undefined;
+					const report = (message) => errors.push({ file, line: at, message: `.${cls} <${el.tagName}>: attribute ${message}` });
+					if (marker.type === 'enum' && !marker.values.includes(value)) report(`${name}="${value}" on <${d.tagName}> is not one of ${marker.values.join(', ')}`);
+					if (marker.type === 'boolean' && value !== '') report(`${name} on <${d.tagName}> is a boolean attribute and takes no value`);
+				}
+			});
 		}
 	});
+	return errors;
+}
+
+// Hooks the browser specs read; they are not part of any component's contract.
+const FIXTURE_ONLY = new Set(['data-contrast', 'data-contrast-border', 'data-contrast-id', 'data-contrast-edge-id']);
+
+/** Fixtures are markup too: anything a browser test renders must be markup the manifests allow. */
+export function validateFixtures(fixturesDir, merged) {
+	if (!fs.existsSync(fixturesDir)) return [];
+	const errors = [];
+	for (const file of walkFiles(fixturesDir).filter((f) => f.endsWith('.html'))) {
+		errors.push(...validateElementTree(parseHtml(fs.readFileSync(file, 'utf8')), merged, file, 0, FIXTURE_ONLY));
+	}
 	return errors;
 }
 
@@ -111,9 +150,47 @@ export function validateGuides(docsDir, merged, entries = []) {
 	return errors;
 }
 
+/** Splits a selector list on the commas outside parentheses and brackets. */
+function splitSelectors(selector) {
+	const out = [];
+	let depth = 0;
+	let current = '';
+	for (const ch of selector) {
+		if (ch === '(' || ch === '[') depth += 1;
+		else if (ch === ')' || ch === ']') depth -= 1;
+		if (ch === ',' && depth === 0) { out.push(current); current = ''; } else current += ch;
+	}
+	out.push(current);
+	return out.map((m) => m.trim()).filter(Boolean);
+}
+
 /**
- * Returns the line of every block whose selector is exactly `.className` and whose own
- * declarations (not nested blocks) set a margin. Handles native nesting and @layer wrappers.
+ * True when a compound selector's subject is an element carrying .className: `.card`,
+ * `.card[data-raised]`, `.card:not([data-x])`, `article.card:hover`, `:is(.card, .pill)`.
+ * A combinator or a pseudo-element makes it some other box, so not the component's own.
+ */
+function targetsBare(member, className) {
+	let depth = 0;
+	for (const ch of member) {
+		if (ch === '(' || ch === '[') depth += 1;
+		else if (ch === ')' || ch === ']') depth -= 1;
+		else if (depth === 0 && /[\s>+~]/.test(ch)) return false;
+	}
+	if (/::/.test(member)) return false;
+	// :is(...)/:where(...) in the compound: any wrapped member counts.
+	for (const wrapped of member.matchAll(/:(?:is|where)\(((?:[^()]|\([^()]*\))*)\)/g)) {
+		if (splitSelectors(wrapped[1]).some((m) => targetsBare(m, className))) return true;
+	}
+	// Drop attribute selectors and pseudo-classes (with any argument) to leave tags and classes.
+	const plain = member.replace(/\[[^\]]*\]/g, '').replace(/:[a-z-]+(?:\((?:[^()]|\([^()]*\))*\))?/g, '');
+	return [...plain.matchAll(/\.([a-z0-9_-]+)/g)].some((m) => m[1] === className);
+}
+
+/**
+ * Returns the line of every block that targets the component's own box and whose own
+ * declarations (not nested blocks) set a margin. Catches `.card`, `.card[data-x]`,
+ * `.card:not(...)`, `:is(.card)` and a nested `&[data-x]` inside `.card { }`. Handles
+ * native nesting and @layer / @supports wrappers.
  */
 export function findBareMargin(css, className) {
 	// Blank string literals too, preserving length, so "margin" inside a
@@ -125,20 +202,31 @@ export function findBareMargin(css, className) {
 	let selectorLine = 1;
 	let line = 1;
 
+	// A block is bare when one of its members targets the component, or is a `&`
+	// suffix (no combinator) on a bare enclosing block; at-rule wrappers are skipped.
+	const isBare = (sel) => {
+		if (sel.startsWith('@')) return false;
+		return splitSelectors(sel).some((member) => {
+			if (member.startsWith('&')) {
+				const parent = [...stack].reverse().find((b) => !b.selector.startsWith('@'));
+				return Boolean(parent?.bare) && targetsBare(`.${className}${member.slice(1)}`, className);
+			}
+			return targetsBare(member, className);
+		});
+	};
+
 	for (const ch of text) {
 		if (ch === '{') {
-			stack.push({ selector: selector.trim(), decls: '', line: selectorLine });
+			const sel = selector.trim();
+			stack.push({ selector: sel, bare: isBare(sel), decls: '', line: selectorLine });
 			selector = '';
 		} else if (ch === '}') {
 			const block = stack.pop();
-			if (block) {
-				const members = block.selector.split(',').map((s) => s.trim());
-				if (block && members.includes(`.${className}`)) {
-					for (const m of block.decls.matchAll(MARGIN_RE)) {
-						if (m[1].trim().split(/\s+/).every((v) => v === 'auto')) continue;
-						hits.push(block.line);
-						break;
-					}
+			if (block?.bare) {
+				for (const m of block.decls.matchAll(MARGIN_RE)) {
+					if (m[1].trim().split(/\s+/).every((v) => v === 'auto')) continue;
+					hits.push(block.line);
+					break;
 				}
 			}
 			selector = '';
@@ -214,6 +302,11 @@ export function validateImportOrder(srcDir) {
 		return 8;
 	};
 	const groupName = ['layers.css', 'tokens/', 'base/reset.css', 'base/', 'layouts/attributes.css', 'layouts/', 'recipes/', 'components/', 'the rest'];
+	// Themes are opt-in overrides a page adds after yeti.css; bundling one would
+	// make its tokens the default for everyone.
+	for (const imp of imports) {
+		if (imp.href.startsWith('themes/')) errors.push({ file: entryFile, line: imp.line, message: `themes are opt-in and must not be imported into yeti.css (found "${imp.href}")` });
+	}
 	// Report the first import that has something of a lower group after it.
 	for (let i = 0; i < imports.length; i++) {
 		const later = imports.slice(i + 1).find((imp) => rank(imp.href) < rank(imports[i].href));
@@ -327,6 +420,126 @@ export function validateTokens(root, manifestEntries = []) {
 	return errors;
 }
 
+/** Blanks comments and string literals, keeping every offset and line. */
+function cssText(file) {
+	return stripComments(fs.readFileSync(file, 'utf8')).replace(/"(?:[^"\\\n]|\\.)*"|'(?:[^'\\\n]|\\.)*'/g, (m) => ' '.repeat(m.length));
+}
+const lineOf = (text, index) => text.slice(0, index).split('\n').length;
+
+/**
+ * Every token read must resolve: a public one to the catalogue, a private one to a
+ * declaration somewhere in src/. A typo in a var() is otherwise silent in the browser.
+ */
+export function validateTokenReads(root) {
+	const srcDir = path.join(root, 'src');
+	if (!fs.existsSync(srcDir)) return [];
+	const catalogueFile = path.join(srcDir, 'tokens', 'tokens.json');
+	let publicNames = null;
+	if (fs.existsSync(catalogueFile)) {
+		const { entries, errors } = loadCatalogue(catalogueFile, loadSchema(path.join(root, 'schema', 'tokens.schema.json')));
+		if (errors.length) return [];
+		publicNames = new Set(entries.map((e) => e.name));
+	}
+	const files = walkFiles(srcDir).filter((f) => f.endsWith('.css')).map((f) => ({ file: f, text: cssText(f) }));
+	const privateNames = new Set(files.flatMap(({ text }) => [...text.matchAll(PRIVATE_DECL_RE)].map((m) => m[1])));
+	const errors = [];
+	for (const { file, text } of files) {
+		for (const m of text.matchAll(/var\(\s*(--(_?)yeti-[a-z0-9-]+)/g)) {
+			const [, name, priv] = m;
+			if (priv && !privateNames.has(name)) errors.push({ file, line: lineOf(text, m.index), message: `reads ${name}, which nothing in src/ declares` });
+			if (!priv && publicNames && !publicNames.has(name)) errors.push({ file, line: lineOf(text, m.index), message: `reads ${name}, which is not in the catalogue` });
+		}
+	}
+	return errors;
+}
+
+const MOTION_PROPS = ['transition', 'transition-duration', 'animation', 'animation-duration', 'animation-iteration-count', 'scroll-behavior'];
+const MOTION_RE = new RegExp(`(?<![a-z-])(${MOTION_PROPS.join('|')})\\s*:\\s*([^;{}]*)`, 'g');
+
+/**
+ * Motion is a token so reduced motion can collapse it in one place. A literal
+ * duration, iteration count or scroll-behavior in a component escapes that.
+ */
+export function validateMotion(srcDir) {
+	const errors = [];
+	const dirs = ['layouts', 'components'].map((d) => path.join(srcDir, d)).filter((d) => fs.existsSync(d));
+	for (const file of dirs.flatMap((d) => walkFiles(d)).filter((f) => f.endsWith('.css'))) {
+		const text = cssText(file);
+		for (const m of text.matchAll(MOTION_RE)) {
+			const [, prop, value] = m;
+			// Anything a --yeti-* token supplies is fine; judge only what is left.
+			const rest = value.replace(/var\(\s*--yeti-[a-z0-9-]+\s*(?:,[^()]*)?\)/g, ' ');
+			// A zero duration is "no motion", the same as none.
+			const literal = [...rest.matchAll(/(?<![a-z0-9.-])\d*\.?\d+m?s(?![a-z0-9-])|\binfinite\b|\bsmooth\b/g)].find((l) => parseFloat(l[0]) !== 0)
+				?? (prop === 'animation-iteration-count' ? rest.match(/\d+/) : null);
+			if (literal) errors.push({ file, line: lineOf(text, m.index), message: `${prop} must read a --yeti-* token or be none (found "${literal[0]}")` });
+		}
+	}
+	return errors;
+}
+
+const WIDTH_DEFAULTS = [16, 24, 32, 48, 64, 80];
+
+/**
+ * Anchors are scoped so nested components never bind to an outer one's name, and
+ * container thresholds mirror a width token's default (or a column count times one),
+ * so every breakpoint in the framework is a documented size.
+ */
+export function validateAnchorsAndContainers(srcDir) {
+	if (!fs.existsSync(srcDir)) return [];
+	const errors = [];
+	for (const file of walkFiles(srcDir).filter((f) => f.endsWith('.css'))) {
+		const text = cssText(file);
+		const anchor = text.match(/(?<![a-z-])anchor-name\s*:/);
+		if (anchor && !/(?<![a-z-])anchor-scope\s*:/.test(text)) {
+			errors.push({ file, line: lineOf(text, anchor.index), message: 'anchor-name without anchor-scope; scope every anchor to its component' });
+		}
+		for (const m of text.matchAll(/@container[^{]*?\(\s*inline-size\s*(?:<=?|>=?|:)\s*([^)]+?)\s*\)/g)) {
+			const value = m[1];
+			const rem = value.match(/^(\d+(?:\.\d+)?)rem$/);
+			const ok = value.startsWith('calc(') || (rem && WIDTH_DEFAULTS.some((w) => Number.isInteger(Number(rem[1]) / w)));
+			if (!ok) errors.push({ file, line: lineOf(text, m.index), message: `@container threshold "${value}" is not a width token's default (${WIDTH_DEFAULTS.join(', ')}rem), a whole multiple of one, or a calc( of one` });
+		}
+	}
+	return errors;
+}
+
+const PUBLIC_READ_RE = /var\(\s*(--yeti-[a-z0-9-]+)/g;
+const PRIVATE_DECL_RE = /(--_yeti-[a-z0-9-]+)\s*:/g;
+
+/**
+ * A manifest's tokens[] is the component's theming surface, so it must match the
+ * code: every public token the CSS (or the JS module) reads, listed public with a
+ * description, and every private token the CSS declares, listed private.
+ */
+export function validateManifestTokens(entries) {
+	const errors = [];
+	for (const entry of entries) {
+		const file = entry.file;
+		const css = stripComments(fs.readFileSync(path.join(entry.dir, `${entry.name}.css`), 'utf8'));
+		const reads = new Set([...css.matchAll(PUBLIC_READ_RE)].map((m) => m[1]));
+		if (entry.manifest.js) {
+			const js = fs.readFileSync(path.join(entry.dir, entry.manifest.js.module), 'utf8');
+			for (const m of js.matchAll(/--yeti-[a-z0-9-]+/g)) reads.add(m[0]);
+		}
+		const declares = new Set([...css.matchAll(PRIVATE_DECL_RE)].map((m) => m[1]));
+		const listed = new Map(entry.manifest.tokens.filter((t) => /^--_?yeti-/.test(t.name)).map((t) => [t.name, t]));
+		for (const [name, token] of listed) {
+			if (name.startsWith('--_')) {
+				if (token.public) errors.push({ file, message: `${name} is a private token; mark it public: false` });
+				if (!declares.has(name)) errors.push({ file, message: `manifest lists ${name} but the CSS never declares it` });
+			} else {
+				if (!token.public) errors.push({ file, message: `${name} is a public token; mark it public: true` });
+				if (!token.description) errors.push({ file, message: `${name} needs a description: what it controls, in one line` });
+				if (!reads.has(name)) errors.push({ file, message: `manifest lists ${name} but the CSS never reads it` });
+			}
+		}
+		for (const name of reads) if (!listed.has(name)) errors.push({ file, message: `CSS reads ${name} but the manifest does not list it` });
+		for (const name of declares) if (!listed.has(name)) errors.push({ file, message: `CSS declares ${name} but the manifest does not list it` });
+	}
+	return errors;
+}
+
 const MAPPED = {
 	'data-gap': 'gap', 'data-align': 'align', 'data-justify': 'justify', 'data-threshold': 'width',
 	'data-width': 'width', 'data-min': 'width-or-none', 'data-max': 'width', 'data-ratio': 'ratio', 'data-columns': 'columns',
@@ -357,7 +570,7 @@ export function validateVocabulary(root, entries = []) {
 	}
 
 	for (const entry of entries) {
-		for (const attr of entry.manifest.attributes) {
+		for (const attr of [...entry.manifest.attributes, ...(entry.manifest.markers ?? [])]) {
 			if (!attr.vocabulary || READ_DIRECTLY.has(attr.name)) continue;
 			if (!(attr.name in MAPPED)) {
 				errors.push({ file: entry.file, message: `attribute ${attr.name} references vocabulary "${attr.vocabulary}" but validate does not check it; add it to MAPPED or READ_DIRECTLY in bin/validate.js` });
@@ -392,11 +605,16 @@ export function validate({ root }) {
 		...errors,
 		...validateExamples(entries, merged),
 		...validateGuides(docsDir, merged, entries),
+		...validateFixtures(path.join(root, 'test', 'browser', 'fixtures'), merged),
 		...validateSpacing(entries),
 		...validateLayers(srcDir),
 		...validateImportOrder(srcDir),
 		...validateImportant(srcDir),
 		...validateTokens(root, entries),
+		...validateManifestTokens(entries),
+		...validateTokenReads(root),
+		...validateMotion(srcDir),
+		...validateAnchorsAndContainers(srcDir),
 		...validateVocabulary(root, entries),
 		...validateNoMediaQueries(srcDir),
 		...validateDocsFragments(entries),

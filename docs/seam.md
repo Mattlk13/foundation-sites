@@ -56,6 +56,7 @@ No structural requirements.
 | Token | Description |
 | --- | --- |
 | `--yeti-seam-size` | Fix the depth for every size. |
+| `--yeti-space-sm` | The depth when data-size is absent. |
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 
@@ -67,6 +68,8 @@ No structural requirements.
 - `--_yeti-seam-wave-top-flip`
 - `--_yeti-seam-wave-bottom-flip`
 - `--_yeti-size-space`
+- `--_yeti-seam-top`
+- `--_yeti-seam-bottom`
 
 </details>
 

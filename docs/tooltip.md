@@ -68,6 +68,17 @@ The bubble also cannot be dismissed while the trigger stays hovered or focused: 
 | `--yeti-tooltip-text` | Text of the bubble. |
 | `--yeti-tooltip-radius` | Corner of the bubble. |
 | `--yeti-text-sm` | The bubble's text size. |
+| `--yeti-space-xs` | Block padding of the bubble, its distance from the trigger, and the caret's size. |
+| `--yeti-space-sm` | Inline padding of the bubble. |
+| `--yeti-duration-fast` | How long the bubble takes to appear. |
+| `--yeti-ease` | The curve of that transition. |
+
+<details><summary>Internal tokens (may change between minor versions)</summary>
+
+- `--_yeti-caret`
+- `--_yeti-caret-overlap`
+
+</details>
 
 ## Accessibility
 
