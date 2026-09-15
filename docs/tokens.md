@@ -155,6 +155,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-duration-fast` | `150ms` | Quick transitions; hover and focus. Collapses to 0.01ms under prefers-reduced-motion. |
 | `--yeti-duration-base` | `250ms` | Standard transitions; open and close. Collapses under prefers-reduced-motion. |
 | `--yeti-ease` | `cubic-bezier(0.2, 0, 0, 1)` | Default easing; fast out, gentle in. |
+| `--yeti-motion-iterations` | `infinite` | Iteration count for animations that run forever, such as the spinner. Collapses to 1 under prefers-reduced-motion, because a component's own infinite would outrank the reset and keep running at a random phase every frame. |
 
 ## Layout
 

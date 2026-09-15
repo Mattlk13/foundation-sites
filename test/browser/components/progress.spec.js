@@ -41,6 +41,18 @@ test.describe('progress', () => {
 		expect(await style(page, '#bar', 'background-image')).toBe('none');
 	});
 
+	test('under reduced motion the stripes stand still', async ({ page }) => {
+		await page.emulateMedia({ reducedMotion: 'reduce' });
+		await open(page);
+		expect(await style(page, '#busy', 'animation-iteration-count')).toBe('1');
+		const positions = await page.evaluate(() => new Promise((resolve) => {
+			const seen = [];
+			const read = () => { seen.push(getComputedStyle(document.getElementById('busy')).backgroundPosition); if (seen.length < 6) requestAnimationFrame(read); else resolve(seen); };
+			requestAnimationFrame(read);
+		}));
+		expect(new Set(positions).size).toBe(1);
+	});
+
 	test('has no accessibility violations', async ({ page }) => {
 		await open(page);
 		expect(await axe(page)).toEqual([]);
