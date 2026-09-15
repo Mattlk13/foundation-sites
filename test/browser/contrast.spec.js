@@ -13,7 +13,7 @@ import { painted } from './lib/layout.js';
 // getAnimations() reports it. Waiting on an empty list resolves at once.
 
 const settle = (page, selector) => page.evaluate((s) => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))
-	.then(() => Promise.all(document.querySelector(s).getAnimations().map((a) => a.finished))), selector);
+	.then(() => Promise.all(document.querySelector(s).getAnimations().map((a) => a.finished.catch(() => {})))), selector);
 
 const PAGES = [
 	'/test/browser/fixtures/components/button.html',

@@ -17,7 +17,11 @@ export function painted(page) {
 		// animations that have an end are worth waiting for; the transitions
 		// this is here to catch are all of them.
 		.filter((animation) => Number.isFinite(animation.effect?.getComputedTiming?.().activeDuration ?? Infinity))
-		.map((animation) => animation.finished)));
+		// A transition interrupted by a later change to the same property
+		// rejects with AbortError. For this purpose it has reached rest, and
+		// the failure it would otherwise cause has nothing to do with the
+		// assertion that follows.
+		.map((animation) => animation.finished.catch(() => {}))));
 }
 
 export async function stage(page, width) {

@@ -8,7 +8,7 @@ const open = async (page, width = 1000) => {
 	await painted(page);
 };
 const settle = (page, selector) => page.evaluate((s) => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))
-	.then(() => Promise.all(document.querySelector(s).getAnimations().map((a) => a.finished))), selector);
+	.then(() => Promise.all(document.querySelector(s).getAnimations().map((a) => a.finished.catch(() => {})))), selector);
 /** The id of whatever is painted at a point. The caret is a pseudo-element, so hitting it reports the bubble. */
 const at = (page, x, y) => page.evaluate(([px, py]) => document.elementFromPoint(px, py)?.id ?? null, [x, y]);
 const anchored = (page) => page.evaluate(() => CSS.supports('anchor-name: --a') && CSS.supports('position-area', 'block-start'));

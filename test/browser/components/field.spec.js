@@ -10,7 +10,7 @@ const settle = (page) => page.evaluate(() => new Promise((r) => requestAnimation
 // Two animation frames are enough to see the transition has started, but the
 // value isn't the settled "none" until the transition itself has finished;
 // wait on the element's running animations rather than a fixed timeout.
-const settleTransitions = (page, selector) => page.evaluate((s) => Promise.all(document.querySelector(s).getAnimations().map((a) => a.finished)), selector);
+const settleTransitions = (page, selector) => page.evaluate((s) => Promise.all(document.querySelector(s).getAnimations().map((a) => a.finished.catch(() => {}))), selector);
 
 const open = async (page, width = 1000) => {
 	await page.addInitScript(PAGE_HELPERS);

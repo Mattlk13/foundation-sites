@@ -13,7 +13,7 @@ const isOpen = (page, id) => page.evaluate((i) => document.getElementById(i).mat
 // style recalculation that creates the transition has certainly happened and
 // getAnimations() reports it. Waiting on an empty list resolves at once.
 const settle = (page, selector) => page.evaluate((s) => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))
-	.then(() => Promise.all(document.querySelector(s).getAnimations().map((a) => a.finished))), selector);
+	.then(() => Promise.all(document.querySelector(s).getAnimations().map((a) => a.finished.catch(() => {})))), selector);
 const anchored = (page) => page.evaluate(() => CSS.supports('anchor-name: --a') && CSS.supports('anchor-scope: --a'));
 
 test.describe('nav', () => {

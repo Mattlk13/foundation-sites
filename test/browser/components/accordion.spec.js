@@ -53,7 +53,7 @@ test.describe('accordion', () => {
 		// Sampled while the transition runs: a jump would already be at its
 		// final height on the first read.
 		const midway = await height();
-		await page.evaluate(() => Promise.all(document.getElementById('d1').getAnimations().map((a) => a.finished)));
+		await page.evaluate(() => Promise.all(document.getElementById('d1').getAnimations().map((a) => a.finished.catch(() => {}))));
 		const opened = await height();
 		expect(opened).toBeGreaterThan(shut);
 		expect(midway).toBeGreaterThan(shut);
