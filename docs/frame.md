@@ -39,7 +39,7 @@ It is what a picture frame does: fix the shape and crop what is inside it. Found
 
 ## Children
 
-- `> *`: exactly 1. One child: an image or video is cropped to fill; anything else is centered.
+- `> *`: exactly 1. One child: an image, video or picture is cropped to fill; anything else is centered.
 
 ## Tokens
 

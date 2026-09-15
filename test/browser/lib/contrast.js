@@ -25,6 +25,24 @@ export async function ratioOf(page, selector) {
 	return contrast(fg, bg);
 }
 
+/** Contrast of a control's edge over the background behind it. A text field,
+ *  an unchecked box and an off switch are identified by that edge alone. */
+export async function edgeRatioOf(page, selector, property) {
+	const [fg, bg] = await page.evaluate(([s, prop]) => {
+		const el = document.querySelector(s);
+		const fg = window.__yeti.rgb(getComputedStyle(el)[prop]);
+		let node = el.parentElement;
+		let background = [255, 255, 255, 255];
+		while (node) {
+			const c = window.__yeti.rgb(getComputedStyle(node).backgroundColor);
+			if (c[3] !== 0) { background = c; break; }
+			node = node.parentElement;
+		}
+		return [fg, background];
+	}, [selector, property]);
+	return contrast(fg, bg);
+}
+
 export async function expectAA(page, selector, { large = false, label = selector } = {}) {
 	expect(await ratioOf(page, selector), label).toBeGreaterThanOrEqual(large ? 3 : 4.5);
 }

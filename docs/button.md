@@ -62,6 +62,19 @@ A `button` is a button and an `a` is a link; the class changes the look, not the
 | `--yeti-button-padding` | Inline padding as a multiple of the size's space step. |
 | `--yeti-control-size` | Minimum height. |
 | `--yeti-border-width` | Border width. |
+| `--yeti-space-xs` | Gap between the icon and the label. |
+| `--yeti-leading-tight` | Line height. |
+| `--yeti-duration-fast` | How long a hover or press takes to settle. |
+| `--yeti-ease` | The curve of that transition. |
+| `--yeti-color-primary` | The default variant's colour, when data-variant is absent. |
+| `--yeti-color-primary-subtle` | The default variant's tint. |
+| `--yeti-color-primary-soft` | The default variant's soft stop. |
+| `--yeti-color-primary-strong` | The default variant's strong stop. |
+| `--yeti-color-primary-text` | The default variant's text colour. |
+| `--yeti-on-primary` | Text on the default variant's colour. |
+| `--yeti-text-md` | Text size when data-size is absent. |
+| `--yeti-space-sm` | The space step when data-size is absent. |
+| `--yeti-opacity-muted` | Opacity when disabled or busy. |
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 
@@ -72,6 +85,7 @@ A `button` is a button and an `a` is a link; the class changes the look, not the
 - `--_yeti-on-variant`
 - `--_yeti-size-text`
 - `--_yeti-size-space`
+- `--_yeti-variant-soft`
 
 </details>
 

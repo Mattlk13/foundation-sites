@@ -75,6 +75,8 @@ The one-class form does the same in one element: a wrapping row whose lines are 
 | `--yeti-width-lg` | The default threshold. |
 | `--yeti-space-lg` | The default gap. |
 | `--yeti-space-sm` | The gap between the copy's children. |
+| `--yeti-text-sm` | Text size of the caption. |
+| `--yeti-color-text-muted` | The caption. |
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 

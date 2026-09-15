@@ -95,6 +95,12 @@ Opening on hover changes none of that. The module never touches focus, ARIA, or 
 | `--yeti-control-size` | Least height of an item. |
 | `--yeti-dropdown-open-delay` | How long the pointer must rest before a hover-triggered panel opens. |
 | `--yeti-dropdown-close-delay` | How long a hover-triggered panel waits after the pointer leaves before closing. |
+| `--yeti-color-text` | The panel's text. |
+| `--yeti-duration-fast` | How long the panel takes to open. |
+| `--yeti-ease` | The curve of that transition. |
+| `--yeti-space-xs` | Gap between an item's icon and its label, and between the trigger and the panel. |
+| `--yeti-space-sm` | Inline padding of an item. |
+| `--yeti-color-surface-sunken` | Background of an item under the pointer. |
 
 ## Accessibility
 

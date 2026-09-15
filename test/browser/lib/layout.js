@@ -80,6 +80,26 @@ export async function expectNoChildMargins(page, selector, except = '[data-split
 	})), [selector, except]);
 	expect(margins.length).toBeGreaterThan(0);
 	for (const m of margins) expect(m).toBe('0px 0px 0px 0px');
+	// Every fixture layout is a div, which prose never targets, so the check
+	// above passed with the layout's margin reset deleted. The same layout on a
+	// section with a heading and paragraphs is where prose does add margins,
+	// and where the reset has to win.
+	const semantic = await page.evaluate((s) => {
+		const source = document.querySelector(s);
+		// Only a classed element carries a layout to copy. A selector that lands
+		// on an unclassed region, like the shell's body row, has no identity to
+		// give the probe, and a bare section with prose in it is only prose.
+		if (!source.className) return [];
+		const probe = document.createElement('section');
+		probe.className = source.className;
+		for (const [k, v] of Object.entries(source.dataset)) probe.dataset[k] = v;
+		probe.innerHTML = '<h2>Heading</h2><p>One.</p><p>Two.</p>';
+		document.body.append(probe);
+		const out = [...probe.children].map((child) => { const cs = getComputedStyle(child); return [cs.marginTop, cs.marginRight, cs.marginBottom, cs.marginLeft].join(' '); });
+		probe.remove();
+		return out;
+	}, selector);
+	for (const m of semantic) expect(m, 'on a section with prose children').toBe('0px 0px 0px 0px');
 }
 
 /** Two boxes match in size and in position relative to their own container. */

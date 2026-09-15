@@ -70,6 +70,8 @@ Nicole Sullivan named the media object in 2010 and the name stuck across a decad
 | `--yeti-width-xs` | The default figure width. |
 | `--yeti-space-md` | The default gap. |
 | `--yeti-space-sm` | The gap between the body's children. |
+| `--yeti-text-sm` | Text size of the caption. |
+| `--yeti-color-text-muted` | The caption. |
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 

@@ -20,8 +20,7 @@
     { "name": "--yeti-space-md", "public": true, "description": "The default gap." },
     { "name": "--_yeti-gap", "public": false },
     { "name": "--_yeti-min", "public": false },
-    { "name": "--_yeti-column-cap", "public": false },
-    { "name": "--_yeti-ranks", "public": false }
+    { "name": "--_yeti-column-cap", "public": false }
   ],
   "a11y": { "requiredAttributes": [], "keyboard": [], "notes": "Purely visual. Use a list when the cells are a list of like things." },
   "js": null,

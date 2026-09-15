@@ -45,6 +45,15 @@ Layers is what every design tool calls things stacked in one frame. Foundation 6
 | --- | --- | --- | --- | --- |
 | `data-align` | enum | `start`, `center`, `end`, `stretch`, `baseline` | `stretch` | Vertical alignment of every child in the box. baseline behaves as start here. |
 
+## Markers
+
+Attributes that descendants carry, not the root.
+
+| Attribute | Type | Values | On | Description |
+| --- | --- | --- | --- | --- |
+| `data-align-self` | enum | `start`, `center`, `end`, `stretch`, `baseline` | `> *` | Where the child sits vertically: start, center, end, stretch, or baseline. |
+| `data-justify-self` | enum | `start`, `center`, `end`, `stretch` | `> *` | Where the child sits horizontally: start, center, end, or stretch. |
+
 ## Children
 
 - `> *`: at least 2. The layers, bottom first.

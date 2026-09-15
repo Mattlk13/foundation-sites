@@ -47,6 +47,14 @@ Overlay is what everyone already calls a thing that lies over other things. Foun
 | `data-fixed` | boolean |  |  | Center the held child over the viewport instead of this box, and keep it there while the page scrolls. |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `md` | The least space kept between the held child and the edges of the box. |
 
+## Markers
+
+Attributes that descendants carry, not the root.
+
+| Attribute | Type | Values | On | Description |
+| --- | --- | --- | --- | --- |
+| `data-over` | boolean |  | `> *` | Lifts the child out of the flow and centers it over the box; exactly one child carries it. |
+
 ## Children
 
 - `> *`: at least 2. The content underneath, in normal flow, and one held child.

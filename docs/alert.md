@@ -49,6 +49,14 @@ The close button is a `button` carrying `data-dismiss`. Yeti's `alert.js`, loade
 | `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral` | `primary` | Which hue: success for done, warning for careful, alert for wrong, primary for news. |
 | `data-emphasis` | enum | `high`, `medium`, `low` | `medium` | How loud: medium is a tint, high a solid fill, low the border alone. |
 
+## Markers
+
+Attributes that descendants carry, not the root.
+
+| Attribute | Type | Values | On | Description |
+| --- | --- | --- | --- | --- |
+| `data-dismiss` | boolean |  | `> button` | The close button; removes the alert when alert.js is loaded. |
+
 ## Children
 
 - `> svg`: 0 to 1. An icon, first, sized to the text.
@@ -63,6 +71,15 @@ The close button is a `button` carrying `data-dismiss`. Yeti's `alert.js`, loade
 | `--yeti-alert-padding` | Padding inside. |
 | `--yeti-control-size` | Size of the close button. |
 | `--yeti-border-width` | The border; the start edge is four of them. |
+| `--yeti-space-sm` | Gap between the icon, the body, and the close button. |
+| `--yeti-color-text` | The body text. |
+| `--yeti-color-primary` | The default variant's colour, when data-variant is absent. |
+| `--yeti-color-primary-subtle` | The default variant's tint. |
+| `--yeti-color-primary-soft` | The default variant's soft stop. |
+| `--yeti-color-primary-strong` | The default variant's strong stop. |
+| `--yeti-color-primary-text` | The default variant's text colour. |
+| `--yeti-on-primary` | Text on the default variant's colour. |
+| `--yeti-duration-fast` | How long the alert takes to fade out when alert.js dismisses it. |
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 
@@ -71,6 +88,7 @@ The close button is a `button` carrying `data-dismiss`. Yeti's `alert.js`, loade
 - `--_yeti-variant-strong`
 - `--_yeti-variant-text`
 - `--_yeti-on-variant`
+- `--_yeti-variant-soft`
 
 </details>
 

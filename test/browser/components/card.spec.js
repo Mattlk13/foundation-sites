@@ -1,5 +1,5 @@
 import { test, expect } from 'playwright/test';
-import { stage, rect, rects, style, px, token, axe } from '../lib/layout.js';
+import { stage, rect, rects, style, px, token, axe, painted } from '../lib/layout.js';
 import { PAGE_HELPERS, expectAA } from '../lib/contrast.js';
 
 const open = async (page, width = 1000) => {
@@ -7,6 +7,10 @@ const open = async (page, width = 1000) => {
 	const response = await page.goto('/test/browser/fixtures/components/card.html');
 	expect(response.status()).toBe(200);
 	await stage(page, width);
+	// The buttons transition colour, and the source stylesheet's imports land
+	// after load, so axe once sampled a footer button half way from unstyled to
+	// styled: grey text on a half-mixed blue. Read nothing until that settles.
+	await painted(page);
 };
 
 test.describe('card', () => {
@@ -33,7 +37,39 @@ test.describe('card', () => {
 		expect(sf.bottom).toBeCloseTo(tf.bottom, 0);
 	});
 
-	test('below 22rem of its own content width a card with a picture becomes a thumbnail row', async ({ page }) => {
+	test('a footer button still takes the click when the heading link is stretched', async ({ page }) => {
+		await open(page);
+		const hit = await page.evaluate(() => {
+			const button = document.getElementById('short-action');
+			button.addEventListener('click', () => { button.dataset.pressed = 'yes'; });
+			const r = button.getBoundingClientRect();
+			return document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2).id;
+		});
+		// The stretched link's pseudo-element covered the whole card, footer
+		// included, so the button was unreachable and the page navigated.
+		expect(hit).toBe('short-action');
+		await page.click('#short-action');
+		expect(await page.evaluate(() => document.getElementById('short-action').dataset.pressed)).toBe('yes');
+		expect(await page.evaluate(() => location.hash)).toBe('');
+	});
+
+	test('a card without a picture keeps its intrinsic width where a parent lets it size itself', async ({ page }) => {
+		await open(page);
+		const width = await page.evaluate(() => {
+			const wrap = document.createElement('div');
+			wrap.className = 'cluster';
+			wrap.innerHTML = '<article class="card"><h2>A heading of some length</h2><p>Body text wider than the padding.</p></article>';
+			document.body.append(wrap);
+			const w = wrap.querySelector('.card').getBoundingClientRect().width;
+			wrap.remove();
+			return w;
+		});
+		// Always-on size containment removed the content's contribution to
+		// intrinsic width, and the card came out at its padding: 37px.
+		expect(width).toBeGreaterThan(150);
+	});
+
+	test('below the sm width of its own content a card with a picture becomes a thumbnail row', async ({ page }) => {
 		await open(page);
 		const [card, img, title] = await Promise.all([rect(page, '#thumb'), rect(page, '#thumb-img'), rect(page, '#thumb-title')]);
 		const border = await token(page, '--yeti-border-width');

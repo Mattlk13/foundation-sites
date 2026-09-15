@@ -29,7 +29,7 @@
 
 	hr {
 		border: 0;
-		border-block-start: 1px solid var(--yeti-color-border);
+		border-block-start: var(--yeti-border-width) solid var(--yeti-color-border);
 	}
 
 	blockquote {

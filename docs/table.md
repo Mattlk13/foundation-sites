@@ -58,6 +58,14 @@ A table needs a name: a `caption`, or `aria-label` or `aria-labelledby` on the e
 | `data-hover` | boolean |  |  | Tint the row under the pointer. |
 | `data-grid` | boolean |  |  | Borders around every cell instead of lines between rows. |
 
+## Markers
+
+Attributes that descendants carry, not the root.
+
+| Attribute | Type | Values | On | Description |
+| --- | --- | --- | --- | --- |
+| `data-numeric` | boolean |  | `td, th` | A cell of numbers: end-aligned with tabular figures. |
+
 ## Children
 
 - `> caption`: 0 to 1. The table's title.
@@ -72,6 +80,11 @@ A table needs a name: a `caption`, or `aria-label` or `aria-labelledby` on the e
 | `--yeti-table-stripe` | Fill of even rows with data-striped. |
 | `--yeti-table-border` | Row and cell borders. |
 | `--yeti-color-border-strong` | The rule under the header. |
+| `--yeti-text-md` | Text size when data-size is absent. |
+| `--yeti-space-sm` | The space step when data-size is absent; a cell's inline padding follows it. |
+| `--yeti-weight-strong` | Weight of the caption and of header cells. |
+| `--yeti-border-width` | Width of the row rules, and of every cell border with data-grid. |
+| `--yeti-color-surface-sunken` | Background of a row under the pointer with data-hover. |
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 

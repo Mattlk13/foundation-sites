@@ -50,12 +50,26 @@ No structural requirements.
 | --- | --- |
 | `--yeti-spinner-duration` | One turn. |
 | `--yeti-spinner-width` | Thickness of the ring. |
+| `--yeti-motion-iterations` | How many times the ring turns; one under reduced motion. |
+| `--yeti-color-primary` | The default variant's colour, when data-variant is absent. |
+| `--yeti-color-primary-subtle` | The default variant's tint. |
+| `--yeti-color-primary-soft` | The default variant's soft stop. |
+| `--yeti-color-primary-strong` | The default variant's strong stop. |
+| `--yeti-color-primary-text` | The default variant's text colour. |
+| `--yeti-on-primary` | Text on the default variant's colour. |
+| `--yeti-text-md` | The text step when data-size is absent; the ring's diameter follows it. |
+| `--yeti-space-sm` | The space step when data-size is absent. |
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 
 - `--_yeti-variant`
 - `--_yeti-variant-subtle`
 - `--_yeti-size-text`
+- `--_yeti-variant-soft`
+- `--_yeti-variant-strong`
+- `--_yeti-variant-text`
+- `--_yeti-on-variant`
+- `--_yeti-size-space`
 
 </details>
 

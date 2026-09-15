@@ -50,6 +50,14 @@ No other word says it as plainly: things stacked, one on another. Foundation 6 h
 | `data-align` | enum | `start`, `center`, `end`, `stretch`, `baseline` | `stretch` | Horizontal alignment of the children. |
 | `data-fill` | boolean |  |  | Make the stack at least as tall as the viewport, so a child carrying data-split reaches the bottom. |
 
+## Markers
+
+Attributes that descendants carry, not the root.
+
+| Attribute | Type | Values | On | Description |
+| --- | --- | --- | --- | --- |
+| `data-split` | boolean |  | `> *` | Pushes the child and everything after it to the end of the stack when the stack is taller than its content. |
+
 ## Children
 
 - `> *`: at least 1. Anything. Each child's margins are reset; the stack owns the space between them.

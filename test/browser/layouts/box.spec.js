@@ -14,7 +14,7 @@ test.describe('box', () => {
 	test('data-border draws a one-pixel border', async ({ page }) => {
 		await open(page, 'box');
 		expect(await px(page, '#box', 'border-top-width')).toBe(0);
-		expect(await px(page, '#bordered', 'border-top-width')).toBe(1);
+		expect(await px(page, '#bordered', 'border-top-width')).toBe(await token(page, '--yeti-border-width'));
 	});
 
 	test('has no accessibility violations', async ({ page }) => {

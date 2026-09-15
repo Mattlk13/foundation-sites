@@ -1,7 +1,7 @@
 ---
 raw: true
 title: "Card"
-description: "A bordered surface for one thing: an optional figure that bleeds to the edges, a body, and a footer that sits at the bottom; a thumbnail row when the card's content is narrower than 22rem."
+description: "A bordered surface for one thing: an optional figure that bleeds to the edges, a body, and a footer that sits at the bottom; a thumbnail row when the card's content is narrower than the sm width."
 nav_group: "Components"
 nav_order: 8
 ---
@@ -9,7 +9,7 @@ nav_order: 8
 
 # Card
 
-A bordered surface for one thing: an optional figure that bleeds to the edges, a body, and a footer that sits at the bottom; a thumbnail row when the card's content is narrower than 22rem.
+A bordered surface for one thing: an optional figure that bleeds to the edges, a body, and a footer that sits at the bottom; a thumbnail row when the card's content is narrower than the sm width.
 
 ## Example
 
@@ -31,7 +31,9 @@ One thing in a box: an article in a listing, a product, a person, a plan. Put ca
 
 ## How it works
 
-A card is a flex column on the raised surface with a border and a radius. A picture, video, or `figure` placed first bleeds through the padding to the card's edges and is cropped to `data-ratio`. Everything after it is the body, spaced at the card's gap. A `footer` is pushed to the bottom, so a row of cards of different lengths keeps its actions aligned. `data-raised` trades the border for a shadow; `data-variant` colours the border and draws a bar along the top without tinting the text. Below 22rem of content width, a card with a picture becomes a two-column row: the picture is a thumbnail down the left, the body takes the rest. A card in a ranked grid keeps its picture and footer aligned with its neighbours' and does not switch to its thumbnail row.
+A card is a flex column on the raised surface with a border and a radius. A picture, video, or `figure` placed first bleeds through the padding to the card's edges and is cropped to `data-ratio`. Everything after it is the body, spaced at the card's gap. A `footer` is pushed to the bottom, so a row of cards of different lengths keeps its actions aligned. `data-raised` trades the border for a shadow; `data-variant` colours the border and draws a bar along the top without tinting the text. Below the `sm` width of content, a card with a picture becomes a two-column row: the picture is a thumbnail down the left, the body takes the rest. A card in a ranked grid keeps its picture and footer aligned with its neighbours' and does not switch to its thumbnail row.
+
+Two things follow from how that query works. Only a card with a picture is a size container, because a size container has no intrinsic width: a card that always was one collapsed to its padding as a cluster item. And anything pressable inside a card sits above a stretched link, so a footer button in a card whose heading carries `data-stretch` still takes the click.
 
 ```html
 <ul class="grid" data-min="sm" role="list">
@@ -63,6 +65,14 @@ Do not wrap a card in a link. Put the link on the heading and add `data-stretch`
 | `data-raised` | boolean |  |  | A shadow instead of a border. |
 | `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral` |  | Tints the border and adds a bar along the top; the body stays plain. |
 
+## Markers
+
+Attributes that descendants carry, not the root.
+
+| Attribute | Type | Values | On | Description |
+| --- | --- | --- | --- | --- |
+| `data-stretch` | boolean |  | `a` | Stretches the link over the whole card, so the card is clickable while the link keeps its own name. |
+
 ## Children
 
 - `> *`: at least 1. A figure first if there is one, then the body, then an optional footer.
@@ -80,11 +90,17 @@ Do not wrap a card in a link. Put the link on the heading and add `data-stretch`
 | `--yeti-card-border` | Border colour. |
 | `--yeti-card-surface` | Background. |
 | `--yeti-shadow-sm` | The shadow when raised. |
+| `--yeti-color-text` | The card's text, and a caption laid over the figure. |
+| `--yeti-border-width` | Border width; the variant's bar is four of them. |
+| `--yeti-space-xs` | Padding of the caption. |
+| `--yeti-text-sm` | Text size of the caption. |
+| `--yeti-color-text-muted` | The caption under a figure. |
+| `--yeti-color-surface` | Background of a caption laid over the figure. |
+| `--yeti-space-sm` | Gap between the footer's actions. |
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 
 - `--_yeti-aspect`
-- `--_yeti-variant`
 
 </details>
 

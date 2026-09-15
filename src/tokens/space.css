@@ -21,7 +21,6 @@
 		--yeti-space-3xl-static: var(--_yeti-step-4-static);
 
 		/* Internal: the wide-viewport value of each stop, for fluid pairs. */
-		--_yeti-space-xs-max: var(--_yeti-step--2-max);
 		--_yeti-space-sm-max: var(--_yeti-step--1-max);
 		--_yeti-space-md-max: var(--_yeti-step-0-max);
 		--_yeti-space-lg-max: var(--_yeti-step-1-max);

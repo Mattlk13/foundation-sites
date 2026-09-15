@@ -14,7 +14,7 @@
 			<form class="stack" data-gap="md" id="form" novalidate>
 				<div class="field" id="text">
 					<label for="email" id="email-label" data-contrast>Email</label>
-					<input id="email" type="email" required aria-describedby="email-hint email-error">
+					<input id="email" type="email" required aria-describedby="email-hint email-error" data-contrast-border>
 					<p id="email-hint" data-hint data-contrast>We only use it to sign you in.</p>
 					<p id="email-error" data-error>Enter an address with an @ in it.</p>
 				</div>
@@ -32,7 +32,7 @@
 					<textarea id="notes"></textarea>
 				</div>
 				<div class="field" id="check">
-					<input id="agree" type="checkbox" checked>
+					<input id="agree" type="checkbox" checked data-contrast-border>
 					<label for="agree" id="agree-label">I agree</label>
 				</div>
 				<div class="field" id="small" data-size="sm">
@@ -40,7 +40,7 @@
 					<input id="code" type="text">
 				</div>
 				<div class="field" id="switch-field">
-				<input id="dark" type="checkbox" role="switch">
+				<input id="dark" type="checkbox" role="switch" data-contrast-border="backgroundColor">
 				<label for="dark" id="dark-label">Dark mode</label>
 			</div>
 			<div class="field" id="range-field">

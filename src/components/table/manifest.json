@@ -17,10 +17,18 @@
     { "selector": "> tbody", "min": 1, "max": null, "description": "The rows." },
     { "selector": "[data-numeric]", "min": 0, "max": null, "description": "A cell (or header cell) of numbers: end-aligned with tabular figures." }
   ],
+  "markers": [
+    { "name": "data-numeric", "type": "boolean", "on": "td, th", "description": "A cell of numbers: end-aligned with tabular figures." }
+  ],
   "tokens": [
     { "name": "--yeti-table-stripe", "public": true, "description": "Fill of even rows with data-striped." },
     { "name": "--yeti-table-border", "public": true, "description": "Row and cell borders." },
     { "name": "--yeti-color-border-strong", "public": true, "description": "The rule under the header." },
+    { "name": "--yeti-text-md", "public": true, "description": "Text size when data-size is absent." },
+    { "name": "--yeti-space-sm", "public": true, "description": "The space step when data-size is absent; a cell's inline padding follows it." },
+    { "name": "--yeti-weight-strong", "public": true, "description": "Weight of the caption and of header cells." },
+    { "name": "--yeti-border-width", "public": true, "description": "Width of the row rules, and of every cell border with data-grid." },
+    { "name": "--yeti-color-surface-sunken", "public": true, "description": "Background of a row under the pointer with data-hover." },
     { "name": "--_yeti-size-text", "public": false },
     { "name": "--_yeti-size-space", "public": false }
   ],

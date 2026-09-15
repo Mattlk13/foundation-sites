@@ -17,7 +17,12 @@
     { "name": "--yeti-accordion-summary", "public": true, "description": "Background of a summary row, set apart from the panel below it." },
     { "name": "--yeti-accordion-summary-hover", "public": true, "description": "Background of a summary under the pointer." },
     { "name": "--yeti-border-width", "public": true, "description": "Width of those lines." },
-    { "name": "--yeti-radius-md", "public": true, "description": "Corner of the set." }
+    { "name": "--yeti-radius-md", "public": true, "description": "Corner of the set." },
+    { "name": "--yeti-space-sm", "public": true, "description": "Gap between a summary's text and its chevron." },
+    { "name": "--yeti-weight-strong", "public": true, "description": "Weight of the summary text." },
+    { "name": "--yeti-duration-fast", "public": true, "description": "How long the chevron takes to turn." },
+    { "name": "--yeti-ease", "public": true, "description": "The curve of both transitions." },
+    { "name": "--yeti-duration-base", "public": true, "description": "How long a panel takes to open or close." }
   ],
   "a11y": {
     "requiredAttributes": [],

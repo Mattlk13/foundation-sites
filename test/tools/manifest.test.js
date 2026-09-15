@@ -111,3 +111,20 @@ test('a manifest under recipes/ must have kind recipe', () => {
 	const r = load(validTree({ 'src/recipes/duo/manifest.json': validManifest({ name: 'duo', class: 'duo', kind: 'layout' }), 'src/recipes/duo/duo.css': '', 'src/recipes/duo/example.html': '<div class="duo"></div>' }));
 	assert.deepEqual(messages(r), ['kind "layout" must be "recipe" inside recipes/']);
 });
+
+test('markers resolve their vocabulary into values and an absent list loads as empty', () => {
+	const vocabulary = loadVocabulary(VOCABULARY_PATH);
+	const r = load(validTree({
+		'src/layouts/rail/manifest.json': validManifest({ markers: [{ name: 'data-span', type: 'enum', vocabulary: 'span', on: '> *', description: 'x' }] }),
+	}), vocabulary);
+	assert.deepEqual(r.errors, []);
+	assert.deepEqual(r.merged.rail.markers[0].values, ['1', '2', '3', '4', '5', '6']);
+	assert.deepEqual(load(validTree()).merged.rail.markers, []);
+});
+
+test('a marker with an unknown vocabulary, or an enum without values, is an error', () => {
+	const unknown = load(validTree({ 'src/layouts/rail/manifest.json': validManifest({ markers: [{ name: 'data-span', type: 'enum', vocabulary: 'nope', description: 'x' }] }) }), {});
+	assert.deepEqual(messages(unknown), ['marker data-span: unknown vocabulary "nope"']);
+	const bare = load(validTree({ 'src/layouts/rail/manifest.json': validManifest({ markers: [{ name: 'data-span', type: 'enum', description: 'x' }] }) }), {});
+	assert.deepEqual(messages(bare), ['marker data-span: enum type requires values']);
+});

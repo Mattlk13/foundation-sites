@@ -83,6 +83,11 @@ None. This is configured through its children and tokens only.
 | `--yeti-accordion-summary-hover` | Background of a summary under the pointer. |
 | `--yeti-border-width` | Width of those lines. |
 | `--yeti-radius-md` | Corner of the set. |
+| `--yeti-space-sm` | Gap between a summary's text and its chevron. |
+| `--yeti-weight-strong` | Weight of the summary text. |
+| `--yeti-duration-fast` | How long the chevron takes to turn. |
+| `--yeti-ease` | The curve of both transitions. |
+| `--yeti-duration-base` | How long a panel takes to open or close. |
 
 ## Accessibility
 

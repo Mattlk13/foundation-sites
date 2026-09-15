@@ -61,16 +61,22 @@ Label the `nav` `aria-label="Breadcrumb"`, so it is announced as one. The last s
 | --- | --- |
 | `--yeti-breadcrumbs-separator` | The string between steps. |
 | `--yeti-color-text-muted` | The links and the separator. |
+| `--yeti-text-md` | Text size when data-size is absent. |
+| `--yeti-space-sm` | The space step when data-size is absent. |
+| `--yeti-space-xs` | Gap between steps, and between a step and its separator. |
+| `--yeti-color-text` | The current step, and a link under the pointer. |
+| `--yeti-weight-strong` | Weight of the current step. |
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 
 - `--_yeti-size-text`
+- `--_yeti-size-space`
 
 </details>
 
 ## Accessibility
 
-- Required attributes: `aria-label`
+- Required attributes: `aria-label` or `aria-labelledby`
 - Put aria-label="Breadcrumb" on the nav. The last step carries aria-current="page", as plain text or as a link to the page itself. The separators are CSS with empty alternative text, so assistive tech reads only the steps. Put role="list" on the ol.
 
 ## Browser support

@@ -54,6 +54,13 @@ export function renderPage({ manifest: m, exampleHtml, navOrder, docsMd = '' }) 
 		: 'None. This is configured through its children and tokens only.');
 	out.push('');
 
+	if ((m.markers ?? []).length) {
+		out.push('## Markers', '', 'Attributes that descendants carry, not the root.', '');
+		out.push(table(['Attribute', 'Type', 'Values', 'On', 'Description'], m.markers.map((k) => [
+			code(k.name), k.type, (k.values ?? []).map(code).join(', '), k.on ? code(k.on) : '', k.description,
+		])), '');
+	}
+
 	if (m.classes.length) {
 		out.push('## Modifier classes', '', table(['Class', 'Description'], m.classes.map((c) => [code(`.${c.name}`), c.description])), '');
 	}
@@ -76,7 +83,9 @@ export function renderPage({ manifest: m, exampleHtml, navOrder, docsMd = '' }) 
 	out.push('## Accessibility', '');
 	const a11y = [];
 	if (m.a11y.role) a11y.push(`- Role: ${code(m.a11y.role)}`);
-	if (m.a11y.requiredAttributes.length) a11y.push(`- Required attributes: ${m.a11y.requiredAttributes.map(code).join(', ')}`);
+	// "aria-label | aria-labelledby" is an alternation: any one of them satisfies it.
+	const required = (r) => r.split('|').map((o) => code(o.trim())).join(' or ');
+	if (m.a11y.requiredAttributes.length) a11y.push(`- Required attributes: ${m.a11y.requiredAttributes.map(required).join(', ')}`);
 	if (m.a11y.notes) a11y.push(`- ${m.a11y.notes}`);
 	out.push(a11y.length ? a11y.join('\n') : 'No special requirements beyond semantic HTML.');
 	if (m.a11y.keyboard.length) out.push('', table(['Key', 'Action'], m.a11y.keyboard.map((k) => [code(k.key), k.action])));

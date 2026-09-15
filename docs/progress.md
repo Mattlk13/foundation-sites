@@ -51,17 +51,34 @@ No structural requirements.
 | --- | --- |
 | `--yeti-progress-radius` | Corner of the bar and of its value. |
 | `--yeti-color-surface-sunken` | The track. |
+| `--yeti-color-primary` | The default variant's colour, when data-variant is absent. |
+| `--yeti-color-primary-subtle` | The default variant's tint. |
+| `--yeti-color-primary-soft` | The default variant's soft stop. |
+| `--yeti-color-primary-strong` | The default variant's strong stop. |
+| `--yeti-color-primary-text` | The default variant's text colour. |
+| `--yeti-on-primary` | Text on the default variant's colour. |
+| `--yeti-text-md` | The text step when data-size is absent. |
+| `--yeti-space-sm` | The space step when data-size is absent; the bar's height follows it. |
+| `--yeti-duration-base` | How long the value takes to move; one cycle of the indeterminate sweep is four of it. |
+| `--yeti-ease` | The curve of the value's move. |
+| `--yeti-motion-iterations` | How many times the indeterminate sweep repeats; one under reduced motion. |
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 
 - `--_yeti-variant`
 - `--_yeti-variant-subtle`
 - `--_yeti-size-space`
+- `--_yeti-variant-soft`
+- `--_yeti-variant-strong`
+- `--_yeti-variant-text`
+- `--_yeti-on-variant`
+- `--_yeti-size-text`
 
 </details>
 
 ## Accessibility
 
+- Required attributes: `aria-label` or `aria-labelledby`
 - Put the class on a progress element and give it a name with aria-label or aria-labelledby. Keep its text content current ("40%"), since older assistive tech reads that. Leave out value for work whose length is unknown; the element is then indeterminate and says so.
 
 ## Browser support

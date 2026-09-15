@@ -67,7 +67,7 @@ The group carries `role="group"` and a name, so a screen reader announces the se
 ## Accessibility
 
 - Role: `group`
-- Required attributes: `role`, `aria-label`
+- Required attributes: `role`, `aria-label` or `aria-labelledby`
 - role="group" with a name, so the set is announced as one thing. A segmented toggle sets aria-pressed on each member; a set of tabs is the tabs component, not this.
 
 ## Browser support

@@ -55,14 +55,13 @@ What the visitor does is scroll, so the layout is a scroller; a name for the mec
 <details><summary>Internal tokens (may change between minor versions)</summary>
 
 - `--_yeti-gap`
-- `--_yeti-width`
 
 </details>
 
 ## Accessibility
 
 - Role: `region`
-- Required attributes: `tabindex`, `aria-label`
+- Required attributes: `tabindex`, `aria-label` or `aria-labelledby`
 - A scrollable region must be reachable from the keyboard: give it tabindex="0", role="region", and a name with aria-label.
 
 | Key | Action |

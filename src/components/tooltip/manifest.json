@@ -16,7 +16,13 @@
     { "name": "--yeti-tooltip-surface", "public": true, "description": "Background of the bubble." },
     { "name": "--yeti-tooltip-text", "public": true, "description": "Text of the bubble." },
     { "name": "--yeti-tooltip-radius", "public": true, "description": "Corner of the bubble." },
-    { "name": "--yeti-text-sm", "public": true, "description": "The bubble's text size." }
+    { "name": "--yeti-text-sm", "public": true, "description": "The bubble's text size." },
+    { "name": "--yeti-space-xs", "public": true, "description": "Block padding of the bubble, its distance from the trigger, and the caret's size." },
+    { "name": "--yeti-space-sm", "public": true, "description": "Inline padding of the bubble." },
+    { "name": "--yeti-duration-fast", "public": true, "description": "How long the bubble takes to appear." },
+    { "name": "--yeti-ease", "public": true, "description": "The curve of that transition." },
+    { "name": "--_yeti-caret", "public": false },
+    { "name": "--_yeti-caret-overlap", "public": false }
   ],
   "a11y": {
     "requiredAttributes": [],

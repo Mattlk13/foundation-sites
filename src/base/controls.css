@@ -3,7 +3,7 @@
 @layer yeti.base {
 	label, legend {
 		display: block;
-		font-weight: 600;
+		font-weight: var(--yeti-weight-strong);
 	}
 
 	input:not([type="checkbox"], [type="radio"], [type="range"], [type="color"], [type="submit"], [type="button"], [type="reset"], [type="file"], [type="image"]),
@@ -11,7 +11,7 @@
 	textarea {
 		inline-size: 100%;
 		padding: var(--yeti-space-xs) var(--yeti-space-sm);
-		border: 1px solid var(--yeti-color-border);
+		border: var(--yeti-border-width) solid var(--yeti-color-border);
 		border-radius: var(--yeti-radius-sm);
 		background-color: var(--yeti-color-surface);
 	}
@@ -24,7 +24,7 @@
 	button,
 	input:is([type="submit"], [type="button"], [type="reset"]) {
 		padding: var(--yeti-space-xs) var(--yeti-space-sm);
-		border: 1px solid var(--yeti-color-border);
+		border: var(--yeti-border-width) solid var(--yeti-color-border);
 		border-radius: var(--yeti-radius-sm);
 		background-color: var(--yeti-color-surface-raised);
 		cursor: default;
@@ -36,7 +36,7 @@
 
 	fieldset {
 		padding: var(--yeti-space-sm) var(--yeti-space-md);
-		border: 1px solid var(--yeti-color-border);
+		border: var(--yeti-border-width) solid var(--yeti-color-border);
 		border-radius: var(--yeti-radius-sm);
 	}
 
@@ -49,7 +49,7 @@
 		text-align: start;
 	}
 	th {
-		font-weight: 700;
+		font-weight: var(--yeti-weight-bold);
 		text-align: start;
 	}
 	th, td {

@@ -39,6 +39,14 @@ The block covers the viewport. Foundation 6 had no primitive for this; people co
 | --- | --- | --- | --- | --- |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `md` | Minimum space between the centered child and whatever sits above or below it. |
 
+## Markers
+
+Attributes that descendants carry, not the root.
+
+| Attribute | Type | Values | On | Description |
+| --- | --- | --- | --- | --- |
+| `data-center` | boolean |  | `> *` | Centers the child in the space the others leave; exactly one child carries it. |
+
 ## Children
 
 - `> *`: at least 1. A header, the centered child, a footer: any of them optional except the centered one.

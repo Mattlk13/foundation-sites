@@ -75,6 +75,10 @@ None. This is configured through its children and tokens only.
 | `--yeti-control-radius` | Outer corners. |
 | `--yeti-control-border` | Border of the attachments. |
 | `--yeti-border-width` | The width the members overlap by. |
+| `--yeti-space-sm` | Inline padding of an attachment. |
+| `--yeti-text-md` | Text size of an attachment. |
+| `--yeti-color-text-muted` | Text of an attachment. |
+| `--yeti-color-surface-sunken` | Background of an attachment. |
 
 ## Accessibility
 

@@ -14,11 +14,14 @@
     { "selector": "> *", "min": 1, "max": null, "description": "Anything. Each child's margins are reset; the stack owns the space between them." },
     { "selector": "> [data-split]", "min": 0, "max": 1, "description": "At most one child may carry data-split; it and everything after it are pushed to the end of the stack when the stack is taller than its content." }
   ],
+  "markers": [
+    { "name": "data-split", "type": "boolean", "on": "> *", "description": "Pushes the child and everything after it to the end of the stack when the stack is taller than its content." }
+  ],
   "tokens": [
     { "name": "--yeti-space-md", "public": true, "description": "The default gap." },
+    { "name": "--yeti-cover-height", "public": true, "description": "The minimum block size when data-fill is set." },
     { "name": "--_yeti-gap", "public": false },
-    { "name": "--_yeti-align", "public": false },
-    { "name": "--yeti-cover-height", "public": true, "description": "The minimum block size when data-fill is set." }
+    { "name": "--_yeti-align", "public": false }
   ],
   "a11y": { "requiredAttributes": [], "keyboard": [], "notes": "Purely visual. Reading order is source order." },
   "js": null,

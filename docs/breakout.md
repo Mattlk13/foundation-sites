@@ -58,6 +58,15 @@ The column is ordinary; what is special is that a child can break out of it. Fou
 | `data-max` | enum | `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `md` | The widest the reading column may be. |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `md` | The gutter on each side, and the space between children. |
 
+## Markers
+
+Attributes that descendants carry, not the root.
+
+| Attribute | Type | Values | On | Description |
+| --- | --- | --- | --- | --- |
+| `data-bleed` | boolean |  | `> *` | Breaks the child out of the column to span the full width. |
+| `data-note` | boolean |  | `> *` | A margin note: in the end gutter beside the child it follows when the breakout is wide, in the column when it is not. |
+
 ## Children
 
 - `> *`: at least 1. The content, in the column. Any child may carry data-bleed to span the full width.

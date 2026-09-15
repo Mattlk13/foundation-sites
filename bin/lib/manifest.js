@@ -53,26 +53,11 @@ export function loadManifests(srcDir, schema, vocabulary = {}) {
 			if (manifest.kind !== kind) errors.push({ file, message: `kind "${manifest.kind}" must be "${kind}" inside ${dirName}/` });
 			if (manifest.class !== manifest.name) errors.push({ file, message: `class "${manifest.class}" must equal name "${manifest.name}"` });
 
-			for (const attr of manifest.attributes) {
-				if (attr.vocabulary !== undefined) {
-					if (attr.values) {
-						errors.push({ file, message: `attribute ${attr.name}: vocabulary and values are mutually exclusive` });
-						continue;
-					}
-					if (!(attr.vocabulary in vocabulary)) {
-						errors.push({ file, message: `attribute ${attr.name}: unknown vocabulary "${attr.vocabulary}"` });
-						continue;
-					}
-					attr.values = [...vocabulary[attr.vocabulary]];
-				}
-				if (attr.type === 'enum' && !attr.values) {
-					errors.push({ file, message: `attribute ${attr.name}: enum type requires values` });
-				} else if (attr.type !== 'enum' && attr.values) {
-					errors.push({ file, message: `attribute ${attr.name}: values is only allowed for enum type` });
-				} else if (attr.type === 'enum' && attr.default !== undefined && !attr.values.includes(attr.default)) {
-					errors.push({ file, message: `attribute ${attr.name}: default "${attr.default}" is not one of its values` });
-				}
-			}
+			// Markers are the attributes descendants carry; an absent list means none,
+			// so every consumer sees one shape.
+			manifest.markers ??= [];
+			for (const attr of manifest.attributes) resolveValues(attr, 'attribute', vocabulary, file, errors);
+			for (const marker of manifest.markers) resolveValues(marker, 'marker', vocabulary, file, errors);
 
 			if (manifest.js && !fs.existsSync(path.join(dir, manifest.js.module))) {
 				errors.push({ file, message: `js.module "${manifest.js.module}" does not exist` });
@@ -82,6 +67,28 @@ export function loadManifests(srcDir, schema, vocabulary = {}) {
 		}
 	}
 	return { entries, errors };
+}
+
+/** Resolves a vocabulary reference into values and checks the enum/values pairing. */
+function resolveValues(attr, what, vocabulary, file, errors) {
+	if (attr.vocabulary !== undefined) {
+		if (attr.values) {
+			errors.push({ file, message: `${what} ${attr.name}: vocabulary and values are mutually exclusive` });
+			return;
+		}
+		if (!(attr.vocabulary in vocabulary)) {
+			errors.push({ file, message: `${what} ${attr.name}: unknown vocabulary "${attr.vocabulary}"` });
+			return;
+		}
+		attr.values = [...vocabulary[attr.vocabulary]];
+	}
+	if (attr.type === 'enum' && !attr.values) {
+		errors.push({ file, message: `${what} ${attr.name}: enum type requires values` });
+	} else if (attr.type !== 'enum' && attr.values) {
+		errors.push({ file, message: `${what} ${attr.name}: values is only allowed for enum type` });
+	} else if (attr.type === 'enum' && attr.default !== undefined && !attr.values.includes(attr.default)) {
+		errors.push({ file, message: `${what} ${attr.name}: default "${attr.default}" is not one of its values` });
+	}
 }
 
 /** Merges entries into one object keyed by name, rejecting duplicate names and classes. */

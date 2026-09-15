@@ -33,6 +33,14 @@
       "description": "Exactly one child carries data-over; it leaves the flow and is centered over the box."
     }
   ],
+  "markers": [
+    {
+      "name": "data-over",
+      "type": "boolean",
+      "on": "> *",
+      "description": "Lifts the child out of the flow and centers it over the box; exactly one child carries it."
+    }
+  ],
   "tokens": [
     {
       "name": "--yeti-space-md",

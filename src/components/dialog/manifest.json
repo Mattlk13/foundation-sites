@@ -18,6 +18,12 @@
     { "name": "--yeti-dialog-padding", "public": true, "description": "Padding inside." },
     { "name": "--yeti-dialog-backdrop", "public": true, "description": "The wash over the page behind it." },
     { "name": "--yeti-shadow-md", "public": true, "description": "The dialog's shadow." },
+    { "name": "--yeti-space-md", "public": true, "description": "The least margin kept between the dialog and the viewport's edges." },
+    { "name": "--yeti-color-text", "public": true, "description": "The dialog's text." },
+    { "name": "--yeti-width-md", "public": true, "description": "The default width, when data-width is absent." },
+    { "name": "--yeti-space-sm", "public": true, "description": "Gap between the footer's actions." },
+    { "name": "--yeti-duration-fast", "public": true, "description": "How long the dialog and its backdrop take to appear." },
+    { "name": "--yeti-ease", "public": true, "description": "The curve of that transition." },
     { "name": "--_yeti-width", "public": false }
   ],
   "a11y": {

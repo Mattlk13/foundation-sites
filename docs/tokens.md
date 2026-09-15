@@ -174,6 +174,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | Token | Default | Description |
 | --- | --- | --- |
 | `--yeti-weight-normal` | `400` | Body weight. |
+| `--yeti-weight-bold` | `700` | Headings, th, strong and b. Separate from --yeti-weight-strong so display text and control labels can be tuned apart. |
 | `--yeti-weight-strong` | `600` | Labels, headers, buttons. |
 
 ## Shadow
@@ -335,4 +336,4 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-carousel-dot-size` | `0.75rem` | Diameter of a slide dot. |
 | `--yeti-carousel-scroll` | `smooth, and auto under reduced motion` | How the track scrolls when a dot is followed. A components-layer declaration outranks the reset, so the preference reaches the track through this token. |
 
-Yeti also defines 48 internal `--_yeti-*` tokens. They derive from the public ones and may change between minor versions; override the public token instead.
+Yeti also defines 47 internal `--_yeti-*` tokens. They derive from the public ones and may change between minor versions; override the public token instead.

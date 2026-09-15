@@ -15,6 +15,7 @@
     "attributes": { "type": "array", "items": { "$ref": "#/$defs/attribute" } },
     "classes": { "type": "array", "items": { "$ref": "#/$defs/modifierClass" } },
     "children": { "type": "array", "items": { "$ref": "#/$defs/child" } },
+    "markers": { "type": "array", "items": { "$ref": "#/$defs/marker" }, "description": "data-* attributes that descendants carry, not the root: a child's span, a cell's alignment. Optional; an absent list is empty." },
     "tokens": { "type": "array", "items": { "$ref": "#/$defs/token" } },
     "a11y": {
       "type": "object",
@@ -88,6 +89,19 @@
         "selector": { "type": "string", "description": "Relative to the root: '> *', '> tag', '> .class', '> tag.class', '> [attr]', '> tag[attr]', '> .class[attr]' (optionally '[attr=\"value\"]', and '*' matches any tag), or the same without '>' for descendants." },
         "min": { "type": "integer", "minimum": 0 },
         "max": { "type": ["integer", "null"], "minimum": 0 },
+        "description": { "type": "string" }
+      }
+    },
+    "marker": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "type", "description"],
+      "properties": {
+        "name": { "type": "string", "pattern": "^data-[a-z][a-z0-9-]*$" },
+        "type": { "enum": ["enum", "boolean"] },
+        "values": { "type": "array", "items": { "type": "string" }, "minItems": 1, "uniqueItems": true },
+        "vocabulary": { "type": "string", "description": "Name of a list in schema/vocabulary.json; resolved into values at load. Mutually exclusive with values." },
+        "on": { "type": "string", "description": "Which descendants carry it, as a child selector: '> *', '> li', '> [data-track] > *'. Documentation only." },
         "description": { "type": "string" }
       }
     },

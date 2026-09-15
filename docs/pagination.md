@@ -70,6 +70,16 @@ Label the `nav` `aria-label="Pagination"`. The current page's link carries `aria
 | --- | --- |
 | `--yeti-pagination-radius` | Corner of each target. |
 | `--yeti-control-size` | Minimum size of each target. |
+| `--yeti-color-primary` | The default variant's colour, when data-variant is absent. |
+| `--yeti-color-primary-subtle` | The default variant's tint. |
+| `--yeti-color-primary-soft` | The default variant's soft stop. |
+| `--yeti-color-primary-strong` | The default variant's strong stop. |
+| `--yeti-color-primary-text` | The default variant's text colour. |
+| `--yeti-on-primary` | Text on the default variant's colour. |
+| `--yeti-text-md` | Text size when data-size is absent. |
+| `--yeti-space-sm` | The space step when data-size is absent; a target's inline padding follows it. |
+| `--yeti-space-xs` | Gap between targets. |
+| `--yeti-color-text-muted` | The span standing for skipped pages. |
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 
@@ -78,12 +88,16 @@ Label the `nav` `aria-label="Pagination"`. The current page's link carries `aria
 - `--_yeti-on-variant`
 - `--_yeti-justify`
 - `--_yeti-size-text`
+- `--_yeti-variant-soft`
+- `--_yeti-variant-strong`
+- `--_yeti-variant-text`
+- `--_yeti-size-space`
 
 </details>
 
 ## Accessibility
 
-- Required attributes: `aria-label`
+- Required attributes: `aria-label` or `aria-labelledby`
 - Put aria-label="Pagination" on the nav. The current page's link carries aria-current="page". Previous and Next carry rel="prev" and rel="next" and visible text or an aria-label; they are what remains when the row is narrow. Skipped pages are a span, not a link. Put role="list" on the ol.
 
 ## Browser support

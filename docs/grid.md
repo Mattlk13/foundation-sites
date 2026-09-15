@@ -83,7 +83,6 @@ It is a grid and nothing else is. Foundation 6 readers: this replaces the Block 
 - `--_yeti-gap`
 - `--_yeti-min`
 - `--_yeti-column-cap`
-- `--_yeti-ranks`
 
 </details>
 

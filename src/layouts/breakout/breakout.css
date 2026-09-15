@@ -5,7 +5,6 @@
 @layer yeti.layouts {
 	.breakout {
 		display: grid;
-		container-type: inline-size;
 		grid-template-columns:
 			[full-start] minmax(var(--_yeti-gap), 1fr)
 			[content-start] min(100% - 2 * var(--_yeti-gap), var(--_yeti-max))
@@ -13,6 +12,10 @@
 			[full-end];
 		row-gap: var(--_yeti-gap);
 	}
+	/* Only a breakout with a note runs a query, so only that one is a size
+	   container; the containment would otherwise cost the layout its intrinsic
+	   width wherever a parent let it size itself. */
+	.breakout:has(> [data-note]) { container-type: inline-size; }
 	.breakout:not([data-max]) { --_yeti-max: var(--yeti-width-md); }
 	.breakout:not([data-gap]) { --_yeti-gap: var(--yeti-space-md); }
 	.breakout > * {

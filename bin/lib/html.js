@@ -15,7 +15,9 @@ import { parseFragment, parse } from 'parse5';
 
 export function parseHtml(html) {
 	// Source locations let the validator report the line of the offending element.
-	if (/^\s*<body[\s>]/i.test(html)) {
+	// A whole document (a fixture) is parsed as one too, so the body's own class
+	// and attributes survive the way they do for a leading <body>.
+	if (/^\s*(?:<!doctype\b|<html[\s>]|<body[\s>])/i.test(html)) {
 		const document = parse(html, { sourceCodeLocationInfo: true });
 		const body = document.childNodes.find((n) => n.tagName === 'html')
 			?.childNodes.find((n) => n.tagName === 'body');
