@@ -2,7 +2,7 @@
   "$schema": "../../../schema/manifest.schema.json",
   "name": "card",
   "kind": "component",
-  "description": "A bordered surface for one thing: an optional figure that bleeds to the edges, a body, and a footer that sits at the bottom; a thumbnail row when the card's content is narrower than 22rem.",
+  "description": "A bordered surface for one thing: an optional figure that bleeds to the edges, a body, and a footer that sits at the bottom; a thumbnail row when the card's content is narrower than the sm width.",
   "class": "card",
   "attributes": [
     { "name": "data-ratio", "type": "enum", "vocabulary": "ratio", "default": "16/9", "description": "The figure's aspect ratio when the card is wide." },
