@@ -9,7 +9,10 @@
 		overflow: hidden;
 	}
 	.frame:not([data-ratio]) { --_yeti-aspect: 16 / 9; }
-	.frame > :is(img, video) {
+	/* picture counts as media, as it does in media, hero and card, so the
+	   recipe built from a frame renders the same as the one-class form. */
+	.frame > :is(img, video, picture),
+	.frame > picture > img {
 		inline-size: 100%;
 		block-size: 100%;
 		object-fit: cover;
