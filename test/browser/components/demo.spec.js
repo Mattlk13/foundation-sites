@@ -33,9 +33,9 @@ test.describe('demo', () => {
 	test('the frame fills the box and follows it', async ({ page }) => {
 		await open(page);
 		await dragGrip(page, '#framed-preview', -300);
-		const [box, frame] = await Promise.all([rect(page, '#framed-preview'), rect(page, '#frame')]);
-		expect(frame.width).toBeCloseTo(box.width, 0);
-		expect(frame.height).toBeCloseTo(box.height, 0);
+		const [box, frame, border] = await Promise.all([rect(page, '#framed-preview'), rect(page, '#frame'), px(page, '#framed-preview', 'border-left-width')]);
+		expect(frame.width).toBeCloseTo(box.width - 2 * border, 0);
+		expect(frame.height).toBeCloseTo(box.height - 2 * border, 0);
 		expect(await style(page, '#frame', 'border-top-width')).toBe('0px');
 	});
 

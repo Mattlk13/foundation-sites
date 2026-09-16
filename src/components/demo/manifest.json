@@ -11,7 +11,7 @@
   "classes": [],
   "children": [
     { "selector": "> figcaption", "min": 0, "max": 1, "description": "A title for the demo, above the box." },
-    { "selector": "> [data-preview]", "min": 1, "max": 1, "description": "The resizable box. Holds an iframe with the example in srcdoc, or the example's markup directly on a page that already loads Yeti." },
+    { "selector": "> [data-preview]", "min": 1, "max": 1, "description": "The resizable box. Holds an iframe with the example in srcdoc, or the example's markup directly on a page that already loads Yeti. Carries tabindex=\"0\" because it scrolls." },
     { "selector": "> [data-preview] > iframe", "min": 0, "max": 1, "description": "The framed example, loading yeti.css alone so the host page's styles never reach it. Needs a title." },
     { "selector": "> details", "min": 0, "max": 1, "description": "The code, collapsed: a summary and a pre." }
   ],

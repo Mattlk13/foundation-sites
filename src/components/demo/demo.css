@@ -16,9 +16,11 @@
 	/* The box. inline-size reads the shared width mapping so data-width
 	   picks a starting width; a frame inside cannot size to its content, so
 	   the block size comes from data-height's mapping, md when absent. The
-	   edge is an inset shadow, not a border: a border removes its own width
-	   from the content box, so the iframe inside (100% of that content box)
-	   would come out a couple of pixels short of the box the reader dragged. */
+	   box has a real border, and the iframe fills the content box inside it:
+	   an inset shadow was tried instead, but it paints beneath the box's own
+	   content, and a framed example's document is opaque (Yeti's own surface
+	   colour), so in the framed case — the docs case — the edge would never
+	   show through. */
 	.demo:not([data-height]) { --_yeti-height: var(--yeti-demo-height-md); }
 	.demo > [data-preview] {
 		position: relative;
@@ -29,7 +31,7 @@
 		resize: horizontal;
 		overflow: auto;
 		container-type: inline-size;
-		box-shadow: inset 0 0 0 var(--yeti-border-width) var(--yeti-demo-border);
+		border: var(--yeti-border-width) solid var(--yeti-demo-border);
 		border-radius: var(--yeti-demo-radius);
 	}
 	.demo > [data-preview] > iframe {
@@ -38,12 +40,13 @@
 		block-size: 100%;
 		border: 0;
 	}
-	/* Direct markup that reaches the box's own end edge sits under WebKit's
+	/* Direct markup that reaches the box's own edge sits under WebKit's
 	   horizontal resize grip and wins the mousedown there, so the reader
-	   drags nothing; a sliver of clearance keeps the grip reachable. An
-	   iframe is exempt because it has to fill the box exactly, edge to edge. */
+	   drags nothing; clearance on every side keeps the grip reachable and
+	   reads as an inset around the content. An iframe is exempt because it
+	   has to fill the box exactly, edge to edge. */
 	.demo > [data-preview]:not(:has(> iframe)) {
-		padding-inline-end: var(--yeti-space-xs);
+		padding: var(--yeti-space-xs);
 	}
 
 	/* The code. The pre keeps the base layer's look on purpose: on a host
