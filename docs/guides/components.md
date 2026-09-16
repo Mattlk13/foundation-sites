@@ -170,6 +170,10 @@ A tooltip is never the only place something is said. It shows on hover and on fo
 </div>
 ```
 
+## Showing your work
+
+A `demo` is a live example in a box the reader can drag narrower and wider, with a label naming the width stop it is at. It is how the pages on this site show each component, and it is the framework's own model applied to itself: whatever is inside responds because it measures its own box. On a page that already loads Yeti the markup goes straight in; anywhere else an `iframe` with the example in `srcdoc` keeps the host's styles out, at the price of a fixed height from `data-height`. The [demo page](../demo.md) has the details and the limits.
+
 ## Loading a module
 
 Yeti's JavaScript lives in `dist/js/`, one module per component, dependency-free and optional: nothing in the CSS expects it, so a page that never loads a module still gets the component, minus whatever that module would have added. Link it with a single `<script type="module" src="…/js/alert.js"></script>` anywhere in the page — there is no init call to run and no order to get right — and it is safe to include on a page with none of that component at all; it simply finds nothing to listen on. Leave the module out and the alert's close button sits there inert, the rest of the component unaffected.

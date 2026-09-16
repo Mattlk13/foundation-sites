@@ -71,3 +71,5 @@ Both resolve with no configuration beyond the default in a modern project. They 
 ## For a language model
 
 `llms.txt` and `llms-full.txt` sit at the root of the docs site and in the package. The first lists every component with its class, attributes, legal values and defaults in a few hundred lines; the second adds each component's guidance, accessibility notes and the token catalogue. They are generated from the manifest, so they describe exactly the surface the validator enforces, and nothing else. Point an assistant at the first and it can write valid Yeti; give it the second and it can explain why.
+
+The examples on these pages are live: each is a `demo`, a box you can drag from its bottom corner to watch the component change shape, with the code beneath it. The label in the corner names the width stop the box is at.
