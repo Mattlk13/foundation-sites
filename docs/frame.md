@@ -13,11 +13,22 @@ Holds one child in a fixed aspect ratio, cropping media to fill it and centering
 
 ## Example
 
+<figure class="demo" data-height="md">
+<div data-preview tabindex="0"><iframe title="Frame, live" srcdoc="&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;frame&quot; data-ratio=&quot;4/3&quot;&gt;
+	&lt;img src=&quot;photo.jpg&quot; alt=&quot;A lake at dawn, cropped to four by three&quot;&gt;
+&lt;/div&gt;"></iframe></div>
+
+<details>
+<summary>Code</summary>
+
 ```html
 <div class="frame" data-ratio="4/3">
 	<img src="photo.jpg" alt="A lake at dawn, cropped to four by three">
 </div>
 ```
+
+</details>
+</figure>
 
 ## When to use it
 

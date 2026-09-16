@@ -13,6 +13,20 @@ A bordered surface for one thing: an optional figure that bleeds to the edges, a
 
 ## Example
 
+<figure class="demo" data-height="md">
+<div data-preview tabindex="0"><iframe title="Card, live" srcdoc="&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;article class=&quot;card&quot;&gt;
+	&lt;img src=&quot;trail.jpg&quot; alt=&quot;A mountain trail at dawn&quot;&gt;
+	&lt;h3&gt;&lt;a href=&quot;/hills&quot; data-stretch&gt;Weekend in the hills&lt;/a&gt;&lt;/h3&gt;
+	&lt;p&gt;Six miles, one summit, and a view worth the early start.&lt;/p&gt;
+	&lt;footer&gt;
+		&lt;span class=&quot;badge&quot; data-variant=&quot;success&quot;&gt;Open&lt;/span&gt;
+		&lt;a class=&quot;button&quot; href=&quot;/hills&quot; data-emphasis=&quot;low&quot; tabindex=&quot;-1&quot;&gt;Read more&lt;/a&gt;
+	&lt;/footer&gt;
+&lt;/article&gt;"></iframe></div>
+
+<details>
+<summary>Code</summary>
+
 ```html
 <article class="card">
 	<img src="trail.jpg" alt="A mountain trail at dawn">
@@ -24,6 +38,9 @@ A bordered surface for one thing: an optional figure that bleeds to the edges, a
 	</footer>
 </article>
 ```
+
+</details>
+</figure>
 
 ## When to use it
 

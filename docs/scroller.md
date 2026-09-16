@@ -13,6 +13,17 @@ Lays its children out in a single row that scrolls horizontally.
 
 ## Example
 
+<figure class="demo" data-height="md">
+<div data-preview tabindex="0"><iframe title="Scroller, live" srcdoc="&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;scroller&quot; data-snap data-width=&quot;sm&quot; role=&quot;region&quot; aria-label=&quot;Featured articles&quot; tabindex=&quot;0&quot;&gt;
+	&lt;article&gt;One&lt;/article&gt;
+	&lt;article&gt;Two&lt;/article&gt;
+	&lt;article&gt;Three&lt;/article&gt;
+	&lt;article&gt;Four&lt;/article&gt;
+&lt;/div&gt;"></iframe></div>
+
+<details>
+<summary>Code</summary>
+
 ```html
 <div class="scroller" data-snap data-width="sm" role="region" aria-label="Featured articles" tabindex="0">
 	<article>One</article>
@@ -21,6 +32,9 @@ Lays its children out in a single row that scrolls horizontally.
 	<article>Four</article>
 </div>
 ```
+
+</details>
+</figure>
 
 ## When to use it
 

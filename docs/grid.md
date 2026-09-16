@@ -13,6 +13,18 @@ Fits as many equal columns as the container allows at a minimum width, up to an 
 
 ## Example
 
+<figure class="demo" data-height="md">
+<div data-preview tabindex="0"><iframe title="Grid, live" srcdoc="&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;ul class=&quot;grid&quot; data-min=&quot;sm&quot; data-columns=&quot;3&quot; role=&quot;list&quot;&gt;
+	&lt;li&gt;One&lt;/li&gt;
+	&lt;li&gt;Two&lt;/li&gt;
+	&lt;li&gt;Three&lt;/li&gt;
+	&lt;li&gt;Four&lt;/li&gt;
+	&lt;li&gt;Five&lt;/li&gt;
+&lt;/ul&gt;"></iframe></div>
+
+<details>
+<summary>Code</summary>
+
 ```html
 <ul class="grid" data-min="sm" data-columns="3" role="list">
 	<li>One</li>
@@ -22,6 +34,9 @@ Fits as many equal columns as the container allows at a minimum width, up to an 
 	<li>Five</li>
 </ul>
 ```
+
+</details>
+</figure>
 
 ## When to use it
 

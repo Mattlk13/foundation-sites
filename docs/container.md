@@ -13,6 +13,17 @@ Makes its box the thing a container query measures, so what is inside can respon
 
 ## Example
 
+<figure class="demo" data-height="md">
+<div data-preview tabindex="0"><iframe title="Container, live" srcdoc="&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;container&quot;&gt;
+	&lt;nav class=&quot;cluster&quot; aria-label=&quot;Site&quot;&gt;
+		&lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;
+		&lt;a href=&quot;#&quot;&gt;Docs&lt;/a&gt;
+	&lt;/nav&gt;
+&lt;/div&gt;"></iframe></div>
+
+<details>
+<summary>Code</summary>
+
 ```html
 <div class="container">
 	<nav class="cluster" aria-label="Site">
@@ -21,6 +32,9 @@ Makes its box the thing a container query measures, so what is inside can respon
 	</nav>
 </div>
 ```
+
+</details>
+</figure>
 
 ## When to use it
 

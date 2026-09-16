@@ -13,6 +13,18 @@ Puts a figure beside a block of text and stacks them when the text would drop be
 
 ## Example
 
+<figure class="demo" data-height="md">
+<div data-preview tabindex="0"><iframe title="Media, live" srcdoc="&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;media&quot; data-width=&quot;sm&quot;&gt;
+	&lt;img src=&quot;ada.jpg&quot; alt=&quot;Portrait of Ada Lovelace&quot;&gt;
+	&lt;div&gt;
+		&lt;h3&gt;Ada Lovelace&lt;/h3&gt;
+		&lt;p&gt;Wrote the first published algorithm, for Babbage&#39;s Analytical Engine.&lt;/p&gt;
+	&lt;/div&gt;
+&lt;/div&gt;"></iframe></div>
+
+<details>
+<summary>Code</summary>
+
 ```html
 <div class="media" data-width="sm">
 	<img src="ada.jpg" alt="Portrait of Ada Lovelace">
@@ -22,6 +34,9 @@ Puts a figure beside a block of text and stacks them when the text would drop be
 	</div>
 </div>
 ```
+
+</details>
+</figure>
 
 ## When to use it
 

@@ -13,6 +13,20 @@ Places a fixed-width sidebar beside flexible content, and stacks them when the c
 
 ## Example
 
+<figure class="demo" data-height="md">
+<div data-preview tabindex="0"><iframe title="Sidebar, live" srcdoc="&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;sidebar&quot; data-width=&quot;xs&quot; data-gap=&quot;lg&quot;&gt;
+	&lt;nav aria-label=&quot;Section&quot;&gt;
+		&lt;a href=&quot;#&quot;&gt;Overview&lt;/a&gt;
+	&lt;/nav&gt;
+	&lt;article&gt;
+		&lt;h2&gt;Content&lt;/h2&gt;
+		&lt;p&gt;Takes the remaining width, and the whole width once the two no longer fit.&lt;/p&gt;
+	&lt;/article&gt;
+&lt;/div&gt;"></iframe></div>
+
+<details>
+<summary>Code</summary>
+
 ```html
 <div class="sidebar" data-width="xs" data-gap="lg">
 	<nav aria-label="Section">
@@ -24,6 +38,9 @@ Places a fixed-width sidebar beside flexible content, and stacks them when the c
 	</article>
 </div>
 ```
+
+</details>
+</figure>
 
 ## When to use it
 

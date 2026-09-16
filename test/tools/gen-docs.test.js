@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
-import { renderPage, generateDocs, isGenerated, GENERATED_MARK, renderTokensPage } from '../../bin/gen-docs.js';
+import { renderPage, generateDocs, isGenerated, GENERATED_MARK, renderTokensPage, escapeAttribute, renderDemo } from '../../bin/gen-docs.js';
 import { makeTree, validManifest, validTree, TOKENS_SCHEMA_PATH } from './helpers.js';
 
 const exampleHtml = '<div class="rail" data-gap="l"><p>One</p><p>Two</p></div>\n';
@@ -218,4 +218,34 @@ test('renderPage spells a required-attribute alternation with "or"', () => {
 	const manifest = validManifest({ a11y: { requiredAttributes: ['role', 'aria-label | aria-labelledby'], keyboard: [] } });
 	const page = renderPage({ manifest, exampleHtml, navOrder: 1 });
 	assert.ok(page.includes('- Required attributes: `role`, `aria-label` or `aria-labelledby`'));
+});
+
+test('escapeAttribute escapes exactly what an attribute value needs and round-trips', () => {
+	const raw = '<a href="x" data-q=\'y\'>a & b</a>';
+	const escaped = escapeAttribute(raw);
+	assert.equal(escaped, '&lt;a href=&quot;x&quot; data-q=&#39;y&#39;&gt;a &amp; b&lt;/a&gt;');
+	const back = escaped.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, '&');
+	assert.equal(back, raw);
+});
+
+test('renderDemo frames the example with the stylesheet ahead of it and fences it under a details', () => {
+	const out = renderDemo({ title: 'Rail', exampleHtml: '<div class="rail"><p>One</p></div>', stylesheet: '/yeti/yeti.css' });
+	assert.ok(out.startsWith('<figure class="demo" data-height="md">\n<div data-preview tabindex="0"><iframe title="Rail, live" srcdoc="'));
+	assert.ok(out.includes('&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;'));
+	assert.ok(out.includes('&lt;div class=&quot;rail&quot;&gt;'));
+	// Blank lines separate the raw HTML from the fence, so Markdown parses the code.
+	assert.ok(out.includes('</div>\n\n<details>\n<summary>Code</summary>\n\n```html\n<div class="rail"><p>One</p></div>\n```\n\n</details>\n</figure>'));
+});
+
+test('renderPage puts the demo where the bare example was and honours the stylesheet option', () => {
+	const page = renderPage({ manifest: validManifest(), exampleHtml, navOrder: 1, demoStylesheet: '/assets/y.css' });
+	assert.ok(page.includes('## Example\n\n<figure class="demo"'));
+	assert.ok(page.includes('href=&quot;/assets/y.css&quot;'));
+	assert.ok(page.includes('```html\n<div class="rail" data-gap="l"><p>One</p><p>Two</p></div>\n```'));
+	assert.ok(!page.includes('## Example\n\n```html'));
+});
+
+test('renderPage defaults the demo stylesheet to the site path', () => {
+	const page = renderPage({ manifest: validManifest(), exampleHtml, navOrder: 1 });
+	assert.ok(page.includes('href=&quot;/yeti/yeti.css&quot;'));
 });

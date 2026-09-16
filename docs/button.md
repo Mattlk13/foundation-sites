@@ -13,6 +13,16 @@ An action with a face: a hue, an emphasis, and a size, with every state taken fr
 
 ## Example
 
+<figure class="demo" data-height="md">
+<div data-preview tabindex="0"><iframe title="Button, live" srcdoc="&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;buttons&quot; role=&quot;group&quot; aria-label=&quot;Emphasis&quot;&gt;
+	&lt;button class=&quot;button&quot; type=&quot;button&quot;&gt;Save&lt;/button&gt;
+	&lt;button class=&quot;button&quot; type=&quot;button&quot; data-emphasis=&quot;medium&quot;&gt;Preview&lt;/button&gt;
+	&lt;button class=&quot;button&quot; type=&quot;button&quot; data-emphasis=&quot;low&quot;&gt;Cancel&lt;/button&gt;
+&lt;/div&gt;"></iframe></div>
+
+<details>
+<summary>Code</summary>
+
 ```html
 <div class="buttons" role="group" aria-label="Emphasis">
 	<button class="button" type="button">Save</button>
@@ -20,6 +30,9 @@ An action with a face: a hue, an emphasis, and a size, with every state taken fr
 	<button class="button" type="button" data-emphasis="low">Cancel</button>
 </div>
 ```
+
+</details>
+</figure>
 
 ## When to use it
 

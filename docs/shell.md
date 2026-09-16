@@ -13,6 +13,23 @@ The page skeleton: header on top, footer at the bottom of the viewport when the 
 
 ## Example
 
+<figure class="demo" data-height="md">
+<div data-preview tabindex="0"><iframe title="Shell, live" srcdoc="&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;body class=&quot;shell&quot; data-width=&quot;xs&quot;&gt;
+	&lt;header&gt;Site header&lt;/header&gt;
+	&lt;div&gt;
+		&lt;nav aria-label=&quot;Section&quot;&gt;Section navigation&lt;/nav&gt;
+		&lt;main&gt;
+			&lt;h1&gt;Page title&lt;/h1&gt;
+			&lt;p&gt;The main content, which takes what is left.&lt;/p&gt;
+		&lt;/main&gt;
+		&lt;aside&gt;Related links&lt;/aside&gt;
+	&lt;/div&gt;
+	&lt;footer&gt;Site footer&lt;/footer&gt;
+&lt;/body&gt;"></iframe></div>
+
+<details>
+<summary>Code</summary>
+
 ```html
 <body class="shell" data-width="xs">
 	<header>Site header</header>
@@ -27,6 +44,9 @@ The page skeleton: header on top, footer at the bottom of the viewport when the 
 	<footer>Site footer</footer>
 </body>
 ```
+
+</details>
+</figure>
 
 ## When to use it
 

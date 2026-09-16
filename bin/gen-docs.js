@@ -26,6 +26,35 @@ const table = (headers, rows) => [
 	...rows.map((r) => `| ${r.map(cell).join(' | ')} |`),
 ].join('\n');
 
+/** Escapes text for an HTML attribute value; the five characters that can end or break one. */
+export function escapeAttribute(text) {
+	return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+// The example twice: framed, so it renders live with only Yeti's stylesheet
+// inside; and fenced, so a renderer that strips iframes, GitHub among them,
+// still shows the code. The blank lines are load-bearing: a raw HTML block
+// in Markdown ends at one, and the fence needs to be parsed as Markdown. The
+// preview box carries tabindex="0" because it scrolls, matching every other
+// [data-preview] box the component emits.
+export function renderDemo({ title, exampleHtml, stylesheet }) {
+	const doc = `<link rel="stylesheet" href="${stylesheet}"><body style="margin:0;padding:var(--yeti-space-md)">${exampleHtml.trim()}`;
+	return [
+		'<figure class="demo" data-height="md">',
+		`<div data-preview tabindex="0"><iframe title="${escapeAttribute(title)}, live" srcdoc="${escapeAttribute(doc)}"></iframe></div>`,
+		'',
+		'<details>',
+		'<summary>Code</summary>',
+		'',
+		'```html',
+		exampleHtml.trim(),
+		'```',
+		'',
+		'</details>',
+		'</figure>',
+	].join('\n');
+}
+
 function range(child) {
 	const min = child.min ?? 0;
 	const max = child.max ?? null;
@@ -34,7 +63,7 @@ function range(child) {
 	return `${min} to ${max}`;
 }
 
-export function renderPage({ manifest: m, exampleHtml, navOrder, docsMd = '' }) {
+export function renderPage({ manifest: m, exampleHtml, navOrder, docsMd = '', demoStylesheet = '/yeti/yeti.css' }) {
 	const title = titleCase(m.name);
 	const dir = KIND_TO_DIR[m.kind];
 	const out = [];
@@ -43,7 +72,7 @@ export function renderPage({ manifest: m, exampleHtml, navOrder, docsMd = '' }) 
 	out.push(frontMatter({ raw: true, title, description: m.description, nav_group: GROUPS[m.kind], nav_order: navOrder }).trimEnd());
 	out.push(`${GENERATED_MARK} from src/${dir}/${m.name}/manifest.json. Do not edit. -->`, '', `# ${title}`, '', m.description, '');
 
-	out.push('## Example', '', '```html', exampleHtml.trim(), '```', '');
+	out.push('## Example', '', renderDemo({ title, exampleHtml, stylesheet: demoStylesheet }), '');
 	if (docsMd.trim()) out.push(docsMd.trim(), '');
 
 	out.push('## Attributes', '');
@@ -131,7 +160,7 @@ function countInternalTokens(tokensDir) {
 	return names.size;
 }
 
-export function generateDocs({ root }) {
+export function generateDocs({ root, demoStylesheet }) {
 	const srcDir = path.join(root, 'src');
 	const docsDir = path.join(root, 'docs');
 	const schema = loadSchema(path.join(root, 'schema', 'manifest.schema.json'));
@@ -175,7 +204,7 @@ export function generateDocs({ root }) {
 			const docsMdFile = path.join(entry.dir, 'docs.md');
 			const docsMd = fs.existsSync(docsMdFile) ? fs.readFileSync(docsMdFile, 'utf8') : '';
 			const file = path.join(docsDir, `${entry.name}.md`);
-			fs.writeFileSync(file, renderPage({ manifest: entry.manifest, exampleHtml, navOrder: i + 1, docsMd }));
+			fs.writeFileSync(file, renderPage({ manifest: entry.manifest, exampleHtml, navOrder: i + 1, docsMd, demoStylesheet }));
 			written.push(file);
 		});
 	}

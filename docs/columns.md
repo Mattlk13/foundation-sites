@@ -13,6 +13,16 @@ Lays its children out as equal columns when the container is wider than a thresh
 
 ## Example
 
+<figure class="demo" data-height="md">
+<div data-preview tabindex="0"><iframe title="Columns, live" srcdoc="&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;columns&quot; data-threshold=&quot;lg&quot;&gt;
+	&lt;section&gt;&lt;h2&gt;Plan&lt;/h2&gt;&lt;p&gt;Three equal columns in a wide container.&lt;/p&gt;&lt;/section&gt;
+	&lt;section&gt;&lt;h2&gt;Build&lt;/h2&gt;&lt;p&gt;Three rows in a narrow one.&lt;/p&gt;&lt;/section&gt;
+	&lt;section&gt;&lt;h2&gt;Ship&lt;/h2&gt;&lt;p&gt;No breakpoint anywhere.&lt;/p&gt;&lt;/section&gt;
+&lt;/div&gt;"></iframe></div>
+
+<details>
+<summary>Code</summary>
+
 ```html
 <div class="columns" data-threshold="lg">
 	<section><h2>Plan</h2><p>Three equal columns in a wide container.</p></section>
@@ -20,6 +30,9 @@ Lays its children out as equal columns when the container is wider than a thresh
 	<section><h2>Ship</h2><p>No breakpoint anywhere.</p></section>
 </div>
 ```
+
+</details>
+</figure>
 
 ## When to use it
 

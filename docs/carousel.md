@@ -13,6 +13,23 @@ Slides on a scroll-snapping track with dots that link to each one, scrolled by t
 
 ## Example
 
+<figure class="demo" data-height="md">
+<div data-preview tabindex="0"><iframe title="Carousel, live" srcdoc="&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;section class=&quot;carousel&quot; aria-roledescription=&quot;carousel&quot; aria-label=&quot;Featured work&quot;&gt;
+	&lt;div data-track role=&quot;group&quot; aria-label=&quot;Slides&quot; tabindex=&quot;0&quot;&gt;
+		&lt;article id=&quot;work-1&quot; data-slide&gt;&lt;h3&gt;A trail map&lt;/h3&gt;&lt;p&gt;Printed in two colours.&lt;/p&gt;&lt;/article&gt;
+		&lt;article id=&quot;work-2&quot; data-slide&gt;&lt;h3&gt;A field guide&lt;/h3&gt;&lt;p&gt;Three hundred pages.&lt;/p&gt;&lt;/article&gt;
+		&lt;article id=&quot;work-3&quot; data-slide&gt;&lt;h3&gt;A season of posters&lt;/h3&gt;&lt;p&gt;Twelve of them.&lt;/p&gt;&lt;/article&gt;
+	&lt;/div&gt;
+	&lt;ol data-dots role=&quot;list&quot;&gt;
+		&lt;li&gt;&lt;a href=&quot;#work-1&quot; aria-label=&quot;Slide 1&quot;&gt;&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a href=&quot;#work-2&quot; aria-label=&quot;Slide 2&quot;&gt;&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a href=&quot;#work-3&quot; aria-label=&quot;Slide 3&quot;&gt;&lt;/a&gt;&lt;/li&gt;
+	&lt;/ol&gt;
+&lt;/section&gt;"></iframe></div>
+
+<details>
+<summary>Code</summary>
+
 ```html
 <section class="carousel" aria-roledescription="carousel" aria-label="Featured work">
 	<div data-track role="group" aria-label="Slides" tabindex="0">
@@ -27,6 +44,9 @@ Slides on a scroll-snapping track with dots that link to each one, scrolled by t
 	</ol>
 </section>
 ```
+
+</details>
+</figure>
 
 ## When to use it
 

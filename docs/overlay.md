@@ -13,12 +13,24 @@ Holds one child over the rest, centered, without pushing anything around; the pa
 
 ## Example
 
+<figure class="demo" data-height="md">
+<div data-preview tabindex="0"><iframe title="Overlay, live" srcdoc="&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;overlay&quot;&gt;
+	&lt;img src=&quot;photo.jpg&quot; alt=&quot;A lake at dawn&quot;&gt;
+	&lt;p data-over&gt;Sold out&lt;/p&gt;
+&lt;/div&gt;"></iframe></div>
+
+<details>
+<summary>Code</summary>
+
 ```html
 <div class="overlay">
 	<img src="photo.jpg" alt="A lake at dawn">
 	<p data-over>Sold out</p>
 </div>
 ```
+
+</details>
+</figure>
 
 ## When to use it
 

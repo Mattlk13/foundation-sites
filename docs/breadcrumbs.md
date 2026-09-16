@@ -13,6 +13,18 @@ The trail from the home page to the current one, each step a link, with a separa
 
 ## Example
 
+<figure class="demo" data-height="md">
+<div data-preview tabindex="0"><iframe title="Breadcrumbs, live" srcdoc="&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;nav class=&quot;breadcrumbs&quot; aria-label=&quot;Breadcrumb&quot;&gt;
+	&lt;ol role=&quot;list&quot;&gt;
+		&lt;li&gt;&lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a href=&quot;#&quot;&gt;Docs&lt;/a&gt;&lt;/li&gt;
+		&lt;li aria-current=&quot;page&quot;&gt;Nav&lt;/li&gt;
+	&lt;/ol&gt;
+&lt;/nav&gt;"></iframe></div>
+
+<details>
+<summary>Code</summary>
+
 ```html
 <nav class="breadcrumbs" aria-label="Breadcrumb">
 	<ol role="list">
@@ -22,6 +34,9 @@ The trail from the home page to the current one, each step a link, with a separa
 	</ol>
 </nav>
 ```
+
+</details>
+</figure>
 
 ## When to use it
 
