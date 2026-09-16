@@ -17,7 +17,7 @@ export function collectAttributes(merged) {
 		const own = component.attributes.map((a) => ({ ...a, on: null }));
 		const markers = (component.markers ?? []).map((m) => ({ ...m, on: m.on ?? '> *' }));
 		for (const attr of [...own, ...markers]) {
-			const entry = map.get(attr.name) ?? { type: attr.type, vocabulary: attr.vocabulary ?? null, values: attr.values ?? null, uses: [], description: attr.description };
+			const entry = map.get(attr.name) ?? { type: attr.type, vocabulary: attr.vocabulary ?? null, values: attr.values ?? null, uses: [] };
 			entry.uses.push({ component: component.name, on: attr.on, description: attr.description });
 			map.set(attr.name, entry);
 		}
@@ -37,16 +37,24 @@ function describe(entry) {
 	return `${who}: ${entry.uses[0].description}`;
 }
 
+// A named vocabulary and an attribute's own inline `values` both need a value
+// set; an inline enum has no vocabulary name to share, so its set is keyed by
+// the attribute's own name instead.
+function valueSetName(name, entry) {
+	return entry.vocabulary ? `yeti-${entry.vocabulary}` : `yeti-${name}`;
+}
+
 export function htmlData(merged, vocabulary) {
 	const map = collectAttributes(merged);
-	const used = new Set([...map.values()].map((e) => e.vocabulary).filter(Boolean));
-	const valueSets = [...used].sort().map((name) => ({
-		name: `yeti-${name}`,
-		values: vocabulary[name].map((v) => ({ name: v })),
-	}));
+	const sets = new Map();
+	for (const [name, entry] of map.entries()) {
+		if (entry.vocabulary) sets.set(valueSetName(name, entry), vocabulary[entry.vocabulary].map((v) => ({ name: v })));
+		else if (entry.values) sets.set(valueSetName(name, entry), entry.values.map((v) => ({ name: v })));
+	}
+	const valueSets = [...sets.entries()].sort(([a], [b]) => a.localeCompare(b)).map(([name, values]) => ({ name, values }));
 	const globalAttributes = [...map.entries()].sort(([a], [b]) => a.localeCompare(b)).map(([name, entry]) => {
 		const out = { name, description: describe(entry) };
-		if (entry.vocabulary) out.valueSet = `yeti-${entry.vocabulary}`;
+		if (entry.vocabulary || entry.values) out.valueSet = valueSetName(name, entry);
 		return out;
 	});
 	return { version: 1.1, valueSets, globalAttributes };
@@ -60,6 +68,9 @@ export function webTypes(merged, vocabulary, pkg) {
 		else if (entry.vocabulary) {
 			out.value = { kind: 'plain', type: 'string' };
 			out.values = vocabulary[entry.vocabulary].map((v) => ({ name: v }));
+		} else if (entry.values) {
+			out.value = { kind: 'plain', type: 'string' };
+			out.values = entry.values.map((v) => ({ name: v }));
 		} else out.value = { kind: 'plain', type: entry.type === 'number' ? 'number' : 'string' };
 		return out;
 	});
