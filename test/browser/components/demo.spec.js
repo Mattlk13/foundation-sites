@@ -71,8 +71,11 @@ test.describe('demo', () => {
 	test('the box never overhangs a container narrower than xs', async ({ page }) => {
 		await open(page);
 		await stage(page, 200);
-		const [stageBox, framed] = await Promise.all([rect(page, '#stage'), rect(page, '#framed-preview')]);
+		// #framed-preview has no padding, only the border term of --_yeti-demo-max;
+		// #direct-preview is direct markup, so it also carries the inset term.
+		const [stageBox, framed, direct] = await Promise.all([rect(page, '#stage'), rect(page, '#framed-preview'), rect(page, '#direct-preview')]);
 		expect(framed.width).toBeLessThanOrEqual(stageBox.width);
+		expect(direct.width).toBeLessThanOrEqual(stageBox.width);
 	});
 
 	test('data-height picks the box height and md is the default', async ({ page }) => {

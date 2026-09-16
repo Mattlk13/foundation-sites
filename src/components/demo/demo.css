@@ -94,17 +94,17 @@
 		color: var(--yeti-color-text-muted);
 		font-size: var(--yeti-text-sm);
 		font-family: var(--yeti-font-mono);
-		line-height: 1.6;
+		line-height: var(--yeti-leading-md);
 		pointer-events: none;
 	}
-	/* sm (24rem) */
+	/* --yeti-width-sm (24rem) */
 	@container (inline-size >= 24rem) { .demo > [data-preview]::after { content: "sm"; } }
-	/* md (32rem) */
+	/* --yeti-width-md (32rem) */
 	@container (inline-size >= 32rem) { .demo > [data-preview]::after { content: "md"; } }
-	/* lg (48rem) */
+	/* --yeti-width-lg (48rem) */
 	@container (inline-size >= 48rem) { .demo > [data-preview]::after { content: "lg"; } }
-	/* xl (64rem) */
+	/* --yeti-width-xl (64rem) */
 	@container (inline-size >= 64rem) { .demo > [data-preview]::after { content: "xl"; } }
-	/* 2xl (80rem) */
+	/* --yeti-width-2xl (80rem) */
 	@container (inline-size >= 80rem) { .demo > [data-preview]::after { content: "2xl"; } }
 }
