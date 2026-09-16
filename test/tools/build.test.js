@@ -43,6 +43,8 @@ test('build writes dist/ with the bundle, a verbatim css tree, js modules, and t
 	assert.ok(r.outputs.includes('yeti.css') && r.outputs.includes('js/rail.js') && r.outputs.includes('yeti.manifest.json'));
 	assert.ok(r.outputs.includes('yeti.html-data.json') && r.outputs.includes('yeti.web-types.json'));
 	assert.ok(r.outputs.includes('yeti.d.ts'));
+	assert.ok(r.outputs.includes('llms.txt') && r.outputs.includes('llms-full.txt'));
+	assert.equal(fs.readFileSync(dist('llms.txt'), 'utf8'), fs.readFileSync(path.join(root, 'docs', 'llms.txt'), 'utf8'));
 	const html = JSON.parse(fs.readFileSync(dist('yeti.html-data.json'), 'utf8'));
 	assert.ok(html.globalAttributes.some((a) => a.name === 'data-gap'));
 });

@@ -1,0 +1,2148 @@
+# Yeti 7.0.0-alpha.0
+
+Yeti is a plain-CSS framework. Three rules cover every component: identity is a class (`class="card"`), configuration is a `data-*` attribute with a fixed value list (`data-gap="md"`), and state is native or ARIA (`open`, `aria-current`), never a class. Layouts arrange, recipes compose layouts, components are styled things. Every attribute below is validated: a value not in its list is an error. Docs: https://foundationcss.com/yeti/
+
+## box (layout, class="box")
+
+Pads its content on all sides, with an optional border.
+
+Attributes:
+- data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Padding on every side.
+- data-border (boolean) — Draw a border of the border width, in the border colour.
+
+### When to use it
+
+A box is the thing to reach for when content needs breathing room from its edges: a card body, a callout, a panel in a sidebar. Combine it with a stack inside for the spacing between its children and with a background or border to make it a surface.
+
+### How it works
+
+`padding` on all four sides from `data-gap`, and a border of `--yeti-border-width` in `--yeti-color-border` when `data-border` is present. Nothing else. Unlike the spacing layouts, a box does not reset its children's margins, so paragraphs inside it keep their prose rhythm.
+
+```html
+<div class="box" data-border>
+	<div class="stack" data-gap="sm">
+		<h3>Title</h3>
+		<p>Body</p>
+	</div>
+</div>
+```
+
+### Why this name
+
+There is no plainer word for a padded rectangle. Foundation 6's Callout was a styled box with a colour scheme; the plain one had no name.
+
+Tokens:
+- --yeti-space-md — The default padding.
+- --yeti-color-border — The border color when data-border is set.
+- --yeti-border-width — Width of the border when data-border is set.
+
+Accessibility:
+Purely visual. A box has no semantics; use a section or article element when the content is one.
+
+## breakout (layout, class="breakout")
+
+Keeps its children in a centered reading column with gutters, and lets any child carrying data-bleed span the full width.
+
+Attributes:
+- data-max: xs | sm | md (default) | lg | xl | 2xl — The widest the reading column may be.
+- data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — The gutter on each side, and the space between children.
+
+On children:
+- data-bleed on > * (boolean) — Breaks the child out of the column to span the full width.
+- data-note on > * (boolean) — A margin note: in the end gutter beside the child it follows when the breakout is wide, in the column when it is not.
+
+### When to use it
+
+Long-form pages: an article, a case study, documentation. The text sits in a column narrow enough to read, and the occasional picture, quote band, or code block breaks out to the full width without leaving the flow.
+
+### How it works
+
+The breakout is a grid of three columns: a gutter, the reading column, and a gutter. The reading column is `data-max` wide, or the container minus two gutters when that is less, and the gutters share whatever remains, so the column is centered. Every child lands in the middle track. A child carrying `data-bleed` spans all three. The rows are separated by the gap, and children's own margins are zeroed, as in every gap-based layout. Prose is also capped at `--yeti-measure`, so a column set wider than the measure is not filled by paragraphs.
+
+```html
+<div class="breakout" data-max="md">
+	<p>Readable.</p>
+	<div data-bleed>Edge to edge.</div>
+	<p>Readable again.</p>
+</div>
+```
+
+A child carrying `data-note` is a margin note: it follows the paragraph it belongs to in the source, and when the content box is at least `xl` wide it moves into the end gutter beside that paragraph, in the small muted text of a hint; narrower, it stays in the column as an aside. One note per paragraph; a second note after the same paragraph stacks below the first and pushes the next paragraph down a row.
+
+```html
+<div class="breakout" data-max="md">
+	<p>The main text carries the argument.</p>
+	<aside data-note>A citation, or a caveat, that would interrupt the flow.</aside>
+</div>
+```
+
+### Why this name
+
+The column is ordinary; what is special is that a child can break out of it. Foundation 6 had `.grid-container.fluid` for the whole page and nothing for one element; people reached for negative margins.
+
+Children:
+- > *: at least 1. The content, in the column. Any child may carry data-bleed to span the full width.
+- > [data-bleed]: at least 0. Children that break out of the column.
+- > [data-note]: at least 0. A margin note: in the end gutter beside the child it follows when the breakout is wide, in the column when it is not.
+
+Tokens:
+- --yeti-width-md — The default column width, chosen under the base measure so paragraphs fill it.
+- --yeti-space-md — The default gutter and row gap.
+- --yeti-text-sm — The note's text size.
+- --yeti-color-text-muted — The note's text colour.
+
+Accessibility:
+Purely visual. A bleeding child is still in reading order.
+
+## center (layout, class="center")
+
+Centers a column of content horizontally, up to a maximum width, with gutters on narrow screens.
+
+Attributes:
+- data-max: xs | sm | md | lg | xl (default) | 2xl — The widest the content column may be.
+- data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — The gutter on each side when the container is narrower than the maximum.
+- data-intrinsic (boolean) — Shrink the column to its content (still no wider than data-max) and center it, with each child centered on its own width inside it.
+
+### When to use it
+
+A center is the page column: the wrapper that keeps a page or a section from spreading across a wide screen, and keeps it off the edges of a narrow one. Use `data-max="lg"` for reading, `xl` or `2xl` for pages with sidebars and grids.
+
+### How it works
+
+`max-inline-size` caps the content, automatic inline margins split the remaining space equally, and `padding-inline` supplies the gutters. The box is `content-box`, so `data-max` is the width of the content, not the content plus gutters. `data-intrinsic` changes what is centered: the column shrinks to fit its content, still no wider than `data-max`, and that box is centered on the page, with each child centered on its own width inside it. Use it for a heading and a button that should sit in the middle rather than stretch.
+
+### Why this name
+
+Centering is the whole job. Foundation 6 readers: this is `.grid-container`, with the width and gutters as attributes instead of Sass variables.
+
+Tokens:
+- --yeti-width-xl — The default maximum.
+- --yeti-space-md — The default gutter.
+
+Accessibility:
+Purely visual.
+
+## cluster (layout, class="cluster")
+
+Lays its children out in a row that wraps, keeping one gap between them on both axes.
+
+Attributes:
+- data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between items, horizontally and between wrapped rows.
+- data-align: start | center (default) | end | stretch | baseline — Vertical alignment of items within a row.
+- data-justify: start (default) | center | end | between | around | evenly — How items are distributed along the row.
+
+### When to use it
+
+Use a cluster for a row of things that are sized by their content and may need to wrap: tags, buttons, navigation links, a logo beside a menu. When it wraps, the gap holds between rows as well as between items, so nothing needs a margin.
+
+### How it works
+
+A cluster is a wrapping flex row with a `gap`. `data-justify` distributes the items along the row, so `between` pushes the first and last to the edges, and `data-align` lines them up vertically within a row. Items keep their own width; a cluster never stretches them.
+
+```html
+<ul class="cluster" data-gap="xs" role="list">
+	<li>css</li>
+	<li>layout</li>
+	<li>intrinsic</li>
+</ul>
+```
+
+### Why this name
+
+The word is exact: items gather, they do not line up in columns. Foundation 6 reached for `.button-group` or a menu for the same job.
+
+Children:
+- > *: at least 1. Anything sized by its content: tags, buttons, links, a logo and a nav.
+
+Tokens:
+- --yeti-space-md — The default gap.
+
+Accessibility:
+Purely visual. Use a list element when the items are a list.
+
+## columns (layout, class="columns")
+
+Lays its children out as equal columns when the container is wider than a threshold, and as rows when it is not.
+
+Attributes:
+- data-threshold: xs | sm | md (default) | lg | xl | 2xl — The container width below which the columns become rows.
+- data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between columns, and between rows once they stack.
+- data-align: start | center | end | stretch (default) | baseline — Vertical alignment of the columns.
+- data-justify: start (default) | center | end | between | around | evenly — Distribution of the columns along the row when they do not fill it.
+- data-limit: 2 | 3 | 4 | 5 — The most columns allowed on one row; further children each take a full row.
+
+On children:
+- data-span on > *: 1 | 2 | 3 | 4 | 5 | 6 — How many shares of the row the child takes: 2 is twice a plain sibling. Below the threshold it stacks like the rest.
+
+### When to use it
+
+Use columns for a set of equals: pricing tiers, feature summaries, a row of statistics. They should be side by side when there is room and one under another when there is not, and the container, not the screen, should decide which.
+
+### How it works
+
+Every child has the same `flex-basis`: the threshold minus the container's width, multiplied by a large number. In a container wider than the threshold that number is hugely negative, which `flex-basis` clamps to zero, so `flex-grow: 1` shares the row equally between them. In a narrower one it is hugely positive, so each child fills a row. `data-limit` caps how many share a row; any child past the cap takes a full row of its own.
+
+```html
+<div class="columns" data-threshold="sm" data-limit="2">
+	<div>One</div>
+	<div>Two</div>
+	<div>Three, on its own row</div>
+</div>
+```
+
+A child with `data-span` takes that many shares of the row: `data-span="2"` beside a plain sibling is Foundation 6's eight-and-four, with no breakpoint, and it still stacks with the rest below the threshold.
+
+```html
+<div class="columns">
+	<article data-span="2">Two thirds.</article>
+	<aside>One third.</aside>
+</div>
+```
+
+### Why this name
+
+Yeti names layouts for what they do to their children, and what this one gives them is columns; the switching is the mechanism, not the point. Foundation 6 readers will recognise the job of `.grid-x` with `medium-4` cells; the difference is that the threshold is a container width, so the same markup works in a sidebar and a full-width band.
+
+Children:
+- > *: at least 2. The columns. Each gets an equal share of the row.
+- > [data-span]: at least 0. A child that takes several shares of the row: data-span="2" is twice a plain sibling. Below the threshold it stacks like the rest.
+
+Tokens:
+- --yeti-width-md — The default threshold.
+- --yeti-space-md — The default gap.
+
+Accessibility:
+Purely visual. Reading order is source order in both arrangements.
+
+## container (layout, class="container")
+
+Makes its box the thing a container query measures, so what is inside can respond to its width instead of the viewport's.
+
+### When to use it
+
+Around anything that should change shape at its own width, when the thing itself cannot measure its own box. A layout can query itself and change its children, but nothing can change its own tracks from inside its own query; wrap it in a container and query that.
+
+### How it works
+
+One declaration: the box becomes a size container. Nothing else. To target it by name in your own CSS, give the container a name in your stylesheet, since a name cannot come from an attribute:
+
+```css
+.container.sidebar-slot { container-name: slot; }
+@container slot (inline-size < 30rem) { .cluster { flex-direction: column; } }
+```
+
+The Yeti layouts that query themselves (`grid` with `data-fold`, `breakout` with notes, `timeline`) do not need one; this is for your own queries and for components that must restyle themselves.
+
+### Why this name
+
+It contains, and it is what a container query measures. Foundation 6's `.grid-container` was a page column; that job is `center`.
+
+Children:
+- > *: at least 1. Anything. The container itself arranges nothing.
+
+Accessibility:
+Purely structural.
+
+## cover (layout, class="cover")
+
+Fills at least the viewport's height and centers one child vertically, with optional content pinned above and below it.
+
+Attributes:
+- data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Minimum space between the centered child and whatever sits above or below it.
+
+On children:
+- data-center on > * (boolean) — Centers the child in the space the others leave; exactly one child carries it.
+
+### When to use it
+
+A cover is the hero section, the sign-in screen, the "coming soon" page: one thing centered in the height of the viewport, with a navigation bar above it or a footnote below it when you want them.
+
+### How it works
+
+The cover is a flex column with a minimum block size of `--yeti-cover-height`, `100dvh` by default so it tracks the browser chrome on phones. The child marked `data-center` gets automatic block margins, which take up all the free space equally above and below it; anything else sits at its natural size at the top or bottom. The gap keeps the centered child from touching its neighbours when the content is taller than the viewport.
+
+### Why this name
+
+The block covers the viewport. Foundation 6 had no primitive for this; people combined a full-height utility with vertical alignment classes on the grid.
+
+Children:
+- > *: at least 1. A header, the centered child, a footer: any of them optional except the centered one.
+- > [data-center]: at least 1, at most 1. Exactly one child carries data-center and is centered in the remaining space.
+
+Tokens:
+- --yeti-cover-height — The minimum block size. Set it to auto for a cover no taller than its content.
+- --yeti-space-md — The default gap.
+
+Accessibility:
+Purely visual. Keep the page's h1 inside the cover when the cover is the hero.
+
+## frame (layout, class="frame")
+
+Holds one child in a fixed aspect ratio, cropping media to fill it and centering anything else.
+
+Attributes:
+- data-ratio: 1/1 | 4/3 | 3/2 | 16/9 (default) | 21/9 — Width to height.
+
+### When to use it
+
+Use a frame wherever images of unpredictable shape must present as the same shape: card thumbnails, avatars, a video embed that should not reflow the page while it loads. The frame owns the shape; the media fills it.
+
+### How it works
+
+`aspect-ratio` sizes the frame from its width, and `overflow: hidden` clips. An image or video child is stretched to both dimensions with `object-fit: cover`, so it fills without distortion and loses only the overflow. Any other child, a placeholder or an icon, is centered with flexbox.
+
+### Why this name
+
+It is what a picture frame does: fix the shape and crop what is inside it. Foundation 6 had `.responsive-embed` for video ratios only; a frame does the same for anything.
+
+Children:
+- > *: at least 1, at most 1. One child: an image, video or picture is cropped to fill; anything else is centered.
+
+Accessibility:
+Cropping hides parts of an image. Make sure the alt text describes what is visible, or use data-ratio to match the image so nothing is lost.
+
+## grid (layout, class="grid")
+
+Fits as many equal columns as the container allows at a minimum width, up to an optional maximum count.
+
+Attributes:
+- data-min: none | xs (default) | sm | md | lg | xl | 2xl — The narrowest a column may be. With none, only data-columns decides the count; none is meant to be paired with data-columns, and alone gives a single full-width column.
+- data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between columns and rows.
+- data-columns: 1 | 2 | 3 | 4 | 5 | 6 — The most columns allowed. Fewer appear when the container cannot fit that many at data-min; with data-min="none" the count is exact. With data-fold, the count only ever halves.
+- data-fold (boolean) — Halve the column count as the grid narrows instead of stepping down one at a time. Needs data-columns 2, 4, or 6 and uses data-min as the width per column. data-min="none" has no meaning with a fold: the count needs a width per column.
+- data-ranks: 2 | 3 | 4 | 5 | 6 — Line up the parts of the children across each row: the value is how many parts a child has, and each part takes one row.
+
+### When to use it
+
+Use a grid for a collection of like things that should line up in equal cells: cards, thumbnails, team members, products. The grid decides how many columns fit; you decide how narrow a cell may get and, when it matters, how many columns there may be at most.
+
+### How it works
+
+The track list is `repeat(auto-fit, minmax(<min>, 1fr))`, where `<min>` is the larger of `data-min` and the container divided by `data-columns`. Without `data-columns` that second value is zero, so the minimum width alone decides the count. With it, the container split N ways becomes the floor as soon as it is wider than the minimum, so there are never more than N columns, and still fewer when even N would squeeze a cell below the minimum. `data-min="none"` removes the width floor and gives exactly N. `data-min="none"` is meant to be paired with `data-columns`; alone it gives a single full-width column instead of a runaway number of tracks.
+
+```html
+<div class="grid" data-columns="4" data-min="none" data-gap="sm">
+	<div>Always</div>
+	<div>four</div>
+	<div>across</div>
+	<div>here</div>
+</div>
+```
+
+Add `data-fold` and the count halves instead of stepping: with `data-min="xs"` and `data-columns="4"` the grid is four across while its content box is at least four `xs` widths, two by two while it is at least two, and a single column below that, never three. The thresholds are the width token's default multiplied by the count, so a theme that changes the token moves the token, not the fold. The closest thing with no container query is two `columns` nested in a third, and it is not the same result: it steps at its own thresholds (inner `sm`, outer `md`) rather than the fold's.
+
+```html
+<div class="columns" data-threshold="md">
+	<div class="columns" data-threshold="sm"><div>One</div><div>Two</div></div>
+	<div class="columns" data-threshold="sm"><div>Three</div><div>Four</div></div>
+</div>
+```
+
+The fold is one attribute on one element; the nest is two wrappers. Use whichever you would rather explain.
+
+`data-ranks` lines up neighbours' parts: with `data-ranks="3"` each child is a subgrid of three rows, so every first part sits in row one, every second in row two, and so on, across the row. Give the number of parts the fullest child has; a child with fewer leaves its last rows empty. A card in a ranked grid keeps its picture and footer aligned with its neighbours' and does not switch to its thumbnail row. A ranked child cannot also be a size container, because a size container cannot be a subgrid; the card turns its own container off inside a ranked grid for this reason.
+
+### Why this name
+
+It is a grid and nothing else is. Foundation 6 readers: this replaces the Block Grid, and `data-columns="4"` is the intrinsic form of `large-up-4`, with the shrinking at narrow widths handled by the minimum instead of by `small-up-1 medium-up-2`.
+
+Children:
+- > *: at least 1. The cells. All are the same width.
+
+Tokens:
+- --yeti-width-xs — The default minimum column width.
+- --yeti-space-md — The default gap.
+
+Accessibility:
+Purely visual. Use a list when the cells are a list of like things.
+
+## icon (layout, class="icon")
+
+Sizes an inline SVG to the surrounding text and aligns it with the text beside it.
+
+Attributes:
+- data-gap: none | xs (default) | sm | md | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the icon and its text.
+- data-align: start | center (default) | end | stretch | baseline — How the icon lines up with the text: centered on the line, or on the baseline.
+
+### When to use it
+
+Wrap an inline SVG in an icon whenever it should behave like a character: in a link, a button, a list item, a heading. It takes the size and colour of the text around it and stays aligned with it, at any font size.
+
+### How it works
+
+The wrapper is an inline flex row with a small gap. The SVG is sized to one em, so it follows the text size, and `currentColor` inside it follows the text colour. `data-align` chooses between centering on the line, which suits buttons and labels, and sitting on the baseline, which suits running text; the baseline setting nudges the glyph down an eighth of an em, because an icon whose bottom edge sits exactly on the baseline reads as floating.
+
+```html
+<button class="icon" type="button">
+	<svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+	Save
+</button>
+```
+
+### Why this name
+
+An icon is what it holds. Foundation 6 shipped an icon font instead, which set size and alignment by font rules; inline SVG needs this small layout to do the same.
+
+Children:
+- > svg: at least 1, at most 1. The icon, an inline SVG, sized to one em.
+
+Tokens:
+- --yeti-space-xs — The default gap.
+
+Accessibility:
+When the icon sits beside text, give the SVG aria-hidden="true" so the text is the name. When it stands alone, give the SVG role="img" and an aria-label.
+
+## layer (layout, class="layer")
+
+Stacks its children in one box, later ones on top, with the box as tall as the tallest of them.
+
+Attributes:
+- data-align: start | center | end | stretch (default) | baseline — Vertical alignment of every child in the box. baseline behaves as start here.
+
+On children:
+- data-align-self on > *: start | center | end | stretch | baseline — Where the child sits vertically: start, center, end, stretch, or baseline.
+- data-justify-self on > *: start | center | end | stretch — Where the child sits horizontally: start, center, end, or stretch.
+
+### When to use it
+
+A caption over a picture, a badge in the corner of a thumbnail, a heading over a hero image, a loading message over a form. Anything that sits on top of something else and should still take part in the layout: the box is as tall as its tallest child, so nothing overlaps its neighbours.
+
+### How it works
+
+Every child is placed in the same grid cell, in source order, so later children paint over earlier ones. `data-align` on the layer sets where every child sits vertically when it is shorter than the box; by default they stretch to fill it. To place one child on its own, put `data-align-self` and `data-justify-self` on that child: a badge in the top-right corner is `data-align-self="start" data-justify-self="end"`. Compare `overlay`, which takes one marked child out of the flow and centers it over the rest.
+
+```html
+<div class="layer">
+	<img src="thumb.jpg" alt="">
+	<span data-align-self="start" data-justify-self="end">New</span>
+</div>
+```
+
+### Why this name
+
+Layers is what every design tool calls things stacked in one frame. Foundation 6 readers did this with a positioned wrapper and an absolutely positioned child, which is what `overlay` still does when you need it.
+
+Children:
+- > *: at least 2. The layers, bottom first.
+- > [data-align-self]: at least 0. A child that places itself vertically: start, center, end, stretch, or baseline.
+- > [data-justify-self]: at least 0. A child that places itself horizontally: start, center, end, or stretch.
+
+Accessibility:
+Everything stays in reading order. Text laid over a picture needs a contrast treatment (a scrim or a solid panel); the layer does not add one.
+
+## masonry (layout, class="masonry")
+
+Packs items of uneven height into columns with no gaps under the short ones.
+
+Attributes:
+- data-min: none | xs (default) | sm | md | lg | xl | 2xl — The narrowest a column may be. none is meant to be paired with data-columns, which then gives an exact count; alone it gives a single full-width column.
+- data-columns: 1 | 2 | 3 | 4 | 5 | 6 — The most columns allowed. Fewer appear when the container cannot fit that many at data-min.
+- data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between columns and between items.
+
+### When to use it
+
+A wall of photos, cards of unpredictable length, quotes of different sizes: anything where equal rows would leave holes under the short items. If the items are roughly equal, use a `grid` and keep the rows.
+
+### How it works
+
+Everywhere, the masonry is a multi-column layout: `data-min` is the column width, `data-columns` caps the count, and each item is told not to break across columns. In that form items flow down the first column, then the next, so the reading order runs in columns. Where the browser supports native masonry, the same element becomes a grid with masonry rows, items read across as in a grid, and the gap is a real gap. Both forms use the same attributes and the same tokens, so nothing in your markup changes when a browser gains support. In the multi-column fallback the last item of each column keeps its bottom gap, so the fallback is one gap taller than the native form.
+
+### Why this name
+
+The word everyone already uses for the brick-wall arrangement. Foundation 6 had nothing for it; people reached for a JavaScript library, which is the thing this layout replaces.
+
+Children:
+- > *: at least 2. The items. Each keeps its own height.
+
+Tokens:
+- --yeti-width-xs — The default minimum column width.
+- --yeti-space-md — The default gap.
+
+Accessibility:
+In browsers without native masonry, items read down each column and then across. Keep the source order meaningful on its own.
+
+## overlay (layout, class="overlay")
+
+Holds one child over the rest, centered, without pushing anything around; the parent is the box it covers.
+
+Attributes:
+- data-fixed (boolean) — Center the held child over the viewport instead of this box, and keep it there while the page scrolls.
+- data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — The least space kept between the held child and the edges of the box.
+
+On children:
+- data-over on > * (boolean) — Lifts the child out of the flow and centers it over the box; exactly one child carries it.
+
+### When to use it
+
+An overlay holds one thing on top of another without taking part in the layout underneath: a "sold out" stamp on a product image, a loading message over a form, a notice over the whole page with `data-fixed`. It is the positioning half of a dialog; the behaviour half is a component's job. Compare `layer`, which stacks all its children in flow and grows to the tallest; an overlay's held child changes nothing about the box.
+
+### How it works
+
+The overlay is the box being covered, so it is positioned, and its plain children flow as usual. The one child carrying `data-over` is absolutely positioned with its top-left corner at the box's center, then translated back by half its own size, which centers it whatever its dimensions. Its maximum width and height are the box's minus a gap on each side, and it scrolls internally rather than growing beyond that. `data-fixed` on the overlay makes the held child `fixed`, so the box it centers on is the viewport.
+
+```html
+<form class="overlay">
+	<label for="email">Email</label>
+	<input id="email" type="email">
+	<p data-over>Saving…</p>
+</form>
+```
+
+### Why this name
+
+Overlay is what everyone already calls a thing that lies over other things. Foundation 6's Reveal was the modal; the plain positioning had no name.
+
+Children:
+- > *: at least 2. The content underneath, in normal flow, and one held child.
+- > [data-over]: at least 1, at most 1. Exactly one child carries data-over; it leaves the flow and is centered over the box.
+
+Tokens:
+- --yeti-space-md — The default edge gap.
+
+Accessibility:
+Positioning only. The held child stays in reading order where it is in the source. A held child that interrupts the page needs focus management and a way to dismiss it, which the dialog and tooltip components provide; use those rather than this primitive alone for anything modal.
+
+## scroller (layout, class="scroller")
+
+Lays its children out in a single row that scrolls horizontally.
+
+Attributes:
+- data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between items.
+- data-snap (boolean) — Snap each item's start edge into place as the track scrolls.
+- data-width: xs | sm | md | lg | xl | 2xl — Give every item this width instead of its natural one.
+
+### When to use it
+
+A scroller is for a row that should stay a row: a strip of photos, a set of related cards, a filmstrip of steps. Where a cluster would wrap, a scroller keeps everything on one line and lets the visitor move along it.
+
+### How it works
+
+A flex row that does not wrap, with `overflow-x: auto`. Children are told not to shrink, so the row overflows and the container scrolls. `data-snap` adds scroll snapping so items land cleanly at the start edge; `data-width` gives every item the same width so the strip reads as a sequence of equal frames. Because a scrolling region is an interactive one, the markup carries `tabindex="0"` and an accessible name; the validator insists.
+
+### Why this name
+
+What the visitor does is scroll, so the layout is a scroller; a name for the mechanism (a reel, a track) would say less. Foundation 6 had no layout for a row that scrolls; people hid the overflow by hand.
+
+Children:
+- > *: at least 1. The items. None shrinks; the track scrolls instead. A single wide item (a table, an image) is legal: the scroller then just gives that one item horizontal overflow.
+
+Tokens:
+- --yeti-space-md — The default gap.
+
+Accessibility:
+Required: tabindex, aria-label | aria-labelledby
+- Tab: Focuses the track so the arrow keys can scroll it.
+- ArrowLeft / ArrowRight: Scroll the track.
+A scrollable region must be reachable from the keyboard: give it tabindex="0", role="region", and a name with aria-label.
+
+## sidebar (layout, class="sidebar")
+
+Places a fixed-width sidebar beside flexible content, and stacks them when the content would drop below half the width.
+
+Attributes:
+- data-side: start (default) | end — Which child is the sidebar: the first (start) or the last (end).
+- data-width: xs | sm (default) | md | lg | xl | 2xl — The sidebar's preferred width.
+- data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the two children, side by side or stacked.
+- data-align: start | center | end | stretch (default) | baseline — Vertical alignment of the two children when side by side.
+
+### When to use it
+
+A sidebar pairs something with a natural width, such as a navigation list, a figure, or a form's summary, with content that should take whatever is left. It handles the awkward middle widths on its own: the two sit side by side as long as the content keeps at least half the space, and stack when it cannot.
+
+### How it works
+
+Both children live in a wrapping flex row. The sidebar child gets `data-width` as its basis; the content child grows aggressively from a zero basis and refuses to shrink below half the container. When the container is too narrow for sidebar plus half, the content wraps to its own line and both fill the width. There is no breakpoint; the switch happens wherever the numbers say it should.
+
+```html
+<div class="sidebar" data-side="end">
+	<article>Main content first in the source.</article>
+	<aside>Shown after it.</aside>
+</div>
+```
+
+### Why this name
+
+The word says exactly what the fixed child is. Foundation 6 built this with `.grid-x` columns and `medium-8`/`medium-4` classes, which fixed the switch to a viewport breakpoint rather than to the content.
+
+Children:
+- > *: at least 2, at most 2. Exactly two: the sidebar and the content, in either order according to data-side.
+
+Tokens:
+- --yeti-width-sm — The default sidebar width.
+- --yeti-space-md — The default gap.
+
+Accessibility:
+Purely visual. Put the content first in the source when it matters more, and use data-side="end" to show the sidebar after it.
+
+## stack (layout, class="stack")
+
+Stacks its children vertically with one consistent gap between them.
+
+Attributes:
+- data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between children. A pair such as sm-lg grows fluidly from the first stop to the second.
+- data-align: start | center | end | stretch (default) | baseline — Horizontal alignment of the children.
+- data-fill (boolean) — Make the stack at least as tall as the viewport, so a child carrying data-split reaches the bottom.
+
+On children:
+- data-split on > * (boolean) — Pushes the child and everything after it to the end of the stack when the stack is taller than its content.
+
+### When to use it
+
+Reach for a stack whenever things sit one above another and should be spaced evenly: the sections of a card, the fields of a form, the parts of a sidebar. Nest stacks with different gaps to express hierarchy: a large gap between sections, a small one inside each.
+
+### How it works
+
+The stack is a flex column with a `gap`, so the space between children is the stack's decision and children's own margins are zeroed. `data-align` controls horizontal alignment. Give one child `data-split` and it, with everything after it, moves to the end whenever the stack is taller than its content, which is how a card keeps its actions at the bottom. Add `data-fill` and the stack is at least as tall as the viewport, which with a `data-split` footer is the whole of a sticky footer.
+
+```html
+<div class="stack" data-gap="sm" data-align="start">
+	<h3>Title</h3>
+	<p>Body</p>
+	<a href="#" data-split>Action</a>
+</div>
+```
+
+### Why this name
+
+No other word says it as plainly: things stacked, one on another. Foundation 6 had no equivalent; the space between blocks came from each element's own margins.
+
+Children:
+- > *: at least 1. Anything. Each child's margins are reset; the stack owns the space between them.
+- > [data-split]: at least 0, at most 1. At most one child may carry data-split; it and everything after it are pushed to the end of the stack when the stack is taller than its content.
+
+Tokens:
+- --yeti-space-md — The default gap.
+- --yeti-cover-height — The minimum block size when data-fill is set.
+
+Accessibility:
+Purely visual. Reading order is source order.
+
+## timeline (layout, class="timeline")
+
+Lays its entries along a rail with a marker each, on one side, or on alternate sides of a centred rail when it is wide.
+
+Attributes:
+- data-gap: none | xs | sm | md | lg (default) | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between entries.
+- data-alternate (boolean) — Put entries on alternate sides of a centred rail once the list is wide enough.
+
+### When to use it
+
+A history, a changelog, the steps of a process, a schedule: entries in order along a line. It is an ordered list with a rail, so it reads as a list and looks like a timeline.
+
+### How it works
+
+The list is a column of entries at the gap, with a rail down its start edge and a marker on the rail beside each entry. Add `data-alternate` and, once the list's content box is at least `lg` wide, the rail moves to the centre and the entries take turns on either side of it, markers still on the rail; narrower, they fall back to one side. The switch is the list's own width, so a timeline in a sidebar stays single-sided while the same one across a page alternates.
+
+```html
+<ol class="timeline" data-gap="md" role="list">
+	<li><time datetime="2026-01-01">January</time><p>Started.</p></li>
+	<li><time datetime="2026-06-01">June</time><p>Shipped.</p></li>
+</ol>
+```
+
+### Why this name
+
+It is a line of time. Foundation 6 had nothing for it; people reached for a snippet and a breakpoint.
+
+Children:
+- > li: at least 2. The entries, in order. Put a time, a heading, and text inside each.
+
+Tokens:
+- --yeti-space-lg — The default gap, and the room between the rail and the entries.
+- --yeti-color-border-strong — The rail and the markers.
+
+Accessibility:
+Use an ordered list, so the sequence is announced, and a time element with datetime in each entry. The rail and markers are decorative. Give the ol role="list": removing the list markers removes the list semantics in some engines.
+
+## hero (recipe, class="hero")
+
+Fills the viewport's height with copy on one side and a figure on the other, centered, and stacks them below a container width; the one-class form of a cover holding columns.
+
+Attributes:
+- data-threshold: xs | sm | md | lg (default) | xl | 2xl — The container width below which copy and figure become rows.
+- data-gap: none | xs | sm | md | lg (default) | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between copy and figure.
+- data-ratio: 1/1 | 4/3 (default) | 3/2 | 16/9 | 21/9 — The figure's aspect ratio.
+- data-align: start | center (default) | end | stretch | baseline — Vertical alignment of copy and figure when side by side.
+- data-side: start | end — Force the figure to the start or the end regardless of source order. Moves it visually only; reading order stays as written.
+
+### When to use it
+
+The opening of a landing page: a headline and a call to action on one side, a picture on the other, filling the first screen. Below the threshold the two become rows and the band grows to fit. Put the picture first or last as you want it read; `data-side` moves it without changing the source. The copy must not have an img, video, or picture as a direct child (it would be taken for a second figure).
+
+### Built from primitives
+
+A `cover` centers one child in the viewport's height. Give it `columns` carrying `data-center`, and inside the columns a `stack` for the copy and a `frame` for the picture. The threshold on the columns is what turns the two halves into rows.
+
+```html
+<header class="cover">
+	<div class="columns" data-center data-threshold="lg" data-gap="lg" data-align="center">
+		<div class="stack" data-gap="sm">
+			<h1>Build interfaces that read their own container</h1>
+			<p>Fifteen layouts, one attribute vocabulary, no breakpoints.</p>
+			<a href="#">Get started</a>
+		</div>
+		<div class="frame" data-ratio="4/3">
+			<img src="peak.jpg" alt="A snow ridge at first light">
+		</div>
+	</div>
+</header>
+```
+
+The one-class form does the same in one element: a wrapping row whose lines are centered in the band's height. Its test measures both forms against each other.
+
+### Why this name
+
+"Hero" is what designers have called the big opening image since the print era, and every framework since Bootstrap 2 has shipped one under that name. The split is the common form; a hero with no picture is a `cover`.
+
+Children:
+- > *: at least 2, at most 2. Exactly two: the copy and the figure (an img, video, or picture, or an element wrapping one); the copy (the body) must not have an img, video, or picture as a direct child (it would be taken for a second figure). A figure with a figcaption keeps its caption below the picture.
+
+Tokens:
+- --yeti-cover-height — The band's minimum block size.
+- --yeti-width-lg — The default threshold.
+- --yeti-space-lg — The default gap.
+- --yeti-space-sm — The gap between the copy's children.
+- --yeti-text-sm — Text size of the caption.
+- --yeti-color-text-muted — The caption.
+
+Accessibility:
+When the hero is the page's opening, keep the h1 inside the copy. data-side changes where the figure sits, not where it is read.
+
+## media (recipe, class="media")
+
+Puts a figure beside a block of text and stacks them when the text would drop below half the width; the one-class form of a sidebar holding a frame and a stack.
+
+Attributes:
+- data-width: xs (default) | sm | md | lg | xl | 2xl — The figure's preferred width.
+- data-ratio: 1/1 (default) | 4/3 | 3/2 | 16/9 | 21/9 — The figure's aspect ratio.
+- data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the figure and the text.
+- data-align: start | center | end | stretch (default) | baseline — Vertical alignment of figure and text when side by side.
+- data-side: start | end — Force the figure to the start or the end regardless of source order. Moves it visually only; reading order stays as written.
+
+### When to use it
+
+A comment with an avatar, a product with its thumbnail, a speaker with a headshot: whenever a picture sits beside a few lines of text, this is the shape. It stays side by side while the text keeps at least half the width and stacks when it cannot. Put the picture first for picture-left, last for picture-right; the reading order follows. The body must not have an img, video, or picture as a direct child (it would be taken for a second figure).
+
+### Built from primitives
+
+A recipe is a shortcut, not a new idea. The same result is three layouts you already know: a `sidebar` whose first child is a `frame` and whose second is a `stack`. Reach for this form when you want to change any part of it, since every knob is an attribute you can see.
+
+```html
+<div class="sidebar" data-width="sm">
+	<div class="frame" data-ratio="1/1">
+		<img src="ada.jpg" alt="Portrait of Ada Lovelace">
+	</div>
+	<div class="stack" data-gap="sm">
+		<h3>Ada Lovelace</h3>
+		<p>Wrote the first published algorithm, for Babbage's Analytical Engine.</p>
+	</div>
+</div>
+```
+
+The one-class form renders the same geometry, and its test proves it. Its attributes are the ones the primitives take. Its CSS is its own file, so a project that prefers the composed form can leave `css/recipes/media/media.css` out of a hand-built bundle. One difference: the sidebar's `data-side` picks which child is the sidebar, while the recipe's `data-side` moves the figure with `order`, which changes where it sits but not where it is read.
+
+### Why this name
+
+Nicole Sullivan named the media object in 2010 and the name stuck across a decade of frameworks, Foundation 6's `.media-object` included. One word of it is enough.
+
+Children:
+- > *: at least 2, at most 2. Exactly two: the figure (an img, video, or picture, or an element wrapping one) and the body; the body must not have an img, video, or picture as a direct child (it would be taken for a second figure). A figure with a figcaption keeps its caption below the picture.
+
+Tokens:
+- --yeti-width-xs — The default figure width.
+- --yeti-space-md — The default gap.
+- --yeti-space-sm — The gap between the body's children.
+- --yeti-text-sm — Text size of the caption.
+- --yeti-color-text-muted — The caption.
+
+Accessibility:
+The figure is cropped to its ratio, so alt text should describe what is visible. data-side changes where the figure sits, not where it is read.
+
+## shell (recipe, class="shell")
+
+The page skeleton: header on top, footer at the bottom of the viewport when the page is short, and a body row where nav and aside sit beside main while there is room.
+
+Attributes:
+- data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the rows, and between nav, main, and aside.
+- data-width: xs | sm (default) | md | lg | xl | 2xl — The preferred width of nav and aside. Three regions share a row once the container is about four times this width plus the gaps; two regions need about half that.
+
+### When to use it
+
+Every page has a skeleton, and most of them are this one: a header, a footer that should sit at the bottom of the screen even when the page is short, and a middle that may have navigation down one side or related material down the other. Put the class on `body` and the landmarks do the rest. Three regions share a row once the container is about four times `data-width` plus the gaps; two regions need about half that.
+
+### Built from primitives
+
+A `stack` with `data-fill` is at least as tall as the viewport, and a footer carrying `data-split` drops to its bottom. In the middle, a `sidebar` puts the nav beside the main content until the content would fall below half the width. That is the whole page.
+
+```html
+<body class="stack" data-fill>
+	<header>Site header</header>
+	<div class="sidebar" data-width="sm">
+		<nav aria-label="Section">Section navigation</nav>
+		<main>
+			<h1>Page title</h1>
+			<p>The main content, which takes what is left.</p>
+		</main>
+	</div>
+	<footer data-split>Site footer</footer>
+</body>
+```
+
+The one-class form adds the third region: an `aside` after `main` in the same body row takes the same width as the nav and sits at the end. The body row needs its own element, the `div`, because three regions cannot share a row with a header and footer above and below them without one; a page with only `main` may skip it.
+
+### Why this name
+
+A shell is the part of the page that is there before any content is, and stays when the content changes. Foundation 6 readers built this with `.grid-container` and a sticky-footer snippet from the forums; the shell is both, with the landmarks as the API.
+
+Children:
+- > *: at least 1. In order: an optional header, the body (a div holding nav, main, and aside, in that source order, or a bare main when there are no side regions), and an optional footer.
+- > header: at least 0, at most 1. undefined
+- > footer: at least 0, at most 1. undefined
+- > main: at least 0, at most 1. undefined
+- > div: at least 0, at most 1. The body row. Its nav and aside take data-width; its main takes the rest and never drops below half.
+
+Tokens:
+- --yeti-cover-height — The shell's minimum block size; the viewport by default.
+- --yeti-space-md — The default gap.
+- --yeti-width-sm — The default nav and aside width.
+
+Accessibility:
+Meant for body or the page's outermost element. The landmarks do the work: one main; a label on nav when the page has more than one; aside for content that is complementary, not primary.
+
+## accordion (component, class="accordion")
+
+A column of disclosures built on details and summary, each opening to show its panel, with the browser doing the opening, the keyboard, and the announcing.
+
+### When to use it
+
+A run of questions and answers, a set of sections most readers only want one of, a long form split into stages. Not for content everyone needs: if it matters, leave it open.
+
+### How it works
+
+Each panel is a `details` with a `summary`, so the opening, the keyboard, and the announced state come from the browser rather than from Yeti. The component draws the lines between panels, the padding, and a chevron that turns when the panel opens.
+
+Each summary sits on its own surface, clearly apart from the answer below it, and moves a step further under the pointer. That is what keeps a set of rows reading as rows rather than as one undivided block; an open one also keeps a line under it. Three tokens carry it: `--yeti-accordion-surface` for the set and so for the panels, `--yeti-accordion-summary` for a row at rest, and `--yeti-accordion-summary-hover` for the one under the pointer.
+
+The last two are mixed from the first toward the text colour rather than picked off the surface ramp, because the ramp's own steps are too small to read here. Mixing toward text also moves the right way by itself in both schemes, darkening the row on a light page and lifting it on a dark one, and a theme that restyles `--yeti-color-surface` or `--yeti-color-text` gets a header that still works without redefining anything.
+
+The panel grows open rather than appearing. A `details` cannot animate its own height to `auto` in every engine, because the keywords that make `auto` interpolable are Chromium's alone, so the set makes each `details` a two-row grid instead: the summary takes the first row and the generated panel the second, and the transition runs on that row's size. That works in all three engines, and the panel clips its overflow so the content is revealed rather than squashed. The rows are packed to the start of the grid, because an `fr` row is a share of the leftover space and the summary would otherwise take part in that sum and visibly swell while the share was being interpolated.
+
+Closing animates in Chromium and Firefox. WebKit shuts the panel at once, because it drops the panel's content before the row has anything left to shrink. Opening is smooth everywhere, which is the direction people watch.
+
+Under `prefers-reduced-motion` the whole thing collapses with the rest of Yeti's motion, and the panel simply appears.
+
+To open one at a time, give every `details` the same `name`. That is the browser's own exclusive accordion, and it needs nothing from Yeti. There is deliberately no Yeti attribute for it: CSS cannot set an attribute, so the only way to offer one would be a script, and this is a component that should never need one.
+
+```html
+<div class="accordion">
+	<details name="plans" open>
+		<summary>Monthly</summary>
+		<p>Cancel whenever you like.</p>
+	</details>
+	<details name="plans">
+		<summary>Yearly</summary>
+		<p>Two months free.</p>
+	</details>
+</div>
+```
+
+### Accessibility
+
+A `summary` is a button to assistive tech, and its panel's state is announced as it opens and closes, so nothing needs ARIA. `summary` is not a heading, so if the rows are section titles, put a heading element inside each one. Keep the summary's text meaningful on its own, since a reader may hear the rows in a list before choosing one.
+
+Children:
+- > details: at least 2. One disclosure each. Give them all the same name attribute to have the browser close the others when one opens.
+- summary: at least 2. The row that opens its panel; one per details, first inside it.
+
+Tokens:
+- --yeti-accordion-border — The line between panels and around the set.
+- --yeti-accordion-padding — Padding of a summary and its panel.
+- --yeti-accordion-surface — Background of the set, and so of an open panel.
+- --yeti-accordion-summary — Background of a summary row, set apart from the panel below it.
+- --yeti-accordion-summary-hover — Background of a summary under the pointer.
+- --yeti-border-width — Width of those lines.
+- --yeti-radius-md — Corner of the set.
+- --yeti-space-sm — Gap between a summary's text and its chevron.
+- --yeti-weight-strong — Weight of the summary text.
+- --yeti-duration-fast — How long the chevron takes to turn.
+- --yeti-ease — The curve of both transitions.
+- --yeti-duration-base — How long a panel takes to open or close.
+
+Accessibility:
+- Tab: Moves to the next summary.
+- Enter / Space: Opens or closes the panel under the focused summary.
+This is native: details is a disclosure, summary is its button, and the open state is the open attribute, all announced without help. Put a heading inside the summary if the row is a section title, since summary is not a heading by itself. To open one at a time, give every details the same name attribute, which is the browser's own exclusive accordion; Yeti adds no attribute for it, because CSS cannot set one and script should not be needed.
+
+## affix (component, class="affix")
+
+Joins a control with what belongs beside it, a unit, a symbol, a button, or another control, into one thing with a shared border and height.
+
+### When to use it
+
+A price with its currency, a distance with its unit, a search box with its button, a URL with a fixed domain after it, a country code beside a phone number. Whatever is joined shares one border and one height, so the parts read as one thing.
+
+### How it works
+
+A flex row. Every control grows; a `span` becomes a labelled box on the sunken surface; a `button` keeps its own colours. Inner corners are squared and each border overlaps the next by one width, so the seam is a single line. The group sets no size of its own: it reads the field around it, so `data-size` on the field scales the whole row.
+
+```html
+<div class="field" data-size="lg">
+	<label for="site">Site</label>
+	<div class="affix">
+		<input id="site" type="text" aria-describedby="site-domain">
+		<span id="site-domain">.foundationcss.com</span>
+	</div>
+</div>
+```
+
+### Accessibility
+
+The prefix is not part of the control, so a screen reader will not read it with the value unless you connect them: give the `span` an id and put it in the control's `aria-describedby`, or include the unit in the label ("Price in dollars"). The field's label still points at one control with `for`; when the affix joins two controls, the other one needs its own `aria-label`.
+
+```html
+<div class="field">
+	<label for="phone">Phone</label>
+	<div class="affix">
+		<select aria-label="Country code"><option>+1</option><option>+44</option></select>
+		<input id="phone" type="tel">
+	</div>
+</div>
+```
+
+Children:
+- > *: at least 2. The controls and their attachments, in visual order.
+- > input: at least 0. A control; every control grows to share the row.
+- > select: at least 0. A control; every control grows to share the row.
+- > span: at least 0, at most 2. A text prefix or suffix.
+- > .button: at least 0, at most 2. A button prefix or suffix.
+
+Tokens:
+- --yeti-control-radius — Outer corners.
+- --yeti-control-border — Border of the attachments.
+- --yeti-border-width — The width the members overlap by.
+- --yeti-space-sm — Inline padding of an attachment.
+- --yeti-text-md — Text size of an attachment.
+- --yeti-color-text-muted — Text of an attachment.
+- --yeti-color-surface-sunken — Background of an attachment.
+
+Accessibility:
+A prefix or suffix that carries meaning (a currency, a unit) must reach the control's accessible name or description: give the span an id and add it to the control's aria-describedby, or say it in the label. When the affix holds more than one control, the field's label names one of them and each other control needs its own aria-label. A button in the affix is an ordinary button. Usually the affix is the control slot of a field.
+
+## alert (component, class="alert")
+
+A message in a hue: a tinted box with a coloured edge, an optional icon, and an optional close button that the module wires up.
+
+Attributes:
+- data-variant: primary (default) | secondary | success | warning | alert | neutral — Which hue: success for done, warning for careful, alert for wrong, primary for news.
+- data-emphasis: high | medium (default) | low — How loud: medium is a tint, high a solid fill, low the border alone.
+
+On children:
+- data-dismiss on > button (boolean) — The close button; removes the alert when alert.js is loaded.
+
+module: alert.js (optional)
+
+### When to use it
+
+Something the reader should know now: the form was saved, the trial ends on Friday, the address did not validate. One message, one hue, in the flow of the page where it applies. For a message that arrives and leaves on its own, wait; that is not this.
+
+### How it works
+
+A flex row: an optional icon, the message, and an optional close button pushed to the end. The hue draws the border and, at `medium` emphasis, a tint behind the text; `high` fills the box for the message that must be seen; `low` keeps the border alone. The start edge is four border widths thick, the same mark the card uses for a variant.
+
+The close button is a `button` carrying `data-dismiss`. Yeti's `alert.js`, loaded once with `<script type="module" src="…/js/alert.js">`, listens on the document: a click fades the alert over the fast duration and removes it. Without the module the button does nothing, so leave it out on pages that do not load the module.
+
+```html
+<div class="alert" role="alert" data-variant="alert" data-emphasis="high">
+	<div><strong>Payment failed.</strong> The card was declined.</div>
+	<button type="button" data-dismiss aria-label="Dismiss">×</button>
+</div>
+```
+
+### Accessibility
+
+`role="status"` for the usual notice, which is announced politely when it appears; `role="alert"` only for something urgent, which interrupts whatever the reader is doing. Neither role announces content that is already on the page at load; they matter for alerts inserted later. The colour is decoration: say "Saved" or "Failed" in the words. The close button needs a name, and after it removes the alert focus moves to where the alert was, so the reader keeps their place; put an alert near the thing it describes rather than far above it.
+
+Children:
+- > svg: at least 0, at most 1. An icon, first, sized to the text.
+- > [data-dismiss]: at least 0, at most 1. A button, last, that removes the alert when alert.js is loaded.
+- > *: at least 1. The message, in any element.
+
+Tokens:
+- --yeti-alert-radius — Corner radius.
+- --yeti-alert-padding — Padding inside.
+- --yeti-control-size — Size of the close button.
+- --yeti-border-width — The border; the start edge is four of them.
+- --yeti-space-sm — Gap between the icon, the body, and the close button.
+- --yeti-color-text — The body text.
+- --yeti-color-primary — The default variant's colour, when data-variant is absent.
+- --yeti-color-primary-subtle — The default variant's tint.
+- --yeti-color-primary-soft — The default variant's soft stop.
+- --yeti-color-primary-strong — The default variant's strong stop.
+- --yeti-color-primary-text — The default variant's text colour.
+- --yeti-on-primary — Text on the default variant's colour.
+- --yeti-duration-fast — How long the alert takes to fade out when alert.js dismisses it.
+
+Accessibility:
+- Enter / Space: On the close button, removes the alert.
+Use role="status" for the usual notice, which is announced politely, and role="alert" only for something urgent, which interrupts. Content present at page load is not announced by either role; the roles matter for alerts inserted later. Meaning carried by the colour must also be in the words. The close button needs a name. Without the module the button does nothing, so leave it out on pages that do not load alert.js.
+
+## badge (component, class="badge")
+
+A small inline label for a status or a count, tinted by a hue.
+
+Attributes:
+- data-variant: primary (default) | secondary | success | warning | alert | neutral — Which hue tints the badge.
+- data-emphasis: high | medium (default) | low — medium is a subtle tint with dark text, high a solid fill, low text alone.
+- data-size: sm | md (default) | lg — The text size the badge sits beside; the badge renders one step smaller.
+
+### When to use it
+
+A word or a number that labels something else: a status beside a title, a count on a tab, a version next to a heading. It sits in the line of text and takes the hue that means the state.
+
+### How it works
+
+An inline box one step smaller than the text around it, with a pill corner by default. `data-emphasis="medium"`, the default, is a subtle tint of the hue with the hue's darker text, quiet enough to repeat down a list. `high` fills the badge for the one state that must stand out; `low` is the text alone.
+
+```html
+<h3>Release notes <span class="badge" data-emphasis="high">New</span></h3>
+```
+
+### Accessibility
+
+Colour is decoration here; the word is the meaning, so "Live" and "Draft" work with no colour at all. A count beside a button or a tab is read as separate text, which is rarely what you want; put it into the control's `aria-label` instead. Text over every tint meets AA in both schemes.
+
+Children:
+- > svg: at least 0, at most 1. An optional icon, sized to the text.
+
+Tokens:
+- --yeti-badge-radius — Corner radius; full makes a pill.
+- --yeti-badge-weight — Text weight.
+- --yeti-space-xs — Gap between the icon and the text.
+- --yeti-leading-tight — Line height.
+- --yeti-border-width — Border width.
+- --yeti-color-primary — The default variant's colour, when data-variant is absent.
+- --yeti-color-primary-subtle — The default variant's tint.
+- --yeti-color-primary-soft — The default variant's soft stop.
+- --yeti-color-primary-strong — The default variant's strong stop.
+- --yeti-color-primary-text — The default variant's text colour.
+- --yeti-on-primary — Text on the default variant's colour.
+- --yeti-text-md — Text size when data-size is absent.
+- --yeti-space-sm — The space step when data-size is absent.
+
+Accessibility:
+A badge is text. If the colour carries meaning, the text must carry it too. A count that belongs to a control goes into that control's accessible name, not beside it.
+
+## breadcrumbs (component, class="breadcrumbs")
+
+The trail from the home page to the current one, each step a link, with a separator between them that is seen and not read.
+
+Attributes:
+- data-size: sm | md (default) | lg — The text step.
+
+### When to use it
+
+Deep pages: a doc inside a section inside a manual, a product inside a category. The trail says where the page sits and gives one click to each level above it. A site two levels deep does not need one.
+
+### How it works
+
+A wrapping row of steps at a small gap. Every step after the first is preceded by a separator drawn by CSS from `--yeti-breadcrumbs-separator`, a slash by default, which a theme may change to a chevron. Links are muted until hovered; the current step is the text colour in a strong weight. `data-size` steps the text.
+
+```html
+<nav class="breadcrumbs" aria-label="Breadcrumb" data-size="sm">
+	<ol role="list">
+		<li><a href="#">Home</a></li>
+		<li aria-current="page">Docs</li>
+	</ol>
+</nav>
+```
+
+### Accessibility
+
+Label the `nav` `aria-label="Breadcrumb"`, so it is announced as one. The last step carries `aria-current="page"`, as plain text or as a link to the page itself. The separators are generated content with empty alternative text (`content: "/" / ""`), so a screen reader hears the steps and nothing between them. `role="list"` on the `ol` keeps it a list where the reset removes the markers.
+
+Children:
+- > ol: at least 1, at most 1. The trail, in order, with role="list".
+- li: at least 2. A step: a link, or plain text with aria-current="page" for the last.
+
+Tokens:
+- --yeti-breadcrumbs-separator — The string between steps.
+- --yeti-color-text-muted — The links and the separator.
+- --yeti-text-md — Text size when data-size is absent.
+- --yeti-space-sm — The space step when data-size is absent.
+- --yeti-space-xs — Gap between steps, and between a step and its separator.
+- --yeti-color-text — The current step, and a link under the pointer.
+- --yeti-weight-strong — Weight of the current step.
+
+Accessibility:
+Required: aria-label | aria-labelledby
+Put aria-label="Breadcrumb" on the nav. The last step carries aria-current="page", as plain text or as a link to the page itself. The separators are CSS with empty alternative text, so assistive tech reads only the steps. Put role="list" on the ol.
+
+## button (component, class="button")
+
+An action with a face: a hue, an emphasis, and a size, with every state taken from the element itself.
+
+Attributes:
+- data-variant: primary (default) | secondary | success | warning | alert | neutral — Which hue's ladder the button uses.
+- data-emphasis: high (default) | medium | low — How loud: high is a solid fill, medium an outline, low text alone.
+- data-size: sm | md (default) | lg — Scales the text and the padding together.
+- data-open (string) — The id of a dialog this button opens, when dialog.js is loaded.
+
+### When to use it
+
+Anything the visitor does: submit, save, open, dismiss. Put the class on a `button` for an action and on an `a` for a link that should look like a button. One high-emphasis button per view is a good rule; the rest are medium or low, so the eye finds the main action.
+
+### How it works
+
+Three attributes and no classes. `data-variant` picks a hue from the palette and the button reads that hue's ladder for its fill, its hover step, and its outline text. `data-emphasis` picks how much of the ladder shows: `high` fills, `medium` outlines, `low` is text that tints on hover. `data-size` scales the text and the padding together so the shape holds. Hover, active, focus, disabled, pressed, and busy come from the element's own state, so nothing needs a script to look right.
+
+```html
+<a class="button" href="/docs" data-variant="secondary" data-emphasis="medium" data-size="lg">
+	<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+	Read the docs
+</a>
+```
+
+### Accessibility
+
+A `button` is a button and an `a` is a link; the class changes the look, not the role, so use the element that matches what happens. An icon-only button needs an `aria-label`. A toggle carries `aria-pressed`, and the pressed look follows it. A button that is waiting on a request carries `aria-busy="true"` and `aria-disabled="true"` together: it dims, shows a progress cursor, and your handler ignores presses until the request returns. The focus ring is the page's ring and is never removed. Text over every fill meets AA in both colour schemes; the test suite checks each variant.
+
+Children:
+- > svg: at least 0, at most 1. An optional icon, sized to the text.
+
+Tokens:
+- --yeti-button-radius — Corner radius.
+- --yeti-button-weight — Text weight.
+- --yeti-button-padding — Inline padding as a multiple of the size's space step.
+- --yeti-control-size — Minimum height.
+- --yeti-border-width — Border width.
+- --yeti-space-xs — Gap between the icon and the label.
+- --yeti-leading-tight — Line height.
+- --yeti-duration-fast — How long a hover or press takes to settle.
+- --yeti-ease — The curve of that transition.
+- --yeti-color-primary — The default variant's colour, when data-variant is absent.
+- --yeti-color-primary-subtle — The default variant's tint.
+- --yeti-color-primary-soft — The default variant's soft stop.
+- --yeti-color-primary-strong — The default variant's strong stop.
+- --yeti-color-primary-text — The default variant's text colour.
+- --yeti-on-primary — Text on the default variant's colour.
+- --yeti-text-md — Text size when data-size is absent.
+- --yeti-space-sm — The space step when data-size is absent.
+- --yeti-opacity-muted — Opacity when disabled or busy.
+
+Accessibility:
+- Enter / Space: Activates a button element; Enter follows a link.
+Put the class on a button, an a, or a submit input, nothing else. Use button for actions and a for navigation. An icon-only button needs an aria-label. A toggle sets aria-pressed; a button that is waiting sets aria-busy="true" together with aria-disabled="true", and your handler ignores presses while it waits.
+
+## buttons (component, class="buttons")
+
+A group of buttons: a wrapping row, or one fused control with data-attach.
+
+Attributes:
+- data-attach (boolean) — Fuse the buttons into one segmented control that shares borders.
+- data-gap: none | xs | sm (default) | md | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between buttons when not attached.
+
+### When to use it
+
+Two or more buttons that belong together: a form's submit and cancel, a set of view toggles, a toolbar row. Loose, they sit in a row at a small gap and wrap when they must. Attached, they become one control with shared borders, the shape of a segmented toggle.
+
+### How it works
+
+Loose is a wrapping flex row at `data-gap`. `data-attach` removes the gap, squares the inner corners, and overlaps each border with the next so the seam is one line wide. A focused member is lifted above its neighbours so its focus ring is not covered.
+
+```html
+<div class="buttons" role="group" aria-label="Form actions">
+	<button class="button" type="submit">Save</button>
+	<button class="button" type="button" data-emphasis="low">Cancel</button>
+</div>
+```
+
+### Accessibility
+
+The group carries `role="group"` and a name, so a screen reader announces the set once. A segmented toggle puts `aria-pressed` on each button and the pressed look follows. Do not use an attached group as tabs; tabs have their own roles and keyboard behaviour and are a separate component.
+
+Children:
+- > .button: at least 2. The buttons.
+
+Tokens:
+- --yeti-space-sm — The default gap.
+- --yeti-border-width — The width the attached members overlap by.
+
+Accessibility:
+Required: role, aria-label | aria-labelledby
+role="group" with a name, so the set is announced as one thing. A segmented toggle sets aria-pressed on each member; a set of tabs is the tabs component, not this.
+
+## card (component, class="card")
+
+A bordered surface for one thing: an optional figure that bleeds to the edges, a body, and a footer that sits at the bottom; a thumbnail row when the card's content is narrower than the sm width.
+
+Attributes:
+- data-ratio: 1/1 | 4/3 | 3/2 | 16/9 (default) | 21/9 — The figure's aspect ratio when the card is wide.
+- data-raised (boolean) — A shadow instead of a border.
+- data-variant: primary | secondary | success | warning | alert | neutral — Tints the border and adds a bar along the top; the body stays plain.
+
+On children:
+- data-stretch on a (boolean) — Stretches the link over the whole card, so the card is clickable while the link keeps its own name.
+
+### When to use it
+
+One thing in a box: an article in a listing, a product, a person, a plan. Put cards in a `grid` and they line up; put one in a narrow column and it turns into a row with a thumbnail on its own, because it reads its own width rather than the screen's.
+
+### How it works
+
+A card is a flex column on the raised surface with a border and a radius. A picture, video, or `figure` placed first bleeds through the padding to the card's edges and is cropped to `data-ratio`. Everything after it is the body, spaced at the card's gap. A `footer` is pushed to the bottom, so a row of cards of different lengths keeps its actions aligned. `data-raised` trades the border for a shadow; `data-variant` colours the border and draws a bar along the top without tinting the text. Below the `sm` width of content, a card with a picture becomes a two-column row: the picture is a thumbnail down the left, the body takes the rest. A card in a ranked grid keeps its picture and footer aligned with its neighbours' and does not switch to its thumbnail row.
+
+Two things follow from how that query works. Only a card with a picture is a size container, because a size container has no intrinsic width: a card that always was one collapsed to its padding as a cluster item. And anything pressable inside a card sits above a stretched link, so a footer button in a card whose heading carries `data-stretch` still takes the click.
+
+```html
+<ul class="grid" data-min="sm" role="list">
+	<li class="card" data-raised>
+		<figure>
+			<img src="ridge.jpg" alt="A snow ridge at first light">
+			<figcaption>Photo: Ada</figcaption>
+		</figure>
+		<h3>First light</h3>
+		<p>Up before the sun, and glad of it.</p>
+	</li>
+	<li class="card" data-variant="warning">
+		<h3>No picture</h3>
+		<p>A card is fine without one.</p>
+		<footer><a class="button" href="#" data-emphasis="medium">Details</a></footer>
+	</li>
+</ul>
+```
+
+### Accessibility
+
+Do not wrap a card in a link. Put the link on the heading and add `data-stretch`: the link grows to cover the card, so the whole card is clickable, while its accessible name stays the heading text. If the footer repeats the link as a button, give that button `tabindex="-1"` so keyboard users do not meet the same destination twice. Use `article` for a card that stands alone and `li` for cards in a list, so the list is announced with its count.
+
+Children:
+- > *: at least 1. A figure first if there is one, then the body, then an optional footer.
+- > figure: at least 0, at most 1. A figure element holding media and a caption; only the media is cropped.
+- > footer: at least 0, at most 1. Actions, pushed to the bottom of the card; in a ranked grid it takes the last row.
+- [data-stretch]: at least 0, at most 1. One link that is stretched over the whole card, so the card is clickable while the link keeps its own name.
+
+Tokens:
+- --yeti-card-radius — Corner radius.
+- --yeti-card-padding — Padding inside the card; the figure bleeds through it.
+- --yeti-card-gap — Space between the card's parts.
+- --yeti-card-border — Border colour.
+- --yeti-card-surface — Background.
+- --yeti-shadow-sm — The shadow when raised.
+- --yeti-color-text — The card's text, and a caption laid over the figure.
+- --yeti-border-width — Border width; the variant's bar is four of them.
+- --yeti-space-xs — Padding of the caption.
+- --yeti-text-sm — Text size of the caption.
+- --yeti-color-text-muted — The caption under a figure.
+- --yeti-color-surface — Background of a caption laid over the figure.
+- --yeti-space-sm — Gap between the footer's actions.
+
+Accessibility:
+Never wrap a card in a link: the whole card's text would become the link's name. Put the link on the heading and give it data-stretch so the card is clickable and the link is named by the heading. Use article for cards that stand alone and li for cards in a list.
+
+## carousel (component, class="carousel")
+
+Slides on a scroll-snapping track with dots that link to each one, scrolled by the browser, with an optional module so following a dot costs no history entry.
+
+Attributes:
+- data-slides: 1 (default) | 2 | 3 | 4 — How many slides are visible at once.
+- data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between slides, and above the dots.
+
+On children:
+- data-track on > * (boolean) — The scrolling track that holds the slides.
+- data-slide on > [data-track] > * (boolean) — One slide, with an id a dot can link to.
+- data-dots on > * (boolean) — The list of links to the slides, one per slide.
+
+module: carousel.js (optional)
+
+### When to use it
+
+A set of things of equal weight that would take too much room laid out at once: work samples, quotes, photographs. Not for anything a reader must see, since a slide out of view is a slide most people never scroll to.
+
+### How it works
+
+The track is a row that scrolls and snaps, so dragging, swiping, and a trackpad all work with nothing added. The dots underneath are ordinary links to each slide's id, which means the browser scrolls to a slide when one is followed, the keyboard reaches them by Tab, and the CSS needs no script. The one module, described below, is optional.
+
+The scrollbar under the track is hidden, since the dots already say where you are and the bar is noise beneath a track that snaps. Scrolling itself is untouched: dragging, swiping, the trackpad and the arrow keys all still work.
+
+`data-slides` sets how many slides are visible at once, and each slide takes an equal share of the track less the gaps. Smooth scrolling comes from a token, `--yeti-carousel-scroll`, rather than from the reset, because a components-layer declaration would otherwise outrank it; the token itself collapses to `auto` under `prefers-reduced-motion`, so the preference still reaches the track. The track itself carries `tabindex="0"` and a name, because a region that scrolls has to be reachable from the keyboard; once it has focus, the arrow keys scroll it.
+
+```html
+<section class="carousel" data-slides="2" aria-roledescription="carousel" aria-label="Quotes">
+	<div data-track role="group" aria-label="Slides" tabindex="0">
+		<blockquote id="quote-1" data-slide><p>It just worked.</p></blockquote>
+		<blockquote id="quote-2" data-slide><p>No build step.</p></blockquote>
+		<blockquote id="quote-3" data-slide><p>Nothing to learn.</p></blockquote>
+	</div>
+	<ol data-dots role="list">
+		<li><a href="#quote-1" aria-label="Quote 1"></a></li>
+		<li><a href="#quote-2" aria-label="Quote 2"></a></li>
+		<li><a href="#quote-3" aria-label="Quote 3"></a></li>
+	</ol>
+</section>
+```
+
+### Accessibility
+
+Label the region and mark it with `aria-roledescription="carousel"`, so it is announced as a carousel rather than as an anonymous group. Every dot is a link with an `aria-label`, because a dot has no room for text and there is no visually-hidden utility in Yeti.
+
+The dots take you to a slide; they do not tell you which slide you are on. CSS cannot know that, and the module deliberately does not track it either: watching scroll position to light up a dot is a different and much larger job. If that matters for what you are building, the honest answer is a list rather than a carousel.
+
+Following a dot is a navigation to a fragment, and every navigation adds an entry to the browser's history. A reader who looked at four slides would then need four presses of back to leave the page, which is why `carousel.js` exists: it takes the click and scrolls the track itself, so the dots cost no history and the URL is left alone. Load it with `<script type="module" src="…/js/carousel.js">`. The module is optional and the dots are ordinary links without it, so a page that never loads it still works, at the price of those history entries. Modified clicks, the ones that open a new tab, are left to the browser either way.
+
+Browser-drawn scroll markers will one day do this in CSS and report the current slide as well. Today they are in one engine, so the module is the honest answer.
+
+Children:
+- > [data-track]: at least 1, at most 1. The scrolling track holding the slides. A scrolling region is an interactive one, so give it role="group", a name, and tabindex="0".
+- [data-slide]: at least 2. One slide each, with an id a dot can link to.
+- > [data-dots]: at least 0, at most 1. A list of links, one per slide, each named with aria-label. With carousel.js loaded the module scrolls the track itself, so following one adds no history entry.
+
+Tokens:
+- --yeti-carousel-dot — Colour of a dot.
+- --yeti-carousel-dot-size — Diameter of a dot.
+- --yeti-control-size — The pressable area around a dot.
+- --yeti-space-md — The default gap between slides.
+- --yeti-carousel-scroll — How the track scrolls when a dot is followed.
+- --yeti-space-xs — Gap between the dots.
+- --yeti-duration-fast — How long a dot takes to grow under the pointer.
+- --yeti-ease — The curve of that transition.
+
+Accessibility:
+Required: aria-label | aria-labelledby
+- Tab: Focuses the track, then each dot in turn.
+- ArrowLeft / ArrowRight: Scroll the track.
+- Enter: Scrolls to that dot's slide.
+Label the region and give it aria-roledescription="carousel" so it is announced as one. The dots are links to slide ids, so the browser does the scrolling and the keyboard works without help; each needs an aria-label, since a dot has no room for text and Yeti ships no visually-hidden utility. They jump to a slide but cannot report which slide is showing, because CSS cannot know that. Loading carousel.js keeps the back button useful by scrolling the track instead of navigating; without it the dots still work, and each one followed is one press of back. Nothing essential should live behind a slide a reader has to find. The track scrolls, so it must be reachable from the keyboard: give it role="group", an aria-label, and tabindex="0". It is a group rather than a region because the carousel itself is already the landmark.
+
+## dialog (component, class="dialog")
+
+The native dialog element as a modal, opened by a button that names it, with the page behind it inert and focus held inside.
+
+Attributes:
+- data-width: xs | sm | md (default) | lg | xl | 2xl — How wide the dialog may grow.
+
+module: dialog.js (optional)
+
+### When to use it
+
+A decision that has to be made before anything else happens: confirming something destructive, a short form the page cannot carry, a message that must be acknowledged. Anything the reader can come back to later belongs on the page rather than over it.
+
+### How it works
+
+A native `dialog`, opened as a modal. That one word is why the component exists in this shape: `showModal` makes everything behind the dialog inert, keeps focus inside it, closes it on Escape, and gives you a `::backdrop` to paint. None of that is Yeti's, and none of it needs ARIA.
+
+Opening is the one thing the browser will not do for you, so `dialog.js` does it: any button carrying `data-open` with a dialog's id opens it, a click on the backdrop closes it, and focus returns to the button that opened it. Closing needs no script at all if you use a form: a button inside `<form method="dialog">` closes the dialog on its own.
+
+```html
+<button class="button" type="button" data-open="share">Share</button>
+
+<dialog class="dialog" id="share" data-width="sm" aria-labelledby="share-title">
+	<h2 id="share-title">Share this page</h2>
+	<p>Anyone with the link can read it.</p>
+	<footer>
+		<form method="dialog"><button class="button" type="submit">Done</button></form>
+	</footer>
+</dialog>
+```
+
+### Accessibility
+
+Name the dialog with `aria-labelledby` pointing at its heading, so it is announced as something rather than as an unnamed dialog. Because it is opened modally the page behind it is genuinely inert, not merely covered, so a screen reader cannot wander out of it. Focus returns to the opener on close, which is what keeps a keyboard reader's place.
+
+Without the module the dialog never opens. That is a real limitation, not a detail: do not put the only way to reach something behind a dialog on a page that does not load `dialog.js`.
+
+Children:
+- > *: at least 1. The contents: a heading that names the dialog, then whatever it is for.
+- > footer: at least 0, at most 1. The buttons, at the end edge. A button inside a form with method="dialog" closes it with no script.
+
+Tokens:
+- --yeti-dialog-surface — Background of the dialog.
+- --yeti-dialog-radius — Corner of the dialog.
+- --yeti-dialog-padding — Padding inside.
+- --yeti-dialog-backdrop — The wash over the page behind it.
+- --yeti-shadow-md — The dialog's shadow.
+- --yeti-space-md — The least margin kept between the dialog and the viewport's edges.
+- --yeti-color-text — The dialog's text.
+- --yeti-width-md — The default width, when data-width is absent.
+- --yeti-space-sm — Gap between the footer's actions.
+- --yeti-duration-fast — How long the dialog and its backdrop take to appear.
+- --yeti-ease — The curve of that transition.
+
+Accessibility:
+- Escape: Closes the dialog.
+- Tab: Cycles inside the dialog, since the rest of the page is inert.
+Give the dialog a name with aria-labelledby pointing at its heading. Opened with showModal, which is what dialog.js does, the browser makes everything behind it inert, holds focus inside, and closes on Escape; none of that needs ARIA. A button inside a form with method="dialog" closes it without any script. Without the module nothing opens the dialog, so never put the only route to something behind one on a page that does not load it.
+
+## dropdown (component, class="dropdown")
+
+A button and a panel of links and buttons that opens under it, closing on Escape or a click outside, with no script unless it is asked to open on hover.
+
+Attributes:
+- data-side: start (default) | end — Which edge of the trigger the panel lines up with.
+- data-trigger: click (default) | hover — What opens the panel. Click always works; hover adds opening under the pointer, and needs the optional module and a pointer that hovers.
+
+module: hover.js (optional)
+
+### When to use it
+
+A short list of things to go to or to do, hung off one button: an account menu, a row of secondary actions, the children of a nav item. For choosing a value in a form, use a `select` inside a field instead.
+
+### How it works
+
+The panel carries `popover` and the button carries `popovertarget`, so the browser opens it, puts it in the top layer, closes it on Escape or a click outside, and keeps the button's expanded state current. Yeti adds the surface, the shadow, and the placement. Because the panel is in the top layer, nothing on the page can clip it, which is why a dropdown inside a nav works even though the bar is a query container.
+
+Where anchor positioning exists the panel hangs under its own trigger, and `data-side="end"` lines it up with the trigger's end edge instead. The anchor name is scoped to each dropdown, so a page full of them behaves. Where anchor positioning is missing the browser centres the panel, which is plainer but still opens, closes, and reads correctly.
+
+```html
+<div class="dropdown" data-side="end">
+	<button class="button" type="button" popovertarget="row-actions" data-emphasis="low">More</button>
+	<div id="row-actions" popover>
+		<a href="#">Duplicate</a>
+		<button type="button">Archive</button>
+	</div>
+</div>
+```
+
+### Opening on hover
+
+Click is the default and never changes. `data-trigger="hover"` adds opening under the pointer on top of it, and needs `hover.js`, loaded once with `<script type="module" src="…/js/hover.js">`. The module is optional: without it the attribute does nothing and the dropdown still works by click.
+
+Hover is added only where the pointer can actually hover, so a touch screen keeps the tap. Opening waits for `--yeti-dropdown-open-delay` so a pointer crossing the trigger on its way somewhere else does not flash the panel open, and closing waits for `--yeti-dropdown-close-delay` so the gap between the trigger and the panel is forgiving. Hovering the panel itself keeps it open.
+
+The module closes only a panel it opened itself. A panel you opened with Enter or a click stays open when the pointer wanders off it, because the deliberate act should outrank the accidental one. Pressing the trigger while hover has the panel open closes it, and a press always cancels an opening that has not happened yet, so the same gesture never does opposite things depending on how long you lingered.
+
+```html
+<div class="dropdown" data-trigger="hover">
+	<button class="button" type="button" popovertarget="products" data-emphasis="low">Products</button>
+	<div id="products" popover>
+		<a href="#">Overview</a>
+		<a href="#">Pricing</a>
+	</div>
+</div>
+<script type="module" src="…/js/hover.js"></script>
+```
+
+This module is a stopgap and says so. The `interestfor` attribute is this feature standardised, and it is in one engine today. When it reaches Baseline the module goes and the attribute maps to it instead.
+
+### Accessibility
+
+The items are ordinary links and buttons, on purpose. `role="menu"` and `role="menuitem"` promise a full application menu, arrow keys and all, and a half-built one is worse than none; a disclosure panel of links is announced clearly by every screen reader and needs no script. Give the trigger a name, and let the browser handle the expanded state rather than setting `aria-expanded` yourself. Escape closes the panel and returns focus to the trigger, which is the browser's doing.
+
+Opening on hover changes none of that. The module never touches focus, ARIA, or the keyboard; it only opens and closes the same popover the button already opens, and a reader who cannot use a pointer is unaffected either way.
+
+Children:
+- > button[popovertarget]: at least 1, at most 1. The trigger; its popovertarget names the panel's id.
+- > [popover]: at least 1, at most 1. The panel, holding ordinary links and buttons.
+
+Tokens:
+- --yeti-dropdown-surface — Background of the panel.
+- --yeti-dropdown-radius — Corner of the panel.
+- --yeti-dropdown-padding — Padding around the items.
+- --yeti-dropdown-min — Least width of the panel.
+- --yeti-shadow-md — The panel's shadow.
+- --yeti-control-size — Least height of an item.
+- --yeti-dropdown-open-delay — How long the pointer must rest before a hover-triggered panel opens.
+- --yeti-dropdown-close-delay — How long a hover-triggered panel waits after the pointer leaves before closing.
+- --yeti-color-text — The panel's text.
+- --yeti-duration-fast — How long the panel takes to open.
+- --yeti-ease — The curve of that transition.
+- --yeti-space-xs — Gap between an item's icon and its label, and between the trigger and the panel.
+- --yeti-space-sm — Inline padding of an item.
+- --yeti-color-surface-sunken — Background of an item under the pointer.
+
+Accessibility:
+- Enter / Space: On the trigger, opens or closes the panel.
+- Tab: Walks the items, which are ordinary links and buttons.
+- Escape: Closes the panel and returns focus to the trigger.
+With data-trigger="hover" the module adds opening under the pointer and changes nothing else: the click, the keyboard, focus and the expanded state are all still the browser's, and a pointer that cannot hover never gets it. The trigger needs a name, and the browser sets its expanded state from popovertarget. The items are deliberately ordinary links and buttons with no menu roles: role="menu" promises arrow-key semantics that belong to application menus, and on a website a disclosure panel is both simpler and better announced. Inside a nav, put the dropdown in the li beside the link it belongs to.
+
+## field (component, class="field")
+
+One form control with its label, an optional hint, and an error that shows itself when the control is invalid.
+
+Attributes:
+- data-size: sm | md (default) | lg — Scales the control's height and text.
+- data-inline (boolean) — Put the label beside the control. Checkboxes and radios are inline without it.
+- data-variant: primary (default) | secondary | success | warning | alert | neutral — The colour of a checked checkbox or radio.
+
+On children:
+- data-hint on > * (boolean) — Help text, referenced by the control's aria-describedby.
+- data-error on > * (boolean) — The error message, hidden until the control is invalid.
+
+### When to use it
+
+Every control in a form: text, email, number, select, textarea, checkbox, radio, switch, range. A form is a `stack` of fields and a button; the field owns what bare HTML cannot, the label's link to its control, the help text, and the error.
+
+### How it works
+
+A tight column: label, control, hint, error. The control is a native element styled to the control tokens, so a theme that changes `--yeti-control-radius` changes every input. The error is hidden until the control is invalid *and* the visitor has touched it (`:user-invalid`), or until you set `aria-invalid="true"` after a server round trip; then it shows and the border turns to the alert colour. A `required` control gets a marker after its label. A checkbox or radio is laid out inline automatically, label after the control, and its checked mark is a variant-coloured centre inside a ring of the surface colour.
+
+```html
+<fieldset class="field">
+	<legend>Notify me by</legend>
+	<div class="field"><input id="n-email" type="checkbox" name="notify" value="email"><label for="n-email">Email</label></div>
+	<div class="field"><input id="n-sms" type="checkbox" name="notify" value="sms"><label for="n-sms">Text message</label></div>
+	<p data-hint>Pick as many as you like.</p>
+</fieldset>
+```
+
+A checkbox with `role="switch"` becomes a switch: a track with a thumb that slides to the end and takes the field's colour when on. A `range` input gets a thin track and a round thumb in the field's colour, the height of a control so it is easy to grab; the track is filled to `--yeti-range-value`, which CSS cannot work out for itself: set it inline for a static value, or from one line of your own script when the value moves.
+
+```html
+<div class="field"><input id="dark" type="checkbox" role="switch"><label for="dark">Dark mode</label></div>
+<div class="field"><label for="quality">Quality</label><input id="quality" type="range" min="0" max="100" value="70" style="--yeti-range-value: 70%"></div>
+```
+
+```html
+<div class="field"><label for="volume">Volume</label><input id="volume" type="range" min="0" max="100" value="40"></div>
+```
+
+The script form: `const set = () => input.style.setProperty('--yeti-range-value', ((input.value - input.min) / (input.max - input.min) * 100) + '%'); input.addEventListener('input', set); set();`.
+
+### Accessibility
+
+The label must point at the control with `for` and the control must carry that `id`; Yeti's validator refuses an example without the pair. Put the hint's and the error's ids in the control's `aria-describedby`, so a screen reader hears the help text with the control and the error the moment it appears. Errors found on the server are shown with `aria-invalid="true"`. The required marker is a visual echo of the `required` attribute, which is what is announced.
+
+Children:
+- > label: at least 0, at most 1. The label, with for pointing at the control's id. Required unless the field is a fieldset with a legend.
+- > legend: at least 0, at most 1. The legend, when the field is a fieldset grouping several controls.
+- > input: at least 0, at most 1. The control.
+- > select: at least 0, at most 1. The control.
+- > textarea: at least 0, at most 1. The control.
+- > .affix: at least 0, at most 1. The control slot as an affix: a control with attachments, or two controls joined.
+- > [data-hint]: at least 0, at most 1. Help text, referenced by the control's aria-describedby.
+- > [data-error]: at least 0, at most 1. The error message, hidden until the control is invalid.
+
+Tokens:
+- --yeti-field-gap — Space between label, control, and hint.
+- --yeti-control-size — Minimum height of the control.
+- --yeti-control-radius — Corner of the control.
+- --yeti-control-border — Border of the control at rest.
+- --yeti-range-value — The filled share of a range's track; set it on the input.
+- --yeti-control-surface — Background of the control.
+- --yeti-control-chevron — The select's chevron image.
+- --yeti-color-alert — Border of an invalid control.
+- --yeti-color-primary — The default variant's colour, when data-variant is absent.
+- --yeti-color-primary-subtle — The default variant's tint.
+- --yeti-color-primary-soft — The default variant's soft stop.
+- --yeti-color-primary-strong — The default variant's strong stop.
+- --yeti-color-primary-text — The default variant's text colour.
+- --yeti-on-primary — Text on the default variant's colour.
+- --yeti-text-md — Text size when data-size is absent.
+- --yeti-space-sm — The space step when data-size is absent; a fieldset's padding follows it.
+- --yeti-weight-strong — Weight of the label or legend.
+- --yeti-color-text — Text of the control.
+- --yeti-border-width — Border width of every control, and of a fieldset.
+- --yeti-duration-fast — How long a control's border and a switch take to change.
+- --yeti-ease — The curve of that transition.
+- --yeti-color-border-strong — Border of a focused control.
+- --yeti-radius-full — Corners of the switch and of the range track.
+- --yeti-space-xs — Gap of an inline field, and a legend's inline padding.
+- --yeti-text-sm — Text size of the hint and the error.
+- --yeti-color-text-muted — The hint.
+- --yeti-color-alert-text — The error, and the required marker.
+- --yeti-space-md — Padding of a fieldset.
+
+Accessibility:
+The label's for must match the control's id; the validator checks it. Reference the hint and the error from the control with aria-describedby so both are announced. Use aria-invalid="true" for errors found on the server. The required marker is decoration; the required attribute is what assistive tech reads. A switch is a checkbox with role="switch"; its label reads as the switch's name. A range needs a label like any control, and aria-valuetext when the numbers are not what a person would say.
+
+## nav (component, class="nav")
+
+A bar with a brand, a list of links, and actions, that collapses the links behind a toggle at its own width and opens them as a sheet, a drawer, or a screen.
+
+Attributes:
+- data-threshold: xs | sm | md (default) | lg | xl | 2xl — The nav's own width at or above which the links sit in the bar; below it they are behind the toggle.
+- data-panel: sheet (default) | drawer | screen — The shape of the open list below the threshold: a sheet under the bar, a drawer from the start edge, or the whole screen.
+- data-variant: primary (default) | secondary | success | warning | alert | neutral — The hue of the current link and of the hover tint.
+- data-gap: none | xs | sm (default) | md | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the bar's parts and between the links.
+
+On children:
+- data-brand on > * (boolean) — The site's name or mark, usually a link home.
+- data-close on li (boolean) — The item holding the button that closes the panel; hidden in the bar.
+- data-actions on > * (boolean) — Buttons at the end of the bar.
+
+### When to use it
+
+The bar across the top of a site: the name, the main links, a button or two. It is a bar of links, not a menu system. Sections with their own submenus are the dropdown's job, and a column of links down the side of a page is a `stack` inside a `sidebar`, which needs no component.
+
+### How it works
+
+One list of links, two modes. The list carries `popover` and the button carries `popovertarget` naming it. When the bar is narrower than `data-threshold` (its own width, not the screen's, so a nav in a narrow column collapses while the same one across a page does not), the list is a closed popover and the button opens it; light dismiss, Escape, and the button's expanded state all come from the browser. At the threshold and above, the nav's own container query puts the list back in the bar and hides the button. The `popover` attribute is still there, so nothing changes in the markup and no link exists twice.
+
+`data-panel` chooses the shape of the open list. `sheet`, the default, hangs under the bar at the full width. `drawer` slides in from the start edge as a column with the page dimmed behind it. `screen` fills the viewport with the links large and centred. Where anchor positioning exists the sheet sits exactly under the bar; elsewhere it starts at the top of the viewport and covers the bar, and Escape or a click outside still closes it. A close item, an `li` carrying `data-close` with a button that hides the popover, sits in the panel's top end corner and disappears in the bar; `screen` needs one, since there is no outside to click.
+
+```html
+<nav class="nav" aria-label="Site" data-threshold="sm" data-panel="drawer">
+	<a href="#" data-brand>Yeti</a>
+	<button type="button" popovertarget="menu" aria-label="Menu"><svg aria-hidden="true" viewBox="0 0 16 16"><path d="M2 4h12M2 8h12M2 12h12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+	<ul id="menu" popover role="list">
+		<li data-close><button type="button" popovertarget="menu" popovertargetaction="hide" aria-label="Close">×</button></li>
+		<li><a href="#">Docs</a></li>
+		<li><a href="#">Blog</a></li>
+	</ul>
+</nav>
+```
+
+A panel that is open stays a panel until it is dismissed, whatever the nav's width; widening past the threshold does not return the links to the bar on its own. Escape or a click outside closes the panel, and only then do the links return to the bar. `data-threshold` is the attribute `columns` uses, so a nav and the columns under it can switch at the same width.
+
+A nav item may hold a `dropdown` for a section with children of its own: the item becomes a button rather than a link, since the dropdown brings its own trigger. Its panel is in the top layer, so the bar's own containment cannot clip it.
+
+The panel changes shape with the nav. In the bar it is the dropdown's usual card, anchored under its trigger. Once the links are behind the toggle it becomes a full-width block instead, docked to the foot of its trigger and squared off against the panel's own edges, so a sheet, a drawer and a screen each keep their submenu inside them. It is still a popover, so it covers the items below rather than pushing them down, and Escape or a click outside closes it before the panel it sits in. Where anchor positioning is missing the block docks to the foot of the viewport, which is still full width and still within reach.
+
+### Accessibility
+
+Give the `nav` an `aria-label`, since a page often has more than one. The toggle needs a name, from `aria-label` or visible text; the browser sets its expanded state. Mark the current page's link with `aria-current="page"`. Put `role="list"` on the `ul`: Yeti's reset only removes list markers where that role says the list is decorative. The open panel follows the toggle in the tab order, so Tab from the toggle reaches the first link; Escape closes the panel and returns focus to the toggle.
+
+Children:
+- > [data-brand]: at least 0, at most 1. The site's name or mark, usually a link home.
+- > button[popovertarget]: at least 1, at most 1. The toggle; its popovertarget names the list's id. Hidden while the links are in the bar.
+- > ul[popover]: at least 1, at most 1. The links, one per li, with role="list" and the id the toggle names.
+- li: at least 1. An entry in the list; each holds one link.
+- [data-close]: at least 0, at most 1. An li holding a button with popovertargetaction="hide", shown at the panel's top end corner and hidden in the bar. Required with data-panel="screen".
+- .dropdown: at least 0. A nav item may hold a dropdown for its own children; the panel is in the top layer, so the bar never clips it. In the bar it is the usual card; behind the toggle it becomes a full-width block docked under its trigger and squared off against the open panel's edges.
+- > [data-actions]: at least 0, at most 1. Buttons at the end of the bar.
+
+Tokens:
+- --yeti-nav-padding — Padding of the bar and of the open panel.
+- --yeti-nav-radius — Corner of the links and the toggle.
+- --yeti-nav-border — The bar's bottom edge, and the sheet's.
+- --yeti-nav-surface — Background of the bar.
+- --yeti-nav-panel — Background of the open panel.
+- --yeti-control-size — Minimum height of the bar, the toggle, and each link.
+- --yeti-shadow-md — The open panel's shadow.
+- --yeti-shadow-color — The drawer's backdrop.
+- --yeti-color-text — The bar's text, and the open panel's.
+- --yeti-border-width — Width of the bar's bottom edge, and of the sheet's.
+- --yeti-space-sm — The default gap; a link's inline padding and the close item's inset follow it.
+- --yeti-color-primary — The default variant's colour, when data-variant is absent.
+- --yeti-color-primary-subtle — The default variant's tint.
+- --yeti-color-primary-soft — The default variant's soft stop.
+- --yeti-color-primary-strong — The default variant's strong stop.
+- --yeti-color-primary-text — The default variant's text colour.
+- --yeti-on-primary — Text on the default variant's colour.
+- --yeti-weight-strong — Weight of the brand, and of the current page's link.
+- --yeti-space-xs — Block padding of a link, and of the close button.
+- --yeti-duration-fast — How long the panel takes to open.
+- --yeti-ease — The curve of that transition.
+- --yeti-text-lg — Text size of the links in a screen panel.
+- --yeti-space-xl — Inset of a screen panel that has no close item.
+
+Accessibility:
+Required: aria-label | aria-labelledby
+- Enter / Space: On the toggle, opens or closes the list.
+- Tab: From the toggle, into the open list's first link.
+- Escape: Closes the open list and returns focus to the toggle.
+Give the nav an aria-label, since a page often has more than one. The toggle needs a name (aria-label or visible text); the browser sets its expanded state. Mark the current page's link with aria-current="page". Put role="list" on the ul, because the reset only removes list markers where that role says the list is decorative. With data-panel="screen" there is no outside to click, so include the close item.
+
+## pagination (component, class="pagination")
+
+Links to the pages of a long list, each a square target, the current one filled, shrinking to Previous, the current page, and Next when it is narrow.
+
+Attributes:
+- data-threshold: xs | sm (default) | md | lg | xl | 2xl — The pagination's own width below which only Previous, the current page, and Next remain.
+- data-variant: primary (default) | secondary | success | warning | alert | neutral — The hue of the current page and of the hover tint.
+- data-justify: start (default) | center | end | between | around | evenly — Where the links sit in the row.
+- data-size: sm | md (default) | lg — The text step.
+
+### When to use it
+
+Under a list that is split into pages: search results, an archive, a table too long for one screen. It is for pages a reader may want to jump between; a feed that only ever goes forward needs one Next link, not this.
+
+### How it works
+
+A row of links, each at least a control's width and height so it is easy to hit, the current page filled with the hue. An ellipsis in a `span` stands for skipped pages. Below `data-threshold`, the pagination's own width, everything but Previous, the current page, and Next is hidden, so the same markup is a full row in a wide column and three targets in a narrow one, with no breakpoint. `data-justify` places the row.
+
+```html
+<nav class="pagination" aria-label="Pagination" data-justify="center" data-threshold="md">
+	<ol role="list">
+		<li><a href="#" rel="prev">Previous</a></li>
+		<li><a href="#" aria-current="page">1</a></li>
+		<li><a href="#">2</a></li>
+		<li><a href="#" rel="next">Next</a></li>
+	</ol>
+</nav>
+```
+
+### Accessibility
+
+Label the `nav` `aria-label="Pagination"`. The current page's link carries `aria-current="page"`, which is also what the fill follows. Previous and Next carry `rel="prev"` and `rel="next"` with visible text, or an `aria-label` if they are icons; they are what remains when the row is narrow, so they must make sense alone. The ellipsis is a `span`, not a link. `role="list"` on the `ol` keeps it a list where the reset removes the markers.
+
+Children:
+- > ol: at least 1, at most 1. The links, in page order, with role="list".
+- li: at least 2. A page link, or a span holding an ellipsis for skipped pages.
+
+Tokens:
+- --yeti-pagination-radius — Corner of each target.
+- --yeti-control-size — Minimum size of each target.
+- --yeti-color-primary — The default variant's colour, when data-variant is absent.
+- --yeti-color-primary-subtle — The default variant's tint.
+- --yeti-color-primary-soft — The default variant's soft stop.
+- --yeti-color-primary-strong — The default variant's strong stop.
+- --yeti-color-primary-text — The default variant's text colour.
+- --yeti-on-primary — Text on the default variant's colour.
+- --yeti-text-md — Text size when data-size is absent.
+- --yeti-space-sm — The space step when data-size is absent; a target's inline padding follows it.
+- --yeti-space-xs — Gap between targets.
+- --yeti-color-text-muted — The span standing for skipped pages.
+
+Accessibility:
+Required: aria-label | aria-labelledby
+Put aria-label="Pagination" on the nav. The current page's link carries aria-current="page". Previous and Next carry rel="prev" and rel="next" and visible text or an aria-label; they are what remains when the row is narrow. Skipped pages are a span, not a link. Put role="list" on the ol.
+
+## progress (component, class="progress")
+
+The native progress element as a thin bar in a hue, filled to its value, or striped and moving when it has none.
+
+Attributes:
+- data-variant: primary (default) | secondary | success | warning | alert | neutral — The hue of the filled part.
+- data-size: sm | md (default) | lg — The bar's thickness: half the size's space step.
+
+### When to use it
+
+Work with a known length: an upload, a wizard's steps, a quota. Leave the value off for work whose length is unknown and the bar says "busy" instead of "40%".
+
+### How it works
+
+The native `progress` element, with its own drawing switched off and a thin rounded track in its place. The filled part is the hue, through the engines' own pseudo-elements, and slides when the value changes. Without a `value` the element is indeterminate: the track takes diagonal stripes that move along it. `data-size` sets the thickness to half of the size's space step.
+
+```html
+<progress class="progress" data-variant="success" data-size="lg" value="3" max="5" aria-label="Steps">3 of 5</progress>
+<progress class="progress" aria-label="Loading">Loading</progress>
+```
+
+### Accessibility
+
+A `progress` element is a progress bar to assistive tech already; it needs a name, from `aria-label` or `aria-labelledby`. Keep the text between the tags current, since some readers announce that rather than the value. An indeterminate bar is announced as busy with no percentage, which is right.
+
+Tokens:
+- --yeti-progress-radius — Corner of the bar and of its value.
+- --yeti-color-surface-sunken — The track.
+- --yeti-color-primary — The default variant's colour, when data-variant is absent.
+- --yeti-color-primary-subtle — The default variant's tint.
+- --yeti-color-primary-soft — The default variant's soft stop.
+- --yeti-color-primary-strong — The default variant's strong stop.
+- --yeti-color-primary-text — The default variant's text colour.
+- --yeti-on-primary — Text on the default variant's colour.
+- --yeti-text-md — The text step when data-size is absent.
+- --yeti-space-sm — The space step when data-size is absent; the bar's height follows it.
+- --yeti-duration-base — How long the value takes to move; one cycle of the indeterminate sweep is four of it.
+- --yeti-ease — The curve of the value's move.
+- --yeti-motion-iterations — How many times the indeterminate sweep repeats; one under reduced motion.
+
+Accessibility:
+Required: aria-label | aria-labelledby
+Put the class on a progress element and give it a name with aria-label or aria-labelledby. Keep its text content current ("40%"), since older assistive tech reads that. Leave out value for work whose length is unknown; the element is then indeterminate and says so.
+
+## seam (component, class="seam")
+
+Gives a section a shaped edge, a slant, a curve, or a wave, cut from its own background so whatever is behind shows through.
+
+Attributes:
+- data-shape: slant (default) | curve | wave — The shape of the cut edge.
+- data-edge: top | bottom (default) | both — Which edge is cut.
+- data-flip (boolean) — Mirror the shape horizontally, for alternating sections. A curve is symmetric and does not change.
+- data-size: sm | md (default) | lg — The depth of the cut: twice the size's space step.
+
+### When to use it
+
+Between bands of a landing page, where a straight line between two backgrounds looks cut from cardboard. A slant, a curve, or a wave along one edge of a section, alternating direction down the page, is the classic move.
+
+### How it works
+
+The cut is taken from the section itself, not added on top: a slant is a `clip-path` polygon, a curve or wave a mask made of a solid body and a shaped strip along the cut edge. Because the section's own background is what is cut, the page, the previous section, or an image behind it shows through, with no extra element. `data-edge` picks the edge, `data-size` the depth, `data-flip` mirrors a slant or a wave for the next section down. The seam adds the depth of the cut as space after or before the content, so give the section its padding as usual and nothing sits in the cut.
+
+```html
+<section class="seam" data-shape="slant" data-edge="both" data-flip data-size="lg" style="background: var(--yeti-color-secondary-subtle); padding: var(--yeti-space-xl)">
+	<h2>Slanted top and bottom</h2>
+</section>
+```
+
+### Accessibility
+
+Purely visual. The clip and the mask change nothing about the content, its order, or its size for assistive tech; the added space keeps text out of the cut for everyone.
+
+Tokens:
+- --yeti-seam-size — Fix the depth for every size.
+- --yeti-space-sm — The depth when data-size is absent.
+
+Accessibility:
+Decorative only; nothing changes for assistive tech. The seam adds its depth as space on a cut edge so text never sits in the cut.
+
+## spinner (component, class="spinner")
+
+A turning ring in a hue, the size of the text, for waiting with no known end; a busy button shows the same ring after its label.
+
+Attributes:
+- data-variant: primary (default) | secondary | success | warning | alert | neutral — The hue of the bright edge.
+- data-size: sm | md (default) | lg — The ring is one em of the size's text step.
+
+### When to use it
+
+A wait with no known end: a page section still fetching, a search running. When the length is known, use `progress`. When the wait belongs to a button, set `aria-busy="true"` on the button and the ring appears there by itself.
+
+### How it works
+
+A one-em ring: a border in the hue's subtle step with the top edge in the hue, turning once per `--yeti-spinner-duration`. `data-size` sets the em through the text step, so a spinner sits in a line of text at that text's size. A button with `aria-busy="true"` draws the same ring after its label from its own text colour, so it reads on a filled button and an outlined one alike.
+
+```html
+<button class="button" aria-busy="true" aria-disabled="true">Saving</button>
+```
+
+### Accessibility
+
+Standing alone, give the spinner `role="status"` and an `aria-label` such as "Loading", so the wait is announced once and not again. Inside a busy button it needs nothing more: `aria-busy` on the button says it. Under reduced motion every animation duration collapses, so the ring stands still; a still ring with one bright edge still reads as "waiting".
+
+Tokens:
+- --yeti-spinner-duration — One turn.
+- --yeti-spinner-width — Thickness of the ring.
+- --yeti-motion-iterations — How many times the ring turns; one under reduced motion.
+- --yeti-color-primary — The default variant's colour, when data-variant is absent.
+- --yeti-color-primary-subtle — The default variant's tint.
+- --yeti-color-primary-soft — The default variant's soft stop.
+- --yeti-color-primary-strong — The default variant's strong stop.
+- --yeti-color-primary-text — The default variant's text colour.
+- --yeti-on-primary — Text on the default variant's colour.
+- --yeti-text-md — The text step when data-size is absent; the ring's diameter follows it.
+- --yeti-space-sm — The space step when data-size is absent.
+
+Accessibility:
+Standing alone, give it role="status" and an aria-label such as "Loading", so the wait is announced once. Inside a button that carries aria-busy="true" it needs nothing: the button already says it is busy, and the ring appears by itself. Under reduced motion the ring stands still.
+
+## table (component, class="table")
+
+A data table styled in place: header rule, row lines, optional stripes, hover, and cell borders, with numeric columns that line up.
+
+Attributes:
+- data-size: sm | md (default) | lg — Cell padding and text size; sm is the compact table.
+- data-striped (boolean) — Tint every other body row.
+- data-hover (boolean) — Tint the row under the pointer.
+- data-grid (boolean) — Borders around every cell instead of lines between rows.
+
+On children:
+- data-numeric on td, th (boolean) — A cell of numbers: end-aligned with tabular figures.
+
+### When to use it
+
+Rows and columns of data: prices, results, comparisons. If the content is a list of things with a picture each, that is a `grid` of cards, not a table.
+
+### How it works
+
+The class goes on the `table`. Cells get padding from `data-size` and a line beneath each row; the header row gets a stronger rule. `data-striped` tints every other row, `data-hover` the row under the pointer, `data-grid` draws every cell. Mark a column of numbers with `data-numeric` on its cells and header: they align to the end with tabular figures, so the digits line up. A table that is wider than its container goes inside a `scroller`, which scrolls it sideways while the table itself stays a table.
+
+```html
+<div class="scroller" role="region" aria-label="Quarterly results" tabindex="0">
+	<table class="table" data-size="sm" data-grid>
+		<caption>Quarterly results</caption>
+		<thead><tr><th scope="col">Region</th><th scope="col" data-numeric>Q1</th><th scope="col" data-numeric>Q2</th></tr></thead>
+		<tbody><tr><th scope="row">North</th><td data-numeric>120</td><td data-numeric>132</td></tr></tbody>
+	</table>
+</div>
+```
+
+### Accessibility
+
+A table needs a name: a `caption`, or `aria-label` or `aria-labelledby` on the element. Header cells carry `scope`. Yeti never turns a table into stacked cards at narrow widths, because that breaks the relationships a screen reader depends on; use a `scroller` and keep the table a table.
+
+Children:
+- > caption: at least 0, at most 1. The table's title.
+- > thead: at least 0, at most 1. The header row.
+- > tbody: at least 1. The rows.
+- [data-numeric]: at least 0. A cell (or header cell) of numbers: end-aligned with tabular figures.
+
+Tokens:
+- --yeti-table-stripe — Fill of even rows with data-striped.
+- --yeti-table-border — Row and cell borders.
+- --yeti-color-border-strong — The rule under the header.
+- --yeti-text-md — Text size when data-size is absent.
+- --yeti-space-sm — The space step when data-size is absent; a cell's inline padding follows it.
+- --yeti-weight-strong — Weight of the caption and of header cells.
+- --yeti-border-width — Width of the row rules, and of every cell border with data-grid.
+- --yeti-color-surface-sunken — Background of a row under the pointer with data-hover.
+
+Accessibility:
+Give the table a caption, or aria-label / aria-labelledby. Header cells carry scope="col" or scope="row". A table wider than its container goes inside a scroller with tabindex="0" and a label; the table itself never changes shape, so it stays a table for assistive tech.
+
+## tabs (component, class="tabs")
+
+A row of tabs over their panels, showing one at a time when its module is loaded and all of them when it is not.
+
+Attributes:
+- data-orientation: horizontal (default) | vertical — Whether the tab list runs along the top or down the side.
+- data-variant: primary (default) | secondary | success | warning | alert | neutral — The hue of the selected tab and its edge.
+- data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the list and the panels.
+
+module: tabs.js (optional)
+
+### When to use it
+
+Alternative views of one thing: a profile and its billing, a chart and its table. Not for steps in a sequence, which want a form, and not for hiding content a reader needs to compare against something else.
+
+### How it works
+
+A tab list of buttons over their panels. The CSS styles the list and marks the selected tab with the hue on its edge, and it never hides a panel. That is deliberate: a page that does not load `tabs.js`, or where the script fails, shows every panel under its own tab, so nothing a reader came for is locked away.
+
+Load the module and it pairs every tab with the panel its `aria-controls` names, shows one, hides the rest, and takes over the keyboard: arrows move selection, Home and End jump to the ends, and only the selected tab is in the tab order, so Tab leaves the list rather than walking it.
+
+```html
+<div class="tabs" data-orientation="vertical">
+	<div role="tablist" aria-label="Settings">
+		<button type="button" role="tab" id="t-general" aria-controls="p-general">General</button>
+		<button type="button" role="tab" id="t-keys" aria-controls="p-keys">API keys</button>
+	</div>
+	<section role="tabpanel" id="p-general" aria-labelledby="t-general"><p>General settings.</p></section>
+	<section role="tabpanel" id="p-keys" aria-labelledby="t-keys"><p>Your API keys.</p></section>
+</div>
+```
+
+### Accessibility
+
+Name the tablist, since a page may have more than one. Each tab's `aria-controls` names its panel and each panel's `aria-labelledby` names its tab; the module reads that pairing rather than guessing from document order, so the markup stays the source of truth. The module also maintains `aria-selected` and the roving `tabindex`, which is what makes a tab list feel like one control rather than a row of buttons. Without the module the markup is still valid: the roles are right and every panel is readable.
+
+Children:
+- > [role="tablist"]: at least 1, at most 1. The tabs, in order, with a name of its own.
+- [role="tab"]: at least 2. A button whose aria-controls names its panel.
+- > [role="tabpanel"]: at least 2. A panel whose aria-labelledby names its tab.
+
+Tokens:
+- --yeti-tabs-border — The line under or beside the list.
+- --yeti-tabs-padding — Padding of one tab.
+- --yeti-border-width — Width of that line; the selected mark is twice it.
+- --yeti-space-md — The default gap between the list and the panel.
+- --yeti-color-primary — The default variant's colour, when data-variant is absent.
+- --yeti-color-primary-subtle — The default variant's tint.
+- --yeti-color-primary-soft — The default variant's soft stop.
+- --yeti-color-primary-strong — The default variant's strong stop.
+- --yeti-color-primary-text — The default variant's text colour.
+- --yeti-on-primary — Text on the default variant's colour.
+- --yeti-space-xs — Gap between tabs.
+- --yeti-weight-strong — Weight of a tab's label.
+- --yeti-duration-fast — How long a tab takes to change colour.
+- --yeti-ease — The curve of that transition.
+
+Accessibility:
+- Left / Right: Moves selection along a horizontal list.
+- Up / Down: Moves selection along a vertical list.
+- Home / End: Selects the first or the last tab.
+- Tab: Leaves the list for the selected panel.
+Give the tablist a name with aria-label or aria-labelledby. Every tab is a button whose aria-controls names its panel, and every panel names its tab back with aria-labelledby; that pairing is what the module reads. With tabs.js loaded one tab is selected, the rest take tabindex="-1" for a roving focus, and the inactive panels are hidden. Without it nothing is hidden and every tab is focusable, which is plainer but never traps content.
+
+## tooltip (component, class="tooltip")
+
+A short hint that appears beside a control on hover and on focus, described to assistive tech and needing no script.
+
+Attributes:
+- data-placement: top (default) | bottom | start | end — Which side of the trigger the bubble sits on.
+
+### When to use it
+
+A few words about a control whose purpose is not obvious from its face, most often an icon-only button. Never for anything the reader has to have: there is no hover on a touch screen, and a tooltip that matters is a tooltip that will be missed.
+
+### How it works
+
+The component wraps a trigger and a bubble. The bubble is hidden until the trigger is hovered or focused, which is why it needs no script: `:hover` and `:focus-within` on the wrapper do the whole job. It is deliberately not a `popover`, because nothing but script can open one of those, and a script is exactly what this component should not need.
+
+Where anchor positioning exists the bubble is fixed and anchored to the trigger, so a scrolling ancestor cannot clip it, and `data-placement` moves it to any of the four sides. Where it is missing the bubble falls back to absolute positioning above the trigger, which is fine until it sits inside something that scrolls.
+
+A caret bridges the gap between the bubble and the trigger, on whichever side the bubble sits. It is anchored to the trigger rather than to the bubble, because a bubble near the edge of the viewport slides sideways to stay on screen and a caret carried along with it would end up pointing at nothing. It takes the bubble's colour and needs no markup of its own.
+
+```html
+<span class="tooltip" data-placement="end">
+	<button class="button" type="button" aria-label="Copy" aria-describedby="copy-tip" data-emphasis="low">⧉</button>
+	<span role="tooltip" id="copy-tip">Copies the link</span>
+</span>
+```
+
+### Accessibility
+
+The trigger references the bubble with `aria-describedby`, so a screen reader announces the hint with the control rather than leaving it stranded in the page. The bubble appears on focus as well as hover, so a keyboard reader gets it too.
+
+Keep it to a few words, and put nothing interactive inside: there is no way to move focus into a bubble that disappears when focus leaves the trigger. If the hint is long, or if it matters, it is not a tooltip. A field's own hint sits under the control permanently and is almost always the better answer.
+
+The bubble also cannot be dismissed while the trigger stays hovered or focused: WCAG 1.4.13 asks for that, and a tooltip with no script has no way to offer it. This is a known limit of a pure-CSS tooltip, not an oversight, and it is another reason to keep the text short and never essential.
+
+Children:
+- > *: at least 2, at most 2. The trigger first, then the bubble.
+- > [role="tooltip"]: at least 1, at most 1. The bubble; the trigger names it with aria-describedby.
+
+Tokens:
+- --yeti-tooltip-surface — Background of the bubble.
+- --yeti-tooltip-text — Text of the bubble.
+- --yeti-tooltip-radius — Corner of the bubble.
+- --yeti-text-sm — The bubble's text size.
+- --yeti-space-xs — Block padding of the bubble, its distance from the trigger, and the caret's size.
+- --yeti-space-sm — Inline padding of the bubble.
+- --yeti-duration-fast — How long the bubble takes to appear.
+- --yeti-ease — The curve of that transition.
+
+Accessibility:
+- Tab: Focusing the trigger shows the bubble, so it is reachable without a mouse.
+The trigger must reference the bubble with aria-describedby, so the hint is announced together with the control; the bubble carries role="tooltip". A tooltip is for a short hint on a control whose purpose is not otherwise obvious, and it is never the only place something is said: touch has no hover, so anything essential belongs in the label, in a field's hint, or in the text. Do not put a link or a button inside the bubble, since there is no way to reach one. The bubble cannot be dismissed while the trigger stays hovered or focused, a known limit of a tooltip with no script, which WCAG 1.4.13 asks content shown on hover or focus to offer.
+
+## Tokens
+
+Every public custom property, with its group and default. A theme is a file that sets some of these after yeti.css.
+
+- --yeti-base (scale): unset — Set to pin the body size at one value for every viewport; overrides both --yeti-base-min and --yeti-base-max.
+- --yeti-ratio (scale): unset — Set to pin the scale ratio at one value for every viewport; overrides both --yeti-ratio-min and --yeti-ratio-max.
+- --yeti-base-min (scale): 1rem — Body text size at the narrow viewport.
+- --yeti-base-max (scale): 1.125rem — Body text size at the wide viewport.
+- --yeti-ratio-min (scale): 1.2 — Scale ratio at the narrow viewport (minor third).
+- --yeti-ratio-max (scale): 1.333 — Scale ratio at the wide viewport (perfect fourth).
+- --yeti-viewport-min (scale): 320px — Viewport width at which the narrow values apply.
+- --yeti-viewport-max (scale): 1280px — Viewport width at which the wide values apply.
+- --yeti-space-none (space): 0 — No space; the value behind data-gap="none".
+- --yeti-space-xs (space): step -2 — Hairline gap.
+- --yeti-space-sm (space): step -1 — Tight gap.
+- --yeti-space-md (space): step 0 — Default gap; equals the body text size.
+- --yeti-space-lg (space): step 1 — Comfortable gap.
+- --yeti-space-xl (space): step 2 — Section gap.
+- --yeti-space-2xl (space): step 3 — Page-level gap.
+- --yeti-space-3xl (space): step 4 — Hero-level gap.
+- --yeti-space-xs-static (space): step -2, narrow viewport value — Non-fluid xs, for a gap that must not scale.
+- --yeti-space-sm-static (space): step -1, narrow viewport value — Non-fluid sm.
+- --yeti-space-md-static (space): step 0, narrow viewport value — Non-fluid md.
+- --yeti-space-lg-static (space): step 1, narrow viewport value — Non-fluid lg.
+- --yeti-space-xl-static (space): step 2, narrow viewport value — Non-fluid xl.
+- --yeti-space-2xl-static (space): step 3, narrow viewport value — Non-fluid 2xl.
+- --yeti-space-3xl-static (space): step 4, narrow viewport value — Non-fluid 3xl.
+- --yeti-radius-sm (radius): 0.25 × base — Small corner radius; inputs, code, badges.
+- --yeti-radius-md (radius): 0.5 × base — Medium corner radius; cards, dialogs.
+- --yeti-radius-lg (radius): 1 × base — Large corner radius; hero panels.
+- --yeti-radius-full (radius): 9999px — Pill or circle.
+- --yeti-width-xs (width): 16rem — Smallest container measure; the grid's default minimum column width.
+- --yeti-width-sm (width): 24rem — The sidebar's default width.
+- --yeti-width-md (width): 32rem — The columns layout's default threshold.
+- --yeti-width-lg (width): 48rem — A narrow page column.
+- --yeti-width-xl (width): 64rem — The center layout's default maximum.
+- --yeti-width-2xl (width): 80rem — A wide page column.
+- --yeti-text-xs (text): step -2 — Captions and fine print.
+- --yeti-text-sm (text): step -1 — Small text; h6.
+- --yeti-text-md (text): step 0 — Body text; h5 in bold.
+- --yeti-text-lg (text): step 1 — Lead paragraphs; h4.
+- --yeti-text-xl (text): step 2 — h3.
+- --yeti-text-2xl (text): step 3 — h2.
+- --yeti-text-3xl (text): step 4 — h1.
+- --yeti-text-display (text): step 5 — Display type, larger than any heading.
+- --yeti-leading-md (text): 1em + 0.5 × base — Body line height; about 1.5 at body size, tightening as type grows.
+- --yeti-leading-tight (text): 1.15 — Heading line height.
+- --yeti-measure (text): 65ch — Maximum line length for prose.
+- --yeti-font-sans (font): system-ui, sans-serif — Default text face. Yeti ships no web fonts; override this to use yours.
+- --yeti-font-mono (font): ui-monospace, monospace — Code face.
+- --yeti-duration-fast (motion): 150ms — Quick transitions; hover and focus. Collapses to 0.01ms under prefers-reduced-motion.
+- --yeti-duration-base (motion): 250ms — Standard transitions; open and close. Collapses under prefers-reduced-motion.
+- --yeti-ease (motion): cubic-bezier(0.2, 0, 0, 1) — Default easing; fast out, gentle in.
+- --yeti-motion-iterations (motion): infinite — Iteration count for animations that run forever, such as the spinner. Collapses to 1 under prefers-reduced-motion, because a component's own infinite would outrank the reset and keep running at a random phase every frame.
+- --yeti-hue-primary (hue): 250 — Brand hue in oklch degrees; 250 is blue. Every primary color derives from it.
+- --yeti-hue-secondary (hue): 300 — Secondary hue; 300 is violet.
+- --yeti-hue-success (hue): 145 — Success hue; 145 is green.
+- --yeti-hue-warning (hue): 80 — Warning hue; 80 is amber.
+- --yeti-hue-alert (hue): 25 — Alert hue; 25 is red.
+- --yeti-hue-neutral (hue): var(--yeti-hue-primary) — Hue that faintly tints surfaces, text, and borders. Follows the primary hue unless set.
+- --yeti-chroma (hue): 0.15 — Accent saturation. Lower for a calmer palette; 0.2 and above may clip on very saturated hues.
+- --yeti-color-primary (color): ladder base of the primary hue — The brand color: buttons, links, focus.
+- --yeti-color-primary-subtle (color): ladder subtle — Tinted background; hover on surfaces, selection.
+- --yeti-color-primary-soft (color): ladder soft — Borders and dividers in the primary hue.
+- --yeti-color-primary-strong (color): ladder strong — Hover and active state of the primary color.
+- --yeti-color-primary-text (color): ladder text — Primary-hued text on plain surfaces.
+- --yeti-on-primary (color): near-white in light, near-black in dark — Text placed on --yeti-color-primary.
+- --yeti-color-secondary (color): ladder base of the secondary hue — Secondary accent.
+- --yeti-color-secondary-subtle (color): ladder subtle — Tinted background in the secondary hue.
+- --yeti-color-secondary-soft (color): ladder soft — Borders in the secondary hue.
+- --yeti-color-secondary-strong (color): ladder strong — Hover and active state of the secondary color.
+- --yeti-color-secondary-text (color): ladder text — Secondary-hued text on plain surfaces.
+- --yeti-on-secondary (color): near-white in light, near-black in dark — Text placed on --yeti-color-secondary.
+- --yeti-color-success (color): ladder base of the success hue — Positive state.
+- --yeti-color-success-subtle (color): ladder subtle — Tinted background for success messages.
+- --yeti-color-success-soft (color): ladder soft — Borders for success messages.
+- --yeti-color-success-strong (color): ladder strong — Hover and active state of the success color.
+- --yeti-color-success-text (color): ladder text — Success-hued text on plain surfaces.
+- --yeti-on-success (color): near-white in light, near-black in dark — Text placed on --yeti-color-success.
+- --yeti-color-warning (color): ladder base of the warning hue — Caution state.
+- --yeti-color-warning-subtle (color): ladder subtle — Tinted background for warnings.
+- --yeti-color-warning-soft (color): ladder soft — Borders for warnings.
+- --yeti-color-warning-strong (color): ladder strong — Hover and active state of the warning color.
+- --yeti-color-warning-text (color): ladder text — Warning-hued text on plain surfaces.
+- --yeti-on-warning (color): near-white in light, near-black in dark — Text placed on --yeti-color-warning.
+- --yeti-color-alert (color): ladder base of the alert hue — Error and danger state.
+- --yeti-color-alert-subtle (color): ladder subtle — Tinted background for errors.
+- --yeti-color-alert-soft (color): ladder soft — Borders for errors.
+- --yeti-color-alert-strong (color): ladder strong — Hover and active state of the alert color.
+- --yeti-color-alert-text (color): ladder text — Alert-hued text on plain surfaces.
+- --yeti-on-alert (color): near-white in light, near-black in dark — Text placed on --yeti-color-alert.
+- --yeti-color-neutral-subtle (color): ladder subtle — Neutral tint for badges and quiet fills.
+- --yeti-color-neutral-soft (color): ladder soft — Neutral fill for hover states.
+- --yeti-color-neutral (color): ladder base — Neutral accent: buttons and badges with data-variant="neutral".
+- --yeti-color-neutral-strong (color): ladder strong — Neutral accent, one step darker: hover and pressed.
+- --yeti-color-neutral-text (color): ladder text — Neutral-hued text on plain surfaces.
+- --yeti-on-neutral (color): near-white in light, near-black in dark — Text placed on --yeti-color-neutral.
+- --yeti-color-surface (color): L 0.99 light, 0.13 dark — Page background.
+- --yeti-color-surface-raised (color): L 0.97 light, 0.17 dark — Cards, code blocks, anything sitting on the page.
+- --yeti-color-surface-sunken (color): L 0.94 light, 0.10 dark — Wells and inset areas.
+- --yeti-color-text (color): L 0.15 light, 0.93 dark — Body text.
+- --yeti-color-text-muted (color): L 0.45 light, 0.70 dark — Secondary text: captions, help, metadata.
+- --yeti-color-border (color): L 0.88 light, 0.30 dark — Default border and divider.
+- --yeti-color-border-strong (color): L 0.75 light, 0.40 dark — Emphasised border: focused inputs, blockquote rule.
+- --yeti-color-focus (color): var(--yeti-color-primary) — Focus ring color.
+- --yeti-cover-height (layout): 100dvh — Minimum block size of a cover layout or a filled stack. Set to auto for one that is only as tall as its content.
+- --yeti-border-width (border): 1px — Width of every border a component draws.
+- --yeti-weight-normal (weight): 400 — Body weight.
+- --yeti-weight-bold (weight): 700 — Headings, th, strong and b. Separate from --yeti-weight-strong so display text and control labels can be tuned apart.
+- --yeti-weight-strong (weight): 600 — Labels, headers, buttons.
+- --yeti-shadow-color (shadow): black at 14% in light, 55% in dark — The colour every shadow is drawn in; a theme changes offsets without losing the scheme flip.
+- --yeti-shadow-sm (shadow): 0 1px 2px (black at 14% light, 55% dark) — Raised cards.
+- --yeti-shadow-md (shadow): 0 4px 12px (the same colour) — Floating surfaces; phase 4's menus and dialogs.
+- --yeti-control-size (control): 2.5rem — Minimum block size of a button or input at data-size="md".
+- --yeti-control-radius (control): var(--yeti-radius-sm) — Corner of inputs.
+- --yeti-control-border (control): var(--yeti-color-border) — Border of inputs at rest.
+- --yeti-control-surface (control): var(--yeti-color-surface) — Background of inputs.
+- --yeti-control-chevron (control): a mid-grey chevron — The select's chevron image; a theme may supply its own, for example a lighter one for a dark control surface.
+- --yeti-opacity-muted (control): 0.6 — Opacity of a disabled or busy control.
+- --yeti-button-radius (button): var(--yeti-radius-md) — Corner of buttons.
+- --yeti-button-weight (button): var(--yeti-weight-strong) — Weight of button text.
+- --yeti-button-padding (button): 2 — Inline padding as a multiple of the size's space step.
+- --yeti-badge-radius (badge): var(--yeti-radius-full) — Corner of badges; full makes a pill.
+- --yeti-badge-weight (badge): var(--yeti-weight-strong) — Weight of badge text.
+- --yeti-card-radius (card): var(--yeti-radius-md) — Corner of cards.
+- --yeti-card-padding (card): var(--yeti-space-md) — Padding inside a card.
+- --yeti-card-gap (card): var(--yeti-space-sm) — Space between a card's parts.
+- --yeti-card-border (card): var(--yeti-color-border) — Border of cards; transparent when raised.
+- --yeti-card-surface (card): var(--yeti-color-surface-raised) — Background of cards.
+- --yeti-field-gap (field): var(--yeti-space-xs) — Space between a field's label, control, and hint.
+- --yeti-table-stripe (table): var(--yeti-color-surface-sunken) — Fill of even rows with data-striped.
+- --yeti-table-border (table): var(--yeti-color-border) — Row and cell borders.
+- --yeti-seam-size (seam): twice the size's space step — Depth of the cut; set it to fix the depth for every size.
+- --yeti-nav-padding (nav): var(--yeti-space-sm) var(--yeti-space-md) — Padding of the bar and of the open panel.
+- --yeti-nav-radius (nav): var(--yeti-radius-sm) — Corner of the links and the toggle.
+- --yeti-nav-border (nav): var(--yeti-color-border) — The bar's bottom edge, and the sheet's.
+- --yeti-nav-surface (nav): var(--yeti-color-surface) — Background of the bar.
+- --yeti-nav-panel (nav): var(--yeti-color-surface-raised) — Background of the open panel.
+- --yeti-breadcrumbs-separator (breadcrumbs): "/" — The string between crumbs; a theme may prefer "›".
+- --yeti-pagination-radius (pagination): var(--yeti-radius-md) — Corner of each page target.
+- --yeti-alert-radius (alert): var(--yeti-radius-md) — Corner of an alert.
+- --yeti-alert-padding (alert): var(--yeti-space-md) — Padding inside an alert.
+- --yeti-progress-radius (progress): var(--yeti-radius-full) — Corner of the bar and of its value.
+- --yeti-spinner-duration (spinner): 0.8s — One turn of the ring; reduced motion stops it.
+- --yeti-spinner-width (spinner): 0.15em — Thickness of the ring.
+- --yeti-accordion-border (accordion): var(--yeti-color-border) — The line between one panel and the next, and around the set.
+- --yeti-accordion-padding (accordion): var(--yeti-space-md) — Padding of a summary and of its panel.
+- --yeti-accordion-surface (accordion): var(--yeti-color-surface) — Background of the set, and so of an open panel.
+- --yeti-accordion-summary (accordion): color-mix(in oklch, var(--yeti-accordion-surface) 88%, var(--yeti-color-text)) — Background of a summary row, set apart from the panel below it. Mixed toward the text colour, so it darkens the row in light and lifts it in dark.
+- --yeti-accordion-summary-hover (accordion): color-mix(in oklch, var(--yeti-accordion-surface) 80%, var(--yeti-color-text)) — Background of a summary under the pointer, one step further from the panel than at rest.
+- --yeti-tabs-border (tabs): var(--yeti-color-border) — The line under the tab list.
+- --yeti-tabs-padding (tabs): var(--yeti-space-sm) var(--yeti-space-md) — Padding of one tab.
+- --yeti-dropdown-surface (dropdown): var(--yeti-color-surface-raised) — Background of the open panel.
+- --yeti-dropdown-radius (dropdown): var(--yeti-radius-md) — Corner of the panel.
+- --yeti-dropdown-padding (dropdown): var(--yeti-space-xs) — Padding around the items.
+- --yeti-dropdown-min (dropdown): 12rem — Least width of the panel.
+- --yeti-dropdown-open-delay (dropdown): 100ms — How long the pointer must rest on a data-trigger="hover" dropdown before its panel opens. Read by hover.js, so it has no effect without that module.
+- --yeti-dropdown-close-delay (dropdown): 200ms — How long a hover-triggered panel waits after the pointer leaves before it closes, so the gap between trigger and panel is forgiving. Read by hover.js.
+- --yeti-dialog-surface (dialog): var(--yeti-color-surface-raised) — Background of the dialog.
+- --yeti-dialog-radius (dialog): var(--yeti-radius-lg) — Corner of the dialog.
+- --yeti-dialog-padding (dialog): var(--yeti-space-lg) — Padding inside the dialog.
+- --yeti-dialog-backdrop (dialog): a translucent wash of the text colour — The backdrop behind an open dialog.
+- --yeti-tooltip-surface (tooltip): var(--yeti-color-text) — Background of the bubble, inverted so it reads over anything.
+- --yeti-tooltip-text (tooltip): var(--yeti-color-surface) — Text of the bubble.
+- --yeti-tooltip-radius (tooltip): var(--yeti-radius-sm) — Corner of the bubble.
+- --yeti-carousel-dot (carousel): var(--yeti-color-border-strong) — Colour of a slide dot.
+- --yeti-carousel-dot-size (carousel): 0.75rem — Diameter of a slide dot.
+- --yeti-carousel-scroll (carousel): smooth, and auto under reduced motion — How the track scrolls when a dot is followed. A components-layer declaration outranks the reset, so the preference reaches the track through this token.
+- --yeti-range-value (field): 0% — The filled share of a range's track. Set it on the input, inline or from your own script, since CSS cannot read the value. Not a theme value.

@@ -10,6 +10,7 @@ import { validate, formatError } from './validate.js';
 import { walkFiles } from './lib/files.js';
 import { writeIde } from './gen-ide.js';
 import { writeTypes } from './gen-types.js';
+import { writeLlms } from './gen-llms.js';
 
 export function readPackage(root) {
 	return JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
@@ -69,7 +70,7 @@ export function build({ root, pkg = readPackage(root) }) {
 	const schema = loadSchema(path.join(root, 'schema', 'manifest.schema.json'));
 	const vocabFile = path.join(root, 'schema', 'vocabulary.json');
 	const vocabulary = fs.existsSync(vocabFile) ? loadVocabulary(vocabFile) : {};
-	const { merged } = loadAndMerge(srcDir, schema, vocabulary);
+	const { merged, entries } = loadAndMerge(srcDir, schema, vocabulary);
 	write('yeti.manifest.json', `${JSON.stringify({
 		framework: 'yeti',
 		version: pkg.version,
@@ -89,6 +90,7 @@ export function build({ root, pkg = readPackage(root) }) {
 
 	outputs.push(...writeIde({ root, merged, vocabulary, pkg }));
 	outputs.push(...writeTypes({ root, merged, vocabulary }));
+	outputs.push(...writeLlms({ root, merged, entries, pkg }));
 
 	return { errors: [], outputs };
 }
