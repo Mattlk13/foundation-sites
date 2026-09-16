@@ -20,14 +20,20 @@
 	   an inset shadow was tried instead, but it paints beneath the box's own
 	   content, and a framed example's document is opaque (Yeti's own surface
 	   colour), so in the framed case — the docs case — the edge would never
-	   show through. The minimum is also capped at 100%, or it would beat
-	   max-inline-size and overhang a container narrower than xs. */
+	   show through. The width and height tokens name the box's content size,
+	   because that is what @container measures and what the markup inside
+	   sees, so data-width="md" reads back as md; the border and the inset
+	   padding are added outside that content box, and the max and min caps
+	   subtract both so the box never overhangs its own container. */
 	.demo:not([data-height]) { --_yeti-height: var(--yeti-demo-height-md); }
 	.demo > [data-preview] {
 		position: relative;
-		inline-size: var(--_yeti-width, 100%);
-		max-inline-size: 100%;
-		min-inline-size: min(var(--yeti-width-xs), 100%);
+		box-sizing: content-box;
+		--_yeti-demo-inset: 0px;
+		--_yeti-demo-max: calc(100% - 2 * (var(--yeti-border-width) + var(--_yeti-demo-inset)));
+		inline-size: var(--_yeti-width, var(--_yeti-demo-max));
+		max-inline-size: var(--_yeti-demo-max);
+		min-inline-size: min(var(--yeti-width-xs), var(--_yeti-demo-max));
 		block-size: var(--_yeti-height);
 		resize: horizontal;
 		overflow: auto;
@@ -47,7 +53,8 @@
 	   reads as an inset around the content. An iframe is exempt because it
 	   has to fill the box exactly, edge to edge. */
 	.demo > [data-preview]:not(:has(> iframe)) {
-		padding: var(--yeti-space-xs);
+		--_yeti-demo-inset: var(--yeti-space-xs);
+		padding: var(--_yeti-demo-inset);
 	}
 
 	/* The code. The pre keeps the base layer's look on purpose: on a host

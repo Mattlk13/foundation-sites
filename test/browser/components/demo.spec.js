@@ -18,6 +18,14 @@ const dragGrip = async (page, selector, dx) => {
 	await page.mouse.move(r.right - 4 + dx, r.bottom - 4, { steps: 10 });
 	await page.mouse.up();
 };
+// The box is box-sizing: content-box, so its rect is bigger than the width
+// and height tokens by the border and (on direct markup) the inset padding;
+// this reads the content box those tokens actually name.
+const content = async (page, sel) => {
+	const r = await rect(page, sel);
+	const [b, p] = await Promise.all([px(page, sel, 'border-left-width'), px(page, sel, 'padding-left')]);
+	return { width: r.width - 2 * (b + p), height: r.height - 2 * (b + p) };
+};
 
 test.describe('demo', () => {
 	test('the preview is a size container the reader can drag narrower', async ({ page }) => {
@@ -33,9 +41,9 @@ test.describe('demo', () => {
 	test('the frame fills the box and follows it', async ({ page }) => {
 		await open(page);
 		await dragGrip(page, '#framed-preview', -300);
-		const [box, frame, border] = await Promise.all([rect(page, '#framed-preview'), rect(page, '#frame'), px(page, '#framed-preview', 'border-left-width')]);
-		expect(frame.width).toBeCloseTo(box.width - 2 * border, 0);
-		expect(frame.height).toBeCloseTo(box.height - 2 * border, 0);
+		const [box, frame] = await Promise.all([content(page, '#framed-preview'), rect(page, '#frame')]);
+		expect(frame.width).toBeCloseTo(box.width, 0);
+		expect(frame.height).toBeCloseTo(box.height, 0);
 		expect(await style(page, '#frame', 'border-top-width')).toBe('0px');
 	});
 
@@ -54,10 +62,10 @@ test.describe('demo', () => {
 
 	test('data-width sets the starting width; without it the box is full width', async ({ page }) => {
 		await open(page);
-		expect((await rect(page, '#narrow-preview')).width).toBeCloseTo(await token(page, '--yeti-width-sm'), 0);
-		expect((await rect(page, '#direct-preview')).width).toBeCloseTo(await token(page, '--yeti-width-lg'), 0);
-		const [stageBox, framed] = await Promise.all([rect(page, '#stage'), rect(page, '#framed-preview')]);
-		expect(framed.width).toBeCloseTo(stageBox.width, 0);
+		expect((await content(page, '#narrow-preview')).width).toBeCloseTo(await token(page, '--yeti-width-sm'), 0);
+		expect((await content(page, '#direct-preview')).width).toBeCloseTo(await token(page, '--yeti-width-lg'), 0);
+		const [stageBox, framed, border] = await Promise.all([rect(page, '#stage'), content(page, '#framed-preview'), px(page, '#framed-preview', 'border-left-width')]);
+		expect(framed.width).toBeCloseTo(stageBox.width - 2 * border, 0);
 	});
 
 	test('the box never overhangs a container narrower than xs', async ({ page }) => {
@@ -70,7 +78,7 @@ test.describe('demo', () => {
 	test('data-height picks the box height and md is the default', async ({ page }) => {
 		await open(page);
 		for (const [id, name] of [['#narrow-preview', 'sm'], ['#framed-preview', 'md'], ['#mid-preview', 'lg'], ['#tall-preview', 'xl']]) {
-			expect((await rect(page, id)).height, id).toBeCloseTo(await token(page, `--yeti-demo-height-${name}`), 0);
+			expect((await content(page, id)).height, id).toBeCloseTo(await token(page, `--yeti-demo-height-${name}`), 0);
 		}
 	});
 
@@ -115,38 +123,23 @@ test.describe('demo', () => {
 
 	test('the label flips exactly at the width defaults, not near them', async ({ page }) => {
 		await open(page);
-		// #framed-preview carries no padding (it holds an iframe), only the
-		// box's 1px border on each side, so the container query's content box
-		// is 2px narrower than the inline-size set here; the pixel values below
-		// are the width defaults plus that 2px, so the *content* box lands
-		// exactly on md (32rem = 512px) and lg (48rem = 768px).
+		// Set the box to one pixel either side of md (32rem = 512px) and read.
 		const at = async (px) => {
 			await page.evaluate((w) => { document.getElementById('framed-preview').style.inlineSize = `${w}px`; }, px);
 			await painted(page);
 			return label(page, 'framed-preview');
 		};
-		expect(await at(513)).toBe('sm');
-		expect(await at(514)).toBe('md');
-		expect(await at(769)).toBe('md');
-		expect(await at(770)).toBe('lg');
+		expect(await at(511)).toBe('sm');
+		expect(await at(512)).toBe('md');
+		expect(await at(767)).toBe('md');
+		expect(await at(768)).toBe('lg');
 	});
 
-	test('a box narrower than sm reads xs, and one with room for it reads sm', async ({ page }) => {
+	test('a box narrower than sm reads xs, and data-width="sm" reads sm at rest', async ({ page }) => {
 		await open(page);
-		// #narrow-preview's data-width="sm" sets its *border-box* to exactly the
-		// sm default (24rem); it is also direct markup, so it carries the box's
-		// padding as well as its border, both subtracted from the content box
-		// the container query reads. That lands a little under 24rem, so this
-		// box reads xs at rest — the label is honest about the room inside,
-		// not the nominal token name on the attribute.
-		expect(await label(page, 'narrow-preview')).toBe('xs');
+		expect(await label(page, 'narrow-preview')).toBe('sm');
 		await page.evaluate(() => { document.getElementById('narrow-preview').style.inlineSize = '300px'; });
 		await painted(page);
 		expect(await label(page, 'narrow-preview')).toBe('xs');
-		// Widened past sm plus that same padding-and-border tax, the content
-		// box clears 24rem and the label catches up.
-		await page.evaluate(() => { document.getElementById('narrow-preview').style.inlineSize = '423px'; });
-		await painted(page);
-		expect(await label(page, 'narrow-preview')).toBe('sm');
 	});
 });
