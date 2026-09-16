@@ -54,7 +54,7 @@
 	   site its own code styling should win, and it does, being unlayered.
 	   The summary gets a resting surface, not just a hover: a touch or
 	   keyboard reader cannot drag the box, so it may be the only part of
-	   the demo they can see is a pressable control. The hover tint mixes
+	   the demo they can see as a pressable control. The hover tint mixes
 	   toward the text colour the way the accordion's own summary does. */
 	.demo > details > summary {
 		display: inline-flex;
@@ -70,4 +70,34 @@
 	.demo > details > summary::-webkit-details-marker { display: none; }
 	.demo > details > summary:hover { background-color: color-mix(in oklch, var(--yeti-demo-label) 85%, var(--yeti-color-text)); }
 	.demo > details > pre { margin-block-start: var(--yeti-space-xs); }
+
+	/* The label names the width stop the box is at. It is what a pixel
+	   readout could never be: the framework's own vocabulary, flipping at the
+	   exact widths the components inside change shape. Thresholds are the
+	   width tokens' defaults, literal because a container condition cannot
+	   read a token; each names its token. */
+	.demo > [data-preview]::after {
+		content: "xs";
+		position: absolute;
+		inset-block-start: var(--yeti-space-xs);
+		inset-inline-end: var(--yeti-space-xs);
+		padding: 0 var(--yeti-space-xs);
+		border-radius: var(--yeti-demo-radius);
+		background-color: var(--yeti-demo-label);
+		color: var(--yeti-color-text-muted);
+		font-size: var(--yeti-text-sm);
+		font-family: var(--yeti-font-mono);
+		line-height: 1.6;
+		pointer-events: none;
+	}
+	/* sm (24rem) */
+	@container (inline-size >= 24rem) { .demo > [data-preview]::after { content: "sm"; } }
+	/* md (32rem) */
+	@container (inline-size >= 32rem) { .demo > [data-preview]::after { content: "md"; } }
+	/* lg (48rem) */
+	@container (inline-size >= 48rem) { .demo > [data-preview]::after { content: "lg"; } }
+	/* xl (64rem) */
+	@container (inline-size >= 64rem) { .demo > [data-preview]::after { content: "xl"; } }
+	/* 2xl (80rem) */
+	@container (inline-size >= 80rem) { .demo > [data-preview]::after { content: "2xl"; } }
 }
