@@ -1,0 +1,45 @@
+{
+  "$schema": "../../../schema/manifest.schema.json",
+  "name": "demo",
+  "kind": "component",
+  "description": "A live example in a box the reader can drag narrower and wider, with a label naming the width stop it is at, and the code beneath it.",
+  "class": "demo",
+  "attributes": [
+    { "name": "data-height", "type": "enum", "vocabulary": "height", "default": "md", "description": "The preview box's height. A frame inside cannot size to its content, so this is where that is set." },
+    { "name": "data-width", "type": "enum", "vocabulary": "width", "description": "The preview box's starting width, before the reader drags it. Full width when absent." }
+  ],
+  "classes": [],
+  "children": [
+    { "selector": "> figcaption", "min": 0, "max": 1, "description": "A title for the demo, above the box." },
+    { "selector": "> [data-preview]", "min": 1, "max": 1, "description": "The resizable box. Holds an iframe with the example in srcdoc, or the example's markup directly on a page that already loads Yeti." },
+    { "selector": "> [data-preview] > iframe", "min": 0, "max": 1, "description": "The framed example, loading yeti.css alone so the host page's styles never reach it. Needs a title." },
+    { "selector": "> details", "min": 0, "max": 1, "description": "The code, collapsed: a summary and a pre." }
+  ],
+  "markers": [
+    { "name": "data-preview", "type": "boolean", "on": "> div", "description": "Marks the resizable box. Direct markup taller than the box scrolls, so it carries tabindex=\"0\" to stay reachable from the keyboard." }
+  ],
+  "tokens": [
+    { "name": "--yeti-demo-height-md", "public": true, "description": "Box height at data-height=\"md\" and by default. The sm, lg, and xl stops are read through the shared height mapping in layouts/attributes.css, not by this file." },
+    { "name": "--yeti-demo-border", "public": true, "description": "The box's edge." },
+    { "name": "--yeti-demo-radius", "public": true, "description": "The box's corner, and the summary's." },
+    { "name": "--yeti-demo-label", "public": true, "description": "Surface of the stop label, and of the summary under the pointer." },
+    { "name": "--yeti-width-xs", "public": true, "description": "The narrowest the box can be dragged." },
+    { "name": "--yeti-border-width", "public": true, "description": "Width of the box's edge." },
+    { "name": "--yeti-space-xs", "public": true, "description": "Clearance direct markup keeps from the box's resize grip, and space around the summary and above the code." },
+    { "name": "--yeti-space-sm", "public": true, "description": "The summary's inline padding." },
+    { "name": "--yeti-text-sm", "public": true, "description": "Text size of the caption and the summary." },
+    { "name": "--yeti-color-text-muted", "public": true, "description": "The caption's colour." },
+    { "name": "--_yeti-height", "public": false }
+  ],
+  "a11y": {
+    "requiredAttributes": [],
+    "keyboard": [
+      { "key": "Enter / Space", "action": "On the summary, opens or closes the code." }
+    ],
+    "notes": "Give the iframe a title. Give the preview box tabindex=\"0\": direct markup taller than the box scrolls, and a scrollable region must be reachable from the keyboard. The resize handle is the browser's and works with a mouse or trackpad; a keyboard or touch reader sees the demo at its starting width and has the code, so a demo must never be the only place the markup appears. The stop label is generated content and is not announced; it is a visual aid to the drag."
+  },
+  "js": null,
+  "support": { "unguarded": ["container size queries", "resize", "iframe srcdoc"], "guarded": [] },
+  "since": "7.0.0",
+  "example": "example.html"
+}

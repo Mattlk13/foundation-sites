@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Demo fixture</title>
+	<link rel="stylesheet" href="../../../../src/yeti.css">
+	<style>#stage { inline-size: 100%; } .slide { background: var(--yeti-color-primary-soft); padding: var(--yeti-space-md); }</style>
+</head>
+<body>
+	<main>
+		<h1>Demo component</h1>
+		<div id="stage">
+			<figure class="demo" id="framed">
+				<div data-preview tabindex="0" id="framed-preview"><iframe id="frame" title="Card, live" srcdoc="&lt;link rel=&quot;stylesheet&quot; href=&quot;/src/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;article class=&quot;card&quot;&gt;&lt;h2&gt;Framed&lt;/h2&gt;&lt;p&gt;Inside an iframe.&lt;/p&gt;&lt;/article&gt;"></iframe></div>
+				<details id="framed-code">
+					<summary>Code</summary>
+					<pre><code>&lt;article class="card"&gt;…&lt;/article&gt;</code></pre>
+				</details>
+			</figure>
+
+			<figure class="demo" id="direct" data-width="lg">
+				<div data-preview tabindex="0" id="direct-preview">
+					<article class="card" id="direct-card">
+						<img id="direct-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%2394a3b8'/%3E%3C/svg%3E" alt="">
+						<h2 data-contrast>Direct</h2>
+						<p data-contrast>Plain markup, no frame.</p>
+					</article>
+				</div>
+			</figure>
+
+			<figure class="demo" id="narrow" data-width="sm" data-height="sm">
+				<div data-preview tabindex="0" id="narrow-preview"><p>Opens narrow and short.</p></div>
+			</figure>
+			<figure class="demo" id="tall" data-height="xl">
+				<div data-preview tabindex="0" id="tall-preview"><p>Tall.</p></div>
+			</figure>
+			<figure class="demo" id="mid" data-height="lg">
+				<div data-preview tabindex="0" id="mid-preview"><p>Large.</p></div>
+			</figure>
+		</div>
+	</main>
+</body>
+</html>
