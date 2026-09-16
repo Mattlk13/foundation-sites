@@ -59,7 +59,14 @@ PhpStorm and WebStorm read web-types and find the file through `package.json` on
 
 One limit is worth knowing. Neither format can tie a completion to a class, and a Yeti component's identity is its class, so every attribute is offered on every element: typing inside a `p` will offer `data-ranks`. Each description opens with the components that accept the attribute, so the list explains itself, and a wrong value is still a validator error rather than a silent nothing.
 
-For a TypeScript project the package also ships `yeti.d.ts`, which types `yeti-css/manifest` and `yeti-css/tokens`. It exists for tools built on those files; a page needs nothing from it.
+For a TypeScript project the package ships types for the two JSON files and the vocabularies they are built from:
+
+```ts
+import manifest from 'yeti-css/manifest';
+import type { YetiGap, YetiManifest } from 'yeti-css';
+```
+
+Both resolve with no configuration beyond the default in a modern project. They exist for tools built on those files; a page needs nothing from them.
 
 ## For a language model
 

@@ -18,12 +18,21 @@
   ],
   "style": "dist/yeti.css",
   "exports": {
-    ".": "./dist/yeti.css",
+    ".": {
+      "types": "./dist/yeti.d.ts",
+      "default": "./dist/yeti.css"
+    },
     "./css/*": "./dist/css/*",
     "./js/*": "./dist/js/*",
     "./themes/*": "./dist/themes/*",
-    "./manifest": "./dist/yeti.manifest.json",
-    "./tokens": "./dist/yeti.tokens.json"
+    "./manifest": {
+      "types": "./dist/yeti.manifest.d.ts",
+      "default": "./dist/yeti.manifest.json"
+    },
+    "./tokens": {
+      "types": "./dist/yeti.tokens.d.ts",
+      "default": "./dist/yeti.tokens.json"
+    }
   },
   "scripts": {
     "build": "node bin/build.js",

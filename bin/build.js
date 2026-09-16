@@ -78,6 +78,9 @@ export function build({ root, pkg = readPackage(root) }) {
 		components: merged,
 	}, null, 2)}\n`);
 
+	const tokensSchemaFile = path.join(root, 'schema', 'tokens.schema.json');
+	const tokensSchema = fs.existsSync(tokensSchemaFile) ? loadSchema(tokensSchemaFile) : null;
+
 	const catalogueFile = path.join(srcDir, 'tokens', 'tokens.json');
 	if (fs.existsSync(catalogueFile)) {
 		write('yeti.tokens.json', `${JSON.stringify({
@@ -89,7 +92,7 @@ export function build({ root, pkg = readPackage(root) }) {
 	}
 
 	outputs.push(...writeIde({ root, merged, vocabulary, pkg }));
-	outputs.push(...writeTypes({ root, merged, vocabulary }));
+	outputs.push(...writeTypes({ root, merged, vocabulary, tokensSchema }));
 	outputs.push(...writeLlms({ root, merged, entries, pkg }));
 
 	return { errors: [], outputs };
