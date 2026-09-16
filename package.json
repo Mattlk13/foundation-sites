@@ -6,6 +6,7 @@
   "type": "module",
   "homepage": "https://foundationcss.com/yeti/",
   "web-types": "./dist/yeti.web-types.json",
+  "types": "./dist/yeti.d.ts",
   "repository": "github:foundation/yeti",
   "engines": {
     "node": ">=24"
@@ -21,7 +22,8 @@
     "./css/*": "./dist/css/*",
     "./js/*": "./dist/js/*",
     "./themes/*": "./dist/themes/*",
-    "./manifest": "./dist/yeti.manifest.json"
+    "./manifest": "./dist/yeti.manifest.json",
+    "./tokens": "./dist/yeti.tokens.json"
   },
   "scripts": {
     "build": "node bin/build.js",

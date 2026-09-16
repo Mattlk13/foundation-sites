@@ -9,6 +9,7 @@ import { loadSchema, loadAndMerge, loadVocabulary } from './lib/manifest.js';
 import { validate, formatError } from './validate.js';
 import { walkFiles } from './lib/files.js';
 import { writeIde } from './gen-ide.js';
+import { writeTypes } from './gen-types.js';
 
 export function readPackage(root) {
 	return JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
@@ -87,6 +88,7 @@ export function build({ root, pkg = readPackage(root) }) {
 	}
 
 	outputs.push(...writeIde({ root, merged, vocabulary, pkg }));
+	outputs.push(...writeTypes({ root, merged, vocabulary }));
 
 	return { errors: [], outputs };
 }
