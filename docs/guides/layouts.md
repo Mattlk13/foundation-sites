@@ -55,6 +55,8 @@ Four across, two by two, one is the same question with an extra step, and the an
 </div>
 ```
 
+The [responsive guide](responsive.md) takes this idea through the whole framework.
+
 ## The vocabulary
 
 Every layout is configured with a small set of `data-*` attributes, drawn from a shared list of values.
