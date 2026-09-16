@@ -32,7 +32,7 @@ export function renderTypes(merged, vocabulary) {
 	lines.push('\ttype: YetiAttributeType;');
 	lines.push('\tvalues?: string[];');
 	lines.push('\tvocabulary?: string;');
-	lines.push('\tdefault?: string;');
+	lines.push('\tdefault?: string | number | boolean;');
 	lines.push('\tdescription: string;');
 	lines.push('}');
 	lines.push('');
@@ -47,9 +47,9 @@ export function renderTypes(merged, vocabulary) {
 	lines.push('');
 	lines.push('export interface YetiChild {');
 	lines.push('\tselector: string;');
-	lines.push('\tmin: number;');
-	lines.push('\tmax: number | null;');
-	lines.push('\tdescription: string;');
+	lines.push('\tmin?: number;');
+	lines.push('\tmax?: number | null;');
+	lines.push('\tdescription?: string;');
 	lines.push('}');
 	lines.push('');
 	lines.push('export interface YetiToken {');
@@ -59,6 +59,7 @@ export function renderTypes(merged, vocabulary) {
 	lines.push('}');
 	lines.push('');
 	lines.push('export interface YetiA11y {');
+	lines.push('\trole?: string;');
 	lines.push('\trequiredAttributes: string[];');
 	lines.push('\tkeyboard: Array<{ key: string; action: string }>;');
 	lines.push('\tnotes?: string;');
@@ -70,7 +71,7 @@ export function renderTypes(merged, vocabulary) {
 	lines.push('\tdescription: string;');
 	lines.push('\tclass: string;');
 	lines.push('\tattributes: YetiAttribute[];');
-	lines.push('\tclasses: Array<{ name: string; description: string }>;');
+	lines.push("\tclasses: Array<{ name: string; type: 'boolean'; description: string }>;");
 	lines.push('\tchildren: YetiChild[];');
 	lines.push('\tmarkers?: YetiMarker[];');
 	lines.push('\ttokens: YetiToken[];');

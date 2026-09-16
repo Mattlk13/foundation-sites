@@ -38,6 +38,14 @@ test('renderTypes types the manifest and token catalogue shapes and declares the
 	assert.ok(out.includes('components: Record<YetiComponentName, YetiComponent>;'));
 });
 
+test('renderTypes types match the schema\'s optional and typed fields', () => {
+	const out = renderTypes(merged, vocabulary);
+	assert.ok(out.includes('role?: string;'));
+	assert.ok(out.includes("type: 'boolean'; description: string }>;"));
+	assert.ok(out.includes('description?: string;'));
+	assert.ok(out.includes('default?: string | number | boolean;'));
+});
+
 test('renderTypes output is structurally sound: balanced braces and every export named', () => {
 	const out = renderTypes(merged, vocabulary);
 	const opens = (out.match(/\{/g) || []).length;
