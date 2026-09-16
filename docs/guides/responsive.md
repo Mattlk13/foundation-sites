@@ -26,7 +26,7 @@ A Yeti layout or component never asks how wide the screen is. It asks how wide i
 
 Here the `columns` sits in the sidebar's main area. When that area is narrower than the `sm` width its children stack; when a wider screen gives the area more room they sit side by side. Nothing about the screen was written down, and the same markup dropped into a full-width `center` behaves the same way relative to its own box.
 
-This is a container query, and Yeti uses it in every place where a layout changes shape. A viewport query, the thing a breakpoint was, appears almost nowhere in the framework, because a component cannot know where on the page it will be used.
+`columns` reaches that answer without a container query: each child's flex basis is `calc((threshold - 100%) * 999)`, hugely negative while the container is wider than the threshold and hugely positive once it is narrower, so the row wraps at the width you named. `hero` switches the same way. Where a component changes more than how it wraps, it declares itself a container and asks its own width in a container query: `nav` folding behind a toggle, `card`, `grid`, `breakout`, `pagination`, `timeline`. Either way the component reads its own box, never the screen. A viewport query, the thing a breakpoint was, appears almost nowhere in the framework, because a component cannot know where on the page it will be used.
 
 ## A threshold, not a breakpoint
 
@@ -82,6 +82,6 @@ When something has to respond, reach for these in order and stop at the first th
 | `data-threshold` | `columns`, `hero`, `nav`, `pagination` | at or above it, the wide form |
 | `data-max` | `breakout`, `center` | the widest the content column gets |
 | `data-width` | `dialog`, `media`, `scroller`, `shell`, `sidebar` | the preferred width of the part it sizes: the dialog itself, the media's figure, each item in a scroller, the shell's nav and aside, or the sidebar |
-| `data-min` | `grid`, `masonry` | the narrowest a column may be before one drops |
+| `data-min` | `grid`, `masonry` | the narrowest a column may be before one drops, or `none`, which leaves the count to `data-columns` |
 
-The values are the six stops above, and every one of them is a token: `--yeti-width-sm` is `24rem` until a theme says otherwise.
+The values are the six stops above, `none` aside, and every one of them is a token: `--yeti-width-sm` is `24rem` until a theme says otherwise.

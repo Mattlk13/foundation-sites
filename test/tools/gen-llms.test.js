@@ -53,6 +53,12 @@ test('the full file adds the docs fragment, accessibility, children and the toke
 	assert.ok(out.includes('- --rail-gap — The gap.'));
 });
 
+test("the generated accessibility block is labelled apart from a fragment's own heading", () => {
+	const out = renderFull(merged, tokens, docs, pkg);
+	assert.ok(out.includes('Accessibility contract:'));
+	assert.ok(!out.includes('\nAccessibility:\n'), 'a bare label reads as the fragment\'s own section');
+});
+
 test('every enumerated value appears and the default is marked exactly once per attribute', () => {
 	const out = renderCompact(merged, pkg);
 	const line = out.split('\n').find((l) => l.startsWith('- data-gap:'));

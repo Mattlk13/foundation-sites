@@ -60,7 +60,9 @@ export function renderFull(merged, tokens, docsByName, pkg) {
 		if (c.tokens.some((t) => t.public)) { lines.push('', 'Tokens:'); for (const t of c.tokens.filter((t) => t.public)) lines.push(`- ${t.name} — ${t.description}`); }
 		const a = c.a11y;
 		if (a.requiredAttributes.length || a.keyboard.length || a.notes) {
-			lines.push('', 'Accessibility:');
+			// "contract", because a fragment may carry its own ### Accessibility prose
+			// just above this: that is the reasoning, this is what the validator enforces.
+			lines.push('', 'Accessibility contract:');
 			if (a.requiredAttributes.length) lines.push(`Required: ${a.requiredAttributes.join(', ')}`);
 			for (const k of a.keyboard) lines.push(`- ${k.key}: ${k.action}`);
 			if (a.notes) lines.push(a.notes);

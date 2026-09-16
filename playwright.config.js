@@ -9,8 +9,13 @@ export default defineConfig({
 	expect: {
 		// A ratio over a two-million-pixel page hid a 178-pixel change, so the
 		// allowance is absolute: enough for antialiasing wobble, not for a
-		// moved border.
-		toHaveScreenshot: { maxDiffPixels: 25, animations: 'disabled' },
+		// moved border. The per-pixel distance is the other half of the
+		// comparison, and the default 0.2 is blind to colour: moving
+		// --yeti-hue-primary from 250 to 270 left all 96 baselines passing,
+		// and only a 40-degree step to 290 failed 20 of them. At 0.1 the same
+		// 10-degree step to 260 fails 20 and 270 fails 40, with the suite
+		// green twice on an unchanged tree.
+		toHaveScreenshot: { maxDiffPixels: 25, threshold: 0.1, animations: 'disabled' },
 	},
 	fullyParallel: true,
 	reporter: process.env.CI ? 'github' : 'list',

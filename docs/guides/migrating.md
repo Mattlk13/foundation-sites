@@ -12,7 +12,7 @@ Yeti is not Foundation 7 in the sense of being version 6 with new names. It is w
 
 ## The map
 
-The table is exhaustive for the grid and for every component in the version 6 kitchen sink. "None" means Yeti does not have it and says why; most of those are things the browser now does.
+The table covers the grid and every component in the version 6 kitchen sink. "None" means Yeti does not have it and says why; most of those are things the browser now does.
 
 ### Grid
 
@@ -43,9 +43,9 @@ The table is exhaustive for the grid and for every component in the version 6 ki
 | `.title-bar` with `.off-canvas` | `nav` with `data-panel="drawer"` | the drawer is the nav's own panel |
 | `.menu`, `.menu.vertical` | a `cluster` or `stack` of links; `nav` for a site menu | a menu is a list of links |
 | `.dropdown-pane` | `dropdown` | a popover, so no script and no z-index |
-| `.dropdown.menu` submenus | `dropdown` inside a `nav` item | one level; a mega menu is a recipe |
+| `.dropdown.menu` submenus | `dropdown` inside a `nav` item | one level; a mega menu is not shipped |
 | `.accordion-menu`, `.drilldown` | none | a site tree is a list of links in a `stack`; the browser's `<details>` disclosure for a section |
-| `.reveal` | `dialog` with `data-open` | the native dialog; the module opens it modally |
+| `.reveal` | `dialog`, opened by a `button` with `data-open` | the native dialog; the module opens it modally |
 | `.tooltip` | `tooltip` | hover and focus, no script |
 | `.accordion` | `accordion` | native `<details>`; `name` for one-at-a-time |
 | `.tabs` | `tabs` | roving focus from the module |

@@ -34,11 +34,14 @@ test('CHECKS runs validate, the tool tests and the browser suite, in that order'
 	for (const c of CHECKS) assert.deepEqual(c.command.slice(0, 2), ['npm', 'run']);
 });
 
-test('runChecks returns null when every check passes and the name of the first failure otherwise', () => {
+test('runChecks returns null when every check passes', () => {
 	const ran = [];
-	const allGood = (command, cwd) => { ran.push(command[2]); return 0; };
+	const allGood = (command) => { ran.push(command[2]); return 0; };
 	assert.equal(runChecks('/repo', allGood), null);
 	assert.deepEqual(ran, ['validate', 'test:tools', 'test:browser']);
+});
+
+test("runChecks returns the first failing check's name", () => {
 	const secondFails = (command) => (command[2] === 'test:tools' ? 1 : 0);
 	assert.equal(runChecks('/repo', secondFails), 'test:tools');
 });
