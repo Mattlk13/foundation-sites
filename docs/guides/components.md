@@ -3,7 +3,7 @@ raw: true
 title: "Components"
 description: "Buttons, badges, cards, forms, tables, and seams: three attributes, native state, and tokens for everything visual."
 nav_group: "Guides"
-nav_order: 4
+nav_order: 2
 ---
 
 # Components
@@ -20,7 +20,7 @@ A component's shape comes from its markup and its manifest; its look comes from 
 | `data-emphasis` | `high`, `medium`, `low` | button, badge |
 | `data-size` | `sm`, `md`, `lg` | button, badge, field, table, seam |
 
-`data-variant` picks a hue from the palette; the component reads that hue's ladder for its fill, its border, or its text. `data-emphasis` picks how much of the ladder shows: `high` is a solid fill, `medium` an outline or a tint, `low` the hue in text alone. `data-size` scales text and padding together, one step at a time, so nothing looks stretched between sizes. A component that does not carry an attribute uses its default, set the same way every other component sets its defaults: `.name:not([data-size])` and the like.
+`data-variant` picks a hue from the palette; the component reads that hue's ladder for its fill, its border, or its text. `data-emphasis` picks how much of the ladder shows: `high` is a solid fill, `medium` an outline or a tint, `low` the hue in text alone. `data-size` scales text and padding together, one step at a time, so nothing looks stretched between sizes. A component that does not carry an attribute uses its default, set the same way every other component sets its defaults: `.name:not([data-size])` and the like. Editors can complete every attribute and value from the package; the [installation guide](install.md) has the one setting.
 
 ## State is native
 

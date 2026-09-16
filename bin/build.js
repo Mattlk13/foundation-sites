@@ -8,6 +8,9 @@ import { resolveImports } from './lib/imports.js';
 import { loadSchema, loadAndMerge, loadVocabulary } from './lib/manifest.js';
 import { validate, formatError } from './validate.js';
 import { walkFiles } from './lib/files.js';
+import { writeIde } from './gen-ide.js';
+import { writeTypes } from './gen-types.js';
+import { writeLlms } from './gen-llms.js';
 
 export function readPackage(root) {
 	return JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
@@ -67,13 +70,16 @@ export function build({ root, pkg = readPackage(root) }) {
 	const schema = loadSchema(path.join(root, 'schema', 'manifest.schema.json'));
 	const vocabFile = path.join(root, 'schema', 'vocabulary.json');
 	const vocabulary = fs.existsSync(vocabFile) ? loadVocabulary(vocabFile) : {};
-	const { merged } = loadAndMerge(srcDir, schema, vocabulary);
+	const { merged, entries } = loadAndMerge(srcDir, schema, vocabulary);
 	write('yeti.manifest.json', `${JSON.stringify({
 		framework: 'yeti',
 		version: pkg.version,
 		generated: new Date().toISOString().slice(0, 10),
 		components: merged,
 	}, null, 2)}\n`);
+
+	const tokensSchemaFile = path.join(root, 'schema', 'tokens.schema.json');
+	const tokensSchema = fs.existsSync(tokensSchemaFile) ? loadSchema(tokensSchemaFile) : null;
 
 	const catalogueFile = path.join(srcDir, 'tokens', 'tokens.json');
 	if (fs.existsSync(catalogueFile)) {
@@ -84,6 +90,10 @@ export function build({ root, pkg = readPackage(root) }) {
 			tokens: JSON.parse(fs.readFileSync(catalogueFile, 'utf8')),
 		}, null, 2)}\n`);
 	}
+
+	outputs.push(...writeIde({ root, merged, vocabulary, pkg }));
+	outputs.push(...writeTypes({ root, merged, vocabulary, tokensSchema }));
+	outputs.push(...writeLlms({ root, merged, entries, pkg }));
 
 	return { errors: [], outputs };
 }

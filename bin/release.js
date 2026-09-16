@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 // Release preparation. Stamps the version, builds dist/, regenerates docs/,
 // and zips dist/. It never commits, tags, or publishes; those stay manual
-// git-flow steps so a human reviews the diff first. Completed in phase 5.
+// git-flow steps so a human reviews the diff first. Runs validate and both
+// test suites first, so a red tree cannot be released.
 import fs from 'node:fs';
 import path from 'node:path';
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { build } from './build.js';
 import { generateDocs } from './gen-docs.js';
@@ -28,6 +29,25 @@ export function checkGitState(root) {
 	return problems;
 }
 
+// The checks a release runs before it stamps anything, in order, so a release
+// cannot be cut from a red tree. There is no flag to skip them: the one
+// mistake a script can prevent outright is this one.
+export const CHECKS = [
+	{ name: 'validate', command: ['npm', 'run', 'validate'] },
+	{ name: 'test:tools', command: ['npm', 'run', 'test:tools'] },
+	{ name: 'test:browser', command: ['npm', 'run', 'test:browser'] },
+];
+
+const defaultRunner = (command, cwd) => spawnSync(command[0], command.slice(1), { cwd, stdio: 'inherit' }).status ?? 1;
+
+/** Runs each check with the runner; returns the first failing check's name, or null. */
+export function runChecks(root, runner = defaultRunner) {
+	for (const check of CHECKS) {
+		if (runner(check.command, root) !== 0) return check.name;
+	}
+	return null;
+}
+
 const isMain = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
 if (isMain) {
 	const root = process.cwd();
@@ -45,6 +65,13 @@ if (isMain) {
 	}
 	for (const p of problems) console.error(`release: ${p}`);
 	if (problems.length) process.exit(1);
+
+	console.log('release: running the checks first');
+	const failed = runChecks(root);
+	if (failed) {
+		console.error(`release: ${failed} failed; nothing stamped`);
+		process.exit(1);
+	}
 
 	const pkgPath = path.join(root, 'package.json');
 	fs.writeFileSync(pkgPath, stampVersion(fs.readFileSync(pkgPath, 'utf8'), version));

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import { stampVersion, checkGitState } from '../../bin/release.js';
+import { stampVersion, checkGitState, CHECKS, runChecks } from '../../bin/release.js';
 import { makeTree } from './helpers.js';
 
 test('stampVersion replaces only the version and keeps two-space formatting', () => {
@@ -27,4 +27,28 @@ test('checkGitState requires a clean tree on a release/* branch', () => {
 	assert.deepEqual(checkGitState(root), []);
 	fs.writeFileSync(path.join(root, 'a.txt'), 'changed\n');
 	assert.deepEqual(checkGitState(root), ['working tree is not clean']);
+});
+
+test('CHECKS runs validate, the tool tests and the browser suite, in that order', () => {
+	assert.deepEqual(CHECKS.map((c) => c.name), ['validate', 'test:tools', 'test:browser']);
+	for (const c of CHECKS) assert.deepEqual(c.command.slice(0, 2), ['npm', 'run']);
+});
+
+test('runChecks returns null when every check passes', () => {
+	const ran = [];
+	const allGood = (command) => { ran.push(command[2]); return 0; };
+	assert.equal(runChecks('/repo', allGood), null);
+	assert.deepEqual(ran, ['validate', 'test:tools', 'test:browser']);
+});
+
+test("runChecks returns the first failing check's name", () => {
+	const secondFails = (command) => (command[2] === 'test:tools' ? 1 : 0);
+	assert.equal(runChecks('/repo', secondFails), 'test:tools');
+});
+
+test('runChecks stops at the first failure and does not run what follows', () => {
+	const ran = [];
+	const firstFails = (command) => { ran.push(command[2]); return command[2] === 'validate' ? 1 : 0; };
+	runChecks('/repo', firstFails);
+	assert.deepEqual(ran, ['validate']);
 });

@@ -6,7 +6,7 @@
 
 ## Status
 
-Yeti is in development at `7.0.0-alpha`. Nothing here is stable yet: class names, attributes, and tokens can change between commits until the beta. Follow the announcement issue for milestones.
+Yeti is at `7.0.0-beta`. The class names, attributes and values, markers, public token names and module names are frozen; the [stability page](docs/guides/stability.md) has the exact list and what may still move before `7.0.0`.
 
 ## What Yeti is
 
@@ -38,6 +38,8 @@ The tokens, reset, base layer, seventeen layout primitives, three recipes, and t
 ```html
 <link rel="stylesheet" href="src/yeti.css">
 ```
+
+Or install the package and follow the [installation guide](docs/guides/install.md), which also covers editor completion and the `llms.txt` files for assistants.
 
 Or run the fixtures locally:
 

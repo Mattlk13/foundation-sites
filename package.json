@@ -5,6 +5,8 @@
   "license": "FSL-1.1-MIT",
   "type": "module",
   "homepage": "https://foundationcss.com/yeti/",
+  "web-types": "./dist/yeti.web-types.json",
+  "types": "./dist/yeti.d.ts",
   "repository": "github:foundation/yeti",
   "engines": {
     "node": ">=24"
@@ -16,11 +18,21 @@
   ],
   "style": "dist/yeti.css",
   "exports": {
-    ".": "./dist/yeti.css",
+    ".": {
+      "types": "./dist/yeti.d.ts",
+      "default": "./dist/yeti.css"
+    },
     "./css/*": "./dist/css/*",
     "./js/*": "./dist/js/*",
     "./themes/*": "./dist/themes/*",
-    "./manifest": "./dist/yeti.manifest.json"
+    "./manifest": {
+      "types": "./dist/yeti.manifest.d.ts",
+      "default": "./dist/yeti.manifest.json"
+    },
+    "./tokens": {
+      "types": "./dist/yeti.tokens.d.ts",
+      "default": "./dist/yeti.tokens.json"
+    }
   },
   "scripts": {
     "build": "node bin/build.js",
@@ -29,6 +41,7 @@
     "test": "npm run validate && npm run test:tools && npm run test:browser",
     "test:tools": "node --test test/tools/*.test.js",
     "test:browser": "playwright test",
+    "screenshots:update": "playwright test test/browser/screenshots.spec.js --project=chromium --update-snapshots",
     "fixtures": "node test/browser/serve.js",
     "release": "node bin/release.js"
   },

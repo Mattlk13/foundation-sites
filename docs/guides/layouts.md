@@ -55,6 +55,8 @@ Four across, two by two, one is the same question with an extra step, and the an
 </div>
 ```
 
+The [responsive guide](responsive.md) takes this idea through the whole framework.
+
 ## The vocabulary
 
 Every layout is configured with a small set of `data-*` attributes, drawn from a shared list of values.
@@ -158,16 +160,4 @@ A recipe still nests inside a primitive like anything else: a `grid` of three `m
 
 ## Coming from version 6
 
-The layouts change more than they look like they do, because the biggest habit to unlearn is thinking in breakpoints at all. Foundation 6's grid classes each encoded a viewport width chosen ahead of time; Yeti's layouts read the width of the box they are actually placed in, so the same markup keeps working when it moves to a narrower column, a wider one, or a sidebar.
-
-| Foundation 6 | Yeti |
-| --- | --- |
-| `.grid-container` | `center` |
-| `.grid-x` with `medium-N` cells | `columns` or `sidebar` |
-| `medium-8` / `medium-4` | `columns` with `data-span="2"` on the wider child |
-| Block Grid `small-up-N` / `large-up-N` | `grid` with `data-columns` |
-| `large-up-4 medium-up-2 small-up-1` | `grid` with `data-fold data-columns="4"` |
-| `.responsive-embed` | `frame` |
-| `.callout` | `box` with `data-border` |
-| `.button-group` | `cluster` |
-| Orbit | `scroller` |
+The biggest habit to unlearn is thinking in breakpoints at all: Foundation 6's grid classes each encoded a viewport width chosen ahead of time, while Yeti's layouts read the width of the box they are placed in. The full map from every version 6 class to its Yeti equivalent is in the [migration guide](migrating.md).

@@ -17,6 +17,16 @@ npm test                 # validate, tools, browser
 
 Node 24 or later. There is nothing to compile.
 
+### Screenshots
+
+`npm run test:browser` compares every fixture in light and dark against the baselines in `test/browser/screenshots/`, in Chromium only. When you change how something looks on purpose, re-bless in the same commit:
+
+```bash
+npm run screenshots:update
+```
+
+and say what changed in the commit message. A commit that re-blesses with no visible reason is a review question. Baselines are captured on the machine that runs them and depend on its fonts; on another machine the first run will fail and you re-bless locally before you start. That is expected, not a bug.
+
 ## The rules that shape every change
 
 **No build step, ever.** Nothing a user needs can depend on Node, Sass, or a bundler. The source tree under `src/` must load in a browser as-is; the build only concatenates.
