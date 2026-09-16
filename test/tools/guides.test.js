@@ -28,8 +28,8 @@ test('every Yeti class and attribute the migration table names exists in the man
 	const classes = new Set(Object.values(merged).map((c) => c.class));
 	const attributes = new Set(Object.values(merged).flatMap((c) => [...c.attributes, ...(c.markers ?? [])].map((a) => a.name)));
 	for (const { name, line } of names) {
-		const bare = name.replace(/^\./, '').replace(/=.*$/, '').replace(/^<|>$/g, '');
-		const known = classes.has(bare) || attributes.has(bare) || /^(aria-|role=|popover|open|<details>|<dialog>|<summary>|details|dialog|summary|name)/.test(name);
+		const bare = name.replace(/^\./, '').replace(/=.*$/, '').replace(/^<|>$/g, '').replace(/^\[|\]$/g, '');
+		const known = classes.has(bare) || attributes.has(bare) || /^(aria-[a-z-]+(=.*)?|role=.*|popover|open|<details>|<dialog>|<summary>|details|dialog|summary|name)$/.test(name);
 		assert.ok(known, `${name} is not a Yeti class or attribute: ${line}`);
 	}
 });

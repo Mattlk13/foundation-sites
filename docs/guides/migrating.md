@@ -55,13 +55,13 @@ The table is exhaustive for the grid and for every component in the version 6 ki
 | `.switch` | `field` around a native checkbox with role="switch" | native, styled |
 | `.breadcrumbs` | `breadcrumbs` | with `aria-current` on the last |
 | `.pagination` | `pagination` | with `aria-current` on the current page |
-| `.close-button` | the dismiss button inside `alert`, the close item inside `nav` | a close button belongs to what it closes |
-| `.sticky` | `affix` | native `position: sticky` |
+| `.close-button` | the dismiss button inside `alert`, `data-close` inside `nav` | a close button belongs to what it closes |
+| `.sticky` | none | one native `position: sticky` declaration on any element; nothing to add |
 | `.magellan` | none | a table of contents is a `stack` of links; scroll spying is script the page can add if it must |
 | `.responsive-embed` / `.flex-video` | `frame` with `data-ratio` | native `aspect-ratio` |
 | `.thumbnail` | `frame` in a `box` with `data-border` | two primitives |
 | `.media-object` | `media` | the recipe, or `sidebar` and `frame` yourself |
-| `.input-group` | `field` with the button inside | a field lays its parts out |
+| `.input-group` | `affix` inside `field` | the joined control and button share a border; the field still owns the label |
 | `.help-text`, `.form-error` | `data-hint` and `data-error` inside `field` | tied to the input with `aria-describedby` |
 | `.is-invalid-input` | `aria-invalid="true"` on the input | state is ARIA, not a class |
 | Abide | none | native validation attributes; the field shows the browser's state |
