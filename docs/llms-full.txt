@@ -1313,6 +1313,71 @@ Required: aria-label | aria-labelledby
 - Enter: Scrolls to that dot's slide.
 Label the region and give it aria-roledescription="carousel" so it is announced as one. The dots are links to slide ids, so the browser does the scrolling and the keyboard works without help; each needs an aria-label, since a dot has no room for text and Yeti ships no visually-hidden utility. They jump to a slide but cannot report which slide is showing, because CSS cannot know that. Loading carousel.js keeps the back button useful by scrolling the track instead of navigating; without it the dots still work, and each one followed is one press of back. Nothing essential should live behind a slide a reader has to find. The track scrolls, so it must be reachable from the keyboard: give it role="group", an aria-label, and tabindex="0". It is a group rather than a region because the carousel itself is already the landmark.
 
+## demo (component, class="demo")
+
+A live example in a box the reader can drag narrower and wider, with a label naming the width stop it is at, and the code beneath it.
+
+Attributes:
+- data-height: sm | md (default) | lg | xl — The preview box's height. A frame inside cannot size to its content, so this is where that is set.
+- data-width: xs | sm | md | lg | xl | 2xl — The preview box's starting width, before the reader drags it. Full width when absent.
+
+On children:
+- data-preview on > div (boolean) — Marks the resizable box. Direct markup taller than the box scrolls, so it carries tabindex="0" to stay reachable from the keyboard.
+
+### When to use it
+
+Showing a piece of Yeti markup and letting the reader see how it behaves as its box gets narrower. Documentation, a pattern library, a design-system page. Not for content a reader has to have: the box is a demonstration, and the markup should be on the page as code as well.
+
+### How it works
+
+The preview box is a size container the reader can drag from its bottom corner, with the browser's own handle and no script. Whatever Yeti markup is inside responds exactly as it would anywhere else, because a Yeti component measures its own box; a card becomes a thumbnail row as the box passes `sm`, and a label in the corner names the stop the box is at, `xs` through `2xl`, flipping at the same widths the components change. That is the framework's responsive model, applied to itself.
+
+The box can hold the example two ways. On a page that already loads Yeti, put the markup straight in; on any other page, the docs site among them, put an `iframe` in with the example in its `srcdoc` and a link to `yeti.css` ahead of it, so nothing from the host page leaks into the example. Either way, the box's height is always `data-height`'s, `md` when absent: a frame cannot size to its content, and neither does the box, so a tall example scrolls inside whichever form it's in. `data-width` sets the width the box starts at, using the width vocabulary, so a demo can open at `sm` and lead with the narrow form. That width names the example's own width: the box's edge and, on direct markup, its inset sit outside it, which is why the corner label agrees with the attribute. The code goes in a `details` under the box, collapsed.
+
+```html
+<figure class="demo" data-width="lg">
+	<div data-preview tabindex="0">
+		<article class="card">
+			<h2>Direct</h2>
+			<p>Plain markup on a Yeti page.</p>
+		</article>
+	</div>
+	<details>
+		<summary>Code</summary>
+		<pre><code>&lt;article class="card"&gt;…&lt;/article&gt;</code></pre>
+	</details>
+</figure>
+```
+
+### Accessibility
+
+Give the frame a `title`. Give the preview box `tabindex="0"`: direct markup taller than the box scrolls, and a scrollable region must be reachable from the keyboard. The handle is the browser's, which means a mouse or a trackpad; a keyboard or touch reader sees the demo at its starting width, which is why the code is there and why a demo must never be the only place the markup lives. The stop label is generated content, a visual aid to the drag, and is not announced. It sits inside the box, so on a tall direct example it scrolls away with the content: an aid to the drag, not a readout.
+
+Children:
+- > figcaption: at least 0, at most 1. A title for the demo, above the box.
+- > [data-preview]: at least 1, at most 1. The resizable box. Holds an iframe with the example in srcdoc, or the example's markup directly on a page that already loads Yeti. Carries tabindex="0" because it scrolls.
+- > [data-preview] > iframe: at least 0, at most 1. The framed example, loading yeti.css alone so the host page's styles never reach it. Needs a title.
+- > details: at least 0, at most 1. The code, collapsed: a summary and a pre.
+
+Tokens:
+- --yeti-demo-height-md — Box height at data-height="md" and by default. The sm, lg, and xl stops are read through the shared height mapping in layouts/attributes.css, not by this file.
+- --yeti-demo-border — The box's edge.
+- --yeti-demo-radius — The box's corner, the summary's, and the stop label's.
+- --yeti-demo-label — Surface of the stop label, and of the summary.
+- --yeti-color-text — Mixed into the summary's surface for the hover tint.
+- --yeti-width-xs — The narrowest the box can be dragged.
+- --yeti-border-width — Width of the box's edge.
+- --yeti-space-xs — Clearance direct markup keeps from the box's resize grip, and space around the summary and above the code; also the stop label's offset from the box's corner and its inline padding.
+- --yeti-space-sm — The summary's inline padding.
+- --yeti-text-sm — Text size of the caption, the summary, and the stop label.
+- --yeti-color-text-muted — The caption's colour, and the stop label's.
+- --yeti-font-mono — The stop label's typeface, so it reads as a readout, not prose.
+- --yeti-leading-md — The stop label's line height, so the pill is a touch taller than its text.
+
+Accessibility contract:
+- Enter / Space: On the summary, opens or closes the code.
+Give the iframe a title. Give the preview box tabindex="0": direct markup taller than the box scrolls, and a scrollable region must be reachable from the keyboard. The resize handle is the browser's and works with a mouse or trackpad; a keyboard or touch reader sees the demo at its starting width and has the code, so a demo must never be the only place the markup appears. The stop label is generated content and is not announced; it is a visual aid to the drag.
+
 ## dialog (component, class="dialog")
 
 The native dialog element as a modal, opened by a button that names it, with the page behind it inert and focus held inside.
@@ -2146,3 +2211,10 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-carousel-dot-size (carousel): 0.75rem — Diameter of a slide dot.
 - --yeti-carousel-scroll (carousel): smooth, and auto under reduced motion — How the track scrolls when a dot is followed. A components-layer declaration outranks the reset, so the preference reaches the track through this token.
 - --yeti-range-value (field): 0% — The filled share of a range's track. Set it on the input, inline or from your own script, since CSS cannot read the value. Not a theme value.
+- --yeti-demo-height-sm (demo): 12rem — The preview box's height at data-height="sm".
+- --yeti-demo-height-md (demo): 20rem — The preview box's height at data-height="md", and with no attribute.
+- --yeti-demo-height-lg (demo): 32rem — The preview box's height at data-height="lg".
+- --yeti-demo-height-xl (demo): 48rem — The preview box's height at data-height="xl".
+- --yeti-demo-border (demo): var(--yeti-color-border) — The preview box's edge.
+- --yeti-demo-radius (demo): var(--yeti-radius-md) — The preview box's corner.
+- --yeti-demo-label (demo): var(--yeti-color-surface-sunken) — Surface of the label naming the current width stop.

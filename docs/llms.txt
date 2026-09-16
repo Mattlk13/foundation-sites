@@ -276,6 +276,17 @@ On children:
 
 module: carousel.js (optional)
 
+## demo (component, class="demo")
+
+A live example in a box the reader can drag narrower and wider, with a label naming the width stop it is at, and the code beneath it.
+
+Attributes:
+- data-height: sm | md (default) | lg | xl — The preview box's height. A frame inside cannot size to its content, so this is where that is set.
+- data-width: xs | sm | md | lg | xl | 2xl — The preview box's starting width, before the reader drags it. Full width when absent.
+
+On children:
+- data-preview on > div (boolean) — Marks the resizable box. Direct markup taller than the box scrolls, so it carries tabindex="0" to stay reachable from the keyboard.
+
 ## dialog (component, class="dialog")
 
 The native dialog element as a modal, opened by a button that names it, with the page behind it inert and focus held inside.
