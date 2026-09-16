@@ -13,12 +13,21 @@ Sizes an inline SVG to the surrounding text and aligns it with the text beside i
 
 ## Example
 
+<figure class="demo" data-height="sm">
+<div data-preview="Icon"><iframe title="Icon, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;a class=&quot;icon&quot; href=&quot;#&quot;&gt;&#10;	&lt;svg aria-hidden=&quot;true&quot; viewBox=&quot;0 0 24 24&quot;&gt;&lt;path d=&quot;M12 3v12m0 0-4-4m4 4 4-4M4 21h16&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot;/&gt;&lt;/svg&gt;&#10;	Download&#10;&lt;/a&gt;"></iframe></div>
+
+<details markdown="1">
+<summary>View Code</summary>
+
 ```html
 <a class="icon" href="#">
 	<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 21h16" fill="none" stroke="currentColor" stroke-width="2"/></svg>
 	Download
 </a>
 ```
+
+</details>
+</figure>
 
 ## When to use it
 

@@ -12,8 +12,9 @@ From `7.0.0-beta.0`, the surface a page depends on is frozen. This page is the l
 
 ## Frozen
 
-- **Component class names.** `card` is `card`. The forty names in the manifest.
+- **Component class names.** `card` is `card`. The forty-one names in the manifest.
 - **Attribute names and their value lists.** `data-gap` takes the values it takes today; a value may be added, none will be removed or renamed.
+- **Vocabularies.** The named value lists attributes draw from, `gap`, `width`, `height` and the rest; a value may be added, none removed.
 - **Marker names and values.** `data-span` on a column, `data-numeric` on a cell, and the rest.
 - **Public token names.** Every `--yeti-*` in the catalogue. Their default values may still be tuned; their names and meanings will not change.
 - **Module file names.** `alert.js`, `tabs.js`, `dialog.js`, `hover.js`, `carousel.js`, and that each is optional.

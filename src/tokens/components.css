@@ -78,6 +78,12 @@
 
 		/* Per element, not per theme: the filled share of a range's track. */
 		--yeti-range-value: 0%;
+
+		/* Demo: a live example in a box the reader can drag. The heights are
+		   what a frame gets, since a frame cannot size to its content. */
+		--yeti-demo-border: var(--yeti-color-border);
+		--yeti-demo-radius: var(--yeti-radius-md);
+		--yeti-demo-label: var(--yeti-color-surface-sunken);
 	}
 
 	/* The ring reads a token so the preference reaches it: a components-layer

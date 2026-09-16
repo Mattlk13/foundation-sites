@@ -13,6 +13,12 @@ A message in a hue: a tinted box with a coloured edge, an optional icon, and an 
 
 ## Example
 
+<figure class="demo" data-height="sm">
+<div data-preview="Alert"><iframe title="Alert, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;alert&quot; role=&quot;status&quot; data-variant=&quot;success&quot;&gt;&#10;	&lt;svg aria-hidden=&quot;true&quot; viewBox=&quot;0 0 16 16&quot;&gt;&lt;path d=&quot;M3 8.5l3 3 7-7&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/&gt;&lt;/svg&gt;&#10;	&lt;div&gt;&lt;strong&gt;Saved.&lt;/strong&gt; Your changes are live.&lt;/div&gt;&#10;	&lt;button type=&quot;button&quot; data-dismiss aria-label=&quot;Dismiss&quot;&gt;×&lt;/button&gt;&#10;&lt;/div&gt;"></iframe></div>
+
+<details markdown="1">
+<summary>View Code</summary>
+
 ```html
 <div class="alert" role="status" data-variant="success">
 	<svg aria-hidden="true" viewBox="0 0 16 16"><path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -20,6 +26,9 @@ A message in a hue: a tinted box with a coloured edge, an optional icon, and an 
 	<button type="button" data-dismiss aria-label="Dismiss">×</button>
 </div>
 ```
+
+</details>
+</figure>
 
 ## When to use it
 

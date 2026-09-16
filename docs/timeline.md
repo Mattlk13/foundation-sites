@@ -13,6 +13,12 @@ Lays its entries along a rail with a marker each, on one side, or on alternate s
 
 ## Example
 
+<figure class="demo" data-height="xl">
+<div data-preview="Timeline"><iframe title="Timeline, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;ol class=&quot;timeline&quot; data-alternate role=&quot;list&quot;&gt;&#10;	&lt;li&gt;&lt;time datetime=&quot;2026-09-12&quot;&gt;12 September&lt;/time&gt;&lt;h3&gt;The plan&lt;/h3&gt;&lt;p&gt;Twelve layouts on paper.&lt;/p&gt;&lt;/li&gt;&#10;	&lt;li&gt;&lt;time datetime=&quot;2026-09-13&quot;&gt;13 September&lt;/time&gt;&lt;h3&gt;The layouts&lt;/h3&gt;&lt;p&gt;Fifteen of them, in the browser.&lt;/p&gt;&lt;/li&gt;&#10;	&lt;li&gt;&lt;time datetime=&quot;2026-09-14&quot;&gt;14 September&lt;/time&gt;&lt;h3&gt;The components&lt;/h3&gt;&lt;p&gt;Eight, and two themes.&lt;/p&gt;&lt;/li&gt;&#10;&lt;/ol&gt;"></iframe></div>
+
+<details markdown="1">
+<summary>View Code</summary>
+
 ```html
 <ol class="timeline" data-alternate role="list">
 	<li><time datetime="2026-09-12">12 September</time><h3>The plan</h3><p>Twelve layouts on paper.</p></li>
@@ -20,6 +26,9 @@ Lays its entries along a rail with a marker each, on one side, or on alternate s
 	<li><time datetime="2026-09-14">14 September</time><h3>The components</h3><p>Eight, and two themes.</p></li>
 </ol>
 ```
+
+</details>
+</figure>
 
 ## When to use it
 

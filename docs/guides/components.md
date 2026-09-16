@@ -59,7 +59,7 @@ A `field` pairs a label with its control and adds a hint and an error the contro
 
 ## Cards
 
-A `card` is a bordered surface for one thing: an optional figure that bleeds to the edges, a body, and a footer pinned to the bottom so a row of cards with different lengths still lines up its actions. Below the `sm` width of the card's own content — a container query, not a viewport one — a card with a figure becomes a row with a thumbnail on its own, wherever on the page it sits. Never wrap a card in a link, because the whole card's text would become the link's name; instead put the link on the heading and give it `data-stretch`, which grows the link to cover the card while its accessible name stays the heading's text.
+A `card` is a bordered surface for one thing: an optional figure that bleeds to the edges, a body, and a footer pinned to the bottom so a row of cards with different lengths still lines up its actions. From the `md` width of the card's own content — a container query, not a viewport one — a card with a figure puts the picture beside the text on its own, wherever on the page it sits; narrower, it stacks. Never wrap a card in a link, because the whole card's text would become the link's name; instead put the link on the heading and give it `data-stretch`, which grows the link to cover the card while its accessible name stays the heading's text.
 
 ```html
 <article class="card" data-raised>
@@ -169,6 +169,10 @@ A tooltip is never the only place something is said. It shows on hover and on fo
 	</div>
 </div>
 ```
+
+## Showing your work
+
+A `demo` is a live example in a box the reader can drag narrower and wider, with a label naming the width stop it is at. It is how the pages on this site show each component, and it is the framework's own model applied to itself: whatever is inside responds because it measures its own box. On a page that already loads Yeti the markup goes straight in; anywhere else an `iframe` with the example in `srcdoc` keeps the host's styles out. Either form takes its height from `data-height`, because neither the box nor a frame sizes to its content. The [demo page](../demo.md) has the details and the limits.
 
 ## Loading a module
 

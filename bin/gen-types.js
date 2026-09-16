@@ -47,7 +47,7 @@ export function renderTypes(merged, vocabulary, tokensSchema) {
 	lines.push('');
 	lines.push('export interface YetiMarker {');
 	lines.push('\tname: `data-${string}`;');
-	lines.push("\ttype: 'enum' | 'boolean';");
+	lines.push("\ttype: 'enum' | 'boolean' | 'string';");
 	lines.push('\tvalues?: string[];');
 	lines.push('\tvocabulary?: string;');
 	lines.push('\ton?: string;');
@@ -94,6 +94,8 @@ export function renderTypes(merged, vocabulary, tokensSchema) {
 	lines.push('\tsupport: { unguarded: string[]; guarded: string[] };');
 	lines.push('\tsince: string;');
 	lines.push('\texample: string;');
+	// How the docs frame the example; optional, and the generator's defaults apply when absent.
+	lines.push('\tdemo?: { height?: YetiHeight; width?: YetiWidth; resize?: YetiResize };');
 	lines.push('}');
 	lines.push('');
 	lines.push('export interface YetiManifest {');

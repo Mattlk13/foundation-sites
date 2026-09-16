@@ -13,6 +13,12 @@ Fits as many equal columns as the container allows at a minimum width, up to an 
 
 ## Example
 
+<figure class="demo" data-height="xl">
+<div data-preview="Grid"><iframe title="Grid, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;ul class=&quot;grid&quot; data-min=&quot;sm&quot; data-columns=&quot;3&quot; role=&quot;list&quot;&gt;&#10;	&lt;li&gt;One&lt;/li&gt;&#10;	&lt;li&gt;Two&lt;/li&gt;&#10;	&lt;li&gt;Three&lt;/li&gt;&#10;	&lt;li&gt;Four&lt;/li&gt;&#10;	&lt;li&gt;Five&lt;/li&gt;&#10;&lt;/ul&gt;"></iframe></div>
+
+<details markdown="1">
+<summary>View Code</summary>
+
 ```html
 <ul class="grid" data-min="sm" data-columns="3" role="list">
 	<li>One</li>
@@ -22,6 +28,9 @@ Fits as many equal columns as the container allows at a minimum width, up to an 
 	<li>Five</li>
 </ul>
 ```
+
+</details>
+</figure>
 
 ## When to use it
 
@@ -51,7 +60,7 @@ Add `data-fold` and the count halves instead of stepping: with `data-min="xs"` a
 
 The fold is one attribute on one element; the nest is two wrappers. Use whichever you would rather explain.
 
-`data-ranks` lines up neighbours' parts: with `data-ranks="3"` each child is a subgrid of three rows, so every first part sits in row one, every second in row two, and so on, across the row. Give the number of parts the fullest child has; a child with fewer leaves its last rows empty. A card in a ranked grid keeps its picture and footer aligned with its neighbours' and does not switch to its thumbnail row. A ranked child cannot also be a size container, because a size container cannot be a subgrid; the card turns its own container off inside a ranked grid for this reason.
+`data-ranks` lines up neighbours' parts: with `data-ranks="3"` each child is a subgrid of three rows, so every first part sits in row one, every second in row two, and so on, across the row. Give the number of parts the fullest child has; a child with fewer leaves its last rows empty. A card in a ranked grid keeps its picture and footer aligned with its neighbours' and does not switch to its side-by-side row. A ranked child cannot also be a size container, because a size container cannot be a subgrid; the card turns its own container off inside a ranked grid for this reason.
 
 ## Why this name
 

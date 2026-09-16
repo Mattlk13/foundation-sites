@@ -66,6 +66,14 @@
 	[data-width="xl"] { --_yeti-width: var(--yeti-width-xl); }
 	[data-width="2xl"] { --_yeti-width: var(--yeti-width-2xl); }
 
+	/* data-height: a block size, for the few things that take one. It reads
+	   the height family the way data-width reads the width family; the demo's
+	   preview box is the first taker, and a second reads the same property. */
+	[data-height="sm"] { --_yeti-height: var(--yeti-height-sm); }
+	[data-height="md"] { --_yeti-height: var(--yeti-height-md); }
+	[data-height="lg"] { --_yeti-height: var(--yeti-height-lg); }
+	[data-height="xl"] { --_yeti-height: var(--yeti-height-xl); }
+
 	[data-min="none"] { --_yeti-min: 0px; }
 	[data-min="xs"] { --_yeti-min: var(--yeti-width-xs); }
 	[data-min="sm"] { --_yeti-min: var(--yeti-width-sm); }

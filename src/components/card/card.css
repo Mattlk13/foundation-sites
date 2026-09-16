@@ -1,7 +1,7 @@
-/* Card: a bordered surface holding a figure, a body, and a footer. Below
-   the sm width (24rem) of content, a
-   card with a figure becomes a row with a thumbnail. Literal because
-   container conditions cannot read custom properties. */
+/* Card: a bordered surface holding a figure, a body, and a footer. From
+   the md width (32rem) of content, a card with a figure puts the picture
+   beside the text; narrower than that it stacks, picture on top. Literal
+   because container conditions cannot read custom properties. */
 @layer yeti.components {
 	.card {
 		position: relative;
@@ -15,8 +15,8 @@
 		border-radius: var(--yeti-card-radius);
 		overflow: clip;
 	}
-	/* Only a card with a figure runs the thumbnail query, so only that card is
-	   a size container. Inline-size containment removes the content's
+	/* Only a card with a figure runs the side-by-side query, so only that
+	   card is a size container. Inline-size containment removes the content's
 	   contribution to intrinsic width, and a card that is always a container
 	   collapsed to its padding wherever a parent let it size itself: 37px in
 	   a cluster, the same at max-content. */
@@ -98,11 +98,11 @@
 
 	/* In a ranked grid the card is a subgrid of the grid's rows, so its parts
 	   line up with its neighbours'; the footer sits in the last row instead of
-	   being pushed. The thumbnail row below is switched off there. The footer
+	   being pushed. The side-by-side form below is switched off there. The footer
 	   is placed in the last row explicitly so a card with fewer parts still
 	   aligns its footer. container-type is turned off here: a subgridded axis
 	   shares track sizing with its ancestor, which containment forbids, so a
-	   query container cannot also be a subgrid; the thumbnail query never
+	   query container cannot also be a subgrid; the side-by-side query never
 	   matches a ranked card anyway. */
 	.grid[data-ranks] > .card {
 		display: grid;
@@ -113,23 +113,35 @@
 	}
 	.grid[data-ranks] > .card > footer { margin-block-start: 0; grid-row: -2; }
 
-	/* Narrow: a thumbnail beside the text. Only cards with a figure change.
-	   A container query can only restyle descendants of its container, never
-	   the container itself, so the card's own display and flow stay flex
-	   column throughout; the figure is pulled out of flow with position and
-	   the text is indented to clear it. The thumbnail sits inside the
-	   border, like the wide figure: inset to the padding box, not the
-	   border box, so the border (and a data-variant bar) stays visible
-	   above and beside it. Its width is 40% of the padding box; the
+	/* Wide: the picture beside the text, a media object. Only cards with a
+	   figure change, and only once the card has room for both: stacked, the
+	   picture is the hero and the text runs full width, which is the form a
+	   phone and a grid cell want; side by side, a narrow picture would be a
+	   crushed thumbnail and the text a sliver, so this form waits for md.
+	   (The first design did the reverse, a thumbnail row below sm; Joe, on
+	   2026-09-16, found it backwards, and the crushed thumbnail proved him
+	   right.) A container query can only restyle descendants of its
+	   container, never the container itself, so the card's own display and
+	   flow stay flex column throughout; the figure is pulled out of flow
+	   with position and the text is indented to clear it. The picture sits
+	   inside the border, like the stacked figure: inset to the padding box,
+	   not the border box, so the border (and a data-variant bar) stays
+	   visible above and beside it. Its width is 40% of the padding box; the
 	   sibling's margin-inline-start percentage resolves against the
 	   narrower content box, so the indent is rewritten in content-box
 	   terms (40% of padding box = 40% of content box + 0.8 × padding; the
 	   content box starts one padding in from the padding box, so the
-	   thumbnail's right edge sits 40% - 0.2 × padding from the content
+	   picture's right edge sits 40% - 0.2 × padding from the content
 	   box's own start) plus the card's gap. */
-	/* sm (24rem): the width token's default, as every container threshold. */
-	@container (inline-size < 24rem) {
-		.card:not(.grid[data-ranks] > .card) > :is(img, video, picture, figure):first-child {
+	/* data-threshold moves the switch. A container condition cannot read a
+	   token, so there is one block per stop rather than one rule reading a
+	   property; each names the width token it mirrors, and md, the default,
+	   also serves a card with no attribute. The three rules are repeated
+	   rather than toggled, because nothing in CSS lets a query set a flag the
+	   container's own children can branch on. */
+	/* --yeti-width-xs (16rem) */
+	@container (inline-size >= 16rem) {
+		.card[data-threshold="xs"]:not(.grid[data-ranks] > .card) > :is(img, video, picture, figure):first-child {
 			position: absolute;
 			inset-block-start: 0;
 			inset-inline-start: 0;
@@ -138,13 +150,118 @@
 			margin: 0;
 			aspect-ratio: auto;
 		}
-		.card:not(.grid[data-ranks] > .card) > figure:first-child > :is(img, video, picture) {
+		.card[data-threshold="xs"]:not(.grid[data-ranks] > .card) > figure:first-child > :is(img, video, picture) {
 			flex: 1;
 			min-block-size: 0;
 			block-size: 100%;
 			aspect-ratio: auto;
 		}
-		.card:not(.grid[data-ranks] > .card) > :is(img, video, picture, figure):first-child ~ * {
+		.card[data-threshold="xs"]:not(.grid[data-ranks] > .card) > :is(img, video, picture, figure):first-child ~ * {
+			margin-inline-start: calc(40% - 0.2 * var(--yeti-card-padding) + var(--yeti-card-gap));
+		}
+	}
+	/* --yeti-width-sm (24rem) */
+	@container (inline-size >= 24rem) {
+		.card[data-threshold="sm"]:not(.grid[data-ranks] > .card) > :is(img, video, picture, figure):first-child {
+			position: absolute;
+			inset-block-start: 0;
+			inset-inline-start: 0;
+			inline-size: 40%;
+			block-size: 100%;
+			margin: 0;
+			aspect-ratio: auto;
+		}
+		.card[data-threshold="sm"]:not(.grid[data-ranks] > .card) > figure:first-child > :is(img, video, picture) {
+			flex: 1;
+			min-block-size: 0;
+			block-size: 100%;
+			aspect-ratio: auto;
+		}
+		.card[data-threshold="sm"]:not(.grid[data-ranks] > .card) > :is(img, video, picture, figure):first-child ~ * {
+			margin-inline-start: calc(40% - 0.2 * var(--yeti-card-padding) + var(--yeti-card-gap));
+		}
+	}
+	/* --yeti-width-md (32rem) */
+	@container (inline-size >= 32rem) {
+		.card:is([data-threshold="md"], :not([data-threshold])):not(.grid[data-ranks] > .card) > :is(img, video, picture, figure):first-child {
+			position: absolute;
+			inset-block-start: 0;
+			inset-inline-start: 0;
+			inline-size: 40%;
+			block-size: 100%;
+			margin: 0;
+			aspect-ratio: auto;
+		}
+		.card:is([data-threshold="md"], :not([data-threshold])):not(.grid[data-ranks] > .card) > figure:first-child > :is(img, video, picture) {
+			flex: 1;
+			min-block-size: 0;
+			block-size: 100%;
+			aspect-ratio: auto;
+		}
+		.card:is([data-threshold="md"], :not([data-threshold])):not(.grid[data-ranks] > .card) > :is(img, video, picture, figure):first-child ~ * {
+			margin-inline-start: calc(40% - 0.2 * var(--yeti-card-padding) + var(--yeti-card-gap));
+		}
+	}
+	/* --yeti-width-lg (48rem) */
+	@container (inline-size >= 48rem) {
+		.card[data-threshold="lg"]:not(.grid[data-ranks] > .card) > :is(img, video, picture, figure):first-child {
+			position: absolute;
+			inset-block-start: 0;
+			inset-inline-start: 0;
+			inline-size: 40%;
+			block-size: 100%;
+			margin: 0;
+			aspect-ratio: auto;
+		}
+		.card[data-threshold="lg"]:not(.grid[data-ranks] > .card) > figure:first-child > :is(img, video, picture) {
+			flex: 1;
+			min-block-size: 0;
+			block-size: 100%;
+			aspect-ratio: auto;
+		}
+		.card[data-threshold="lg"]:not(.grid[data-ranks] > .card) > :is(img, video, picture, figure):first-child ~ * {
+			margin-inline-start: calc(40% - 0.2 * var(--yeti-card-padding) + var(--yeti-card-gap));
+		}
+	}
+	/* --yeti-width-xl (64rem) */
+	@container (inline-size >= 64rem) {
+		.card[data-threshold="xl"]:not(.grid[data-ranks] > .card) > :is(img, video, picture, figure):first-child {
+			position: absolute;
+			inset-block-start: 0;
+			inset-inline-start: 0;
+			inline-size: 40%;
+			block-size: 100%;
+			margin: 0;
+			aspect-ratio: auto;
+		}
+		.card[data-threshold="xl"]:not(.grid[data-ranks] > .card) > figure:first-child > :is(img, video, picture) {
+			flex: 1;
+			min-block-size: 0;
+			block-size: 100%;
+			aspect-ratio: auto;
+		}
+		.card[data-threshold="xl"]:not(.grid[data-ranks] > .card) > :is(img, video, picture, figure):first-child ~ * {
+			margin-inline-start: calc(40% - 0.2 * var(--yeti-card-padding) + var(--yeti-card-gap));
+		}
+	}
+	/* --yeti-width-2xl (80rem) */
+	@container (inline-size >= 80rem) {
+		.card[data-threshold="2xl"]:not(.grid[data-ranks] > .card) > :is(img, video, picture, figure):first-child {
+			position: absolute;
+			inset-block-start: 0;
+			inset-inline-start: 0;
+			inline-size: 40%;
+			block-size: 100%;
+			margin: 0;
+			aspect-ratio: auto;
+		}
+		.card[data-threshold="2xl"]:not(.grid[data-ranks] > .card) > figure:first-child > :is(img, video, picture) {
+			flex: 1;
+			min-block-size: 0;
+			block-size: 100%;
+			aspect-ratio: auto;
+		}
+		.card[data-threshold="2xl"]:not(.grid[data-ranks] > .card) > :is(img, video, picture, figure):first-child ~ * {
 			margin-inline-start: calc(40% - 0.2 * var(--yeti-card-padding) + var(--yeti-card-gap));
 		}
 	}

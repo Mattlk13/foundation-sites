@@ -13,6 +13,12 @@ Fills the viewport's height with copy on one side and a figure on the other, cen
 
 ## Example
 
+<figure class="demo" data-height="xl">
+<div data-preview="Hero"><iframe title="Hero, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;header class=&quot;hero&quot;&gt;&#10;	&lt;div&gt;&#10;		&lt;h1&gt;Build interfaces that read their own container&lt;/h1&gt;&#10;		&lt;p&gt;Fifteen layouts, one attribute vocabulary, no breakpoints.&lt;/p&gt;&#10;		&lt;a href=&quot;#&quot;&gt;Get started&lt;/a&gt;&#10;	&lt;/div&gt;&#10;	&lt;img src=&quot;peak.jpg&quot; alt=&quot;A snow ridge at first light&quot;&gt;&#10;&lt;/header&gt;"></iframe></div>
+
+<details markdown="1">
+<summary>View Code</summary>
+
 ```html
 <header class="hero">
 	<div>
@@ -23,6 +29,9 @@ Fills the viewport's height with copy on one side and a figure on the other, cen
 	<img src="peak.jpg" alt="A snow ridge at first light">
 </header>
 ```
+
+</details>
+</figure>
 
 ## When to use it
 

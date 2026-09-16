@@ -1,0 +1,163 @@
+/* Demo: a live example in a box the reader can drag narrower and wider,
+   and taller when the demo allows it. The box is a size container, so whatever Yeti markup is inside
+   responds the way it would on a real page; the demo is the framework's own
+   model applied to itself, not a picture of it. The resize handle is the
+   browser's, which is why there is no script here and why it works with a
+   mouse or trackpad only; the docs say so. A bar across the top of the box
+   names the example and, at its end, the width stop the box is at; that
+   label is in this file's second half. */
+@layer yeti.components {
+	.demo > * { margin: 0; }
+	.demo > figcaption {
+		margin-block-end: var(--yeti-space-xs);
+		font-size: var(--yeti-text-sm);
+		color: var(--yeti-color-text-muted);
+	}
+
+	/* The box. inline-size reads the shared width mapping so data-width
+	   picks a starting width; a frame inside cannot size to its content, so
+	   the block size comes from data-height's mapping, md when absent; with
+	   data-resize="both" the reader can pull it taller from the corner, down
+	   to the smallest height stop. The box has a real border, and the iframe fills the
+	   content box inside it: an inset shadow was tried instead, but it
+	   paints beneath the box's own content, and a framed example's document
+	   is opaque (Yeti's own surface colour), so in the framed case — the
+	   docs case — the edge would never show through. The width and height
+	   tokens name the box's content size, because that is what @container
+	   measures and what the markup inside sees, so data-width="md" reads
+	   back as md; the border and the inset padding are added outside that
+	   content box, and the max and min caps subtract both so the box never
+	   overhangs its own container. The box is a grid of two rows, the bar
+	   and the example, so the bar takes its own height and the example the
+	   rest. */
+	.demo:not([data-height]) { --_yeti-height: var(--yeti-height-md); }
+	.demo > [data-preview] {
+		position: relative;
+		display: grid;
+		grid-template-rows: auto 1fr;
+		box-sizing: content-box;
+		--_yeti-demo-inset: 0px;
+		--_yeti-demo-max: calc(100% - 2 * (var(--yeti-border-width) + var(--_yeti-demo-inset)));
+		inline-size: var(--_yeti-width, var(--_yeti-demo-max));
+		max-inline-size: var(--_yeti-demo-max);
+		min-inline-size: min(var(--yeti-width-xs), var(--_yeti-demo-max));
+		block-size: var(--_yeti-height);
+		min-block-size: var(--yeti-height-sm);
+		resize: horizontal;
+		overflow: auto;
+		container-type: inline-size;
+		border: var(--yeti-border-width) solid var(--yeti-demo-border);
+		border-radius: var(--yeti-demo-radius);
+	}
+	/* Height is fixed by default, since the point of the drag is width and a
+	   frame that also grows tall invites fiddling; a demo that wants it opts
+	   in, and the reader can then pull the box taller, never shorter than the
+	   sm height. */
+	.demo[data-resize="both"] > [data-preview] { resize: both; }
+	.demo > [data-preview] > iframe {
+		display: block;
+		inline-size: 100%;
+		block-size: 100%;
+		min-block-size: 0;
+		border: 0;
+	}
+	/* Direct markup that reaches the box's own edge sits under WebKit's
+	   resize grip and wins the mousedown there, so the reader drags nothing;
+	   clearance at the sides and the bottom keeps the grip reachable and
+	   reads as an inset around the content, and the bar's own margin gives
+	   the same clearance at the top. An iframe is exempt because it has to
+	   fill the box exactly, edge to edge. */
+	.demo > [data-preview]:not(:has(> iframe)) {
+		--_yeti-demo-inset: var(--yeti-space-xs);
+		padding: 0 var(--_yeti-demo-inset) var(--_yeti-demo-inset);
+	}
+
+	/* The code. The pre keeps the base layer's look on purpose: on a host
+	   site its own code styling should win, and it does, being unlayered.
+	   The summary is quiet text at rest and underlines itself under the
+	   pointer, the way a link does: a touch or keyboard reader cannot drag
+	   the box, so this may be the one part of the demo they use, and it must
+	   read as pressable the moment they reach it. The rule is there at rest,
+	   transparent, so nothing shifts on hover. */
+	.demo > details > summary {
+		display: inline-flex;
+		align-items: center;
+		font-size: var(--yeti-text-sm);
+		color: var(--yeti-color-text-muted);
+		border-block-end: var(--yeti-border-width) solid transparent;
+		cursor: pointer;
+		list-style: none;
+	}
+	.demo > details > summary::-webkit-details-marker { display: none; }
+	.demo > details > summary:is(:hover, :focus-visible) {
+		color: var(--yeti-color-text);
+		border-block-end-color: var(--yeti-control-border);
+	}
+	/* Once the code is open the pre sits right under the summary, and a rule
+	   there would read as the pre's top edge, so only the colour change stays. */
+	.demo > details[open] > summary:is(:hover, :focus-visible) { border-block-end-color: transparent; }
+	/* The summary sits tight under the box and the code tight under it, so
+	   the whole thing reads as one object; the base prose rhythm would put a
+	   paragraph's worth of air in both gaps. */
+	.demo > details > pre { margin-block-start: 0; }
+
+	/* The bar. Both pseudo-elements share the grid's first row: ::before is
+	   the bar itself, showing the name the marker carries, and ::after is
+	   the label at its end. They are sticky so the bar stays put when direct
+	   markup scrolls. A direct box has no top padding, because a sticky box
+	   cannot leave its containing block's content box, so a bar pulled up
+	   over padding would be clamped back down; the bar spans the box edge to
+	   edge with negative inline margins instead, and its own bottom margin
+	   supplies the inset above the content. Pointer events pass through, so
+	   the bar never steals a drag. */
+	.demo > [data-preview]::before,
+	.demo > [data-preview]::after {
+		grid-area: 1 / 1;
+		position: sticky;
+		inset-block-start: 0;
+		z-index: 1;
+		font-size: var(--yeti-text-sm);
+		line-height: var(--yeti-leading-md);
+		pointer-events: none;
+	}
+	.demo > [data-preview]::before {
+		content: attr(data-preview);
+		margin-inline: calc(-1 * var(--_yeti-demo-inset));
+		margin-block-end: var(--_yeti-demo-inset);
+		padding: var(--yeti-space-xs) var(--yeti-space-sm);
+		background-color: var(--yeti-demo-label);
+		border-block-end: var(--yeti-border-width) solid var(--yeti-demo-border);
+		color: var(--yeti-color-text);
+		font-weight: var(--yeti-weight-strong);
+	}
+
+	/* The label names the width stop the box is at. It is what a pixel
+	   readout could never be: the framework's own vocabulary, flipping at the
+	   exact widths the components inside change shape. Thresholds are the
+	   width tokens' defaults, literal because a container condition cannot
+	   read a token; each names its token. */
+	.demo > [data-preview]::after {
+		content: "xs";
+		justify-self: end;
+		align-self: start;
+		margin-block-start: var(--yeti-space-xs);
+		margin-inline-end: calc(var(--yeti-space-sm) - var(--_yeti-demo-inset));
+		padding: 0 var(--yeti-space-xs);
+		border-radius: var(--yeti-demo-radius);
+		/* Mixed toward the text colour so the pill stands off the bar in both
+		   schemes; a second surface token sits too close to the bar in the dark. */
+		background-color: color-mix(in oklch, var(--yeti-demo-label) 82%, var(--yeti-color-text));
+		color: var(--yeti-color-text-muted);
+		font-family: var(--yeti-font-mono);
+	}
+	/* --yeti-width-sm (24rem) */
+	@container (inline-size >= 24rem) { .demo > [data-preview]::after { content: "sm"; } }
+	/* --yeti-width-md (32rem) */
+	@container (inline-size >= 32rem) { .demo > [data-preview]::after { content: "md"; } }
+	/* --yeti-width-lg (48rem) */
+	@container (inline-size >= 48rem) { .demo > [data-preview]::after { content: "lg"; } }
+	/* --yeti-width-xl (64rem) */
+	@container (inline-size >= 64rem) { .demo > [data-preview]::after { content: "xl"; } }
+	/* --yeti-width-2xl (80rem) */
+	@container (inline-size >= 80rem) { .demo > [data-preview]::after { content: "2xl"; } }
+}

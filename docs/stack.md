@@ -13,6 +13,12 @@ Stacks its children vertically with one consistent gap between them.
 
 ## Example
 
+<figure class="demo" data-height="lg">
+<div data-preview="Stack"><iframe title="Stack, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;stack&quot; data-gap=&quot;lg&quot;&gt;&#10;	&lt;h2&gt;A heading&lt;/h2&gt;&#10;	&lt;p&gt;A paragraph that follows it at the stack&#39;s gap, not the prose gap.&lt;/p&gt;&#10;	&lt;p&gt;Another paragraph.&lt;/p&gt;&#10;	&lt;p data-split&gt;Pushed to the bottom when the stack has room.&lt;/p&gt;&#10;&lt;/div&gt;"></iframe></div>
+
+<details markdown="1">
+<summary>View Code</summary>
+
 ```html
 <div class="stack" data-gap="lg">
 	<h2>A heading</h2>
@@ -21,6 +27,9 @@ Stacks its children vertically with one consistent gap between them.
 	<p data-split>Pushed to the bottom when the stack has room.</p>
 </div>
 ```
+
+</details>
+</figure>
 
 ## When to use it
 

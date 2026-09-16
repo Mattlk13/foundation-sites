@@ -69,7 +69,7 @@ test.describe('card', () => {
 		expect(width).toBeGreaterThan(150);
 	});
 
-	test('below the sm width of its own content a card with a picture becomes a thumbnail row', async ({ page }) => {
+	test('from the md width of its own content a card with a picture puts it beside the text', async ({ page }) => {
 		await open(page);
 		const [card, img, title] = await Promise.all([rect(page, '#thumb'), rect(page, '#thumb-img'), rect(page, '#thumb-title')]);
 		const border = await token(page, '--yeti-border-width');
@@ -129,6 +129,17 @@ test.describe('card', () => {
 			}
 		});
 	}
+
+	test('data-threshold moves the switch: an xs card is a row in a narrow column where a plain card stacks', async ({ page }) => {
+		await open(page);
+		const [xsCard, xsImg, xsTitle] = await Promise.all([rect(page, '#thumb-xs'), rect(page, '#thumb-xs-img'), rect(page, '#thumb-xs-title')]);
+		expect(xsTitle.left).toBeGreaterThan(xsImg.right);
+		expect(xsImg.width).toBeCloseTo(xsCard.width * 0.4, -1);
+		const [card, img, title] = await Promise.all([rect(page, '#stacked'), rect(page, '#stacked-img'), rect(page, '#stacked-title')]);
+		expect(title.top).toBeGreaterThan(img.bottom);
+		// The picture bleeds to the padding box, inside the border.
+		expect(img.width).toBeCloseTo(card.width - 2 * await token(page, '--yeti-border-width'), 0);
+	});
 
 	test('has no accessibility violations', async ({ page }) => {
 		await open(page);
