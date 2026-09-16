@@ -25,7 +25,7 @@
 	   sees, so data-width="md" reads back as md; the border and the inset
 	   padding are added outside that content box, and the max and min caps
 	   subtract both so the box never overhangs its own container. */
-	.demo:not([data-height]) { --_yeti-height: var(--yeti-demo-height-md); }
+	.demo:not([data-height]) { --_yeti-height: var(--yeti-height-md); }
 	.demo > [data-preview] {
 		position: relative;
 		box-sizing: content-box;

@@ -81,7 +81,7 @@ test.describe('demo', () => {
 	test('data-height picks the box height and md is the default', async ({ page }) => {
 		await open(page);
 		for (const [id, name] of [['#narrow-preview', 'sm'], ['#framed-preview', 'md'], ['#mid-preview', 'lg'], ['#tall-preview', 'xl']]) {
-			expect((await content(page, id)).height, id).toBeCloseTo(await token(page, `--yeti-demo-height-${name}`), 0);
+			expect((await content(page, id)).height, id).toBeCloseTo(await token(page, `--yeti-height-${name}`), 0);
 		}
 	});
 
@@ -100,14 +100,11 @@ test.describe('demo', () => {
 		expect(await axe(page)).toEqual([]);
 	});
 
-	// The label's content is generated, so it is read from the pseudo-element
-	// (or the child span, if that is what the engines required; see the CSS).
-	const label = (page, id) => page.evaluate((i) => {
-		const box = document.getElementById(i);
-		const child = box.querySelector(':scope > [data-stop]');
-		const raw = child ? getComputedStyle(child, '::after').content : getComputedStyle(box, '::after').content;
-		return raw.replace(/"/g, '');
-	}, id);
+	// The label is a pseudo-element, so its content is read from there.
+	const label = (page, id) => page.evaluate(
+		(i) => getComputedStyle(document.getElementById(i), '::after').content.replace(/"/g, ''),
+		id,
+	);
 
 	test('the label names the width stop the box is at and follows a drag', async ({ page }) => {
 		await open(page, 1400);

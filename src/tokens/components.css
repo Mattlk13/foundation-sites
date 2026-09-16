@@ -81,10 +81,6 @@
 
 		/* Demo: a live example in a box the reader can drag. The heights are
 		   what a frame gets, since a frame cannot size to its content. */
-		--yeti-demo-height-sm: 12rem;
-		--yeti-demo-height-md: 20rem;
-		--yeti-demo-height-lg: 32rem;
-		--yeti-demo-height-xl: 48rem;
 		--yeti-demo-border: var(--yeti-color-border);
 		--yeti-demo-radius: var(--yeti-radius-md);
 		--yeti-demo-label: var(--yeti-color-surface-sunken);

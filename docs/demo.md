@@ -14,14 +14,14 @@ A live example in a box the reader can drag narrower and wider, with a label nam
 ## Example
 
 <figure class="demo" data-height="md">
-<div data-preview><iframe title="Demo, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;figure class=&quot;demo&quot; data-height=&quot;md&quot;&gt;&#10;	&lt;div data-preview tabindex=&quot;0&quot;&gt;&lt;iframe title=&quot;Card, live&quot; srcdoc=&quot;&amp;lt;link rel=&amp;quot;stylesheet&amp;quot; href=&amp;quot;/yeti/yeti.css&amp;quot;&amp;gt;&amp;lt;body style=&amp;quot;margin:0;padding:var(--yeti-space-md)&amp;quot;&amp;gt;&amp;lt;article class=&amp;quot;card&amp;quot;&amp;gt;&amp;lt;h2&amp;gt;Weekend in the hills&amp;lt;/h2&amp;gt;&amp;lt;p&amp;gt;Drag the corner.&amp;lt;/p&amp;gt;&amp;lt;/article&amp;gt;&quot;&gt;&lt;/iframe&gt;&lt;/div&gt;&#10;	&lt;details&gt;&#10;		&lt;summary&gt;Code&lt;/summary&gt;&#10;		&lt;pre&gt;&lt;code&gt;&amp;lt;article class=&quot;card&quot;&amp;gt;&#10;	&amp;lt;h2&amp;gt;Weekend in the hills&amp;lt;/h2&amp;gt;&#10;	&amp;lt;p&amp;gt;Drag the corner.&amp;lt;/p&amp;gt;&#10;&amp;lt;/article&amp;gt;&lt;/code&gt;&lt;/pre&gt;&#10;	&lt;/details&gt;&#10;&lt;/figure&gt;"></iframe></div>
+<div data-preview><iframe title="Demo, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;figure class=&quot;demo&quot; data-height=&quot;md&quot;&gt;&#10;	&lt;div data-preview&gt;&lt;iframe title=&quot;Card, live&quot; srcdoc=&quot;&amp;lt;link rel=&amp;quot;stylesheet&amp;quot; href=&amp;quot;/yeti/yeti.css&amp;quot;&amp;gt;&amp;lt;body style=&amp;quot;margin:0;padding:var(--yeti-space-md)&amp;quot;&amp;gt;&amp;lt;article class=&amp;quot;card&amp;quot;&amp;gt;&amp;lt;h2&amp;gt;Weekend in the hills&amp;lt;/h2&amp;gt;&amp;lt;p&amp;gt;Drag the corner.&amp;lt;/p&amp;gt;&amp;lt;/article&amp;gt;&quot;&gt;&lt;/iframe&gt;&lt;/div&gt;&#10;	&lt;details&gt;&#10;		&lt;summary&gt;Code&lt;/summary&gt;&#10;		&lt;pre&gt;&lt;code&gt;&amp;lt;article class=&quot;card&quot;&amp;gt;&#10;	&amp;lt;h2&amp;gt;Weekend in the hills&amp;lt;/h2&amp;gt;&#10;	&amp;lt;p&amp;gt;Drag the corner.&amp;lt;/p&amp;gt;&#10;&amp;lt;/article&amp;gt;&lt;/code&gt;&lt;/pre&gt;&#10;	&lt;/details&gt;&#10;&lt;/figure&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>Code</summary>
 
 ```html
 <figure class="demo" data-height="md">
-	<div data-preview tabindex="0"><iframe title="Card, live" srcdoc="&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;article class=&quot;card&quot;&gt;&lt;h2&gt;Weekend in the hills&lt;/h2&gt;&lt;p&gt;Drag the corner.&lt;/p&gt;&lt;/article&gt;"></iframe></div>
+	<div data-preview><iframe title="Card, live" srcdoc="&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;article class=&quot;card&quot;&gt;&lt;h2&gt;Weekend in the hills&lt;/h2&gt;&lt;p&gt;Drag the corner.&lt;/p&gt;&lt;/article&gt;"></iframe></div>
 	<details>
 		<summary>Code</summary>
 		<pre><code>&lt;article class="card"&gt;
@@ -43,7 +43,7 @@ Showing a piece of Yeti markup and letting the reader see how it behaves as its 
 
 The preview box is a size container the reader can drag from its bottom corner, with the browser's own handle and no script. Whatever Yeti markup is inside responds exactly as it would anywhere else, because a Yeti component measures its own box; a card becomes a thumbnail row as the box passes `sm`, and a label in the corner names the stop the box is at, `xs` through `2xl`, flipping at the same widths the components change. That is the framework's responsive model, applied to itself.
 
-The box can hold the example two ways. On a page that already loads Yeti, put the markup straight in; on any other page, the docs site among them, put an `iframe` in with the example in its `srcdoc` and a link to `yeti.css` ahead of it, so nothing from the host page leaks into the example. Either way, the box's height is always `data-height`'s, `md` when absent: a frame cannot size to its content, and neither does the box, so a tall example scrolls inside whichever form it's in. `data-width` sets the width the box starts at, using the width vocabulary, so a demo can open at `sm` and lead with the narrow form. That width names the example's own width: the box's edge and, on direct markup, its inset sit outside it, which is why the corner label agrees with the attribute. The code goes in a `details` under the box, collapsed.
+The box can hold the example two ways. On a page that already loads Yeti, put the markup straight in; on any other page, the docs site among them, put an `iframe` in with the example in its `srcdoc` and a link to `yeti.css` ahead of it, so nothing from the host page leaks into the example. Either way, the box's height is always `data-height`'s, `md` when absent: a frame cannot size to its content, and neither does the box, so a tall example scrolls inside whichever form it's in. `data-width` sets the width the box starts at, using the width vocabulary, so a demo can open at `sm` and lead with the narrow form. That width names the example's own width: the box's edge and, on direct markup, its inset sit outside it, which is why the corner label agrees with the attribute, as long as the container is at least that wide. In a narrower container the box is capped at the container, and the label names the capped width instead. The code goes in a `details` under the box, collapsed.
 
 ```html
 <figure class="demo" data-width="lg">
@@ -62,7 +62,7 @@ The box can hold the example two ways. On a page that already loads Yeti, put th
 
 ## Accessibility
 
-Give the frame a `title`. Give the preview box `tabindex="0"`: direct markup taller than the box scrolls, and a scrollable region must be reachable from the keyboard. The handle is the browser's, which means a mouse or a trackpad; a keyboard or touch reader sees the demo at its starting width, which is why the code is there and why a demo must never be the only place the markup lives. The stop label is generated content, a visual aid to the drag, and is not announced. It sits inside the box, so on a tall direct example it scrolls away with the content: an aid to the drag, not a readout.
+Give the frame a `title`. Give a box holding direct markup `tabindex="0"`: markup taller than the box scrolls, and a scrollable region must be reachable from the keyboard. A framed box does not need one, because the iframe fills it exactly and it never scrolls. The handle is the browser's, which means a mouse or a trackpad; a keyboard or touch reader sees the demo at its starting width, which is why the code is there and why a demo must never be the only place the markup lives. The stop label is generated content, a visual aid to the drag, and is not announced. It sits inside the box, so on a tall direct example it scrolls away with the content: an aid to the drag, not a readout.
 
 ## Attributes
 
@@ -77,12 +77,12 @@ Attributes that descendants carry, not the root.
 
 | Attribute | Type | Values | On | Description |
 | --- | --- | --- | --- | --- |
-| `data-preview` | boolean |  | `> div` | Marks the resizable box. Direct markup taller than the box scrolls, so it carries tabindex="0" to stay reachable from the keyboard. |
+| `data-preview` | boolean |  | `> div` | Marks the resizable box. Direct markup taller than the box scrolls, so a box holding it carries tabindex="0" to stay reachable from the keyboard; a framed box does not. |
 
 ## Children
 
 - `> figcaption`: 0 to 1. A title for the demo, above the box.
-- `> [data-preview]`: exactly 1. The resizable box. Holds an iframe with the example in srcdoc, or the example's markup directly on a page that already loads Yeti. Carries tabindex="0" because it scrolls.
+- `> [data-preview]`: exactly 1. The resizable box. Holds an iframe with the example in srcdoc, or the example's markup directly on a page that already loads Yeti. A box holding direct markup carries tabindex="0" because it scrolls; a framed box does not need one, because the iframe fills it exactly.
 - `> [data-preview] > iframe`: 0 to 1. The framed example, loading yeti.css alone so the host page's styles never reach it. Needs a title.
 - `> details`: 0 to 1. The code, collapsed: a summary and a pre.
 
@@ -90,7 +90,7 @@ Attributes that descendants carry, not the root.
 
 | Token | Description |
 | --- | --- |
-| `--yeti-demo-height-md` | Box height at data-height="md" and by default. The sm, lg, and xl stops are read through the shared height mapping in layouts/attributes.css, not by this file. |
+| `--yeti-height-md` | Box height at data-height="md" and by default. The sm, lg, and xl stops of the same family are read through the shared height mapping in layouts/attributes.css, not by this file. |
 | `--yeti-demo-border` | The box's edge. |
 | `--yeti-demo-radius` | The box's corner, the summary's, and the stop label's. |
 | `--yeti-demo-label` | Surface of the stop label, and of the summary. |
@@ -114,7 +114,7 @@ Attributes that descendants carry, not the root.
 
 ## Accessibility
 
-- Give the iframe a title. Give the preview box tabindex="0": direct markup taller than the box scrolls, and a scrollable region must be reachable from the keyboard. The resize handle is the browser's and works with a mouse or trackpad; a keyboard or touch reader sees the demo at its starting width and has the code, so a demo must never be the only place the markup appears. The stop label is generated content and is not announced; it is a visual aid to the drag.
+- Give the iframe a title. Give a box holding direct markup tabindex="0": markup taller than the box scrolls, and a scrollable region must be reachable from the keyboard. A framed box does not need one, because the iframe fills it exactly and it never scrolls. The resize handle is the browser's and works with a mouse or trackpad; a keyboard or touch reader sees the demo at its starting width and has the code, so a demo must never be the only place the markup appears. The stop label is generated content and is not announced; it is a visual aid to the drag.
 
 | Key | Action |
 | --- | --- |

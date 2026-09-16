@@ -40,6 +40,13 @@
 		--yeti-width-xl: 64rem;
 		--yeti-width-2xl: 80rem;
 
+		/* Block sizes, for the few things that take one; the demo's preview box
+		   is the first. */
+		--yeti-height-sm: 12rem;
+		--yeti-height-md: 20rem;
+		--yeti-height-lg: 32rem;
+		--yeti-height-xl: 48rem;
+
 		--yeti-cover-height: 100dvh;
 	}
 }

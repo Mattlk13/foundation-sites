@@ -64,6 +64,15 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-width-xl` | `64rem` | The center layout's default maximum. |
 | `--yeti-width-2xl` | `80rem` | A wide page column. |
 
+## Height
+
+| Token | Default | Description |
+| --- | --- | --- |
+| `--yeti-height-sm` | `12rem` | Block size at data-height="sm"; the demo's preview box is the first taker. |
+| `--yeti-height-md` | `20rem` | Block size at data-height="md", and with no attribute. |
+| `--yeti-height-lg` | `32rem` | Block size at data-height="lg". |
+| `--yeti-height-xl` | `48rem` | Block size at data-height="xl". |
+
 ## Text
 
 | Token | Default | Description |
@@ -340,12 +349,8 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 
 | Token | Default | Description |
 | --- | --- | --- |
-| `--yeti-demo-height-sm` | `12rem` | The preview box's height at data-height="sm". |
-| `--yeti-demo-height-md` | `20rem` | The preview box's height at data-height="md", and with no attribute. |
-| `--yeti-demo-height-lg` | `32rem` | The preview box's height at data-height="lg". |
-| `--yeti-demo-height-xl` | `48rem` | The preview box's height at data-height="xl". |
 | `--yeti-demo-border` | `var(--yeti-color-border)` | The preview box's edge. |
-| `--yeti-demo-radius` | `var(--yeti-radius-md)` | The preview box's corner. |
-| `--yeti-demo-label` | `var(--yeti-color-surface-sunken)` | Surface of the label naming the current width stop. |
+| `--yeti-demo-radius` | `var(--yeti-radius-md)` | The preview box's corner, the summary's, and the stop label's. |
+| `--yeti-demo-label` | `var(--yeti-color-surface-sunken)` | Surface of the stop label naming the current width, and of the summary. |
 
 Yeti also defines 47 internal `--_yeti-*` tokens. They derive from the public ones and may change between minor versions; override the public token instead.
