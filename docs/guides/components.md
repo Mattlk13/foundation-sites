@@ -172,7 +172,7 @@ A tooltip is never the only place something is said. It shows on hover and on fo
 
 ## Showing your work
 
-A `demo` is a live example in a box the reader can drag narrower and wider, with a label naming the width stop it is at. It is how the pages on this site show each component, and it is the framework's own model applied to itself: whatever is inside responds because it measures its own box. On a page that already loads Yeti the markup goes straight in; anywhere else an `iframe` with the example in `srcdoc` keeps the host's styles out, at the price of a fixed height from `data-height`. The [demo page](../demo.md) has the details and the limits.
+A `demo` is a live example in a box the reader can drag narrower and wider, with a label naming the width stop it is at. It is how the pages on this site show each component, and it is the framework's own model applied to itself: whatever is inside responds because it measures its own box. On a page that already loads Yeti the markup goes straight in; anywhere else an `iframe` with the example in `srcdoc` keeps the host's styles out. Either form takes its height from `data-height`, because neither the box nor a frame sizes to its content. The [demo page](../demo.md) has the details and the limits.
 
 ## Loading a module
 
