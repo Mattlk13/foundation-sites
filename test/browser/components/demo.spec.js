@@ -60,6 +60,13 @@ test.describe('demo', () => {
 		expect(framed.width).toBeCloseTo(stageBox.width, 0);
 	});
 
+	test('the box never overhangs a container narrower than xs', async ({ page }) => {
+		await open(page);
+		await stage(page, 200);
+		const [stageBox, framed] = await Promise.all([rect(page, '#stage'), rect(page, '#framed-preview')]);
+		expect(framed.width).toBeLessThanOrEqual(stageBox.width);
+	});
+
 	test('data-height picks the box height and md is the default', async ({ page }) => {
 		await open(page);
 		for (const [id, name] of [['#narrow-preview', 'sm'], ['#framed-preview', 'md'], ['#mid-preview', 'lg'], ['#tall-preview', 'xl']]) {

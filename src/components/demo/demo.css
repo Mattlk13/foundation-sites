@@ -20,13 +20,14 @@
 	   an inset shadow was tried instead, but it paints beneath the box's own
 	   content, and a framed example's document is opaque (Yeti's own surface
 	   colour), so in the framed case — the docs case — the edge would never
-	   show through. */
+	   show through. The minimum is also capped at 100%, or it would beat
+	   max-inline-size and overhang a container narrower than xs. */
 	.demo:not([data-height]) { --_yeti-height: var(--yeti-demo-height-md); }
 	.demo > [data-preview] {
 		position: relative;
 		inline-size: var(--_yeti-width, 100%);
 		max-inline-size: 100%;
-		min-inline-size: var(--yeti-width-xs);
+		min-inline-size: min(var(--yeti-width-xs), 100%);
 		block-size: var(--_yeti-height);
 		resize: horizontal;
 		overflow: auto;
@@ -50,18 +51,23 @@
 	}
 
 	/* The code. The pre keeps the base layer's look on purpose: on a host
-	   site its own code styling should win, and it does, being unlayered. */
+	   site its own code styling should win, and it does, being unlayered.
+	   The summary gets a resting surface, not just a hover: a touch or
+	   keyboard reader cannot drag the box, so it may be the only part of
+	   the demo they can see is a pressable control. The hover tint mixes
+	   toward the text colour the way the accordion's own summary does. */
 	.demo > details > summary {
 		display: inline-flex;
 		align-items: center;
 		margin-block-start: var(--yeti-space-xs);
 		padding: var(--yeti-space-xs) var(--yeti-space-sm);
 		font-size: var(--yeti-text-sm);
+		background-color: var(--yeti-demo-label);
 		border-radius: var(--yeti-demo-radius);
 		cursor: pointer;
 		list-style: none;
 	}
 	.demo > details > summary::-webkit-details-marker { display: none; }
-	.demo > details > summary:hover { background-color: var(--yeti-demo-label); }
+	.demo > details > summary:hover { background-color: color-mix(in oklch, var(--yeti-demo-label) 85%, var(--yeti-color-text)); }
 	.demo > details > pre { margin-block-start: var(--yeti-space-xs); }
 }
