@@ -36,7 +36,9 @@ function describe(entry) {
 		const who = use.on === null ? use.component : `${use.component}, on a child (${use.on})`;
 		byDescription.set(use.description, [...(byDescription.get(use.description) ?? []), who]);
 	}
-	return [...byDescription.entries()].map(([description, who]) => `${who.join(', ')}: ${description}`).join('; ');
+	// Every description is a whole sentence ending in a full stop, so a space
+	// is the separator: a semicolon would read ".; " between clauses.
+	return [...byDescription.entries()].map(([description, who]) => `${who.join(', ')}: ${description}`).join(' ');
 }
 
 // A named vocabulary and an attribute's own inline `values` both need a value

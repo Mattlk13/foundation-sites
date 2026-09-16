@@ -60,7 +60,9 @@ test('htmlData descriptions open with the components that accept the attribute',
 test('an attribute described differently by two components carries both descriptions', () => {
 	const out = htmlData(merged, vocabulary);
 	const gap = out.globalAttributes.find((a) => a.name === 'data-gap');
-	assert.equal(gap.description, 'rail: Gap between items.; pill: Space inside.');
+	assert.ok(gap.description.includes('rail: Gap between items.'), gap.description);
+	assert.ok(gap.description.includes('pill: Space inside.'), gap.description);
+	assert.ok(!gap.description.includes('.;'), 'a description already ends its own sentence');
 });
 
 test('an enumerated attribute names the value set its values live in', () => {
@@ -139,7 +141,7 @@ test('webTypes carries the package name and version and lists values for enumera
 	const attrs = out.contributions.html.attributes;
 	const gap = attrs.find((a) => a.name === 'data-gap');
 	assert.deepEqual(gap.values.map((v) => v.name), ['s', 'm', 'l']);
-	assert.equal(gap.description, 'rail: Gap between items.; pill: Space inside.');
+	assert.equal(gap.description, 'rail: Gap between items. pill: Space inside.');
 	const wrap = attrs.find((a) => a.name === 'data-wrap');
 	assert.equal(wrap.values, undefined);
 	assert.equal(wrap.value.type, 'boolean');
