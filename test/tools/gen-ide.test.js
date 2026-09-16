@@ -1,6 +1,9 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import path from 'node:path';
 import { collectAttributes, htmlData, webTypes } from '../../bin/gen-ide.js';
+import { loadSchema, loadAndMerge, loadVocabulary } from '../../bin/lib/manifest.js';
+import { REPO_ROOT } from './helpers.js';
 
 const vocabulary = { gap: ['s', 'm', 'l'], span: ['1', '2'] };
 const merged = {
@@ -18,6 +21,12 @@ const merged = {
 		attributes: [{ name: 'data-gap', type: 'enum', vocabulary: 'gap', values: ['s', 'm', 'l'], default: 's', description: 'Space inside.' }],
 		classes: [], children: [], tokens: [], a11y: { requiredAttributes: [], keyboard: [] }, js: null, support: { unguarded: [], guarded: [] }, since: '7.0.0', example: 'example.html',
 	},
+};
+
+// The same fixture with one meaning for data-gap, for the shared-description case.
+const shared = {
+	rail: merged.rail,
+	pill: { ...merged.pill, attributes: [{ ...merged.pill.attributes[0], description: 'Gap between items.' }] },
 };
 
 test('collectAttributes merges an attribute shared by two components and keeps markers apart by element', () => {
@@ -43,10 +52,20 @@ test('htmlData emits one global attribute per name', () => {
 });
 
 test('htmlData descriptions open with the components that accept the attribute', () => {
+	const out = htmlData(shared, vocabulary);
+	const gap = out.globalAttributes.find((a) => a.name === 'data-gap');
+	assert.equal(gap.description, 'rail, pill: Gap between items.');
+});
+
+test('an attribute described differently by two components carries both descriptions', () => {
 	const out = htmlData(merged, vocabulary);
 	const gap = out.globalAttributes.find((a) => a.name === 'data-gap');
-	assert.ok(gap.description.startsWith('rail, pill: '), gap.description);
-	assert.equal(gap.valueSet, 'yeti-gap');
+	assert.equal(gap.description, 'rail: Gap between items.; pill: Space inside.');
+});
+
+test('an enumerated attribute names the value set its values live in', () => {
+	const out = htmlData(merged, vocabulary);
+	assert.equal(out.globalAttributes.find((a) => a.name === 'data-gap').valueSet, 'yeti-gap');
 });
 
 test("a marker's description names the element it lives on", () => {
@@ -65,7 +84,34 @@ test('a boolean attribute carries no value set', () => {
 test('every enumerated attribute references a value set that exists', () => {
 	const out = htmlData(merged, vocabulary);
 	const sets = new Set(out.valueSets.map((s) => s.name));
-	for (const a of out.globalAttributes) if (a.valueSet) assert.ok(sets.has(a.valueSet), a.name);
+	const enumerated = out.globalAttributes.filter((a) => a.valueSet);
+	assert.equal(enumerated.length, 2, 'data-gap and data-span are enumerated; a count keeps this from passing vacuously');
+	for (const a of enumerated) assert.ok(sets.has(a.valueSet), a.name);
+});
+
+// The fixture cannot prove the generator handles the real manifest's shapes:
+// the inline-values enum that shipped without a value set passed every test
+// above. This runs the generator over what the package actually ships.
+test('every enumerated attribute in the real manifest carries a value set holding its values', () => {
+	const schema = loadSchema(path.join(REPO_ROOT, 'schema/manifest.schema.json'));
+	const vocab = loadVocabulary(path.join(REPO_ROOT, 'schema/vocabulary.json'));
+	const { merged: real, errors } = loadAndMerge(path.join(REPO_ROOT, 'src'), schema, vocab);
+	assert.deepEqual(errors, []);
+	const out = htmlData(real, vocab);
+	const sets = new Map(out.valueSets.map((set) => [set.name, set.values.map((v) => v.name)]));
+	const emitted = new Map(out.globalAttributes.map((a) => [a.name, a]));
+	let checked = 0;
+	for (const component of Object.values(real)) {
+		for (const attr of [...component.attributes, ...component.markers]) {
+			if (attr.type !== 'enum') continue;
+			const where = `${component.name} ${attr.name}`;
+			const set = emitted.get(attr.name).valueSet;
+			assert.ok(set, where);
+			assert.deepEqual(sets.get(set), attr.values, where);
+			checked += 1;
+		}
+	}
+	assert.ok(checked > 50, `only ${checked} enumerated attributes and markers were checked`);
 });
 
 test('an enum with inline values and no vocabulary still gets a value set', () => {
@@ -93,7 +139,7 @@ test('webTypes carries the package name and version and lists values for enumera
 	const attrs = out.contributions.html.attributes;
 	const gap = attrs.find((a) => a.name === 'data-gap');
 	assert.deepEqual(gap.values.map((v) => v.name), ['s', 'm', 'l']);
-	assert.ok(gap.description.startsWith('rail, pill: '));
+	assert.equal(gap.description, 'rail: Gap between items.; pill: Space inside.');
 	const wrap = attrs.find((a) => a.name === 'data-wrap');
 	assert.equal(wrap.values, undefined);
 	assert.equal(wrap.value.type, 'boolean');

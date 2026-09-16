@@ -26,15 +26,17 @@ export function collectAttributes(merged) {
 }
 
 // "rail, pill: Gap between items." for a root attribute; a marker names the
-// element it lives on, since that is where the author will be typing.
+// element it lives on, since that is where the author will be typing. A name
+// shared by components that mean different things by it gets one clause per
+// meaning: data-gap is padding on a box and space between children on a
+// stack, so the first component's sentence cannot stand for the other twenty.
 function describe(entry) {
-	const roots = entry.uses.filter((u) => u.on === null).map((u) => u.component);
-	const markers = entry.uses.filter((u) => u.on !== null);
-	const who = [
-		...(roots.length ? [roots.join(', ')] : []),
-		...markers.map((m) => `${m.component}, on a child (${m.on})`),
-	].join('; ');
-	return `${who}: ${entry.uses[0].description}`;
+	const byDescription = new Map();
+	for (const use of entry.uses) {
+		const who = use.on === null ? use.component : `${use.component}, on a child (${use.on})`;
+		byDescription.set(use.description, [...(byDescription.get(use.description) ?? []), who]);
+	}
+	return [...byDescription.entries()].map(([description, who]) => `${who.join(', ')}: ${description}`).join('; ');
 }
 
 // A named vocabulary and an attribute's own inline `values` both need a value
