@@ -55,7 +55,8 @@
       }
     },
     "since": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
-    "example": { "const": "example.html" }
+    "example": { "const": "example.html" },
+    "demo": { "type": "object", "additionalProperties": false, "description": "How the docs frame this component's example: the preview box's height (lg when absent) and its starting width (the full column when absent).", "properties": { "height": { "enum": ["sm", "md", "lg", "xl"] }, "width": { "enum": ["xs", "sm", "md", "lg", "xl", "2xl"] }, "resize": { "enum": ["width", "both"] } } }
   },
   "$defs": {
     "attribute": {
@@ -98,7 +99,7 @@
       "required": ["name", "type", "description"],
       "properties": {
         "name": { "type": "string", "pattern": "^data-[a-z][a-z0-9-]*$" },
-        "type": { "enum": ["enum", "boolean"] },
+        "type": { "enum": ["enum", "boolean", "string"], "description": "A string marker carries free text, such as a name the CSS shows through attr()." },
         "values": { "type": "array", "items": { "type": "string" }, "minItems": 1, "uniqueItems": true },
         "vocabulary": { "type": "string", "description": "Name of a list in schema/vocabulary.json; resolved into values at load. Mutually exclusive with values." },
         "on": { "type": "string", "description": "Which descendants carry it, as a child selector: '> *', '> li', '> [data-track] > *'. Documentation only." },

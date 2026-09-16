@@ -52,16 +52,16 @@ export function escapeAttribute(text) {
 // ahead of everything else points relative example URLs — images, above all —
 // at the stylesheet's own folder, since a srcdoc frame otherwise resolves
 // them against the docs page.
-export function renderDemo({ title, exampleHtml, stylesheet }) {
+export function renderDemo({ title, exampleHtml, stylesheet, height = 'lg', width, resize }) {
 	const base = `${path.posix.dirname(stylesheet)}/`.replace(/\/+$/, '/');
 	const doc = `<base href="${base}"><link rel="stylesheet" href="${stylesheet}"><body style="margin:0;padding:var(--yeti-space-md)">${exampleHtml.trim()}`;
 	const srcdoc = escapeAttribute(doc).replace(/\r?\n/g, '&#10;');
 	return [
-		'<figure class="demo" data-height="md">',
-		`<div data-preview><iframe title="${escapeAttribute(title)}, live" srcdoc="${srcdoc}"></iframe></div>`,
+		`<figure class="demo" data-height="${height}"${width ? ` data-width="${width}"` : ''}${resize ? ` data-resize="${resize}"` : ''}>`,
+		`<div data-preview="${escapeAttribute(title)}"><iframe title="${escapeAttribute(title)}, live" srcdoc="${srcdoc}"></iframe></div>`,
 		'',
 		'<details markdown="1">',
-		'<summary>Code</summary>',
+		'<summary>View Code</summary>',
 		'',
 		'```html',
 		exampleHtml.trim(),
@@ -89,7 +89,7 @@ export function renderPage({ manifest: m, exampleHtml, navOrder, docsMd = '', de
 	out.push(frontMatter({ raw: true, title, description: m.description, nav_group: GROUPS[m.kind], nav_order: navOrder }).trimEnd());
 	out.push(`${GENERATED_MARK} from src/${dir}/${m.name}/manifest.json. Do not edit. -->`, '', `# ${title}`, '', m.description, '');
 
-	out.push('## Example', '', renderDemo({ title, exampleHtml, stylesheet: demoStylesheet }), '');
+	out.push('## Example', '', renderDemo({ title, exampleHtml, stylesheet: demoStylesheet, height: m.demo?.height, width: m.demo?.width, resize: m.demo?.resize }), '');
 	if (docsMd.trim()) out.push(docsMd.trim(), '');
 
 	out.push('## Attributes', '');

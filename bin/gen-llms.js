@@ -24,7 +24,7 @@ function attributeLine(a) {
 function markerLine(m) {
 	const on = m.on ?? '> *';
 	if (m.type === 'enum') return `- ${m.name} on ${on}: ${m.values.join(' | ')} — ${m.description}`;
-	return `- ${m.name} on ${on} (boolean) — ${m.description}`;
+	return `- ${m.name} on ${on} (${m.type}) — ${m.description}`;
 }
 
 function preamble(pkg) {

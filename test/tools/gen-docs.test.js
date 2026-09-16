@@ -238,14 +238,27 @@ test('escapeAttribute escapes exactly what an attribute value needs and round-tr
 
 test('renderDemo frames the example with the stylesheet ahead of it and fences it under a details', () => {
 	const out = renderDemo({ title: 'Rail', exampleHtml: '<div class="rail"><p>One</p></div>', stylesheet: '/yeti/yeti.css' });
-	assert.ok(out.startsWith('<figure class="demo" data-height="md">\n<div data-preview><iframe title="Rail, live" srcdoc="'));
+	assert.ok(out.startsWith('<figure class="demo" data-height="lg">\n<div data-preview="Rail"><iframe title="Rail, live" srcdoc="'));
 	assert.ok(out.includes('&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;'));
 	assert.ok(out.includes('&lt;div class=&quot;rail&quot;&gt;'));
 	// markdown="1" makes PHP Markdown Extra parse the fence instead of passing
 	// the whole details through as one raw block.
 	assert.ok(out.includes('\n<details markdown="1">\n'));
 	// Blank lines separate the raw HTML from the fence, so Markdown parses the code.
-	assert.ok(out.includes('</div>\n\n<details markdown="1">\n<summary>Code</summary>\n\n```html\n<div class="rail"><p>One</p></div>\n```\n\n</details>\n</figure>'));
+	assert.ok(out.includes('</div>\n\n<details markdown="1">\n<summary>View Code</summary>\n\n```html\n<div class="rail"><p>One</p></div>\n```\n\n</details>\n</figure>'));
+});
+
+test('renderDemo takes the height and starting width the manifest asks for', () => {
+	const out = renderDemo({ title: 'Table', exampleHtml: '<table class="table"></table>', stylesheet: '/yeti/yeti.css', height: 'xl', width: 'sm' });
+	assert.ok(out.startsWith('<figure class="demo" data-height="xl" data-width="sm">'));
+	assert.ok(renderDemo({ title: 'T', exampleHtml: '<p></p>', stylesheet: '/y.css', resize: 'both' }).startsWith('<figure class="demo" data-height="lg" data-resize="both">'));
+	// Without a width the attribute is absent, so the box opens at the column's width.
+	assert.ok(!renderDemo({ title: 'Table', exampleHtml: '<p></p>', stylesheet: '/yeti/yeti.css' }).includes('data-width'));
+});
+
+test('renderPage passes a manifest demo block through to the figure', () => {
+	const page = renderPage({ manifest: { ...validManifest(), demo: { height: 'sm', width: 'md' } }, exampleHtml, navOrder: 1 });
+	assert.ok(page.includes('<figure class="demo" data-height="sm" data-width="md">'));
 });
 
 test('renderDemo keeps the srcdoc on one line, whatever the example does', () => {
