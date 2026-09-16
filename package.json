@@ -5,6 +5,7 @@
   "license": "FSL-1.1-MIT",
   "type": "module",
   "homepage": "https://foundationcss.com/yeti/",
+  "web-types": "./dist/yeti.web-types.json",
   "repository": "github:foundation/yeti",
   "engines": {
     "node": ">=24"
