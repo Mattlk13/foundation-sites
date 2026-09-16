@@ -31,5 +31,6 @@
   "js": null,
   "support": { "unguarded": ["flexbox gap", "aspect-ratio", "object-fit", ":has()", "dvh units"], "guarded": [] },
   "since": "7.0.0",
-  "example": "example.html"
+  "example": "example.html",
+  "demo": { "height": "xl" }
 }

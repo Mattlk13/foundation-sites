@@ -36,5 +36,6 @@
   "js": null,
   "support": { "unguarded": ["logical properties", "font-variant-numeric"], "guarded": [] },
   "since": "7.0.0",
-  "example": "example.html"
+  "example": "example.html",
+  "demo": { "height": "xl" }
 }

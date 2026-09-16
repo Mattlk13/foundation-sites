@@ -13,11 +13,11 @@ A row of tabs over their panels, showing one at a time when its module is loaded
 
 ## Example
 
-<figure class="demo" data-height="md">
-<div data-preview><iframe title="Tabs, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;tabs&quot;&gt;&#10;	&lt;div role=&quot;tablist&quot; aria-label=&quot;Account&quot;&gt;&#10;		&lt;button type=&quot;button&quot; role=&quot;tab&quot; id=&quot;tab-profile&quot; aria-controls=&quot;panel-profile&quot;&gt;Profile&lt;/button&gt;&#10;		&lt;button type=&quot;button&quot; role=&quot;tab&quot; id=&quot;tab-billing&quot; aria-controls=&quot;panel-billing&quot;&gt;Billing&lt;/button&gt;&#10;	&lt;/div&gt;&#10;	&lt;section role=&quot;tabpanel&quot; id=&quot;panel-profile&quot; aria-labelledby=&quot;tab-profile&quot;&gt;&#10;		&lt;p&gt;Your name and how people reach you.&lt;/p&gt;&#10;	&lt;/section&gt;&#10;	&lt;section role=&quot;tabpanel&quot; id=&quot;panel-billing&quot; aria-labelledby=&quot;tab-billing&quot;&gt;&#10;		&lt;p&gt;Your plan and your invoices.&lt;/p&gt;&#10;	&lt;/section&gt;&#10;&lt;/div&gt;"></iframe></div>
+<figure class="demo" data-height="lg">
+<div data-preview="Tabs"><iframe title="Tabs, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;tabs&quot;&gt;&#10;	&lt;div role=&quot;tablist&quot; aria-label=&quot;Account&quot;&gt;&#10;		&lt;button type=&quot;button&quot; role=&quot;tab&quot; id=&quot;tab-profile&quot; aria-controls=&quot;panel-profile&quot;&gt;Profile&lt;/button&gt;&#10;		&lt;button type=&quot;button&quot; role=&quot;tab&quot; id=&quot;tab-billing&quot; aria-controls=&quot;panel-billing&quot;&gt;Billing&lt;/button&gt;&#10;	&lt;/div&gt;&#10;	&lt;section role=&quot;tabpanel&quot; id=&quot;panel-profile&quot; aria-labelledby=&quot;tab-profile&quot;&gt;&#10;		&lt;p&gt;Your name and how people reach you.&lt;/p&gt;&#10;	&lt;/section&gt;&#10;	&lt;section role=&quot;tabpanel&quot; id=&quot;panel-billing&quot; aria-labelledby=&quot;tab-billing&quot;&gt;&#10;		&lt;p&gt;Your plan and your invoices.&lt;/p&gt;&#10;	&lt;/section&gt;&#10;&lt;/div&gt;"></iframe></div>
 
 <details markdown="1">
-<summary>Code</summary>
+<summary>View Code</summary>
 
 ```html
 <div class="tabs">

@@ -42,5 +42,6 @@
   "js": null,
   "support": { "unguarded": ["container size queries", ":has()"], "guarded": [] },
   "since": "7.0.0",
-  "example": "example.html"
+  "example": "example.html",
+  "demo": { "height": "sm" }
 }

@@ -46,5 +46,6 @@
   "js": null,
   "support": { "unguarded": ["inline flexbox", "logical properties"], "guarded": [] },
   "since": "7.0.0",
-  "example": "example.html"
+  "example": "example.html",
+  "demo": { "height": "sm" }
 }

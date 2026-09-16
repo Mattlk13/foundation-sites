@@ -27,5 +27,6 @@
   "js": null,
   "support": { "unguarded": ["flexbox gap", "dvh units", ":has()"], "guarded": [] },
   "since": "7.0.0",
-  "example": "example.html"
+  "example": "example.html",
+  "demo": { "height": "xl" }
 }

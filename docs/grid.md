@@ -13,11 +13,11 @@ Fits as many equal columns as the container allows at a minimum width, up to an 
 
 ## Example
 
-<figure class="demo" data-height="md">
-<div data-preview><iframe title="Grid, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;ul class=&quot;grid&quot; data-min=&quot;sm&quot; data-columns=&quot;3&quot; role=&quot;list&quot;&gt;&#10;	&lt;li&gt;One&lt;/li&gt;&#10;	&lt;li&gt;Two&lt;/li&gt;&#10;	&lt;li&gt;Three&lt;/li&gt;&#10;	&lt;li&gt;Four&lt;/li&gt;&#10;	&lt;li&gt;Five&lt;/li&gt;&#10;&lt;/ul&gt;"></iframe></div>
+<figure class="demo" data-height="xl">
+<div data-preview="Grid"><iframe title="Grid, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;ul class=&quot;grid&quot; data-min=&quot;sm&quot; data-columns=&quot;3&quot; role=&quot;list&quot;&gt;&#10;	&lt;li&gt;One&lt;/li&gt;&#10;	&lt;li&gt;Two&lt;/li&gt;&#10;	&lt;li&gt;Three&lt;/li&gt;&#10;	&lt;li&gt;Four&lt;/li&gt;&#10;	&lt;li&gt;Five&lt;/li&gt;&#10;&lt;/ul&gt;"></iframe></div>
 
 <details markdown="1">
-<summary>Code</summary>
+<summary>View Code</summary>
 
 ```html
 <ul class="grid" data-min="sm" data-columns="3" role="list">

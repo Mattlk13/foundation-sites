@@ -37,5 +37,6 @@
   "js": null,
   "support": { "unguarded": ["appearance: none on progress"], "guarded": [] },
   "since": "7.0.0",
-  "example": "example.html"
+  "example": "example.html",
+  "demo": { "height": "sm" }
 }

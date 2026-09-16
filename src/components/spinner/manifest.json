@@ -35,5 +35,6 @@
   "js": null,
   "support": { "unguarded": ["individual transform properties", "color-mix()"], "guarded": [] },
   "since": "7.0.0",
-  "example": "example.html"
+  "example": "example.html",
+  "demo": { "height": "sm" }
 }

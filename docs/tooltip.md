@@ -13,11 +13,11 @@ A short hint that appears beside a control on hover and on focus, described to a
 
 ## Example
 
-<figure class="demo" data-height="md">
-<div data-preview><iframe title="Tooltip, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;span class=&quot;tooltip&quot;&gt;&#10;	&lt;button class=&quot;button&quot; type=&quot;button&quot; aria-label=&quot;Save&quot; aria-describedby=&quot;save-tip&quot; data-emphasis=&quot;medium&quot;&gt;&#10;		&lt;svg aria-hidden=&quot;true&quot; viewBox=&quot;0 0 16 16&quot;&gt;&lt;path d=&quot;M3 3h10v10H3z&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot;/&gt;&lt;/svg&gt;&#10;	&lt;/button&gt;&#10;	&lt;span role=&quot;tooltip&quot; id=&quot;save-tip&quot;&gt;Saves without closing&lt;/span&gt;&#10;&lt;/span&gt;"></iframe></div>
+<figure class="demo" data-height="sm">
+<div data-preview="Tooltip"><iframe title="Tooltip, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;span class=&quot;tooltip&quot;&gt;&#10;	&lt;button class=&quot;button&quot; type=&quot;button&quot; aria-label=&quot;Save&quot; aria-describedby=&quot;save-tip&quot; data-emphasis=&quot;medium&quot;&gt;&#10;		&lt;svg aria-hidden=&quot;true&quot; viewBox=&quot;0 0 16 16&quot;&gt;&lt;path d=&quot;M3 3h10v10H3z&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot;/&gt;&lt;/svg&gt;&#10;	&lt;/button&gt;&#10;	&lt;span role=&quot;tooltip&quot; id=&quot;save-tip&quot;&gt;Saves without closing&lt;/span&gt;&#10;&lt;/span&gt;"></iframe></div>
 
 <details markdown="1">
-<summary>Code</summary>
+<summary>View Code</summary>
 
 ```html
 <span class="tooltip">

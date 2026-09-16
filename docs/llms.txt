@@ -278,14 +278,15 @@ module: carousel.js (optional)
 
 ## demo (component, class="demo")
 
-A live example in a box the reader can drag narrower and wider, with a label naming the width stop it is at, and the code beneath it.
+A live example in a box the reader can drag narrower and wider, with a bar naming the example and the width stop the box is at, and the code beneath it.
 
 Attributes:
-- data-height: sm | md (default) | lg | xl — The preview box's height. A frame inside cannot size to its content, so this is where that is set.
+- data-height: sm | md (default) | lg | xl — The preview box's height. A frame inside cannot size to its content, so this is where that is set; with data-resize="both" it is the starting height.
 - data-width: xs | sm | md | lg | xl | 2xl — The preview box's starting width, before the reader drags it. Full width when absent.
+- data-resize: width (default) | both — Which way the reader can drag the box: its width only, or both width and height.
 
 On children:
-- data-preview on > div (boolean) — Marks the resizable box. Direct markup taller than the box scrolls, so a box holding it carries tabindex="0" to stay reachable from the keyboard; a framed box does not.
+- data-preview on > div (string) — Marks the resizable box and names the example; the bar across the top of the box shows the value. Direct markup taller than the box scrolls, so a box holding it carries tabindex="0" to stay reachable from the keyboard; a framed box does not.
 
 ## dialog (component, class="dialog")
 

@@ -13,11 +13,11 @@ A bordered surface for one thing: an optional figure that bleeds to the edges, a
 
 ## Example
 
-<figure class="demo" data-height="md">
-<div data-preview><iframe title="Card, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;article class=&quot;card&quot;&gt;&#10;	&lt;img src=&quot;trail.jpg&quot; alt=&quot;A mountain trail at dawn&quot;&gt;&#10;	&lt;h3&gt;&lt;a href=&quot;/hills&quot; data-stretch&gt;Weekend in the hills&lt;/a&gt;&lt;/h3&gt;&#10;	&lt;p&gt;Six miles, one summit, and a view worth the early start.&lt;/p&gt;&#10;	&lt;footer&gt;&#10;		&lt;span class=&quot;badge&quot; data-variant=&quot;success&quot;&gt;Open&lt;/span&gt;&#10;		&lt;a class=&quot;button&quot; href=&quot;/hills&quot; data-emphasis=&quot;low&quot; tabindex=&quot;-1&quot;&gt;Read more&lt;/a&gt;&#10;	&lt;/footer&gt;&#10;&lt;/article&gt;"></iframe></div>
+<figure class="demo" data-height="lg">
+<div data-preview="Card"><iframe title="Card, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;article class=&quot;card&quot;&gt;&#10;	&lt;img src=&quot;trail.jpg&quot; alt=&quot;A mountain trail at dawn&quot;&gt;&#10;	&lt;h3&gt;&lt;a href=&quot;/hills&quot; data-stretch&gt;Weekend in the hills&lt;/a&gt;&lt;/h3&gt;&#10;	&lt;p&gt;Six miles, one summit, and a view worth the early start.&lt;/p&gt;&#10;	&lt;footer&gt;&#10;		&lt;span class=&quot;badge&quot; data-variant=&quot;success&quot;&gt;Open&lt;/span&gt;&#10;		&lt;a class=&quot;button&quot; href=&quot;/hills&quot; data-emphasis=&quot;low&quot; tabindex=&quot;-1&quot;&gt;Read more&lt;/a&gt;&#10;	&lt;/footer&gt;&#10;&lt;/article&gt;"></iframe></div>
 
 <details markdown="1">
-<summary>Code</summary>
+<summary>View Code</summary>
 
 ```html
 <article class="card">

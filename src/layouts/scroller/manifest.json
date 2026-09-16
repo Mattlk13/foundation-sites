@@ -29,5 +29,6 @@
   "js": null,
   "support": { "unguarded": ["flexbox gap", "scroll snap", "overscroll-behavior"], "guarded": [] },
   "since": "7.0.0",
-  "example": "example.html"
+  "example": "example.html",
+  "demo": { "height": "xl" }
 }
