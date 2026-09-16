@@ -39,6 +39,8 @@ The tokens, reset, base layer, seventeen layout primitives, three recipes, and t
 <link rel="stylesheet" href="src/yeti.css">
 ```
 
+Or install the package and follow the [installation guide](docs/guides/install.md), which also covers editor completion and the `llms.txt` files for assistants.
+
 Or run the fixtures locally:
 
 ```bash
