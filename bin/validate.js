@@ -542,7 +542,7 @@ export function validateManifestTokens(entries) {
 
 const MAPPED = {
 	'data-gap': 'gap', 'data-align': 'align', 'data-justify': 'justify', 'data-threshold': 'width',
-	'data-width': 'width', 'data-min': 'width-or-none', 'data-max': 'width', 'data-ratio': 'ratio', 'data-columns': 'columns',
+	'data-width': 'width', 'data-height': 'height', 'data-min': 'width-or-none', 'data-max': 'width', 'data-ratio': 'ratio', 'data-columns': 'columns',
 	'data-align-self': 'align', 'data-justify-self': 'self',
 	'data-variant': 'variant', 'data-size': 'size-control',
 	'data-span': 'span', 'data-ranks': 'ranks',

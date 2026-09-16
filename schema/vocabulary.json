@@ -22,6 +22,12 @@
     "click",
     "hover"
   ],
+  "height": [
+    "sm",
+    "md",
+    "lg",
+    "xl"
+  ],
   "placement": ["top", "bottom", "start", "end"],
   "slides": ["1", "2", "3", "4"]
 }
