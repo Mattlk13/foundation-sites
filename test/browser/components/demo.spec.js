@@ -80,17 +80,17 @@ test.describe('demo', () => {
 		expect((await content(page, '#tall-preview')).height).toBeCloseTo(await token(page, '--yeti-height-sm'), 0);
 	});
 
-	test('a direct card changes shape as the box is dragged past sm', async ({ page }) => {
+	test('a direct card changes shape as the box is dragged below md', async ({ page }) => {
 		await open(page);
-		// Above sm the card is a column: the picture spans the card's width.
+		// At lg the card is a row: the picture is a fraction of its width.
 		const wide = await Promise.all([rect(page, '#direct-card'), rect(page, '#direct-img')]);
-		expect(wide[1].width).toBeGreaterThan(wide[0].width * 0.9);
+		expect(wide[1].width).toBeLessThan(wide[0].width * 0.6);
 		const boxBefore = await rect(page, '#direct-preview');
 		await dragGrip(page, '#direct-preview', -(boxBefore.width - 300));
 		await painted(page);
-		// Below sm the card is a thumbnail row: the picture is a fraction of it.
+		// Below md the card stacks: the picture spans the card's width.
 		const narrow = await Promise.all([rect(page, '#direct-card'), rect(page, '#direct-img')]);
-		expect(narrow[1].width).toBeLessThan(narrow[0].width * 0.6);
+		expect(narrow[1].width).toBeGreaterThan(narrow[0].width * 0.9);
 	});
 
 	test('data-width sets the starting width; without it the box is full width', async ({ page }) => {

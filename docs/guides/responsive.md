@@ -61,7 +61,7 @@ When something has to respond, reach for these in order and stop at the first th
 </div>
 ```
 
-**A container query second.** When the change is a switch rather than a flow, a row that becomes a stack, a card that becomes a thumbnail row, a nav that folds behind a toggle, the component queries its own width against a threshold. In Yeti these are already written: you choose the threshold with an attribute, you do not write the query.
+**A container query second.** When the change is a switch rather than a flow, a row that becomes a stack, a card that puts its picture beside the text, a nav that folds behind a toggle, the component queries its own width against a threshold. In Yeti these are already written: you choose the threshold with an attribute, you do not write the query.
 
 ```html
 <nav class="nav" aria-label="Site" data-threshold="lg">
