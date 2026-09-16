@@ -14,14 +14,9 @@ Makes its box the thing a container query measures, so what is inside can respon
 ## Example
 
 <figure class="demo" data-height="md">
-<div data-preview tabindex="0"><iframe title="Container, live" srcdoc="&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;container&quot;&gt;
-	&lt;nav class=&quot;cluster&quot; aria-label=&quot;Site&quot;&gt;
-		&lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;
-		&lt;a href=&quot;#&quot;&gt;Docs&lt;/a&gt;
-	&lt;/nav&gt;
-&lt;/div&gt;"></iframe></div>
+<div data-preview><iframe title="Container, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;container&quot;&gt;&#10;	&lt;nav class=&quot;cluster&quot; aria-label=&quot;Site&quot;&gt;&#10;		&lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;&#10;		&lt;a href=&quot;#&quot;&gt;Docs&lt;/a&gt;&#10;	&lt;/nav&gt;&#10;&lt;/div&gt;"></iframe></div>
 
-<details>
+<details markdown="1">
 <summary>Code</summary>
 
 ```html

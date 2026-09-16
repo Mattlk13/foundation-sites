@@ -14,15 +14,9 @@ Puts a figure beside a block of text and stacks them when the text would drop be
 ## Example
 
 <figure class="demo" data-height="md">
-<div data-preview tabindex="0"><iframe title="Media, live" srcdoc="&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;media&quot; data-width=&quot;sm&quot;&gt;
-	&lt;img src=&quot;ada.jpg&quot; alt=&quot;Portrait of Ada Lovelace&quot;&gt;
-	&lt;div&gt;
-		&lt;h3&gt;Ada Lovelace&lt;/h3&gt;
-		&lt;p&gt;Wrote the first published algorithm, for Babbage&#39;s Analytical Engine.&lt;/p&gt;
-	&lt;/div&gt;
-&lt;/div&gt;"></iframe></div>
+<div data-preview><iframe title="Media, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;media&quot; data-width=&quot;sm&quot;&gt;&#10;	&lt;img src=&quot;ada.jpg&quot; alt=&quot;Portrait of Ada Lovelace&quot;&gt;&#10;	&lt;div&gt;&#10;		&lt;h3&gt;Ada Lovelace&lt;/h3&gt;&#10;		&lt;p&gt;Wrote the first published algorithm, for Babbage&#39;s Analytical Engine.&lt;/p&gt;&#10;	&lt;/div&gt;&#10;&lt;/div&gt;"></iframe></div>
 
-<details>
+<details markdown="1">
 <summary>Code</summary>
 
 ```html

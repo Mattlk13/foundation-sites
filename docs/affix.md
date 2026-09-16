@@ -14,16 +14,9 @@ Joins a control with what belongs beside it, a unit, a symbol, a button, or anot
 ## Example
 
 <figure class="demo" data-height="md">
-<div data-preview tabindex="0"><iframe title="Affix, live" srcdoc="&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;field&quot;&gt;
-	&lt;label for=&quot;price&quot;&gt;Price&lt;/label&gt;
-	&lt;div class=&quot;affix&quot;&gt;
-		&lt;span id=&quot;price-unit&quot;&gt;$&lt;/span&gt;
-		&lt;input id=&quot;price&quot; type=&quot;number&quot; min=&quot;0&quot; step=&quot;0.01&quot; aria-describedby=&quot;price-unit&quot;&gt;
-		&lt;button class=&quot;button&quot; type=&quot;button&quot; data-emphasis=&quot;medium&quot;&gt;Apply&lt;/button&gt;
-	&lt;/div&gt;
-&lt;/div&gt;"></iframe></div>
+<div data-preview><iframe title="Affix, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;field&quot;&gt;&#10;	&lt;label for=&quot;price&quot;&gt;Price&lt;/label&gt;&#10;	&lt;div class=&quot;affix&quot;&gt;&#10;		&lt;span id=&quot;price-unit&quot;&gt;$&lt;/span&gt;&#10;		&lt;input id=&quot;price&quot; type=&quot;number&quot; min=&quot;0&quot; step=&quot;0.01&quot; aria-describedby=&quot;price-unit&quot;&gt;&#10;		&lt;button class=&quot;button&quot; type=&quot;button&quot; data-emphasis=&quot;medium&quot;&gt;Apply&lt;/button&gt;&#10;	&lt;/div&gt;&#10;&lt;/div&gt;"></iframe></div>
 
-<details>
+<details markdown="1">
 <summary>Code</summary>
 
 ```html

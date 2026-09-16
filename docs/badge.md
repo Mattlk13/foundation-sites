@@ -14,9 +14,9 @@ A small inline label for a status or a count, tinted by a hue.
 ## Example
 
 <figure class="demo" data-height="md">
-<div data-preview tabindex="0"><iframe title="Badge, live" srcdoc="&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;p&gt;Deploy &lt;span class=&quot;badge&quot; data-variant=&quot;success&quot;&gt;Live&lt;/span&gt; to production, or keep it &lt;span class=&quot;badge&quot; data-variant=&quot;neutral&quot;&gt;Draft&lt;/span&gt;.&lt;/p&gt;"></iframe></div>
+<div data-preview><iframe title="Badge, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;p&gt;Deploy &lt;span class=&quot;badge&quot; data-variant=&quot;success&quot;&gt;Live&lt;/span&gt; to production, or keep it &lt;span class=&quot;badge&quot; data-variant=&quot;neutral&quot;&gt;Draft&lt;/span&gt;.&lt;/p&gt;"></iframe></div>
 
-<details>
+<details markdown="1">
 <summary>Code</summary>
 
 ```html

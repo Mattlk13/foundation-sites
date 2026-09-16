@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { renderPage, generateDocs, isGenerated, GENERATED_MARK, renderTokensPage, escapeAttribute, renderDemo } from '../../bin/gen-docs.js';
-import { makeTree, validManifest, validTree, TOKENS_SCHEMA_PATH } from './helpers.js';
+import { makeTree, validManifest, validTree, TOKENS_SCHEMA_PATH, REPO_ROOT } from './helpers.js';
 
 const exampleHtml = '<div class="rail" data-gap="l"><p>One</p><p>Two</p></div>\n';
 
@@ -110,6 +110,14 @@ test('renderTokensPage groups by group with a table per group and notes internal
 	assert.ok(page.includes('| `--yeti-space-md` | `step 0` | Default gap. |'));
 	assert.ok(page.includes('| `--yeti-base` | unset (override only) | Pins both ends. |'));
 	assert.ok(page.includes('12 internal `--_yeti-*` tokens'));
+});
+
+test('the tokens page has a heading for every group the real catalogue uses', () => {
+	const catalogue = JSON.parse(fs.readFileSync(path.join(REPO_ROOT, 'src/tokens/tokens.json'), 'utf8'));
+	const page = renderTokensPage(catalogue, 0);
+	for (const group of new Set(catalogue.map((e) => e.group))) {
+		assert.ok(page.includes(`\n## ${group[0].toUpperCase()}${group.slice(1)}\n`), `missing heading for ${group}`);
+	}
 });
 
 test('generateDocs writes tokens.md when a catalogue exists and never sweeps it', () => {
@@ -224,17 +232,34 @@ test('escapeAttribute escapes exactly what an attribute value needs and round-tr
 	const raw = '<a href="x" data-q=\'y\'>a & b</a>';
 	const escaped = escapeAttribute(raw);
 	assert.equal(escaped, '&lt;a href=&quot;x&quot; data-q=&#39;y&#39;&gt;a &amp; b&lt;/a&gt;');
-	const back = escaped.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, '&');
+	const back = escaped.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&#10;/g, '\n').replace(/&amp;/g, '&');
 	assert.equal(back, raw);
 });
 
 test('renderDemo frames the example with the stylesheet ahead of it and fences it under a details', () => {
 	const out = renderDemo({ title: 'Rail', exampleHtml: '<div class="rail"><p>One</p></div>', stylesheet: '/yeti/yeti.css' });
-	assert.ok(out.startsWith('<figure class="demo" data-height="md">\n<div data-preview tabindex="0"><iframe title="Rail, live" srcdoc="'));
+	assert.ok(out.startsWith('<figure class="demo" data-height="md">\n<div data-preview><iframe title="Rail, live" srcdoc="'));
 	assert.ok(out.includes('&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;'));
 	assert.ok(out.includes('&lt;div class=&quot;rail&quot;&gt;'));
+	// markdown="1" makes PHP Markdown Extra parse the fence instead of passing
+	// the whole details through as one raw block.
+	assert.ok(out.includes('\n<details markdown="1">\n'));
 	// Blank lines separate the raw HTML from the fence, so Markdown parses the code.
-	assert.ok(out.includes('</div>\n\n<details>\n<summary>Code</summary>\n\n```html\n<div class="rail"><p>One</p></div>\n```\n\n</details>\n</figure>'));
+	assert.ok(out.includes('</div>\n\n<details markdown="1">\n<summary>Code</summary>\n\n```html\n<div class="rail"><p>One</p></div>\n```\n\n</details>\n</figure>'));
+});
+
+test('renderDemo keeps the srcdoc on one line, whatever the example does', () => {
+	const out = renderDemo({ title: 'Dialog', exampleHtml: '<p>One</p>\n\n<p>Two</p>\n', stylesheet: '/yeti/yeti.css' });
+	const srcdoc = out.match(/srcdoc="([^"]*)"/);
+	assert.ok(srcdoc, 'no srcdoc attribute');
+	assert.ok(!srcdoc[1].includes('\n'));
+	assert.ok(srcdoc[1].includes('&lt;p&gt;One&lt;/p&gt;&#10;&#10;&lt;p&gt;Two&lt;/p&gt;'));
+});
+
+test('renderDemo points relative example URLs at the stylesheet folder with a base', () => {
+	const out = renderDemo({ title: 'Card', exampleHtml: '<img src="trail.jpg" alt="">', stylesheet: '/assets/y.css' });
+	assert.ok(out.includes('&lt;base href=&quot;/assets/&quot;&gt;'));
+	assert.ok(out.indexOf('&lt;base href=&quot;/assets/&quot;&gt;') < out.indexOf('&lt;link rel=&quot;stylesheet&quot;'));
 });
 
 test('renderPage puts the demo where the bare example was and honours the stylesheet option', () => {

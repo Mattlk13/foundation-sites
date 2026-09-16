@@ -14,13 +14,9 @@ A group of buttons: a wrapping row, or one fused control with data-attach.
 ## Example
 
 <figure class="demo" data-height="md">
-<div data-preview tabindex="0"><iframe title="Buttons, live" srcdoc="&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;buttons&quot; role=&quot;group&quot; aria-label=&quot;Text style&quot; data-attach&gt;
-	&lt;button class=&quot;button&quot; type=&quot;button&quot; data-emphasis=&quot;medium&quot; aria-pressed=&quot;true&quot;&gt;Bold&lt;/button&gt;
-	&lt;button class=&quot;button&quot; type=&quot;button&quot; data-emphasis=&quot;medium&quot; aria-pressed=&quot;false&quot;&gt;Italic&lt;/button&gt;
-	&lt;button class=&quot;button&quot; type=&quot;button&quot; data-emphasis=&quot;medium&quot; aria-pressed=&quot;false&quot;&gt;Underline&lt;/button&gt;
-&lt;/div&gt;"></iframe></div>
+<div data-preview><iframe title="Buttons, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;buttons&quot; role=&quot;group&quot; aria-label=&quot;Text style&quot; data-attach&gt;&#10;	&lt;button class=&quot;button&quot; type=&quot;button&quot; data-emphasis=&quot;medium&quot; aria-pressed=&quot;true&quot;&gt;Bold&lt;/button&gt;&#10;	&lt;button class=&quot;button&quot; type=&quot;button&quot; data-emphasis=&quot;medium&quot; aria-pressed=&quot;false&quot;&gt;Italic&lt;/button&gt;&#10;	&lt;button class=&quot;button&quot; type=&quot;button&quot; data-emphasis=&quot;medium&quot; aria-pressed=&quot;false&quot;&gt;Underline&lt;/button&gt;&#10;&lt;/div&gt;"></iframe></div>
 
-<details>
+<details markdown="1">
 <summary>Code</summary>
 
 ```html

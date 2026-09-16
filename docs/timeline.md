@@ -14,13 +14,9 @@ Lays its entries along a rail with a marker each, on one side, or on alternate s
 ## Example
 
 <figure class="demo" data-height="md">
-<div data-preview tabindex="0"><iframe title="Timeline, live" srcdoc="&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;ol class=&quot;timeline&quot; data-alternate role=&quot;list&quot;&gt;
-	&lt;li&gt;&lt;time datetime=&quot;2026-09-12&quot;&gt;12 September&lt;/time&gt;&lt;h3&gt;The plan&lt;/h3&gt;&lt;p&gt;Twelve layouts on paper.&lt;/p&gt;&lt;/li&gt;
-	&lt;li&gt;&lt;time datetime=&quot;2026-09-13&quot;&gt;13 September&lt;/time&gt;&lt;h3&gt;The layouts&lt;/h3&gt;&lt;p&gt;Fifteen of them, in the browser.&lt;/p&gt;&lt;/li&gt;
-	&lt;li&gt;&lt;time datetime=&quot;2026-09-14&quot;&gt;14 September&lt;/time&gt;&lt;h3&gt;The components&lt;/h3&gt;&lt;p&gt;Eight, and two themes.&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;"></iframe></div>
+<div data-preview><iframe title="Timeline, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;ol class=&quot;timeline&quot; data-alternate role=&quot;list&quot;&gt;&#10;	&lt;li&gt;&lt;time datetime=&quot;2026-09-12&quot;&gt;12 September&lt;/time&gt;&lt;h3&gt;The plan&lt;/h3&gt;&lt;p&gt;Twelve layouts on paper.&lt;/p&gt;&lt;/li&gt;&#10;	&lt;li&gt;&lt;time datetime=&quot;2026-09-13&quot;&gt;13 September&lt;/time&gt;&lt;h3&gt;The layouts&lt;/h3&gt;&lt;p&gt;Fifteen of them, in the browser.&lt;/p&gt;&lt;/li&gt;&#10;	&lt;li&gt;&lt;time datetime=&quot;2026-09-14&quot;&gt;14 September&lt;/time&gt;&lt;h3&gt;The components&lt;/h3&gt;&lt;p&gt;Eight, and two themes.&lt;/p&gt;&lt;/li&gt;&#10;&lt;/ol&gt;"></iframe></div>
 
-<details>
+<details markdown="1">
 <summary>Code</summary>
 
 ```html

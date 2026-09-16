@@ -14,12 +14,9 @@ Pads its content on all sides, with an optional border.
 ## Example
 
 <figure class="demo" data-height="md">
-<div data-preview tabindex="0"><iframe title="Box, live" srcdoc="&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;section class=&quot;box&quot; data-gap=&quot;lg&quot; data-border&gt;
-	&lt;h2&gt;A bordered box&lt;/h2&gt;
-	&lt;p&gt;Prose inside a box keeps its rhythm; the box only adds room around it.&lt;/p&gt;
-&lt;/section&gt;"></iframe></div>
+<div data-preview><iframe title="Box, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;section class=&quot;box&quot; data-gap=&quot;lg&quot; data-border&gt;&#10;	&lt;h2&gt;A bordered box&lt;/h2&gt;&#10;	&lt;p&gt;Prose inside a box keeps its rhythm; the box only adds room around it.&lt;/p&gt;&#10;&lt;/section&gt;"></iframe></div>
 
-<details>
+<details markdown="1">
 <summary>Code</summary>
 
 ```html

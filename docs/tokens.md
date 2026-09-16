@@ -336,4 +336,16 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-carousel-dot-size` | `0.75rem` | Diameter of a slide dot. |
 | `--yeti-carousel-scroll` | `smooth, and auto under reduced motion` | How the track scrolls when a dot is followed. A components-layer declaration outranks the reset, so the preference reaches the track through this token. |
 
+## Demo
+
+| Token | Default | Description |
+| --- | --- | --- |
+| `--yeti-demo-height-sm` | `12rem` | The preview box's height at data-height="sm". |
+| `--yeti-demo-height-md` | `20rem` | The preview box's height at data-height="md", and with no attribute. |
+| `--yeti-demo-height-lg` | `32rem` | The preview box's height at data-height="lg". |
+| `--yeti-demo-height-xl` | `48rem` | The preview box's height at data-height="xl". |
+| `--yeti-demo-border` | `var(--yeti-color-border)` | The preview box's edge. |
+| `--yeti-demo-radius` | `var(--yeti-radius-md)` | The preview box's corner. |
+| `--yeti-demo-label` | `var(--yeti-color-surface-sunken)` | Surface of the label naming the current width stop. |
+
 Yeti also defines 47 internal `--_yeti-*` tokens. They derive from the public ones and may change between minor versions; override the public token instead.

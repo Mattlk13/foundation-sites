@@ -14,20 +14,9 @@ The page skeleton: header on top, footer at the bottom of the viewport when the 
 ## Example
 
 <figure class="demo" data-height="md">
-<div data-preview tabindex="0"><iframe title="Shell, live" srcdoc="&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;body class=&quot;shell&quot; data-width=&quot;xs&quot;&gt;
-	&lt;header&gt;Site header&lt;/header&gt;
-	&lt;div&gt;
-		&lt;nav aria-label=&quot;Section&quot;&gt;Section navigation&lt;/nav&gt;
-		&lt;main&gt;
-			&lt;h1&gt;Page title&lt;/h1&gt;
-			&lt;p&gt;The main content, which takes what is left.&lt;/p&gt;
-		&lt;/main&gt;
-		&lt;aside&gt;Related links&lt;/aside&gt;
-	&lt;/div&gt;
-	&lt;footer&gt;Site footer&lt;/footer&gt;
-&lt;/body&gt;"></iframe></div>
+<div data-preview><iframe title="Shell, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;body class=&quot;shell&quot; data-width=&quot;xs&quot;&gt;&#10;	&lt;header&gt;Site header&lt;/header&gt;&#10;	&lt;div&gt;&#10;		&lt;nav aria-label=&quot;Section&quot;&gt;Section navigation&lt;/nav&gt;&#10;		&lt;main&gt;&#10;			&lt;h1&gt;Page title&lt;/h1&gt;&#10;			&lt;p&gt;The main content, which takes what is left.&lt;/p&gt;&#10;		&lt;/main&gt;&#10;		&lt;aside&gt;Related links&lt;/aside&gt;&#10;	&lt;/div&gt;&#10;	&lt;footer&gt;Site footer&lt;/footer&gt;&#10;&lt;/body&gt;"></iframe></div>
 
-<details>
+<details markdown="1">
 <summary>Code</summary>
 
 ```html

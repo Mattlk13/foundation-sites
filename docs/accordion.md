@@ -14,18 +14,9 @@ A column of disclosures built on details and summary, each opening to show its p
 ## Example
 
 <figure class="demo" data-height="md">
-<div data-preview tabindex="0"><iframe title="Accordion, live" srcdoc="&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;accordion&quot;&gt;
-	&lt;details name=&quot;faq&quot;&gt;
-		&lt;summary&gt;Does Yeti need JavaScript?&lt;/summary&gt;
-		&lt;p&gt;Almost never. A handful of optional modules exist and nothing depends on them.&lt;/p&gt;
-	&lt;/details&gt;
-	&lt;details name=&quot;faq&quot;&gt;
-		&lt;summary&gt;Can I use my own class names?&lt;/summary&gt;
-		&lt;p&gt;Yes. Anything Yeti does not declare is ignored.&lt;/p&gt;
-	&lt;/details&gt;
-&lt;/div&gt;"></iframe></div>
+<div data-preview><iframe title="Accordion, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;accordion&quot;&gt;&#10;	&lt;details name=&quot;faq&quot;&gt;&#10;		&lt;summary&gt;Does Yeti need JavaScript?&lt;/summary&gt;&#10;		&lt;p&gt;Almost never. A handful of optional modules exist and nothing depends on them.&lt;/p&gt;&#10;	&lt;/details&gt;&#10;	&lt;details name=&quot;faq&quot;&gt;&#10;		&lt;summary&gt;Can I use my own class names?&lt;/summary&gt;&#10;		&lt;p&gt;Yes. Anything Yeti does not declare is ignored.&lt;/p&gt;&#10;	&lt;/details&gt;&#10;&lt;/div&gt;"></iframe></div>
 
-<details>
+<details markdown="1">
 <summary>Code</summary>
 
 ```html

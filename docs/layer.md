@@ -14,12 +14,9 @@ Stacks its children in one box, later ones on top, with the box as tall as the t
 ## Example
 
 <figure class="demo" data-height="md">
-<div data-preview tabindex="0"><iframe title="Layer, live" srcdoc="&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;figure class=&quot;layer&quot;&gt;
-	&lt;img src=&quot;harbour.jpg&quot; alt=&quot;Boats in a harbour at dawn&quot;&gt;
-	&lt;figcaption data-align-self=&quot;end&quot;&gt;Dawn at the harbour&lt;/figcaption&gt;
-&lt;/figure&gt;"></iframe></div>
+<div data-preview><iframe title="Layer, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;figure class=&quot;layer&quot;&gt;&#10;	&lt;img src=&quot;harbour.jpg&quot; alt=&quot;Boats in a harbour at dawn&quot;&gt;&#10;	&lt;figcaption data-align-self=&quot;end&quot;&gt;Dawn at the harbour&lt;/figcaption&gt;&#10;&lt;/figure&gt;"></iframe></div>
 
-<details>
+<details markdown="1">
 <summary>Code</summary>
 
 ```html

@@ -14,19 +14,9 @@ A data table styled in place: header rule, row lines, optional stripes, hover, a
 ## Example
 
 <figure class="demo" data-height="md">
-<div data-preview tabindex="0"><iframe title="Table, live" srcdoc="&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;table class=&quot;table&quot; data-striped&gt;
-	&lt;caption&gt;Summits&lt;/caption&gt;
-	&lt;thead&gt;
-		&lt;tr&gt;&lt;th scope=&quot;col&quot;&gt;Peak&lt;/th&gt;&lt;th scope=&quot;col&quot; data-numeric&gt;Height (m)&lt;/th&gt;&lt;/tr&gt;
-	&lt;/thead&gt;
-	&lt;tbody&gt;
-		&lt;tr&gt;&lt;td&gt;Ben Nevis&lt;/td&gt;&lt;td data-numeric&gt;1,345&lt;/td&gt;&lt;/tr&gt;
-		&lt;tr&gt;&lt;td&gt;Snowdon&lt;/td&gt;&lt;td data-numeric&gt;1,085&lt;/td&gt;&lt;/tr&gt;
-		&lt;tr&gt;&lt;td&gt;Scafell Pike&lt;/td&gt;&lt;td data-numeric&gt;978&lt;/td&gt;&lt;/tr&gt;
-	&lt;/tbody&gt;
-&lt;/table&gt;"></iframe></div>
+<div data-preview><iframe title="Table, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;table class=&quot;table&quot; data-striped&gt;&#10;	&lt;caption&gt;Summits&lt;/caption&gt;&#10;	&lt;thead&gt;&#10;		&lt;tr&gt;&lt;th scope=&quot;col&quot;&gt;Peak&lt;/th&gt;&lt;th scope=&quot;col&quot; data-numeric&gt;Height (m)&lt;/th&gt;&lt;/tr&gt;&#10;	&lt;/thead&gt;&#10;	&lt;tbody&gt;&#10;		&lt;tr&gt;&lt;td&gt;Ben Nevis&lt;/td&gt;&lt;td data-numeric&gt;1,345&lt;/td&gt;&lt;/tr&gt;&#10;		&lt;tr&gt;&lt;td&gt;Snowdon&lt;/td&gt;&lt;td data-numeric&gt;1,085&lt;/td&gt;&lt;/tr&gt;&#10;		&lt;tr&gt;&lt;td&gt;Scafell Pike&lt;/td&gt;&lt;td data-numeric&gt;978&lt;/td&gt;&lt;/tr&gt;&#10;	&lt;/tbody&gt;&#10;&lt;/table&gt;"></iframe></div>
 
-<details>
+<details markdown="1">
 <summary>Code</summary>
 
 ```html

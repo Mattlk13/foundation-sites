@@ -14,18 +14,9 @@ The native dialog element as a modal, opened by a button that names it, with the
 ## Example
 
 <figure class="demo" data-height="md">
-<div data-preview tabindex="0"><iframe title="Dialog, live" srcdoc="&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;button class=&quot;button&quot; type=&quot;button&quot; data-open=&quot;delete-project&quot; data-variant=&quot;alert&quot;&gt;Delete project&lt;/button&gt;
+<div data-preview><iframe title="Dialog, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;button class=&quot;button&quot; type=&quot;button&quot; data-open=&quot;delete-project&quot; data-variant=&quot;alert&quot;&gt;Delete project&lt;/button&gt;&#10;&#10;&lt;dialog class=&quot;dialog&quot; id=&quot;delete-project&quot; aria-labelledby=&quot;delete-project-title&quot;&gt;&#10;	&lt;h2 id=&quot;delete-project-title&quot;&gt;Delete this project?&lt;/h2&gt;&#10;	&lt;p&gt;Everything in it goes too, and this cannot be undone.&lt;/p&gt;&#10;	&lt;footer&gt;&#10;		&lt;form method=&quot;dialog&quot;&gt;&lt;button class=&quot;button&quot; type=&quot;submit&quot; data-emphasis=&quot;medium&quot;&gt;Cancel&lt;/button&gt;&lt;/form&gt;&#10;		&lt;button class=&quot;button&quot; type=&quot;button&quot; data-variant=&quot;alert&quot;&gt;Delete&lt;/button&gt;&#10;	&lt;/footer&gt;&#10;&lt;/dialog&gt;"></iframe></div>
 
-&lt;dialog class=&quot;dialog&quot; id=&quot;delete-project&quot; aria-labelledby=&quot;delete-project-title&quot;&gt;
-	&lt;h2 id=&quot;delete-project-title&quot;&gt;Delete this project?&lt;/h2&gt;
-	&lt;p&gt;Everything in it goes too, and this cannot be undone.&lt;/p&gt;
-	&lt;footer&gt;
-		&lt;form method=&quot;dialog&quot;&gt;&lt;button class=&quot;button&quot; type=&quot;submit&quot; data-emphasis=&quot;medium&quot;&gt;Cancel&lt;/button&gt;&lt;/form&gt;
-		&lt;button class=&quot;button&quot; type=&quot;button&quot; data-variant=&quot;alert&quot;&gt;Delete&lt;/button&gt;
-	&lt;/footer&gt;
-&lt;/dialog&gt;"></iframe></div>
-
-<details>
+<details markdown="1">
 <summary>Code</summary>
 
 ```html

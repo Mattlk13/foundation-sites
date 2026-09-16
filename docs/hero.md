@@ -14,16 +14,9 @@ Fills the viewport's height with copy on one side and a figure on the other, cen
 ## Example
 
 <figure class="demo" data-height="md">
-<div data-preview tabindex="0"><iframe title="Hero, live" srcdoc="&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;header class=&quot;hero&quot;&gt;
-	&lt;div&gt;
-		&lt;h1&gt;Build interfaces that read their own container&lt;/h1&gt;
-		&lt;p&gt;Fifteen layouts, one attribute vocabulary, no breakpoints.&lt;/p&gt;
-		&lt;a href=&quot;#&quot;&gt;Get started&lt;/a&gt;
-	&lt;/div&gt;
-	&lt;img src=&quot;peak.jpg&quot; alt=&quot;A snow ridge at first light&quot;&gt;
-&lt;/header&gt;"></iframe></div>
+<div data-preview><iframe title="Hero, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;header class=&quot;hero&quot;&gt;&#10;	&lt;div&gt;&#10;		&lt;h1&gt;Build interfaces that read their own container&lt;/h1&gt;&#10;		&lt;p&gt;Fifteen layouts, one attribute vocabulary, no breakpoints.&lt;/p&gt;&#10;		&lt;a href=&quot;#&quot;&gt;Get started&lt;/a&gt;&#10;	&lt;/div&gt;&#10;	&lt;img src=&quot;peak.jpg&quot; alt=&quot;A snow ridge at first light&quot;&gt;&#10;&lt;/header&gt;"></iframe></div>
 
-<details>
+<details markdown="1">
 <summary>Code</summary>
 
 ```html

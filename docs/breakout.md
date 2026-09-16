@@ -14,14 +14,9 @@ Keeps its children in a centered reading column with gutters, and lets any child
 ## Example
 
 <figure class="demo" data-height="md">
-<div data-preview tabindex="0"><iframe title="Breakout, live" srcdoc="&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;article class=&quot;breakout&quot;&gt;
-	&lt;h1&gt;A long read&lt;/h1&gt;
-	&lt;p&gt;The column keeps every paragraph at a readable width.&lt;/p&gt;
-	&lt;img src=&quot;valley.jpg&quot; alt=&quot;A valley at dusk, edge to edge&quot; data-bleed&gt;
-	&lt;p&gt;And the picture runs from edge to edge.&lt;/p&gt;
-&lt;/article&gt;"></iframe></div>
+<div data-preview><iframe title="Breakout, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;article class=&quot;breakout&quot;&gt;&#10;	&lt;h1&gt;A long read&lt;/h1&gt;&#10;	&lt;p&gt;The column keeps every paragraph at a readable width.&lt;/p&gt;&#10;	&lt;img src=&quot;valley.jpg&quot; alt=&quot;A valley at dusk, edge to edge&quot; data-bleed&gt;&#10;	&lt;p&gt;And the picture runs from edge to edge.&lt;/p&gt;&#10;&lt;/article&gt;"></iframe></div>
 
-<details>
+<details markdown="1">
 <summary>Code</summary>
 
 ```html

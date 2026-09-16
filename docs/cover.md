@@ -14,13 +14,9 @@ Fills at least the viewport's height and centers one child vertically, with opti
 ## Example
 
 <figure class="demo" data-height="md">
-<div data-preview tabindex="0"><iframe title="Cover, live" srcdoc="&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;header class=&quot;cover&quot; data-gap=&quot;lg&quot;&gt;
-	&lt;nav aria-label=&quot;Site&quot;&gt;&lt;a href=&quot;#&quot;&gt;Yeti&lt;/a&gt;&lt;/nav&gt;
-	&lt;h1 data-center&gt;A heading centered in the viewport&lt;/h1&gt;
-	&lt;p&gt;Pinned to the bottom.&lt;/p&gt;
-&lt;/header&gt;"></iframe></div>
+<div data-preview><iframe title="Cover, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;header class=&quot;cover&quot; data-gap=&quot;lg&quot;&gt;&#10;	&lt;nav aria-label=&quot;Site&quot;&gt;&lt;a href=&quot;#&quot;&gt;Yeti&lt;/a&gt;&lt;/nav&gt;&#10;	&lt;h1 data-center&gt;A heading centered in the viewport&lt;/h1&gt;&#10;	&lt;p&gt;Pinned to the bottom.&lt;/p&gt;&#10;&lt;/header&gt;"></iframe></div>
 
-<details>
+<details markdown="1">
 <summary>Code</summary>
 
 ```html

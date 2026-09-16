@@ -14,12 +14,9 @@ Centers a column of content horizontally, up to a maximum width, with gutters on
 ## Example
 
 <figure class="demo" data-height="md">
-<div data-preview tabindex="0"><iframe title="Center, live" srcdoc="&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;main class=&quot;center&quot; data-max=&quot;lg&quot;&gt;
-	&lt;h1&gt;A readable column&lt;/h1&gt;
-	&lt;p&gt;Never wider than the maximum, never touching the screen edge.&lt;/p&gt;
-&lt;/main&gt;"></iframe></div>
+<div data-preview><iframe title="Center, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;main class=&quot;center&quot; data-max=&quot;lg&quot;&gt;&#10;	&lt;h1&gt;A readable column&lt;/h1&gt;&#10;	&lt;p&gt;Never wider than the maximum, never touching the screen edge.&lt;/p&gt;&#10;&lt;/main&gt;"></iframe></div>
 
-<details>
+<details markdown="1">
 <summary>Code</summary>
 
 ```html

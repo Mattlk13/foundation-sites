@@ -14,18 +14,9 @@ A live example in a box the reader can drag narrower and wider, with a label nam
 ## Example
 
 <figure class="demo" data-height="md">
-<div data-preview tabindex="0"><iframe title="Demo, live" srcdoc="&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;figure class=&quot;demo&quot; data-height=&quot;md&quot;&gt;
-	&lt;div data-preview tabindex=&quot;0&quot;&gt;&lt;iframe title=&quot;Card, live&quot; srcdoc=&quot;&amp;lt;link rel=&amp;quot;stylesheet&amp;quot; href=&amp;quot;/yeti/yeti.css&amp;quot;&amp;gt;&amp;lt;body style=&amp;quot;margin:0;padding:var(--yeti-space-md)&amp;quot;&amp;gt;&amp;lt;article class=&amp;quot;card&amp;quot;&amp;gt;&amp;lt;h2&amp;gt;Weekend in the hills&amp;lt;/h2&amp;gt;&amp;lt;p&amp;gt;Drag the corner.&amp;lt;/p&amp;gt;&amp;lt;/article&amp;gt;&quot;&gt;&lt;/iframe&gt;&lt;/div&gt;
-	&lt;details&gt;
-		&lt;summary&gt;Code&lt;/summary&gt;
-		&lt;pre&gt;&lt;code&gt;&amp;lt;article class=&quot;card&quot;&amp;gt;
-	&amp;lt;h2&amp;gt;Weekend in the hills&amp;lt;/h2&amp;gt;
-	&amp;lt;p&amp;gt;Drag the corner.&amp;lt;/p&amp;gt;
-&amp;lt;/article&amp;gt;&lt;/code&gt;&lt;/pre&gt;
-	&lt;/details&gt;
-&lt;/figure&gt;"></iframe></div>
+<div data-preview><iframe title="Demo, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;figure class=&quot;demo&quot; data-height=&quot;md&quot;&gt;&#10;	&lt;div data-preview tabindex=&quot;0&quot;&gt;&lt;iframe title=&quot;Card, live&quot; srcdoc=&quot;&amp;lt;link rel=&amp;quot;stylesheet&amp;quot; href=&amp;quot;/yeti/yeti.css&amp;quot;&amp;gt;&amp;lt;body style=&amp;quot;margin:0;padding:var(--yeti-space-md)&amp;quot;&amp;gt;&amp;lt;article class=&amp;quot;card&amp;quot;&amp;gt;&amp;lt;h2&amp;gt;Weekend in the hills&amp;lt;/h2&amp;gt;&amp;lt;p&amp;gt;Drag the corner.&amp;lt;/p&amp;gt;&amp;lt;/article&amp;gt;&quot;&gt;&lt;/iframe&gt;&lt;/div&gt;&#10;	&lt;details&gt;&#10;		&lt;summary&gt;Code&lt;/summary&gt;&#10;		&lt;pre&gt;&lt;code&gt;&amp;lt;article class=&quot;card&quot;&amp;gt;&#10;	&amp;lt;h2&amp;gt;Weekend in the hills&amp;lt;/h2&amp;gt;&#10;	&amp;lt;p&amp;gt;Drag the corner.&amp;lt;/p&amp;gt;&#10;&amp;lt;/article&amp;gt;&lt;/code&gt;&lt;/pre&gt;&#10;	&lt;/details&gt;&#10;&lt;/figure&gt;"></iframe></div>
 
-<details>
+<details markdown="1">
 <summary>Code</summary>
 
 ```html

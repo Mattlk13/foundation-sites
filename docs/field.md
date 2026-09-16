@@ -14,14 +14,9 @@ One form control with its label, an optional hint, and an error that shows itsel
 ## Example
 
 <figure class="demo" data-height="md">
-<div data-preview tabindex="0"><iframe title="Field, live" srcdoc="&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;field&quot;&gt;
-	&lt;label for=&quot;email&quot;&gt;Email&lt;/label&gt;
-	&lt;input id=&quot;email&quot; type=&quot;email&quot; required aria-describedby=&quot;email-hint email-error&quot;&gt;
-	&lt;p id=&quot;email-hint&quot; data-hint&gt;We only use it to sign you in.&lt;/p&gt;
-	&lt;p id=&quot;email-error&quot; data-error&gt;Enter an address with an @ in it.&lt;/p&gt;
-&lt;/div&gt;"></iframe></div>
+<div data-preview><iframe title="Field, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;field&quot;&gt;&#10;	&lt;label for=&quot;email&quot;&gt;Email&lt;/label&gt;&#10;	&lt;input id=&quot;email&quot; type=&quot;email&quot; required aria-describedby=&quot;email-hint email-error&quot;&gt;&#10;	&lt;p id=&quot;email-hint&quot; data-hint&gt;We only use it to sign you in.&lt;/p&gt;&#10;	&lt;p id=&quot;email-error&quot; data-error&gt;Enter an address with an @ in it.&lt;/p&gt;&#10;&lt;/div&gt;"></iframe></div>
 
-<details>
+<details markdown="1">
 <summary>Code</summary>
 
 ```html
