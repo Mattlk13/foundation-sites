@@ -23,8 +23,9 @@ const dragGrip = async (page, selector, dx) => {
 // this reads the content box those tokens actually name.
 const content = async (page, sel) => {
 	const r = await rect(page, sel);
-	const [b, p] = await Promise.all([px(page, sel, 'border-left-width'), px(page, sel, 'padding-left')]);
-	return { width: r.width - 2 * (b + p), height: r.height - 2 * (b + p) };
+	// The inset is not symmetric: a direct box has none at the top, where the bar is.
+	const [b, pi, pt, pb] = await Promise.all([px(page, sel, 'border-left-width'), px(page, sel, 'padding-left'), px(page, sel, 'padding-top'), px(page, sel, 'padding-bottom')]);
+	return { width: r.width - 2 * (b + pi), height: r.height - 2 * b - pt - pb };
 };
 
 test.describe('demo', () => {
@@ -41,10 +42,42 @@ test.describe('demo', () => {
 	test('the frame fills the box and follows it', async ({ page }) => {
 		await open(page);
 		await dragGrip(page, '#framed-preview', -300);
-		const [box, frame] = await Promise.all([content(page, '#framed-preview'), rect(page, '#frame')]);
+		const [box, frame, boxRect] = await Promise.all([content(page, '#framed-preview'), rect(page, '#frame'), rect(page, '#framed-preview')]);
 		expect(frame.width).toBeCloseTo(box.width, 0);
-		expect(frame.height).toBeCloseTo(box.height, 0);
+		// The bar takes the first row, so the frame is the content box less the
+		// bar's height, and its bottom edge is the box's bottom edge.
+		expect(frame.height).toBeLessThan(box.height);
+		expect(frame.height).toBeGreaterThan(box.height - 80);
+		expect(frame.bottom).toBeCloseTo(boxRect.bottom - (boxRect.height - box.height) / 2, 0);
 		expect(await style(page, '#frame', 'border-top-width')).toBe('0px');
+	});
+
+	test('the bar names the example from the marker and stays put when the content scrolls', async ({ page }) => {
+		await open(page);
+		const bar = (id) => page.evaluate((i) => {
+			const cs = getComputedStyle(document.getElementById(i), '::before');
+			return { content: cs.content.replace(/"/g, ''), position: cs.position };
+		}, id);
+		expect(await bar('framed-preview')).toEqual({ content: 'Card', position: 'sticky' });
+		expect((await bar('direct-preview')).content).toBe('Direct card');
+	});
+
+	test('data-resize="both" lets the reader drag the box taller, but not shorter than the sm height', async ({ page }) => {
+		await open(page);
+		expect(await style(page, '#tall-preview', 'resize')).toBe('both');
+		// The xl box is taller than the default viewport, and Firefox loses a drag
+		// that leaves the viewport, so make room for the box and the drag below it.
+		await page.setViewportSize({ width: 1280, height: 1100 });
+		await page.evaluate(() => document.getElementById('tall-preview').scrollIntoView({ block: 'start' }));
+		const before = await content(page, '#tall-preview');
+		const grip = await rect(page, '#tall-preview');
+		await page.mouse.move(grip.right - 4, grip.bottom - 4);
+		await page.mouse.down();
+		await page.mouse.move(grip.right - 4, grip.bottom + 150, { steps: 10 });
+		await page.mouse.up();
+		expect((await content(page, '#tall-preview')).height).toBeGreaterThan(before.height + 100);
+		await page.evaluate(() => { document.getElementById('tall-preview').style.blockSize = '40px'; });
+		expect((await content(page, '#tall-preview')).height).toBeCloseTo(await token(page, '--yeti-height-sm'), 0);
 	});
 
 	test('a direct card changes shape as the box is dragged past sm', async ({ page }) => {
@@ -88,6 +121,7 @@ test.describe('demo', () => {
 	test('the code is a details that opens', async ({ page }) => {
 		await open(page);
 		expect(await page.evaluate(() => document.getElementById('framed-code').open)).toBe(false);
+		expect((await page.textContent('#framed-code summary')).trim()).toBe('View Code');
 		await page.click('#framed-code summary');
 		expect(await page.evaluate(() => document.getElementById('framed-code').open)).toBe(true);
 		expect((await rect(page, '#framed-code pre')).height).toBeGreaterThan(0);
