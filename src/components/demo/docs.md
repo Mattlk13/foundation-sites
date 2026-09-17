@@ -6,7 +6,7 @@ Showing a piece of Yeti markup and letting the reader see how it behaves as its 
 
 The preview box is a size container the reader can drag from its bottom corner, narrower and wider, with the browser's own handle and no script. Whatever Yeti markup is inside responds exactly as it would anywhere else, because a Yeti component measures its own box; a card puts its picture beside the text once the box reaches `md`. A bar across the top of the box names the example, from the value of `data-preview`, and at its end a label names the stop the box is at, `xs` through `2xl`, flipping at the same widths the components change. That is the framework's responsive model, applied to itself.
 
-The box can hold the example two ways. On a page that already loads Yeti, put the markup straight in; on any other page, the docs site among them, put an `iframe` in with the example in its `srcdoc` and a link to `yeti.css` ahead of it, so nothing from the host page leaks into the example. Either way, the box starts at `data-height`'s height, `md` when absent: a frame cannot size to its content, and neither does the box, so a tall example scrolls inside whichever form it's in. `data-resize="both"` lets the reader pull the box taller too, never shorter than the `sm` height; width alone is the default, because width is what the demo is for. `data-width` sets the width the box starts at, using the width vocabulary, so a demo can open at `sm` and lead with the narrow form. That width names the example's own width: the box's edge and, on direct markup, its inset sit outside it, which is why the label in the bar agrees with the attribute, as long as the container is at least that wide. In a narrower container the box is capped at the container, and the label names the capped width instead. The code goes in a `details` under the box, collapsed behind a summary that reads as plain text and underlines when the pointer reaches it.
+The box can hold the example two ways. On a page that already loads Yeti, put the markup straight in; on any other page, the docs site among them, put an `iframe` in with the example in its `srcdoc` and a link to `yeti.css` and `yeti.js` ahead of it, so nothing from the host page leaks into the example and every module is there. Either way, the box starts at `data-height`'s height, `md` when absent: a frame cannot size to its content, and neither does the box, so a tall example scrolls inside whichever form it's in. `data-resize="both"` lets the reader pull the box taller too, never shorter than the `sm` height; width alone is the default, because width is what the demo is for. `data-width` sets the width the box starts at, using the width vocabulary, so a demo can open at `sm` and lead with the narrow form. That width names the example's own width: the box's edge and, on direct markup, its inset sit outside it, which is why the label in the bar agrees with the attribute, as long as the container is at least that wide. In a narrower container the box is capped at the container, and the label names the capped width instead. The code goes in a `details` under the box, collapsed behind a summary that reads as plain text and underlines when the pointer reaches it.
 
 ```html
 <figure class="demo" data-width="lg">
@@ -16,6 +16,20 @@ The box can hold the example two ways. On a page that already loads Yeti, put th
 			<p>Plain markup on a Yeti page.</p>
 		</article>
 	</div>
+	<details>
+		<summary>View Code</summary>
+		<pre><code>&lt;article class="card"&gt;…&lt;/article&gt;</code></pre>
+	</details>
+</figure>
+```
+
+## With the module
+
+A framed demo written by hand carries the example twice, escaped into `srcdoc` and again as code, and the two drift. Load `demo.js` and write the code once: an iframe with no `srcdoc`, or an empty box, is filled from the `pre` under it, with the host page's own `yeti.css` linked ahead of the example, or the stylesheet named in `data-stylesheet`, and `yeti.js` from the folder beside it, so the frame is a whole Yeti page and an example that needs a module has it. Relative picture paths resolve beside that stylesheet too. Without the module the code still shows and the box stays empty, so a page that never loads it loses nothing it wrote. The docs site does not use it: its pages are generated with the frame filled, so they work anywhere, GitHub included.
+
+```html
+<figure class="demo">
+	<div data-preview="Card"></div>
 	<details>
 		<summary>View Code</summary>
 		<pre><code>&lt;article class="card"&gt;…&lt;/article&gt;</code></pre>

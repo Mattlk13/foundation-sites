@@ -261,6 +261,11 @@ test('renderPage passes a manifest demo block through to the figure', () => {
 	assert.ok(page.includes('<figure class="demo" data-height="sm" data-width="md">'));
 });
 
+test('renderDemo links the module bundle into every frame, beside the stylesheet', () => {
+	const out = renderDemo({ title: 'Dialog', exampleHtml: '<p></p>', stylesheet: '/assets/y.css' });
+	assert.ok(out.includes('&lt;link rel=&quot;stylesheet&quot; href=&quot;/assets/y.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/assets/yeti.js&quot;&gt;&lt;/script&gt;'));
+});
+
 test('renderDemo keeps the srcdoc on one line, whatever the example does', () => {
 	const out = renderDemo({ title: 'Dialog', exampleHtml: '<p>One</p>\n\n<p>Two</p>\n', stylesheet: '/yeti/yeti.css' });
 	const srcdoc = out.match(/srcdoc="([^"]*)"/);

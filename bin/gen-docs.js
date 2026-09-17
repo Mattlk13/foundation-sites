@@ -54,7 +54,10 @@ export function escapeAttribute(text) {
 // them against the docs page.
 export function renderDemo({ title, exampleHtml, stylesheet, height = 'lg', width, resize }) {
 	const base = `${path.posix.dirname(stylesheet)}/`.replace(/\/+$/, '/');
-	const doc = `<base href="${base}"><link rel="stylesheet" href="${stylesheet}"><body style="margin:0;padding:var(--yeti-space-md)">${exampleHtml.trim()}`;
+	// The frame is a whole Yeti page: the stylesheet and, beside it, the bundle
+	// of every module, so a framed dialog opens, framed tabs switch, and an
+	// example that composes components gets all of their scripts, not one.
+	const doc = `<base href="${base}"><link rel="stylesheet" href="${stylesheet}"><script type="module" src="${base}yeti.js"></script><body style="margin:0;padding:var(--yeti-space-md)">${exampleHtml.trim()}`;
 	const srcdoc = escapeAttribute(doc).replace(/\r?\n/g, '&#10;');
 	return [
 		`<figure class="demo" data-height="${height}"${width ? ` data-width="${width}"` : ''}${resize ? ` data-resize="${resize}"` : ''}>`,

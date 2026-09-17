@@ -5,6 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Demo fixture</title>
 	<link rel="stylesheet" href="../../../../src/yeti.css">
+	<script type="module" src="../../../../src/components/demo/demo.js"></script>
 	<style>#stage { inline-size: 100%; }</style>
 </head>
 <body>
@@ -34,6 +35,20 @@
 			</figure>
 			<figure class="demo" id="tall" data-height="xl" data-resize="both">
 				<div data-preview="Tall" tabindex="0" id="tall-preview"><p>Tall.</p></div>
+			</figure>
+			<figure class="demo" id="scripted">
+				<div data-preview="Scripted"><iframe id="scripted-frame" title="Scripted, live"></iframe></div>
+				<details>
+					<summary>View Code</summary>
+					<pre><code id="scripted-code">&lt;article class="card"&gt;&lt;h2&gt;From the pre&lt;/h2&gt;&lt;p&gt;Written once.&lt;/p&gt;&lt;/article&gt;</code></pre>
+				</details>
+			</figure>
+			<figure class="demo" id="created" data-stylesheet="/src/yeti.css">
+				<div data-preview="Created" id="created-box"></div>
+				<details>
+					<summary>View Code</summary>
+					<pre><code>&lt;p class="badge"&gt;Made&lt;/p&gt;</code></pre>
+				</details>
 			</figure>
 			<figure class="demo" id="mid" data-height="lg">
 				<figcaption>Large box</figcaption>

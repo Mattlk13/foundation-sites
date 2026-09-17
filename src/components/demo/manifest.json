@@ -7,19 +7,21 @@
   "attributes": [
     { "name": "data-height", "type": "enum", "vocabulary": "height", "default": "md", "description": "The preview box's height. A frame inside cannot size to its content, so this is where that is set; with data-resize=\"both\" it is the starting height." },
     { "name": "data-width", "type": "enum", "vocabulary": "width", "description": "The preview box's starting width, before the reader drags it. Full width when absent." },
-    { "name": "data-resize", "type": "enum", "vocabulary": "resize", "default": "width", "description": "Which way the reader can drag the box: its width only, or both width and height." }
+    { "name": "data-resize", "type": "enum", "vocabulary": "resize", "default": "width", "description": "Which way the reader can drag the box: its width only, or both width and height." },
+    { "name": "data-stylesheet", "type": "string", "description": "Read by the module: the stylesheet the frame it builds should load, when it is not the host page's own yeti.css; yeti.js is expected beside it." }
   ],
   "classes": [],
   "children": [
     { "selector": "> figcaption", "min": 0, "max": 1, "description": "A title for the demo, above the box." },
     { "selector": "> [data-preview]", "min": 1, "max": 1, "description": "The resizable box: a bar naming the example across the top, then the example. Holds an iframe with the example in srcdoc, or the example's markup directly on a page that already loads Yeti. A box holding direct markup carries tabindex=\"0\" because it scrolls; a framed box does not need one, because the iframe fills it exactly." },
-    { "selector": "> [data-preview] > iframe", "min": 0, "max": 1, "description": "The framed example, loading yeti.css alone so the host page's styles never reach it. Needs a title." },
+    { "selector": "> [data-preview] > iframe", "min": 0, "max": 1, "description": "The framed example, loading yeti.css and yeti.js alone so the host page's styles never reach it and every module is present. Needs a title. With the module, an iframe without srcdoc, or an empty box, is filled from the code under the box." },
     { "selector": "> details", "min": 0, "max": 1, "description": "The code, collapsed: a summary reading View Code, plain text that underlines under the pointer, and a pre." }
   ],
   "markers": [
     { "name": "data-preview", "type": "string", "on": "> div", "description": "Marks the resizable box and names the example; the bar across the top of the box shows the value. Direct markup taller than the box scrolls, so a box holding it carries tabindex=\"0\" to stay reachable from the keyboard; a framed box does not." }
   ],
   "tokens": [
+    { "name": "--yeti-space-md", "public": true, "description": "Padding of the framed document's body, written by the module." },
     { "name": "--yeti-height-md", "public": true, "description": "Box height at data-height=\"md\" and by default. The sm, lg, and xl stops of the same family are read through the shared height mapping in layouts/attributes.css, not by this file." },
     { "name": "--yeti-height-sm", "public": true, "description": "The shortest the box can be dragged when data-resize allows height." },
     { "name": "--yeti-demo-border", "public": true, "description": "The box's edge, and the rule under the bar." },
@@ -45,9 +47,9 @@
     "keyboard": [
       { "key": "Enter / Space", "action": "On the summary, opens or closes the code." }
     ],
-    "notes": "Give the iframe a title. Give a box holding direct markup tabindex=\"0\": markup taller than the box scrolls, and a scrollable region must be reachable from the keyboard. A framed box does not need one, because the iframe fills it exactly and it never scrolls. The resize handle is the browser's and works with a mouse or trackpad; a keyboard or touch reader sees the demo at its starting size and has the code, so a demo must never be the only place the markup appears. The bar and the stop label are generated content and are not announced; the name in data-preview is a visual heading for the box, and the iframe's title carries the same name to assistive tech."
+    "notes": "Give the iframe a title. Give a box holding direct markup tabindex=\"0\": markup taller than the box scrolls, and a scrollable region must be reachable from the keyboard. A framed box does not need one, because the iframe fills it exactly and it never scrolls. The resize handle is the browser's and works with a mouse or trackpad; a keyboard or touch reader sees the demo at its starting size and has the code, so a demo must never be the only place the markup appears. The bar and the stop label are generated content and are not announced; the name in data-preview is a visual heading for the box, and the iframe's title carries the same name to assistive tech. A frame the module creates is titled from that name too."
   },
-  "js": null,
+  "js": { "module": "demo.js", "optional": true },
   "support": { "unguarded": ["container size queries", "resize", "iframe srcdoc"], "guarded": [] },
   "since": "7.0.0",
   "example": "example.html",

@@ -1,5 +1,5 @@
 import { test, expect } from 'playwright/test';
-import { stage, rect, style, px, token, axe, painted } from '../lib/layout.js';
+import { stage, rect, style, px, token, axe, painted, withoutModule } from '../lib/layout.js';
 
 const open = async (page, width = 1000) => {
 	const response = await page.goto('/test/browser/fixtures/components/demo.html');
@@ -125,6 +125,46 @@ test.describe('demo', () => {
 		await page.click('#framed-code summary');
 		expect(await page.evaluate(() => document.getElementById('framed-code').open)).toBe(true);
 		expect((await rect(page, '#framed-code pre')).height).toBeGreaterThan(0);
+	});
+
+	test('the module fills an empty frame from the code under the box, linking the page\'s own stylesheet', async ({ page }) => {
+		await open(page);
+		await page.waitForFunction(() => document.getElementById('scripted-frame').hasAttribute('srcdoc'));
+		const srcdoc = await page.getAttribute('#scripted-frame', 'srcdoc');
+		expect(srcdoc).toContain('<link rel="stylesheet" href="http://localhost:4173/src/yeti.css">');
+		expect(srcdoc).toContain('<base href="http://localhost:4173/src/">');
+		expect(srcdoc).toContain('<script type="module" src="http://localhost:4173/src/yeti.js"></script>');
+		expect(srcdoc).toContain('<article class="card"><h2>From the pre</h2>');
+		// The framed document really holds the example and the stylesheet link.
+		await page.waitForFunction(() => document.getElementById('scripted-frame').contentDocument?.querySelector('.card'));
+		const rendered = await page.evaluate(() => {
+			const doc = document.getElementById('scripted-frame').contentDocument;
+			return { card: !!doc.querySelector('.card'), styled: !!doc.querySelector('link[href$="yeti.css"]') };
+		});
+		expect(rendered).toEqual({ card: true, styled: true });
+	});
+
+	test('the module makes the frame for an empty box, titled from the marker, honouring data-stylesheet', async ({ page }) => {
+		await open(page);
+		await page.waitForFunction(() => document.querySelector('#created-box > iframe[srcdoc]'));
+		expect(await page.getAttribute('#created-box > iframe', 'title')).toBe('Created, live');
+		expect(await page.getAttribute('#created-box > iframe', 'srcdoc')).toContain('<link rel="stylesheet" href="/src/yeti.css">');
+	});
+
+	test('the module leaves a filled frame and direct markup alone', async ({ page }) => {
+		await open(page);
+		await page.waitForFunction(() => document.getElementById('scripted-frame').hasAttribute('srcdoc'));
+		expect(await page.getAttribute('#frame', 'srcdoc')).toContain('Inside an iframe.');
+		expect(await page.evaluate(() => document.querySelector('#direct-preview > iframe'))).toBeNull();
+	});
+
+	test('without the module the code still shows and the box stays empty', async ({ page }) => {
+		await withoutModule(page, 'demo');
+		await open(page);
+		expect(await page.getAttribute('#scripted-frame', 'srcdoc')).toBeNull();
+		expect(await page.evaluate(() => document.getElementById('created-box').childElementCount)).toBe(0);
+		await page.click('#scripted summary');
+		expect((await rect(page, '#scripted-code')).height).toBeGreaterThan(0);
 	});
 
 	test('has no accessibility violations, code closed and open', async ({ page }) => {
