@@ -14,7 +14,7 @@ A turning ring in a hue, the size of the text, for waiting with no known end; a 
 ## Example
 
 <figure class="demo" data-height="sm">
-<div data-preview="Spinner"><iframe title="Spinner, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;p&gt;&lt;span class=&quot;spinner&quot; role=&quot;status&quot; aria-label=&quot;Loading&quot;&gt;&lt;/span&gt; Loading the latest posts&lt;/p&gt;"></iframe></div>
+<div data-preview="Spinner"><iframe title="Spinner, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;p&gt;&lt;span class=&quot;spinner&quot; role=&quot;status&quot; aria-label=&quot;Loading&quot;&gt;&lt;/span&gt; Loading the latest posts&lt;/p&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>

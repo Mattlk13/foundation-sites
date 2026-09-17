@@ -14,7 +14,7 @@ Packs items of uneven height into columns with no gaps under the short ones.
 ## Example
 
 <figure class="demo" data-height="xl">
-<div data-preview="Masonry"><iframe title="Masonry, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;masonry&quot; data-min=&quot;sm&quot; data-columns=&quot;3&quot;&gt;&#10;	&lt;img src=&quot;one.jpg&quot; alt=&quot;A tall waterfall&quot;&gt;&#10;	&lt;img src=&quot;two.jpg&quot; alt=&quot;A wide valley&quot;&gt;&#10;	&lt;img src=&quot;three.jpg&quot; alt=&quot;A square pond&quot;&gt;&#10;	&lt;img src=&quot;four.jpg&quot; alt=&quot;A tall pine&quot;&gt;&#10;	&lt;img src=&quot;five.jpg&quot; alt=&quot;A wide ridge&quot;&gt;&#10;&lt;/div&gt;"></iframe></div>
+<div data-preview="Masonry"><iframe title="Masonry, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;masonry&quot; data-min=&quot;sm&quot; data-columns=&quot;3&quot;&gt;&#10;	&lt;img src=&quot;one.jpg&quot; alt=&quot;A tall waterfall&quot;&gt;&#10;	&lt;img src=&quot;two.jpg&quot; alt=&quot;A wide valley&quot;&gt;&#10;	&lt;img src=&quot;three.jpg&quot; alt=&quot;A square pond&quot;&gt;&#10;	&lt;img src=&quot;four.jpg&quot; alt=&quot;A tall pine&quot;&gt;&#10;	&lt;img src=&quot;five.jpg&quot; alt=&quot;A wide ridge&quot;&gt;&#10;&lt;/div&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>

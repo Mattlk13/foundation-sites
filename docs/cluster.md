@@ -14,7 +14,7 @@ Lays its children out in a row that wraps, keeping one gap between them on both 
 ## Example
 
 <figure class="demo" data-height="lg">
-<div data-preview="Cluster"><iframe title="Cluster, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;nav class=&quot;cluster&quot; data-gap=&quot;sm&quot; data-justify=&quot;between&quot; aria-label=&quot;Site&quot;&gt;&#10;	&lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;&#10;	&lt;a href=&quot;#&quot;&gt;Docs&lt;/a&gt;&#10;	&lt;a href=&quot;#&quot;&gt;Blog&lt;/a&gt;&#10;	&lt;a href=&quot;#&quot;&gt;Contact&lt;/a&gt;&#10;&lt;/nav&gt;"></iframe></div>
+<div data-preview="Cluster"><iframe title="Cluster, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;nav class=&quot;cluster&quot; data-gap=&quot;sm&quot; data-justify=&quot;between&quot; aria-label=&quot;Site&quot;&gt;&#10;	&lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;&#10;	&lt;a href=&quot;#&quot;&gt;Docs&lt;/a&gt;&#10;	&lt;a href=&quot;#&quot;&gt;Blog&lt;/a&gt;&#10;	&lt;a href=&quot;#&quot;&gt;Contact&lt;/a&gt;&#10;&lt;/nav&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>

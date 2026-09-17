@@ -14,7 +14,7 @@ A button and a panel of links and buttons that opens under it, closing on Escape
 ## Example
 
 <figure class="demo" data-height="lg">
-<div data-preview="Dropdown"><iframe title="Dropdown, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;dropdown&quot;&gt;&#10;	&lt;button class=&quot;button&quot; type=&quot;button&quot; popovertarget=&quot;account-menu&quot; data-emphasis=&quot;medium&quot;&gt;Account&lt;/button&gt;&#10;	&lt;div id=&quot;account-menu&quot; popover&gt;&#10;		&lt;a href=&quot;#&quot;&gt;Profile&lt;/a&gt;&#10;		&lt;a href=&quot;#&quot;&gt;Settings&lt;/a&gt;&#10;		&lt;button type=&quot;button&quot;&gt;Sign out&lt;/button&gt;&#10;	&lt;/div&gt;&#10;&lt;/div&gt;"></iframe></div>
+<div data-preview="Dropdown"><iframe title="Dropdown, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;dropdown&quot;&gt;&#10;	&lt;button class=&quot;button&quot; type=&quot;button&quot; popovertarget=&quot;account-menu&quot; data-emphasis=&quot;medium&quot;&gt;Account&lt;/button&gt;&#10;	&lt;div id=&quot;account-menu&quot; popover&gt;&#10;		&lt;a href=&quot;#&quot;&gt;Profile&lt;/a&gt;&#10;		&lt;a href=&quot;#&quot;&gt;Settings&lt;/a&gt;&#10;		&lt;button type=&quot;button&quot;&gt;Sign out&lt;/button&gt;&#10;	&lt;/div&gt;&#10;&lt;/div&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>

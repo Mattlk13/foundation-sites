@@ -17,7 +17,7 @@ From `7.0.0-beta.0`, the surface a page depends on is frozen. This page is the l
 - **Vocabularies.** The named value lists attributes draw from, `gap`, `width`, `height` and the rest; a value may be added, none removed.
 - **Marker names and values.** `data-span` on a column, `data-numeric` on a cell, and the rest.
 - **Public token names.** Every `--yeti-*` in the catalogue. Their default values may still be tuned; their names and meanings will not change.
-- **Module file names.** `alert.js`, `tabs.js`, `dialog.js`, `hover.js`, `carousel.js`, and that each is optional.
+- **Module file names.** `alert.js`, `tabs.js`, `dialog.js`, `hover.js`, `carousel.js`, `demo.js`, and that each is optional.
 - **The manifest and token catalogue schemas**, and the package `exports` map, so tooling built on `yeti-css/manifest` and `yeti-css/tokens` keeps working.
 
 ## Not frozen

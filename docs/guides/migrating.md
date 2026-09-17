@@ -78,6 +78,6 @@ The table covers the grid and every component in the version 6 kitchen sink. "No
 
 **A threshold, not a breakpoint.** There are no `small-`, `medium-`, `large-` prefixes and no visibility classes. A component changes shape at its own width, chosen from six stops with `data-threshold` or `data-max`. The [responsive guide](responsive.md) is the whole story.
 
-**Nothing to initialise.** There is no `Foundation.init()`, no `data-` attributes for plugins, no jQuery. Five components have an optional module; you load it with one script tag, anywhere, and it finds its own elements. Without the module the component still works, minus what the module adds.
+**Nothing to initialise.** There is no `Foundation.init()`, no `data-` attributes for plugins, no jQuery. Six components have an optional module; you load it with one script tag, anywhere, and it finds its own elements. Without the module the component still works, minus what the module adds.
 
 **The browser does the opening and closing.** Dropdowns and the nav's menu are popovers; the dialog is a dialog; the accordion is `<details>`. Escape, light dismiss, the focus trap and the expanded state come from the platform. If you find yourself writing script to open something, look for the attribute that already does.

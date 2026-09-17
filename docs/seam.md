@@ -14,7 +14,7 @@ Gives a section a shaped edge, a slant, a curve, or a wave, cut from its own bac
 ## Example
 
 <figure class="demo" data-height="lg">
-<div data-preview="Seam"><iframe title="Seam, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;section class=&quot;seam&quot; data-shape=&quot;wave&quot; style=&quot;background: var(--yeti-color-primary-subtle); padding: var(--yeti-space-lg)&quot;&gt;&#10;	&lt;h2&gt;A section with a wave along its bottom edge&lt;/h2&gt;&#10;	&lt;p&gt;Whatever comes next shows through the cut.&lt;/p&gt;&#10;&lt;/section&gt;"></iframe></div>
+<div data-preview="Seam"><iframe title="Seam, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;section class=&quot;seam&quot; data-shape=&quot;wave&quot; style=&quot;background: var(--yeti-color-primary-subtle); padding: var(--yeti-space-lg)&quot;&gt;&#10;	&lt;h2&gt;A section with a wave along its bottom edge&lt;/h2&gt;&#10;	&lt;p&gt;Whatever comes next shows through the cut.&lt;/p&gt;&#10;&lt;/section&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>

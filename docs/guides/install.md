@@ -20,7 +20,7 @@ From npm:
 npm install yeti-css
 ```
 
-The package ships `dist/`: the bundled `yeti.css`, the same source tree unbundled under `css/`, the five modules under `js/`, the two example themes under `themes/`, and the machine-readable files described below. A release also carries a zip of the same `dist/` folder on its GitHub release page, for a site with no build step at all. There is no CDN path yet; when there is one it will be listed here.
+The package ships `dist/`: the bundled `yeti.css`, the same source tree unbundled under `css/`, the six modules under `js/` and all of them in one `yeti.js`, the two example themes under `themes/`, and the machine-readable files described below. A release also carries a zip of the same `dist/` folder on its GitHub release page, for a site with no build step at all. There is no CDN path yet; when there is one it will be listed here.
 
 ## The stylesheet
 
@@ -39,13 +39,17 @@ Yeti's rules live in cascade layers, so anything you write outside a layer wins 
 
 ## A module
 
-Every component works with no script. Five of them do more with one: the alert's close button, the tabs' roving focus, the dialog's opening, a dropdown that opens on hover, and the carousel's dots. Each is a module you load once, anywhere in the page, with nothing to call:
+Every component works with no script. Six of them do more with one: the alert's close button, the tabs' roving focus, the dialog's opening, a dropdown that opens on hover, the carousel's dots, and a demo's frame built from the code beneath it. Each is a module you load once, anywhere in the page, with nothing to call:
 
 ```html
 <script type="module" src="node_modules/yeti-css/dist/js/dialog.js"></script>
 ```
 
-A module finds its own elements and is safe on a page that has none of them. Leave it out and the component is still there, minus what the module adds; the [components guide](components.md) says what that is for each.
+A module finds its own elements and is safe on a page that has none of them. Leave it out and the component is still there, minus what the module adds; the [components guide](components.md) says what that is for each. A page that would rather not pick loads all six at once, about a kilobyte and a half compressed:
+
+```html
+<script type="module" src="node_modules/yeti-css/dist/yeti.js"></script>
+```
 
 ## Editor completion
 
