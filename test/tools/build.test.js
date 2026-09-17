@@ -35,6 +35,9 @@ test('build writes dist/ with the bundle, a verbatim css tree, js modules, and t
 	assert.equal(fs.readFileSync(dist('css/yeti.css'), 'utf8'), fs.readFileSync(path.join(root, 'src/yeti.css'), 'utf8'));
 	assert.ok(!fs.existsSync(dist('css/tokens/.gitkeep')));
 	assert.equal(fs.readFileSync(dist('js/rail.js'), 'utf8'), 'export default 1;\n');
+	// The one-file bundle carries each module in its own block and names it.
+	assert.ok(fs.readFileSync(dist('yeti.js'), 'utf8').includes('// rail.js\n{\nexport default 1;\n}'));
+	assert.ok(r.outputs.includes('yeti.js'));
 	const manifest = JSON.parse(fs.readFileSync(dist('yeti.manifest.json'), 'utf8'));
 	assert.equal(manifest.framework, 'yeti');
 	assert.equal(manifest.version, '7.0.0-alpha.0');

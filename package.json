@@ -24,6 +24,7 @@
     },
     "./css/*": "./dist/css/*",
     "./js/*": "./dist/js/*",
+    "./yeti.js": "./dist/yeti.js",
     "./themes/*": "./dist/themes/*",
     "./manifest": {
       "types": "./dist/yeti.manifest.d.ts",

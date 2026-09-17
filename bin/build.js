@@ -61,10 +61,18 @@ export function build({ root, pkg = readPackage(root) }) {
 		}
 	}
 
-	for (const file of walkFiles(srcDir).filter((f) => f.endsWith('.js'))) {
+	const modules = walkFiles(srcDir).filter((f) => f.endsWith('.js')).sort((a, b) => path.basename(a).localeCompare(path.basename(b)));
+	for (const file of modules) {
 		const rel = `js/${path.basename(file)}`;
 		fs.copyFileSync(file, path.join(distDir, rel));
 		outputs.push(rel);
+	}
+	// One file with every module, for a page that would rather load one
+	// script than pick. The modules import nothing and export nothing, so
+	// each goes in its own block, which keeps their top-level names apart.
+	if (modules.length) {
+		const parts = modules.map((file) => `// ${path.basename(file)}\n{\n${fs.readFileSync(file, 'utf8').trim()}\n}\n`);
+		write('yeti.js', `// Yeti ${pkg.version}: every optional module in one file. Load with <script type="module">.\n\n${parts.join('\n')}`);
 	}
 
 	const schema = loadSchema(path.join(root, 'schema', 'manifest.schema.json'));
