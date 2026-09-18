@@ -20,6 +20,11 @@
 		--yeti-leading-sm: 1.5;
 		--yeti-leading-tight: 1.15;
 		--yeti-measure: 70ch;
+		/* Between one item of a prose list and the next. Not on the space scale,
+		   which is geometric and tied to the type steps: its smallest step is
+		   already two thirds of a line, and a list wants a hair of separation
+		   rather than a gap. Prose rhythm, like the measure above it. */
+		--yeti-list-gap: 0.25rem;
 
 		--yeti-font-sans: system-ui, sans-serif;
 		--yeti-font-mono: ui-monospace, monospace;

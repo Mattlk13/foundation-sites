@@ -90,6 +90,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-leading-sm` | `1.5` | Line height for text set below the body size, such as a code block; a ratio, so it shrinks with the type. |
 | `--yeti-leading-tight` | `1.15` | Heading line height. |
 | `--yeti-measure` | `70ch` | Maximum line length for prose. |
+| `--yeti-list-gap` | `0.25rem` | Space between one item of a prose list and the next. |
 
 ## Font
 

@@ -2245,6 +2245,7 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-leading-sm (text): 1.5 — Line height for text set below the body size, such as a code block; a ratio, so it shrinks with the type.
 - --yeti-leading-tight (text): 1.15 — Heading line height.
 - --yeti-measure (text): 70ch — Maximum line length for prose.
+- --yeti-list-gap (text): 0.25rem — Space between one item of a prose list and the next.
 - --yeti-font-sans (font): system-ui, sans-serif — Default text face. Yeti ships no web fonts; override this to use yours.
 - --yeti-font-mono (font): ui-monospace, monospace — Code face.
 - --yeti-duration-fast (motion): 150ms — Quick transitions; hover and focus. Collapses to 0.01ms under prefers-reduced-motion.
