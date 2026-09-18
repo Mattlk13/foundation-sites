@@ -3,7 +3,7 @@ raw: true
 title: "Migrating from Foundation 6"
 description: "Every Foundation 6 grid class and component, and its Yeti equivalent or the reason there is none; then the five habits to unlearn."
 nav_group: "Guides"
-nav_order: 6
+nav_order: 7
 ---
 
 # Migrating from Foundation 6

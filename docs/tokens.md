@@ -170,6 +170,8 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-duration-base` | `250ms` | Standard transitions; open and close. Collapses under prefers-reduced-motion. |
 | `--yeti-ease` | `cubic-bezier(0.2, 0, 0, 1)` | Default easing; fast out, gentle in. |
 | `--yeti-motion-iterations` | `infinite` | Iteration count for animations that run forever, such as the spinner. Collapses to 1 under prefers-reduced-motion, because a component's own infinite would outrank the reset and keep running at a random phase every frame. |
+| `--yeti-page-duration` | `200ms` | How long the crossfade between two pages takes, for a site that has turned cross-document view transitions on. Collapses to 0.01ms under prefers-reduced-motion, which is the only thing that stills a page transition. |
+| `--yeti-page-ease` | `ease` | The curve that crossfade runs on. Symmetric, unlike --yeti-ease, because neither end of a page change leads. |
 
 ## Layout
 

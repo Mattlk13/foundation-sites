@@ -3,7 +3,7 @@ raw: true
 title: "Theming"
 description: "Set a few inputs and every color and size in Yeti follows: hues, chroma, base, and ratio, in light and dark."
 nav_group: "Guides"
-nav_order: 5
+nav_order: 6
 ---
 
 # Theming

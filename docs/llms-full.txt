@@ -2286,6 +2286,8 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-duration-base (motion): 250ms — Standard transitions; open and close. Collapses under prefers-reduced-motion.
 - --yeti-ease (motion): cubic-bezier(0.2, 0, 0, 1) — Default easing; fast out, gentle in.
 - --yeti-motion-iterations (motion): infinite — Iteration count for animations that run forever, such as the spinner. Collapses to 1 under prefers-reduced-motion, because a component's own infinite would outrank the reset and keep running at a random phase every frame.
+- --yeti-page-duration (motion): 200ms — How long the crossfade between two pages takes, for a site that has turned cross-document view transitions on. Collapses to 0.01ms under prefers-reduced-motion, which is the only thing that stills a page transition.
+- --yeti-page-ease (motion): ease — The curve that crossfade runs on. Symmetric, unlike --yeti-ease, because neither end of a page change leads.
 - --yeti-hue-primary (hue): 250 — Brand hue in oklch degrees; 250 is blue. Every primary color derives from it.
 - --yeti-hue-secondary (hue): 300 — Secondary hue; 300 is violet.
 - --yeti-hue-success (hue): 145 — Success hue; 145 is green.
