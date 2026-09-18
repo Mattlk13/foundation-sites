@@ -70,7 +70,7 @@ A shell is the part of the page that is there before any content is, and stays w
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `md` | Space between the rows, and between nav, main, and aside. |
-| `data-width` | enum | `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `sm` | The preferred width of nav and aside. Three regions share a row once the container is about four times this width plus the gaps; two regions need about half that. |
+| `data-width` | enum | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `sm` | The preferred width of nav and aside. Three regions share a row once the container is about four times this width plus the gaps; two regions need about half that. |
 
 ## Children
 

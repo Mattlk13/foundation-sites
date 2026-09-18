@@ -15,7 +15,7 @@ Attributes:
 Keeps its children in a centered reading column with gutters, and lets any child carrying data-bleed span the full width.
 
 Attributes:
-- data-max: xs | sm | md (default) | lg | xl | 2xl — The widest the reading column may be.
+- data-max: 2xs | xs | sm | md (default) | lg | xl | 2xl — The widest the reading column may be.
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — The gutter on each side, and the space between children.
 
 On children:
@@ -27,7 +27,7 @@ On children:
 Centers a column of content horizontally, up to a maximum width, with gutters on narrow screens.
 
 Attributes:
-- data-max: xs | sm | md | lg | xl (default) | 2xl — The widest the content column may be.
+- data-max: 2xs | xs | sm | md | lg | xl (default) | 2xl — The widest the content column may be.
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — The gutter on each side when the container is narrower than the maximum.
 - data-intrinsic (boolean) — Shrink the column to its content (still no wider than data-max) and center it, with each child centered on its own width inside it.
 
@@ -45,7 +45,7 @@ Attributes:
 Lays its children out as equal columns when the container is wider than a threshold, and as rows when it is not.
 
 Attributes:
-- data-threshold: xs | sm | md (default) | lg | xl | 2xl — The container width below which the columns become rows.
+- data-threshold: 2xs | xs | sm | md (default) | lg | xl | 2xl — The container width below which the columns become rows.
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between columns, and between rows once they stack.
 - data-align: start | center | end | stretch (default) | baseline — Vertical alignment of the columns.
 - data-justify: start (default) | center | end | between | around | evenly — Distribution of the columns along the row when they do not fill it.
@@ -80,7 +80,7 @@ Attributes:
 Fits as many equal columns as the container allows at a minimum width, up to an optional maximum count.
 
 Attributes:
-- data-min: none | xs (default) | sm | md | lg | xl | 2xl — The narrowest a column may be. With none, only data-columns decides the count; none is meant to be paired with data-columns, and alone gives a single full-width column.
+- data-min: none | 2xs | xs (default) | sm | md | lg | xl | 2xl — The narrowest a column may be. With none, only data-columns decides the count; none is meant to be paired with data-columns, and alone gives a single full-width column.
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between columns and rows.
 - data-columns: 1 | 2 | 3 | 4 | 5 | 6 — The most columns allowed. Fewer appear when the container cannot fit that many at data-min; with data-min="none" the count is exact. With data-fold, the count only ever halves.
 - data-fold (boolean) — Halve the column count as the grid narrows instead of stepping down one at a time. Needs data-columns 2, 4, or 6 and uses data-min as the width per column. data-min="none" has no meaning with a fold: the count needs a width per column.
@@ -110,7 +110,7 @@ On children:
 Packs items of uneven height into columns with no gaps under the short ones.
 
 Attributes:
-- data-min: none | xs (default) | sm | md | lg | xl | 2xl — The narrowest a column may be. none is meant to be paired with data-columns, which then gives an exact count; alone it gives a single full-width column.
+- data-min: none | 2xs | xs (default) | sm | md | lg | xl | 2xl — The narrowest a column may be. none is meant to be paired with data-columns, which then gives an exact count; alone it gives a single full-width column.
 - data-columns: 1 | 2 | 3 | 4 | 5 | 6 — The most columns allowed. Fewer appear when the container cannot fit that many at data-min.
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between columns and between items.
 
@@ -132,7 +132,7 @@ Lays its children out in a single row that scrolls horizontally.
 Attributes:
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between items.
 - data-snap (boolean) — Snap each item's start edge into place as the track scrolls.
-- data-width: xs | sm | md | lg | xl | 2xl — Give every item this width instead of its natural one.
+- data-width: 2xs | xs | sm | md | lg | xl | 2xl — Give every item this width instead of its natural one.
 
 ## sidebar (layout, class="sidebar")
 
@@ -140,7 +140,7 @@ Places a fixed-width sidebar beside flexible content, and stacks them when the c
 
 Attributes:
 - data-side: start (default) | end — Which child is the sidebar: the first (start) or the last (end).
-- data-width: xs | sm (default) | md | lg | xl | 2xl — The sidebar's preferred width.
+- data-width: 2xs | xs | sm (default) | md | lg | xl | 2xl — The sidebar's preferred width.
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the two children, side by side or stacked.
 - data-align: start | center | end | stretch (default) | baseline — Vertical alignment of the two children when side by side.
 
@@ -169,7 +169,7 @@ Attributes:
 Fills the viewport's height with copy on one side and a figure on the other, centered, and stacks them below a container width; the one-class form of a cover holding columns.
 
 Attributes:
-- data-threshold: xs | sm | md | lg (default) | xl | 2xl — The container width below which copy and figure become rows.
+- data-threshold: 2xs | xs | sm | md | lg (default) | xl | 2xl — The container width below which copy and figure become rows.
 - data-gap: none | xs | sm | md | lg (default) | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between copy and figure.
 - data-ratio: 1/1 | 4/3 (default) | 3/2 | 16/9 | 21/9 — The figure's aspect ratio.
 - data-align: start | center (default) | end | stretch | baseline — Vertical alignment of copy and figure when side by side.
@@ -180,7 +180,7 @@ Attributes:
 Puts a figure beside a block of text and stacks them when the text would drop below half the width; the one-class form of a sidebar holding a frame and a stack.
 
 Attributes:
-- data-width: xs (default) | sm | md | lg | xl | 2xl — The figure's preferred width.
+- data-width: 2xs | xs (default) | sm | md | lg | xl | 2xl — The figure's preferred width.
 - data-ratio: 1/1 (default) | 4/3 | 3/2 | 16/9 | 21/9 — The figure's aspect ratio.
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the figure and the text.
 - data-align: start | center | end | stretch (default) | baseline — Vertical alignment of figure and text when side by side.
@@ -192,7 +192,7 @@ The page skeleton: header on top, footer at the bottom of the viewport when the 
 
 Attributes:
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the rows, and between nav, main, and aside.
-- data-width: xs | sm (default) | md | lg | xl | 2xl — The preferred width of nav and aside. Three regions share a row once the container is about four times this width plus the gaps; two regions need about half that.
+- data-width: 2xs | xs | sm (default) | md | lg | xl | 2xl — The preferred width of nav and aside. Three regions share a row once the container is about four times this width plus the gaps; two regions need about half that.
 
 ## accordion (component, class="accordion")
 
@@ -255,7 +255,7 @@ A bordered surface for one thing: an optional figure that bleeds to the edges, a
 
 Attributes:
 - data-ratio: 1/1 | 4/3 | 3/2 | 16/9 (default) | 21/9 — The figure's aspect ratio when the card is wide.
-- data-threshold: xs | sm | md (default) | lg | xl | 2xl — The card's own width from which the picture sits beside the text instead of on top.
+- data-threshold: 2xs | xs | sm | md (default) | lg | xl | 2xl — The card's own width from which the picture sits beside the text instead of on top.
 - data-raised (boolean) — A shadow instead of a border.
 - data-variant: primary | secondary | success | warning | alert | neutral — Tints the border and adds a bar along the top; the body stays plain.
 
@@ -283,7 +283,7 @@ A live example in a box the reader can drag narrower and wider, with a bar namin
 
 Attributes:
 - data-height: sm | md (default) | lg | xl — The preview box's height. A frame inside cannot size to its content, so this is where that is set; with data-resize="both" it is the starting height.
-- data-width: xs | sm | md | lg | xl | 2xl — The preview box's starting width, before the reader drags it. Full width when absent.
+- data-width: 2xs | xs | sm | md | lg | xl | 2xl — The preview box's starting width, before the reader drags it. Full width when absent.
 - data-resize: width (default) | both — Which way the reader can drag the box: its width only, or both width and height.
 - data-stylesheet (string) — Read by the module: the stylesheet the frame it builds should load, when it is not the host page's own yeti.css; yeti.js is expected beside it.
 
@@ -297,7 +297,7 @@ module: demo.js (optional)
 The native dialog element as a modal, opened by a button that names it, with the page behind it inert and focus held inside.
 
 Attributes:
-- data-width: xs | sm | md (default) | lg | xl | 2xl — How wide the dialog may grow.
+- data-width: 2xs | xs | sm | md (default) | lg | xl | 2xl — How wide the dialog may grow.
 
 module: dialog.js (optional)
 
@@ -329,7 +329,7 @@ On children:
 A bar with a brand, a list of links, and actions, that collapses the links behind a toggle at its own width and opens them as a sheet, a drawer, or a screen.
 
 Attributes:
-- data-threshold: xs | sm | md (default) | lg | xl | 2xl — The nav's own width at or above which the links sit in the bar; below it they are behind the toggle.
+- data-threshold: 2xs | xs | sm | md (default) | lg | xl | 2xl — The nav's own width at or above which the links sit in the bar; below it they are behind the toggle.
 - data-panel: sheet (default) | drawer | screen — The shape of the open list below the threshold: a sheet under the bar, a drawer from the start edge, or the whole screen.
 - data-variant: primary (default) | secondary | success | warning | alert | neutral — The hue of the current link and of the hover tint.
 - data-gap: none | xs | sm (default) | md | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the bar's parts and between the links.
@@ -344,7 +344,7 @@ On children:
 Links to the pages of a long list, each a square target, the current one filled, shrinking to Previous, the current page, and Next when it is narrow.
 
 Attributes:
-- data-threshold: xs | sm (default) | md | lg | xl | 2xl — The pagination's own width below which only Previous, the current page, and Next remain.
+- data-threshold: 2xs | xs | sm (default) | md | lg | xl | 2xl — The pagination's own width below which only Previous, the current page, and Next remain.
 - data-variant: primary (default) | secondary | success | warning | alert | neutral — The hue of the current page and of the hover tint.
 - data-justify: start (default) | center | end | between | around | evenly — Where the links sit in the row.
 - data-size: sm | md (default) | lg — The text step.

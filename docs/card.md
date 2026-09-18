@@ -71,7 +71,7 @@ Do not wrap a card in a link. Put the link on the heading and add `data-stretch`
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-ratio` | enum | `1/1`, `4/3`, `3/2`, `16/9`, `21/9` | `16/9` | The figure's aspect ratio when the card is wide. |
-| `data-threshold` | enum | `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `md` | The card's own width from which the picture sits beside the text instead of on top. |
+| `data-threshold` | enum | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `md` | The card's own width from which the picture sits beside the text instead of on top. |
 | `data-raised` | boolean |  |  | A shadow instead of a border. |
 | `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral` |  | Tints the border and adds a bar along the top; the body stays plain. |
 

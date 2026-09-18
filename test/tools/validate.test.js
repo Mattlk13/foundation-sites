@@ -243,23 +243,34 @@ test('validateTokens flags a public token declared outside src/tokens/', () => {
 	]);
 });
 
+// The mapped attributes and the private property each one sets. The VALUES
+// come from the real vocabulary, so adding a stop to a list never breaks this
+// fixture again; only a genuinely new attribute needs a line here.
+const VOCAB = JSON.parse(fs.readFileSync(VOCABULARY_PATH, 'utf8'));
+const MAPPINGS = [
+	['data-gap', 'gap', '--_yeti-gap', () => '0'],
+	['data-align', 'align', '--_yeti-align', (v) => v],
+	['data-justify', 'justify', '--_yeti-justify', (v) => v],
+	['data-threshold', 'width', '--_yeti-threshold', () => '0'],
+	['data-width', 'width', '--_yeti-width', () => '0'],
+	['data-max', 'width', '--_yeti-max', () => '0'],
+	['data-height', 'height', '--_yeti-height', () => '0'],
+	['data-min', 'width-or-none', '--_yeti-min', () => '0'],
+	['data-ratio', 'ratio', '--_yeti-aspect', (v) => v],
+	['data-columns', 'columns', '--_yeti-column-cap', () => '0'],
+	['data-align-self', 'align', '--_yeti-align-self', (v) => v],
+	['data-justify-self', 'self', '--_yeti-justify-self', (v) => v],
+	['data-variant', 'variant', '--_yeti-variant', () => '0'],
+	['data-size', 'size-control', '--_yeti-size-text', () => '0'],
+	['data-span', 'span', '--_yeti-span', (v) => v],
+	['data-ranks', 'ranks', '--_yeti-ranks', (v) => v],
+	['data-slides', 'slides', '--_yeti-slides', (v) => v],
+];
+
 const layoutTree = (extra = {}) => validTree({
 	'schema/vocabulary.json': fs.readFileSync(VOCABULARY_PATH, 'utf8'),
-	'src/layouts/attributes.css': '@layer yeti.layouts {\n' + ['none', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', 'xs-sm', 'xs-md', 'xs-lg', 'xs-xl', 'xs-2xl', 'xs-3xl', 'sm-md', 'sm-lg', 'sm-xl', 'sm-2xl', 'sm-3xl', 'md-lg', 'md-xl', 'md-2xl', 'md-3xl', 'lg-xl', 'lg-2xl', 'lg-3xl', 'xl-2xl', 'xl-3xl', '2xl-3xl'].map((v) => `\t[data-gap="${v}"] { --_yeti-gap: 0; }\n`).join('')
-		+ ['start', 'center', 'end', 'stretch', 'baseline'].map((v) => `\t[data-align="${v}"] { --_yeti-align: ${v}; }\n`).join('')
-		+ ['start', 'center', 'end', 'between', 'around', 'evenly'].map((v) => `\t[data-justify="${v}"] { --_yeti-justify: ${v}; }\n`).join('')
-		+ ['xs', 'sm', 'md', 'lg', 'xl', '2xl'].flatMap((v) => [`\t[data-threshold="${v}"] { --_yeti-threshold: 0; }\n`, `\t[data-width="${v}"] { --_yeti-width: 0; }\n`, `\t[data-max="${v}"] { --_yeti-max: 0; }\n`]).join('')
-		+ ['sm', 'md', 'lg', 'xl'].map((v) => `\t[data-height="${v}"] { --_yeti-height: 0; }\n`).join('')
-		+ ['none', 'xs', 'sm', 'md', 'lg', 'xl', '2xl'].map((v) => `\t[data-min="${v}"] { --_yeti-min: 0; }\n`).join('')
-		+ ['1/1', '4/3', '3/2', '16/9', '21/9'].map((v) => `\t[data-ratio="${v}"] { --_yeti-aspect: ${v}; }\n`).join('')
-		+ ['1', '2', '3', '4', '5', '6'].map((v) => `\t[data-columns="${v}"] { --_yeti-column-cap: 0; }\n`).join('')
-		+ ['start', 'center', 'end', 'stretch', 'baseline'].map((v) => `\t[data-align-self="${v}"] { --_yeti-align-self: ${v}; }\n`).join('')
-		+ ['start', 'center', 'end', 'stretch'].map((v) => `\t[data-justify-self="${v}"] { --_yeti-justify-self: ${v}; }\n`).join('')
-		+ ['primary', 'secondary', 'success', 'warning', 'alert', 'neutral'].map((v) => `\t[data-variant="${v}"] { --_yeti-variant: 0; }\n`).join('')
-		+ ['sm', 'md', 'lg'].map((v) => `\t[data-size="${v}"] { --_yeti-size-text: 0; }\n`).join('')
-		+ ['1', '2', '3', '4', '5', '6'].map((v) => `\t[data-span="${v}"] { --_yeti-span: ${v}; }\n`).join('')
-		+ ['2', '3', '4', '5', '6'].map((v) => `\t[data-ranks="${v}"] { --_yeti-ranks: ${v}; }\n`).join('')
-		+ ['1', '2', '3', '4'].map((v) => `\t[data-slides="${v}"] { --_yeti-slides: ${v}; }\n`).join('')
+	'src/layouts/attributes.css': '@layer yeti.layouts {\n'
+		+ MAPPINGS.map(([attr, vocab, prop, value]) => VOCAB[vocab].map((v) => `\t[${attr}="${v}"] { ${prop}: ${value(v)}; }\n`).join('')).join('')
 		+ '}\n',
 	'src/yeti.css': '@import "layers.css";\n@import "layouts/attributes.css";\n@import "layouts/rail/rail.css";\n',
 	...extra,

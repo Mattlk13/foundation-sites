@@ -63,7 +63,7 @@ Yeti names layouts for what they do to their children, and what this one gives t
 
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
-| `data-threshold` | enum | `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `md` | The container width below which the columns become rows. |
+| `data-threshold` | enum | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `md` | The container width below which the columns become rows. |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `md` | Space between columns, and between rows once they stack. |
 | `data-align` | enum | `start`, `center`, `end`, `stretch`, `baseline` | `stretch` | Vertical alignment of the columns. |
 | `data-justify` | enum | `start`, `center`, `end`, `between`, `around`, `evenly` | `start` | Distribution of the columns along the row when they do not fill it. |

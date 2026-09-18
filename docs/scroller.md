@@ -49,7 +49,7 @@ What the visitor does is scroll, so the layout is a scroller; a name for the mec
 | --- | --- | --- | --- | --- |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `md` | Space between items. |
 | `data-snap` | boolean |  |  | Snap each item's start edge into place as the track scrolls. |
-| `data-width` | enum | `xs`, `sm`, `md`, `lg`, `xl`, `2xl` |  | Give every item this width instead of its natural one. |
+| `data-width` | enum | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` |  | Give every item this width instead of its natural one. |
 
 ## Children
 

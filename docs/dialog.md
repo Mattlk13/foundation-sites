@@ -67,7 +67,7 @@ Without the module the dialog never opens. That is a real limitation, not a deta
 
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
-| `data-width` | enum | `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `md` | How wide the dialog may grow. |
+| `data-width` | enum | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `md` | How wide the dialog may grow. |
 
 ## Children
 

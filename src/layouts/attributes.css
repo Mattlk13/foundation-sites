@@ -52,6 +52,7 @@
 	[data-justify="evenly"] { --_yeti-justify: space-evenly; }
 
 	/* Container widths */
+	[data-threshold="2xs"] { --_yeti-threshold: var(--yeti-width-2xs); }
 	[data-threshold="xs"] { --_yeti-threshold: var(--yeti-width-xs); }
 	[data-threshold="sm"] { --_yeti-threshold: var(--yeti-width-sm); }
 	[data-threshold="md"] { --_yeti-threshold: var(--yeti-width-md); }
@@ -59,6 +60,7 @@
 	[data-threshold="xl"] { --_yeti-threshold: var(--yeti-width-xl); }
 	[data-threshold="2xl"] { --_yeti-threshold: var(--yeti-width-2xl); }
 
+	[data-width="2xs"] { --_yeti-width: var(--yeti-width-2xs); }
 	[data-width="xs"] { --_yeti-width: var(--yeti-width-xs); }
 	[data-width="sm"] { --_yeti-width: var(--yeti-width-sm); }
 	[data-width="md"] { --_yeti-width: var(--yeti-width-md); }
@@ -75,6 +77,7 @@
 	[data-height="xl"] { --_yeti-height: var(--yeti-height-xl); }
 
 	[data-min="none"] { --_yeti-min: 0px; }
+	[data-min="2xs"] { --_yeti-min: var(--yeti-width-2xs); }
 	[data-min="xs"] { --_yeti-min: var(--yeti-width-xs); }
 	[data-min="sm"] { --_yeti-min: var(--yeti-width-sm); }
 	[data-min="md"] { --_yeti-min: var(--yeti-width-md); }
@@ -82,6 +85,7 @@
 	[data-min="xl"] { --_yeti-min: var(--yeti-width-xl); }
 	[data-min="2xl"] { --_yeti-min: var(--yeti-width-2xl); }
 
+	[data-max="2xs"] { --_yeti-max: var(--yeti-width-2xs); }
 	[data-max="xs"] { --_yeti-max: var(--yeti-width-xs); }
 	[data-max="sm"] { --_yeti-max: var(--yeti-width-sm); }
 	[data-max="md"] { --_yeti-max: var(--yeti-width-md); }

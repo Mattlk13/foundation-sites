@@ -33,6 +33,7 @@
 		--yeti-radius-lg: var(--_yeti-base);
 		--yeti-radius-full: 9999px;
 
+		--yeti-width-2xs: 12rem;
 		--yeti-width-xs: 16rem;
 		--yeti-width-sm: 24rem;
 		--yeti-width-md: 32rem;

@@ -70,7 +70,7 @@ It is a grid and nothing else is. Foundation 6 readers: this replaces the Block 
 
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
-| `data-min` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `xs` | The narrowest a column may be. With none, only data-columns decides the count; none is meant to be paired with data-columns, and alone gives a single full-width column. |
+| `data-min` | enum | `none`, `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `xs` | The narrowest a column may be. With none, only data-columns decides the count; none is meant to be paired with data-columns, and alone gives a single full-width column. |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `md` | Space between columns and rows. |
 | `data-columns` | enum | `1`, `2`, `3`, `4`, `5`, `6` |  | The most columns allowed. Fewer appear when the container cannot fit that many at data-min; with data-min="none" the count is exact. With data-fold, the count only ever halves. |
 | `data-fold` | boolean |  |  | Halve the column count as the grid narrows instead of stepping down one at a time. Needs data-columns 2, 4, or 6 and uses data-min as the width per column. data-min="none" has no meaning with a fold: the count needs a width per column. |

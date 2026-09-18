@@ -83,7 +83,7 @@ Give the frame a `title`. Give a box holding direct markup `tabindex="0"`: marku
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-height` | enum | `sm`, `md`, `lg`, `xl` | `md` | The preview box's height. A frame inside cannot size to its content, so this is where that is set; with data-resize="both" it is the starting height. |
-| `data-width` | enum | `xs`, `sm`, `md`, `lg`, `xl`, `2xl` |  | The preview box's starting width, before the reader drags it. Full width when absent. |
+| `data-width` | enum | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` |  | The preview box's starting width, before the reader drags it. Full width when absent. |
 | `data-resize` | enum | `width`, `both` | `width` | Which way the reader can drag the box: its width only, or both width and height. |
 | `data-stylesheet` | string |  |  | Read by the module: the stylesheet the frame it builds should load, when it is not the host page's own yeti.css; yeti.js is expected beside it. |
 

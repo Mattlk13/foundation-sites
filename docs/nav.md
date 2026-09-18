@@ -71,7 +71,7 @@ Give the `nav` an `aria-label`, since a page often has more than one. The toggle
 
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
-| `data-threshold` | enum | `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `md` | The nav's own width at or above which the links sit in the bar; below it they are behind the toggle. |
+| `data-threshold` | enum | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `md` | The nav's own width at or above which the links sit in the bar; below it they are behind the toggle. |
 | `data-panel` | enum | `sheet`, `drawer`, `screen` | `sheet` | The shape of the open list below the threshold: a sheet under the bar, a drawer from the start edge, or the whole screen. |
 | `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral` | `primary` | The hue of the current link and of the hover tint. |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `sm` | Space between the bar's parts and between the links. |
