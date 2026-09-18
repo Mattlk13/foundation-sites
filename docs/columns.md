@@ -9,7 +9,7 @@ nav_order: 2
 
 # Columns
 
-Lays its children out as equal columns when the container is wider than a threshold, and as rows when it is not.
+<p class="lede">Lays its children out as equal columns when the container is wider than a threshold, and as rows when it is not.</p>
 
 ## Example
 

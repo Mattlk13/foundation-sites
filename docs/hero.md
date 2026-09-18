@@ -9,7 +9,7 @@ nav_order: 4
 
 # Hero
 
-Fills the viewport's height with copy on one side and a figure on the other, centered, and stacks them below a container width; the one-class form of a cover holding columns.
+<p class="lede">Fills the viewport's height with copy on one side and a figure on the other, centered, and stacks them below a container width; the one-class form of a cover holding columns.</p>
 
 ## Example
 

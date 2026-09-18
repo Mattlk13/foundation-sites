@@ -9,7 +9,7 @@ nav_order: 3
 
 # Grid
 
-Fits as many equal columns as the container allows at a minimum width, up to an optional maximum count.
+<p class="lede">Fits as many equal columns as the container allows at a minimum width, up to an optional maximum count.</p>
 
 ## Example
 

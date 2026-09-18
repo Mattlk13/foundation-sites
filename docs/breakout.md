@@ -9,7 +9,7 @@ nav_order: 1
 
 # Breakout
 
-Keeps its children in a centered reading column with gutters, and lets any child carrying data-bleed span the full width.
+<p class="lede">Keeps its children in a centered reading column with gutters, and lets any child carrying data-bleed span the full width.</p>
 
 ## Example
 

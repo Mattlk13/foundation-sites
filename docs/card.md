@@ -9,7 +9,7 @@ nav_order: 2
 
 # Card
 
-A bordered surface for one thing: an optional figure that bleeds to the edges, a body, and a footer that sits at the bottom; a row with the picture beside the text once the card's content reaches the md width.
+<p class="lede">A bordered surface for one thing: an optional figure that bleeds to the edges, a body, and a footer that sits at the bottom; a row with the picture beside the text once the card's content reaches the md width.</p>
 
 ## Example
 

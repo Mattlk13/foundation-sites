@@ -9,7 +9,7 @@ nav_order: 2
 
 # Enter
 
-Plays one arrival, on load or as the element scrolls into view, either for the element itself or for each of its children in turn.
+<p class="lede">Plays one arrival, on load or as the element scrolls into view, either for the element itself or for each of its children in turn.</p>
 
 ## Example
 

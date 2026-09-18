@@ -9,7 +9,7 @@ nav_order: 6
 
 # Sidebar
 
-Places a fixed-width sidebar beside flexible content, and stacks them when the content would drop below half the width.
+<p class="lede">Places a fixed-width sidebar beside flexible content, and stacks them when the content would drop below half the width.</p>
 
 ## Example
 

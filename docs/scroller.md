@@ -9,7 +9,7 @@ nav_order: 5
 
 # Scroller
 
-Lays its children out in a single row that scrolls horizontally.
+<p class="lede">Lays its children out in a single row that scrolls horizontally.</p>
 
 ## Example
 

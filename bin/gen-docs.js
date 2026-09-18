@@ -98,7 +98,10 @@ export function renderPage({ manifest: m, exampleHtml, navOrder, docsMd = '', de
 
 	// trimEnd so the join below adds exactly one newline before the generated mark
 	out.push(frontMatter({ raw: true, title, description: m.description, nav_group: groupOf(m), nav_order: navOrder }).trimEnd());
-	out.push(`${GENERATED_MARK} from src/${dir}/${m.name}/manifest.json. Do not edit. -->`, '', `# ${title}`, '', m.description, '');
+	// The description is the page's lede, and says so with a class rather than
+	// by being the paragraph after the heading: a host that wraps the two in a
+	// layout would otherwise lose it silently.
+	out.push(`${GENERATED_MARK} from src/${dir}/${m.name}/manifest.json. Do not edit. -->`, '', `# ${title}`, '', `<p class="lede">${m.description}</p>`, '');
 
 	out.push('## Example', '', renderDemo({ title, exampleHtml, stylesheet: demoStylesheet, height: m.demo?.height, width: m.demo?.width, resize: m.demo?.resize }), '');
 	if (docsMd.trim()) out.push(docsMd.trim(), '');

@@ -9,7 +9,7 @@ nav_order: 4
 
 # Pagination
 
-Links to the pages of a long list, each a square target, the current one filled, shrinking to Previous, the current page, and Next when it is narrow.
+<p class="lede">Links to the pages of a long list, each a square target, the current one filled, shrinking to Previous, the current page, and Next when it is narrow.</p>
 
 ## Example
 

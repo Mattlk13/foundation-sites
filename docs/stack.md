@@ -9,7 +9,7 @@ nav_order: 8
 
 # Stack
 
-Stacks its children vertically with one consistent gap between them.
+<p class="lede">Stacks its children vertically with one consistent gap between them.</p>
 
 ## Example
 

@@ -9,7 +9,7 @@ nav_order: 2
 
 # Center
 
-Centers a column of content horizontally, up to a maximum width, with gutters on narrow screens.
+<p class="lede">Centers a column of content horizontally, up to a maximum width, with gutters on narrow screens.</p>
 
 ## Example
 

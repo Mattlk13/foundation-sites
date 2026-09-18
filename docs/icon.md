@@ -9,7 +9,7 @@ nav_order: 4
 
 # Icon
 
-Sizes an inline SVG to the surrounding text and aligns it with the text beside it.
+<p class="lede">Sizes an inline SVG to the surrounding text and aligns it with the text beside it.</p>
 
 ## Example
 

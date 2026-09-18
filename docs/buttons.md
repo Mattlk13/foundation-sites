@@ -9,7 +9,7 @@ nav_order: 3
 
 # Buttons
 
-A group of buttons: a wrapping row, or one fused control with data-attach.
+<p class="lede">A group of buttons: a wrapping row, or one fused control with data-attach.</p>
 
 ## Example
 

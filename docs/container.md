@@ -9,7 +9,7 @@ nav_order: 2
 
 # Container
 
-Makes its box the thing a container query measures, so what is inside can respond to its width instead of the viewport's.
+<p class="lede">Makes its box the thing a container query measures, so what is inside can respond to its width instead of the viewport's.</p>
 
 ## Example
 

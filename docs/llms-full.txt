@@ -2155,6 +2155,38 @@ Tokens:
 Accessibility contract:
 Purely visual, and safe by default: the element is only ever hidden by the animation's own backwards fill, so an element whose animation never runs is visible rather than stranded, and nothing here changes reading order or focus order. Under reduced motion the duration and the stagger step both collapse, so everything is simply present at once; the scroll-driven form is switched off entirely for the same reader, because a scroll timeline paces itself and would ignore a collapsed duration.
 
+## lede (utility, class="lede")
+
+The standfirst: the sentence under a page's heading that says what the page is, set larger than the prose it introduces.
+
+### When to use it
+
+The one sentence under a page's heading that says what the page is, before the page begins. A standfirst. Put it on that paragraph and nothing else: a second lede on a page is not a lede.
+
+### How it works
+
+It is a class rather than a rule about position, because a lede is a role and not a place. The obvious alternative, styling the paragraph that follows the heading, encodes where the paragraph happens to sit, so the day someone wraps the heading and the paragraph in a `stack` the lede quietly becomes body copy. A class survives being moved.
+
+The size is a token, so a theme sets how much larger a lede reads. It carries its own measure too, narrower than the body's: set larger at the body's measure it would run to a longer line than the prose it introduces, which is backwards for the sentence meant to be read first.
+
+```html
+<h1>Card</h1>
+<p class="lede">A bordered surface for one thing.</p>
+<p>One thing in a box: an article in a listing, a product, a person, a plan.</p>
+```
+
+### Accessibility
+
+Nothing to do. A lede is a paragraph that is set larger; it takes no role and announces nothing of its own, which is correct, because the sentence is ordinary prose and its position already says what it is.
+
+Tokens:
+- --yeti-lede-size — How large a lede reads.
+- --yeti-lede-measure — The lede's own line length, narrower than the body's because it is set larger.
+- --yeti-leading-md — Its line height, the same as body prose.
+
+Accessibility contract:
+A lede takes no role and announces nothing of its own. It is ordinary prose set larger, and its position under the heading already says what it is.
+
 ## lift (utility, class="lift")
 
 Raises the element slightly and deepens its shadow while the pointer is on it or a keyboard is inside it.
@@ -2246,6 +2278,8 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-leading-tight (text): 1.15 — Heading line height.
 - --yeti-measure (text): 70ch — Maximum line length for prose.
 - --yeti-list-gap (text): 0.25rem — Space between one item of a prose list and the next.
+- --yeti-lede-size (text): var(--yeti-text-lg) — How large a lede reads.
+- --yeti-lede-measure (text): 45ch — A lede's line length, shorter than the body's because it is set larger.
 - --yeti-font-sans (font): system-ui, sans-serif — Default text face. Yeti ships no web fonts; override this to use yours.
 - --yeti-font-mono (font): ui-monospace, monospace — Code face.
 - --yeti-duration-fast (motion): 150ms — Quick transitions; hover and focus. Collapses to 0.01ms under prefers-reduced-motion.

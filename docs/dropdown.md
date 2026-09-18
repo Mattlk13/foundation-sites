@@ -9,7 +9,7 @@ nav_order: 2
 
 # Dropdown
 
-A button and a panel of links and buttons that opens under it, closing on Escape or a click outside, with no script unless it is asked to open on hover.
+<p class="lede">A button and a panel of links and buttons that opens under it, closing on Escape or a click outside, with no script unless it is asked to open on hover.</p>
 
 ## Example
 

@@ -9,7 +9,7 @@ nav_order: 4
 
 # Spinner
 
-A turning ring in a hue, the size of the text, for waiting with no known end; a busy button shows the same ring after its label.
+<p class="lede">A turning ring in a hue, the size of the text, for waiting with no known end; a busy button shows the same ring after its label.</p>
 
 ## Example
 

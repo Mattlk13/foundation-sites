@@ -9,7 +9,7 @@ nav_order: 6
 
 # Timeline
 
-Lays its entries along a rail with a marker each, on one side, or on alternate sides of a centred rail when it is wide.
+<p class="lede">Lays its entries along a rail with a marker each, on one side, or on alternate sides of a centred rail when it is wide.</p>
 
 ## Example
 

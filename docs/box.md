@@ -9,7 +9,7 @@ nav_order: 1
 
 # Box
 
-Pads its content on all sides, with an optional border.
+<p class="lede">Pads its content on all sides, with an optional border.</p>
 
 ## Example
 

@@ -9,7 +9,7 @@ nav_order: 1
 
 # Accordion
 
-A column of disclosures built on details and summary, each opening to show its panel, with the browser doing the opening, the keyboard, and the announcing.
+<p class="lede">A column of disclosures built on details and summary, each opening to show its panel, with the browser doing the opening, the keyboard, and the announcing.</p>
 
 ## Example
 

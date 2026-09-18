@@ -9,7 +9,7 @@ nav_order: 3
 
 # Lift
 
-Raises the element slightly and deepens its shadow while the pointer is on it or a keyboard is inside it.
+<p class="lede">Raises the element slightly and deepens its shadow while the pointer is on it or a keyboard is inside it.</p>
 
 ## Example
 

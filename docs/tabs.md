@@ -9,7 +9,7 @@ nav_order: 5
 
 # Tabs
 
-A row of tabs over their panels, showing one at a time when its module is loaded and all of them when it is not.
+<p class="lede">A row of tabs over their panels, showing one at a time when its module is loaded and all of them when it is not.</p>
 
 ## Example
 

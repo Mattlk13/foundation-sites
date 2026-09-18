@@ -9,7 +9,7 @@ nav_order: 1
 
 # Cluster
 
-Lays its children out in a row that wraps, keeping one gap between them on both axes.
+<p class="lede">Lays its children out in a row that wraps, keeping one gap between them on both axes.</p>
 
 ## Example
 

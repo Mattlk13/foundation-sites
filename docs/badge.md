@@ -9,7 +9,7 @@ nav_order: 2
 
 # Badge
 
-A small inline label for a status or a count, tinted by a hue.
+<p class="lede">A small inline label for a status or a count, tinted by a hue.</p>
 
 ## Example
 

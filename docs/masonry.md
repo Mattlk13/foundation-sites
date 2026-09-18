@@ -9,7 +9,7 @@ nav_order: 4
 
 # Masonry
 
-Packs items of uneven height into columns with no gaps under the short ones.
+<p class="lede">Packs items of uneven height into columns with no gaps under the short ones.</p>
 
 ## Example
 

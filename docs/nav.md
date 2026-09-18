@@ -9,7 +9,7 @@ nav_order: 3
 
 # Nav
 
-A bar with a brand, a list of links, and actions, that collapses the links behind a toggle at its own width and opens them as a sheet, a drawer, or a screen.
+<p class="lede">A bar with a brand, a list of links, and actions, that collapses the links behind a toggle at its own width and opens them as a sheet, a drawer, or a screen.</p>
 
 ## Example
 

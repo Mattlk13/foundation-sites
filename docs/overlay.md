@@ -9,7 +9,7 @@ nav_order: 7
 
 # Overlay
 
-Holds one child over the rest, centered, without pushing anything around; the parent is the box it covers.
+<p class="lede">Holds one child over the rest, centered, without pushing anything around; the parent is the box it covers.</p>
 
 ## Example
 

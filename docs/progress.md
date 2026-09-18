@@ -9,7 +9,7 @@ nav_order: 3
 
 # Progress
 
-The native progress element as a thin bar in a hue, filled to its value, or striped and moving when it has none.
+<p class="lede">The native progress element as a thin bar in a hue, filled to its value, or striped and moving when it has none.</p>
 
 ## Example
 

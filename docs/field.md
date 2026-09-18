@@ -9,7 +9,7 @@ nav_order: 5
 
 # Field
 
-One form control with its label, an optional hint, and an error that shows itself when the control is invalid.
+<p class="lede">One form control with its label, an optional hint, and an error that shows itself when the control is invalid.</p>
 
 ## Example
 

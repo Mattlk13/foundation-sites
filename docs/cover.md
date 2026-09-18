@@ -9,7 +9,7 @@ nav_order: 3
 
 # Cover
 
-Fills at least the viewport's height and centers one child vertically, with optional content pinned above and below it.
+<p class="lede">Fills at least the viewport's height and centers one child vertically, with optional content pinned above and below it.</p>
 
 ## Example
 

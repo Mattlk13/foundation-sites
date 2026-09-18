@@ -9,7 +9,7 @@ nav_order: 2
 
 # Button
 
-An action with a face: a hue, an emphasis, and a size, with every state taken from the element itself.
+<p class="lede">An action with a face: a hue, an emphasis, and a size, with every state taken from the element itself.</p>
 
 ## Example
 

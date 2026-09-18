@@ -9,7 +9,7 @@ nav_order: 3
 
 # Frame
 
-Holds one child in a fixed aspect ratio, cropping media to fill it and centering anything else.
+<p class="lede">Holds one child in a fixed aspect ratio, cropping media to fill it and centering anything else.</p>
 
 ## Example
 

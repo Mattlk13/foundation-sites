@@ -9,7 +9,7 @@ nav_order: 1
 
 # Affix
 
-Joins a control with what belongs beside it, a unit, a symbol, a button, or another control, into one thing with a shared border and height.
+<p class="lede">Joins a control with what belongs beside it, a unit, a symbol, a button, or another control, into one thing with a shared border and height.</p>
 
 ## Example
 

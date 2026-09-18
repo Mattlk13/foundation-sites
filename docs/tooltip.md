@@ -9,7 +9,7 @@ nav_order: 5
 
 # Tooltip
 
-A short hint that appears beside a control on hover and on focus, described to assistive tech and needing no script.
+<p class="lede">A short hint that appears beside a control on hover and on focus, described to assistive tech and needing no script.</p>
 
 ## Example
 

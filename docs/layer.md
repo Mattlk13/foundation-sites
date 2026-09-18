@@ -9,7 +9,7 @@ nav_order: 5
 
 # Layer
 
-Stacks its children in one box, later ones on top, with the box as tall as the tallest of them.
+<p class="lede">Stacks its children in one box, later ones on top, with the box as tall as the tallest of them.</p>
 
 ## Example
 

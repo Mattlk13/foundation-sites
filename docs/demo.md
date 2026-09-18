@@ -9,7 +9,7 @@ nav_order: 4
 
 # Demo
 
-A live example in a box the reader can drag narrower and wider, with a bar naming the example and the width stop the box is at, and the code beneath it.
+<p class="lede">A live example in a box the reader can drag narrower and wider, with a bar naming the example and the width stop the box is at, and the code beneath it.</p>
 
 ## Example
 

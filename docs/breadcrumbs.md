@@ -9,7 +9,7 @@ nav_order: 1
 
 # Breadcrumbs
 
-The trail from the home page to the current one, each step a link, with a separator between them that is seen and not read.
+<p class="lede">The trail from the home page to the current one, each step a link, with a separator between them that is seen and not read.</p>
 
 ## Example
 

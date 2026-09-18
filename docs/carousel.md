@@ -9,7 +9,7 @@ nav_order: 3
 
 # Carousel
 
-Slides on a scroll-snapping track with dots that link to each one, scrolled by the browser, with an optional module so following a dot costs no history entry.
+<p class="lede">Slides on a scroll-snapping track with dots that link to each one, scrolled by the browser, with an optional module so following a dot costs no history entry.</p>
 
 ## Example
 

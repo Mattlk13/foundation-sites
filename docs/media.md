@@ -9,7 +9,7 @@ nav_order: 6
 
 # Media
 
-Puts a figure beside a block of text and stacks them when the text would drop below half the width; the one-class form of a sidebar holding a frame and a stack.
+<p class="lede">Puts a figure beside a block of text and stacks them when the text would drop below half the width; the one-class form of a sidebar holding a frame and a stack.</p>
 
 ## Example
 

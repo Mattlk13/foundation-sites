@@ -9,7 +9,7 @@ nav_order: 4
 
 # Dialog
 
-The native dialog element as a modal, opened by a button that names it, with the page behind it inert and focus held inside.
+<p class="lede">The native dialog element as a modal, opened by a button that names it, with the page behind it inert and focus held inside.</p>
 
 ## Example
 

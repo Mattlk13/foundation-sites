@@ -9,7 +9,7 @@ nav_order: 5
 
 # Shell
 
-The page skeleton: header on top, footer at the bottom of the viewport when the page is short, and a body row where nav and aside sit beside main while there is room.
+<p class="lede">The page skeleton: header on top, footer at the bottom of the viewport when the page is short, and a body row where nav and aside sit beside main while there is room.</p>
 
 ## Example
 

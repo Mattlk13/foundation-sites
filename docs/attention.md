@@ -9,7 +9,7 @@ nav_order: 1
 
 # Attention
 
-Plays one pulse or one shake on load, to point at something that has just changed.
+<p class="lede">Plays one pulse or one shake on load, to point at something that has just changed.</p>
 
 ## Example
 

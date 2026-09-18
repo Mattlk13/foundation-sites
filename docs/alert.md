@@ -9,7 +9,7 @@ nav_order: 1
 
 # Alert
 
-A message in a hue: a tinted box with a coloured edge, an optional icon, and an optional close button that the module wires up.
+<p class="lede">A message in a hue: a tinted box with a coloured edge, an optional icon, and an optional close button that the module wires up.</p>
 
 ## Example
 
