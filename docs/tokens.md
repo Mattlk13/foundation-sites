@@ -353,4 +353,28 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-demo-radius` | `var(--yeti-radius-md)` | The preview box's corner, the summary's, and the stop label's. |
 | `--yeti-demo-label` | `var(--yeti-color-surface-sunken)` | Surface of the stop label naming the current width, and of the summary. |
 
+## Enter
+
+| Token | Default | Description |
+| --- | --- | --- |
+| `--yeti-enter-duration` | `600ms` | How long one arrival takes. Collapses to 0.01ms under prefers-reduced-motion, which leaves the element present and still. |
+| `--yeti-enter-distance` | `2rem` | How far below its place a rising element starts. |
+| `--yeti-enter-scale` | `0.94` | How small a scaling element starts. |
+| `--yeti-enter-stagger` | `200ms` | The wait between one staggered child and the next; every child's delay is a multiple of it. Collapses to 0s under prefers-reduced-motion. |
+
+## Lift
+
+| Token | Default | Description |
+| --- | --- | --- |
+| `--yeti-lift-distance` | `0.25rem` | How far the element rises under the pointer. Collapses to 0 under prefers-reduced-motion, so the hover keeps its deeper shadow and loses only the movement. |
+| `--yeti-lift-shadow` | `var(--yeti-shadow-md)` | The shadow the element casts once lifted. |
+
+## Attention
+
+| Token | Default | Description |
+| --- | --- | --- |
+| `--yeti-attention-duration` | `600ms` | How long the one pulse or shake takes. Collapses to 0.01ms under prefers-reduced-motion. |
+| `--yeti-attention-distance` | `0.35rem` | How far a shake throws the element to each side. |
+| `--yeti-attention-scale` | `1.06` | How large a pulse swells the element at its peak. |
+
 Yeti also defines 47 internal `--_yeti-*` tokens. They derive from the public ones and may change between minor versions; override the public token instead.

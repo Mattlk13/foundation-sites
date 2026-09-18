@@ -33,5 +33,7 @@
     "xl"
   ],
   "placement": ["top", "bottom", "start", "end"],
-  "slides": ["1", "2", "3", "4"]
+  "slides": ["1", "2", "3", "4"],
+  "enter": ["fade", "rise", "scale"],
+  "attention": ["pulse", "shake"]
 }

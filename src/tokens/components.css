@@ -84,6 +84,37 @@
 		--yeti-demo-border: var(--yeti-color-border);
 		--yeti-demo-radius: var(--yeti-radius-md);
 		--yeti-demo-label: var(--yeti-color-surface-sunken);
+
+		/* Enter: the one-shot arrival. 600ms is longer than any transition in the
+		   framework on purpose; an entrance the reader is meant to notice has to
+		   outlast the glance that finds it, and the same 600ms is what the
+		   foundationcss.com homepage had arrived at by hand. The rise is 2rem,
+		   far enough to read as arriving from below and short enough that the
+		   element never starts outside its own row. The scale stops at 0.94
+		   rather than something smaller because a card that starts at half size
+		   reads as a zoom, which is a different gesture. */
+		--yeti-enter-duration: 600ms;
+		--yeti-enter-distance: 2rem;
+		--yeti-enter-scale: 0.94;
+		/* The gap between one staggered child and the next. A theme slows the
+		   whole run down by raising this one number, since every child's delay
+		   is a multiple of it. */
+		--yeti-enter-stagger: 200ms;
+
+		/* Lift: how far a card rises under the pointer, and the shadow it casts
+		   from up there. Reduced motion takes the distance to zero below and
+		   leaves the shadow, which is why the two are separate tokens. */
+		--yeti-lift-distance: 0.25rem;
+		--yeti-lift-shadow: var(--yeti-shadow-md);
+
+		/* Attention: one pulse or one shake over 600ms, the same length as an
+		   entrance, because both are a single gesture the reader has to catch.
+		   The shake's throw is deliberately small: a wobble says "look here",
+		   while a wide swing says "wrong", and only a field's error should say
+		   that. */
+		--yeti-attention-duration: 600ms;
+		--yeti-attention-distance: 0.35rem;
+		--yeti-attention-scale: 1.06;
 	}
 
 	/* The ring reads a token so the preference reaches it: a components-layer
@@ -93,6 +124,19 @@
 		:root {
 			--yeti-spinner-duration: 0.01ms;
 			--yeti-carousel-scroll: auto;
+			--yeti-enter-duration: 0.01ms;
+			/* The step goes with the duration. A collapsed duration alone would
+			   still hand the third card a 400ms wait and then pop it into place,
+			   which is a staggered arrival with the smooth part taken out. */
+			--yeti-enter-stagger: 0s;
+			--yeti-attention-duration: 0.01ms;
+			/* A hover lift is the one piece of motion here that is not a one-shot,
+			   and collapsing its duration is the wrong answer: the element would
+			   still move a quarter of a rem, just instantly, so every pass of the
+			   pointer becomes a flinch under the cursor. Reduced motion takes the
+			   movement away instead and leaves the deepened shadow to carry the
+			   whole hover, which is a change of appearance and not of position. */
+			--yeti-lift-distance: 0rem;
 		}
 	}
 }

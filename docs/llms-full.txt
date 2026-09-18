@@ -2065,6 +2065,131 @@ Accessibility contract:
 - Tab: Focusing the trigger shows the bubble, so it is reachable without a mouse.
 The trigger must reference the bubble with aria-describedby, so the hint is announced together with the control; the bubble carries role="tooltip". A tooltip is for a short hint on a control whose purpose is not otherwise obvious, and it is never the only place something is said: touch has no hover, so anything essential belongs in the label, in a field's hint, or in the text. Do not put a link or a button inside the bubble, since there is no way to reach one. The bubble cannot be dismissed while the trigger stays hovered or focused, a known limit of a tooltip with no script, which WCAG 1.4.13 asks content shown on hover or focus to offer.
 
+## attention (utility, class="attention")
+
+Plays one pulse or one shake on load, to point at something that has just changed.
+
+Attributes:
+- data-attention: pulse (default) | shake — Which gesture: a swell and settle, or a shake from side to side.
+
+### When to use it
+
+On something that has just changed and might otherwise be missed: the alert that appeared after a save, the total that moved when a quantity changed, the field the server rejected. It plays on load, so in practice it arrives with the element, whether that element came from a navigation or was written into the page.
+
+Not as an ornament, and not on anything permanent. A pulse on a heading that has always been there is an instruction to look at something that has nothing to say.
+
+```html
+<p class="badge attention" data-attention="shake" data-variant="alert" role="status">Card declined</p>
+```
+
+### How it works
+
+One run of one animation, over `--yeti-attention-duration`. `pulse` swells the element to `--yeti-attention-scale` at the halfway point and settles back; the peak is in the middle so the gesture is symmetrical, since something that grows and snaps back reads as a twitch. `shake` throws it `--yeti-attention-distance` to each side and back twice, because a single sideways move is a slide and it takes the return trip to read as a shake.
+
+It runs once, and the iteration count is deliberately left at the initial `1` rather than reading `--yeti-motion-iterations`, which exists for the animations that never end. A gesture that keeps repeating stops being a moment that has passed and becomes a state the page is in, and the reader has no way to dismiss it.
+
+No keyframe leaves the element anywhere but where it started, so no fill mode is needed and nothing here can strand an element off its mark.
+
+### Accessibility
+
+Motion is not an announcement. A screen reader hears nothing at all here, so a change worth pointing at is a change worth saying: put the element in a live region, or give it `role="status"`, and the gesture becomes the visual half of something that is already spoken.
+
+Under reduced motion `--yeti-attention-duration` collapses and the element simply sits still, which is the whole of the accommodation — there is nothing left to see, and the live region is still heard.
+
+Tokens:
+- --yeti-attention-duration — How long the gesture takes; reduced motion collapses it.
+- --yeti-attention-distance — How far a shake throws the element to each side.
+- --yeti-attention-scale — How large a pulse swells the element at its peak.
+- --yeti-ease — The easing of the gesture.
+
+Accessibility contract:
+Motion is not an announcement. A change worth pointing at is worth saying, so put the element in a live region, or give it role="status", and the gesture becomes the visual half of something a screen reader already hears. It plays once and never repeats, so nothing here keeps moving under a reader who cannot dismiss it, and under reduced motion the duration collapses and the element simply sits still.
+
+## enter (utility, class="enter")
+
+Plays one arrival, on load or as the element scrolls into view, either for the element itself or for each of its children in turn.
+
+Attributes:
+- data-enter: fade (default) | rise | scale — Which arrival: a fade, a rise from below, or a growth from slightly small.
+- data-stagger (boolean) — Animate the element's children one after another instead of the element itself, each a step later than the last.
+- data-view (boolean) — Play as the element scrolls into view instead of on load. Where a scroll timeline is unsupported, or the reader has asked for less motion, it plays on load instead.
+
+### When to use it
+
+Once, near the top of a page, on the thing the page is about: a row of product cards, a hero's headline, the three panels a landing page is built from. An arrival is a punctuation mark, and a page that punctuates every sentence is harder to read than one that punctuates none. If everything on the page enters, nothing has entered.
+
+### How it works
+
+One animation, one run, ending exactly where the layout already put the element. Every keyframe list names only a `from`, so the `to` is the element's own computed style: `enter` has no opinion about where anything belongs and cannot move it. The animation fills backwards, which means its first frame applies from the moment the element is painted, so nothing has to be given `opacity: 0` by a rule of its own. That detail is what makes the whole utility safe to fail: an element whose animation never runs is visible, not stranded.
+
+`data-enter` picks the arrival. `fade` is the default and is the quietest. `rise` starts `--yeti-enter-distance` below its place, which is the one to reach for when the element is a card or a panel arriving into a row. `scale` starts at `--yeti-enter-scale` of its size, for something that should feel like it landed rather than slid.
+
+`data-stagger` moves the animation down one level: the element itself no longer animates and each of its children does, every one `--yeti-enter-stagger` behind the one before it. Put it on the layout that holds the row, not on the items.
+
+```html
+<ul class="grid enter" data-enter="rise" data-stagger data-min="xs" role="list">
+	<li class="card"><h3>One</h3></li>
+	<li class="card"><h3>Two</h3></li>
+	<li class="card"><h3>Three</h3></li>
+</ul>
+```
+
+Past the ninth child the delay stops growing and every remaining child shares the ninth's. A stagger that kept counting would turn a list of thirty into a ten-second wait, and the gesture is long over by then.
+
+`data-view` waits for the element to scroll into view instead of playing on load, so an arrival below the fold happens where the reader is rather than before they arrive. It is guarded twice, and both fallbacks land on the same place: the element plays its arrival on load. Once for `@supports`, because `animation-timeline: view()` is not yet Baseline — Chromium and Safari have it, Firefox does not, and that line will move; and once for `prefers-reduced-motion`, because a scroll-driven animation is paced by the scroll and never reads `animation-duration`, so the collapsed token that stills everything else in Yeti would sail straight past this one.
+
+### Accessibility
+
+Nothing here changes reading order, focus order, or what any element is. The only way an element is ever hidden is the animation's own backwards fill, so a browser that cannot run the animation shows the content instead of swallowing it.
+
+Under reduced motion both `--yeti-enter-duration` and `--yeti-enter-stagger` collapse, so every element is simply present at once — the step collapses too, because a stagger with the smooth part removed is still a row of boxes popping into place one after another. The scroll-driven form is switched off outright for the same reader, and they get the collapsed load-timed animation instead.
+
+Tokens:
+- --yeti-enter-duration — How long one arrival takes; reduced motion collapses it.
+- --yeti-enter-distance — How far below its place a rising element starts.
+- --yeti-enter-scale — How small a scaling element starts.
+- --yeti-enter-stagger — The wait between one staggered child and the next.
+- --yeti-ease — The easing every arrival uses.
+
+Accessibility contract:
+Purely visual, and safe by default: the element is only ever hidden by the animation's own backwards fill, so an element whose animation never runs is visible rather than stranded, and nothing here changes reading order or focus order. Under reduced motion the duration and the stagger step both collapse, so everything is simply present at once; the scroll-driven form is switched off entirely for the same reader, because a scroll timeline paces itself and would ignore a collapsed duration.
+
+## lift (utility, class="lift")
+
+Raises the element slightly and deepens its shadow while the pointer is on it or a keyboard is inside it.
+
+### When to use it
+
+On something that can be pressed and is big enough for the movement to read: a card that is a link, a tile in a grid of choices, a panel that opens something. On a button it is noise — a button already has a pressed and a hovered state — and on a paragraph it is a lie, because nothing happens when you click it.
+
+```html
+<article class="card lift" data-raised>
+	<h3><a href="/yeti/" data-stretch>Yeti</a></h3>
+	<p>for Websites</p>
+</article>
+```
+
+### How it works
+
+A transition on `translate` and `box-shadow`, and one rule that raises the element `--yeti-lift-distance` and swaps in `--yeti-lift-shadow`. It answers three selectors: `:hover`, `:focus-visible` on the element itself, and `:has(:focus-visible)`. The third is the one that matters most in practice, because the thing that takes focus is almost always inside — a card's stretched link, a button in a tile — and without it the lift would be an affordance only a pointer ever sees.
+
+`translate` rather than `transform`, so an element that its own component already scales or rotates keeps that.
+
+### Accessibility
+
+The lift sits on top of a focus ring; it never replaces one. The ring comes from the reset and nothing here touches it.
+
+Reduced motion is answered differently here from everywhere else in Yeti, and on purpose. Everywhere else the animation runs once and ends, so collapsing its duration lands on the end state instantly, which is what was asked for. A hover has no end: its end state is a quarter of a rem up, so a collapsed duration would still move the element, just without the smooth part, and every pass of the pointer would jump the box out from under the cursor and drop it back on the way out. That is more startling than the animation it replaced. So `--yeti-lift-distance` goes to zero instead. The element does not move at all, the deeper shadow carries the whole hover, and the transition that is left has nothing to animate but that shadow.
+
+Tokens:
+- --yeti-lift-distance — How far the element rises; reduced motion takes it to zero.
+- --yeti-lift-shadow — The shadow the element casts once lifted.
+- --yeti-duration-fast — How long the rise and the shadow take.
+- --yeti-ease — The easing of both.
+
+Accessibility contract:
+The lift answers :focus-visible on the element and on anything inside it, so a reader tabbing through a page of cards sees the same affordance a pointer gets. It is decoration on top of a focus ring, never a replacement for one; the ring comes from the reset and is untouched. Under reduced motion the element no longer moves and the deeper shadow carries the hover by itself.
+
 ## Tokens
 
 Every public custom property, with its group and default. A theme is a file that sets some of these after yeti.css.
@@ -2241,3 +2366,12 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-demo-border (demo): var(--yeti-color-border) — The preview box's edge.
 - --yeti-demo-radius (demo): var(--yeti-radius-md) — The preview box's corner, the summary's, and the stop label's.
 - --yeti-demo-label (demo): var(--yeti-color-surface-sunken) — Surface of the stop label naming the current width, and of the summary.
+- --yeti-enter-duration (enter): 600ms — How long one arrival takes. Collapses to 0.01ms under prefers-reduced-motion, which leaves the element present and still.
+- --yeti-enter-distance (enter): 2rem — How far below its place a rising element starts.
+- --yeti-enter-scale (enter): 0.94 — How small a scaling element starts.
+- --yeti-enter-stagger (enter): 200ms — The wait between one staggered child and the next; every child's delay is a multiple of it. Collapses to 0s under prefers-reduced-motion.
+- --yeti-lift-distance (lift): 0.25rem — How far the element rises under the pointer. Collapses to 0 under prefers-reduced-motion, so the hover keeps its deeper shadow and loses only the movement.
+- --yeti-lift-shadow (lift): var(--yeti-shadow-md) — The shadow the element casts once lifted.
+- --yeti-attention-duration (attention): 600ms — How long the one pulse or shake takes. Collapses to 0.01ms under prefers-reduced-motion.
+- --yeti-attention-distance (attention): 0.35rem — How far a shake throws the element to each side.
+- --yeti-attention-scale (attention): 1.06 — How large a pulse swells the element at its peak.

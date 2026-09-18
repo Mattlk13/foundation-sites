@@ -405,3 +405,23 @@ A short hint that appears beside a control on hover and on focus, described to a
 
 Attributes:
 - data-placement: top (default) | bottom | start | end — Which side of the trigger the bubble sits on.
+
+## attention (utility, class="attention")
+
+Plays one pulse or one shake on load, to point at something that has just changed.
+
+Attributes:
+- data-attention: pulse (default) | shake — Which gesture: a swell and settle, or a shake from side to side.
+
+## enter (utility, class="enter")
+
+Plays one arrival, on load or as the element scrolls into view, either for the element itself or for each of its children in turn.
+
+Attributes:
+- data-enter: fade (default) | rise | scale — Which arrival: a fade, a rise from below, or a growth from slightly small.
+- data-stagger (boolean) — Animate the element's children one after another instead of the element itself, each a step later than the last.
+- data-view (boolean) — Play as the element scrolls into view instead of on load. Where a scroll timeline is unsupported, or the reader has asked for less motion, it plays on load instead.
+
+## lift (utility, class="lift")
+
+Raises the element slightly and deepens its shadow while the pointer is on it or a keyboard is inside it.
