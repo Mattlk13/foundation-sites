@@ -2,6 +2,7 @@
   "$schema": "../../../schema/manifest.schema.json",
   "name": "masonry",
   "kind": "layout",
+  "group": "Grids and rows",
   "description": "Packs items of uneven height into columns with no gaps under the short ones.",
   "class": "masonry",
   "attributes": [

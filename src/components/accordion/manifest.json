@@ -2,6 +2,7 @@
   "$schema": "../../../schema/manifest.schema.json",
   "name": "accordion",
   "kind": "component",
+  "group": "Content",
   "description": "A column of disclosures built on details and summary, each opening to show its panel, with the browser doing the opening, the keyboard, and the announcing.",
   "class": "accordion",
   "attributes": [],

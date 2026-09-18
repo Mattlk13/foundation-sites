@@ -2,6 +2,7 @@
   "$schema": "../../../schema/manifest.schema.json",
   "name": "buttons",
   "kind": "component",
+  "group": "Forms and actions",
   "description": "A group of buttons: a wrapping row, or one fused control with data-attach.",
   "class": "buttons",
   "attributes": [

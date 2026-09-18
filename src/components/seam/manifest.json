@@ -2,6 +2,7 @@
   "$schema": "../../../schema/manifest.schema.json",
   "name": "seam",
   "kind": "component",
+  "group": "Content",
   "description": "Gives a section a shaped edge, a slant, a curve, or a wave, cut from its own background so whatever is behind shows through.",
   "class": "seam",
   "attributes": [

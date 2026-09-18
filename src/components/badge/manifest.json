@@ -2,6 +2,7 @@
   "$schema": "../../../schema/manifest.schema.json",
   "name": "badge",
   "kind": "component",
+  "group": "Feedback",
   "description": "A small inline label for a status or a count, tinted by a hue.",
   "class": "badge",
   "attributes": [

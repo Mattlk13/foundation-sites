@@ -2,6 +2,7 @@
   "$schema": "../../../schema/manifest.schema.json",
   "name": "center",
   "kind": "layout",
+  "group": "Page layouts",
   "description": "Centers a column of content horizontally, up to a maximum width, with gutters on narrow screens.",
   "class": "center",
   "attributes": [

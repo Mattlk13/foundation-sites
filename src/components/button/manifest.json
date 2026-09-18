@@ -2,6 +2,7 @@
   "$schema": "../../../schema/manifest.schema.json",
   "name": "button",
   "kind": "component",
+  "group": "Forms and actions",
   "description": "An action with a face: a hue, an emphasis, and a size, with every state taken from the element itself.",
   "class": "button",
   "attributes": [

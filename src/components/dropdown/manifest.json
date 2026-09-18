@@ -2,6 +2,7 @@
   "$schema": "../../../schema/manifest.schema.json",
   "name": "dropdown",
   "kind": "component",
+  "group": "Navigation",
   "description": "A button and a panel of links and buttons that opens under it, closing on Escape or a click outside, with no script unless it is asked to open on hover.",
   "class": "dropdown",
   "attributes": [

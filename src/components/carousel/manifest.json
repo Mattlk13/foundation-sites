@@ -2,6 +2,7 @@
   "$schema": "../../../schema/manifest.schema.json",
   "name": "carousel",
   "kind": "component",
+  "group": "Content",
   "description": "Slides on a scroll-snapping track with dots that link to each one, scrolled by the browser, with an optional module so following a dot costs no history entry.",
   "class": "carousel",
   "attributes": [

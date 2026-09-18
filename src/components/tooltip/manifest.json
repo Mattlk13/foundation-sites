@@ -2,6 +2,7 @@
   "$schema": "../../../schema/manifest.schema.json",
   "name": "tooltip",
   "kind": "component",
+  "group": "Feedback",
   "description": "A short hint that appears beside a control on hover and on focus, described to assistive tech and needing no script.",
   "class": "tooltip",
   "attributes": [

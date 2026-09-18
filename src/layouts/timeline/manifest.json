@@ -2,6 +2,7 @@
   "$schema": "../../../schema/manifest.schema.json",
   "name": "timeline",
   "kind": "layout",
+  "group": "Grids and rows",
   "description": "Lays its entries along a rail with a marker each, on one side, or on alternate sides of a centred rail when it is wide.",
   "class": "timeline",
   "attributes": [

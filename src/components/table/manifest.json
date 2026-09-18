@@ -2,6 +2,7 @@
   "$schema": "../../../schema/manifest.schema.json",
   "name": "table",
   "kind": "component",
+  "group": "Content",
   "description": "A data table styled in place: header rule, row lines, optional stripes, hover, and cell borders, with numeric columns that line up.",
   "class": "table",
   "attributes": [

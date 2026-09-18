@@ -2,6 +2,7 @@
   "$schema": "../../../schema/manifest.schema.json",
   "name": "breadcrumbs",
   "kind": "component",
+  "group": "Navigation",
   "description": "The trail from the home page to the current one, each step a link, with a separator between them that is seen and not read.",
   "class": "breadcrumbs",
   "attributes": [

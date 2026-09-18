@@ -2,6 +2,7 @@
   "$schema": "../../../schema/manifest.schema.json",
   "name": "media",
   "kind": "recipe",
+  "group": "Boxes and stacks",
   "description": "Puts a figure beside a block of text and stacks them when the text would drop below half the width; the one-class form of a sidebar holding a frame and a stack.",
   "class": "media",
   "attributes": [

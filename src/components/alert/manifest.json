@@ -2,6 +2,7 @@
   "$schema": "../../../schema/manifest.schema.json",
   "name": "alert",
   "kind": "component",
+  "group": "Feedback",
   "description": "A message in a hue: a tinted box with a coloured edge, an optional icon, and an optional close button that the module wires up.",
   "class": "alert",
   "attributes": [

@@ -2,6 +2,7 @@
   "$schema": "../../../schema/manifest.schema.json",
   "name": "frame",
   "kind": "layout",
+  "group": "Boxes and stacks",
   "description": "Holds one child in a fixed aspect ratio, cropping media to fill it and centering anything else.",
   "class": "frame",
   "attributes": [

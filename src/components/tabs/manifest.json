@@ -2,6 +2,7 @@
   "$schema": "../../../schema/manifest.schema.json",
   "name": "tabs",
   "kind": "component",
+  "group": "Navigation",
   "description": "A row of tabs over their panels, showing one at a time when its module is loaded and all of them when it is not.",
   "class": "tabs",
   "attributes": [

@@ -2,6 +2,7 @@
   "$schema": "../../../schema/manifest.schema.json",
   "name": "overlay",
   "kind": "layout",
+  "group": "Boxes and stacks",
   "description": "Holds one child over the rest, centered, without pushing anything around; the parent is the box it covers.",
   "class": "overlay",
   "attributes": [

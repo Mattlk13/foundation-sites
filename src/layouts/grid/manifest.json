@@ -2,6 +2,7 @@
   "$schema": "../../../schema/manifest.schema.json",
   "name": "grid",
   "kind": "layout",
+  "group": "Grids and rows",
   "description": "Fits as many equal columns as the container allows at a minimum width, up to an optional maximum count.",
   "class": "grid",
   "attributes": [

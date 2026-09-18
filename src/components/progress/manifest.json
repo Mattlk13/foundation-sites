@@ -2,6 +2,7 @@
   "$schema": "../../../schema/manifest.schema.json",
   "name": "progress",
   "kind": "component",
+  "group": "Feedback",
   "description": "The native progress element as a thin bar in a hue, filled to its value, or striped and moving when it has none.",
   "class": "progress",
   "attributes": [

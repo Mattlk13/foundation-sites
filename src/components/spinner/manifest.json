@@ -2,6 +2,7 @@
   "$schema": "../../../schema/manifest.schema.json",
   "name": "spinner",
   "kind": "component",
+  "group": "Feedback",
   "description": "A turning ring in a hue, the size of the text, for waiting with no known end; a busy button shows the same ring after its label.",
   "class": "spinner",
   "attributes": [

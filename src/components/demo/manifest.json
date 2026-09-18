@@ -2,6 +2,7 @@
   "$schema": "../../../schema/manifest.schema.json",
   "name": "demo",
   "kind": "component",
+  "group": "Content",
   "description": "A live example in a box the reader can drag narrower and wider, with a bar naming the example and the width stop the box is at, and the code beneath it.",
   "class": "demo",
   "attributes": [

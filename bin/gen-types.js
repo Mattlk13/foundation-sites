@@ -80,6 +80,8 @@ export function renderTypes(merged, vocabulary, tokensSchema) {
 	lines.push('\t$schema?: string;');
 	lines.push('\tname: YetiComponentName;');
 	lines.push('\tkind: YetiKind;');
+	// The docs nav group; optional, and the kind's own name is the fallback.
+	lines.push('\tgroup?: string;');
 	lines.push('\tdescription: string;');
 	lines.push('\tclass: string;');
 	lines.push('\tattributes: YetiAttribute[];');

@@ -2,6 +2,7 @@
   "$schema": "../../../schema/manifest.schema.json",
   "name": "pagination",
   "kind": "component",
+  "group": "Navigation",
   "description": "Links to the pages of a long list, each a square target, the current one filled, shrinking to Previous, the current page, and Next when it is narrow.",
   "class": "pagination",
   "attributes": [

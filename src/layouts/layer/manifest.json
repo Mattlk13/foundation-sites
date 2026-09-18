@@ -2,6 +2,7 @@
   "$schema": "../../../schema/manifest.schema.json",
   "name": "layer",
   "kind": "layout",
+  "group": "Boxes and stacks",
   "description": "Stacks its children in one box, later ones on top, with the box as tall as the tallest of them.",
   "class": "layer",
   "attributes": [

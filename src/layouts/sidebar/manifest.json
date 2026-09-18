@@ -2,6 +2,7 @@
   "$schema": "../../../schema/manifest.schema.json",
   "name": "sidebar",
   "kind": "layout",
+  "group": "Page layouts",
   "description": "Places a fixed-width sidebar beside flexible content, and stacks them when the content would drop below half the width.",
   "class": "sidebar",
   "attributes": [
