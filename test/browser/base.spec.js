@@ -25,7 +25,11 @@ test.describe('base typography and prose', () => {
 		expect(await px(page, '#lead', 'marginTop')).toBeCloseTo(await token(page, '--yeti-space-sm'), 1);
 		expect(await px(page, '#h2', 'marginTop')).toBeCloseTo(await token(page, '--yeti-space-xl'), 1);
 		expect(await px(page, '#after-h2', 'marginTop')).toBeCloseTo(await token(page, '--yeti-space-sm'), 1);
-		expect(await px(page, '#li2', 'marginTop')).toBeCloseTo(await token(page, '--yeti-space-xs'), 1);
+		// A list item is spaced more tightly than a paragraph but clearly more
+		// than its own wrapped lines, which xs was not: a two-line item and the
+		// gap after it were nearly indistinguishable.
+		expect(await px(page, '#li2', 'marginTop')).toBeCloseTo(await token(page, '--yeti-space-sm'), 1);
+		expect(await px(page, '#li2', 'marginTop')).toBeLessThan(await token(page, '--yeti-space-md'));
 	});
 
 	test('measure caps line length', async ({ page }) => {

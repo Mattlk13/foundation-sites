@@ -31,6 +31,12 @@
 	   sign that a list is layout, and every list component carries it, so
 	   scoping here means none of them has to zero this again. */
 	:is(ul, ol):not([role="list"]) > li + li {
-		margin-block-start: var(--yeti-space-xs);
+		/* Enough to read as a new item rather than a wrapped line. At the xs
+		   this used to be, an item sat ten pixels below the last line of the
+		   one before it while its own lines sat twenty-seven apart, so a
+		   two-line item and the gap after it were nearly indistinguishable.
+		   Still tighter than the space between paragraphs, because a list is
+		   meant to be denser than prose. */
+		margin-block-start: var(--yeti-space-sm);
 	}
 }
