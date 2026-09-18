@@ -256,6 +256,15 @@ test('renderDemo takes the height and starting width the manifest asks for', () 
 	assert.ok(!renderDemo({ title: 'Table', exampleHtml: '<p></p>', stylesheet: '/yeti/yeti.css' }).includes('data-width'));
 });
 
+test('generateDocs sends its stylesheet option all the way into the frames', () => {
+	const root = makeTree(validTree());
+	generateDocs({ root, demoStylesheet: '/yeti/frame.css' });
+	const page = fs.readFileSync(path.join(root, 'docs', 'rail.md'), 'utf8');
+	assert.ok(page.includes('href=&quot;/yeti/frame.css&quot;'));
+	// The module bundle is found beside the stylesheet, so it follows it.
+	assert.ok(page.includes('src=&quot;/yeti/yeti.js&quot;'));
+});
+
 test('renderPage passes a manifest demo block through to the figure', () => {
 	const page = renderPage({ manifest: { ...validManifest(), demo: { height: 'sm', width: 'md' } }, exampleHtml, navOrder: 1 });
 	assert.ok(page.includes('<figure class="demo" data-height="sm" data-width="md">'));

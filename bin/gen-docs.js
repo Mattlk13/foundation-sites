@@ -270,7 +270,16 @@ export function isGenerated(content) {
 const isMain = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
 if (isMain) {
 	const root = process.cwd();
-	const { written, deleted, errors } = generateDocs({ root });
+	// A host that themes Yeti wants its own stylesheet inside the demo frames,
+	// so foundationcss.com can point them at its themed build rather than the
+	// framework's defaults. Absent, the frames load the site's plain yeti.css.
+	const flag = process.argv.indexOf('--stylesheet');
+	const demoStylesheet = flag === -1 ? undefined : process.argv[flag + 1];
+	if (flag !== -1 && !demoStylesheet) {
+		console.error('usage: node bin/gen-docs.js [--stylesheet <path>]');
+		process.exit(2);
+	}
+	const { written, deleted, errors } = generateDocs({ root, demoStylesheet });
 	for (const e of errors) console.error(formatError(root, e));
 	if (errors.length) {
 		console.error('docs: aborted');
