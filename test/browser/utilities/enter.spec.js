@@ -80,7 +80,14 @@ test.describe('enter', () => {
 		await page.evaluate(() => document.getElementById('view').scrollIntoView());
 		await settled(page);
 		await painted(page);
-		expect(await style(page, '#view', 'opacity')).toBe('1');
+		// Opaque, not exactly the string "1". #view is the last thing in the
+		// fixture, so the page cannot scroll past the end of the entry range,
+		// and a progress timeline stopped a hair short of its end reports a
+		// fraction: CI sees 0.999935 in Chromium and 0.999946 in WebKit where
+		// this machine happens to round to 1. The claim being made is that the
+		// element is not left invisible, and an animation that never ran would
+		// report 0, not a rounding error's distance from 1.
+		expect(Number(await style(page, '#view', 'opacity'))).toBeGreaterThan(0.99);
 	});
 
 	test('reduced motion leaves even a scroll-driven arrival present at once', async ({ page }) => {
