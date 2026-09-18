@@ -100,12 +100,21 @@
 		   whole run down by raising this one number, since every child's delay
 		   is a multiple of it. */
 		--yeti-enter-stagger: 200ms;
+		/* How long the whole run waits before the first child moves. Zero by
+		   default, because an entrance that hesitates reads as a stall; a page
+		   that would rather paint first before anything moves raises it. */
+		--yeti-enter-delay: 0s;
 
 		/* Lift: how far a card rises under the pointer, and the shadow it casts
 		   from up there. Reduced motion takes the distance to zero below and
 		   leaves the shadow, which is why the two are separate tokens. */
 		--yeti-lift-distance: 0.25rem;
 		--yeti-lift-shadow: var(--yeti-shadow-md);
+		/* Its own duration rather than the shared fast one, because a hover on
+		   a large tile wants longer than a hover on a control, and a consumer
+		   that changes a card's colours on the same hover has to be able to
+		   match this exactly or the two halves arrive apart. */
+		--yeti-lift-duration: var(--yeti-duration-fast);
 
 		/* Attention: one pulse or one shake over 600ms, the same length as an
 		   entrance, because both are a single gesture the reader has to catch.

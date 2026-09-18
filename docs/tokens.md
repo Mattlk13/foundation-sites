@@ -361,6 +361,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-enter-distance` | `2rem` | How far below its place a rising element starts. |
 | `--yeti-enter-scale` | `0.94` | How small a scaling element starts. |
 | `--yeti-enter-stagger` | `200ms` | The wait between one staggered child and the next; every child's delay is a multiple of it. Collapses to 0s under prefers-reduced-motion. |
+| `--yeti-enter-delay` | `0s` | How long a staggered run waits before its first child moves. |
 
 ## Lift
 
@@ -368,6 +369,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | --- | --- | --- |
 | `--yeti-lift-distance` | `0.25rem` | How far the element rises under the pointer. Collapses to 0 under prefers-reduced-motion, so the hover keeps its deeper shadow and loses only the movement. |
 | `--yeti-lift-shadow` | `var(--yeti-shadow-md)` | The shadow the element casts once lifted. |
+| `--yeti-lift-duration` | `var(--yeti-duration-fast)` | How long the lift takes; a consumer tinting the same hover matches it to this. |
 
 ## Attention
 

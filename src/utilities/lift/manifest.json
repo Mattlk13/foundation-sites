@@ -9,9 +9,9 @@
   "classes": [],
   "children": [],
   "tokens": [
+    { "name": "--yeti-lift-duration", "public": true, "description": "How long the lift takes; match a tinted hover to it." },
     { "name": "--yeti-lift-distance", "public": true, "description": "How far the element rises; reduced motion takes it to zero." },
     { "name": "--yeti-lift-shadow", "public": true, "description": "The shadow the element casts once lifted." },
-    { "name": "--yeti-duration-fast", "public": true, "description": "How long the rise and the shadow take." },
     { "name": "--yeti-ease", "public": true, "description": "The easing of both." }
   ],
   "a11y": { "requiredAttributes": [], "keyboard": [], "notes": "The lift answers :focus-visible on the element and on anything inside it, so a reader tabbing through a page of cards sees the same affordance a pointer gets. It is decoration on top of a focus ring, never a replacement for one; the ring comes from the reset and is untouched. Under reduced motion the element no longer moves and the deeper shadow carries the hover by itself." },

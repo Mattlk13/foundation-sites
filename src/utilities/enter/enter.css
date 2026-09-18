@@ -27,15 +27,15 @@
 	   the gesture is long gone by then. The floor is written first and is
 	   outranked by every :nth-child() rule below it on specificity, not on
 	   order. */
-	.enter[data-stagger] > * { animation-delay: calc(8 * var(--yeti-enter-stagger)); }
-	.enter[data-stagger] > :nth-child(1) { animation-delay: 0s; }
-	.enter[data-stagger] > :nth-child(2) { animation-delay: var(--yeti-enter-stagger); }
-	.enter[data-stagger] > :nth-child(3) { animation-delay: calc(2 * var(--yeti-enter-stagger)); }
-	.enter[data-stagger] > :nth-child(4) { animation-delay: calc(3 * var(--yeti-enter-stagger)); }
-	.enter[data-stagger] > :nth-child(5) { animation-delay: calc(4 * var(--yeti-enter-stagger)); }
-	.enter[data-stagger] > :nth-child(6) { animation-delay: calc(5 * var(--yeti-enter-stagger)); }
-	.enter[data-stagger] > :nth-child(7) { animation-delay: calc(6 * var(--yeti-enter-stagger)); }
-	.enter[data-stagger] > :nth-child(8) { animation-delay: calc(7 * var(--yeti-enter-stagger)); }
+	.enter[data-stagger] > * { animation-delay: calc(var(--yeti-enter-delay) + 8 * var(--yeti-enter-stagger)); }
+	.enter[data-stagger] > :nth-child(1) { animation-delay: var(--yeti-enter-delay); }
+	.enter[data-stagger] > :nth-child(2) { animation-delay: calc(var(--yeti-enter-delay) + var(--yeti-enter-stagger)); }
+	.enter[data-stagger] > :nth-child(3) { animation-delay: calc(var(--yeti-enter-delay) + 2 * var(--yeti-enter-stagger)); }
+	.enter[data-stagger] > :nth-child(4) { animation-delay: calc(var(--yeti-enter-delay) + 3 * var(--yeti-enter-stagger)); }
+	.enter[data-stagger] > :nth-child(5) { animation-delay: calc(var(--yeti-enter-delay) + 4 * var(--yeti-enter-stagger)); }
+	.enter[data-stagger] > :nth-child(6) { animation-delay: calc(var(--yeti-enter-delay) + 5 * var(--yeti-enter-stagger)); }
+	.enter[data-stagger] > :nth-child(7) { animation-delay: calc(var(--yeti-enter-delay) + 6 * var(--yeti-enter-stagger)); }
+	.enter[data-stagger] > :nth-child(8) { animation-delay: calc(var(--yeti-enter-delay) + 7 * var(--yeti-enter-stagger)); }
 
 	/* data-view hands the same animation to a scroll-driven timeline, so the
 	   arrival happens where the reader is rather than all at once above the

@@ -2145,6 +2145,7 @@ Nothing here changes reading order, focus order, or what any element is. The onl
 Under reduced motion both `--yeti-enter-duration` and `--yeti-enter-stagger` collapse, so every element is simply present at once — the step collapses too, because a stagger with the smooth part removed is still a row of boxes popping into place one after another. The scroll-driven form is switched off outright for the same reader, and they get the collapsed load-timed animation instead.
 
 Tokens:
+- --yeti-enter-delay — How long the staggered run waits before its first child moves.
 - --yeti-enter-duration — How long one arrival takes; reduced motion collapses it.
 - --yeti-enter-distance — How far below its place a rising element starts.
 - --yeti-enter-scale — How small a scaling element starts.
@@ -2182,9 +2183,9 @@ The lift sits on top of a focus ring; it never replaces one. The ring comes from
 Reduced motion is answered differently here from everywhere else in Yeti, and on purpose. Everywhere else the animation runs once and ends, so collapsing its duration lands on the end state instantly, which is what was asked for. A hover has no end: its end state is a quarter of a rem up, so a collapsed duration would still move the element, just without the smooth part, and every pass of the pointer would jump the box out from under the cursor and drop it back on the way out. That is more startling than the animation it replaced. So `--yeti-lift-distance` goes to zero instead. The element does not move at all, the deeper shadow carries the whole hover, and the transition that is left has nothing to animate but that shadow.
 
 Tokens:
+- --yeti-lift-duration — How long the lift takes; match a tinted hover to it.
 - --yeti-lift-distance — How far the element rises; reduced motion takes it to zero.
 - --yeti-lift-shadow — The shadow the element casts once lifted.
-- --yeti-duration-fast — How long the rise and the shadow take.
 - --yeti-ease — The easing of both.
 
 Accessibility contract:
@@ -2370,8 +2371,10 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-enter-distance (enter): 2rem — How far below its place a rising element starts.
 - --yeti-enter-scale (enter): 0.94 — How small a scaling element starts.
 - --yeti-enter-stagger (enter): 200ms — The wait between one staggered child and the next; every child's delay is a multiple of it. Collapses to 0s under prefers-reduced-motion.
+- --yeti-enter-delay (enter): 0s — How long a staggered run waits before its first child moves.
 - --yeti-lift-distance (lift): 0.25rem — How far the element rises under the pointer. Collapses to 0 under prefers-reduced-motion, so the hover keeps its deeper shadow and loses only the movement.
 - --yeti-lift-shadow (lift): var(--yeti-shadow-md) — The shadow the element casts once lifted.
+- --yeti-lift-duration (lift): var(--yeti-duration-fast) — How long the lift takes; a consumer tinting the same hover matches it to this.
 - --yeti-attention-duration (attention): 600ms — How long the one pulse or shake takes. Collapses to 0.01ms under prefers-reduced-motion.
 - --yeti-attention-distance (attention): 0.35rem — How far a shake throws the element to each side.
 - --yeti-attention-scale (attention): 1.06 — How large a pulse swells the element at its peak.

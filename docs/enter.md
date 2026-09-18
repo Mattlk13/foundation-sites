@@ -76,6 +76,7 @@ No structural requirements.
 
 | Token | Description |
 | --- | --- |
+| `--yeti-enter-delay` | How long the staggered run waits before its first child moves. |
 | `--yeti-enter-duration` | How long one arrival takes; reduced motion collapses it. |
 | `--yeti-enter-distance` | How far below its place a rising element starts. |
 | `--yeti-enter-scale` | How small a scaling element starts. |

@@ -4,7 +4,7 @@
    answer different from everything else's. */
 @layer yeti.utilities {
 	.lift {
-		transition: translate var(--yeti-duration-fast) var(--yeti-ease), box-shadow var(--yeti-duration-fast) var(--yeti-ease);
+		transition: translate var(--yeti-lift-duration) var(--yeti-ease), box-shadow var(--yeti-lift-duration) var(--yeti-ease);
 	}
 	/* :has(:focus-visible) as well as :focus-visible, because the thing that
 	   takes focus is usually inside: a card's stretched link, a button in a

@@ -13,6 +13,7 @@
   "classes": [],
   "children": [],
   "tokens": [
+    { "name": "--yeti-enter-delay", "public": true, "description": "How long the staggered run waits before its first child moves." },
     { "name": "--yeti-enter-duration", "public": true, "description": "How long one arrival takes; reduced motion collapses it." },
     { "name": "--yeti-enter-distance", "public": true, "description": "How far below its place a rising element starts." },
     { "name": "--yeti-enter-scale", "public": true, "description": "How small a scaling element starts." },
