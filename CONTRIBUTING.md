@@ -25,7 +25,7 @@ Node 24 or later. There is nothing to compile.
 npm run screenshots:update
 ```
 
-and say what changed in the commit message. A commit that re-blesses with no visible reason is a review question. Baselines are captured on the machine that runs them and depend on its fonts; on another machine the first run will fail and you re-bless locally before you start. That is expected, not a bug.
+and say what changed in the commit message. A commit that re-blesses with no visible reason is a review question. Baselines are captured on the machine that runs them and depend on its fonts; on another machine the first run will fail and you re-bless locally before you start. That is expected, not a bug. CI runs on Ubuntu, where every baseline differs by a few pixels of text metrics, so its browser job passes `--ignore-snapshots`: the functional suite runs there, the screenshots are compared only where they were taken. To run everything the way CI does plus the screenshots, `bin/runtests.sh`.
 
 ## The rules that shape every change
 

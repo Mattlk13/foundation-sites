@@ -28,8 +28,15 @@ const content = async (page, sel) => {
 	return { width: r.width - 2 * (b + pi), height: r.height - 2 * b - pt - pb };
 };
 
+// WebKit on Linux, which is what CI runs, does not resize a box from a
+// synthetic pointer on the grip: the drag lands and nothing moves. The four
+// tests that depend on a real drag are skipped there; the other engines, and
+// WebKit on a Mac, cover them.
+const dragless = ({ browserName }) => browserName === 'webkit' && process.platform === 'linux';
+
 test.describe('demo', () => {
-	test('the preview is a size container the reader can drag narrower', async ({ page }) => {
+	test('the preview is a size container the reader can drag narrower', async ({ page, browserName }) => {
+		test.skip(dragless({ browserName }), 'Linux WebKit ignores a drag on the resize grip');
 		await open(page);
 		expect(await style(page, '#framed-preview', 'container-type')).toBe('inline-size');
 		expect(await style(page, '#framed-preview', 'resize')).toBe('horizontal');
@@ -62,7 +69,8 @@ test.describe('demo', () => {
 		expect((await bar('direct-preview')).content).toBe('Direct card');
 	});
 
-	test('data-resize="both" lets the reader drag the box taller, but not shorter than the sm height', async ({ page }) => {
+	test('data-resize="both" lets the reader drag the box taller, but not shorter than the sm height', async ({ page, browserName }) => {
+		test.skip(dragless({ browserName }), 'Linux WebKit ignores a drag on the resize grip');
 		await open(page);
 		expect(await style(page, '#tall-preview', 'resize')).toBe('both');
 		// The xl box is taller than the default viewport, and Firefox loses a drag
@@ -80,7 +88,8 @@ test.describe('demo', () => {
 		expect((await content(page, '#tall-preview')).height).toBeCloseTo(await token(page, '--yeti-height-sm'), 0);
 	});
 
-	test('a direct card changes shape as the box is dragged below md', async ({ page }) => {
+	test('a direct card changes shape as the box is dragged below md', async ({ page, browserName }) => {
+		test.skip(dragless({ browserName }), 'Linux WebKit ignores a drag on the resize grip');
 		await open(page);
 		// At lg the card is a row: the picture is a fraction of its width.
 		const wide = await Promise.all([rect(page, '#direct-card'), rect(page, '#direct-img')]);
@@ -180,7 +189,8 @@ test.describe('demo', () => {
 		id,
 	);
 
-	test('the label names the width stop the box is at and follows a drag', async ({ page }) => {
+	test('the label names the width stop the box is at and follows a drag', async ({ page, browserName }) => {
+		test.skip(dragless({ browserName }), 'Linux WebKit ignores a drag on the resize grip');
 		await open(page, 1400);
 		// The stage is wider than the default 1280px viewport, so the box's own
 		// resize grip would sit off-screen and undraggable; widen the viewport

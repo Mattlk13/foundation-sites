@@ -1,5 +1,5 @@
 import { test, expect } from 'playwright/test';
-import { stage, style, px, axe } from '../lib/layout.js';
+import { stage, style, px, axe, painted } from '../lib/layout.js';
 
 const open = async (page, width = 1000) => {
 	const response = await page.goto('/test/browser/fixtures/components/spinner.html');
@@ -46,6 +46,10 @@ test.describe('spinner', () => {
 		// reset's, and an endless 0.01ms animation samples a random angle every
 		// frame: a strobe, which is the opposite of what was asked for.
 		expect(await style(page, '#spin', 'animation-iteration-count')).toBe('1');
+		// The 0.01ms animation must have finished before sampling starts, or the
+		// first frame catches it mid-flight and reads one angle the rest do not:
+		// a flake that only shows when the machine is busy running the whole suite.
+		await painted(page);
 		const angles = await page.evaluate(() => new Promise((resolve) => {
 			const seen = [];
 			const read = () => { seen.push(getComputedStyle(document.getElementById('spin')).rotate); if (seen.length < 6) requestAnimationFrame(read); else resolve(seen); };
