@@ -14,7 +14,7 @@
 		   tighter as the size grows, because the added space stays constant. */
 		--yeti-leading-md: calc(1em + 0.5 * var(--_yeti-base));
 		--yeti-leading-tight: 1.15;
-		--yeti-measure: 65ch;
+		--yeti-measure: 70ch;
 
 		--yeti-font-sans: system-ui, sans-serif;
 		--yeti-font-mono: ui-monospace, monospace;

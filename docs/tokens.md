@@ -88,7 +88,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-text-display` | `step 5` | Display type, larger than any heading. |
 | `--yeti-leading-md` | `1em + 0.5 × base` | Body line height; about 1.5 at body size, tightening as type grows. |
 | `--yeti-leading-tight` | `1.15` | Heading line height. |
-| `--yeti-measure` | `65ch` | Maximum line length for prose. |
+| `--yeti-measure` | `70ch` | Maximum line length for prose. |
 
 ## Font
 
