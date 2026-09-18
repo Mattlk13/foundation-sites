@@ -8,7 +8,7 @@ nav_order: 7
 
 # What is stable
 
-From `7.0.0-beta.0`, the surface a page depends on is frozen. This page is the list. Anything on it that changes between beta and `7.0.0` is a bug, and you should report it as one.
+<p class="lede">From `7.0.0-beta.0`, the surface a page depends on is frozen. This page is the list. Anything on it that changes between beta and `7.0.0` is a bug, and you should report it as one.</p>
 
 ## Frozen
 

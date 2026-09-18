@@ -8,7 +8,7 @@ nav_order: 5
 
 # Theming
 
-Yeti is themed by setting tokens, not by editing CSS. Every public token is a custom property named `--yeti-<group>-<name>`; the full list is on the [Tokens](../tokens.md) page. Set them on `:root` in your own stylesheet, after Yeti's, and everything that reads them follows.
+<p class="lede">Yeti is themed by setting tokens, not by editing CSS. Every public token is a custom property named `--yeti-<group>-<name>`; the full list is on the [Tokens](../tokens.md) page. Set them on `:root` in your own stylesheet, after Yeti's, and everything that reads them follows.</p>
 
 ```html
 <link rel="stylesheet" href="/css/yeti.css">

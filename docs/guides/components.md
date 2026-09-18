@@ -8,7 +8,7 @@ nav_order: 2
 
 # Components
 
-Layouts arrange; components have a face. The first eight are the essentials every site needs — a button, a badge, a card, a form, a table, a seam — and the face is quiet on purpose: flat surfaces, one border width, no shadow unless you ask for one. Every visual value a component draws is a token, so a theme changes the look without touching a single class or selector in your markup.
+<p class="lede">Layouts arrange; components have a face. The first eight are the essentials every site needs — a button, a badge, a card, a form, a table, a seam — and the face is quiet on purpose: flat surfaces, one border width, no shadow unless you ask for one. Every visual value a component draws is a token, so a theme changes the look without touching a single class or selector in your markup.</p>
 
 ## Three attributes
 

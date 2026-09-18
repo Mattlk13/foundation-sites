@@ -8,7 +8,7 @@ nav_order: 6
 
 # Migrating from Foundation 6
 
-Yeti is not Foundation 7 in the sense of being version 6 with new names. It is what Foundation would be if it were written today, for browsers that have container queries, popovers, dialogs, anchor positioning and cascade layers, and if the JavaScript were allowed to be almost nothing. So a port is not a rename. This page gives you the map, then the five habits that change.
+<p class="lede">Yeti is not Foundation 7 in the sense of being version 6 with new names. It is what Foundation would be if it were written today, for browsers that have container queries, popovers, dialogs, anchor positioning and cascade layers, and if the JavaScript were allowed to be almost nothing. So a port is not a rename. This page gives you the map, then the five habits that change.</p>
 
 ## The map
 

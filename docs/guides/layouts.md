@@ -8,7 +8,7 @@ nav_order: 3
 
 # Layouts
 
-Layouts are Yeti's grammar. A layout is a class that arranges its own children and owns the space between them. Children never carry their own margins; the layout that holds them decides the gap.
+<p class="lede">Layouts are Yeti's grammar. A layout is a class that arranges its own children and owns the space between them. Children never carry their own margins; the layout that holds them decides the gap.</p>
 
 ## Three tools, in this order
 
