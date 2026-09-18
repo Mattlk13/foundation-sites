@@ -429,6 +429,38 @@ test('a component validates and counts', () => {
 	assert.equal(r.count, 2);
 });
 
+const utilityTree = (extra = {}) => componentTree({
+	'src/utilities/flare/manifest.json': validManifest({ name: 'flare', kind: 'utility', class: 'flare', attributes: [{ name: 'data-flare', type: 'enum', values: ['soft', 'hard'], default: 'soft', description: 'How bright.' }], children: [] }),
+	'src/utilities/flare/flare.css': '@layer yeti.utilities {\n\t.flare { opacity: 1; }\n}\n',
+	'src/utilities/flare/example.html': '<span class="flare" data-flare="hard">Bright</span>\n',
+	'src/yeti.css': '@import "layers.css";\n@import "layouts/attributes.css";\n@import "layouts/rail/rail.css";\n@import "components/tag/tag.css";\n@import "utilities/flare/flare.css";\n',
+	...extra,
+});
+
+test('a utility validates and counts', () => {
+	const r = run(utilityTree());
+	assert.deepEqual(r.lines, []);
+	assert.equal(r.count, 3);
+});
+
+test('an element carrying two identity classes may use either one\'s attributes', () => {
+	const both = run(utilityTree({ 'src/components/tag/example.html': '<span class="tag flare" data-variant="success" data-flare="hard">New</span>\n' }));
+	assert.deepEqual(both.lines, []);
+});
+
+test('an attribute no identity class on the element declares is still unknown to each of them', () => {
+	const r = run(utilityTree({ 'src/components/tag/example.html': '<span class="tag flare" data-glow>New</span>\n' }));
+	assert.deepEqual(r.errors.map((e) => e.message), [
+		'.tag <span>: unknown attribute data-glow',
+		'.flare <span>: unknown attribute data-glow',
+	]);
+});
+
+test('a value is still checked against the identity class that declares it, whatever else the element carries', () => {
+	const r = run(utilityTree({ 'src/components/tag/example.html': '<span class="tag flare" data-flare="blinding">New</span>\n' }));
+	assert.deepEqual(r.errors.map((e) => e.message), ['.flare <span>: data-flare="blinding" is not one of soft, hard']);
+});
+
 test('components import after recipes and every component file must be imported', () => {
 	const early = run(componentTree({ 'src/yeti.css': '@import "layers.css";\n@import "layouts/attributes.css";\n@import "components/tag/tag.css";\n@import "layouts/rail/rail.css";\n' }));
 	assert.deepEqual(early.lines, ['src/yeti.css:3: imports must come in the order layers.css, tokens/*, base/reset.css, base/*, layouts/attributes.css, layouts/*, recipes/*, components/*, then everything else (found "components/tag/tag.css" before all of layouts/)']);

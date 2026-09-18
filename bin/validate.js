@@ -47,6 +47,14 @@ export function validateElementTree(root, merged, file, lineOffset = 0, allowed 
 	const checkedMarkers = new Map();
 
 	walkElements(root, (el) => {
+		// An element may carry more than one identity class: a utility on a
+		// layout, `.cluster.enter`, or on a component, `.card.lift`. Each
+		// component's own contract is still checked on its own below, but an
+		// attribute only has to be declared by ONE of the identities present,
+		// or a staggered cluster would be told that data-gap is unknown to
+		// .enter and data-stagger unknown to .cluster, both of which are the
+		// validator's confusion and not the page's.
+		const onAnyIdentity = new Set(classList(el).flatMap((c) => (byClass.get(c)?.attributes ?? []).map((a) => a.name)));
 		for (const cls of classList(el)) {
 			const m = byClass.get(cls);
 			if (!m) continue;
@@ -59,7 +67,7 @@ export function validateElementTree(root, merged, file, lineOffset = 0, allowed 
 				if (!name.startsWith('data-')) continue;
 				const decl = declared.get(name);
 				if (!decl) {
-					if (!childMarkers.has(name)) push(`unknown attribute ${name}`);
+					if (!childMarkers.has(name) && !onAnyIdentity.has(name)) push(`unknown attribute ${name}`);
 					continue;
 				}
 				if (decl.type === 'enum' && !decl.values.includes(value)) push(`${name}="${value}" is not one of ${decl.values.join(', ')}`);
@@ -471,7 +479,7 @@ const MOTION_RE = new RegExp(`(?<![a-z-])(${MOTION_PROPS.join('|')})\\s*:\\s*([^
  */
 export function validateMotion(srcDir) {
 	const errors = [];
-	const dirs = ['layouts', 'components'].map((d) => path.join(srcDir, d)).filter((d) => fs.existsSync(d));
+	const dirs = ['layouts', 'components', 'utilities'].map((d) => path.join(srcDir, d)).filter((d) => fs.existsSync(d));
 	for (const file of dirs.flatMap((d) => walkFiles(d)).filter((f) => f.endsWith('.css'))) {
 		const text = cssText(file);
 		for (const m of text.matchAll(MOTION_RE)) {
@@ -559,7 +567,10 @@ const MAPPED = {
 };
 
 // Read directly by their own layout's CSS, so they have no attributes.css rule.
-const READ_DIRECTLY = new Set(['data-side', 'data-limit', 'data-emphasis', 'data-shape', 'data-edge', 'data-panel', 'data-orientation', 'data-placement', 'data-trigger', 'data-resize']);
+// data-enter and data-attention are here for the same reason: each value names
+// an animation on the utility's own selector, and a mapped property would be a
+// keyframe name in a custom property that nothing else could ever read.
+const READ_DIRECTLY = new Set(['data-side', 'data-limit', 'data-emphasis', 'data-shape', 'data-edge', 'data-panel', 'data-orientation', 'data-placement', 'data-trigger', 'data-resize', 'data-enter', 'data-attention']);
 
 /** Every value of every mapped vocabulary must have a rule in layouts/attributes.css,
  *  and every manifest attribute that references a vocabulary must be checked against
