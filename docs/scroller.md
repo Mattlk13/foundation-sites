@@ -9,12 +9,12 @@ nav_order: 5
 
 # Scroller
 
-Lays its children out in a single row that scrolls horizontally.
+<p class="lede">Lays its children out in a single row that scrolls horizontally.</p>
 
 ## Example
 
 <figure class="demo" data-height="xl">
-<div data-preview="Scroller"><iframe title="Scroller, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;scroller&quot; data-snap data-width=&quot;sm&quot; role=&quot;region&quot; aria-label=&quot;Featured articles&quot; tabindex=&quot;0&quot;&gt;&#10;	&lt;article&gt;One&lt;/article&gt;&#10;	&lt;article&gt;Two&lt;/article&gt;&#10;	&lt;article&gt;Three&lt;/article&gt;&#10;	&lt;article&gt;Four&lt;/article&gt;&#10;&lt;/div&gt;"></iframe></div>
+<div data-preview="Scroller"><iframe title="Scroller, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/frame.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;scroller&quot; data-snap data-width=&quot;sm&quot; role=&quot;region&quot; aria-label=&quot;Featured articles&quot; tabindex=&quot;0&quot;&gt;&#10;	&lt;article&gt;One&lt;/article&gt;&#10;	&lt;article&gt;Two&lt;/article&gt;&#10;	&lt;article&gt;Three&lt;/article&gt;&#10;	&lt;article&gt;Four&lt;/article&gt;&#10;&lt;/div&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
@@ -49,7 +49,7 @@ What the visitor does is scroll, so the layout is a scroller; a name for the mec
 | --- | --- | --- | --- | --- |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `md` | Space between items. |
 | `data-snap` | boolean |  |  | Snap each item's start edge into place as the track scrolls. |
-| `data-width` | enum | `xs`, `sm`, `md`, `lg`, `xl`, `2xl` |  | Give every item this width instead of its natural one. |
+| `data-width` | enum | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` |  | Give every item this width instead of its natural one. |
 
 ## Children
 

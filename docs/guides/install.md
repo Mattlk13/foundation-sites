@@ -8,7 +8,7 @@ nav_order: 1
 
 # Installing Yeti
 
-Yeti is one stylesheet. Everything else here is optional and most pages need none of it.
+<p class="lede">Yeti is one stylesheet. Everything else here is optional and most pages need none of it.</p>
 
 The examples on these pages are live: each is a `demo`, a box you can drag from its bottom corner to watch the component change shape, with the code beneath it. The label in the corner names the width stop the box is at.
 

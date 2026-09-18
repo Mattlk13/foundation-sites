@@ -9,12 +9,12 @@ nav_order: 4
 
 # Masonry
 
-Packs items of uneven height into columns with no gaps under the short ones.
+<p class="lede">Packs items of uneven height into columns with no gaps under the short ones.</p>
 
 ## Example
 
 <figure class="demo" data-height="xl">
-<div data-preview="Masonry"><iframe title="Masonry, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;masonry&quot; data-min=&quot;sm&quot; data-columns=&quot;3&quot;&gt;&#10;	&lt;img src=&quot;one.jpg&quot; alt=&quot;A tall waterfall&quot;&gt;&#10;	&lt;img src=&quot;two.jpg&quot; alt=&quot;A wide valley&quot;&gt;&#10;	&lt;img src=&quot;three.jpg&quot; alt=&quot;A square pond&quot;&gt;&#10;	&lt;img src=&quot;four.jpg&quot; alt=&quot;A tall pine&quot;&gt;&#10;	&lt;img src=&quot;five.jpg&quot; alt=&quot;A wide ridge&quot;&gt;&#10;&lt;/div&gt;"></iframe></div>
+<div data-preview="Masonry"><iframe title="Masonry, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/frame.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;masonry&quot; data-min=&quot;sm&quot; data-columns=&quot;3&quot;&gt;&#10;	&lt;img src=&quot;one.jpg&quot; alt=&quot;A tall waterfall&quot;&gt;&#10;	&lt;img src=&quot;two.jpg&quot; alt=&quot;A wide valley&quot;&gt;&#10;	&lt;img src=&quot;three.jpg&quot; alt=&quot;A square pond&quot;&gt;&#10;	&lt;img src=&quot;four.jpg&quot; alt=&quot;A tall pine&quot;&gt;&#10;	&lt;img src=&quot;five.jpg&quot; alt=&quot;A wide ridge&quot;&gt;&#10;&lt;/div&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
@@ -48,7 +48,7 @@ The word everyone already uses for the brick-wall arrangement. Foundation 6 had 
 
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
-| `data-min` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `xs` | The narrowest a column may be. none is meant to be paired with data-columns, which then gives an exact count; alone it gives a single full-width column. |
+| `data-min` | enum | `none`, `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `xs` | The narrowest a column may be. none is meant to be paired with data-columns, which then gives an exact count; alone it gives a single full-width column. |
 | `data-columns` | enum | `1`, `2`, `3`, `4`, `5`, `6` |  | The most columns allowed. Fewer appear when the container cannot fit that many at data-min. |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `md` | Space between columns and between items. |
 

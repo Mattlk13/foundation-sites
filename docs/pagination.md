@@ -9,12 +9,12 @@ nav_order: 4
 
 # Pagination
 
-Links to the pages of a long list, each a square target, the current one filled, shrinking to Previous, the current page, and Next when it is narrow.
+<p class="lede">Links to the pages of a long list, each a square target, the current one filled, shrinking to Previous, the current page, and Next when it is narrow.</p>
 
 ## Example
 
 <figure class="demo" data-height="sm">
-<div data-preview="Pagination"><iframe title="Pagination, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;nav class=&quot;pagination&quot; aria-label=&quot;Pagination&quot;&gt;&#10;	&lt;ol role=&quot;list&quot;&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#&quot; rel=&quot;prev&quot;&gt;Previous&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#&quot;&gt;1&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#&quot; aria-current=&quot;page&quot;&gt;2&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#&quot;&gt;3&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li&gt;&lt;span&gt;…&lt;/span&gt;&lt;/li&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#&quot;&gt;9&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#&quot; rel=&quot;next&quot;&gt;Next&lt;/a&gt;&lt;/li&gt;&#10;	&lt;/ol&gt;&#10;&lt;/nav&gt;"></iframe></div>
+<div data-preview="Pagination"><iframe title="Pagination, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/frame.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;nav class=&quot;pagination&quot; aria-label=&quot;Pagination&quot;&gt;&#10;	&lt;ol role=&quot;list&quot;&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#&quot; rel=&quot;prev&quot;&gt;Previous&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#&quot;&gt;1&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#&quot; aria-current=&quot;page&quot;&gt;2&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#&quot;&gt;3&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li&gt;&lt;span&gt;…&lt;/span&gt;&lt;/li&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#&quot;&gt;9&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#&quot; rel=&quot;next&quot;&gt;Next&lt;/a&gt;&lt;/li&gt;&#10;	&lt;/ol&gt;&#10;&lt;/nav&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
@@ -63,7 +63,7 @@ Label the `nav` `aria-label="Pagination"`. The current page's link carries `aria
 
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
-| `data-threshold` | enum | `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `sm` | The pagination's own width below which only Previous, the current page, and Next remain. |
+| `data-threshold` | enum | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `sm` | The pagination's own width below which only Previous, the current page, and Next remain. |
 | `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral` | `primary` | The hue of the current page and of the hover tint. |
 | `data-justify` | enum | `start`, `center`, `end`, `between`, `around`, `evenly` | `start` | Where the links sit in the row. |
 | `data-size` | enum | `sm`, `md`, `lg` | `md` | The text step. |

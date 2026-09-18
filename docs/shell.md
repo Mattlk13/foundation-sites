@@ -9,12 +9,12 @@ nav_order: 5
 
 # Shell
 
-The page skeleton: header on top, footer at the bottom of the viewport when the page is short, and a body row where nav and aside sit beside main while there is room.
+<p class="lede">The page skeleton: header on top, footer at the bottom of the viewport when the page is short, and a body row where nav and aside sit beside main while there is room.</p>
 
 ## Example
 
 <figure class="demo" data-height="xl">
-<div data-preview="Shell"><iframe title="Shell, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;body class=&quot;shell&quot; data-width=&quot;xs&quot;&gt;&#10;	&lt;header&gt;Site header&lt;/header&gt;&#10;	&lt;div&gt;&#10;		&lt;nav aria-label=&quot;Section&quot;&gt;Section navigation&lt;/nav&gt;&#10;		&lt;main&gt;&#10;			&lt;h1&gt;Page title&lt;/h1&gt;&#10;			&lt;p&gt;The main content, which takes what is left.&lt;/p&gt;&#10;		&lt;/main&gt;&#10;		&lt;aside&gt;Related links&lt;/aside&gt;&#10;	&lt;/div&gt;&#10;	&lt;footer&gt;Site footer&lt;/footer&gt;&#10;&lt;/body&gt;"></iframe></div>
+<div data-preview="Shell"><iframe title="Shell, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/frame.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;body class=&quot;shell&quot; data-width=&quot;xs&quot;&gt;&#10;	&lt;header&gt;Site header&lt;/header&gt;&#10;	&lt;div&gt;&#10;		&lt;nav aria-label=&quot;Section&quot;&gt;Section navigation&lt;/nav&gt;&#10;		&lt;main&gt;&#10;			&lt;h1&gt;Page title&lt;/h1&gt;&#10;			&lt;p&gt;The main content, which takes what is left.&lt;/p&gt;&#10;		&lt;/main&gt;&#10;		&lt;aside&gt;Related links&lt;/aside&gt;&#10;	&lt;/div&gt;&#10;	&lt;footer&gt;Site footer&lt;/footer&gt;&#10;&lt;/body&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
@@ -70,7 +70,7 @@ A shell is the part of the page that is there before any content is, and stays w
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `md` | Space between the rows, and between nav, main, and aside. |
-| `data-width` | enum | `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `sm` | The preferred width of nav and aside. Three regions share a row once the container is about four times this width plus the gaps; two regions need about half that. |
+| `data-width` | enum | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `sm` | The preferred width of nav and aside. Three regions share a row once the container is about four times this width plus the gaps; two regions need about half that. |
 
 ## Children
 

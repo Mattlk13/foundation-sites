@@ -9,12 +9,12 @@ nav_order: 4
 
 # Dialog
 
-The native dialog element as a modal, opened by a button that names it, with the page behind it inert and focus held inside.
+<p class="lede">The native dialog element as a modal, opened by a button that names it, with the page behind it inert and focus held inside.</p>
 
 ## Example
 
 <figure class="demo" data-height="xl">
-<div data-preview="Dialog"><iframe title="Dialog, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;button class=&quot;button&quot; type=&quot;button&quot; data-open=&quot;delete-project&quot; data-variant=&quot;alert&quot;&gt;Delete project&lt;/button&gt;&#10;&#10;&lt;dialog class=&quot;dialog&quot; id=&quot;delete-project&quot; aria-labelledby=&quot;delete-project-title&quot;&gt;&#10;	&lt;h2 id=&quot;delete-project-title&quot;&gt;Delete this project?&lt;/h2&gt;&#10;	&lt;p&gt;Everything in it goes too, and this cannot be undone.&lt;/p&gt;&#10;	&lt;footer&gt;&#10;		&lt;form method=&quot;dialog&quot;&gt;&lt;button class=&quot;button&quot; type=&quot;submit&quot; data-emphasis=&quot;medium&quot;&gt;Cancel&lt;/button&gt;&lt;/form&gt;&#10;		&lt;button class=&quot;button&quot; type=&quot;button&quot; data-variant=&quot;alert&quot;&gt;Delete&lt;/button&gt;&#10;	&lt;/footer&gt;&#10;&lt;/dialog&gt;"></iframe></div>
+<div data-preview="Dialog"><iframe title="Dialog, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/frame.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;button class=&quot;button&quot; type=&quot;button&quot; data-open=&quot;delete-project&quot; data-variant=&quot;alert&quot;&gt;Delete project&lt;/button&gt;&#10;&#10;&lt;dialog class=&quot;dialog&quot; id=&quot;delete-project&quot; aria-labelledby=&quot;delete-project-title&quot;&gt;&#10;	&lt;h2 id=&quot;delete-project-title&quot;&gt;Delete this project?&lt;/h2&gt;&#10;	&lt;p&gt;Everything in it goes too, and this cannot be undone.&lt;/p&gt;&#10;	&lt;footer&gt;&#10;		&lt;form method=&quot;dialog&quot;&gt;&lt;button class=&quot;button&quot; type=&quot;submit&quot; data-emphasis=&quot;medium&quot;&gt;Cancel&lt;/button&gt;&lt;/form&gt;&#10;		&lt;button class=&quot;button&quot; type=&quot;button&quot; data-variant=&quot;alert&quot;&gt;Delete&lt;/button&gt;&#10;	&lt;/footer&gt;&#10;&lt;/dialog&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
@@ -67,7 +67,7 @@ Without the module the dialog never opens. That is a real limitation, not a deta
 
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
-| `data-width` | enum | `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `md` | How wide the dialog may grow. |
+| `data-width` | enum | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `md` | How wide the dialog may grow. |
 
 ## Children
 

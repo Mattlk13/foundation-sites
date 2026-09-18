@@ -9,12 +9,12 @@ nav_order: 5
 
 # Field
 
-One form control with its label, an optional hint, and an error that shows itself when the control is invalid.
+<p class="lede">One form control with its label, an optional hint, and an error that shows itself when the control is invalid.</p>
 
 ## Example
 
 <figure class="demo" data-height="lg">
-<div data-preview="Field"><iframe title="Field, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;field&quot;&gt;&#10;	&lt;label for=&quot;email&quot;&gt;Email&lt;/label&gt;&#10;	&lt;input id=&quot;email&quot; type=&quot;email&quot; required aria-describedby=&quot;email-hint email-error&quot;&gt;&#10;	&lt;p id=&quot;email-hint&quot; data-hint&gt;We only use it to sign you in.&lt;/p&gt;&#10;	&lt;p id=&quot;email-error&quot; data-error&gt;Enter an address with an @ in it.&lt;/p&gt;&#10;&lt;/div&gt;"></iframe></div>
+<div data-preview="Field"><iframe title="Field, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/frame.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;field&quot;&gt;&#10;	&lt;label for=&quot;email&quot;&gt;Email&lt;/label&gt;&#10;	&lt;input id=&quot;email&quot; type=&quot;email&quot; required aria-describedby=&quot;email-hint email-error&quot;&gt;&#10;	&lt;p id=&quot;email-hint&quot; data-hint&gt;We only use it to sign you in.&lt;/p&gt;&#10;	&lt;p id=&quot;email-error&quot; data-error&gt;Enter an address with an @ in it.&lt;/p&gt;&#10;&lt;/div&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>

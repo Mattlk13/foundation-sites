@@ -9,12 +9,12 @@ nav_order: 1
 
 # Breadcrumbs
 
-The trail from the home page to the current one, each step a link, with a separator between them that is seen and not read.
+<p class="lede">The trail from the home page to the current one, each step a link, with a separator between them that is seen and not read.</p>
 
 ## Example
 
 <figure class="demo" data-height="sm">
-<div data-preview="Breadcrumbs"><iframe title="Breadcrumbs, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;nav class=&quot;breadcrumbs&quot; aria-label=&quot;Breadcrumb&quot;&gt;&#10;	&lt;ol role=&quot;list&quot;&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#&quot;&gt;Docs&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li aria-current=&quot;page&quot;&gt;Nav&lt;/li&gt;&#10;	&lt;/ol&gt;&#10;&lt;/nav&gt;"></iframe></div>
+<div data-preview="Breadcrumbs"><iframe title="Breadcrumbs, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/frame.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;nav class=&quot;breadcrumbs&quot; aria-label=&quot;Breadcrumb&quot;&gt;&#10;	&lt;ol role=&quot;list&quot;&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#&quot;&gt;Docs&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li aria-current=&quot;page&quot;&gt;Nav&lt;/li&gt;&#10;	&lt;/ol&gt;&#10;&lt;/nav&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>

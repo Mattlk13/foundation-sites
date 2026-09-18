@@ -9,12 +9,12 @@ nav_order: 3
 
 # Frame
 
-Holds one child in a fixed aspect ratio, cropping media to fill it and centering anything else.
+<p class="lede">Holds one child in a fixed aspect ratio, cropping media to fill it and centering anything else.</p>
 
 ## Example
 
 <figure class="demo" data-height="lg">
-<div data-preview="Frame"><iframe title="Frame, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;frame&quot; data-ratio=&quot;4/3&quot;&gt;&#10;	&lt;img src=&quot;photo.jpg&quot; alt=&quot;A lake at dawn, cropped to four by three&quot;&gt;&#10;&lt;/div&gt;"></iframe></div>
+<div data-preview="Frame"><iframe title="Frame, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/frame.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;frame&quot; data-ratio=&quot;4/3&quot;&gt;&#10;	&lt;img src=&quot;photo.jpg&quot; alt=&quot;A lake at dawn, cropped to four by three&quot;&gt;&#10;&lt;/div&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>

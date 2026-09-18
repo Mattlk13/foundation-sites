@@ -25,7 +25,11 @@ test.describe('base typography and prose', () => {
 		expect(await px(page, '#lead', 'marginTop')).toBeCloseTo(await token(page, '--yeti-space-sm'), 1);
 		expect(await px(page, '#h2', 'marginTop')).toBeCloseTo(await token(page, '--yeti-space-xl'), 1);
 		expect(await px(page, '#after-h2', 'marginTop')).toBeCloseTo(await token(page, '--yeti-space-sm'), 1);
-		expect(await px(page, '#li2', 'marginTop')).toBeCloseTo(await token(page, '--yeti-space-xs'), 1);
+		// A list item takes its own token, not a step off the space scale, whose
+		// smallest is already two thirds of a line and spaces items like short
+		// paragraphs.
+		expect(await px(page, '#li2', 'marginTop')).toBeCloseTo(await token(page, '--yeti-list-gap'), 1);
+		expect(await px(page, '#li2', 'marginTop')).toBeLessThan(await token(page, '--yeti-space-xs'));
 	});
 
 	test('measure caps line length', async ({ page }) => {

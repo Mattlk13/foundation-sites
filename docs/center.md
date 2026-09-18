@@ -9,12 +9,12 @@ nav_order: 2
 
 # Center
 
-Centers a column of content horizontally, up to a maximum width, with gutters on narrow screens.
+<p class="lede">Centers a column of content horizontally, up to a maximum width, with gutters on narrow screens.</p>
 
 ## Example
 
 <figure class="demo" data-height="lg">
-<div data-preview="Center"><iframe title="Center, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;main class=&quot;center&quot; data-max=&quot;lg&quot;&gt;&#10;	&lt;h1&gt;A readable column&lt;/h1&gt;&#10;	&lt;p&gt;Never wider than the maximum, never touching the screen edge.&lt;/p&gt;&#10;&lt;/main&gt;"></iframe></div>
+<div data-preview="Center"><iframe title="Center, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/frame.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;main class=&quot;center&quot; data-max=&quot;lg&quot;&gt;&#10;	&lt;h1&gt;A readable column&lt;/h1&gt;&#10;	&lt;p&gt;Never wider than the maximum, never touching the screen edge.&lt;/p&gt;&#10;&lt;/main&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
@@ -45,7 +45,7 @@ Centering is the whole job. Foundation 6 readers: this is `.grid-container`, wit
 
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
-| `data-max` | enum | `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `xl` | The widest the content column may be. |
+| `data-max` | enum | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `xl` | The widest the content column may be. |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `md` | The gutter on each side when the container is narrower than the maximum. |
 | `data-intrinsic` | boolean |  |  | Shrink the column to its content (still no wider than data-max) and center it, with each child centered on its own width inside it. |
 

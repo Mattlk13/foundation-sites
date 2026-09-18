@@ -9,12 +9,12 @@ nav_order: 7
 
 # Overlay
 
-Holds one child over the rest, centered, without pushing anything around; the parent is the box it covers.
+<p class="lede">Holds one child over the rest, centered, without pushing anything around; the parent is the box it covers.</p>
 
 ## Example
 
 <figure class="demo" data-height="lg">
-<div data-preview="Overlay"><iframe title="Overlay, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;overlay&quot;&gt;&#10;	&lt;img src=&quot;photo.jpg&quot; alt=&quot;A lake at dawn&quot;&gt;&#10;	&lt;p data-over&gt;Sold out&lt;/p&gt;&#10;&lt;/div&gt;"></iframe></div>
+<div data-preview="Overlay"><iframe title="Overlay, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/frame.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;overlay&quot;&gt;&#10;	&lt;img src=&quot;photo.jpg&quot; alt=&quot;A lake at dawn&quot;&gt;&#10;	&lt;p data-over&gt;Sold out&lt;/p&gt;&#10;&lt;/div&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>

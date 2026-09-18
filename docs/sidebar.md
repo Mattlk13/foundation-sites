@@ -9,12 +9,12 @@ nav_order: 6
 
 # Sidebar
 
-Places a fixed-width sidebar beside flexible content, and stacks them when the content would drop below half the width.
+<p class="lede">Places a fixed-width sidebar beside flexible content, and stacks them when the content would drop below half the width.</p>
 
 ## Example
 
 <figure class="demo" data-height="lg">
-<div data-preview="Sidebar"><iframe title="Sidebar, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;sidebar&quot; data-width=&quot;xs&quot; data-gap=&quot;lg&quot;&gt;&#10;	&lt;nav aria-label=&quot;Section&quot;&gt;&#10;		&lt;a href=&quot;#&quot;&gt;Overview&lt;/a&gt;&#10;	&lt;/nav&gt;&#10;	&lt;article&gt;&#10;		&lt;h2&gt;Content&lt;/h2&gt;&#10;		&lt;p&gt;Takes the remaining width, and the whole width once the two no longer fit.&lt;/p&gt;&#10;	&lt;/article&gt;&#10;&lt;/div&gt;"></iframe></div>
+<div data-preview="Sidebar"><iframe title="Sidebar, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/frame.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;sidebar&quot; data-width=&quot;xs&quot; data-gap=&quot;lg&quot;&gt;&#10;	&lt;nav aria-label=&quot;Section&quot;&gt;&#10;		&lt;a href=&quot;#&quot;&gt;Overview&lt;/a&gt;&#10;	&lt;/nav&gt;&#10;	&lt;article&gt;&#10;		&lt;h2&gt;Content&lt;/h2&gt;&#10;		&lt;p&gt;Takes the remaining width, and the whole width once the two no longer fit.&lt;/p&gt;&#10;	&lt;/article&gt;&#10;&lt;/div&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
@@ -58,7 +58,7 @@ The word says exactly what the fixed child is. Foundation 6 built this with `.gr
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-side` | enum | `start`, `end` | `start` | Which child is the sidebar: the first (start) or the last (end). |
-| `data-width` | enum | `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `sm` | The sidebar's preferred width. |
+| `data-width` | enum | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `sm` | The sidebar's preferred width. |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `md` | Space between the two children, side by side or stacked. |
 | `data-align` | enum | `start`, `center`, `end`, `stretch`, `baseline` | `stretch` | Vertical alignment of the two children when side by side. |
 

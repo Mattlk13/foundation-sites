@@ -9,12 +9,12 @@ nav_order: 3
 
 # Nav
 
-A bar with a brand, a list of links, and actions, that collapses the links behind a toggle at its own width and opens them as a sheet, a drawer, or a screen.
+<p class="lede">A bar with a brand, a list of links, and actions, that collapses the links behind a toggle at its own width and opens them as a sheet, a drawer, or a screen.</p>
 
 ## Example
 
 <figure class="demo" data-height="xl">
-<div data-preview="Nav"><iframe title="Nav, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;nav class=&quot;nav&quot; aria-label=&quot;Site&quot;&gt;&#10;	&lt;a href=&quot;#&quot; data-brand&gt;Yeti&lt;/a&gt;&#10;	&lt;button type=&quot;button&quot; popovertarget=&quot;site-menu&quot; aria-label=&quot;Menu&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; viewBox=&quot;0 0 16 16&quot;&gt;&lt;path d=&quot;M2 4h12M2 8h12M2 12h12&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;&#10;	&lt;ul id=&quot;site-menu&quot; popover role=&quot;list&quot;&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#&quot; aria-current=&quot;page&quot;&gt;Docs&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#&quot;&gt;Blog&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#&quot;&gt;About&lt;/a&gt;&lt;/li&gt;&#10;	&lt;/ul&gt;&#10;	&lt;div data-actions&gt;&lt;a class=&quot;button&quot; href=&quot;#&quot; data-size=&quot;sm&quot;&gt;Get started&lt;/a&gt;&lt;/div&gt;&#10;&lt;/nav&gt;"></iframe></div>
+<div data-preview="Nav"><iframe title="Nav, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/frame.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;nav class=&quot;nav&quot; aria-label=&quot;Site&quot;&gt;&#10;	&lt;a href=&quot;#&quot; data-brand&gt;Yeti&lt;/a&gt;&#10;	&lt;button type=&quot;button&quot; popovertarget=&quot;site-menu&quot; aria-label=&quot;Menu&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; viewBox=&quot;0 0 16 16&quot;&gt;&lt;path d=&quot;M2 4h12M2 8h12M2 12h12&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;&#10;	&lt;ul id=&quot;site-menu&quot; popover role=&quot;list&quot;&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#&quot; aria-current=&quot;page&quot;&gt;Docs&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#&quot;&gt;Blog&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#&quot;&gt;About&lt;/a&gt;&lt;/li&gt;&#10;	&lt;/ul&gt;&#10;	&lt;div data-actions&gt;&lt;a class=&quot;button&quot; href=&quot;#&quot; data-size=&quot;sm&quot;&gt;Get started&lt;/a&gt;&lt;/div&gt;&#10;&lt;/nav&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
@@ -71,7 +71,7 @@ Give the `nav` an `aria-label`, since a page often has more than one. The toggle
 
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
-| `data-threshold` | enum | `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `md` | The nav's own width at or above which the links sit in the bar; below it they are behind the toggle. |
+| `data-threshold` | enum | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `md` | The nav's own width at or above which the links sit in the bar; below it they are behind the toggle. |
 | `data-panel` | enum | `sheet`, `drawer`, `screen` | `sheet` | The shape of the open list below the threshold: a sheet under the bar, a drawer from the start edge, or the whole screen. |
 | `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral` | `primary` | The hue of the current link and of the hover tint. |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `sm` | Space between the bar's parts and between the links. |

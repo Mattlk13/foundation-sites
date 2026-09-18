@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Attention fixture</title>
+	<link rel="stylesheet" href="../../../../src/yeti.css">
+	<style>#stage { inline-size: 100%; }</style>
+</head>
+<body>
+	<main>
+		<h1>Attention utility</h1>
+		<div id="stage">
+			<div class="stack" data-gap="md">
+				<div class="alert attention" id="pulse" data-variant="success" role="status">
+					<div><strong>Saved.</strong> Your changes are live.</div>
+				</div>
+				<div class="alert attention" id="shake" data-attention="shake" data-variant="alert" role="status">
+					<div><strong>Declined.</strong> That card was refused.</div>
+				</div>
+				<div class="alert" id="still" data-variant="success" role="status">
+					<div><strong>Saved.</strong> The same alert with no gesture.</div>
+				</div>
+			</div>
+		</div>
+	</main>
+</body>
+</html>

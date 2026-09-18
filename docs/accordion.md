@@ -9,12 +9,12 @@ nav_order: 1
 
 # Accordion
 
-A column of disclosures built on details and summary, each opening to show its panel, with the browser doing the opening, the keyboard, and the announcing.
+<p class="lede">A column of disclosures built on details and summary, each opening to show its panel, with the browser doing the opening, the keyboard, and the announcing.</p>
 
 ## Example
 
 <figure class="demo" data-height="lg">
-<div data-preview="Accordion"><iframe title="Accordion, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;accordion&quot;&gt;&#10;	&lt;details name=&quot;faq&quot;&gt;&#10;		&lt;summary&gt;Does Yeti need JavaScript?&lt;/summary&gt;&#10;		&lt;p&gt;Almost never. A handful of optional modules exist and nothing depends on them.&lt;/p&gt;&#10;	&lt;/details&gt;&#10;	&lt;details name=&quot;faq&quot;&gt;&#10;		&lt;summary&gt;Can I use my own class names?&lt;/summary&gt;&#10;		&lt;p&gt;Yes. Anything Yeti does not declare is ignored.&lt;/p&gt;&#10;	&lt;/details&gt;&#10;&lt;/div&gt;"></iframe></div>
+<div data-preview="Accordion"><iframe title="Accordion, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/frame.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;accordion&quot;&gt;&#10;	&lt;details name=&quot;faq&quot;&gt;&#10;		&lt;summary&gt;Does Yeti need JavaScript?&lt;/summary&gt;&#10;		&lt;p&gt;Almost never. A handful of optional modules exist and nothing depends on them.&lt;/p&gt;&#10;	&lt;/details&gt;&#10;	&lt;details name=&quot;faq&quot;&gt;&#10;		&lt;summary&gt;Can I use my own class names?&lt;/summary&gt;&#10;		&lt;p&gt;Yes. Anything Yeti does not declare is ignored.&lt;/p&gt;&#10;	&lt;/details&gt;&#10;&lt;/div&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>

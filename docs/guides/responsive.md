@@ -8,7 +8,7 @@ nav_order: 4
 
 # Responsive, the Yeti way
 
-Three ideas, in the order they matter. Everything responsive in Yeti follows from them.
+<p class="lede">Three ideas, in the order they matter. Everything responsive in Yeti follows from them.</p>
 
 ## A component measures itself
 

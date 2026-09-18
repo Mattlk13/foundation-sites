@@ -57,6 +57,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 
 | Token | Default | Description |
 | --- | --- | --- |
+| `--yeti-width-2xs` | `12rem` | The narrowest named width: three of them fit a reading column, which sixteen rem does not. |
 | `--yeti-width-xs` | `16rem` | Smallest container measure; the grid's default minimum column width. |
 | `--yeti-width-sm` | `24rem` | The sidebar's default width. |
 | `--yeti-width-md` | `32rem` | The columns layout's default threshold. |
@@ -86,8 +87,12 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-text-3xl` | `step 4` | h1. |
 | `--yeti-text-display` | `step 5` | Display type, larger than any heading. |
 | `--yeti-leading-md` | `1em + 0.5 × base` | Body line height; about 1.5 at body size, tightening as type grows. |
+| `--yeti-leading-sm` | `1.5` | Line height for text set below the body size, such as a code block; a ratio, so it shrinks with the type. |
 | `--yeti-leading-tight` | `1.15` | Heading line height. |
-| `--yeti-measure` | `65ch` | Maximum line length for prose. |
+| `--yeti-measure` | `70ch` | Maximum line length for prose. |
+| `--yeti-list-gap` | `0.25rem` | Space between one item of a prose list and the next. |
+| `--yeti-lede-size` | `var(--yeti-text-lg)` | How large a lede reads. |
+| `--yeti-lede-measure` | `50ch` | A lede's line length. Moves with --yeti-lede-size, since ch is a unit of the font. |
 
 ## Font
 
@@ -352,5 +357,33 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-demo-border` | `var(--yeti-color-border)` | The preview box's edge. |
 | `--yeti-demo-radius` | `var(--yeti-radius-md)` | The preview box's corner, the summary's, and the stop label's. |
 | `--yeti-demo-label` | `var(--yeti-color-surface-sunken)` | Surface of the stop label naming the current width, and of the summary. |
+
+## Enter
+
+| Token | Default | Description |
+| --- | --- | --- |
+| `--yeti-enter-duration` | `600ms` | How long one arrival takes. Collapses to 0.01ms under prefers-reduced-motion, which leaves the element present and still. |
+| `--yeti-enter-distance` | `2rem` | How far below its place a rising element starts. |
+| `--yeti-enter-scale` | `0.94` | How small a scaling element starts. |
+| `--yeti-enter-stagger` | `200ms` | The wait between one staggered child and the next; every child's delay is a multiple of it. Collapses to 0s under prefers-reduced-motion. |
+| `--yeti-enter-delay` | `0s` | How long a staggered run waits before its first child moves. |
+| `--yeti-enter-ease` | `var(--yeti-ease)` | The curve a staggered entrance runs on. |
+
+## Lift
+
+| Token | Default | Description |
+| --- | --- | --- |
+| `--yeti-lift-distance` | `0.25rem` | How far the element rises under the pointer. Collapses to 0 under prefers-reduced-motion, so the hover keeps its deeper shadow and loses only the movement. |
+| `--yeti-lift-shadow` | `var(--yeti-shadow-md)` | The shadow the element casts once lifted. |
+| `--yeti-lift-duration` | `var(--yeti-duration-fast)` | How long the lift takes; a consumer tinting the same hover matches it to this. |
+| `--yeti-lift-ease` | `var(--yeti-ease)` | The curve a lift runs on. |
+
+## Attention
+
+| Token | Default | Description |
+| --- | --- | --- |
+| `--yeti-attention-duration` | `600ms` | How long the one pulse or shake takes. Collapses to 0.01ms under prefers-reduced-motion. |
+| `--yeti-attention-distance` | `0.35rem` | How far a shake throws the element to each side. |
+| `--yeti-attention-scale` | `1.06` | How large a pulse swells the element at its peak. |
 
 Yeti also defines 47 internal `--_yeti-*` tokens. They derive from the public ones and may change between minor versions; override the public token instead.

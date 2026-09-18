@@ -9,12 +9,12 @@ nav_order: 2
 
 # Card
 
-A bordered surface for one thing: an optional figure that bleeds to the edges, a body, and a footer that sits at the bottom; a row with the picture beside the text once the card's content reaches the md width.
+<p class="lede">A bordered surface for one thing: an optional figure that bleeds to the edges, a body, and a footer that sits at the bottom; a row with the picture beside the text once the card's content reaches the md width.</p>
 
 ## Example
 
 <figure class="demo" data-height="md">
-<div data-preview="Card"><iframe title="Card, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;article class=&quot;card&quot; data-threshold=&quot;xs&quot;&gt;&#10;	&lt;img src=&quot;trail.jpg&quot; alt=&quot;A mountain trail at dawn&quot;&gt;&#10;	&lt;h3&gt;&lt;a href=&quot;/hills&quot; data-stretch&gt;Weekend in the hills&lt;/a&gt;&lt;/h3&gt;&#10;	&lt;p&gt;Six miles, one summit, and a view worth the early start.&lt;/p&gt;&#10;	&lt;footer&gt;&#10;		&lt;span class=&quot;badge&quot; data-variant=&quot;success&quot;&gt;Open&lt;/span&gt;&#10;		&lt;a class=&quot;button&quot; href=&quot;/hills&quot; data-emphasis=&quot;low&quot; tabindex=&quot;-1&quot;&gt;Read more&lt;/a&gt;&#10;	&lt;/footer&gt;&#10;&lt;/article&gt;"></iframe></div>
+<div data-preview="Card"><iframe title="Card, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/frame.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;article class=&quot;card&quot; data-threshold=&quot;xs&quot;&gt;&#10;	&lt;img src=&quot;trail.jpg&quot; alt=&quot;A mountain trail at dawn&quot;&gt;&#10;	&lt;h3&gt;&lt;a href=&quot;/hills&quot; data-stretch&gt;Weekend in the hills&lt;/a&gt;&lt;/h3&gt;&#10;	&lt;p&gt;Six miles, one summit, and a view worth the early start.&lt;/p&gt;&#10;	&lt;footer&gt;&#10;		&lt;span class=&quot;badge&quot; data-variant=&quot;success&quot;&gt;Open&lt;/span&gt;&#10;		&lt;a class=&quot;button&quot; href=&quot;/hills&quot; data-emphasis=&quot;low&quot; tabindex=&quot;-1&quot;&gt;Read more&lt;/a&gt;&#10;	&lt;/footer&gt;&#10;&lt;/article&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
@@ -71,7 +71,7 @@ Do not wrap a card in a link. Put the link on the heading and add `data-stretch`
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-ratio` | enum | `1/1`, `4/3`, `3/2`, `16/9`, `21/9` | `16/9` | The figure's aspect ratio when the card is wide. |
-| `data-threshold` | enum | `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `md` | The card's own width from which the picture sits beside the text instead of on top. |
+| `data-threshold` | enum | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `md` | The card's own width from which the picture sits beside the text instead of on top. |
 | `data-raised` | boolean |  |  | A shadow instead of a border. |
 | `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral` |  | Tints the border and adds a bar along the top; the body stays plain. |
 

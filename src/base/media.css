@@ -15,6 +15,10 @@
 
 	pre {
 		font-family: var(--yeti-font-mono);
+		/* Code is read line by line rather than as a paragraph, and a block of
+		   it is nearly always set below the body size, where the body's leading
+		   formula loosens rather than tightens. A ratio keeps it even. */
+		line-height: var(--yeti-leading-sm);
 		padding: var(--yeti-space-md);
 		border-radius: var(--yeti-radius-md);
 		background-color: var(--yeti-color-surface-raised);

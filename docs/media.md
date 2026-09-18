@@ -9,12 +9,12 @@ nav_order: 6
 
 # Media
 
-Puts a figure beside a block of text and stacks them when the text would drop below half the width; the one-class form of a sidebar holding a frame and a stack.
+<p class="lede">Puts a figure beside a block of text and stacks them when the text would drop below half the width; the one-class form of a sidebar holding a frame and a stack.</p>
 
 ## Example
 
 <figure class="demo" data-height="lg">
-<div data-preview="Media"><iframe title="Media, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;media&quot; data-width=&quot;sm&quot;&gt;&#10;	&lt;img src=&quot;ada.jpg&quot; alt=&quot;Portrait of Ada Lovelace&quot;&gt;&#10;	&lt;div&gt;&#10;		&lt;h3&gt;Ada Lovelace&lt;/h3&gt;&#10;		&lt;p&gt;Wrote the first published algorithm, for Babbage&#39;s Analytical Engine.&lt;/p&gt;&#10;	&lt;/div&gt;&#10;&lt;/div&gt;"></iframe></div>
+<div data-preview="Media"><iframe title="Media, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/frame.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;media&quot; data-width=&quot;sm&quot;&gt;&#10;	&lt;img src=&quot;ada.jpg&quot; alt=&quot;Portrait of Ada Lovelace&quot;&gt;&#10;	&lt;div&gt;&#10;		&lt;h3&gt;Ada Lovelace&lt;/h3&gt;&#10;		&lt;p&gt;Wrote the first published algorithm, for Babbage&#39;s Analytical Engine.&lt;/p&gt;&#10;	&lt;/div&gt;&#10;&lt;/div&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
@@ -62,7 +62,7 @@ Nicole Sullivan named the media object in 2010 and the name stuck across a decad
 
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
-| `data-width` | enum | `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `xs` | The figure's preferred width. |
+| `data-width` | enum | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `xs` | The figure's preferred width. |
 | `data-ratio` | enum | `1/1`, `4/3`, `3/2`, `16/9`, `21/9` | `1/1` | The figure's aspect ratio. |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `md` | Space between the figure and the text. |
 | `data-align` | enum | `start`, `center`, `end`, `stretch`, `baseline` | `stretch` | Vertical alignment of figure and text when side by side. |

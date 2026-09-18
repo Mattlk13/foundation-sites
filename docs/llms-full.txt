@@ -44,7 +44,7 @@ Purely visual. A box has no semantics; use a section or article element when the
 Keeps its children in a centered reading column with gutters, and lets any child carrying data-bleed span the full width.
 
 Attributes:
-- data-max: xs | sm | md (default) | lg | xl | 2xl — The widest the reading column may be.
+- data-max: 2xs | xs | sm | md (default) | lg | xl | 2xl — The widest the reading column may be.
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — The gutter on each side, and the space between children.
 
 On children:
@@ -99,7 +99,7 @@ Purely visual. A bleeding child is still in reading order.
 Centers a column of content horizontally, up to a maximum width, with gutters on narrow screens.
 
 Attributes:
-- data-max: xs | sm | md | lg | xl (default) | 2xl — The widest the content column may be.
+- data-max: 2xs | xs | sm | md | lg | xl (default) | 2xl — The widest the content column may be.
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — The gutter on each side when the container is narrower than the maximum.
 - data-intrinsic (boolean) — Shrink the column to its content (still no wider than data-max) and center it, with each child centered on its own width inside it.
 
@@ -165,7 +165,7 @@ Purely visual. Use a list element when the items are a list.
 Lays its children out as equal columns when the container is wider than a threshold, and as rows when it is not.
 
 Attributes:
-- data-threshold: xs | sm | md (default) | lg | xl | 2xl — The container width below which the columns become rows.
+- data-threshold: 2xs | xs | sm | md (default) | lg | xl | 2xl — The container width below which the columns become rows.
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between columns, and between rows once they stack.
 - data-align: start | center | end | stretch (default) | baseline — Vertical alignment of the columns.
 - data-justify: start (default) | center | end | between | around | evenly — Distribution of the columns along the row when they do not fill it.
@@ -306,7 +306,7 @@ Cropping hides parts of an image. Make sure the alt text describes what is visib
 Fits as many equal columns as the container allows at a minimum width, up to an optional maximum count.
 
 Attributes:
-- data-min: none | xs (default) | sm | md | lg | xl | 2xl — The narrowest a column may be. With none, only data-columns decides the count; none is meant to be paired with data-columns, and alone gives a single full-width column.
+- data-min: none | 2xs | xs (default) | sm | md | lg | xl | 2xl — The narrowest a column may be. With none, only data-columns decides the count; none is meant to be paired with data-columns, and alone gives a single full-width column.
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between columns and rows.
 - data-columns: 1 | 2 | 3 | 4 | 5 | 6 — The most columns allowed. Fewer appear when the container cannot fit that many at data-min; with data-min="none" the count is exact. With data-fold, the count only ever halves.
 - data-fold (boolean) — Halve the column count as the grid narrows instead of stepping down one at a time. Needs data-columns 2, 4, or 6 and uses data-min as the width per column. data-min="none" has no meaning with a fold: the count needs a width per column.
@@ -435,7 +435,7 @@ Everything stays in reading order. Text laid over a picture needs a contrast tre
 Packs items of uneven height into columns with no gaps under the short ones.
 
 Attributes:
-- data-min: none | xs (default) | sm | md | lg | xl | 2xl — The narrowest a column may be. none is meant to be paired with data-columns, which then gives an exact count; alone it gives a single full-width column.
+- data-min: none | 2xs | xs (default) | sm | md | lg | xl | 2xl — The narrowest a column may be. none is meant to be paired with data-columns, which then gives an exact count; alone it gives a single full-width column.
 - data-columns: 1 | 2 | 3 | 4 | 5 | 6 — The most columns allowed. Fewer appear when the container cannot fit that many at data-min.
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between columns and between items.
 
@@ -509,7 +509,7 @@ Lays its children out in a single row that scrolls horizontally.
 Attributes:
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between items.
 - data-snap (boolean) — Snap each item's start edge into place as the track scrolls.
-- data-width: xs | sm | md | lg | xl | 2xl — Give every item this width instead of its natural one.
+- data-width: 2xs | xs | sm | md | lg | xl | 2xl — Give every item this width instead of its natural one.
 
 ### When to use it
 
@@ -541,7 +541,7 @@ Places a fixed-width sidebar beside flexible content, and stacks them when the c
 
 Attributes:
 - data-side: start (default) | end — Which child is the sidebar: the first (start) or the last (end).
-- data-width: xs | sm (default) | md | lg | xl | 2xl — The sidebar's preferred width.
+- data-width: 2xs | xs | sm (default) | md | lg | xl | 2xl — The sidebar's preferred width.
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the two children, side by side or stacked.
 - data-align: start | center | end | stretch (default) | baseline — Vertical alignment of the two children when side by side.
 
@@ -659,7 +659,7 @@ Use an ordered list, so the sequence is announced, and a time element with datet
 Fills the viewport's height with copy on one side and a figure on the other, centered, and stacks them below a container width; the one-class form of a cover holding columns.
 
 Attributes:
-- data-threshold: xs | sm | md | lg (default) | xl | 2xl — The container width below which copy and figure become rows.
+- data-threshold: 2xs | xs | sm | md | lg (default) | xl | 2xl — The container width below which copy and figure become rows.
 - data-gap: none | xs | sm | md | lg (default) | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between copy and figure.
 - data-ratio: 1/1 | 4/3 (default) | 3/2 | 16/9 | 21/9 — The figure's aspect ratio.
 - data-align: start | center (default) | end | stretch | baseline — Vertical alignment of copy and figure when side by side.
@@ -713,7 +713,7 @@ When the hero is the page's opening, keep the h1 inside the copy. data-side chan
 Puts a figure beside a block of text and stacks them when the text would drop below half the width; the one-class form of a sidebar holding a frame and a stack.
 
 Attributes:
-- data-width: xs (default) | sm | md | lg | xl | 2xl — The figure's preferred width.
+- data-width: 2xs | xs (default) | sm | md | lg | xl | 2xl — The figure's preferred width.
 - data-ratio: 1/1 (default) | 4/3 | 3/2 | 16/9 | 21/9 — The figure's aspect ratio.
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the figure and the text.
 - data-align: start | center | end | stretch (default) | baseline — Vertical alignment of figure and text when side by side.
@@ -764,7 +764,7 @@ The page skeleton: header on top, footer at the bottom of the viewport when the 
 
 Attributes:
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the rows, and between nav, main, and aside.
-- data-width: xs | sm (default) | md | lg | xl | 2xl — The preferred width of nav and aside. Three regions share a row once the container is about four times this width plus the gaps; two regions need about half that.
+- data-width: 2xs | xs | sm (default) | md | lg | xl | 2xl — The preferred width of nav and aside. Three regions share a row once the container is about four times this width plus the gaps; two regions need about half that.
 
 ### When to use it
 
@@ -1177,7 +1177,7 @@ A bordered surface for one thing: an optional figure that bleeds to the edges, a
 
 Attributes:
 - data-ratio: 1/1 | 4/3 | 3/2 | 16/9 (default) | 21/9 — The figure's aspect ratio when the card is wide.
-- data-threshold: xs | sm | md (default) | lg | xl | 2xl — The card's own width from which the picture sits beside the text instead of on top.
+- data-threshold: 2xs | xs | sm | md (default) | lg | xl | 2xl — The card's own width from which the picture sits beside the text instead of on top.
 - data-raised (boolean) — A shadow instead of a border.
 - data-variant: primary | secondary | success | warning | alert | neutral — Tints the border and adds a bar along the top; the body stays plain.
 
@@ -1320,7 +1320,7 @@ A live example in a box the reader can drag narrower and wider, with a bar namin
 
 Attributes:
 - data-height: sm | md (default) | lg | xl — The preview box's height. A frame inside cannot size to its content, so this is where that is set; with data-resize="both" it is the starting height.
-- data-width: xs | sm | md | lg | xl | 2xl — The preview box's starting width, before the reader drags it. Full width when absent.
+- data-width: 2xs | xs | sm | md | lg | xl | 2xl — The preview box's starting width, before the reader drags it. Full width when absent.
 - data-resize: width (default) | both — Which way the reader can drag the box: its width only, or both width and height.
 - data-stylesheet (string) — Read by the module: the stylesheet the frame it builds should load, when it is not the host page's own yeti.css; yeti.js is expected beside it.
 
@@ -1406,7 +1406,7 @@ Give the iframe a title. Give a box holding direct markup tabindex="0": markup t
 The native dialog element as a modal, opened by a button that names it, with the page behind it inert and focus held inside.
 
 Attributes:
-- data-width: xs | sm | md (default) | lg | xl | 2xl — How wide the dialog may grow.
+- data-width: 2xs | xs | sm | md (default) | lg | xl | 2xl — How wide the dialog may grow.
 
 module: dialog.js (optional)
 
@@ -1638,7 +1638,7 @@ The label's for must match the control's id; the validator checks it. Reference 
 A bar with a brand, a list of links, and actions, that collapses the links behind a toggle at its own width and opens them as a sheet, a drawer, or a screen.
 
 Attributes:
-- data-threshold: xs | sm | md (default) | lg | xl | 2xl — The nav's own width at or above which the links sit in the bar; below it they are behind the toggle.
+- data-threshold: 2xs | xs | sm | md (default) | lg | xl | 2xl — The nav's own width at or above which the links sit in the bar; below it they are behind the toggle.
 - data-panel: sheet (default) | drawer | screen — The shape of the open list below the threshold: a sheet under the bar, a drawer from the start edge, or the whole screen.
 - data-variant: primary (default) | secondary | success | warning | alert | neutral — The hue of the current link and of the hover tint.
 - data-gap: none | xs | sm (default) | md | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the bar's parts and between the links.
@@ -1726,7 +1726,7 @@ Give the nav an aria-label, since a page often has more than one. The toggle nee
 Links to the pages of a long list, each a square target, the current one filled, shrinking to Previous, the current page, and Next when it is narrow.
 
 Attributes:
-- data-threshold: xs | sm (default) | md | lg | xl | 2xl — The pagination's own width below which only Previous, the current page, and Next remain.
+- data-threshold: 2xs | xs | sm (default) | md | lg | xl | 2xl — The pagination's own width below which only Previous, the current page, and Next remain.
 - data-variant: primary (default) | secondary | success | warning | alert | neutral — The hue of the current page and of the hover tint.
 - data-justify: start (default) | center | end | between | around | evenly — Where the links sit in the row.
 - data-size: sm | md (default) | lg — The text step.
@@ -2065,6 +2065,164 @@ Accessibility contract:
 - Tab: Focusing the trigger shows the bubble, so it is reachable without a mouse.
 The trigger must reference the bubble with aria-describedby, so the hint is announced together with the control; the bubble carries role="tooltip". A tooltip is for a short hint on a control whose purpose is not otherwise obvious, and it is never the only place something is said: touch has no hover, so anything essential belongs in the label, in a field's hint, or in the text. Do not put a link or a button inside the bubble, since there is no way to reach one. The bubble cannot be dismissed while the trigger stays hovered or focused, a known limit of a tooltip with no script, which WCAG 1.4.13 asks content shown on hover or focus to offer.
 
+## attention (utility, class="attention")
+
+Plays one pulse or one shake on load, to point at something that has just changed.
+
+Attributes:
+- data-attention: pulse (default) | shake — Which gesture: a swell and settle, or a shake from side to side.
+
+### When to use it
+
+On something that has just changed and might otherwise be missed: the alert that appeared after a save, the total that moved when a quantity changed, the field the server rejected. It plays on load, so in practice it arrives with the element, whether that element came from a navigation or was written into the page.
+
+Not as an ornament, and not on anything permanent. A pulse on a heading that has always been there is an instruction to look at something that has nothing to say.
+
+```html
+<p class="badge attention" data-attention="shake" data-variant="alert" role="status">Card declined</p>
+```
+
+### How it works
+
+One run of one animation, over `--yeti-attention-duration`. `pulse` swells the element to `--yeti-attention-scale` at the halfway point and settles back; the peak is in the middle so the gesture is symmetrical, since something that grows and snaps back reads as a twitch. `shake` throws it `--yeti-attention-distance` to each side and back twice, because a single sideways move is a slide and it takes the return trip to read as a shake.
+
+It runs once, and the iteration count is deliberately left at the initial `1` rather than reading `--yeti-motion-iterations`, which exists for the animations that never end. A gesture that keeps repeating stops being a moment that has passed and becomes a state the page is in, and the reader has no way to dismiss it.
+
+No keyframe leaves the element anywhere but where it started, so no fill mode is needed and nothing here can strand an element off its mark.
+
+### Accessibility
+
+Motion is not an announcement. A screen reader hears nothing at all here, so a change worth pointing at is a change worth saying: put the element in a live region, or give it `role="status"`, and the gesture becomes the visual half of something that is already spoken.
+
+Under reduced motion `--yeti-attention-duration` collapses and the element simply sits still, which is the whole of the accommodation — there is nothing left to see, and the live region is still heard.
+
+Tokens:
+- --yeti-attention-duration — How long the gesture takes; reduced motion collapses it.
+- --yeti-attention-distance — How far a shake throws the element to each side.
+- --yeti-attention-scale — How large a pulse swells the element at its peak.
+- --yeti-ease — The easing of the gesture.
+
+Accessibility contract:
+Motion is not an announcement. A change worth pointing at is worth saying, so put the element in a live region, or give it role="status", and the gesture becomes the visual half of something a screen reader already hears. It plays once and never repeats, so nothing here keeps moving under a reader who cannot dismiss it, and under reduced motion the duration collapses and the element simply sits still.
+
+## enter (utility, class="enter")
+
+Plays one arrival, on load or as the element scrolls into view, either for the element itself or for each of its children in turn.
+
+Attributes:
+- data-enter: fade (default) | rise | scale — Which arrival: a fade, a rise from below, or a growth from slightly small.
+- data-stagger (boolean) — Animate the element's children one after another instead of the element itself, each a step later than the last.
+- data-view (boolean) — Play as the element scrolls into view instead of on load. Where a scroll timeline is unsupported, or the reader has asked for less motion, it plays on load instead.
+
+### When to use it
+
+Once, near the top of a page, on the thing the page is about: a row of product cards, a hero's headline, the three panels a landing page is built from. An arrival is a punctuation mark, and a page that punctuates every sentence is harder to read than one that punctuates none. If everything on the page enters, nothing has entered.
+
+### How it works
+
+One animation, one run, ending exactly where the layout already put the element. Every keyframe list names only a `from`, so the `to` is the element's own computed style: `enter` has no opinion about where anything belongs and cannot move it. The animation fills backwards, which means its first frame applies from the moment the element is painted, so nothing has to be given `opacity: 0` by a rule of its own. That detail is what makes the whole utility safe to fail: an element whose animation never runs is visible, not stranded.
+
+`data-enter` picks the arrival. `fade` is the default and is the quietest. `rise` starts `--yeti-enter-distance` below its place, which is the one to reach for when the element is a card or a panel arriving into a row. `scale` starts at `--yeti-enter-scale` of its size, for something that should feel like it landed rather than slid.
+
+`data-stagger` moves the animation down one level: the element itself no longer animates and each of its children does, every one `--yeti-enter-stagger` behind the one before it. Put it on the layout that holds the row, not on the items.
+
+```html
+<ul class="grid enter" data-enter="rise" data-stagger data-min="xs" role="list">
+	<li class="card"><h3>One</h3></li>
+	<li class="card"><h3>Two</h3></li>
+	<li class="card"><h3>Three</h3></li>
+</ul>
+```
+
+Past the ninth child the delay stops growing and every remaining child shares the ninth's. A stagger that kept counting would turn a list of thirty into a ten-second wait, and the gesture is long over by then.
+
+`data-view` waits for the element to scroll into view instead of playing on load, so an arrival below the fold happens where the reader is rather than before they arrive. It is guarded twice, and both fallbacks land on the same place: the element plays its arrival on load. Once for `@supports`, because `animation-timeline: view()` is not yet Baseline — Chromium and Safari have it, Firefox does not, and that line will move; and once for `prefers-reduced-motion`, because a scroll-driven animation is paced by the scroll and never reads `animation-duration`, so the collapsed token that stills everything else in Yeti would sail straight past this one.
+
+### Accessibility
+
+Nothing here changes reading order, focus order, or what any element is. The only way an element is ever hidden is the animation's own backwards fill, so a browser that cannot run the animation shows the content instead of swallowing it.
+
+Under reduced motion both `--yeti-enter-duration` and `--yeti-enter-stagger` collapse, so every element is simply present at once — the step collapses too, because a stagger with the smooth part removed is still a row of boxes popping into place one after another. The scroll-driven form is switched off outright for the same reader, and they get the collapsed load-timed animation instead.
+
+Tokens:
+- --yeti-enter-ease — The curve the entrance runs on.
+- --yeti-enter-delay — How long the staggered run waits before its first child moves.
+- --yeti-enter-duration — How long one arrival takes; reduced motion collapses it.
+- --yeti-enter-distance — How far below its place a rising element starts.
+- --yeti-enter-scale — How small a scaling element starts.
+- --yeti-enter-stagger — The wait between one staggered child and the next.
+
+Accessibility contract:
+Purely visual, and safe by default: the element is only ever hidden by the animation's own backwards fill, so an element whose animation never runs is visible rather than stranded, and nothing here changes reading order or focus order. Under reduced motion the duration and the stagger step both collapse, so everything is simply present at once; the scroll-driven form is switched off entirely for the same reader, because a scroll timeline paces itself and would ignore a collapsed duration.
+
+## lede (utility, class="lede")
+
+The standfirst: the sentence under a page's heading that says what the page is, set larger than the prose it introduces.
+
+### When to use it
+
+The one sentence under a page's heading that says what the page is, before the page begins. A standfirst. Put it on that paragraph and nothing else: a second lede on a page is not a lede.
+
+### How it works
+
+It is a class rather than a rule about position, because a lede is a role and not a place. The obvious alternative, styling the paragraph that follows the heading, encodes where the paragraph happens to sit, so the day someone wraps the heading and the paragraph in a `stack` the lede quietly becomes body copy. A class survives being moved.
+
+The size is a token, so a theme sets how much larger a lede reads. It carries its own measure, because a lede set larger at the body's measure runs to a longer line than the prose it introduces. Change one and change the other: `ch` is a unit of the font, so raising the size raises what the count is worth.
+
+```html
+<h1>Card</h1>
+<p class="lede">A bordered surface for one thing.</p>
+<p>One thing in a box: an article in a listing, a product, a person, a plan.</p>
+```
+
+### Accessibility
+
+Nothing to do. A lede is a paragraph that is set larger; it takes no role and announces nothing of its own, which is correct, because the sentence is ordinary prose and its position already says what it is.
+
+Tokens:
+- --yeti-lede-size — How large a lede reads.
+- --yeti-lede-measure — The lede's line length; moves with its size, since ch is a unit of the font.
+- --yeti-leading-md — Its line height, the same as body prose.
+
+Accessibility contract:
+A lede takes no role and announces nothing of its own. It is ordinary prose set larger, and its position under the heading already says what it is.
+
+## lift (utility, class="lift")
+
+Raises the element slightly and deepens its shadow while the pointer is on it or a keyboard is inside it.
+
+### When to use it
+
+On something that can be pressed and is big enough for the movement to read: a card that is a link, a tile in a grid of choices, a panel that opens something. On a button it is noise — a button already has a pressed and a hovered state — and on a paragraph it is a lie, because nothing happens when you click it.
+
+```html
+<article class="card lift" data-raised>
+	<h3><a href="/yeti/" data-stretch>Yeti</a></h3>
+	<p>for Websites</p>
+</article>
+```
+
+### How it works
+
+A transition on `translate` and `box-shadow`, and one rule that raises the element `--yeti-lift-distance` and swaps in `--yeti-lift-shadow`. It answers three selectors: `:hover`, `:focus-visible` on the element itself, and `:has(:focus-visible)`. The third is the one that matters most in practice, because the thing that takes focus is almost always inside — a card's stretched link, a button in a tile — and without it the lift would be an affordance only a pointer ever sees.
+
+`translate` rather than `transform`, so an element that its own component already scales or rotates keeps that.
+
+### Accessibility
+
+The lift sits on top of a focus ring; it never replaces one. The ring comes from the reset and nothing here touches it.
+
+Reduced motion is answered differently here from everywhere else in Yeti, and on purpose. Everywhere else the animation runs once and ends, so collapsing its duration lands on the end state instantly, which is what was asked for. A hover has no end: its end state is a quarter of a rem up, so a collapsed duration would still move the element, just without the smooth part, and every pass of the pointer would jump the box out from under the cursor and drop it back on the way out. That is more startling than the animation it replaced. So `--yeti-lift-distance` goes to zero instead. The element does not move at all, the deeper shadow carries the whole hover, and the transition that is left has nothing to animate but that shadow.
+
+Tokens:
+- --yeti-lift-ease — The curve the lift runs on.
+- --yeti-lift-duration — How long the lift takes; match a tinted hover to it.
+- --yeti-lift-distance — How far the element rises; reduced motion takes it to zero.
+- --yeti-lift-shadow — The shadow the element casts once lifted.
+
+Accessibility contract:
+The lift answers :focus-visible on the element and on anything inside it, so a reader tabbing through a page of cards sees the same affordance a pointer gets. It is decoration on top of a focus ring, never a replacement for one; the ring comes from the reset and is untouched. Under reduced motion the element no longer moves and the deeper shadow carries the hover by itself.
+
 ## Tokens
 
 Every public custom property, with its group and default. A theme is a file that sets some of these after yeti.css.
@@ -2096,6 +2254,7 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-radius-md (radius): 0.5 × base — Medium corner radius; cards, dialogs.
 - --yeti-radius-lg (radius): 1 × base — Large corner radius; hero panels.
 - --yeti-radius-full (radius): 9999px — Pill or circle.
+- --yeti-width-2xs (width): 12rem — The narrowest named width: three of them fit a reading column, which sixteen rem does not.
 - --yeti-width-xs (width): 16rem — Smallest container measure; the grid's default minimum column width.
 - --yeti-width-sm (width): 24rem — The sidebar's default width.
 - --yeti-width-md (width): 32rem — The columns layout's default threshold.
@@ -2115,8 +2274,12 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-text-3xl (text): step 4 — h1.
 - --yeti-text-display (text): step 5 — Display type, larger than any heading.
 - --yeti-leading-md (text): 1em + 0.5 × base — Body line height; about 1.5 at body size, tightening as type grows.
+- --yeti-leading-sm (text): 1.5 — Line height for text set below the body size, such as a code block; a ratio, so it shrinks with the type.
 - --yeti-leading-tight (text): 1.15 — Heading line height.
-- --yeti-measure (text): 65ch — Maximum line length for prose.
+- --yeti-measure (text): 70ch — Maximum line length for prose.
+- --yeti-list-gap (text): 0.25rem — Space between one item of a prose list and the next.
+- --yeti-lede-size (text): var(--yeti-text-lg) — How large a lede reads.
+- --yeti-lede-measure (text): 50ch — A lede's line length. Moves with --yeti-lede-size, since ch is a unit of the font.
 - --yeti-font-sans (font): system-ui, sans-serif — Default text face. Yeti ships no web fonts; override this to use yours.
 - --yeti-font-mono (font): ui-monospace, monospace — Code face.
 - --yeti-duration-fast (motion): 150ms — Quick transitions; hover and focus. Collapses to 0.01ms under prefers-reduced-motion.
@@ -2241,3 +2404,16 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-demo-border (demo): var(--yeti-color-border) — The preview box's edge.
 - --yeti-demo-radius (demo): var(--yeti-radius-md) — The preview box's corner, the summary's, and the stop label's.
 - --yeti-demo-label (demo): var(--yeti-color-surface-sunken) — Surface of the stop label naming the current width, and of the summary.
+- --yeti-enter-duration (enter): 600ms — How long one arrival takes. Collapses to 0.01ms under prefers-reduced-motion, which leaves the element present and still.
+- --yeti-enter-distance (enter): 2rem — How far below its place a rising element starts.
+- --yeti-enter-scale (enter): 0.94 — How small a scaling element starts.
+- --yeti-enter-stagger (enter): 200ms — The wait between one staggered child and the next; every child's delay is a multiple of it. Collapses to 0s under prefers-reduced-motion.
+- --yeti-enter-delay (enter): 0s — How long a staggered run waits before its first child moves.
+- --yeti-enter-ease (enter): var(--yeti-ease) — The curve a staggered entrance runs on.
+- --yeti-lift-distance (lift): 0.25rem — How far the element rises under the pointer. Collapses to 0 under prefers-reduced-motion, so the hover keeps its deeper shadow and loses only the movement.
+- --yeti-lift-shadow (lift): var(--yeti-shadow-md) — The shadow the element casts once lifted.
+- --yeti-lift-duration (lift): var(--yeti-duration-fast) — How long the lift takes; a consumer tinting the same hover matches it to this.
+- --yeti-lift-ease (lift): var(--yeti-ease) — The curve a lift runs on.
+- --yeti-attention-duration (attention): 600ms — How long the one pulse or shake takes. Collapses to 0.01ms under prefers-reduced-motion.
+- --yeti-attention-distance (attention): 0.35rem — How far a shake throws the element to each side.
+- --yeti-attention-scale (attention): 1.06 — How large a pulse swells the element at its peak.

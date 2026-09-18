@@ -9,12 +9,12 @@ nav_order: 4
 
 # Hero
 
-Fills the viewport's height with copy on one side and a figure on the other, centered, and stacks them below a container width; the one-class form of a cover holding columns.
+<p class="lede">Fills the viewport's height with copy on one side and a figure on the other, centered, and stacks them below a container width; the one-class form of a cover holding columns.</p>
 
 ## Example
 
 <figure class="demo" data-height="xl">
-<div data-preview="Hero"><iframe title="Hero, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;header class=&quot;hero&quot;&gt;&#10;	&lt;div&gt;&#10;		&lt;h1&gt;Build interfaces that read their own container&lt;/h1&gt;&#10;		&lt;p&gt;Fifteen layouts, one attribute vocabulary, no breakpoints.&lt;/p&gt;&#10;		&lt;a href=&quot;#&quot;&gt;Get started&lt;/a&gt;&#10;	&lt;/div&gt;&#10;	&lt;img src=&quot;peak.jpg&quot; alt=&quot;A snow ridge at first light&quot;&gt;&#10;&lt;/header&gt;"></iframe></div>
+<div data-preview="Hero"><iframe title="Hero, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/frame.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;header class=&quot;hero&quot;&gt;&#10;	&lt;div&gt;&#10;		&lt;h1&gt;Build interfaces that read their own container&lt;/h1&gt;&#10;		&lt;p&gt;Fifteen layouts, one attribute vocabulary, no breakpoints.&lt;/p&gt;&#10;		&lt;a href=&quot;#&quot;&gt;Get started&lt;/a&gt;&#10;	&lt;/div&gt;&#10;	&lt;img src=&quot;peak.jpg&quot; alt=&quot;A snow ridge at first light&quot;&gt;&#10;&lt;/header&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
@@ -66,7 +66,7 @@ The one-class form does the same in one element: a wrapping row whose lines are 
 
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
-| `data-threshold` | enum | `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `lg` | The container width below which copy and figure become rows. |
+| `data-threshold` | enum | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `lg` | The container width below which copy and figure become rows. |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `lg` | Space between copy and figure. |
 | `data-ratio` | enum | `1/1`, `4/3`, `3/2`, `16/9`, `21/9` | `4/3` | The figure's aspect ratio. |
 | `data-align` | enum | `start`, `center`, `end`, `stretch`, `baseline` | `center` | Vertical alignment of copy and figure when side by side. |

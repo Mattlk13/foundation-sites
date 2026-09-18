@@ -13,8 +13,23 @@
 		/* Line height: one em plus half the base. Near 1.5 at body size,
 		   tighter as the size grows, because the added space stays constant. */
 		--yeti-leading-md: calc(1em + 0.5 * var(--_yeti-base));
+		/* A plain ratio, for text that is set smaller than the body and wants
+		   its leading to shrink with it. The formula above adds a constant, so
+		   below body size its ratio grows instead: a code block at 0.85rem
+		   comes out near 1.66, which is why code set that way reads airy. */
+		--yeti-leading-sm: 1.5;
 		--yeti-leading-tight: 1.15;
-		--yeti-measure: 65ch;
+		--yeti-measure: 70ch;
+		/* Between one item of a prose list and the next. Not on the space scale,
+		   which is geometric and tied to the type steps: its smallest step is
+		   already two thirds of a line, and a list wants a hair of separation
+		   rather than a gap. Prose rhythm, like the measure above it. */
+		--yeti-list-gap: 0.25rem;
+		/* A lede is set one step up from the body and on a shorter line. The two
+		   go together: ch is a unit of the font, so a theme that changes the size
+		   changes what the count is worth. */
+		--yeti-lede-size: var(--yeti-text-lg);
+		--yeti-lede-measure: 50ch;
 
 		--yeti-font-sans: system-ui, sans-serif;
 		--yeti-font-mono: ui-monospace, monospace;

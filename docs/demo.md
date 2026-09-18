@@ -9,12 +9,12 @@ nav_order: 4
 
 # Demo
 
-A live example in a box the reader can drag narrower and wider, with a bar naming the example and the width stop the box is at, and the code beneath it.
+<p class="lede">A live example in a box the reader can drag narrower and wider, with a bar naming the example and the width stop the box is at, and the code beneath it.</p>
 
 ## Example
 
 <figure class="demo" data-height="md" data-width="lg" data-resize="both">
-<div data-preview="Demo"><iframe title="Demo, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;figure class=&quot;demo&quot; data-height=&quot;md&quot;&gt;&#10;	&lt;div data-preview=&quot;Card&quot;&gt;&lt;/div&gt;&#10;	&lt;details&gt;&#10;		&lt;summary&gt;View Code&lt;/summary&gt;&#10;		&lt;pre&gt;&lt;code&gt;&amp;lt;article class=&quot;card&quot;&amp;gt;&#10;	&amp;lt;h2&amp;gt;Weekend in the hills&amp;lt;/h2&amp;gt;&#10;	&amp;lt;p&amp;gt;Drag the corner.&amp;lt;/p&amp;gt;&#10;&amp;lt;/article&amp;gt;&lt;/code&gt;&lt;/pre&gt;&#10;	&lt;/details&gt;&#10;&lt;/figure&gt;"></iframe></div>
+<div data-preview="Demo"><iframe title="Demo, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/frame.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;figure class=&quot;demo&quot; data-height=&quot;md&quot;&gt;&#10;	&lt;div data-preview=&quot;Card&quot;&gt;&lt;/div&gt;&#10;	&lt;details&gt;&#10;		&lt;summary&gt;View Code&lt;/summary&gt;&#10;		&lt;pre&gt;&lt;code&gt;&amp;lt;article class=&quot;card&quot;&amp;gt;&#10;	&amp;lt;h2&amp;gt;Weekend in the hills&amp;lt;/h2&amp;gt;&#10;	&amp;lt;p&amp;gt;Drag the corner.&amp;lt;/p&amp;gt;&#10;&amp;lt;/article&amp;gt;&lt;/code&gt;&lt;/pre&gt;&#10;	&lt;/details&gt;&#10;&lt;/figure&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
@@ -83,7 +83,7 @@ Give the frame a `title`. Give a box holding direct markup `tabindex="0"`: marku
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-height` | enum | `sm`, `md`, `lg`, `xl` | `md` | The preview box's height. A frame inside cannot size to its content, so this is where that is set; with data-resize="both" it is the starting height. |
-| `data-width` | enum | `xs`, `sm`, `md`, `lg`, `xl`, `2xl` |  | The preview box's starting width, before the reader drags it. Full width when absent. |
+| `data-width` | enum | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` |  | The preview box's starting width, before the reader drags it. Full width when absent. |
 | `data-resize` | enum | `width`, `both` | `width` | Which way the reader can drag the box: its width only, or both width and height. |
 | `data-stylesheet` | string |  |  | Read by the module: the stylesheet the frame it builds should load, when it is not the host page's own yeti.css; yeti.js is expected beside it. |
 

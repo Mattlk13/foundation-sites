@@ -9,12 +9,12 @@ nav_order: 4
 
 # Icon
 
-Sizes an inline SVG to the surrounding text and aligns it with the text beside it.
+<p class="lede">Sizes an inline SVG to the surrounding text and aligns it with the text beside it.</p>
 
 ## Example
 
 <figure class="demo" data-height="sm">
-<div data-preview="Icon"><iframe title="Icon, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;a class=&quot;icon&quot; href=&quot;#&quot;&gt;&#10;	&lt;svg aria-hidden=&quot;true&quot; viewBox=&quot;0 0 24 24&quot;&gt;&lt;path d=&quot;M12 3v12m0 0-4-4m4 4 4-4M4 21h16&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot;/&gt;&lt;/svg&gt;&#10;	Download&#10;&lt;/a&gt;"></iframe></div>
+<div data-preview="Icon"><iframe title="Icon, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/frame.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;a class=&quot;icon&quot; href=&quot;#&quot;&gt;&#10;	&lt;svg aria-hidden=&quot;true&quot; viewBox=&quot;0 0 24 24&quot;&gt;&lt;path d=&quot;M12 3v12m0 0-4-4m4 4 4-4M4 21h16&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot;/&gt;&lt;/svg&gt;&#10;	Download&#10;&lt;/a&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>

@@ -1,0 +1,90 @@
+/* Enter: the arrival. One run, on load, of an animation that starts the
+   element somewhere it is not and ends it exactly where the layout already
+   put it. Every keyframe list names only a from, so the to is the element's
+   own computed style and nothing here has an opinion about where a thing
+   belongs; that is the layout's job. backwards fill is what makes the hidden
+   start safe: the first frame applies from the moment the element is painted,
+   so no rule ever has to leave it at opacity: 0 on its own, and an element
+   whose animation never runs is still visible rather than stranded. */
+@layer yeti.utilities {
+	/* The element itself, or each of its children in turn, since data-stagger
+	   moves the animation down one level rather than changing what it is. */
+	.enter:not([data-stagger]),
+	.enter[data-stagger] > * {
+		animation: yeti-enter-fade var(--yeti-enter-duration) var(--yeti-enter-ease) backwards;
+	}
+	.enter[data-enter="rise"]:not([data-stagger]),
+	.enter[data-enter="rise"][data-stagger] > * { animation-name: yeti-enter-rise; }
+	.enter[data-enter="scale"]:not([data-stagger]),
+	.enter[data-enter="scale"][data-stagger] > * { animation-name: yeti-enter-scale; }
+
+	/* Each child a step later than the last. Eight rules and a floor, rather
+	   than sibling-index(), which is neither Baseline nor in WebKit, and
+	   rather than a delay counted in the markup, which would put a number a
+	   theme cannot reach back into the page. The floor is the ninth child's
+	   delay, and every child past the ninth shares it: a stagger that keeps
+	   growing turns a list of thirty into a ten-second wait, and the point of
+	   the gesture is long gone by then. The floor is written first and is
+	   outranked by every :nth-child() rule below it on specificity, not on
+	   order. */
+	.enter[data-stagger] > * { animation-delay: calc(var(--yeti-enter-delay) + 8 * var(--yeti-enter-stagger)); }
+	.enter[data-stagger] > :nth-child(1) { animation-delay: var(--yeti-enter-delay); }
+	.enter[data-stagger] > :nth-child(2) { animation-delay: calc(var(--yeti-enter-delay) + var(--yeti-enter-stagger)); }
+	.enter[data-stagger] > :nth-child(3) { animation-delay: calc(var(--yeti-enter-delay) + 2 * var(--yeti-enter-stagger)); }
+	.enter[data-stagger] > :nth-child(4) { animation-delay: calc(var(--yeti-enter-delay) + 3 * var(--yeti-enter-stagger)); }
+	.enter[data-stagger] > :nth-child(5) { animation-delay: calc(var(--yeti-enter-delay) + 4 * var(--yeti-enter-stagger)); }
+	.enter[data-stagger] > :nth-child(6) { animation-delay: calc(var(--yeti-enter-delay) + 5 * var(--yeti-enter-stagger)); }
+	.enter[data-stagger] > :nth-child(7) { animation-delay: calc(var(--yeti-enter-delay) + 6 * var(--yeti-enter-stagger)); }
+	.enter[data-stagger] > :nth-child(8) { animation-delay: calc(var(--yeti-enter-delay) + 7 * var(--yeti-enter-stagger)); }
+
+	/* data-view hands the same animation to a scroll-driven timeline, so the
+	   arrival happens where the reader is rather than all at once above the
+	   fold. Two guards, and the fallback is the whole point of both.
+
+	   @supports, because animation-timeline: view() is not Baseline. Chromium
+	   and Safari have it and Firefox does not, as of this writing, and that
+	   line will move. The rules above already gave every .enter a working
+	   animation on load and this block only re-times it, so a reader without
+	   view() sees the element arrive on load instead of on scroll, which is a
+	   lesser effect and not a broken page. Setting opacity: 0 outside the
+	   animation would have been the tidier way to write the waiting state and
+	   would have left every one of those readers looking at nothing at all.
+
+	   @media, because a progress-based timeline does not read
+	   animation-duration: the animation is paced by the scroll, so the
+	   collapsed --yeti-enter-duration that stills every other animation in
+	   the framework would sail straight past this one and a reader who asked
+	   for less motion would get the most motion Yeti has. Scroll-driven entry
+	   is therefore only for a reader who has not asked; everyone else keeps
+	   the load-timed animation, which their tokens have already collapsed to
+	   nothing. */
+	@supports (animation-timeline: view()) {
+		@media (prefers-reduced-motion: no-preference) {
+			.enter[data-view]:not([data-stagger]),
+			.enter[data-view][data-stagger] > * {
+				animation-timeline: view();
+				/* From the moment the element's edge crosses into the
+				   scrollport to the moment it is fully inside. A range that
+				   ran on past that would leave a card still fading while the
+				   reader was already reading it. */
+				animation-range: entry 0% entry 100%;
+				/* The delays above are times, and a progress timeline has no
+				   use for them; each child is paced by its own crossing. Set
+				   to zero so nothing reads as a stagger that is not one. */
+				animation-delay: 0s;
+			}
+		}
+	}
+
+	@keyframes yeti-enter-fade {
+		from { opacity: 0; }
+	}
+	/* Individual transform properties, so an element that is already rotated
+	   or scaled by something else keeps that while it arrives. */
+	@keyframes yeti-enter-rise {
+		from { opacity: 0; translate: 0 var(--yeti-enter-distance); }
+	}
+	@keyframes yeti-enter-scale {
+		from { opacity: 0; scale: var(--yeti-enter-scale); }
+	}
+}

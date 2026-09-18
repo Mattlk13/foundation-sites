@@ -31,6 +31,9 @@
 	   sign that a list is layout, and every list component carries it, so
 	   scoping here means none of them has to zero this again. */
 	:is(ul, ol):not([role="list"]) > li + li {
-		margin-block-start: var(--yeti-space-xs);
+		/* A hair, not a gap: a list is meant to read denser than prose, and the
+		   space scale's smallest step is already two thirds of a line, which
+		   spaces items like short paragraphs. */
+		margin-block-start: var(--yeti-list-gap);
 	}
 }

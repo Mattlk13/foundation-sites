@@ -9,12 +9,12 @@ nav_order: 1
 
 # Breakout
 
-Keeps its children in a centered reading column with gutters, and lets any child carrying data-bleed span the full width.
+<p class="lede">Keeps its children in a centered reading column with gutters, and lets any child carrying data-bleed span the full width.</p>
 
 ## Example
 
 <figure class="demo" data-height="lg">
-<div data-preview="Breakout"><iframe title="Breakout, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;article class=&quot;breakout&quot;&gt;&#10;	&lt;h1&gt;A long read&lt;/h1&gt;&#10;	&lt;p&gt;The column keeps every paragraph at a readable width.&lt;/p&gt;&#10;	&lt;img src=&quot;valley.jpg&quot; alt=&quot;A valley at dusk, edge to edge&quot; data-bleed&gt;&#10;	&lt;p&gt;And the picture runs from edge to edge.&lt;/p&gt;&#10;&lt;/article&gt;"></iframe></div>
+<div data-preview="Breakout"><iframe title="Breakout, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/frame.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;article class=&quot;breakout&quot;&gt;&#10;	&lt;h1&gt;A long read&lt;/h1&gt;&#10;	&lt;p&gt;The column keeps every paragraph at a readable width.&lt;/p&gt;&#10;	&lt;img src=&quot;valley.jpg&quot; alt=&quot;A valley at dusk, edge to edge&quot; data-bleed&gt;&#10;	&lt;p&gt;And the picture runs from edge to edge.&lt;/p&gt;&#10;&lt;/article&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
@@ -64,7 +64,7 @@ The column is ordinary; what is special is that a child can break out of it. Fou
 
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
-| `data-max` | enum | `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `md` | The widest the reading column may be. |
+| `data-max` | enum | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `md` | The widest the reading column may be. |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `md` | The gutter on each side, and the space between children. |
 
 ## Markers

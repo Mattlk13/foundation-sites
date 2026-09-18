@@ -9,12 +9,12 @@ nav_order: 3
 
 # Cover
 
-Fills at least the viewport's height and centers one child vertically, with optional content pinned above and below it.
+<p class="lede">Fills at least the viewport's height and centers one child vertically, with optional content pinned above and below it.</p>
 
 ## Example
 
 <figure class="demo" data-height="xl">
-<div data-preview="Cover"><iframe title="Cover, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;header class=&quot;cover&quot; data-gap=&quot;lg&quot;&gt;&#10;	&lt;nav aria-label=&quot;Site&quot;&gt;&lt;a href=&quot;#&quot;&gt;Yeti&lt;/a&gt;&lt;/nav&gt;&#10;	&lt;h1 data-center&gt;A heading centered in the viewport&lt;/h1&gt;&#10;	&lt;p&gt;Pinned to the bottom.&lt;/p&gt;&#10;&lt;/header&gt;"></iframe></div>
+<div data-preview="Cover"><iframe title="Cover, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/frame.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;header class=&quot;cover&quot; data-gap=&quot;lg&quot;&gt;&#10;	&lt;nav aria-label=&quot;Site&quot;&gt;&lt;a href=&quot;#&quot;&gt;Yeti&lt;/a&gt;&lt;/nav&gt;&#10;	&lt;h1 data-center&gt;A heading centered in the viewport&lt;/h1&gt;&#10;	&lt;p&gt;Pinned to the bottom.&lt;/p&gt;&#10;&lt;/header&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
