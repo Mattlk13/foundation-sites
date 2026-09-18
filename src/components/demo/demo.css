@@ -31,6 +31,14 @@
 	   and the example, so the bar takes its own height and the example the
 	   rest. */
 	.demo:not([data-height]) { --_yeti-height: var(--yeti-height-md); }
+	/* Every [data-width] sets --_yeti-width, and custom properties inherit, so a
+	   demo inside a shell or a sidebar would silently take that ancestor's
+	   width: the docs site's demos all collapsed to its 16rem nav column. A
+	   var() fallback cannot help, because the property is set, not unset; the
+	   other readers of this token block inheritance by redeclaring it, and this
+	   does the same. initial makes it guaranteed-invalid, so the fallback below
+	   applies. */
+	.demo:not([data-width]) { --_yeti-width: initial; }
 	.demo > [data-preview] {
 		position: relative;
 		display: grid;

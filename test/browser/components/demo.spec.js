@@ -127,6 +127,15 @@ test.describe('demo', () => {
 		}
 	});
 
+	test('a demo inside an element with data-width keeps its own width', async ({ page }) => {
+		await open(page);
+		// Every [data-width] sets the shared private token and custom properties
+		// inherit, so without a reset the box would take the ancestor's 16rem.
+		const [box, ancestor] = await Promise.all([rect(page, '#inherited-preview'), rect(page, '#narrow-ancestor')]);
+		expect(box.width).toBeCloseTo(ancestor.width, 0);
+		expect(box.width).toBeGreaterThan(await token(page, '--yeti-width-xs') + 100);
+	});
+
 	test('the code is a details that opens', async ({ page }) => {
 		await open(page);
 		expect(await page.evaluate(() => document.getElementById('framed-code').open)).toBe(false);

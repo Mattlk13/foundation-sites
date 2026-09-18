@@ -39,6 +39,7 @@
     { "name": "--yeti-color-text-muted", "public": true, "description": "The caption's colour, the stop label's, and the summary's at rest." },
     { "name": "--yeti-font-mono", "public": true, "description": "The stop label's typeface, so it reads as a readout, not prose." },
     { "name": "--yeti-leading-md", "public": true, "description": "Line height of the bar and the stop label." },
+    { "name": "--_yeti-width", "public": false },
     { "name": "--_yeti-height", "public": false },
     { "name": "--_yeti-demo-inset", "public": false },
     { "name": "--_yeti-demo-max", "public": false }

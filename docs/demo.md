@@ -126,6 +126,7 @@ Attributes that descendants carry, not the root.
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 
+- `--_yeti-width`
 - `--_yeti-height`
 - `--_yeti-demo-inset`
 - `--_yeti-demo-max`
