@@ -14,7 +14,7 @@ nav_order: 1
 ## Example
 
 <figure class="demo" data-height="sm">
-<div data-preview="Attention"><iframe title="Attention, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/frame.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;alert attention&quot; data-variant=&quot;success&quot; role=&quot;status&quot;&gt;&#10;	&lt;div&gt;&lt;strong&gt;Saved.&lt;/strong&gt; Your changes are live.&lt;/div&gt;&#10;&lt;/div&gt;"></iframe></div>
+<div data-preview="Attention"><iframe title="Attention, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;alert attention&quot; data-variant=&quot;success&quot; role=&quot;status&quot;&gt;&#10;	&lt;div&gt;&lt;strong&gt;Saved.&lt;/strong&gt; Your changes are live.&lt;/div&gt;&#10;&lt;/div&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>

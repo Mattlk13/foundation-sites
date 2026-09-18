@@ -14,7 +14,7 @@ nav_order: 5
 ## Example
 
 <figure class="demo" data-height="lg">
-<div data-preview="Lede"><iframe title="Lede, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/frame.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;article&gt;&#10;	&lt;h1&gt;Card&lt;/h1&gt;&#10;	&lt;p class=&quot;lede&quot;&gt;A bordered surface for one thing: a figure that bleeds to the edges, a body, and a footer that sits at the bottom.&lt;/p&gt;&#10;	&lt;p&gt;One thing in a box: an article in a listing, a product, a person, a plan.&lt;/p&gt;&#10;&lt;/article&gt;"></iframe></div>
+<div data-preview="Lede"><iframe title="Lede, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;article&gt;&#10;	&lt;h1&gt;Card&lt;/h1&gt;&#10;	&lt;p class=&quot;lede&quot;&gt;A bordered surface for one thing: a figure that bleeds to the edges, a body, and a footer that sits at the bottom.&lt;/p&gt;&#10;	&lt;p&gt;One thing in a box: an article in a listing, a product, a person, a plan.&lt;/p&gt;&#10;&lt;/article&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
