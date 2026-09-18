@@ -11,7 +11,7 @@
 	   moves the animation down one level rather than changing what it is. */
 	.enter:not([data-stagger]),
 	.enter[data-stagger] > * {
-		animation: yeti-enter-fade var(--yeti-enter-duration) var(--yeti-ease) backwards;
+		animation: yeti-enter-fade var(--yeti-enter-duration) var(--yeti-enter-ease) backwards;
 	}
 	.enter[data-enter="rise"]:not([data-stagger]),
 	.enter[data-enter="rise"][data-stagger] > * { animation-name: yeti-enter-rise; }

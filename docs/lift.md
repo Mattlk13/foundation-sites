@@ -70,10 +70,10 @@ No structural requirements.
 
 | Token | Description |
 | --- | --- |
+| `--yeti-lift-ease` | The curve the lift runs on. |
 | `--yeti-lift-duration` | How long the lift takes; match a tinted hover to it. |
 | `--yeti-lift-distance` | How far the element rises; reduced motion takes it to zero. |
 | `--yeti-lift-shadow` | The shadow the element casts once lifted. |
-| `--yeti-ease` | The easing of both. |
 
 ## Accessibility
 

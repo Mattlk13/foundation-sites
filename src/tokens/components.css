@@ -104,6 +104,10 @@
 		   default, because an entrance that hesitates reads as a stall; a page
 		   that would rather paint first before anything moves raises it. */
 		--yeti-enter-delay: 0s;
+		/* Its own curve, not the shared one, for the same reason as the
+		   durations: a page that wants a different feel for an entrance than
+		   for a hover has to be able to say so without moving both. */
+		--yeti-enter-ease: var(--yeti-ease);
 
 		/* Lift: how far a card rises under the pointer, and the shadow it casts
 		   from up there. Reduced motion takes the distance to zero below and
@@ -115,6 +119,7 @@
 		   that changes a card's colours on the same hover has to be able to
 		   match this exactly or the two halves arrive apart. */
 		--yeti-lift-duration: var(--yeti-duration-fast);
+		--yeti-lift-ease: var(--yeti-ease);
 
 		/* Attention: one pulse or one shake over 600ms, the same length as an
 		   entrance, because both are a single gesture the reader has to catch.

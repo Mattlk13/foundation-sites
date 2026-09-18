@@ -76,12 +76,12 @@ No structural requirements.
 
 | Token | Description |
 | --- | --- |
+| `--yeti-enter-ease` | The curve the entrance runs on. |
 | `--yeti-enter-delay` | How long the staggered run waits before its first child moves. |
 | `--yeti-enter-duration` | How long one arrival takes; reduced motion collapses it. |
 | `--yeti-enter-distance` | How far below its place a rising element starts. |
 | `--yeti-enter-scale` | How small a scaling element starts. |
 | `--yeti-enter-stagger` | The wait between one staggered child and the next. |
-| `--yeti-ease` | The easing every arrival uses. |
 
 ## Accessibility
 

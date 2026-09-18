@@ -10,10 +10,10 @@
 		   animating, which is exactly what happened the first time this was used.
 		   Listing the four here means a consumer sets colours and nothing else. */
 		transition:
-			translate var(--yeti-lift-duration) var(--yeti-ease),
-			box-shadow var(--yeti-lift-duration) var(--yeti-ease),
-			background-color var(--yeti-lift-duration) var(--yeti-ease),
-			border-color var(--yeti-lift-duration) var(--yeti-ease);
+			translate var(--yeti-lift-duration) var(--yeti-lift-ease),
+			box-shadow var(--yeti-lift-duration) var(--yeti-lift-ease),
+			background-color var(--yeti-lift-duration) var(--yeti-lift-ease),
+			border-color var(--yeti-lift-duration) var(--yeti-lift-ease);
 	}
 	/* :has(:focus-visible) as well as :focus-visible, because the thing that
 	   takes focus is usually inside: a card's stretched link, a button in a

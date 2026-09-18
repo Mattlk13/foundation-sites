@@ -13,12 +13,12 @@
   "classes": [],
   "children": [],
   "tokens": [
+    { "name": "--yeti-enter-ease", "public": true, "description": "The curve the entrance runs on." },
     { "name": "--yeti-enter-delay", "public": true, "description": "How long the staggered run waits before its first child moves." },
     { "name": "--yeti-enter-duration", "public": true, "description": "How long one arrival takes; reduced motion collapses it." },
     { "name": "--yeti-enter-distance", "public": true, "description": "How far below its place a rising element starts." },
     { "name": "--yeti-enter-scale", "public": true, "description": "How small a scaling element starts." },
-    { "name": "--yeti-enter-stagger", "public": true, "description": "The wait between one staggered child and the next." },
-    { "name": "--yeti-ease", "public": true, "description": "The easing every arrival uses." }
+    { "name": "--yeti-enter-stagger", "public": true, "description": "The wait between one staggered child and the next." }
   ],
   "a11y": { "requiredAttributes": [], "keyboard": [], "notes": "Purely visual, and safe by default: the element is only ever hidden by the animation's own backwards fill, so an element whose animation never runs is visible rather than stranded, and nothing here changes reading order or focus order. Under reduced motion the duration and the stagger step both collapse, so everything is simply present at once; the scroll-driven form is switched off entirely for the same reader, because a scroll timeline paces itself and would ignore a collapsed duration." },
   "js": null,
