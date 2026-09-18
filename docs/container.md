@@ -14,7 +14,7 @@ nav_order: 2
 ## Example
 
 <figure class="demo" data-height="lg">
-<div data-preview="Container"><iframe title="Container, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;container&quot;&gt;&#10;	&lt;nav class=&quot;cluster&quot; aria-label=&quot;Site&quot;&gt;&#10;		&lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;&#10;		&lt;a href=&quot;#&quot;&gt;Docs&lt;/a&gt;&#10;	&lt;/nav&gt;&#10;&lt;/div&gt;"></iframe></div>
+<div data-preview="Container"><iframe title="Container, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/frame.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;container&quot;&gt;&#10;	&lt;nav class=&quot;cluster&quot; aria-label=&quot;Site&quot;&gt;&#10;		&lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;&#10;		&lt;a href=&quot;#&quot;&gt;Docs&lt;/a&gt;&#10;	&lt;/nav&gt;&#10;&lt;/div&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>

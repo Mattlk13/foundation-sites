@@ -61,11 +61,18 @@ export function escapeAttribute(text) {
 // at the stylesheet's own folder, since a srcdoc frame otherwise resolves
 // them against the docs page.
 export function renderDemo({ title, exampleHtml, stylesheet, height = 'lg', width, resize }) {
-	const base = `${path.posix.dirname(stylesheet)}/`.replace(/\/+$/, '/');
-	// The frame is a whole Yeti page: the stylesheet and, beside it, the bundle
-	// of every module, so a framed dialog opens, framed tabs switch, and an
-	// example that composes components gets all of their scripts, not one.
-	const doc = `<base href="${base}"><link rel="stylesheet" href="${stylesheet}"><script type="module" src="${base}yeti.js"></script><body style="margin:0;padding:var(--yeti-space-md)">${exampleHtml.trim()}`;
+	// More than one stylesheet is allowed, and is how a themed host should do
+	// it: the page has already fetched yeti.css, so naming that same URL first
+	// and a small theme after it costs the frame one short file rather than a
+	// second copy of the framework. The first one places the base and the
+	// module bundle beside it.
+	const sheets = Array.isArray(stylesheet) ? stylesheet : [stylesheet];
+	const base = `${path.posix.dirname(sheets[0])}/`.replace(/\/+$/, '/');
+	const links = sheets.map((href) => `<link rel="stylesheet" href="${href}">`).join('');
+	// The frame is a whole Yeti page: the stylesheets and, beside the first,
+	// the bundle of every module, so a framed dialog opens, framed tabs switch,
+	// and an example that composes components gets all of their scripts.
+	const doc = `<base href="${base}">${links}<script type="module" src="${base}yeti.js"></script><body style="margin:0;padding:var(--yeti-space-md)">${exampleHtml.trim()}`;
 	const srcdoc = escapeAttribute(doc).replace(/\r?\n/g, '&#10;');
 	return [
 		`<figure class="demo" data-height="${height}"${width ? ` data-width="${width}"` : ''}${resize ? ` data-resize="${resize}"` : ''}>`,
@@ -279,8 +286,9 @@ if (isMain) {
 	// so foundationcss.com can point them at its themed build rather than the
 	// framework's defaults. Absent, the frames load the site's plain yeti.css.
 	const flag = process.argv.indexOf('--stylesheet');
-	const demoStylesheet = flag === -1 ? undefined : process.argv[flag + 1];
-	if (flag !== -1 && !demoStylesheet) {
+	// Comma-separated, so a themed host can name the framework and its theme.
+	const demoStylesheet = flag === -1 ? undefined : process.argv[flag + 1]?.split(',').map((s) => s.trim()).filter(Boolean);
+	if (flag !== -1 && !demoStylesheet?.length) {
 		console.error('usage: node bin/gen-docs.js [--stylesheet <path>]');
 		process.exit(2);
 	}

@@ -14,7 +14,7 @@ nav_order: 6
 ## Example
 
 <figure class="demo" data-height="lg">
-<div data-preview="Media"><iframe title="Media, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;media&quot; data-width=&quot;sm&quot;&gt;&#10;	&lt;img src=&quot;ada.jpg&quot; alt=&quot;Portrait of Ada Lovelace&quot;&gt;&#10;	&lt;div&gt;&#10;		&lt;h3&gt;Ada Lovelace&lt;/h3&gt;&#10;		&lt;p&gt;Wrote the first published algorithm, for Babbage&#39;s Analytical Engine.&lt;/p&gt;&#10;	&lt;/div&gt;&#10;&lt;/div&gt;"></iframe></div>
+<div data-preview="Media"><iframe title="Media, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/frame.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;media&quot; data-width=&quot;sm&quot;&gt;&#10;	&lt;img src=&quot;ada.jpg&quot; alt=&quot;Portrait of Ada Lovelace&quot;&gt;&#10;	&lt;div&gt;&#10;		&lt;h3&gt;Ada Lovelace&lt;/h3&gt;&#10;		&lt;p&gt;Wrote the first published algorithm, for Babbage&#39;s Analytical Engine.&lt;/p&gt;&#10;	&lt;/div&gt;&#10;&lt;/div&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>

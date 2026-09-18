@@ -14,7 +14,7 @@ nav_order: 3
 ## Example
 
 <figure class="demo" data-height="sm">
-<div data-preview="Progress"><iframe title="Progress, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;progress class=&quot;progress&quot; value=&quot;40&quot; max=&quot;100&quot; aria-label=&quot;Upload&quot;&gt;40%&lt;/progress&gt;"></iframe></div>
+<div data-preview="Progress"><iframe title="Progress, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/frame.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;progress class=&quot;progress&quot; value=&quot;40&quot; max=&quot;100&quot; aria-label=&quot;Upload&quot;&gt;40%&lt;/progress&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>

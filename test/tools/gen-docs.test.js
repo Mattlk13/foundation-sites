@@ -275,6 +275,14 @@ test('renderDemo links the module bundle into every frame, beside the stylesheet
 	assert.ok(out.includes('&lt;link rel=&quot;stylesheet&quot; href=&quot;/assets/y.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/assets/yeti.js&quot;&gt;&lt;/script&gt;'));
 });
 
+test('renderDemo takes several stylesheets, so a themed host reuses the cached framework', () => {
+	const out = renderDemo({ title: 'Card', exampleHtml: '<p></p>', stylesheet: ['/yeti/yeti.css', '/css/theme.css'] });
+	assert.ok(out.includes('&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/theme.css&quot;&gt;'));
+	// The first one places the base and the module bundle beside it.
+	assert.ok(out.includes('&lt;base href=&quot;/yeti/&quot;&gt;'));
+	assert.ok(out.includes('src=&quot;/yeti/yeti.js&quot;'));
+});
+
 test('renderDemo keeps the srcdoc on one line, whatever the example does', () => {
 	const out = renderDemo({ title: 'Dialog', exampleHtml: '<p>One</p>\n\n<p>Two</p>\n', stylesheet: '/yeti/yeti.css' });
 	const srcdoc = out.match(/srcdoc="([^"]*)"/);
