@@ -2,7 +2,7 @@
   "$schema": "../../../schema/manifest.schema.json",
   "name": "shell",
   "kind": "recipe",
-  "group": "Page layouts",
+  "group": "Page Layouts",
   "description": "The page skeleton: header on top, footer at the bottom of the viewport when the page is short, and a body row where nav and aside sit beside main while there is room.",
   "class": "shell",
   "attributes": [

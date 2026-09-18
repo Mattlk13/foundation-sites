@@ -2,7 +2,7 @@
   "$schema": "../../../schema/manifest.schema.json",
   "name": "columns",
   "kind": "layout",
-  "group": "Grids and rows",
+  "group": "Grids and Rows",
   "description": "Lays its children out as equal columns when the container is wider than a threshold, and as rows when it is not.",
   "class": "columns",
   "attributes": [

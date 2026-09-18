@@ -2,7 +2,7 @@
   "$schema": "../../../schema/manifest.schema.json",
   "name": "icon",
   "kind": "layout",
-  "group": "Boxes and stacks",
+  "group": "Boxes and Stacks",
   "description": "Sizes an inline SVG to the surrounding text and aligns it with the text beside it.",
   "class": "icon",
   "attributes": [

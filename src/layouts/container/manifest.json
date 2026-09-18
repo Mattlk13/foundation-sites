@@ -2,7 +2,7 @@
   "$schema": "../../../schema/manifest.schema.json",
   "name": "container",
   "kind": "layout",
-  "group": "Boxes and stacks",
+  "group": "Boxes and Stacks",
   "description": "Makes its box the thing a container query measures, so what is inside can respond to its width instead of the viewport's.",
   "class": "container",
   "attributes": [],

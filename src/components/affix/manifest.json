@@ -2,7 +2,7 @@
   "$schema": "../../../schema/manifest.schema.json",
   "name": "affix",
   "kind": "component",
-  "group": "Forms and actions",
+  "group": "Forms and Actions",
   "description": "Joins a control with what belongs beside it, a unit, a symbol, a button, or another control, into one thing with a shared border and height.",
   "class": "affix",
   "attributes": [],

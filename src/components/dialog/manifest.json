@@ -2,7 +2,7 @@
   "$schema": "../../../schema/manifest.schema.json",
   "name": "dialog",
   "kind": "component",
-  "group": "Forms and actions",
+  "group": "Forms and Actions",
   "description": "The native dialog element as a modal, opened by a button that names it, with the page behind it inert and focus held inside.",
   "class": "dialog",
   "attributes": [

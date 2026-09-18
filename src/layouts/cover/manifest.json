@@ -2,7 +2,7 @@
   "$schema": "../../../schema/manifest.schema.json",
   "name": "cover",
   "kind": "layout",
-  "group": "Page layouts",
+  "group": "Page Layouts",
   "description": "Fills at least the viewport's height and centers one child vertically, with optional content pinned above and below it.",
   "class": "cover",
   "attributes": [

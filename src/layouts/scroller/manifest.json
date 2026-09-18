@@ -2,7 +2,7 @@
   "$schema": "../../../schema/manifest.schema.json",
   "name": "scroller",
   "kind": "layout",
-  "group": "Grids and rows",
+  "group": "Grids and Rows",
   "description": "Lays its children out in a single row that scrolls horizontally.",
   "class": "scroller",
   "attributes": [

@@ -2,7 +2,7 @@
   "$schema": "../../../schema/manifest.schema.json",
   "name": "box",
   "kind": "layout",
-  "group": "Boxes and stacks",
+  "group": "Boxes and Stacks",
   "description": "Pads its content on all sides, with an optional border.",
   "class": "box",
   "attributes": [

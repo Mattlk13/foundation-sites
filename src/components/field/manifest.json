@@ -2,7 +2,7 @@
   "$schema": "../../../schema/manifest.schema.json",
   "name": "field",
   "kind": "component",
-  "group": "Forms and actions",
+  "group": "Forms and Actions",
   "description": "One form control with its label, an optional hint, and an error that shows itself when the control is invalid.",
   "class": "field",
   "attributes": [

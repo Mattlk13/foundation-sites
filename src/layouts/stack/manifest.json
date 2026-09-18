@@ -2,7 +2,7 @@
   "$schema": "../../../schema/manifest.schema.json",
   "name": "stack",
   "kind": "layout",
-  "group": "Boxes and stacks",
+  "group": "Boxes and Stacks",
   "description": "Stacks its children vertically with one consistent gap between them.",
   "class": "stack",
   "attributes": [
