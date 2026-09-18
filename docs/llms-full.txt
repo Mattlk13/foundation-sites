@@ -2167,7 +2167,7 @@ The one sentence under a page's heading that says what the page is, before the p
 
 It is a class rather than a rule about position, because a lede is a role and not a place. The obvious alternative, styling the paragraph that follows the heading, encodes where the paragraph happens to sit, so the day someone wraps the heading and the paragraph in a `stack` the lede quietly becomes body copy. A class survives being moved.
 
-The size is a token, so a theme sets how much larger a lede reads. It carries its own measure too, narrower than the body's: set larger at the body's measure it would run to a longer line than the prose it introduces, which is backwards for the sentence meant to be read first.
+The size is a token, so a theme sets how much larger a lede reads. It carries its own measure, because a lede set larger at the body's measure runs to a longer line than the prose it introduces. Change one and change the other: `ch` is a unit of the font, so raising the size raises what the count is worth.
 
 ```html
 <h1>Card</h1>
@@ -2181,7 +2181,7 @@ Nothing to do. A lede is a paragraph that is set larger; it takes no role and an
 
 Tokens:
 - --yeti-lede-size — How large a lede reads.
-- --yeti-lede-measure — The lede's own line length, narrower than the body's because it is set larger.
+- --yeti-lede-measure — The lede's line length; moves with its size, since ch is a unit of the font.
 - --yeti-leading-md — Its line height, the same as body prose.
 
 Accessibility contract:
@@ -2279,7 +2279,7 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-measure (text): 70ch — Maximum line length for prose.
 - --yeti-list-gap (text): 0.25rem — Space between one item of a prose list and the next.
 - --yeti-lede-size (text): var(--yeti-text-lg) — How large a lede reads.
-- --yeti-lede-measure (text): 45ch — A lede's line length, shorter than the body's because it is set larger.
+- --yeti-lede-measure (text): 50ch — A lede's line length. Moves with --yeti-lede-size, since ch is a unit of the font.
 - --yeti-font-sans (font): system-ui, sans-serif — Default text face. Yeti ships no web fonts; override this to use yours.
 - --yeti-font-mono (font): ui-monospace, monospace — Code face.
 - --yeti-duration-fast (motion): 150ms — Quick transitions; hover and focus. Collapses to 0.01ms under prefers-reduced-motion.

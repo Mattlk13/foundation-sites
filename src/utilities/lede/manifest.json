@@ -11,7 +11,7 @@
   "markers": [],
   "tokens": [
     { "name": "--yeti-lede-size", "public": true, "description": "How large a lede reads." },
-    { "name": "--yeti-lede-measure", "public": true, "description": "The lede's own line length, narrower than the body's because it is set larger." },
+    { "name": "--yeti-lede-measure", "public": true, "description": "The lede's line length; moves with its size, since ch is a unit of the font." },
     { "name": "--yeti-leading-md", "public": true, "description": "Its line height, the same as body prose." }
   ],
   "a11y": {

@@ -92,7 +92,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-measure` | `70ch` | Maximum line length for prose. |
 | `--yeti-list-gap` | `0.25rem` | Space between one item of a prose list and the next. |
 | `--yeti-lede-size` | `var(--yeti-text-lg)` | How large a lede reads. |
-| `--yeti-lede-measure` | `45ch` | A lede's line length, shorter than the body's because it is set larger. |
+| `--yeti-lede-measure` | `50ch` | A lede's line length. Moves with --yeti-lede-size, since ch is a unit of the font. |
 
 ## Font
 

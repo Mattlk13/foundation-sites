@@ -25,11 +25,11 @@
 		   already two thirds of a line, and a list wants a hair of separation
 		   rather than a gap. Prose rhythm, like the measure above it. */
 		--yeti-list-gap: 0.25rem;
-		/* A lede is set one step up from the body and on a shorter line. The
-		   count has to fall by more than the type rises, because ch is a unit of
-		   the font: 55ch of lg type is wider than 70ch of md, not narrower. */
+		/* A lede is set one step up from the body and on a shorter line. The two
+		   go together: ch is a unit of the font, so a theme that changes the size
+		   changes what the count is worth. */
 		--yeti-lede-size: var(--yeti-text-lg);
-		--yeti-lede-measure: 45ch;
+		--yeti-lede-measure: 50ch;
 
 		--yeti-font-sans: system-ui, sans-serif;
 		--yeti-font-mono: ui-monospace, monospace;

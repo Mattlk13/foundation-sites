@@ -6,7 +6,7 @@ The one sentence under a page's heading that says what the page is, before the p
 
 It is a class rather than a rule about position, because a lede is a role and not a place. The obvious alternative, styling the paragraph that follows the heading, encodes where the paragraph happens to sit, so the day someone wraps the heading and the paragraph in a `stack` the lede quietly becomes body copy. A class survives being moved.
 
-The size is a token, so a theme sets how much larger a lede reads. It carries its own measure too, narrower than the body's: set larger at the body's measure it would run to a longer line than the prose it introduces, which is backwards for the sentence meant to be read first.
+The size is a token, so a theme sets how much larger a lede reads. It carries its own measure, because a lede set larger at the body's measure runs to a longer line than the prose it introduces. Change one and change the other: `ch` is a unit of the font, so raising the size raises what the count is worth.
 
 ```html
 <h1>Card</h1>
