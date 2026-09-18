@@ -107,6 +107,15 @@ export function validateElementTree(root, merged, file, lineOffset = 0, allowed 
 const FIXTURE_ONLY = new Set(['data-contrast', 'data-contrast-border', 'data-contrast-id', 'data-contrast-edge-id']);
 
 /** Fixtures are markup too: anything a browser test renders must be markup the manifests allow. */
+/**
+ * One HTML string against a merged manifest object, for HTML that lives outside
+ * src/: a built page, an editor's buffer, a snippet an agent is about to write.
+ * Takes the manifest as data, not a source tree, which is what a consumer has.
+ */
+export function validateHtmlString(html, merged, file = 'snippet') {
+	return validateElementTree(parseHtml(html), merged, file);
+}
+
 export function validateFixtures(fixturesDir, merged) {
 	if (!fs.existsSync(fixturesDir)) return [];
 	const errors = [];

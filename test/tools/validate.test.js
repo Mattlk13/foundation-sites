@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import {
-	validate, formatError, validateElementTree, extractHtmlBlocks, findBareMargin, validateLayers, validateImportOrder, validateImportant, validateTokens,
+	validate, formatError, validateElementTree, validateHtmlString, extractHtmlBlocks, findBareMargin, validateLayers, validateImportOrder, validateImportant, validateTokens,
 	validateVocabulary, validateNoMediaQueries, validateDocsFragments, validateFields, validateThemes, validateMotion, validateAnchorsAndContainers, validateTokenReads,
 } from '../../bin/validate.js';
 import { parseHtml } from '../../bin/lib/html.js';
@@ -71,6 +71,18 @@ test('an example that never uses its component is reported', () => {
 test('elements without a framework class are never checked', () => {
 	const errors = validateElementTree(parseHtml('<div data-anything="1"></div>'), { rail: validManifest() }, 'f.html');
 	assert.deepEqual(errors, []);
+});
+
+test('validateHtmlString passes markup that obeys the manifest', () => {
+	const errors = validateHtmlString('<div class="rail" data-gap="l"><p>One</p><p>Two</p></div>', { rail: validManifest() }, 'page.html');
+	assert.deepEqual(errors, []);
+});
+
+test('validateHtmlString reports a value outside its attribute\'s list, with the file it came from', () => {
+	const errors = validateHtmlString('<div class="rail" data-gap="enormous"><p>One</p><p>Two</p></div>', { rail: validManifest() }, 'page.html');
+	assert.equal(errors.length, 1);
+	assert.equal(errors[0].file, 'page.html');
+	assert.match(errors[0].message, /data-gap="enormous"/);
 });
 
 test('extractHtmlBlocks returns each fenced html block with its starting line', () => {
