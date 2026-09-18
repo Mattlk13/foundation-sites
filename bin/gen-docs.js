@@ -198,9 +198,15 @@ function countInternalTokens(tokensDir) {
 	return names.size;
 }
 
-export function generateDocs({ root, demoStylesheet }) {
+// outDir is where the pages land, and defaults to this repo's own docs/. A
+// host that themes Yeti passes its own: foundationcss.com generates the pages
+// it serves straight into its src/pages/yeti/, with demo frames pointing at
+// its themed, cache-stamped stylesheet. That used to be done by generating
+// over docs/ here and restoring it afterwards, which left the stamped pages in
+// this repo whenever the import did not reach its last line.
+export function generateDocs({ root, demoStylesheet, outDir }) {
 	const srcDir = path.join(root, 'src');
-	const docsDir = path.join(root, 'docs');
+	const docsDir = outDir ? path.resolve(outDir) : path.join(root, 'docs');
 	const schema = loadSchema(path.join(root, 'schema', 'manifest.schema.json'));
 	const vocabFile = path.join(root, 'schema', 'vocabulary.json');
 	const vocabulary = fs.existsSync(vocabFile) ? loadVocabulary(vocabFile) : {};
@@ -288,11 +294,15 @@ if (isMain) {
 	const flag = process.argv.indexOf('--stylesheet');
 	// Comma-separated, so a themed host can name the framework and its theme.
 	const demoStylesheet = flag === -1 ? undefined : process.argv[flag + 1]?.split(',').map((s) => s.trim()).filter(Boolean);
-	if (flag !== -1 && !demoStylesheet?.length) {
-		console.error('usage: node bin/gen-docs.js [--stylesheet <path>]');
+	// Where the pages are written; docs/ when absent. A themed host generates
+	// into its own tree rather than over this one.
+	const outFlag = process.argv.indexOf('--out');
+	const outDir = outFlag === -1 ? undefined : process.argv[outFlag + 1];
+	if ((flag !== -1 && !demoStylesheet?.length) || (outFlag !== -1 && !outDir)) {
+		console.error('usage: node bin/gen-docs.js [--stylesheet <path>] [--out <dir>]');
 		process.exit(2);
 	}
-	const { written, deleted, errors } = generateDocs({ root, demoStylesheet });
+	const { written, deleted, errors } = generateDocs({ root, demoStylesheet, outDir });
 	for (const e of errors) console.error(formatError(root, e));
 	if (errors.length) {
 		console.error('docs: aborted');
