@@ -2242,6 +2242,7 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-text-3xl (text): step 4 — h1.
 - --yeti-text-display (text): step 5 — Display type, larger than any heading.
 - --yeti-leading-md (text): 1em + 0.5 × base — Body line height; about 1.5 at body size, tightening as type grows.
+- --yeti-leading-sm (text): 1.5 — Line height for text set below the body size, such as a code block; a ratio, so it shrinks with the type.
 - --yeti-leading-tight (text): 1.15 — Heading line height.
 - --yeti-measure (text): 70ch — Maximum line length for prose.
 - --yeti-font-sans (font): system-ui, sans-serif — Default text face. Yeti ships no web fonts; override this to use yours.
