@@ -51,10 +51,14 @@ It is a line of time. Foundation 6 had nothing for it; people reached for a snip
 
 ## Attributes
 
+<div class="scroller" role="region" aria-label="Timeline attributes" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `lg` | Space between entries. |
 | `data-alternate` | boolean |  |  | Put entries on alternate sides of a centred rail once the list is wide enough. |
+
+</div>
 
 ## Children
 
@@ -62,10 +66,14 @@ It is a line of time. Foundation 6 had nothing for it; people reached for a snip
 
 ## Tokens
 
+<div class="scroller" role="region" aria-label="Timeline tokens" tabindex="0" markdown="1">
+
 | Token | Description |
 | --- | --- |
 | `--yeti-space-lg` | The default gap, and the room between the rail and the entries. |
 | `--yeti-color-border-strong` | The rail and the markers. |
+
+</div>
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 

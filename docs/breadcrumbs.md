@@ -55,9 +55,13 @@ Label the `nav` `aria-label="Breadcrumb"`, so it is announced as one. The last s
 
 ## Attributes
 
+<div class="scroller" role="region" aria-label="Breadcrumbs attributes" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-size` | enum | `sm`, `md`, `lg` | `md` | The text step. |
+
+</div>
 
 ## Children
 
@@ -65,6 +69,8 @@ Label the `nav` `aria-label="Breadcrumb"`, so it is announced as one. The last s
 - `li`: at least 2. A step: a link, or plain text with aria-current="page" for the last.
 
 ## Tokens
+
+<div class="scroller" role="region" aria-label="Breadcrumbs tokens" tabindex="0" markdown="1">
 
 | Token | Description |
 | --- | --- |
@@ -75,6 +81,8 @@ Label the `nav` `aria-label="Breadcrumb"`, so it is announced as one. The last s
 | `--yeti-space-xs` | Gap between steps, and between a step and its separator. |
 | `--yeti-color-text` | The current step, and a link under the pointer. |
 | `--yeti-weight-strong` | Weight of the current step. |
+
+</div>
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 

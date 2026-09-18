@@ -54,9 +54,13 @@ Under reduced motion `--yeti-attention-duration` collapses and the element simpl
 
 ## Attributes
 
+<div class="scroller" role="region" aria-label="Attention attributes" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-attention` | enum | `pulse`, `shake` | `pulse` | Which gesture: a swell and settle, or a shake from side to side. |
+
+</div>
 
 ## Children
 
@@ -64,12 +68,16 @@ No structural requirements.
 
 ## Tokens
 
+<div class="scroller" role="region" aria-label="Attention tokens" tabindex="0" markdown="1">
+
 | Token | Description |
 | --- | --- |
 | `--yeti-attention-duration` | How long the gesture takes; reduced motion collapses it. |
 | `--yeti-attention-distance` | How far a shake throws the element to each side. |
 | `--yeti-attention-scale` | How large a pulse swells the element at its peak. |
 | `--yeti-ease` | The easing of the gesture. |
+
+</div>
 
 ## Accessibility
 

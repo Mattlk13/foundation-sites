@@ -61,6 +61,8 @@ Label the `nav` `aria-label="Pagination"`. The current page's link carries `aria
 
 ## Attributes
 
+<div class="scroller" role="region" aria-label="Pagination attributes" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-threshold` | enum | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `sm` | The pagination's own width below which only Previous, the current page, and Next remain. |
@@ -68,12 +70,16 @@ Label the `nav` `aria-label="Pagination"`. The current page's link carries `aria
 | `data-justify` | enum | `start`, `center`, `end`, `between`, `around`, `evenly` | `start` | Where the links sit in the row. |
 | `data-size` | enum | `sm`, `md`, `lg` | `md` | The text step. |
 
+</div>
+
 ## Children
 
 - `> ol`: exactly 1. The links, in page order, with role="list".
 - `li`: at least 2. A page link, or a span holding an ellipsis for skipped pages.
 
 ## Tokens
+
+<div class="scroller" role="region" aria-label="Pagination tokens" tabindex="0" markdown="1">
 
 | Token | Description |
 | --- | --- |
@@ -89,6 +95,8 @@ Label the `nav` `aria-label="Pagination"`. The current page's link carries `aria
 | `--yeti-space-sm` | The space step when data-size is absent; a target's inline padding follows it. |
 | `--yeti-space-xs` | Gap between targets. |
 | `--yeti-color-text-muted` | The span standing for skipped pages. |
+
+</div>
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 

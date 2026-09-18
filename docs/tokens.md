@@ -13,6 +13,8 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 
 ## Scale
 
+<div class="scroller" role="region" aria-label="Scale tokens" tabindex="0" markdown="1">
+
 | Token | Default | Description |
 | --- | --- | --- |
 | `--yeti-base` | unset (override only) | Set to pin the body size at one value for every viewport; overrides both --yeti-base-min and --yeti-base-max. |
@@ -24,7 +26,11 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-viewport-min` | `320px` | Viewport width at which the narrow values apply. |
 | `--yeti-viewport-max` | `1280px` | Viewport width at which the wide values apply. |
 
+</div>
+
 ## Space
+
+<div class="scroller" role="region" aria-label="Space tokens" tabindex="0" markdown="1">
 
 | Token | Default | Description |
 | --- | --- | --- |
@@ -44,7 +50,11 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-space-2xl-static` | `step 3, narrow viewport value` | Non-fluid 2xl. |
 | `--yeti-space-3xl-static` | `step 4, narrow viewport value` | Non-fluid 3xl. |
 
+</div>
+
 ## Radius
+
+<div class="scroller" role="region" aria-label="Radius tokens" tabindex="0" markdown="1">
 
 | Token | Default | Description |
 | --- | --- | --- |
@@ -53,7 +63,11 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-radius-lg` | `1 × base` | Large corner radius; hero panels. |
 | `--yeti-radius-full` | `9999px` | Pill or circle. |
 
+</div>
+
 ## Width
+
+<div class="scroller" role="region" aria-label="Width tokens" tabindex="0" markdown="1">
 
 | Token | Default | Description |
 | --- | --- | --- |
@@ -65,7 +79,11 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-width-xl` | `64rem` | The center layout's default maximum. |
 | `--yeti-width-2xl` | `80rem` | A wide page column. |
 
+</div>
+
 ## Height
+
+<div class="scroller" role="region" aria-label="Height tokens" tabindex="0" markdown="1">
 
 | Token | Default | Description |
 | --- | --- | --- |
@@ -74,7 +92,11 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-height-lg` | `32rem` | Block size at data-height="lg". |
 | `--yeti-height-xl` | `48rem` | Block size at data-height="xl". |
 
+</div>
+
 ## Text
+
+<div class="scroller" role="region" aria-label="Text tokens" tabindex="0" markdown="1">
 
 | Token | Default | Description |
 | --- | --- | --- |
@@ -94,14 +116,22 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-lede-size` | `var(--yeti-text-lg)` | How large a lede reads. |
 | `--yeti-lede-measure` | `50ch` | A lede's line length. Moves with --yeti-lede-size, since ch is a unit of the font. |
 
+</div>
+
 ## Font
+
+<div class="scroller" role="region" aria-label="Font tokens" tabindex="0" markdown="1">
 
 | Token | Default | Description |
 | --- | --- | --- |
 | `--yeti-font-sans` | `system-ui, sans-serif` | Default text face. Yeti ships no web fonts; override this to use yours. |
 | `--yeti-font-mono` | `ui-monospace, monospace` | Code face. |
 
+</div>
+
 ## Hue
+
+<div class="scroller" role="region" aria-label="Hue tokens" tabindex="0" markdown="1">
 
 | Token | Default | Description |
 | --- | --- | --- |
@@ -113,7 +143,11 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-hue-neutral` | `var(--yeti-hue-primary)` | Hue that faintly tints surfaces, text, and borders. Follows the primary hue unless set. |
 | `--yeti-chroma` | `0.15` | Accent saturation. Lower for a calmer palette; 0.2 and above may clip on very saturated hues. |
 
+</div>
+
 ## Color
+
+<div class="scroller" role="region" aria-label="Color tokens" tabindex="0" markdown="1">
 
 | Token | Default | Description |
 | --- | --- | --- |
@@ -162,7 +196,11 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-color-border-strong` | `L 0.75 light, 0.40 dark` | Emphasised border: focused inputs, blockquote rule. |
 | `--yeti-color-focus` | `var(--yeti-color-primary)` | Focus ring color. |
 
+</div>
+
 ## Motion
+
+<div class="scroller" role="region" aria-label="Motion tokens" tabindex="0" markdown="1">
 
 | Token | Default | Description |
 | --- | --- | --- |
@@ -173,19 +211,31 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-page-duration` | `200ms` | How long the crossfade between two pages takes, for a site that has turned cross-document view transitions on. Collapses to 0.01ms under prefers-reduced-motion, which is the only thing that stills a page transition. |
 | `--yeti-page-ease` | `ease` | The curve that crossfade runs on. Symmetric, unlike --yeti-ease, because neither end of a page change leads. |
 
+</div>
+
 ## Layout
+
+<div class="scroller" role="region" aria-label="Layout tokens" tabindex="0" markdown="1">
 
 | Token | Default | Description |
 | --- | --- | --- |
 | `--yeti-cover-height` | `100dvh` | Minimum block size of a cover layout or a filled stack. Set to auto for one that is only as tall as its content. |
 
+</div>
+
 ## Border
+
+<div class="scroller" role="region" aria-label="Border tokens" tabindex="0" markdown="1">
 
 | Token | Default | Description |
 | --- | --- | --- |
 | `--yeti-border-width` | `1px` | Width of every border a component draws. |
 
+</div>
+
 ## Weight
+
+<div class="scroller" role="region" aria-label="Weight tokens" tabindex="0" markdown="1">
 
 | Token | Default | Description |
 | --- | --- | --- |
@@ -193,7 +243,11 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-weight-bold` | `700` | Headings, th, strong and b. Separate from --yeti-weight-strong so display text and control labels can be tuned apart. |
 | `--yeti-weight-strong` | `600` | Labels, headers, buttons. |
 
+</div>
+
 ## Shadow
+
+<div class="scroller" role="region" aria-label="Shadow tokens" tabindex="0" markdown="1">
 
 | Token | Default | Description |
 | --- | --- | --- |
@@ -201,7 +255,11 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-shadow-sm` | `0 1px 2px (black at 14% light, 55% dark)` | Raised cards. |
 | `--yeti-shadow-md` | `0 4px 12px (the same colour)` | Floating surfaces; phase 4's menus and dialogs. |
 
+</div>
+
 ## Control
+
+<div class="scroller" role="region" aria-label="Control tokens" tabindex="0" markdown="1">
 
 | Token | Default | Description |
 | --- | --- | --- |
@@ -212,7 +270,11 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-control-chevron` | `a mid-grey chevron` | The select's chevron image; a theme may supply its own, for example a lighter one for a dark control surface. |
 | `--yeti-opacity-muted` | `0.6` | Opacity of a disabled or busy control. |
 
+</div>
+
 ## Button
+
+<div class="scroller" role="region" aria-label="Button tokens" tabindex="0" markdown="1">
 
 | Token | Default | Description |
 | --- | --- | --- |
@@ -220,14 +282,22 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-button-weight` | `var(--yeti-weight-strong)` | Weight of button text. |
 | `--yeti-button-padding` | `2` | Inline padding as a multiple of the size's space step. |
 
+</div>
+
 ## Badge
+
+<div class="scroller" role="region" aria-label="Badge tokens" tabindex="0" markdown="1">
 
 | Token | Default | Description |
 | --- | --- | --- |
 | `--yeti-badge-radius` | `var(--yeti-radius-full)` | Corner of badges; full makes a pill. |
 | `--yeti-badge-weight` | `var(--yeti-weight-strong)` | Weight of badge text. |
 
+</div>
+
 ## Card
+
+<div class="scroller" role="region" aria-label="Card tokens" tabindex="0" markdown="1">
 
 | Token | Default | Description |
 | --- | --- | --- |
@@ -237,27 +307,43 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-card-border` | `var(--yeti-color-border)` | Border of cards; transparent when raised. |
 | `--yeti-card-surface` | `var(--yeti-color-surface-raised)` | Background of cards. |
 
+</div>
+
 ## Field
+
+<div class="scroller" role="region" aria-label="Field tokens" tabindex="0" markdown="1">
 
 | Token | Default | Description |
 | --- | --- | --- |
 | `--yeti-field-gap` | `var(--yeti-space-xs)` | Space between a field's label, control, and hint. |
 | `--yeti-range-value` | `0%` | The filled share of a range's track. Set it on the input, inline or from your own script, since CSS cannot read the value. Not a theme value. |
 
+</div>
+
 ## Table
+
+<div class="scroller" role="region" aria-label="Table tokens" tabindex="0" markdown="1">
 
 | Token | Default | Description |
 | --- | --- | --- |
 | `--yeti-table-stripe` | `var(--yeti-color-surface-sunken)` | Fill of even rows with data-striped. |
 | `--yeti-table-border` | `var(--yeti-color-border)` | Row and cell borders. |
 
+</div>
+
 ## Seam
+
+<div class="scroller" role="region" aria-label="Seam tokens" tabindex="0" markdown="1">
 
 | Token | Default | Description |
 | --- | --- | --- |
 | `--yeti-seam-size` | twice the size's space step (override only) | Depth of the cut; set it to fix the depth for every size. |
 
+</div>
+
 ## Nav
+
+<div class="scroller" role="region" aria-label="Nav tokens" tabindex="0" markdown="1">
 
 | Token | Default | Description |
 | --- | --- | --- |
@@ -267,39 +353,63 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-nav-surface` | `var(--yeti-color-surface)` | Background of the bar. |
 | `--yeti-nav-panel` | `var(--yeti-color-surface-raised)` | Background of the open panel. |
 
+</div>
+
 ## Breadcrumbs
+
+<div class="scroller" role="region" aria-label="Breadcrumbs tokens" tabindex="0" markdown="1">
 
 | Token | Default | Description |
 | --- | --- | --- |
 | `--yeti-breadcrumbs-separator` | `"/"` | The string between crumbs; a theme may prefer "›". |
 
+</div>
+
 ## Pagination
+
+<div class="scroller" role="region" aria-label="Pagination tokens" tabindex="0" markdown="1">
 
 | Token | Default | Description |
 | --- | --- | --- |
 | `--yeti-pagination-radius` | `var(--yeti-radius-md)` | Corner of each page target. |
 
+</div>
+
 ## Alert
+
+<div class="scroller" role="region" aria-label="Alert tokens" tabindex="0" markdown="1">
 
 | Token | Default | Description |
 | --- | --- | --- |
 | `--yeti-alert-radius` | `var(--yeti-radius-md)` | Corner of an alert. |
 | `--yeti-alert-padding` | `var(--yeti-space-md)` | Padding inside an alert. |
 
+</div>
+
 ## Progress
+
+<div class="scroller" role="region" aria-label="Progress tokens" tabindex="0" markdown="1">
 
 | Token | Default | Description |
 | --- | --- | --- |
 | `--yeti-progress-radius` | `var(--yeti-radius-full)` | Corner of the bar and of its value. |
 
+</div>
+
 ## Spinner
+
+<div class="scroller" role="region" aria-label="Spinner tokens" tabindex="0" markdown="1">
 
 | Token | Default | Description |
 | --- | --- | --- |
 | `--yeti-spinner-duration` | `0.8s` | One turn of the ring; reduced motion stops it. |
 | `--yeti-spinner-width` | `0.15em` | Thickness of the ring. |
 
+</div>
+
 ## Accordion
+
+<div class="scroller" role="region" aria-label="Accordion tokens" tabindex="0" markdown="1">
 
 | Token | Default | Description |
 | --- | --- | --- |
@@ -309,14 +419,22 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-accordion-summary` | `color-mix(in oklch, var(--yeti-accordion-surface) 88%, var(--yeti-color-text))` | Background of a summary row, set apart from the panel below it. Mixed toward the text colour, so it darkens the row in light and lifts it in dark. |
 | `--yeti-accordion-summary-hover` | `color-mix(in oklch, var(--yeti-accordion-surface) 80%, var(--yeti-color-text))` | Background of a summary under the pointer, one step further from the panel than at rest. |
 
+</div>
+
 ## Tabs
+
+<div class="scroller" role="region" aria-label="Tabs tokens" tabindex="0" markdown="1">
 
 | Token | Default | Description |
 | --- | --- | --- |
 | `--yeti-tabs-border` | `var(--yeti-color-border)` | The line under the tab list. |
 | `--yeti-tabs-padding` | `var(--yeti-space-sm) var(--yeti-space-md)` | Padding of one tab. |
 
+</div>
+
 ## Dropdown
+
+<div class="scroller" role="region" aria-label="Dropdown tokens" tabindex="0" markdown="1">
 
 | Token | Default | Description |
 | --- | --- | --- |
@@ -327,7 +445,11 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-dropdown-open-delay` | `100ms` | How long the pointer must rest on a data-trigger="hover" dropdown before its panel opens. Read by hover.js, so it has no effect without that module. |
 | `--yeti-dropdown-close-delay` | `200ms` | How long a hover-triggered panel waits after the pointer leaves before it closes, so the gap between trigger and panel is forgiving. Read by hover.js. |
 
+</div>
+
 ## Dialog
+
+<div class="scroller" role="region" aria-label="Dialog tokens" tabindex="0" markdown="1">
 
 | Token | Default | Description |
 | --- | --- | --- |
@@ -336,7 +458,11 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-dialog-padding` | `var(--yeti-space-lg)` | Padding inside the dialog. |
 | `--yeti-dialog-backdrop` | `a translucent wash of the text colour` | The backdrop behind an open dialog. |
 
+</div>
+
 ## Tooltip
+
+<div class="scroller" role="region" aria-label="Tooltip tokens" tabindex="0" markdown="1">
 
 | Token | Default | Description |
 | --- | --- | --- |
@@ -344,7 +470,11 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-tooltip-text` | `var(--yeti-color-surface)` | Text of the bubble. |
 | `--yeti-tooltip-radius` | `var(--yeti-radius-sm)` | Corner of the bubble. |
 
+</div>
+
 ## Carousel
+
+<div class="scroller" role="region" aria-label="Carousel tokens" tabindex="0" markdown="1">
 
 | Token | Default | Description |
 | --- | --- | --- |
@@ -352,7 +482,11 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-carousel-dot-size` | `0.75rem` | Diameter of a slide dot. |
 | `--yeti-carousel-scroll` | `smooth, and auto under reduced motion` | How the track scrolls when a dot is followed. A components-layer declaration outranks the reset, so the preference reaches the track through this token. |
 
+</div>
+
 ## Demo
+
+<div class="scroller" role="region" aria-label="Demo tokens" tabindex="0" markdown="1">
 
 | Token | Default | Description |
 | --- | --- | --- |
@@ -360,7 +494,11 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-demo-radius` | `var(--yeti-radius-md)` | The preview box's corner, the summary's, and the stop label's. |
 | `--yeti-demo-label` | `var(--yeti-color-surface-sunken)` | Surface of the stop label naming the current width, and of the summary. |
 
+</div>
+
 ## Enter
+
+<div class="scroller" role="region" aria-label="Enter tokens" tabindex="0" markdown="1">
 
 | Token | Default | Description |
 | --- | --- | --- |
@@ -371,7 +509,11 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-enter-delay` | `0s` | How long a staggered run waits before its first child moves. |
 | `--yeti-enter-ease` | `var(--yeti-ease)` | The curve a staggered entrance runs on. |
 
+</div>
+
 ## Lift
+
+<div class="scroller" role="region" aria-label="Lift tokens" tabindex="0" markdown="1">
 
 | Token | Default | Description |
 | --- | --- | --- |
@@ -380,12 +522,18 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-lift-duration` | `var(--yeti-duration-fast)` | How long the lift takes; a consumer tinting the same hover matches it to this. |
 | `--yeti-lift-ease` | `var(--yeti-ease)` | The curve a lift runs on. |
 
+</div>
+
 ## Attention
+
+<div class="scroller" role="region" aria-label="Attention tokens" tabindex="0" markdown="1">
 
 | Token | Default | Description |
 | --- | --- | --- |
 | `--yeti-attention-duration` | `600ms` | How long the one pulse or shake takes. Collapses to 0.01ms under prefers-reduced-motion. |
 | `--yeti-attention-distance` | `0.35rem` | How far a shake throws the element to each side. |
 | `--yeti-attention-scale` | `1.06` | How large a pulse swells the element at its peak. |
+
+</div>
 
 Yeti also defines 47 internal `--_yeti-*` tokens. They derive from the public ones and may change between minor versions; override the public token instead.

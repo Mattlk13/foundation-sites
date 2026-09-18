@@ -64,6 +64,8 @@ The one-class form does the same in one element: a wrapping row whose lines are 
 
 ## Attributes
 
+<div class="scroller" role="region" aria-label="Hero attributes" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-threshold` | enum | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `lg` | The container width below which copy and figure become rows. |
@@ -72,11 +74,15 @@ The one-class form does the same in one element: a wrapping row whose lines are 
 | `data-align` | enum | `start`, `center`, `end`, `stretch`, `baseline` | `center` | Vertical alignment of copy and figure when side by side. |
 | `data-side` | enum | `start`, `end` |  | Force the figure to the start or the end regardless of source order. Moves it visually only; reading order stays as written. |
 
+</div>
+
 ## Children
 
 - `> *`: exactly 2. Exactly two: the copy and the figure (an img, video, or picture, or an element wrapping one); the copy (the body) must not have an img, video, or picture as a direct child (it would be taken for a second figure). A figure with a figcaption keeps its caption below the picture.
 
 ## Tokens
+
+<div class="scroller" role="region" aria-label="Hero tokens" tabindex="0" markdown="1">
 
 | Token | Description |
 | --- | --- |
@@ -86,6 +92,8 @@ The one-class form does the same in one element: a wrapping row whose lines are 
 | `--yeti-space-sm` | The gap between the copy's children. |
 | `--yeti-text-sm` | Text size of the caption. |
 | `--yeti-color-text-muted` | The caption. |
+
+</div>
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 

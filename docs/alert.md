@@ -53,18 +53,26 @@ The close button is a `button` carrying `data-dismiss`. Yeti's `alert.js`, loade
 
 ## Attributes
 
+<div class="scroller" role="region" aria-label="Alert attributes" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral` | `primary` | Which hue: success for done, warning for careful, alert for wrong, primary for news. |
 | `data-emphasis` | enum | `high`, `medium`, `low` | `medium` | How loud: medium is a tint, high a solid fill, low the border alone. |
 
+</div>
+
 ## Markers
 
 Attributes that descendants carry, not the root.
 
+<div class="scroller" role="region" aria-label="Alert markers" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | On | Description |
 | --- | --- | --- | --- | --- |
 | `data-dismiss` | boolean |  | `> button` | The close button; removes the alert when alert.js is loaded. |
+
+</div>
 
 ## Children
 
@@ -73,6 +81,8 @@ Attributes that descendants carry, not the root.
 - `> *`: at least 1. The message, in any element.
 
 ## Tokens
+
+<div class="scroller" role="region" aria-label="Alert tokens" tabindex="0" markdown="1">
 
 | Token | Description |
 | --- | --- |
@@ -90,6 +100,8 @@ Attributes that descendants carry, not the root.
 | `--yeti-on-primary` | Text on the default variant's colour. |
 | `--yeti-duration-fast` | How long the alert takes to fade out when alert.js dismisses it. |
 
+</div>
+
 <details><summary>Internal tokens (may change between minor versions)</summary>
 
 - `--_yeti-variant`
@@ -105,9 +117,13 @@ Attributes that descendants carry, not the root.
 
 - Use role="status" for the usual notice, which is announced politely, and role="alert" only for something urgent, which interrupts. Content present at page load is not announced by either role; the roles matter for alerts inserted later. Meaning carried by the colour must also be in the words. The close button needs a name. Without the module the button does nothing, so leave it out on pages that do not load alert.js.
 
+<div class="scroller" role="region" aria-label="Alert keyboard shortcuts" tabindex="0" markdown="1">
+
 | Key | Action |
 | --- | --- |
 | `Enter / Space` | On the close button, removes the alert. |
+
+</div>
 
 ## Browser support
 

@@ -64,11 +64,15 @@ Name the tablist, since a page may have more than one. Each tab's `aria-controls
 
 ## Attributes
 
+<div class="scroller" role="region" aria-label="Tabs attributes" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-orientation` | enum | `horizontal`, `vertical` | `horizontal` | Whether the tab list runs along the top or down the side. |
 | `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral` | `primary` | The hue of the selected tab and its edge. |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `md` | Space between the list and the panels. |
+
+</div>
 
 ## Children
 
@@ -77,6 +81,8 @@ Name the tablist, since a page may have more than one. Each tab's `aria-controls
 - `> [role="tabpanel"]`: at least 2. A panel whose aria-labelledby names its tab.
 
 ## Tokens
+
+<div class="scroller" role="region" aria-label="Tabs tokens" tabindex="0" markdown="1">
 
 | Token | Description |
 | --- | --- |
@@ -95,6 +101,8 @@ Name the tablist, since a page may have more than one. Each tab's `aria-controls
 | `--yeti-duration-fast` | How long a tab takes to change colour. |
 | `--yeti-ease` | The curve of that transition. |
 
+</div>
+
 <details><summary>Internal tokens (may change between minor versions)</summary>
 
 - `--_yeti-variant`
@@ -111,12 +119,16 @@ Name the tablist, since a page may have more than one. Each tab's `aria-controls
 
 - Give the tablist a name with aria-label or aria-labelledby. Every tab is a button whose aria-controls names its panel, and every panel names its tab back with aria-labelledby; that pairing is what the module reads. With tabs.js loaded one tab is selected, the rest take tabindex="-1" for a roving focus, and the inactive panels are hidden. Without it nothing is hidden and every tab is focusable, which is plainer but never traps content.
 
+<div class="scroller" role="region" aria-label="Tabs keyboard shortcuts" tabindex="0" markdown="1">
+
 | Key | Action |
 | --- | --- |
 | `Left / Right` | Moves selection along a horizontal list. |
 | `Up / Down` | Moves selection along a vertical list. |
 | `Home / End` | Selects the first or the last tab. |
 | `Tab` | Leaves the list for the selected panel. |
+
+</div>
 
 ## Browser support
 

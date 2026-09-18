@@ -68,6 +68,8 @@ Do not wrap a card in a link. Put the link on the heading and add `data-stretch`
 
 ## Attributes
 
+<div class="scroller" role="region" aria-label="Card attributes" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-ratio` | enum | `1/1`, `4/3`, `3/2`, `16/9`, `21/9` | `16/9` | The figure's aspect ratio when the card is wide. |
@@ -75,13 +77,19 @@ Do not wrap a card in a link. Put the link on the heading and add `data-stretch`
 | `data-raised` | boolean |  |  | A shadow instead of a border. |
 | `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral` |  | Tints the border and adds a bar along the top; the body stays plain. |
 
+</div>
+
 ## Markers
 
 Attributes that descendants carry, not the root.
 
+<div class="scroller" role="region" aria-label="Card markers" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | On | Description |
 | --- | --- | --- | --- | --- |
 | `data-stretch` | boolean |  | `a` | Stretches the link over the whole card, so the card is clickable while the link keeps its own name. |
+
+</div>
 
 ## Children
 
@@ -91,6 +99,8 @@ Attributes that descendants carry, not the root.
 - `[data-stretch]`: 0 to 1. One link that is stretched over the whole card, so the card is clickable while the link keeps its own name.
 
 ## Tokens
+
+<div class="scroller" role="region" aria-label="Card tokens" tabindex="0" markdown="1">
 
 | Token | Description |
 | --- | --- |
@@ -107,6 +117,8 @@ Attributes that descendants carry, not the root.
 | `--yeti-color-text-muted` | The caption under a figure. |
 | `--yeti-color-surface` | Background of a caption laid over the figure. |
 | `--yeti-space-sm` | Gap between the footer's actions. |
+
+</div>
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 

@@ -79,6 +79,8 @@ None. This is configured through its children and tokens only.
 
 ## Tokens
 
+<div class="scroller" role="region" aria-label="Affix tokens" tabindex="0" markdown="1">
+
 | Token | Description |
 | --- | --- |
 | `--yeti-control-radius` | Outer corners. |
@@ -88,6 +90,8 @@ None. This is configured through its children and tokens only.
 | `--yeti-text-md` | Text size of an attachment. |
 | `--yeti-color-text-muted` | Text of an attachment. |
 | `--yeti-color-surface-sunken` | Background of an attachment. |
+
+</div>
 
 ## Accessibility
 

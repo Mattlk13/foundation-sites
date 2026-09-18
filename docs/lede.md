@@ -60,11 +60,15 @@ No structural requirements.
 
 ## Tokens
 
+<div class="scroller" role="region" aria-label="Lede tokens" tabindex="0" markdown="1">
+
 | Token | Description |
 | --- | --- |
 | `--yeti-lede-size` | How large a lede reads. |
 | `--yeti-lede-measure` | The lede's line length; moves with its size, since ch is a unit of the font. |
 | `--yeti-leading-md` | Its line height, the same as body prose. |
+
+</div>
 
 ## Accessibility
 

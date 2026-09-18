@@ -51,6 +51,8 @@ A `button` is a button and an `a` is a link; the class changes the look, not the
 
 ## Attributes
 
+<div class="scroller" role="region" aria-label="Button attributes" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral` | `primary` | Which hue's ladder the button uses. |
@@ -58,11 +60,15 @@ A `button` is a button and an `a` is a link; the class changes the look, not the
 | `data-size` | enum | `sm`, `md`, `lg` | `md` | Scales the text and the padding together. |
 | `data-open` | string |  |  | The id of a dialog this button opens, when dialog.js is loaded. |
 
+</div>
+
 ## Children
 
 - `> svg`: 0 to 1. An optional icon, sized to the text.
 
 ## Tokens
+
+<div class="scroller" role="region" aria-label="Button tokens" tabindex="0" markdown="1">
 
 | Token | Description |
 | --- | --- |
@@ -85,6 +91,8 @@ A `button` is a button and an `a` is a link; the class changes the look, not the
 | `--yeti-space-sm` | The space step when data-size is absent. |
 | `--yeti-opacity-muted` | Opacity when disabled or busy. |
 
+</div>
+
 <details><summary>Internal tokens (may change between minor versions)</summary>
 
 - `--_yeti-variant`
@@ -102,9 +110,13 @@ A `button` is a button and an `a` is a link; the class changes the look, not the
 
 - Put the class on a button, an a, or a submit input, nothing else. Use button for actions and a for navigation. An icon-only button needs an aria-label. A toggle sets aria-pressed; a button that is waiting sets aria-busy="true" together with aria-disabled="true", and your handler ignores presses while it waits.
 
+<div class="scroller" role="region" aria-label="Button keyboard shortcuts" tabindex="0" markdown="1">
+
 | Key | Action |
 | --- | --- |
 | `Enter / Space` | Activates a button element; Enter follows a link. |
+
+</div>
 
 ## Browser support
 

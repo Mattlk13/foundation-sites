@@ -43,11 +43,15 @@ Centering is the whole job. Foundation 6 readers: this is `.grid-container`, wit
 
 ## Attributes
 
+<div class="scroller" role="region" aria-label="Center attributes" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-max` | enum | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `xl` | The widest the content column may be. |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `md` | The gutter on each side when the container is narrower than the maximum. |
 | `data-intrinsic` | boolean |  |  | Shrink the column to its content (still no wider than data-max) and center it, with each child centered on its own width inside it. |
+
+</div>
 
 ## Children
 
@@ -55,10 +59,14 @@ No structural requirements.
 
 ## Tokens
 
+<div class="scroller" role="region" aria-label="Center tokens" tabindex="0" markdown="1">
+
 | Token | Description |
 | --- | --- |
 | `--yeti-width-xl` | The default maximum. |
 | `--yeti-space-md` | The default gutter. |
+
+</div>
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 

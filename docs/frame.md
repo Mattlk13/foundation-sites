@@ -42,9 +42,13 @@ It is what a picture frame does: fix the shape and crop what is inside it. Found
 
 ## Attributes
 
+<div class="scroller" role="region" aria-label="Frame attributes" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-ratio` | enum | `1/1`, `4/3`, `3/2`, `16/9`, `21/9` | `16/9` | Width to height. |
+
+</div>
 
 ## Children
 

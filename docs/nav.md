@@ -69,6 +69,8 @@ Give the `nav` an `aria-label`, since a page often has more than one. The toggle
 
 ## Attributes
 
+<div class="scroller" role="region" aria-label="Nav attributes" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-threshold` | enum | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `md` | The nav's own width at or above which the links sit in the bar; below it they are behind the toggle. |
@@ -76,15 +78,21 @@ Give the `nav` an `aria-label`, since a page often has more than one. The toggle
 | `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral` | `primary` | The hue of the current link and of the hover tint. |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `sm` | Space between the bar's parts and between the links. |
 
+</div>
+
 ## Markers
 
 Attributes that descendants carry, not the root.
+
+<div class="scroller" role="region" aria-label="Nav markers" tabindex="0" markdown="1">
 
 | Attribute | Type | Values | On | Description |
 | --- | --- | --- | --- | --- |
 | `data-brand` | boolean |  | `> *` | The site's name or mark, usually a link home. |
 | `data-close` | boolean |  | `li` | The item holding the button that closes the panel; hidden in the bar. |
 | `data-actions` | boolean |  | `> *` | Buttons at the end of the bar. |
+
+</div>
 
 ## Children
 
@@ -97,6 +105,8 @@ Attributes that descendants carry, not the root.
 - `> [data-actions]`: 0 to 1. Buttons at the end of the bar.
 
 ## Tokens
+
+<div class="scroller" role="region" aria-label="Nav tokens" tabindex="0" markdown="1">
 
 | Token | Description |
 | --- | --- |
@@ -124,6 +134,8 @@ Attributes that descendants carry, not the root.
 | `--yeti-text-lg` | Text size of the links in a screen panel. |
 | `--yeti-space-xl` | Inset of a screen panel that has no close item. |
 
+</div>
+
 <details><summary>Internal tokens (may change between minor versions)</summary>
 
 - `--_yeti-gap`
@@ -141,11 +153,15 @@ Attributes that descendants carry, not the root.
 - Required attributes: `aria-label` or `aria-labelledby`
 - Give the nav an aria-label, since a page often has more than one. The toggle needs a name (aria-label or visible text); the browser sets its expanded state. Mark the current page's link with aria-current="page". Put role="list" on the ul, because the reset only removes list markers where that role says the list is decorative. With data-panel="screen" there is no outside to click, so include the close item.
 
+<div class="scroller" role="region" aria-label="Nav keyboard shortcuts" tabindex="0" markdown="1">
+
 | Key | Action |
 | --- | --- |
 | `Enter / Space` | On the toggle, opens or closes the list. |
 | `Tab` | From the toggle, into the open list's first link. |
 | `Escape` | Closes the open list and returns focus to the toggle. |
+
+</div>
 
 ## Browser support
 

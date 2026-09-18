@@ -60,6 +60,8 @@ A table needs a name: a `caption`, or `aria-label` or `aria-labelledby` on the e
 
 ## Attributes
 
+<div class="scroller" role="region" aria-label="Table attributes" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-size` | enum | `sm`, `md`, `lg` | `md` | Cell padding and text size; sm is the compact table. |
@@ -67,13 +69,19 @@ A table needs a name: a `caption`, or `aria-label` or `aria-labelledby` on the e
 | `data-hover` | boolean |  |  | Tint the row under the pointer. |
 | `data-grid` | boolean |  |  | Borders around every cell instead of lines between rows. |
 
+</div>
+
 ## Markers
 
 Attributes that descendants carry, not the root.
 
+<div class="scroller" role="region" aria-label="Table markers" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | On | Description |
 | --- | --- | --- | --- | --- |
 | `data-numeric` | boolean |  | `td, th` | A cell of numbers: end-aligned with tabular figures. |
+
+</div>
 
 ## Children
 
@@ -83,6 +91,8 @@ Attributes that descendants carry, not the root.
 - `[data-numeric]`: any number. A cell (or header cell) of numbers: end-aligned with tabular figures.
 
 ## Tokens
+
+<div class="scroller" role="region" aria-label="Table tokens" tabindex="0" markdown="1">
 
 | Token | Description |
 | --- | --- |
@@ -94,6 +104,8 @@ Attributes that descendants carry, not the root.
 | `--yeti-weight-strong` | Weight of the caption and of header cells. |
 | `--yeti-border-width` | Width of the row rules, and of every cell border with data-grid. |
 | `--yeti-color-surface-sunken` | Background of a row under the pointer with data-hover. |
+
+</div>
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 

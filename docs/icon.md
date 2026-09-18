@@ -50,10 +50,14 @@ An icon is what it holds. Foundation 6 shipped an icon font instead, which set s
 
 ## Attributes
 
+<div class="scroller" role="region" aria-label="Icon attributes" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `xs` | Space between the icon and its text. |
 | `data-align` | enum | `start`, `center`, `end`, `stretch`, `baseline` | `center` | How the icon lines up with the text: centered on the line, or on the baseline. |
+
+</div>
 
 ## Children
 
@@ -61,9 +65,13 @@ An icon is what it holds. Foundation 6 shipped an icon font instead, which set s
 
 ## Tokens
 
+<div class="scroller" role="region" aria-label="Icon tokens" tabindex="0" markdown="1">
+
 | Token | Description |
 | --- | --- |
 | `--yeti-space-xs` | The default gap. |
+
+</div>
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 

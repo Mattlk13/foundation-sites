@@ -62,17 +62,23 @@ Under reduced motion both `--yeti-enter-duration` and `--yeti-enter-stagger` col
 
 ## Attributes
 
+<div class="scroller" role="region" aria-label="Enter attributes" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-enter` | enum | `fade`, `rise`, `scale` | `fade` | Which arrival: a fade, a rise from below, or a growth from slightly small. |
 | `data-stagger` | boolean |  |  | Animate the element's children one after another instead of the element itself, each a step later than the last. |
 | `data-view` | boolean |  |  | Play as the element scrolls into view instead of on load. Where a scroll timeline is unsupported, or the reader has asked for less motion, it plays on load instead. |
 
+</div>
+
 ## Children
 
 No structural requirements.
 
 ## Tokens
+
+<div class="scroller" role="region" aria-label="Enter tokens" tabindex="0" markdown="1">
 
 | Token | Description |
 | --- | --- |
@@ -82,6 +88,8 @@ No structural requirements.
 | `--yeti-enter-distance` | How far below its place a rising element starts. |
 | `--yeti-enter-scale` | How small a scaling element starts. |
 | `--yeti-enter-stagger` | The wait between one staggered child and the next. |
+
+</div>
 
 ## Accessibility
 

@@ -44,17 +44,23 @@ Colour is decoration here; the word is the meaning, so "Live" and "Draft" work w
 
 ## Attributes
 
+<div class="scroller" role="region" aria-label="Badge attributes" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral` | `primary` | Which hue tints the badge. |
 | `data-emphasis` | enum | `high`, `medium`, `low` | `medium` | medium is a subtle tint with dark text, high a solid fill, low text alone. |
 | `data-size` | enum | `sm`, `md`, `lg` | `md` | The text size the badge sits beside; the badge renders one step smaller. |
 
+</div>
+
 ## Children
 
 - `> svg`: 0 to 1. An optional icon, sized to the text.
 
 ## Tokens
+
+<div class="scroller" role="region" aria-label="Badge tokens" tabindex="0" markdown="1">
 
 | Token | Description |
 | --- | --- |
@@ -71,6 +77,8 @@ Colour is decoration here; the word is the meaning, so "Live" and "Draft" work w
 | `--yeti-on-primary` | Text on the default variant's colour. |
 | `--yeti-text-md` | Text size when data-size is absent. |
 | `--yeti-space-sm` | The space step when data-size is absent. |
+
+</div>
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 

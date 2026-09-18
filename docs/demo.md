@@ -80,6 +80,8 @@ Give the frame a `title`. Give a box holding direct markup `tabindex="0"`: marku
 
 ## Attributes
 
+<div class="scroller" role="region" aria-label="Demo attributes" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-height` | enum | `sm`, `md`, `lg`, `xl` | `md` | The preview box's height. A frame inside cannot size to its content, so this is where that is set; with data-resize="both" it is the starting height. |
@@ -87,13 +89,19 @@ Give the frame a `title`. Give a box holding direct markup `tabindex="0"`: marku
 | `data-resize` | enum | `width`, `both` | `width` | Which way the reader can drag the box: its width only, or both width and height. |
 | `data-stylesheet` | string |  |  | Read by the module: the stylesheet the frame it builds should load, when it is not the host page's own yeti.css; yeti.js is expected beside it. |
 
+</div>
+
 ## Markers
 
 Attributes that descendants carry, not the root.
 
+<div class="scroller" role="region" aria-label="Demo markers" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | On | Description |
 | --- | --- | --- | --- | --- |
 | `data-preview` | string |  | `> div` | Marks the resizable box and names the example; the bar across the top of the box shows the value. Direct markup taller than the box scrolls, so a box holding it carries tabindex="0" to stay reachable from the keyboard; a framed box does not. |
+
+</div>
 
 ## Children
 
@@ -103,6 +111,8 @@ Attributes that descendants carry, not the root.
 - `> details`: 0 to 1. The code, collapsed: a summary reading View Code, plain text that underlines under the pointer, and a pre.
 
 ## Tokens
+
+<div class="scroller" role="region" aria-label="Demo tokens" tabindex="0" markdown="1">
 
 | Token | Description |
 | --- | --- |
@@ -124,6 +134,8 @@ Attributes that descendants carry, not the root.
 | `--yeti-font-mono` | The stop label's typeface, so it reads as a readout, not prose. |
 | `--yeti-leading-md` | Line height of the bar and the stop label. |
 
+</div>
+
 <details><summary>Internal tokens (may change between minor versions)</summary>
 
 - `--_yeti-width`
@@ -137,9 +149,13 @@ Attributes that descendants carry, not the root.
 
 - Give the iframe a title. Give a box holding direct markup tabindex="0": markup taller than the box scrolls, and a scrollable region must be reachable from the keyboard. A framed box does not need one, because the iframe fills it exactly and it never scrolls. The resize handle is the browser's and works with a mouse or trackpad; a keyboard or touch reader sees the demo at its starting size and has the code, so a demo must never be the only place the markup appears. The bar and the stop label are generated content and are not announced; the name in data-preview is a visual heading for the box, and the iframe's title carries the same name to assistive tech. A frame the module creates is titled from that name too.
 
+<div class="scroller" role="region" aria-label="Demo keyboard shortcuts" tabindex="0" markdown="1">
+
 | Key | Action |
 | --- | --- |
 | `Enter / Space` | On the summary, opens or closes the code. |
+
+</div>
 
 ## Browser support
 

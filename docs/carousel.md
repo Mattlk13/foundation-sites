@@ -76,20 +76,28 @@ Browser-drawn scroll markers will one day do this in CSS and report the current 
 
 ## Attributes
 
+<div class="scroller" role="region" aria-label="Carousel attributes" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-slides` | enum | `1`, `2`, `3`, `4` | `1` | How many slides are visible at once. |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `md` | Space between slides, and above the dots. |
 
+</div>
+
 ## Markers
 
 Attributes that descendants carry, not the root.
+
+<div class="scroller" role="region" aria-label="Carousel markers" tabindex="0" markdown="1">
 
 | Attribute | Type | Values | On | Description |
 | --- | --- | --- | --- | --- |
 | `data-track` | boolean |  | `> *` | The scrolling track that holds the slides. |
 | `data-slide` | boolean |  | `> [data-track] > *` | One slide, with an id a dot can link to. |
 | `data-dots` | boolean |  | `> *` | The list of links to the slides, one per slide. |
+
+</div>
 
 ## Children
 
@@ -98,6 +106,8 @@ Attributes that descendants carry, not the root.
 - `> [data-dots]`: 0 to 1. A list of links, one per slide, each named with aria-label. With carousel.js loaded the module scrolls the track itself, so following one adds no history entry.
 
 ## Tokens
+
+<div class="scroller" role="region" aria-label="Carousel tokens" tabindex="0" markdown="1">
 
 | Token | Description |
 | --- | --- |
@@ -109,6 +119,8 @@ Attributes that descendants carry, not the root.
 | `--yeti-space-xs` | Gap between the dots. |
 | `--yeti-duration-fast` | How long a dot takes to grow under the pointer. |
 | `--yeti-ease` | The curve of that transition. |
+
+</div>
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 
@@ -122,11 +134,15 @@ Attributes that descendants carry, not the root.
 - Required attributes: `aria-label` or `aria-labelledby`
 - Label the region and give it aria-roledescription="carousel" so it is announced as one. The dots are links to slide ids, so the browser does the scrolling and the keyboard works without help; each needs an aria-label, since a dot has no room for text and Yeti ships no visually-hidden utility. They jump to a slide but cannot report which slide is showing, because CSS cannot know that. Loading carousel.js keeps the back button useful by scrolling the track instead of navigating; without it the dots still work, and each one followed is one press of back. Nothing essential should live behind a slide a reader has to find. The track scrolls, so it must be reachable from the keyboard: give it role="group", an aria-label, and tabindex="0". It is a group rather than a region because the carousel itself is already the landmark.
 
+<div class="scroller" role="region" aria-label="Carousel keyboard shortcuts" tabindex="0" markdown="1">
+
 | Key | Action |
 | --- | --- |
 | `Tab` | Focuses the track, then each dot in turn. |
 | `ArrowLeft / ArrowRight` | Scroll the track. |
 | `Enter` | Scrolls to that dot's slide. |
+
+</div>
 
 ## Browser support
 

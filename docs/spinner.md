@@ -44,16 +44,22 @@ Standing alone, give the spinner `role="status"` and an `aria-label` such as "Lo
 
 ## Attributes
 
+<div class="scroller" role="region" aria-label="Spinner attributes" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral` | `primary` | The hue of the bright edge. |
 | `data-size` | enum | `sm`, `md`, `lg` | `md` | The ring is one em of the size's text step. |
+
+</div>
 
 ## Children
 
 No structural requirements.
 
 ## Tokens
+
+<div class="scroller" role="region" aria-label="Spinner tokens" tabindex="0" markdown="1">
 
 | Token | Description |
 | --- | --- |
@@ -68,6 +74,8 @@ No structural requirements.
 | `--yeti-on-primary` | Text on the default variant's colour. |
 | `--yeti-text-md` | The text step when data-size is absent; the ring's diameter follows it. |
 | `--yeti-space-sm` | The space step when data-size is absent. |
+
+</div>
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 

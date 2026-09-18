@@ -44,17 +44,25 @@ The block covers the viewport. Foundation 6 had no primitive for this; people co
 
 ## Attributes
 
+<div class="scroller" role="region" aria-label="Cover attributes" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `md` | Minimum space between the centered child and whatever sits above or below it. |
+
+</div>
 
 ## Markers
 
 Attributes that descendants carry, not the root.
 
+<div class="scroller" role="region" aria-label="Cover markers" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | On | Description |
 | --- | --- | --- | --- | --- |
 | `data-center` | boolean |  | `> *` | Centers the child in the space the others leave; exactly one child carries it. |
+
+</div>
 
 ## Children
 
@@ -63,10 +71,14 @@ Attributes that descendants carry, not the root.
 
 ## Tokens
 
+<div class="scroller" role="region" aria-label="Cover tokens" tabindex="0" markdown="1">
+
 | Token | Description |
 | --- | --- |
 | `--yeti-cover-height` | The minimum block size. Set it to auto for a cover no taller than its content. |
 | `--yeti-space-md` | The default gap. |
+
+</div>
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 

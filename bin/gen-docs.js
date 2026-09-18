@@ -33,10 +33,30 @@ const TOKEN_GROUPS = tokenGroups(loadSchema(path.join(SCHEMA_DIR, 'tokens.schema
 const titleCase = (name) => name.split('-').map((w) => w[0].toUpperCase() + w.slice(1)).join(' ');
 const cell = (v) => String(v ?? '').replace(/\|/g, '\\|');
 const code = (v) => `\`${v}\``;
-const table = (headers, rows) => [
+// Every table on a reference page goes in a scroller, because most of a
+// reference page is table and the widest of them do not fit a phone. The
+// scroller's own manifest names this case: one wide item, which the track then
+// gives horizontal overflow. Without it a table simply runs off the side of
+// the page, and there is nothing CSS alone can do about it — a Markdown table
+// has no wrapper to scroll inside, and making the table itself a block box
+// takes its role away from a screen reader.
+//
+// markdown="1" and the blank lines are both load-bearing, and for different
+// readers. PHP Markdown Extra, which renders the docs site, leaves the table
+// as literal pipes without the attribute; GitHub ignores the attribute but
+// needs the blank lines, and without them leaves the pipes just the same.
+// Together they render as a table in both, which is checked, and GitHub drops
+// the class and the attribute from its output as it always does.
+// label names the track for a screen reader; a scrollable region has to carry
+// a name, a role and a tab stop, and validate-html enforces all three.
+const table = (label, headers, rows) => [
+	`<div class="scroller" role="region" aria-label="${escapeAttribute(label)}" tabindex="0" markdown="1">`,
+	'',
 	`| ${headers.join(' | ')} |`,
 	`| ${headers.map(() => '---').join(' | ')} |`,
 	...rows.map((r) => `| ${r.map(cell).join(' | ')} |`),
+	'',
+	'</div>',
 ].join('\n');
 
 /** Escapes text for an HTML attribute value; the five characters that can end or break one. */
@@ -115,7 +135,7 @@ export function renderPage({ manifest: m, exampleHtml, navOrder, docsMd = '', de
 
 	out.push('## Attributes', '');
 	out.push(m.attributes.length
-		? table(['Attribute', 'Type', 'Values', 'Default', 'Description'], m.attributes.map((a) => [
+		? table(`${title} attributes`, ['Attribute', 'Type', 'Values', 'Default', 'Description'], m.attributes.map((a) => [
 			code(a.name), a.type, (a.values ?? []).map(code).join(', '), a.default === undefined ? '' : code(a.default), a.description,
 		]))
 		: 'None. This is configured through its children and tokens only.');
@@ -123,13 +143,13 @@ export function renderPage({ manifest: m, exampleHtml, navOrder, docsMd = '', de
 
 	if ((m.markers ?? []).length) {
 		out.push('## Markers', '', 'Attributes that descendants carry, not the root.', '');
-		out.push(table(['Attribute', 'Type', 'Values', 'On', 'Description'], m.markers.map((k) => [
+		out.push(table(`${title} markers`, ['Attribute', 'Type', 'Values', 'On', 'Description'], m.markers.map((k) => [
 			code(k.name), k.type, (k.values ?? []).map(code).join(', '), k.on ? code(k.on) : '', k.description,
 		])), '');
 	}
 
 	if (m.classes.length) {
-		out.push('## Modifier classes', '', table(['Class', 'Description'], m.classes.map((c) => [code(`.${c.name}`), c.description])), '');
+		out.push('## Modifier classes', '', table(`${title} modifier classes`, ['Class', 'Description'], m.classes.map((c) => [code(`.${c.name}`), c.description])), '');
 	}
 
 	out.push('## Children', '');
@@ -141,7 +161,7 @@ export function renderPage({ manifest: m, exampleHtml, navOrder, docsMd = '', de
 	const publicTokens = m.tokens.filter((t) => t.public);
 	const internalTokens = m.tokens.filter((t) => !t.public);
 	out.push('## Tokens', '');
-	out.push(publicTokens.length ? table(['Token', 'Description'], publicTokens.map((t) => [code(t.name), t.description ?? ''])) : 'No public tokens.');
+	out.push(publicTokens.length ? table(`${title} tokens`, ['Token', 'Description'], publicTokens.map((t) => [code(t.name), t.description ?? ''])) : 'No public tokens.');
 	if (internalTokens.length) {
 		out.push('', '<details><summary>Internal tokens (may change between minor versions)</summary>', '', internalTokens.map((t) => `- ${code(t.name)}`).join('\n'), '', '</details>');
 	}
@@ -155,7 +175,7 @@ export function renderPage({ manifest: m, exampleHtml, navOrder, docsMd = '', de
 	if (m.a11y.requiredAttributes.length) a11y.push(`- Required attributes: ${m.a11y.requiredAttributes.map(required).join(', ')}`);
 	if (m.a11y.notes) a11y.push(`- ${m.a11y.notes}`);
 	out.push(a11y.length ? a11y.join('\n') : 'No special requirements beyond semantic HTML.');
-	if (m.a11y.keyboard.length) out.push('', table(['Key', 'Action'], m.a11y.keyboard.map((k) => [code(k.key), k.action])));
+	if (m.a11y.keyboard.length) out.push('', table(`${title} keyboard shortcuts`, ['Key', 'Action'], m.a11y.keyboard.map((k) => [code(k.key), k.action])));
 	out.push('');
 
 	out.push('## Browser support', '');
@@ -181,7 +201,7 @@ export function renderTokensPage(entries, internalCount, groups = TOKEN_GROUPS) 
 		const rows = entries.filter((e) => e.group === group);
 		if (!rows.length) continue;
 		out.push(`## ${group[0].toUpperCase()}${group.slice(1)}`, '');
-		out.push(table(['Token', 'Default', 'Description'], rows.map((e) => [
+		out.push(table(`${group[0].toUpperCase()}${group.slice(1)} tokens`, ['Token', 'Default', 'Description'], rows.map((e) => [
 			code(e.name), e.declared === false ? `${e.default} (override only)` : code(e.default), e.description,
 		])), '');
 	}

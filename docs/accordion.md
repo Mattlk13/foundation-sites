@@ -83,6 +83,8 @@ None. This is configured through its children and tokens only.
 
 ## Tokens
 
+<div class="scroller" role="region" aria-label="Accordion tokens" tabindex="0" markdown="1">
+
 | Token | Description |
 | --- | --- |
 | `--yeti-accordion-border` | The line between panels and around the set. |
@@ -98,14 +100,20 @@ None. This is configured through its children and tokens only.
 | `--yeti-ease` | The curve of both transitions. |
 | `--yeti-duration-base` | How long a panel takes to open or close. |
 
+</div>
+
 ## Accessibility
 
 - This is native: details is a disclosure, summary is its button, and the open state is the open attribute, all announced without help. Put a heading inside the summary if the row is a section title, since summary is not a heading by itself. To open one at a time, give every details the same name attribute, which is the browser's own exclusive accordion; Yeti adds no attribute for it, because CSS cannot set one and script should not be needed.
+
+<div class="scroller" role="region" aria-label="Accordion keyboard shortcuts" tabindex="0" markdown="1">
 
 | Key | Action |
 | --- | --- |
 | `Tab` | Moves to the next summary. |
 | `Enter / Space` | Opens or closes the panel under the focused summary. |
+
+</div>
 
 ## Browser support
 

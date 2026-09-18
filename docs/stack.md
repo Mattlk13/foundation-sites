@@ -53,19 +53,27 @@ No other word says it as plainly: things stacked, one on another. Foundation 6 h
 
 ## Attributes
 
+<div class="scroller" role="region" aria-label="Stack attributes" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `md` | Space between children. A pair such as sm-lg grows fluidly from the first stop to the second. |
 | `data-align` | enum | `start`, `center`, `end`, `stretch`, `baseline` | `stretch` | Horizontal alignment of the children. |
 | `data-fill` | boolean |  |  | Make the stack at least as tall as the viewport, so a child carrying data-split reaches the bottom. |
 
+</div>
+
 ## Markers
 
 Attributes that descendants carry, not the root.
 
+<div class="scroller" role="region" aria-label="Stack markers" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | On | Description |
 | --- | --- | --- | --- | --- |
 | `data-split` | boolean |  | `> *` | Pushes the child and everything after it to the end of the stack when the stack is taller than its content. |
+
+</div>
 
 ## Children
 
@@ -74,10 +82,14 @@ Attributes that descendants carry, not the root.
 
 ## Tokens
 
+<div class="scroller" role="region" aria-label="Stack tokens" tabindex="0" markdown="1">
+
 | Token | Description |
 | --- | --- |
 | `--yeti-space-md` | The default gap. |
 | `--yeti-cover-height` | The minimum block size when data-fill is set. |
+
+</div>
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 

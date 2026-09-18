@@ -51,10 +51,14 @@ The group carries `role="group"` and a name, so a screen reader announces the se
 
 ## Attributes
 
+<div class="scroller" role="region" aria-label="Buttons attributes" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-attach` | boolean |  |  | Fuse the buttons into one segmented control that shares borders. |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `sm` | Space between buttons when not attached. |
+
+</div>
 
 ## Children
 
@@ -62,10 +66,14 @@ The group carries `role="group"` and a name, so a screen reader announces the se
 
 ## Tokens
 
+<div class="scroller" role="region" aria-label="Buttons tokens" tabindex="0" markdown="1">
+
 | Token | Description |
 | --- | --- |
 | `--yeti-space-sm` | The default gap. |
 | `--yeti-border-width` | The width the attached members overlap by. |
+
+</div>
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 

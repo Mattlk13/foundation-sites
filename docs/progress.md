@@ -45,16 +45,22 @@ A `progress` element is a progress bar to assistive tech already; it needs a nam
 
 ## Attributes
 
+<div class="scroller" role="region" aria-label="Progress attributes" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral` | `primary` | The hue of the filled part. |
 | `data-size` | enum | `sm`, `md`, `lg` | `md` | The bar's thickness: half the size's space step. |
+
+</div>
 
 ## Children
 
 No structural requirements.
 
 ## Tokens
+
+<div class="scroller" role="region" aria-label="Progress tokens" tabindex="0" markdown="1">
 
 | Token | Description |
 | --- | --- |
@@ -71,6 +77,8 @@ No structural requirements.
 | `--yeti-duration-base` | How long the value takes to move; one cycle of the indeterminate sweep is four of it. |
 | `--yeti-ease` | The curve of the value's move. |
 | `--yeti-motion-iterations` | How many times the indeterminate sweep repeats; one under reduced motion. |
+
+</div>
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 

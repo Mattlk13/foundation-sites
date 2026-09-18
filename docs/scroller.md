@@ -45,11 +45,15 @@ What the visitor does is scroll, so the layout is a scroller; a name for the mec
 
 ## Attributes
 
+<div class="scroller" role="region" aria-label="Scroller attributes" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `md` | Space between items. |
 | `data-snap` | boolean |  |  | Snap each item's start edge into place as the track scrolls. |
 | `data-width` | enum | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` |  | Give every item this width instead of its natural one. |
+
+</div>
 
 ## Children
 
@@ -57,9 +61,13 @@ What the visitor does is scroll, so the layout is a scroller; a name for the mec
 
 ## Tokens
 
+<div class="scroller" role="region" aria-label="Scroller tokens" tabindex="0" markdown="1">
+
 | Token | Description |
 | --- | --- |
 | `--yeti-space-md` | The default gap. |
+
+</div>
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 
@@ -73,10 +81,14 @@ What the visitor does is scroll, so the layout is a scroller; a name for the mec
 - Required attributes: `tabindex`, `aria-label` or `aria-labelledby`
 - A scrollable region must be reachable from the keyboard: give it tabindex="0", role="region", and a name with aria-label.
 
+<div class="scroller" role="region" aria-label="Scroller keyboard shortcuts" tabindex="0" markdown="1">
+
 | Key | Action |
 | --- | --- |
 | `Tab` | Focuses the track so the arrow keys can scroll it. |
 | `ArrowLeft / ArrowRight` | Scroll the track. |
+
+</div>
 
 ## Browser support
 

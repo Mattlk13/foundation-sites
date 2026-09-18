@@ -52,10 +52,14 @@ There is no plainer word for a padded rectangle. Foundation 6's Callout was a st
 
 ## Attributes
 
+<div class="scroller" role="region" aria-label="Box attributes" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `md` | Padding on every side. |
 | `data-border` | boolean |  |  | Draw a border of the border width, in the border colour. |
+
+</div>
 
 ## Children
 
@@ -63,11 +67,15 @@ No structural requirements.
 
 ## Tokens
 
+<div class="scroller" role="region" aria-label="Box tokens" tabindex="0" markdown="1">
+
 | Token | Description |
 | --- | --- |
 | `--yeti-space-md` | The default padding. |
 | `--yeti-color-border` | The border color when data-border is set. |
 | `--yeti-border-width` | Width of the border when data-border is set. |
+
+</div>
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 

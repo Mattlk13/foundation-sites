@@ -53,11 +53,15 @@ The word is exact: items gather, they do not line up in columns. Foundation 6 re
 
 ## Attributes
 
+<div class="scroller" role="region" aria-label="Cluster attributes" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `md` | Space between items, horizontally and between wrapped rows. |
 | `data-align` | enum | `start`, `center`, `end`, `stretch`, `baseline` | `center` | Vertical alignment of items within a row. |
 | `data-justify` | enum | `start`, `center`, `end`, `between`, `around`, `evenly` | `start` | How items are distributed along the row. |
+
+</div>
 
 ## Children
 
@@ -65,9 +69,13 @@ The word is exact: items gather, they do not line up in columns. Foundation 6 re
 
 ## Tokens
 
+<div class="scroller" role="region" aria-label="Cluster tokens" tabindex="0" markdown="1">
+
 | Token | Description |
 | --- | --- |
 | `--yeti-space-md` | The default gap. |
+
+</div>
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 

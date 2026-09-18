@@ -55,6 +55,8 @@ The word says exactly what the fixed child is. Foundation 6 built this with `.gr
 
 ## Attributes
 
+<div class="scroller" role="region" aria-label="Sidebar attributes" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-side` | enum | `start`, `end` | `start` | Which child is the sidebar: the first (start) or the last (end). |
@@ -62,16 +64,22 @@ The word says exactly what the fixed child is. Foundation 6 built this with `.gr
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `md` | Space between the two children, side by side or stacked. |
 | `data-align` | enum | `start`, `center`, `end`, `stretch`, `baseline` | `stretch` | Vertical alignment of the two children when side by side. |
 
+</div>
+
 ## Children
 
 - `> *`: exactly 2. Exactly two: the sidebar and the content, in either order according to data-side.
 
 ## Tokens
 
+<div class="scroller" role="region" aria-label="Sidebar tokens" tabindex="0" markdown="1">
+
 | Token | Description |
 | --- | --- |
 | `--yeti-width-sm` | The default sidebar width. |
 | `--yeti-space-md` | The default gap. |
+
+</div>
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 

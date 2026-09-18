@@ -61,6 +61,8 @@ Yeti names layouts for what they do to their children, and what this one gives t
 
 ## Attributes
 
+<div class="scroller" role="region" aria-label="Columns attributes" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-threshold` | enum | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `md` | The container width below which the columns become rows. |
@@ -69,13 +71,19 @@ Yeti names layouts for what they do to their children, and what this one gives t
 | `data-justify` | enum | `start`, `center`, `end`, `between`, `around`, `evenly` | `start` | Distribution of the columns along the row when they do not fill it. |
 | `data-limit` | enum | `2`, `3`, `4`, `5` |  | The most columns allowed on one row; further children each take a full row. |
 
+</div>
+
 ## Markers
 
 Attributes that descendants carry, not the root.
 
+<div class="scroller" role="region" aria-label="Columns markers" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | On | Description |
 | --- | --- | --- | --- | --- |
 | `data-span` | enum | `1`, `2`, `3`, `4`, `5`, `6` | `> *` | How many shares of the row the child takes: 2 is twice a plain sibling. Below the threshold it stacks like the rest. |
+
+</div>
 
 ## Children
 
@@ -84,10 +92,14 @@ Attributes that descendants carry, not the root.
 
 ## Tokens
 
+<div class="scroller" role="region" aria-label="Columns tokens" tabindex="0" markdown="1">
+
 | Token | Description |
 | --- | --- |
 | `--yeti-width-md` | The default threshold. |
 | `--yeti-space-md` | The default gap. |
+
+</div>
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 

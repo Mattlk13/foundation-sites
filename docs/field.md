@@ -67,20 +67,28 @@ The label must point at the control with `for` and the control must carry that `
 
 ## Attributes
 
+<div class="scroller" role="region" aria-label="Field attributes" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-size` | enum | `sm`, `md`, `lg` | `md` | Scales the control's height and text. |
 | `data-inline` | boolean |  |  | Put the label beside the control. Checkboxes and radios are inline without it. |
 | `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral` | `primary` | The colour of a checked checkbox or radio. |
 
+</div>
+
 ## Markers
 
 Attributes that descendants carry, not the root.
+
+<div class="scroller" role="region" aria-label="Field markers" tabindex="0" markdown="1">
 
 | Attribute | Type | Values | On | Description |
 | --- | --- | --- | --- | --- |
 | `data-hint` | boolean |  | `> *` | Help text, referenced by the control's aria-describedby. |
 | `data-error` | boolean |  | `> *` | The error message, hidden until the control is invalid. |
+
+</div>
 
 ## Children
 
@@ -94,6 +102,8 @@ Attributes that descendants carry, not the root.
 - `> [data-error]`: 0 to 1. The error message, hidden until the control is invalid.
 
 ## Tokens
+
+<div class="scroller" role="region" aria-label="Field tokens" tabindex="0" markdown="1">
 
 | Token | Description |
 | --- | --- |
@@ -125,6 +135,8 @@ Attributes that descendants carry, not the root.
 | `--yeti-color-text-muted` | The hint. |
 | `--yeti-color-alert-text` | The error, and the required marker. |
 | `--yeti-space-md` | Padding of a fieldset. |
+
+</div>
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 

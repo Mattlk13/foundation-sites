@@ -62,19 +62,27 @@ The column is ordinary; what is special is that a child can break out of it. Fou
 
 ## Attributes
 
+<div class="scroller" role="region" aria-label="Breakout attributes" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-max` | enum | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `md` | The widest the reading column may be. |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `md` | The gutter on each side, and the space between children. |
 
+</div>
+
 ## Markers
 
 Attributes that descendants carry, not the root.
+
+<div class="scroller" role="region" aria-label="Breakout markers" tabindex="0" markdown="1">
 
 | Attribute | Type | Values | On | Description |
 | --- | --- | --- | --- | --- |
 | `data-bleed` | boolean |  | `> *` | Breaks the child out of the column to span the full width. |
 | `data-note` | boolean |  | `> *` | A margin note: in the end gutter beside the child it follows when the breakout is wide, in the column when it is not. |
+
+</div>
 
 ## Children
 
@@ -84,12 +92,16 @@ Attributes that descendants carry, not the root.
 
 ## Tokens
 
+<div class="scroller" role="region" aria-label="Breakout tokens" tabindex="0" markdown="1">
+
 | Token | Description |
 | --- | --- |
 | `--yeti-width-md` | The default column width, chosen under the base measure so paragraphs fill it. |
 | `--yeti-space-md` | The default gutter and row gap. |
 | `--yeti-text-sm` | The note's text size. |
 | `--yeti-color-text-muted` | The note's text colour. |
+
+</div>
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 

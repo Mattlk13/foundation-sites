@@ -49,6 +49,8 @@ Purely visual. The clip and the mask change nothing about the content, its order
 
 ## Attributes
 
+<div class="scroller" role="region" aria-label="Seam attributes" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-shape` | enum | `slant`, `curve`, `wave` | `slant` | The shape of the cut edge. |
@@ -56,16 +58,22 @@ Purely visual. The clip and the mask change nothing about the content, its order
 | `data-flip` | boolean |  |  | Mirror the shape horizontally, for alternating sections. A curve is symmetric and does not change. |
 | `data-size` | enum | `sm`, `md`, `lg` | `md` | The depth of the cut: twice the size's space step. |
 
+</div>
+
 ## Children
 
 No structural requirements.
 
 ## Tokens
 
+<div class="scroller" role="region" aria-label="Seam tokens" tabindex="0" markdown="1">
+
 | Token | Description |
 | --- | --- |
 | `--yeti-seam-size` | Fix the depth for every size. |
 | `--yeti-space-sm` | The depth when data-size is absent. |
+
+</div>
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 

@@ -65,9 +65,13 @@ Without the module the dialog never opens. That is a real limitation, not a deta
 
 ## Attributes
 
+<div class="scroller" role="region" aria-label="Dialog attributes" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-width` | enum | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `md` | How wide the dialog may grow. |
+
+</div>
 
 ## Children
 
@@ -75,6 +79,8 @@ Without the module the dialog never opens. That is a real limitation, not a deta
 - `> footer`: 0 to 1. The buttons, at the end edge. A button inside a form with method="dialog" closes it with no script.
 
 ## Tokens
+
+<div class="scroller" role="region" aria-label="Dialog tokens" tabindex="0" markdown="1">
 
 | Token | Description |
 | --- | --- |
@@ -90,6 +96,8 @@ Without the module the dialog never opens. That is a real limitation, not a deta
 | `--yeti-duration-fast` | How long the dialog and its backdrop take to appear. |
 | `--yeti-ease` | The curve of that transition. |
 
+</div>
+
 <details><summary>Internal tokens (may change between minor versions)</summary>
 
 - `--_yeti-width`
@@ -100,10 +108,14 @@ Without the module the dialog never opens. That is a real limitation, not a deta
 
 - Give the dialog a name with aria-labelledby pointing at its heading. Opened with showModal, which is what dialog.js does, the browser makes everything behind it inert, holds focus inside, and closes on Escape; none of that needs ARIA. A button inside a form with method="dialog" closes it without any script. Without the module nothing opens the dialog, so never put the only route to something behind one on a page that does not load it.
 
+<div class="scroller" role="region" aria-label="Dialog keyboard shortcuts" tabindex="0" markdown="1">
+
 | Key | Action |
 | --- | --- |
 | `Escape` | Closes the dialog. |
 | `Tab` | Cycles inside the dialog, since the rest of the page is inert. |
+
+</div>
 
 ## Browser support
 

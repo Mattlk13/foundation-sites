@@ -60,6 +60,8 @@ Nicole Sullivan named the media object in 2010 and the name stuck across a decad
 
 ## Attributes
 
+<div class="scroller" role="region" aria-label="Media attributes" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-width` | enum | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `xs` | The figure's preferred width. |
@@ -68,11 +70,15 @@ Nicole Sullivan named the media object in 2010 and the name stuck across a decad
 | `data-align` | enum | `start`, `center`, `end`, `stretch`, `baseline` | `stretch` | Vertical alignment of figure and text when side by side. |
 | `data-side` | enum | `start`, `end` |  | Force the figure to the start or the end regardless of source order. Moves it visually only; reading order stays as written. |
 
+</div>
+
 ## Children
 
 - `> *`: exactly 2. Exactly two: the figure (an img, video, or picture, or an element wrapping one) and the body; the body must not have an img, video, or picture as a direct child (it would be taken for a second figure). A figure with a figcaption keeps its caption below the picture.
 
 ## Tokens
+
+<div class="scroller" role="region" aria-label="Media tokens" tabindex="0" markdown="1">
 
 | Token | Description |
 | --- | --- |
@@ -81,6 +87,8 @@ Nicole Sullivan named the media object in 2010 and the name stuck across a decad
 | `--yeti-space-sm` | The gap between the body's children. |
 | `--yeti-text-sm` | Text size of the caption. |
 | `--yeti-color-text-muted` | The caption. |
+
+</div>
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 

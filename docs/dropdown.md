@@ -82,10 +82,14 @@ Opening on hover changes none of that. The module never touches focus, ARIA, or 
 
 ## Attributes
 
+<div class="scroller" role="region" aria-label="Dropdown attributes" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-side` | enum | `start`, `end` | `start` | Which edge of the trigger the panel lines up with. |
 | `data-trigger` | enum | `click`, `hover` | `click` | What opens the panel. Click always works; hover adds opening under the pointer, and needs the optional module and a pointer that hovers. |
+
+</div>
 
 ## Children
 
@@ -93,6 +97,8 @@ Opening on hover changes none of that. The module never touches focus, ARIA, or 
 - `> [popover]`: exactly 1. The panel, holding ordinary links and buttons.
 
 ## Tokens
+
+<div class="scroller" role="region" aria-label="Dropdown tokens" tabindex="0" markdown="1">
 
 | Token | Description |
 | --- | --- |
@@ -111,15 +117,21 @@ Opening on hover changes none of that. The module never touches focus, ARIA, or 
 | `--yeti-space-sm` | Inline padding of an item. |
 | `--yeti-color-surface-sunken` | Background of an item under the pointer. |
 
+</div>
+
 ## Accessibility
 
 - With data-trigger="hover" the module adds opening under the pointer and changes nothing else: the click, the keyboard, focus and the expanded state are all still the browser's, and a pointer that cannot hover never gets it. The trigger needs a name, and the browser sets its expanded state from popovertarget. The items are deliberately ordinary links and buttons with no menu roles: role="menu" promises arrow-key semantics that belong to application menus, and on a website a disclosure panel is both simpler and better announced. Inside a nav, put the dropdown in the li beside the link it belongs to.
+
+<div class="scroller" role="region" aria-label="Dropdown keyboard shortcuts" tabindex="0" markdown="1">
 
 | Key | Action |
 | --- | --- |
 | `Enter / Space` | On the trigger, opens or closes the panel. |
 | `Tab` | Walks the items, which are ordinary links and buttons. |
 | `Escape` | Closes the panel and returns focus to the trigger. |
+
+</div>
 
 ## Browser support
 

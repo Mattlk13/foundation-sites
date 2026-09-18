@@ -60,9 +60,13 @@ The bubble also cannot be dismissed while the trigger stays hovered or focused: 
 
 ## Attributes
 
+<div class="scroller" role="region" aria-label="Tooltip attributes" tabindex="0" markdown="1">
+
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-placement` | enum | `top`, `bottom`, `start`, `end` | `top` | Which side of the trigger the bubble sits on. |
+
+</div>
 
 ## Children
 
@@ -70,6 +74,8 @@ The bubble also cannot be dismissed while the trigger stays hovered or focused: 
 - `> [role="tooltip"]`: exactly 1. The bubble; the trigger names it with aria-describedby.
 
 ## Tokens
+
+<div class="scroller" role="region" aria-label="Tooltip tokens" tabindex="0" markdown="1">
 
 | Token | Description |
 | --- | --- |
@@ -82,6 +88,8 @@ The bubble also cannot be dismissed while the trigger stays hovered or focused: 
 | `--yeti-duration-fast` | How long the bubble takes to appear. |
 | `--yeti-ease` | The curve of that transition. |
 
+</div>
+
 <details><summary>Internal tokens (may change between minor versions)</summary>
 
 - `--_yeti-caret`
@@ -93,9 +101,13 @@ The bubble also cannot be dismissed while the trigger stays hovered or focused: 
 
 - The trigger must reference the bubble with aria-describedby, so the hint is announced together with the control; the bubble carries role="tooltip". A tooltip is for a short hint on a control whose purpose is not otherwise obvious, and it is never the only place something is said: touch has no hover, so anything essential belongs in the label, in a field's hint, or in the text. Do not put a link or a button inside the bubble, since there is no way to reach one. The bubble cannot be dismissed while the trigger stays hovered or focused, a known limit of a tooltip with no script, which WCAG 1.4.13 asks content shown on hover or focus to offer.
 
+<div class="scroller" role="region" aria-label="Tooltip keyboard shortcuts" tabindex="0" markdown="1">
+
 | Key | Action |
 | --- | --- |
 | `Tab` | Focusing the trigger shows the bubble, so it is reachable without a mouse. |
+
+</div>
 
 ## Browser support
 
