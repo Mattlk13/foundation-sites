@@ -55,8 +55,8 @@ The group carries `role="group"` and a name, so a screen reader announces the se
 
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
-| `data-attach` | boolean |  |  | Fuse the buttons into one segmented control that shares borders. |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `sm` | Space between buttons when not attached. |
+| `data-attach` | boolean |  |  | Fuse the buttons into one segmented control that shares borders. |
 
 </div>
 

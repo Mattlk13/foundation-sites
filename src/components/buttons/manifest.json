@@ -6,8 +6,8 @@
   "description": "A group of buttons: a wrapping row, or one fused control with data-attach.",
   "class": "buttons",
   "attributes": [
-    { "name": "data-attach", "type": "boolean", "description": "Fuse the buttons into one segmented control that shares borders." },
-    { "name": "data-gap", "type": "enum", "vocabulary": "gap", "default": "sm", "description": "Space between buttons when not attached." }
+    { "name": "data-gap", "type": "enum", "vocabulary": "gap", "default": "sm", "description": "Space between buttons when not attached." },
+    { "name": "data-attach", "type": "boolean", "description": "Fuse the buttons into one segmented control that shares borders." }
   ],
   "classes": [],
   "children": [

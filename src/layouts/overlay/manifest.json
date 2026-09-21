@@ -7,16 +7,16 @@
   "class": "overlay",
   "attributes": [
     {
-      "name": "data-fixed",
-      "type": "boolean",
-      "description": "Center the held child over the viewport instead of this box, and keep it there while the page scrolls."
-    },
-    {
       "name": "data-gap",
       "type": "enum",
       "vocabulary": "gap",
       "default": "md",
       "description": "The least space kept between the held child and the edges of the box."
+    },
+    {
+      "name": "data-fixed",
+      "type": "boolean",
+      "description": "Center the held child over the viewport instead of this box, and keep it there while the page scrolls."
     }
   ],
   "classes": [],

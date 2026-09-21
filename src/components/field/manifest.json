@@ -7,6 +7,13 @@
   "class": "field",
   "attributes": [
     {
+      "name": "data-variant",
+      "type": "enum",
+      "vocabulary": "variant",
+      "default": "primary",
+      "description": "The colour of a checked checkbox or radio."
+    },
+    {
       "name": "data-size",
       "type": "enum",
       "vocabulary": "size-control",
@@ -17,13 +24,6 @@
       "name": "data-inline",
       "type": "boolean",
       "description": "Put the label beside the control. Checkboxes and radios are inline without it."
-    },
-    {
-      "name": "data-variant",
-      "type": "enum",
-      "vocabulary": "variant",
-      "default": "primary",
-      "description": "The colour of a checked checkbox or radio."
     }
   ],
   "classes": [],

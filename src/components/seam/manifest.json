@@ -7,9 +7,9 @@
   "class": "seam",
   "attributes": [
     { "name": "data-shape", "type": "enum", "vocabulary": "shape", "default": "slant", "description": "The shape of the cut edge." },
+    { "name": "data-size", "type": "enum", "vocabulary": "size-control", "default": "md", "description": "The depth of the cut: twice the size's space step." },
     { "name": "data-edge", "type": "enum", "vocabulary": "edge", "default": "bottom", "description": "Which edge is cut." },
-    { "name": "data-flip", "type": "boolean", "description": "Mirror the shape horizontally, for alternating sections. A curve is symmetric and does not change." },
-    { "name": "data-size", "type": "enum", "vocabulary": "size-control", "default": "md", "description": "The depth of the cut: twice the size's space step." }
+    { "name": "data-flip", "type": "boolean", "description": "Mirror the shape horizontally, for alternating sections. A curve is symmetric and does not change." }
   ],
   "classes": [],
   "children": [],

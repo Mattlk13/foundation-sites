@@ -6,10 +6,10 @@
   "description": "A bordered surface for one thing: an optional figure that bleeds to the edges, a body, and a footer that sits at the bottom; a row with the picture beside the text once the card's content reaches the md width.",
   "class": "card",
   "attributes": [
-    { "name": "data-ratio", "type": "enum", "vocabulary": "ratio", "default": "16/9", "description": "The figure's aspect ratio when the card is wide." },
+    { "name": "data-variant", "type": "enum", "vocabulary": "variant", "description": "Tints the border and adds a bar along the top; the body stays plain." },
     { "name": "data-threshold", "type": "enum", "vocabulary": "width", "default": "md", "description": "The card's own width from which the picture sits beside the text instead of on top." },
-    { "name": "data-raised", "type": "boolean", "description": "A shadow instead of a border." },
-    { "name": "data-variant", "type": "enum", "vocabulary": "variant", "description": "Tints the border and adds a bar along the top; the body stays plain." }
+    { "name": "data-ratio", "type": "enum", "vocabulary": "ratio", "default": "16/9", "description": "The figure's aspect ratio when the card is wide." },
+    { "name": "data-raised", "type": "boolean", "description": "A shadow instead of a border." }
   ],
   "classes": [],
   "children": [

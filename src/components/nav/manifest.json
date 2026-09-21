@@ -6,9 +6,9 @@
   "description": "A bar with a brand, a list of links, and actions, that collapses the links behind a toggle at its own width and opens them as a sheet, a drawer, or a screen.",
   "class": "nav",
   "attributes": [
+    { "name": "data-variant", "type": "enum", "vocabulary": "variant", "default": "primary", "description": "The hue of the current link and of the hover tint." },
     { "name": "data-threshold", "type": "enum", "vocabulary": "width", "default": "md", "description": "The nav's own width at or above which the links sit in the bar; below it they are behind the toggle." },
     { "name": "data-panel", "type": "enum", "vocabulary": "panel", "default": "sheet", "description": "The shape of the open list below the threshold: a sheet under the bar, a drawer from the start edge, or the whole screen." },
-    { "name": "data-variant", "type": "enum", "vocabulary": "variant", "default": "primary", "description": "The hue of the current link and of the hover tint." },
     { "name": "data-gap", "type": "enum", "vocabulary": "gap", "default": "sm", "description": "Space between the bar's parts and between the links." }
   ],
   "classes": [],

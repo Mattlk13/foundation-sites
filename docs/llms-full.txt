@@ -315,10 +315,10 @@ Fits as many equal columns as the container allows at a minimum width, up to an 
 
 Attributes:
 - data-min: none | 2xs | xs (default) | sm | md | lg | xl | 2xl — The narrowest a column may be. With none, only data-columns decides the count; none is meant to be paired with data-columns, and alone gives a single full-width column.
-- data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between columns and rows.
 - data-columns: 1 | 2 | 3 | 4 | 5 | 6 — The most columns allowed. Fewer appear when the container cannot fit that many at data-min; with data-min="none" the count is exact. With data-fold, the count only ever halves.
-- data-fold (boolean) — Halve the column count as the grid narrows instead of stepping down one at a time. Needs data-columns 2, 4, or 6 and uses data-min as the width per column. data-min="none" has no meaning with a fold: the count needs a width per column.
+- data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between columns and rows.
 - data-ranks: 2 | 3 | 4 | 5 | 6 — Line up the parts of the children across each row: the value is how many parts a child has, and each part takes one row.
+- data-fold (boolean) — Halve the column count as the grid narrows instead of stepping down one at a time. Needs data-columns 2, 4, or 6 and uses data-min as the width per column. data-min="none" has no meaning with a fold: the count needs a width per column.
 
 ### When to use it
 
@@ -474,8 +474,8 @@ In browsers without native masonry, items read down each column and then across.
 Holds one child over the rest, centered, without pushing anything around; the parent is the box it covers.
 
 Attributes:
-- data-fixed (boolean) — Center the held child over the viewport instead of this box, and keep it there while the page scrolls.
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — The least space kept between the held child and the edges of the box.
+- data-fixed (boolean) — Center the held child over the viewport instead of this box, and keep it there while the page scrolls.
 
 On children:
 - data-over on > * (boolean) — Lifts the child out of the flow and centers it over the box; exactly one child carries it.
@@ -516,8 +516,8 @@ Lays its children out in a single row that scrolls horizontally.
 
 Attributes:
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between items.
-- data-snap (boolean) — Snap each item's start edge into place as the track scrolls.
 - data-width: 2xs | xs | sm | md | lg | xl | 2xl — Give every item this width instead of its natural one.
+- data-snap (boolean) — Snap each item's start edge into place as the track scrolls.
 
 ### When to use it
 
@@ -1146,8 +1146,8 @@ Put the class on a button, an a, or a submit input, nothing else. Use button for
 A group of buttons: a wrapping row, or one fused control with data-attach.
 
 Attributes:
-- data-attach (boolean) — Fuse the buttons into one segmented control that shares borders.
 - data-gap: none | xs | sm (default) | md | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between buttons when not attached.
+- data-attach (boolean) — Fuse the buttons into one segmented control that shares borders.
 
 ### When to use it
 
@@ -1184,10 +1184,10 @@ role="group" with a name, so the set is announced as one thing. A segmented togg
 A bordered surface for one thing: an optional figure that bleeds to the edges, a body, and a footer that sits at the bottom; a row with the picture beside the text once the card's content reaches the md width.
 
 Attributes:
-- data-ratio: 1/1 | 4/3 | 3/2 | 16/9 (default) | 21/9 — The figure's aspect ratio when the card is wide.
-- data-threshold: 2xs | xs | sm | md (default) | lg | xl | 2xl — The card's own width from which the picture sits beside the text instead of on top.
-- data-raised (boolean) — A shadow instead of a border.
 - data-variant: primary | secondary | success | warning | alert | neutral — Tints the border and adds a bar along the top; the body stays plain.
+- data-threshold: 2xs | xs | sm | md (default) | lg | xl | 2xl — The card's own width from which the picture sits beside the text instead of on top.
+- data-ratio: 1/1 | 4/3 | 3/2 | 16/9 (default) | 21/9 — The figure's aspect ratio when the card is wide.
+- data-raised (boolean) — A shadow instead of a border.
 
 On children:
 - data-stretch on a (boolean) — Stretches the link over the whole card, so the card is clickable while the link keeps its own name.
@@ -1556,9 +1556,9 @@ With data-trigger="hover" the module adds opening under the pointer and changes 
 One form control with its label, an optional hint, and an error that shows itself when the control is invalid.
 
 Attributes:
+- data-variant: primary (default) | secondary | success | warning | alert | neutral — The colour of a checked checkbox or radio.
 - data-size: sm | md (default) | lg — Scales the control's height and text.
 - data-inline (boolean) — Put the label beside the control. Checkboxes and radios are inline without it.
-- data-variant: primary (default) | secondary | success | warning | alert | neutral — The colour of a checked checkbox or radio.
 
 On children:
 - data-hint on > * (boolean) — Help text, referenced by the control's aria-describedby.
@@ -1646,9 +1646,9 @@ The label's for must match the control's id; the validator checks it. Reference 
 A bar with a brand, a list of links, and actions, that collapses the links behind a toggle at its own width and opens them as a sheet, a drawer, or a screen.
 
 Attributes:
+- data-variant: primary (default) | secondary | success | warning | alert | neutral — The hue of the current link and of the hover tint.
 - data-threshold: 2xs | xs | sm | md (default) | lg | xl | 2xl — The nav's own width at or above which the links sit in the bar; below it they are behind the toggle.
 - data-panel: sheet (default) | drawer | screen — The shape of the open list below the threshold: a sheet under the bar, a drawer from the start edge, or the whole screen.
-- data-variant: primary (default) | secondary | success | warning | alert | neutral — The hue of the current link and of the hover tint.
 - data-gap: none | xs | sm (default) | md | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the bar's parts and between the links.
 
 On children:
@@ -1734,10 +1734,10 @@ Give the nav an aria-label, since a page often has more than one. The toggle nee
 Links to the pages of a long list, each a square target, the current one filled, shrinking to Previous, the current page, and Next when it is narrow.
 
 Attributes:
-- data-threshold: 2xs | xs | sm (default) | md | lg | xl | 2xl — The pagination's own width below which only Previous, the current page, and Next remain.
 - data-variant: primary (default) | secondary | success | warning | alert | neutral — The hue of the current page and of the hover tint.
-- data-justify: start (default) | center | end | between | around | evenly — Where the links sit in the row.
 - data-size: sm | md (default) | lg — The text step.
+- data-threshold: 2xs | xs | sm (default) | md | lg | xl | 2xl — The pagination's own width below which only Previous, the current page, and Next remain.
+- data-justify: start (default) | center | end | between | around | evenly — Where the links sit in the row.
 
 ### When to use it
 
@@ -1834,9 +1834,9 @@ Gives a section a shaped edge, a slant, a curve, or a wave, cut from its own bac
 
 Attributes:
 - data-shape: slant (default) | curve | wave — The shape of the cut edge.
+- data-size: sm | md (default) | lg — The depth of the cut: twice the size's space step.
 - data-edge: top | bottom (default) | both — Which edge is cut.
 - data-flip (boolean) — Mirror the shape horizontally, for alternating sections. A curve is symmetric and does not change.
-- data-size: sm | md (default) | lg — The depth of the cut: twice the size's space step.
 
 ### When to use it
 
@@ -1962,8 +1962,8 @@ Give the table a caption, or aria-label / aria-labelledby. Header cells carry sc
 A row of tabs over their panels, showing one at a time when its module is loaded and all of them when it is not.
 
 Attributes:
-- data-orientation: horizontal (default) | vertical — Whether the tab list runs along the top or down the side.
 - data-variant: primary (default) | secondary | success | warning | alert | neutral — The hue of the selected tab and its edge.
+- data-orientation: horizontal (default) | vertical — Whether the tab list runs along the top or down the side.
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the list and the panels.
 
 module: tabs.js (optional)

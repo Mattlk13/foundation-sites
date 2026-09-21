@@ -54,9 +54,9 @@ Purely visual. The clip and the mask change nothing about the content, its order
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-shape` | enum | `slant`, `curve`, `wave` | `slant` | The shape of the cut edge. |
+| `data-size` | enum | `sm`, `md`, `lg` | `md` | The depth of the cut: twice the size's space step. |
 | `data-edge` | enum | `top`, `bottom`, `both` | `bottom` | Which edge is cut. |
 | `data-flip` | boolean |  |  | Mirror the shape horizontally, for alternating sections. A curve is symmetric and does not change. |
-| `data-size` | enum | `sm`, `md`, `lg` | `md` | The depth of the cut: twice the size's space step. |
 
 </div>
 

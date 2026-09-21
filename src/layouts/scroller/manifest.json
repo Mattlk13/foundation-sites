@@ -7,8 +7,8 @@
   "class": "scroller",
   "attributes": [
     { "name": "data-gap", "type": "enum", "vocabulary": "gap", "default": "md", "description": "Space between items." },
-    { "name": "data-snap", "type": "boolean", "description": "Snap each item's start edge into place as the track scrolls." },
-    { "name": "data-width", "type": "enum", "vocabulary": "width", "description": "Give every item this width instead of its natural one." }
+    { "name": "data-width", "type": "enum", "vocabulary": "width", "description": "Give every item this width instead of its natural one." },
+    { "name": "data-snap", "type": "boolean", "description": "Snap each item's start edge into place as the track scrolls." }
   ],
   "classes": [],
   "children": [

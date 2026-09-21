@@ -6,10 +6,10 @@
   "description": "Links to the pages of a long list, each a square target, the current one filled, shrinking to Previous, the current page, and Next when it is narrow.",
   "class": "pagination",
   "attributes": [
-    { "name": "data-threshold", "type": "enum", "vocabulary": "width", "default": "sm", "description": "The pagination's own width below which only Previous, the current page, and Next remain." },
     { "name": "data-variant", "type": "enum", "vocabulary": "variant", "default": "primary", "description": "The hue of the current page and of the hover tint." },
-    { "name": "data-justify", "type": "enum", "vocabulary": "justify", "default": "start", "description": "Where the links sit in the row." },
-    { "name": "data-size", "type": "enum", "vocabulary": "size-control", "default": "md", "description": "The text step." }
+    { "name": "data-size", "type": "enum", "vocabulary": "size-control", "default": "md", "description": "The text step." },
+    { "name": "data-threshold", "type": "enum", "vocabulary": "width", "default": "sm", "description": "The pagination's own width below which only Previous, the current page, and Next remain." },
+    { "name": "data-justify", "type": "enum", "vocabulary": "justify", "default": "start", "description": "Where the links sit in the row." }
   ],
   "classes": [],
   "children": [

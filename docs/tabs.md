@@ -68,8 +68,8 @@ Name the tablist, since a page may have more than one. Each tab's `aria-controls
 
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
-| `data-orientation` | enum | `horizontal`, `vertical` | `horizontal` | Whether the tab list runs along the top or down the side. |
 | `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral` | `primary` | The hue of the selected tab and its edge. |
+| `data-orientation` | enum | `horizontal`, `vertical` | `horizontal` | Whether the tab list runs along the top or down the side. |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `md` | Space between the list and the panels. |
 
 </div>
