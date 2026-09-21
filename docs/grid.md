@@ -14,18 +14,18 @@ nav_order: 3
 ## Example
 
 <figure class="demo" data-height="xl">
-<div data-preview="Grid"><iframe title="Grid, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;ul class=&quot;grid&quot; data-min=&quot;sm&quot; data-columns=&quot;3&quot; role=&quot;list&quot;&gt;&#10;	&lt;li&gt;One&lt;/li&gt;&#10;	&lt;li&gt;Two&lt;/li&gt;&#10;	&lt;li&gt;Three&lt;/li&gt;&#10;	&lt;li&gt;Four&lt;/li&gt;&#10;	&lt;li&gt;Five&lt;/li&gt;&#10;&lt;/ul&gt;"></iframe></div>
+<div data-preview="Grid"><iframe title="Grid, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;ul class=&quot;grid&quot; data-min=&quot;2xs&quot; data-columns=&quot;3&quot; role=&quot;list&quot;&gt;&#10;	&lt;li class=&quot;box&quot; data-surface=&quot;raised&quot; data-border&gt;One&lt;/li&gt;&#10;	&lt;li class=&quot;box&quot; data-surface=&quot;raised&quot; data-border&gt;Two&lt;/li&gt;&#10;	&lt;li class=&quot;box&quot; data-surface=&quot;raised&quot; data-border&gt;Three&lt;/li&gt;&#10;	&lt;li class=&quot;box&quot; data-surface=&quot;raised&quot; data-border&gt;Four&lt;/li&gt;&#10;	&lt;li class=&quot;box&quot; data-surface=&quot;raised&quot; data-border&gt;Five&lt;/li&gt;&#10;&lt;/ul&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
 
 ```html
-<ul class="grid" data-min="sm" data-columns="3" role="list">
-	<li>One</li>
-	<li>Two</li>
-	<li>Three</li>
-	<li>Four</li>
-	<li>Five</li>
+<ul class="grid" data-min="2xs" data-columns="3" role="list">
+	<li class="box" data-surface="raised" data-border>One</li>
+	<li class="box" data-surface="raised" data-border>Two</li>
+	<li class="box" data-surface="raised" data-border>Three</li>
+	<li class="box" data-surface="raised" data-border>Four</li>
+	<li class="box" data-surface="raised" data-border>Five</li>
 </ul>
 ```
 

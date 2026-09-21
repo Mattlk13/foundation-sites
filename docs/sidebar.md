@@ -14,17 +14,17 @@ nav_order: 6
 ## Example
 
 <figure class="demo" data-height="lg">
-<div data-preview="Sidebar"><iframe title="Sidebar, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;sidebar&quot; data-width=&quot;xs&quot; data-gap=&quot;lg&quot;&gt;&#10;	&lt;nav aria-label=&quot;Section&quot;&gt;&#10;		&lt;a href=&quot;#&quot;&gt;Overview&lt;/a&gt;&#10;	&lt;/nav&gt;&#10;	&lt;article&gt;&#10;		&lt;h2&gt;Content&lt;/h2&gt;&#10;		&lt;p&gt;Takes the remaining width, and the whole width once the two no longer fit.&lt;/p&gt;&#10;	&lt;/article&gt;&#10;&lt;/div&gt;"></iframe></div>
+<div data-preview="Sidebar"><iframe title="Sidebar, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;sidebar&quot; data-width=&quot;xs&quot; data-gap=&quot;lg&quot;&gt;&#10;	&lt;nav class=&quot;box&quot; data-surface=&quot;raised&quot; data-border aria-label=&quot;Section&quot;&gt;&#10;		&lt;a href=&quot;#&quot;&gt;Overview&lt;/a&gt;&#10;	&lt;/nav&gt;&#10;	&lt;article class=&quot;box&quot; data-surface=&quot;raised&quot; data-border&gt;&#10;		&lt;h2&gt;Content&lt;/h2&gt;&#10;		&lt;p&gt;Takes the remaining width, and the whole width once the two no longer fit.&lt;/p&gt;&#10;	&lt;/article&gt;&#10;&lt;/div&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
 
 ```html
 <div class="sidebar" data-width="xs" data-gap="lg">
-	<nav aria-label="Section">
+	<nav class="box" data-surface="raised" data-border aria-label="Section">
 		<a href="#">Overview</a>
 	</nav>
-	<article>
+	<article class="box" data-surface="raised" data-border>
 		<h2>Content</h2>
 		<p>Takes the remaining width, and the whole width once the two no longer fit.</p>
 	</article>
