@@ -8,7 +8,7 @@
   "attributes": [
     { "name": "data-variant", "type": "enum", "vocabulary": "variant", "description": "Tints the border and adds a bar along the top; the body stays plain." },
     { "name": "data-threshold", "type": "enum", "vocabulary": "width", "default": "md", "description": "The card's own width from which the picture sits beside the text instead of on top." },
-    { "name": "data-ratio", "type": "enum", "vocabulary": "ratio", "default": "16/9", "description": "The figure's aspect ratio when the card is wide." },
+    { "name": "data-ratio", "type": "enum", "vocabulary": "ratio", "default": "16/9", "description": "The picture's aspect ratio while it sits on top of the body. Past data-threshold the picture moves beside the body and fills that column, and the ratio stops applying." },
     { "name": "data-raised", "type": "boolean", "description": "A shadow instead of a border." }
   ],
   "classes": [],
