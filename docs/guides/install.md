@@ -14,13 +14,11 @@ The examples on these pages are live: each is a `demo`, a box you can drag from 
 
 ## Getting the files
 
-From npm:
+Yeti is not released yet. There is no package on npm and nothing to download, so there is nothing to install today. This section will describe npm, the zip on the GitHub release page and a CDN path once there is a release to describe.
 
-```bash
-npm install yeti-css
-```
+Everything below is written the way it will work then. The package will ship `dist/`: the bundled `yeti.css`, the same source tree unbundled under `css/`, the six modules under `js/` and all of them in one `yeti.js`, the two example themes under `themes/`, and the machine-readable files described further down.
 
-The package ships `dist/`: the bundled `yeti.css`, the same source tree unbundled under `css/`, the six modules under `js/` and all of them in one `yeti.js`, the two example themes under `themes/`, and the machine-readable files described below. A release also carries a zip of the same `dist/` folder on its GitHub release page, for a site with no build step at all. There is no CDN path yet; when there is one it will be listed here.
+To try Yeti before the release, clone the repository and run `npm run build`. That writes the same `dist/` the package will ship, so read `dist/` wherever a path below says `node_modules/yeti-css/dist/`.
 
 ## The stylesheet
 
