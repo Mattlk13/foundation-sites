@@ -3,10 +3,11 @@
   "name": "box",
   "kind": "layout",
   "group": "Boxes and Stacks",
-  "description": "Pads its content on all sides, with an optional border.",
+  "description": "Pads its content on all sides, with an optional border and an optional surface.",
   "class": "box",
   "attributes": [
     { "name": "data-gap", "type": "enum", "vocabulary": "gap", "default": "md", "description": "Padding on every side." },
+    { "name": "data-surface", "type": "enum", "vocabulary": "surface", "description": "Fill the box with one of the three surface tones, making it a visible panel. Absent, the box is transparent and only its padding does anything." },
     { "name": "data-border", "type": "boolean", "description": "Draw a border of the border width, in the border colour." }
   ],
   "classes": [],
@@ -15,6 +16,9 @@
     { "name": "--yeti-space-md", "public": true, "description": "The default padding." },
     { "name": "--yeti-color-border", "public": true, "description": "The border color when data-border is set." },
     { "name": "--yeti-border-width", "public": true, "description": "Width of the border when data-border is set." },
+    { "name": "--yeti-color-surface", "public": true, "description": "The fill at data-surface=\"base\"; the page's own surface." },
+    { "name": "--yeti-color-surface-raised", "public": true, "description": "The fill at data-surface=\"raised\", a step above the page." },
+    { "name": "--yeti-color-surface-sunken", "public": true, "description": "The fill at data-surface=\"sunken\", a step below the page." },
     { "name": "--_yeti-gap", "public": false }
   ],
   "a11y": { "requiredAttributes": [], "keyboard": [], "notes": "Purely visual. A box has no semantics; use a section or article element when the content is one." },

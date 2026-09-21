@@ -4,10 +4,11 @@ Yeti is a plain-CSS framework. Three rules cover every component: identity is a 
 
 ## box (layout, class="box")
 
-Pads its content on all sides, with an optional border.
+Pads its content on all sides, with an optional border and an optional surface.
 
 Attributes:
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Padding on every side.
+- data-surface: base | raised | sunken — Fill the box with one of the three surface tones, making it a visible panel. Absent, the box is transparent and only its padding does anything.
 - data-border (boolean) — Draw a border of the border width, in the border colour.
 
 ## breakout (layout, class="breakout")

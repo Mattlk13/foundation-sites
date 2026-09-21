@@ -1,7 +1,16 @@
-/* Box: padding and an optional border. The one layout that is only about
-   the space inside its own edges. */
+/* Box: padding, an optional border and an optional surface. The one layout
+   that is only about the space inside its own edges. */
 @layer yeti.layouts {
 	.box { padding: var(--_yeti-gap); }
 	.box:not([data-gap]) { --_yeti-gap: var(--yeti-space-md); }
 	.box[data-border] { border: var(--yeti-border-width) solid var(--yeti-color-border); }
+	/* The three surface tokens, which until now almost nothing read. A box is
+	   where they belong: it is the padded rectangle, and a padded rectangle you
+	   can see is a panel. base is the page's own surface, for a panel that sits
+	   on a sunken area without changing tone; raised and sunken step away from
+	   it in either direction. No corner radius: a box is square, and a rounded
+	   panel with a shadow is a card. */
+	.box[data-surface="base"] { background-color: var(--yeti-color-surface); }
+	.box[data-surface="raised"] { background-color: var(--yeti-color-surface-raised); }
+	.box[data-surface="sunken"] { background-color: var(--yeti-color-surface-sunken); }
 }

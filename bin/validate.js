@@ -570,7 +570,7 @@ const MAPPED = {
 // data-enter and data-attention are here for the same reason: each value names
 // an animation on the utility's own selector, and a mapped property would be a
 // keyframe name in a custom property that nothing else could ever read.
-const READ_DIRECTLY = new Set(['data-side', 'data-limit', 'data-emphasis', 'data-shape', 'data-edge', 'data-panel', 'data-orientation', 'data-placement', 'data-trigger', 'data-resize', 'data-enter', 'data-attention']);
+const READ_DIRECTLY = new Set(['data-side', 'data-limit', 'data-emphasis', 'data-shape', 'data-edge', 'data-panel', 'data-orientation', 'data-placement', 'data-trigger', 'data-resize', 'data-enter', 'data-attention', 'data-surface']);
 
 /** Every value of every mapped vocabulary must have a rule in layouts/attributes.css,
  *  and every manifest attribute that references a vocabulary must be checked against

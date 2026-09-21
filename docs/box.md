@@ -1,7 +1,7 @@
 ---
 raw: true
 title: "Box"
-description: "Pads its content on all sides, with an optional border."
+description: "Pads its content on all sides, with an optional border and an optional surface."
 nav_group: "Boxes and Stacks"
 nav_order: 1
 ---
@@ -9,19 +9,19 @@ nav_order: 1
 
 # Box
 
-<p class="lede">Pads its content on all sides, with an optional border.</p>
+<p class="lede">Pads its content on all sides, with an optional border and an optional surface.</p>
 
 ## Example
 
 <figure class="demo" data-height="lg">
-<div data-preview="Box"><iframe title="Box, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;section class=&quot;box&quot; data-gap=&quot;lg&quot; data-border&gt;&#10;	&lt;h2&gt;A bordered box&lt;/h2&gt;&#10;	&lt;p&gt;Prose inside a box keeps its rhythm; the box only adds room around it.&lt;/p&gt;&#10;&lt;/section&gt;"></iframe></div>
+<div data-preview="Box"><iframe title="Box, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;section class=&quot;box&quot; data-gap=&quot;lg&quot; data-surface=&quot;raised&quot; data-border&gt;&#10;	&lt;h2&gt;A box you can see&lt;/h2&gt;&#10;	&lt;p&gt;Prose inside a box keeps its rhythm; the box only adds room around it.&lt;/p&gt;&#10;&lt;/section&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
 
 ```html
-<section class="box" data-gap="lg" data-border>
-	<h2>A bordered box</h2>
+<section class="box" data-gap="lg" data-surface="raised" data-border>
+	<h2>A box you can see</h2>
 	<p>Prose inside a box keeps its rhythm; the box only adds room around it.</p>
 </section>
 ```
@@ -31,14 +31,18 @@ nav_order: 1
 
 ## When to use it
 
-A box is the thing to reach for when content needs breathing room from its edges: a card body, a callout, a panel in a sidebar. Combine it with a stack inside for the spacing between its children and with a background or border to make it a surface.
+A box is the thing to reach for when content needs breathing room from its edges: a card body, a callout, a panel in a sidebar. Combine it with a stack inside for the spacing between its children, and with `data-surface` or `data-border` to make it something you can see.
 
 ## How it works
 
-`padding` on all four sides from `data-gap`, and a border of `--yeti-border-width` in `--yeti-color-border` when `data-border` is present. Nothing else. Unlike the spacing layouts, a box does not reset its children's margins, so paragraphs inside it keep their prose rhythm.
+`padding` on all four sides from `data-gap`, a border of `--yeti-border-width` in `--yeti-color-border` when `data-border` is present, and a fill from `data-surface`. Nothing else. Unlike the spacing layouts, a box does not reset its children's margins, so paragraphs inside it keep their prose rhythm.
+
+`data-surface` takes the three surface tones. `raised` is a step above the page and is what a panel usually wants; `sunken` is a step below, for a well that content sits in; `base` is the page's own surface, for a panel inside a sunken area that should not change tone. Without it a box is transparent and only its padding does anything, which is right when the thing behind it is already a surface.
+
+There is no corner radius, on purpose. A box is square. A rounded panel that lifts off the page is a `card`, and the two should not blur into each other.
 
 ```html
-<div class="box" data-border>
+<div class="box" data-surface="raised" data-border>
 	<div class="stack" data-gap="sm">
 		<h3>Title</h3>
 		<p>Body</p>
@@ -57,6 +61,7 @@ There is no plainer word for a padded rectangle. Foundation 6's Callout was a st
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `md` | Padding on every side. |
+| `data-surface` | enum | `base`, `raised`, `sunken` |  | Fill the box with one of the three surface tones, making it a visible panel. Absent, the box is transparent and only its padding does anything. |
 | `data-border` | boolean |  |  | Draw a border of the border width, in the border colour. |
 
 </div>
@@ -74,6 +79,9 @@ No structural requirements.
 | `--yeti-space-md` | The default padding. |
 | `--yeti-color-border` | The border color when data-border is set. |
 | `--yeti-border-width` | Width of the border when data-border is set. |
+| `--yeti-color-surface` | The fill at data-surface="base"; the page's own surface. |
+| `--yeti-color-surface-raised` | The fill at data-surface="raised", a step above the page. |
+| `--yeti-color-surface-sunken` | The fill at data-surface="sunken", a step below the page. |
 
 </div>
 
