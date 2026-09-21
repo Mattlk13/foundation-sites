@@ -13,8 +13,8 @@ nav_order: 1
 
 ## Example
 
-<figure class="demo" data-height="lg">
-<div data-preview="Breakout"><iframe title="Breakout, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;article class=&quot;breakout&quot;&gt;&#10;	&lt;h1&gt;A long read&lt;/h1&gt;&#10;	&lt;p&gt;The column keeps every paragraph at a readable width.&lt;/p&gt;&#10;	&lt;img src=&quot;valley.jpg&quot; alt=&quot;A valley at dusk, edge to edge&quot; data-bleed&gt;&#10;	&lt;p&gt;And the picture runs from edge to edge.&lt;/p&gt;&#10;&lt;/article&gt;"></iframe></div>
+<figure class="demo" data-height="xl">
+<div data-preview="Breakout"><iframe title="Breakout, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;article class=&quot;breakout&quot;&gt;&#10;	&lt;h1&gt;A long read&lt;/h1&gt;&#10;	&lt;p&gt;Every paragraph here sits in the same narrow column, because that is what a long read wants: a line short enough that the eye finds the start of the next one without hunting for it. The width belongs to the layout, not to each paragraph, so nothing is measured by hand.&lt;/p&gt;&#10;	&lt;div class=&quot;frame&quot; data-ratio=&quot;21/9&quot; data-bleed&gt;&#10;		&lt;img src=&quot;valley.jpg&quot; alt=&quot;A valley at dusk, edge to edge&quot;&gt;&#10;	&lt;/div&gt;&#10;	&lt;p&gt;The picture is the exception. Left in the column it would sit marooned in a sea of margin, so it is marked to bleed and takes the whole width instead.&lt;/p&gt;&#10;	&lt;p&gt;Then the text picks up at exactly the width it left off, with no wrapper around the picture and no negative margin to undo afterwards.&lt;/p&gt;&#10;&lt;/article&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
@@ -22,9 +22,12 @@ nav_order: 1
 ```html
 <article class="breakout">
 	<h1>A long read</h1>
-	<p>The column keeps every paragraph at a readable width.</p>
-	<img src="valley.jpg" alt="A valley at dusk, edge to edge" data-bleed>
-	<p>And the picture runs from edge to edge.</p>
+	<p>Every paragraph here sits in the same narrow column, because that is what a long read wants: a line short enough that the eye finds the start of the next one without hunting for it. The width belongs to the layout, not to each paragraph, so nothing is measured by hand.</p>
+	<div class="frame" data-ratio="21/9" data-bleed>
+		<img src="valley.jpg" alt="A valley at dusk, edge to edge">
+	</div>
+	<p>The picture is the exception. Left in the column it would sit marooned in a sea of margin, so it is marked to bleed and takes the whole width instead.</p>
+	<p>Then the text picks up at exactly the width it left off, with no wrapper around the picture and no negative margin to undo afterwards.</p>
 </article>
 ```
 

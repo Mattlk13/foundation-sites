@@ -14,23 +14,23 @@ nav_order: 5
 ## Example
 
 <figure class="demo" data-height="xl">
-<div data-preview="Shell"><iframe title="Shell, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;body class=&quot;shell&quot; data-width=&quot;xs&quot;&gt;&#10;	&lt;header&gt;Site header&lt;/header&gt;&#10;	&lt;div&gt;&#10;		&lt;nav aria-label=&quot;Section&quot;&gt;Section navigation&lt;/nav&gt;&#10;		&lt;main&gt;&#10;			&lt;h1&gt;Page title&lt;/h1&gt;&#10;			&lt;p&gt;The main content, which takes what is left.&lt;/p&gt;&#10;		&lt;/main&gt;&#10;		&lt;aside&gt;Related links&lt;/aside&gt;&#10;	&lt;/div&gt;&#10;	&lt;footer&gt;Site footer&lt;/footer&gt;&#10;&lt;/body&gt;"></iframe></div>
+<div data-preview="Shell"><iframe title="Shell, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;body class=&quot;shell&quot; data-width=&quot;xs&quot;&gt;&#10;	&lt;header class=&quot;box&quot; data-surface=&quot;raised&quot; data-border&gt;Site header&lt;/header&gt;&#10;	&lt;div&gt;&#10;		&lt;nav class=&quot;box&quot; data-surface=&quot;raised&quot; data-border aria-label=&quot;Section&quot;&gt;Section navigation&lt;/nav&gt;&#10;		&lt;main class=&quot;box&quot; data-surface=&quot;raised&quot; data-border&gt;&#10;			&lt;h1&gt;Page title&lt;/h1&gt;&#10;			&lt;p&gt;The main content, which takes what is left.&lt;/p&gt;&#10;		&lt;/main&gt;&#10;		&lt;aside class=&quot;box&quot; data-surface=&quot;raised&quot; data-border&gt;Related links&lt;/aside&gt;&#10;	&lt;/div&gt;&#10;	&lt;footer class=&quot;box&quot; data-surface=&quot;raised&quot; data-border&gt;Site footer&lt;/footer&gt;&#10;&lt;/body&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
 
 ```html
 <body class="shell" data-width="xs">
-	<header>Site header</header>
+	<header class="box" data-surface="raised" data-border>Site header</header>
 	<div>
-		<nav aria-label="Section">Section navigation</nav>
-		<main>
+		<nav class="box" data-surface="raised" data-border aria-label="Section">Section navigation</nav>
+		<main class="box" data-surface="raised" data-border>
 			<h1>Page title</h1>
 			<p>The main content, which takes what is left.</p>
 		</main>
-		<aside>Related links</aside>
+		<aside class="box" data-surface="raised" data-border>Related links</aside>
 	</div>
-	<footer>Site footer</footer>
+	<footer class="box" data-surface="raised" data-border>Site footer</footer>
 </body>
 ```
 

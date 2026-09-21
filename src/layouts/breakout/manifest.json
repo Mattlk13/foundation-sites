@@ -31,5 +31,6 @@
   "js": null,
   "support": { "unguarded": ["grid named lines", "min() in track sizes"], "guarded": [] },
   "since": "7.0.0",
-  "example": "example.html"
+  "example": "example.html",
+  "demo": { "height": "xl" }
 }
