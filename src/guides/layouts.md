@@ -28,7 +28,7 @@ Nothing under `src/layouts/` contains a media query, and the validator refuses o
 
 Put a `columns` inside a `sidebar`'s content side, and it never sees the full viewport: the sidebar has already taken some of the width for itself. The columns still switch to rows at their own threshold, measured against their own container, so they can be stacked as rows while the page around them is wide open. Put the identical `columns` markup in a full-width section instead, and it switches at a much wider viewport, because its container is wider. Same markup, same threshold, two different viewport widths, because a threshold reads the box the element is in, not the window.
 
-```html
+```html demo md lg
 <div class="sidebar" data-side="start" data-width="xs">
 	<nav aria-label="Section">
 		<a href="#">Overview</a>
@@ -48,7 +48,7 @@ Put a `columns` inside a `sidebar`'s content side, and it never sees the full vi
 
 Four across, two by two, one is the same question with an extra step, and the answer is `grid` with `data-fold`, not a longer chain of thresholds: `data-min="xs" data-columns="4" data-fold` halves the column count as its own content box narrows — four, then two, then one — and never passes through three. The no-query alternative is two `columns` nested inside a third:
 
-```html
+```html demo sm md
 <div class="columns" data-threshold="md">
 	<div class="columns" data-threshold="sm"><div>One</div><div>Two</div></div>
 	<div class="columns" data-threshold="sm"><div>Three</div><div>Four</div></div>
@@ -140,7 +140,7 @@ None of these layouts do much alone. Nest a few and they add up to a page.
 
 A card: a bordered `box` holds a `stack`, which separates a cropped photo, a heading, and a paragraph at its own gap. The last child is a `cluster` of links carrying `data-split`, so it settles at the bottom of the card once the stack has more height than its content needs.
 
-```html
+```html demo lg sm both
 <div class="box" data-border>
 	<div class="stack" data-gap="sm">
 		<div class="frame" data-ratio="4/3">
@@ -160,7 +160,7 @@ A card: a bordered `box` holds a `stack`, which separates a cropped photo, a hea
 
 A recipe still nests inside a primitive like anything else: a `grid` of three `media` items, each a figure and a caption.
 
-```html
+```html demo lg xl
 <ul class="grid" data-min="sm" data-columns="3" role="list">
 	<li class="media" data-width="xs">
 		<img src="trail.jpg" alt="A mountain trail at dawn">

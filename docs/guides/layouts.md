@@ -29,6 +29,12 @@ Nothing under `src/layouts/` contains a media query, and the validator refuses o
 
 Put a `columns` inside a `sidebar`'s content side, and it never sees the full viewport: the sidebar has already taken some of the width for itself. The columns still switch to rows at their own threshold, measured against their own container, so they can be stacked as rows while the page around them is wide open. Put the identical `columns` markup in a full-width section instead, and it switches at a much wider viewport, because its container is wider. Same markup, same threshold, two different viewport widths, because a threshold reads the box the element is in, not the window.
 
+<figure class="demo" data-height="md" data-width="lg">
+<div data-preview="Why columns has a threshold, not a breakpoint"><iframe title="Why columns has a threshold, not a breakpoint, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;sidebar&quot; data-side=&quot;start&quot; data-width=&quot;xs&quot;&gt;&#10;	&lt;nav aria-label=&quot;Section&quot;&gt;&#10;		&lt;a href=&quot;#&quot;&gt;Overview&lt;/a&gt;&#10;	&lt;/nav&gt;&#10;	&lt;div class=&quot;columns&quot; data-threshold=&quot;sm&quot;&gt;&#10;		&lt;section&gt;&#10;			&lt;h2&gt;Plan&lt;/h2&gt;&#10;			&lt;p&gt;Three equal columns once the content column is wide enough.&lt;/p&gt;&#10;		&lt;/section&gt;&#10;		&lt;section&gt;&#10;			&lt;h2&gt;Build&lt;/h2&gt;&#10;			&lt;p&gt;Two rows once it is not, regardless of the viewport.&lt;/p&gt;&#10;		&lt;/section&gt;&#10;	&lt;/div&gt;&#10;&lt;/div&gt;"></iframe></div>
+
+<details markdown="1">
+<summary>View Code</summary>
+
 ```html
 <div class="sidebar" data-side="start" data-width="xs">
 	<nav aria-label="Section">
@@ -47,7 +53,16 @@ Put a `columns` inside a `sidebar`'s content side, and it never sees the full vi
 </div>
 ```
 
+</details>
+</figure>
+
 Four across, two by two, one is the same question with an extra step, and the answer is `grid` with `data-fold`, not a longer chain of thresholds: `data-min="xs" data-columns="4" data-fold` halves the column count as its own content box narrows — four, then two, then one — and never passes through three. The no-query alternative is two `columns` nested inside a third:
+
+<figure class="demo" data-height="sm" data-width="md">
+<div data-preview="Why columns has a threshold, not a breakpoint (2)"><iframe title="Why columns has a threshold, not a breakpoint (2), live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;columns&quot; data-threshold=&quot;md&quot;&gt;&#10;	&lt;div class=&quot;columns&quot; data-threshold=&quot;sm&quot;&gt;&lt;div&gt;One&lt;/div&gt;&lt;div&gt;Two&lt;/div&gt;&lt;/div&gt;&#10;	&lt;div class=&quot;columns&quot; data-threshold=&quot;sm&quot;&gt;&lt;div&gt;Three&lt;/div&gt;&lt;div&gt;Four&lt;/div&gt;&lt;/div&gt;&#10;&lt;/div&gt;"></iframe></div>
+
+<details markdown="1">
+<summary>View Code</summary>
 
 ```html
 <div class="columns" data-threshold="md">
@@ -55,6 +70,9 @@ Four across, two by two, one is the same question with an extra step, and the an
 	<div class="columns" data-threshold="sm"><div>Three</div><div>Four</div></div>
 </div>
 ```
+
+</details>
+</figure>
 
 The [responsive guide](responsive.md) takes this idea through the whole framework.
 
@@ -141,6 +159,12 @@ None of these layouts do much alone. Nest a few and they add up to a page.
 
 A card: a bordered `box` holds a `stack`, which separates a cropped photo, a heading, and a paragraph at its own gap. The last child is a `cluster` of links carrying `data-split`, so it settles at the bottom of the card once the stack has more height than its content needs.
 
+<figure class="demo" data-height="lg" data-width="sm" data-resize="both">
+<div data-preview="Composing"><iframe title="Composing, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;box&quot; data-border&gt;&#10;	&lt;div class=&quot;stack&quot; data-gap=&quot;sm&quot;&gt;&#10;		&lt;div class=&quot;frame&quot; data-ratio=&quot;4/3&quot;&gt;&#10;			&lt;img src=&quot;trail.jpg&quot; alt=&quot;A mountain trail at dawn, cropped to four by three&quot;&gt;&#10;		&lt;/div&gt;&#10;		&lt;h3&gt;Weekend in the hills&lt;/h3&gt;&#10;		&lt;p&gt;Six miles, one summit, and a view worth the early start.&lt;/p&gt;&#10;		&lt;nav class=&quot;cluster&quot; data-gap=&quot;sm&quot; data-split aria-label=&quot;Card actions&quot;&gt;&#10;			&lt;a href=&quot;#&quot;&gt;Read more&lt;/a&gt;&#10;			&lt;a href=&quot;#&quot;&gt;Share&lt;/a&gt;&#10;		&lt;/nav&gt;&#10;	&lt;/div&gt;&#10;&lt;/div&gt;"></iframe></div>
+
+<details markdown="1">
+<summary>View Code</summary>
+
 ```html
 <div class="box" data-border>
 	<div class="stack" data-gap="sm">
@@ -157,9 +181,18 @@ A card: a bordered `box` holds a `stack`, which separates a cropped photo, a hea
 </div>
 ```
 
+</details>
+</figure>
+
 **The most common compositions ship as recipes, one class each, and every recipe page shows the same result built from primitives so nothing is hidden:** [shell](../shell.md) (page skeleton with a sticky footer), [media](../media.md) (a figure beside text), [hero](../hero.md) (a split opening band). `dist/yeti.css` includes the recipes; a project that composes its own can import the `dist/css/` files it wants and leave `dist/css/recipes/` out.
 
 A recipe still nests inside a primitive like anything else: a `grid` of three `media` items, each a figure and a caption.
+
+<figure class="demo" data-height="lg" data-width="xl">
+<div data-preview="Composing (2)"><iframe title="Composing (2), live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;ul class=&quot;grid&quot; data-min=&quot;sm&quot; data-columns=&quot;3&quot; role=&quot;list&quot;&gt;&#10;	&lt;li class=&quot;media&quot; data-width=&quot;xs&quot;&gt;&#10;		&lt;img src=&quot;trail.jpg&quot; alt=&quot;A mountain trail at dawn&quot;&gt;&#10;		&lt;div&gt;&#10;			&lt;h3&gt;Weekend in the hills&lt;/h3&gt;&#10;			&lt;p&gt;Six miles, one summit, and a view worth the early start.&lt;/p&gt;&#10;		&lt;/div&gt;&#10;	&lt;/li&gt;&#10;	&lt;li class=&quot;media&quot; data-width=&quot;xs&quot;&gt;&#10;		&lt;img src=&quot;ada.jpg&quot; alt=&quot;Portrait of Ada Lovelace&quot;&gt;&#10;		&lt;div&gt;&#10;			&lt;h3&gt;Ada Lovelace&lt;/h3&gt;&#10;			&lt;p&gt;Wrote the first published algorithm, for Babbage&#39;s Analytical Engine.&lt;/p&gt;&#10;		&lt;/div&gt;&#10;	&lt;/li&gt;&#10;	&lt;li class=&quot;media&quot; data-width=&quot;xs&quot;&gt;&#10;		&lt;img src=&quot;peak.jpg&quot; alt=&quot;A snow ridge at first light&quot;&gt;&#10;		&lt;div&gt;&#10;			&lt;h3&gt;First light on the ridge&lt;/h3&gt;&#10;			&lt;p&gt;The cloud broke just after dawn, for about ten minutes.&lt;/p&gt;&#10;		&lt;/div&gt;&#10;	&lt;/li&gt;&#10;&lt;/ul&gt;"></iframe></div>
+
+<details markdown="1">
+<summary>View Code</summary>
 
 ```html
 <ul class="grid" data-min="sm" data-columns="3" role="list">
@@ -186,6 +219,9 @@ A recipe still nests inside a primitive like anything else: a `grid` of three `m
 	</li>
 </ul>
 ```
+
+</details>
+</figure>
 
 ## Coming from version 6
 

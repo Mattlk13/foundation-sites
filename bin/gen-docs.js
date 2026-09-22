@@ -292,13 +292,116 @@ export function frontMatterTitle(markdown) {
 	return title ? title[1] : '';
 }
 
+// A fenced block in a guide can ask to be shown as well as read: ```html demo
+// renders the same figure the component pages use, the frame filled and the
+// code beneath it, so a layout that stacks at its own width is something the
+// reader watches happen rather than something the paragraph promises. The
+// tokens after demo describe the box: a height, a width, and "both" to let the
+// reader drag it taller as well as wider. The two lists come from the schema so
+// they cannot drift from the demo component's own attributes, and they are read
+// here rather than from the tree being generated, because a host generating
+// into its own folder still writes this repo's guides.
+const VOCABULARY = loadVocabulary(path.join(SCHEMA_DIR, 'vocabulary.json'));
+export const DEMO_HEIGHTS = VOCABULARY.height;
+export const DEMO_WIDTHS = VOCABULARY.width;
+
+/**
+ * The tokens after `demo` on an info string, as options for renderDemo.
+ * sm, md, lg and xl are in both vocabularies, so an ambiguous one fills the
+ * height while the height is empty and the width afterwards; 2xs, xs and 2xl
+ * can only be widths. Every error names the file and the line, because that is
+ * what an author needs to find the fence again.
+ */
+export function parseDemoFence(info, { file, line }) {
+	const options = {};
+	const errors = [];
+	const fail = (message) => errors.push({ file, line, message });
+	for (const token of info.trim().split(/\s+/).filter(Boolean)) {
+		const height = DEMO_HEIGHTS.includes(token);
+		const width = DEMO_WIDTHS.includes(token);
+		if (token === 'both') {
+			if (options.resize) fail('html demo: both is given twice');
+			options.resize = 'both';
+		} else if (height && options.height === undefined) {
+			options.height = token;
+		} else if (width && options.width === undefined) {
+			options.width = token;
+		} else if (height || width) {
+			fail(`html demo: ${token} is a second ${height ? 'height' : 'width'}; a demo takes one height and one width`);
+		} else {
+			fail(`html demo: unknown token ${token}; expected a height (${DEMO_HEIGHTS.join(' ')}), a width (${DEMO_WIDTHS.join(' ')}), or both`);
+		}
+	}
+	return { options, errors };
+}
+
+/** A heading's plain text: code ticks and link syntax are markup, not part of a name. */
+export function headingText(text) {
+	return text.replace(/\[([^\]]+)\]\([^)]*\)/g, '$1').replace(/`/g, '').trim();
+}
+
+/** Every `html demo` block replaced by its figure; every other block passed through as it is. */
+export function renderGuideDemos(markdown, { file, title, stylesheet }) {
+	const lines = markdown.split('\n');
+	const out = [];
+	const errors = [];
+	// A demo is named after the heading above it, and a section with more than
+	// one numbers the rest: two iframes on a page may not share a name, and the
+	// name is what a screen reader has to tell them apart by.
+	let heading = title;
+	const counts = new Map();
+	for (let i = 0; i < lines.length; i += 1) {
+		const fence = lines[i].match(/^(`{3,})(.*)$/);
+		if (!fence) {
+			// Only a line that opens no block can be a heading, which is what
+			// keeps a # inside a shell sample from renaming the demos after it.
+			const found = lines[i].match(/^#{1,6}\s+(.+?)\s*$/);
+			if (found) heading = headingText(found[1]);
+			out.push(lines[i]);
+			continue;
+		}
+		const [, marker, info] = fence;
+		let end = i + 1;
+		while (end < lines.length && lines[end].trim() !== marker) end += 1;
+		const demo = info.trim().match(/^html\s+demo\b(.*)$/);
+		if (!demo || end === lines.length) {
+			// A plain block goes through untouched, and so does an unclosed one:
+			// the author is told where it is rather than having it guessed at.
+			if (demo) errors.push({ file, line: i + 1, message: 'html demo: this fence is never closed' });
+			out.push(...lines.slice(i, Math.min(end + 1, lines.length)));
+			i = end;
+			continue;
+		}
+		const { options, errors: bad } = parseDemoFence(demo[1], { file, line: i + 1 });
+		errors.push(...bad);
+		const seen = (counts.get(heading) ?? 0) + 1;
+		counts.set(heading, seen);
+		out.push(renderDemo({
+			title: seen === 1 ? heading : `${heading} (${seen})`,
+			// The example is the block verbatim, tabs and all: renderDemo trims
+			// its ends and writes it twice, framed and fenced, from this one copy.
+			exampleHtml: lines.slice(i + 1, end).join('\n'),
+			stylesheet,
+			...options,
+		}));
+		i = end;
+	}
+	return { markdown: out.join('\n'), errors };
+}
+
 // A guide is written by hand in src/guides/ and rendered into docs/guides/ the
 // way a component page is rendered from its manifest: the source owns the
 // prose, the attribute markers and the fenced examples, and the rendered page
 // carries the mark saying so, the filled table and, from here on, the demo
 // figures. Nothing under docs/ is a source any more.
-export function renderGuide({ markdown, source, file, table, merged }) {
-	let out = markdown;
+export function renderGuide({ markdown, source, file, table, merged, demoStylesheet = '/yeti/yeti.css' }) {
+	// The demos are rendered first, from the source exactly as it was written, so
+	// a bad info string is reported at the line the author will find it on: the
+	// table pass inserts about forty lines above the layouts guide's last two
+	// fences and would otherwise move every line number after it.
+	const demos = renderGuideDemos(markdown, { file, title: frontMatterTitle(markdown), stylesheet: demoStylesheet });
+	if (demos.errors.length) return { markdown: null, errors: demos.errors };
+	let out = demos.markdown;
 	if (table) {
 		const filled = replaceMarked(out, renderAttributeTable({ merged, kinds: table.kinds, label: table.label }));
 		if (filled === null) return { markdown: null, errors: [{ file, message: `no ${ATTRIBUTES_START} … ${ATTRIBUTES_END} pair for the generated attribute table` }] };
@@ -416,6 +519,7 @@ export function generateDocs({ root, demoStylesheet, outDir }) {
 			file,
 			table: tables.get(`guides/${name}`),
 			merged,
+			demoStylesheet,
 		});
 		if (bad.length) {
 			guideErrors.push(...bad);

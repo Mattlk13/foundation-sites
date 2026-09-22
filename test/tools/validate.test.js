@@ -100,6 +100,13 @@ test('fenced html blocks in src/guides are validated with the right line', () =>
 	assert.deepEqual(r.lines, ['src/guides/layouts.md:4: .rail <div>: data-gap="huge" is not one of s, m, l']);
 });
 
+test('a fenced html demo block in a guide source is linted like any other html block', () => {
+	const r = run(validTree({
+		'src/guides/layouts.md': '# Layouts\n\n```html demo md lg\n<div class="rail" data-gap="huge"><p>x</p></div>\n```\n',
+	}));
+	assert.deepEqual(r.lines, ['src/guides/layouts.md:4: .rail <div>: data-gap="huge" is not one of s, m, l']);
+});
+
 test('findBareMargin flags margin on the bare identity selector only', () => {
 	assert.deepEqual(findBareMargin('.rail { margin: 0; }', 'rail'), [1]);
 	assert.deepEqual(findBareMargin('@layer yeti.layouts {\n  .rail {\n    display: flex;\n    margin-block-end: 1rem;\n  }\n}', 'rail'), [2]);

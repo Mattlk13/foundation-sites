@@ -67,6 +67,12 @@ Never put it on anything focusable. A button a screen reader cannot see but can 
 
 Seen, but unreachable and unannounced: no focus, no clicks, no find-in-page, and out of the accessibility tree. It is for the page behind something — a custom overlay you built yourself, a form region disabled while a request is in flight.
 
+<figure class="demo" data-height="sm" data-width="md">
+<div data-preview="inert"><iframe title="inert, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div inert&gt;&#10;	&lt;p&gt;Still visible. Nothing in here can be tabbed to or clicked.&lt;/p&gt;&#10;	&lt;a href=&quot;/settings&quot;&gt;Settings&lt;/a&gt;&#10;&lt;/div&gt;"></iframe></div>
+
+<details markdown="1">
+<summary>View Code</summary>
+
 ```html
 <div inert>
 	<p>Still visible. Nothing in here can be tabbed to or clicked.</p>
@@ -74,11 +80,20 @@ Seen, but unreachable and unannounced: no focus, no clicks, no find-in-page, and
 </div>
 ```
 
+</details>
+</figure>
+
 A native `dialog` opened with `showModal()` does this to the rest of the page for you, so a `dialog` needs none of it.
 
 ### `details`, `popover`, `dialog`
 
 Hidden until the reader asks, with the browser keeping the state and announcing it. A disclosure is `details` and `summary`; a panel that closes on Escape and on a click outside is `popover`; a modal is `dialog`. None of the three needs a line of script, and each tells a screen reader what happened, which a toggled class never did.
+
+<figure class="demo" data-height="sm" data-width="md">
+<div data-preview="details, popover, dialog"><iframe title="details, popover, dialog, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;details&gt;&#10;	&lt;summary&gt;Shipping and returns&lt;/summary&gt;&#10;	&lt;p&gt;Ships within two days.&lt;/p&gt;&#10;&lt;/details&gt;"></iframe></div>
+
+<details markdown="1">
+<summary>View Code</summary>
 
 ```html
 <details>
@@ -87,12 +102,24 @@ Hidden until the reader asks, with the browser keeping the state and announcing 
 </details>
 ```
 
+</details>
+</figure>
+
+<figure class="demo" data-height="sm" data-width="md">
+<div data-preview="details, popover, dialog (2)"><iframe title="details, popover, dialog (2), live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;button popovertarget=&quot;notes&quot;&gt;Notes&lt;/button&gt;&#10;&lt;div id=&quot;notes&quot; popover&gt;&#10;	&lt;p&gt;Only in the page while it is open.&lt;/p&gt;&#10;&lt;/div&gt;"></iframe></div>
+
+<details markdown="1">
+<summary>View Code</summary>
+
 ```html
 <button popovertarget="notes">Notes</button>
 <div id="notes" popover>
 	<p>Only in the page while it is open.</p>
 </div>
 ```
+
+</details>
+</figure>
 
 If you are about to write script to show something, this is the section to re-read first.
 
@@ -128,12 +155,21 @@ Foundation 6 called this `.show-on-focus`.
 
 By the space available, measured on the nearest size container rather than on the window. Both take a width from the same scale as `data-threshold` and both mean *at or above*: `data-show="md"` is shown from `md` up, `data-hide="md"` is gone from `md` up.
 
+<figure class="demo" data-height="md" data-width="sm">
+<div data-preview="data-show and data-hide"><iframe title="data-show and data-hide, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;container&quot;&gt;&#10;	&lt;p data-show=&quot;md&quot;&gt;Shown once this column is 32rem or wider.&lt;/p&gt;&#10;	&lt;p data-hide=&quot;md&quot;&gt;Gone once this column is 32rem or wider.&lt;/p&gt;&#10;&lt;/div&gt;"></iframe></div>
+
+<details markdown="1">
+<summary>View Code</summary>
+
 ```html
 <div class="container">
 	<p data-show="md">Shown once this column is 32rem or wider.</p>
 	<p data-hide="md">Gone once this column is 32rem or wider.</p>
 </div>
 ```
+
+</details>
+</figure>
 
 They need a size container above them and do nothing without one. [container](../container.md) is what makes a box into one, and lists which layouts already are.
 

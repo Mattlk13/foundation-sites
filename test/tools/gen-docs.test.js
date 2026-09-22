@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
-import { renderPage, generateDocs, isGenerated, GENERATED_MARK, renderTokensPage, escapeAttribute, renderDemo, renderAttributeTable, replaceMarked, ATTRIBUTES_START, ATTRIBUTES_END, GUIDE_TABLES, renderGuide, stampGuide, frontMatterTitle } from '../../bin/gen-docs.js';
+import { renderPage, generateDocs, isGenerated, GENERATED_MARK, renderTokensPage, escapeAttribute, renderDemo, renderAttributeTable, replaceMarked, ATTRIBUTES_START, ATTRIBUTES_END, GUIDE_TABLES, renderGuide, stampGuide, frontMatterTitle, parseDemoFence, renderGuideDemos, headingText, DEMO_HEIGHTS, DEMO_WIDTHS } from '../../bin/gen-docs.js';
 import { makeTree, validManifest, validTree, TOKENS_SCHEMA_PATH, REPO_ROOT } from './helpers.js';
 import { KIND_DIRS } from '../../bin/lib/manifest.js';
 
@@ -476,4 +476,117 @@ test('every guide table names a kind the manifests actually use', () => {
 	for (const entry of GUIDE_TABLES) {
 		for (const kind of entry.kinds) assert.ok(kinds.has(kind), `${kind} is not a manifest kind`);
 	}
+});
+
+/** A guide with front matter and one h1, so a demo has a heading to be named after. */
+const demoGuide = (body) => `---\nraw: true\ntitle: "Layouts"\n---\n\n# Layouts\n\n${body}`;
+/** Every frame's accessible name, in the order the page shows them. */
+const previews = (markdown) => [...markdown.matchAll(/<div data-preview="([^"]*)"/g)].map((m) => m[1]);
+const at = { file: 'src/guides/layouts.md', line: 31 };
+
+test('the demo vocabularies are the schema\'s own height and width lists', () => {
+	const vocabulary = JSON.parse(fs.readFileSync(path.join(REPO_ROOT, 'schema/vocabulary.json'), 'utf8'));
+	assert.deepEqual(DEMO_HEIGHTS, vocabulary.height);
+	assert.deepEqual(DEMO_WIDTHS, vocabulary.width);
+});
+
+test('parseDemoFence reads a height, a width and both', () => {
+	assert.deepEqual(parseDemoFence('', at), { options: {}, errors: [] });
+	assert.deepEqual(parseDemoFence(' md xs both', at).options, { height: 'md', width: 'xs', resize: 'both' });
+	assert.deepEqual(parseDemoFence(' sm', at).options, { height: 'sm' });
+	assert.deepEqual(parseDemoFence(' 2xl', at).options, { width: '2xl' });
+	assert.deepEqual(parseDemoFence(' both', at).options, { resize: 'both' });
+});
+
+test('parseDemoFence takes a size in both vocabularies as the height first, the width second', () => {
+	// sm, md, lg and xl are in both lists, so their order is what decides.
+	assert.deepEqual(parseDemoFence(' lg sm', at).options, { height: 'lg', width: 'sm' });
+	// A name that can only be a width is one wherever it appears.
+	assert.deepEqual(parseDemoFence(' xs lg', at).options, { width: 'xs', height: 'lg' });
+});
+
+test('parseDemoFence names the file and the line of a token it does not know', () => {
+	const { options, errors } = parseDemoFence(' huge', at);
+	assert.deepEqual(options, {});
+	assert.equal(errors.length, 1);
+	assert.equal(errors[0].file, 'src/guides/layouts.md');
+	assert.equal(errors[0].line, 31);
+	assert.match(errors[0].message, /unknown token huge/);
+});
+
+test('parseDemoFence refuses a second height, a second width, and a repeated both', () => {
+	assert.match(parseDemoFence(' sm md lg', at).errors[0].message, /lg is a second height/);
+	assert.match(parseDemoFence(' xs 2xs', at).errors[0].message, /2xs is a second width/);
+	assert.match(parseDemoFence(' both both', at).errors[0].message, /both is given twice/);
+});
+
+test('headingText drops the markup a heading carries and a frame name cannot use', () => {
+	assert.equal(headingText('`data-show` and the [container](../container.md)'), 'data-show and the container');
+});
+
+test('a demo takes its name from the nearest heading above it', () => {
+	const body = '## Composing\n\n```html demo\n<p>One</p>\n```\n\n## The vocabulary\n\n```html demo\n<p>Two</p>\n```\n';
+	const r = renderGuideDemos(demoGuide(body), { file: 'f', title: 'Layouts', stylesheet: '/yeti/yeti.css' });
+	assert.deepEqual(r.errors, []);
+	assert.deepEqual(previews(r.markdown), ['Composing', 'The vocabulary']);
+});
+
+test('a section with more than one demo numbers the rest, so no two frames share a name', () => {
+	const body = '## Composing\n\n```html demo\n<p>One</p>\n```\n\n```html demo\n<p>Two</p>\n```\n\n```html demo\n<p>Three</p>\n```\n';
+	const r = renderGuideDemos(demoGuide(body), { file: 'f', title: 'Layouts', stylesheet: '/yeti/yeti.css' });
+	assert.deepEqual(previews(r.markdown), ['Composing', 'Composing (2)', 'Composing (3)']);
+});
+
+test('a demo above every heading takes the page title', () => {
+	const markdown = '---\ntitle: "Visibility"\n---\n\n```html demo\n<p>a</p>\n```\n\n### `data-show`\n\n```html demo\n<p>b</p>\n```\n';
+	const r = renderGuideDemos(markdown, { file: 'f', title: 'Visibility', stylesheet: '/yeti/yeti.css' });
+	assert.deepEqual(previews(r.markdown), ['Visibility', 'data-show']);
+});
+
+test('a plain html block is left exactly as it was', () => {
+	const source = demoGuide('## Composing\n\n```html\n<div class="rail"><p>x</p></div>\n```\n');
+	const r = renderGuideDemos(source, { file: 'f', title: 'Layouts', stylesheet: '/yeti/yeti.css' });
+	assert.equal(r.markdown, source);
+	assert.deepEqual(r.errors, []);
+});
+
+test('a heading inside a fenced block is code, not a heading', () => {
+	const body = '## Composing\n\n```markdown\n## Not a heading\n```\n\n```html demo\n<p>One</p>\n```\n';
+	const r = renderGuideDemos(demoGuide(body), { file: 'f', title: 'Layouts', stylesheet: '/yeti/yeti.css' });
+	assert.deepEqual(previews(r.markdown), ['Composing']);
+});
+
+test('renderGuideDemos reports a demo fence that is never closed', () => {
+	const r = renderGuideDemos(demoGuide('## Composing\n\n```html demo\n<p>One</p>\n'), { file: 'src/guides/layouts.md', title: 'Layouts', stylesheet: '/y.css' });
+	assert.equal(r.errors.length, 1);
+	assert.equal(r.errors[0].line, 10);
+	assert.match(r.errors[0].message, /never closed/);
+});
+
+test('generateDocs renders a demo fence in a guide as the figure component pages use', () => {
+	const root = makeTree(validTree({
+		'src/guides/theming.md': guideSource('Theming', '## Composing\n\n```html demo sm xs both\n<div class="rail" data-gap="l"><p>One</p></div>\n```\n'),
+	}));
+	const r = generateDocs({ root, demoStylesheet: '/assets/y.css' });
+	assert.deepEqual(r.errors, []);
+	const page = fs.readFileSync(path.join(root, 'docs/guides/theming.md'), 'utf8');
+	assert.ok(page.includes('<figure class="demo" data-height="sm" data-width="xs" data-resize="both">'));
+	assert.ok(page.includes('<div data-preview="Composing"><iframe title="Composing, live" srcdoc="'));
+	assert.ok(page.includes('href=&quot;/assets/y.css&quot;'));
+	// The code is still under the frame, so a renderer that strips iframes shows it.
+	assert.ok(page.includes('```html\n<div class="rail" data-gap="l"><p>One</p></div>\n```'));
+	// And the source keeps the fence it was written with.
+	assert.ok(fs.readFileSync(path.join(root, 'src/guides/theming.md'), 'utf8').includes('```html demo sm xs both'));
+});
+
+test('generateDocs reports a bad demo info string at its line and writes no page', () => {
+	const root = makeTree(validTree({
+		'src/guides/theming.md': guideSource('Theming', '## Composing\n\n```html demo enormous\n<p>x</p>\n```\n'),
+	}));
+	const r = generateDocs({ root });
+	assert.equal(r.errors.length, 1);
+	assert.equal(r.errors[0].line, 12);
+	assert.match(r.errors[0].message, /unknown token enormous/);
+	assert.ok(r.errors[0].file.endsWith(path.join('src', 'guides', 'theming.md')));
+	assert.ok(!fs.existsSync(path.join(root, 'docs/guides/theming.md')));
 });

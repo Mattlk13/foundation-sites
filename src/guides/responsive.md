@@ -14,7 +14,7 @@ nav_order: 5
 
 A Yeti layout or component never asks how wide the screen is. It asks how wide it is. A `columns` in a sidebar and the same `columns` across the page get different answers and behave differently, with identical markup, because each one reads the box it was put in.
 
-```html
+```html demo md lg
 <div class="sidebar">
 	<nav class="stack"><a href="#">Overview</a></nav>
 	<div class="columns" data-threshold="sm">
@@ -54,7 +54,7 @@ When something has to respond, reach for these in order and stop at the first th
 
 **Intrinsic sizing first.** Most of the time nothing has to be told a width at all. A `cluster` wraps when its items run out of room. A `grid` with `data-columns` puts as many columns in as fit. A `sidebar` lets its main area take what is left. These respond continuously, at every width, with no threshold, and they are what to try first.
 
-```html
+```html demo sm md
 <div class="cluster" data-gap="sm">
 	<button class="button" type="button">Save</button>
 	<button class="button" type="button" data-emphasis="medium">Save as draft</button>
@@ -64,7 +64,7 @@ When something has to respond, reach for these in order and stop at the first th
 
 **A container query second.** When the change is a switch rather than a flow, a row that becomes a stack, a card that puts its picture beside the text, a nav that folds behind a toggle, the component queries its own width against a threshold. In Yeti these are already written: you choose the threshold with an attribute, you do not write the query.
 
-```html
+```html demo md xl
 <nav class="nav" aria-label="Site" data-threshold="lg">
 	<a href="#" data-brand>Yeti</a>
 	<button type="button" popovertarget="menu" aria-label="Menu">☰</button>

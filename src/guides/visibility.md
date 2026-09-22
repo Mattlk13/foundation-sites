@@ -66,7 +66,7 @@ Never put it on anything focusable. A button a screen reader cannot see but can 
 
 Seen, but unreachable and unannounced: no focus, no clicks, no find-in-page, and out of the accessibility tree. It is for the page behind something — a custom overlay you built yourself, a form region disabled while a request is in flight.
 
-```html
+```html demo sm md
 <div inert>
 	<p>Still visible. Nothing in here can be tabbed to or clicked.</p>
 	<a href="/settings">Settings</a>
@@ -79,14 +79,14 @@ A native `dialog` opened with `showModal()` does this to the rest of the page fo
 
 Hidden until the reader asks, with the browser keeping the state and announcing it. A disclosure is `details` and `summary`; a panel that closes on Escape and on a click outside is `popover`; a modal is `dialog`. None of the three needs a line of script, and each tells a screen reader what happened, which a toggled class never did.
 
-```html
+```html demo sm md
 <details>
 	<summary>Shipping and returns</summary>
 	<p>Ships within two days.</p>
 </details>
 ```
 
-```html
+```html demo sm md
 <button popovertarget="notes">Notes</button>
 <div id="notes" popover>
 	<p>Only in the page while it is open.</p>
@@ -127,7 +127,7 @@ Foundation 6 called this `.show-on-focus`.
 
 By the space available, measured on the nearest size container rather than on the window. Both take a width from the same scale as `data-threshold` and both mean *at or above*: `data-show="md"` is shown from `md` up, `data-hide="md"` is gone from `md` up.
 
-```html
+```html demo md sm
 <div class="container">
 	<p data-show="md">Shown once this column is 32rem or wider.</p>
 	<p data-hide="md">Gone once this column is 32rem or wider.</p>
