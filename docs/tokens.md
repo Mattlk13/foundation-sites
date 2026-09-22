@@ -377,6 +377,16 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 
 </div>
 
+## Toc
+
+<div class="scroller" role="region" aria-label="Toc tokens" tabindex="0" markdown="1">
+
+| Token | Default | Description |
+| --- | --- | --- |
+| `--yeti-toc-scroll` | `smooth, and auto under reduced motion` | How the page scrolls when a link in a toc is followed. A components-layer declaration outranks the reset, so the preference reaches the page through this token. |
+
+</div>
+
 ## Alert
 
 <div class="scroller" role="region" aria-label="Alert tokens" tabindex="0" markdown="1">

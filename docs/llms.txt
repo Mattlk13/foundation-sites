@@ -418,6 +418,17 @@ Attributes:
 module: tabs.js (optional)
 - event yeti:select with detail { tab, panel } — Dispatched on the .tabs when a click or an arrow key selects a tab; never for the pass at load.
 
+## toc (component, class="toc")
+
+A column of links to the headings on the page, with the one being read marked as the reader scrolls.
+
+Attributes:
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — The hue of the current link and its edge bar.
+- data-size: sm | md (default) | lg — The text step, and the inset of each link with it.
+
+module: toc.js (optional)
+- event yeti:current with detail { link, heading } — Dispatched on the .toc when the mark moves to another link.
+
 ## tooltip (component, class="tooltip")
 
 A short hint that appears beside a control on hover and on focus, described to assistive tech and needing no script.

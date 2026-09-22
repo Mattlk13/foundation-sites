@@ -80,6 +80,13 @@
 		--yeti-carousel-dot-size: 0.75rem;
 		--yeti-carousel-scroll: smooth;
 
+		/* On-page nav. Smooth by default, and a token rather than a plain
+		   declaration for the reason the carousel's is one: a components-layer
+		   scroll-behavior outranks the reset's reduced-motion rule, so the
+		   preference has to reach the page through something the media query
+		   below can collapse. */
+		--yeti-toc-scroll: smooth;
+
 		/* Per element, not per theme: the filled share of a range's track. */
 		--yeti-range-value: 0%;
 
@@ -149,6 +156,7 @@
 		:root {
 			--yeti-spinner-duration: 0.01ms;
 			--yeti-carousel-scroll: auto;
+			--yeti-toc-scroll: auto;
 			--yeti-enter-duration: 0.01ms;
 			/* The step goes with the duration. A collapsed duration alone would
 			   still hand the third card a 400ms wait and then pop it into place,
