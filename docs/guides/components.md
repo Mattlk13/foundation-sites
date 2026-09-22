@@ -85,7 +85,7 @@ No component invents a state attribute. Every state a person sees is one the bro
 | State | Where it comes from |
 | --- | --- |
 | Hover | `:hover` — a button's fill deepens, a table row tints under `data-hover`. |
-| Focus | `:focus-visible` — the same ring the base layer gives every focusable element; no component removes it. |
+| Focus | `:focus-visible` — the same ring the [base layer](base.md#the-reset) gives every focusable element; no component removes it. |
 | Disabled | `:disabled`, or `[aria-disabled="true"]` on a link acting as a button. |
 | Pressed | `[aria-pressed="true"]` on a toggle button. |
 | Busy | `[aria-busy="true"]`, set together with `aria-disabled="true"` while a button waits on a request. |

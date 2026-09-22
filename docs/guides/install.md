@@ -50,7 +50,7 @@ Minified is not transpiled. `light-dark()`, `@starting-style`, container queries
 
 ## Bare HTML
 
-Most of Yeti is opt-in, but the base layer is not: it styles plain HTML the moment the stylesheet loads. Headings take the type scale, running text takes a measure, siblings in flow take the spacing rhythm, form controls and tables come out tidy, definition lists read as pairs, a quotation's caption reads as an attribution, and a `details` opens with a chevron and a panel that grows. A page with no Yeti markup in it at all still reads as a designed page.
+Most of Yeti is opt-in, but the base layer is not: it styles plain HTML the moment the stylesheet loads. Headings take the type scale, running text takes a measure, siblings in flow take the spacing rhythm, form controls and tables come out tidy, definition lists read as pairs, a quotation's caption reads as an attribution, and a `details` opens with a chevron and a panel that grows. A page with no Yeti markup in it at all still reads as a designed page. The [base guide](base.md) shows every element of it, live, with the tokens behind each group.
 
 One base rule is a convention rather than an element. The first link in the body, if it points at a fragment of the same page, is treated as a skip link: it is out of sight until it is focused, and then it is a box pinned at the top start corner of the window with the focus ring on it.
 

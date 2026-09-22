@@ -111,7 +111,7 @@ It is the one two-word class in Yeti, and the second word is there because `hidd
 
 ### The skip link
 
-A special case of the same recipe, and you get it for nothing. The first link in the body, if it points at a fragment, is hidden the way `visually-hidden` hides — out of sight, in the tree, still in Tab order — until it takes focus, at which point it appears at the corner of the window. There is no class; being the first link in the body is the whole contract, which is why the base rule is written that way and why a body whose first link is something else will find it hidden.
+A special case of the same recipe, and you get it for nothing. The first link in the body, if it points at a fragment, is hidden the way `visually-hidden` hides — out of sight, in the tree, still in Tab order — until it takes focus, at which point it appears at the corner of the window. There is no class; being the first link in the body is the whole contract, which is why the base rule is written that way and why a body whose first link is something else will find it hidden. It is a base rule like any other, and the [base guide](base.md#the-skip-link) lists it among the rest of what a page gets for free.
 
 ```html
 <body>
