@@ -3,7 +3,7 @@ raw: true
 title: "Responsive, the Yeti way"
 description: "A component measures its own width, a threshold is a width where behaviour changes, and the three tools that make a layout respond, in the order to reach for them."
 nav_group: "Guides"
-nav_order: 4
+nav_order: 5
 ---
 
 # Responsive, the Yeti way

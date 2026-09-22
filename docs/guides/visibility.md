@@ -3,7 +3,7 @@ raw: true
 title: "Visibility"
 description: "Every way to hide something, the platform's first and Yeti's second: who stops seeing it, whether it keeps its space, and what brings it back."
 nav_group: "Guides"
-nav_order: 5
+nav_order: 6
 ---
 
 # Visibility
