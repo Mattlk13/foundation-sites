@@ -425,6 +425,10 @@ Attributes:
 - data-stagger (boolean) — Animate the element's children one after another instead of the element itself, each a step later than the last.
 - data-view (boolean) — Play as the element scrolls into view instead of on load. Where a scroll timeline is unsupported, or the reader has asked for less motion, it plays on load instead.
 
+## hidden (utility, class="hidden")
+
+Takes words out of sight and leaves them in the accessibility tree, for the name a control needs when its face is a picture.
+
 ## lede (utility, class="lede")
 
 The standfirst: the sentence under a page's heading that says what the page is, set larger than the prose it introduces.

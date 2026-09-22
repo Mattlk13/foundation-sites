@@ -14,7 +14,7 @@ nav_order: 3
 ## Example
 
 <figure class="demo" data-height="md">
-<div data-preview="Carousel"><iframe title="Carousel, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;section class=&quot;carousel&quot; aria-roledescription=&quot;carousel&quot; aria-label=&quot;Featured work&quot;&gt;&#10;	&lt;div data-track role=&quot;group&quot; aria-label=&quot;Slides&quot; tabindex=&quot;0&quot;&gt;&#10;		&lt;article id=&quot;work-1&quot; class=&quot;box&quot; data-surface=&quot;raised&quot; data-border data-slide&gt;&lt;h3&gt;A trail map&lt;/h3&gt;&lt;p&gt;Printed in two colours.&lt;/p&gt;&lt;/article&gt;&#10;		&lt;article id=&quot;work-2&quot; class=&quot;box&quot; data-surface=&quot;raised&quot; data-border data-slide&gt;&lt;h3&gt;A field guide&lt;/h3&gt;&lt;p&gt;Three hundred pages.&lt;/p&gt;&lt;/article&gt;&#10;		&lt;article id=&quot;work-3&quot; class=&quot;box&quot; data-surface=&quot;raised&quot; data-border data-slide&gt;&lt;h3&gt;A season of posters&lt;/h3&gt;&lt;p&gt;Twelve of them.&lt;/p&gt;&lt;/article&gt;&#10;	&lt;/div&gt;&#10;	&lt;ol data-dots role=&quot;list&quot;&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#work-1&quot; aria-label=&quot;Slide 1&quot;&gt;&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#work-2&quot; aria-label=&quot;Slide 2&quot;&gt;&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#work-3&quot; aria-label=&quot;Slide 3&quot;&gt;&lt;/a&gt;&lt;/li&gt;&#10;	&lt;/ol&gt;&#10;&lt;/section&gt;"></iframe></div>
+<div data-preview="Carousel"><iframe title="Carousel, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;section class=&quot;carousel&quot; aria-roledescription=&quot;carousel&quot; aria-label=&quot;Featured work&quot;&gt;&#10;	&lt;div data-track role=&quot;group&quot; aria-label=&quot;Slides&quot; tabindex=&quot;0&quot;&gt;&#10;		&lt;article id=&quot;work-1&quot; class=&quot;box&quot; data-surface=&quot;raised&quot; data-border data-slide&gt;&lt;h3&gt;A trail map&lt;/h3&gt;&lt;p&gt;Printed in two colours.&lt;/p&gt;&lt;/article&gt;&#10;		&lt;article id=&quot;work-2&quot; class=&quot;box&quot; data-surface=&quot;raised&quot; data-border data-slide&gt;&lt;h3&gt;A field guide&lt;/h3&gt;&lt;p&gt;Three hundred pages.&lt;/p&gt;&lt;/article&gt;&#10;		&lt;article id=&quot;work-3&quot; class=&quot;box&quot; data-surface=&quot;raised&quot; data-border data-slide&gt;&lt;h3&gt;A season of posters&lt;/h3&gt;&lt;p&gt;Twelve of them.&lt;/p&gt;&lt;/article&gt;&#10;	&lt;/div&gt;&#10;	&lt;ol data-dots role=&quot;list&quot;&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#work-1&quot;&gt;&lt;span class=&quot;hidden&quot;&gt;Slide 1&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#work-2&quot;&gt;&lt;span class=&quot;hidden&quot;&gt;Slide 2&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#work-3&quot;&gt;&lt;span class=&quot;hidden&quot;&gt;Slide 3&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;&#10;	&lt;/ol&gt;&#10;&lt;/section&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
@@ -27,9 +27,9 @@ nav_order: 3
 		<article id="work-3" class="box" data-surface="raised" data-border data-slide><h3>A season of posters</h3><p>Twelve of them.</p></article>
 	</div>
 	<ol data-dots role="list">
-		<li><a href="#work-1" aria-label="Slide 1"></a></li>
-		<li><a href="#work-2" aria-label="Slide 2"></a></li>
-		<li><a href="#work-3" aria-label="Slide 3"></a></li>
+		<li><a href="#work-1"><span class="hidden">Slide 1</span></a></li>
+		<li><a href="#work-2"><span class="hidden">Slide 2</span></a></li>
+		<li><a href="#work-3"><span class="hidden">Slide 3</span></a></li>
 	</ol>
 </section>
 ```
@@ -57,16 +57,16 @@ The scrollbar under the track is hidden, since the dots already say where you ar
 		<blockquote id="quote-3" data-slide><p>Nothing to learn.</p></blockquote>
 	</div>
 	<ol data-dots role="list">
-		<li><a href="#quote-1" aria-label="Quote 1"></a></li>
-		<li><a href="#quote-2" aria-label="Quote 2"></a></li>
-		<li><a href="#quote-3" aria-label="Quote 3"></a></li>
+		<li><a href="#quote-1"><span class="hidden">Quote 1</span></a></li>
+		<li><a href="#quote-2"><span class="hidden">Quote 2</span></a></li>
+		<li><a href="#quote-3"><span class="hidden">Quote 3</span></a></li>
 	</ol>
 </section>
 ```
 
 ## Accessibility
 
-Label the region and mark it with `aria-roledescription="carousel"`, so it is announced as a carousel rather than as an anonymous group. Every dot is a link with an `aria-label`, because a dot has no room for text and there is no visually-hidden utility in Yeti.
+Label the region and mark it with `aria-roledescription="carousel"`, so it is announced as a carousel rather than as an anonymous group. A dot has no room for visible text, so name each one: put the words inside it in a `span` carrying `hidden`, which leaves them in the accessibility tree and takes them off the screen, or use an `aria-label`.
 
 The dots take you to a slide; they do not tell you which slide you are on. CSS cannot know that, and the module deliberately does not track it either: watching scroll position to light up a dot is a different and much larger job. If that matters for what you are building, the honest answer is a list rather than a carousel.
 
@@ -103,7 +103,7 @@ Attributes that descendants carry, not the root.
 
 - `> [data-track]`: exactly 1. The scrolling track holding the slides. A scrolling region is an interactive one, so give it role="group", a name, and tabindex="0".
 - `[data-slide]`: at least 2. One slide each, with an id a dot can link to.
-- `> [data-dots]`: 0 to 1. A list of links, one per slide, each named with aria-label. With carousel.js loaded the module scrolls the track itself, so following one adds no history entry.
+- `> [data-dots]`: 0 to 1. A list of links, one per slide, each named by a span carrying hidden or by an aria-label. With carousel.js loaded the module scrolls the track itself, so following one adds no history entry.
 
 ## Tokens
 
@@ -132,7 +132,7 @@ Attributes that descendants carry, not the root.
 ## Accessibility
 
 - Required attributes: `aria-label` or `aria-labelledby`
-- Label the region and give it aria-roledescription="carousel" so it is announced as one. The dots are links to slide ids, so the browser does the scrolling and the keyboard works without help; each needs an aria-label, since a dot has no room for text and Yeti ships no visually-hidden utility. They jump to a slide but cannot report which slide is showing, because CSS cannot know that. Loading carousel.js keeps the back button useful by scrolling the track instead of navigating; without it the dots still work, and each one followed is one press of back. Nothing essential should live behind a slide a reader has to find. The track scrolls, so it must be reachable from the keyboard: give it role="group", an aria-label, and tabindex="0". It is a group rather than a region because the carousel itself is already the landmark.
+- Label the region and give it aria-roledescription="carousel" so it is announced as one. The dots are links to slide ids, so the browser does the scrolling and the keyboard works without help; each needs a name, from a span carrying hidden or from an aria-label, since a dot has no room for visible text. They jump to a slide but cannot report which slide is showing, because CSS cannot know that. Loading carousel.js keeps the back button useful by scrolling the track instead of navigating; without it the dots still work, and each one followed is one press of back. Nothing essential should live behind a slide a reader has to find. The track scrolls, so it must be reachable from the keyboard: give it role="group", an aria-label, and tabindex="0". It is a group rather than a region because the carousel itself is already the landmark.
 
 <div class="scroller" role="region" aria-label="Carousel keyboard shortcuts" tabindex="0" markdown="1">
 

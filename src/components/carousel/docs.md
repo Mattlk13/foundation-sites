@@ -18,16 +18,16 @@ The scrollbar under the track is hidden, since the dots already say where you ar
 		<blockquote id="quote-3" data-slide><p>Nothing to learn.</p></blockquote>
 	</div>
 	<ol data-dots role="list">
-		<li><a href="#quote-1" aria-label="Quote 1"></a></li>
-		<li><a href="#quote-2" aria-label="Quote 2"></a></li>
-		<li><a href="#quote-3" aria-label="Quote 3"></a></li>
+		<li><a href="#quote-1"><span class="hidden">Quote 1</span></a></li>
+		<li><a href="#quote-2"><span class="hidden">Quote 2</span></a></li>
+		<li><a href="#quote-3"><span class="hidden">Quote 3</span></a></li>
 	</ol>
 </section>
 ```
 
 ## Accessibility
 
-Label the region and mark it with `aria-roledescription="carousel"`, so it is announced as a carousel rather than as an anonymous group. Every dot is a link with an `aria-label`, because a dot has no room for text and there is no visually-hidden utility in Yeti.
+Label the region and mark it with `aria-roledescription="carousel"`, so it is announced as a carousel rather than as an anonymous group. A dot has no room for visible text, so name each one: put the words inside it in a `span` carrying `hidden`, which leaves them in the accessibility tree and takes them off the screen, or use an `aria-label`.
 
 The dots take you to a slide; they do not tell you which slide you are on. CSS cannot know that, and the module deliberately does not track it either: watching scroll position to light up a dot is a different and much larger job. If that matters for what you are building, the honest answer is a list rather than a carousel.
 
