@@ -41,6 +41,16 @@
 		border-inline-start: 4px solid var(--yeti-color-border-strong);
 	}
 
+	/* A caption under a quotation is an attribution, and the dash is what says
+	   so. It is generated with empty alternative text, the way the breadcrumbs
+	   separator is, so the name is announced and the dash is not. Only in a
+	   figure, and only after the quotation: a caption under a picture is a
+	   caption. The muted colour and the small size are already every
+	   figcaption's, at the top of this file. */
+	figure > blockquote + figcaption::before {
+		content: "— " / "";
+	}
+
 	/* A disclosure. details and summary already open, close, take the keyboard
 	   and announce their state, so all that is left is the look: the accordion
 	   had it first, and it lives here now, which is what makes a lone details

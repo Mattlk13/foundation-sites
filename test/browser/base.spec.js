@@ -158,3 +158,26 @@ test.describe('base definition lists', () => {
 		expect(await px(page, '#pair2', 'marginTop')).toBeCloseTo(await token(page, '--yeti-space-sm'), 1);
 	});
 });
+
+test.describe('base quotation attribution', () => {
+	const before = (page, id, prop) => page.evaluate(([i, p]) => getComputedStyle(document.getElementById(i), '::before').getPropertyValue(p), [id, prop]);
+
+	test.beforeEach(async ({ page }) => {
+		await page.setViewportSize({ width: 1024, height: 900 });
+		await page.goto('/test/browser/fixtures/base.html');
+	});
+
+	test('a caption after a quotation leads with a dash that is seen and not read', async ({ page }) => {
+		const content = await before(page, 'cite', 'content');
+		expect(content).toContain('—');
+		// The alternative text is empty, as the breadcrumbs separator's is, so a
+		// screen reader hears the name and no stray punctuation.
+		expect(content.replace(/\s/g, '')).toMatch(/""$/);
+		expect(await style(page, '#cite', 'color')).toBe(await style(page, '#caption', 'color'));
+		expect(await px(page, '#cite', 'fontSize')).toBeCloseTo(await token(page, '--yeti-text-sm'), 1);
+	});
+
+	test('a caption under a picture is still a caption', async ({ page }) => {
+		expect(await before(page, 'caption', 'content')).toBe('none');
+	});
+});
