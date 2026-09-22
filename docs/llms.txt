@@ -298,7 +298,7 @@ module: demo.js (optional)
 The native dialog element as a modal, opened by a button whose commandfor names it, with the page behind it inert and focus held inside.
 
 Attributes:
-- data-width: 2xs | xs | sm | md (default) | lg | xl | 2xl — How wide the dialog may grow.
+- data-max: 2xs | xs | sm | md (default) | lg | xl | 2xl — The widest the dialog may grow, from the width scale; it is always narrower than the viewport by a gutter.
 
 module: dialog.js (optional)
 

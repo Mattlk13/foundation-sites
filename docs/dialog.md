@@ -48,7 +48,7 @@ Opening is native too. A `button` carrying `commandfor` with the dialog's id and
 ```html
 <button class="button" type="button" commandfor="share" command="show-modal">Share</button>
 
-<dialog class="dialog" id="share" data-width="sm" aria-labelledby="share-title">
+<dialog class="dialog" id="share" data-max="sm" aria-labelledby="share-title">
 	<h2 id="share-title">Share this page</h2>
 	<p>Anyone with the link can read it.</p>
 	<footer>
@@ -69,7 +69,7 @@ Without the module the dialog still opens and Escape still closes it. What is lo
 
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
-| `data-width` | enum | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `md` | How wide the dialog may grow. |
+| `data-max` | enum | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `md` | The widest the dialog may grow, from the width scale; it is always narrower than the viewport by a gutter. |
 
 </div>
 
@@ -91,7 +91,7 @@ Without the module the dialog still opens and Escape still closes it. What is lo
 | `--yeti-shadow-md` | The dialog's shadow. |
 | `--yeti-space-md` | The least margin kept between the dialog and the viewport's edges. |
 | `--yeti-color-text` | The dialog's text. |
-| `--yeti-width-md` | The default width, when data-width is absent. |
+| `--yeti-width-md` | The default maximum, when data-max is absent. |
 | `--yeti-space-sm` | Gap between the footer's actions. |
 | `--yeti-duration-fast` | How long the dialog and its backdrop take to appear. |
 | `--yeti-ease` | The curve of that transition. |
@@ -100,7 +100,7 @@ Without the module the dialog still opens and Escape still closes it. What is lo
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 
-- `--_yeti-width`
+- `--_yeti-max`
 
 </details>
 

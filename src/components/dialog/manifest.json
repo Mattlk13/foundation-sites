@@ -6,7 +6,7 @@
   "description": "The native dialog element as a modal, opened by a button whose commandfor names it, with the page behind it inert and focus held inside.",
   "class": "dialog",
   "attributes": [
-    { "name": "data-width", "type": "enum", "vocabulary": "width", "default": "md", "description": "How wide the dialog may grow." }
+    { "name": "data-max", "type": "enum", "vocabulary": "width", "default": "md", "description": "The widest the dialog may grow, from the width scale; it is always narrower than the viewport by a gutter." }
   ],
   "classes": [],
   "children": [
@@ -21,11 +21,11 @@
     { "name": "--yeti-shadow-md", "public": true, "description": "The dialog's shadow." },
     { "name": "--yeti-space-md", "public": true, "description": "The least margin kept between the dialog and the viewport's edges." },
     { "name": "--yeti-color-text", "public": true, "description": "The dialog's text." },
-    { "name": "--yeti-width-md", "public": true, "description": "The default width, when data-width is absent." },
+    { "name": "--yeti-width-md", "public": true, "description": "The default maximum, when data-max is absent." },
     { "name": "--yeti-space-sm", "public": true, "description": "Gap between the footer's actions." },
     { "name": "--yeti-duration-fast", "public": true, "description": "How long the dialog and its backdrop take to appear." },
     { "name": "--yeti-ease", "public": true, "description": "The curve of that transition." },
-    { "name": "--_yeti-width", "public": false }
+    { "name": "--_yeti-max", "public": false }
   ],
   "a11y": {
     "requiredAttributes": [],

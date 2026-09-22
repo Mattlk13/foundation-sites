@@ -11,7 +11,7 @@ Opening is native too. A `button` carrying `commandfor` with the dialog's id and
 ```html
 <button class="button" type="button" commandfor="share" command="show-modal">Share</button>
 
-<dialog class="dialog" id="share" data-width="sm" aria-labelledby="share-title">
+<dialog class="dialog" id="share" data-max="sm" aria-labelledby="share-title">
 	<h2 id="share-title">Share this page</h2>
 	<p>Anyone with the link can read it.</p>
 	<footer>

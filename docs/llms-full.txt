@@ -1434,7 +1434,7 @@ Give the iframe a title. Give a box holding direct markup tabindex="0": markup t
 The native dialog element as a modal, opened by a button whose commandfor names it, with the page behind it inert and focus held inside.
 
 Attributes:
-- data-width: 2xs | xs | sm | md (default) | lg | xl | 2xl — How wide the dialog may grow.
+- data-max: 2xs | xs | sm | md (default) | lg | xl | 2xl — The widest the dialog may grow, from the width scale; it is always narrower than the viewport by a gutter.
 
 module: dialog.js (optional)
 
@@ -1451,7 +1451,7 @@ Opening is native too. A `button` carrying `commandfor` with the dialog's id and
 ```html
 <button class="button" type="button" commandfor="share" command="show-modal">Share</button>
 
-<dialog class="dialog" id="share" data-width="sm" aria-labelledby="share-title">
+<dialog class="dialog" id="share" data-max="sm" aria-labelledby="share-title">
 	<h2 id="share-title">Share this page</h2>
 	<p>Anyone with the link can read it.</p>
 	<footer>
@@ -1478,7 +1478,7 @@ Tokens:
 - --yeti-shadow-md — The dialog's shadow.
 - --yeti-space-md — The least margin kept between the dialog and the viewport's edges.
 - --yeti-color-text — The dialog's text.
-- --yeti-width-md — The default width, when data-width is absent.
+- --yeti-width-md — The default maximum, when data-max is absent.
 - --yeti-space-sm — Gap between the footer's actions.
 - --yeti-duration-fast — How long the dialog and its backdrop take to appear.
 - --yeti-ease — The curve of that transition.

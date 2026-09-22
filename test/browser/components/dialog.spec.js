@@ -1,5 +1,5 @@
 import { test, expect } from 'playwright/test';
-import { stage, rect, style, axe, withoutModule } from '../lib/layout.js';
+import { stage, rect, style, axe, withoutModule, token } from '../lib/layout.js';
 
 const open = async (page, width = 1000) => {
 	const response = await page.goto('/test/browser/fixtures/components/dialog.html');
@@ -119,5 +119,16 @@ test.describe('dialog', () => {
 		expect(await isOpen(page)).toBe(true);
 		await page.keyboard.press('Escape');
 		expect(await page.evaluate(() => document.activeElement.id)).toBe('opener');
+	});
+
+	test('data-max caps the width from the width scale', async ({ page }) => {
+		await open(page);
+		await page.click('#opener');
+		await settle(page, '#confirm');
+		await page.click('#nested-open');
+		await settle(page, '#nested');
+		const [outer, nested] = await Promise.all([rect(page, '#confirm'), rect(page, '#nested')]);
+		expect(nested.width).toBeLessThan(outer.width);
+		expect(nested.width).toBeCloseTo(await token(page, '--yeti-width-sm'), 0);
 	});
 });
