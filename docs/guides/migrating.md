@@ -26,8 +26,21 @@ The table covers the grid and every component in the version 6 kitchen sink. "No
 | `.grid-y` | `stack` | vertical rhythm, no grid needed |
 | `.grid-frame` / `.cell-block` | `cover` and `scroller` | full-height frame; a region that scrolls |
 | `.float-left` / `.float-right` | none | floats are for text wrapping; a layout is a `sidebar` or a `cluster` |
-| `.show-for-medium` / `.hide-for-small` | none | a component changes shape at its own threshold instead of being duplicated and hidden |
+| `.show-for-medium` / `.hide-for-small` | `data-show` / `data-hide` inside a `container` | at or above a width, measured on the nearest container and not the window; a component that can change shape at its own threshold still should |
 | `.text-center` and friends | `data-align` and `data-justify` on the layout | alignment is a layout's attribute, not a text utility |
+
+### Visibility
+
+Version 6 had a class for each of these. Most of them are the browser's job, and the [visibility guide](visibility.md) has the whole set side by side.
+
+| Foundation 6 | Yeti | Notes |
+| --- | --- | --- |
+| `.show-for-sr` | `visually-hidden` | out of sight, still announced; see the [visibility guide](visibility.md) |
+| `.hide` | the `hidden` attribute | the platform's, and the reset makes it win over any component's `display` |
+| `.invisible` | `visibility: hidden` in your own CSS | two words, and the only one of these that keeps the element's space |
+| `.show-on-focus` | none | the base skip-link rule already does it for the first link in the body |
+| `.show-for-print` | `print` | on paper and nowhere else |
+| `.hide-for-print` | `print` with `data-print="none"` | everywhere but paper |
 
 ### Components
 
@@ -72,13 +85,15 @@ The table covers the grid and every component in the version 6 kitchen sink. "No
 
 ### What Yeti does instead
 
-Four of those rows deserve more than a line, because what they did is still worth doing.
+Five of those rows deserve more than a line, because what they did is still worth doing.
 
 **Toggler** set a class or an attribute on another element to show it, hide it, or animate it. Every case it covered has a platform answer now. A disclosure is `<details>` with `<summary>`. A panel that closes on Escape and on a click outside is `popover`. A modal is `<dialog>`, opened by a button with `commandfor` and `command="show-modal"`. A parent that has to react to the state of something inside it is `:has()`. None of the four needs a script, and each announces itself to a screen reader, which a toggled class never did.
 
 **Label and badge** were two components with one look. Yeti has one, `badge`, and `data-emphasis` is the difference: `high` is the solid fill the old badge had, `medium` an outline, `low` the hue in the text alone. `data-variant` picks the hue and `data-size` the step, so every label-and-badge combination version 6 shipped is three attributes on one class.
 
 **Sticky** was a plugin with a placeholder element, a pin offset, and a list of edge cases. It is the `data-sticky` marker now: put it on a child of a `sidebar` or a `stack`, on the `nav` or `aside` inside a `shell`'s body row, or on a `nav` itself, and that child sticks, `--yeti-sticky-offset` deciding how far below the top it stops. There is nothing to initialise and nothing to tear down.
+
+**Visibility** was a grid of classes: `show-for-medium`, `hide-for-large`, `show-for-medium-only`, and a `-portrait` and `-landscape` for good measure. Every one of them asked the window how wide the element was, and the window is the wrong thing to ask — the moment the same markup is dropped into a sidebar, a card or a dialog, the class is talking about a width the element has not had for some time. Yeti asks the box instead: `data-show` and `data-hide` read the nearest size container, so one piece of markup makes two different decisions on one page. The rest of the version 6 set is in the table above and most of it belongs to the browser now. There is no `-only` band and no `-portrait`: a band is two elements or a nested container, and both were rare.
 
 **Reveal** is the `dialog` row above. The native element does the opening, the modal backdrop, the focus trap and Escape; `dialog.js` adds the click on the backdrop and the return of focus to the opener, and without the module the dialog still opens and closes.
 
@@ -88,7 +103,7 @@ Four of those rows deserve more than a line, because what they did is still wort
 
 **Native state, not `is-` classes.** There is no `.is-active`, `.is-open`, `.is-invalid-input`. An open accordion has the `open` attribute, the current page has `aria-current="page"`, an invalid field has `aria-invalid="true"`, a selected tab has `aria-selected="true"`. Screen readers read those; they never read a class.
 
-**A threshold, not a breakpoint.** There are no `small-`, `medium-`, `large-` prefixes and no visibility classes. A component changes shape at its own width, chosen from six stops with `data-threshold` or `data-max`. The [responsive guide](responsive.md) is the whole story.
+**A threshold, not a breakpoint.** There are no `small-`, `medium-`, `large-` prefixes and nothing at all that asks the window how wide an element is. A component changes shape at its own width, chosen from the stops with `data-threshold` or `data-max`; where a thing genuinely has no narrow form, `data-show` and `data-hide` remove it at a width of its own container. The [responsive guide](responsive.md) is the whole story, and the [visibility guide](visibility.md) is the part about hiding.
 
 **Nothing to initialise.** There is no `Foundation.init()`, no `data-` attributes for plugins, no jQuery. Six components have an optional module; you load it with one script tag, anywhere, and it finds its own elements. Without the module the component still works, minus what the module adds.
 

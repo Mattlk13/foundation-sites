@@ -30,7 +30,12 @@ test('every Yeti class and attribute the migration table names exists in the man
 	const attributes = new Set(Object.values(merged).flatMap((c) => [...c.attributes, ...(c.markers ?? [])].map((a) => a.name)));
 	for (const { name, line } of names) {
 		const bare = name.replace(/^\./, '').replace(/=.*$/, '').replace(/^<|>$/g, '').replace(/^\[|\]$/g, '');
-		const known = classes.has(bare) || attributes.has(bare) || /^(aria-[a-z-]+(=.*)?|role=.*|popover|open|commandfor|<details>|<dialog>|<summary>|details|dialog|summary|name)$/.test(name);
+		// The Yeti column sometimes answers a Foundation 6 class with something
+		// the platform already provides and Yeti does not redeclare: an ARIA
+		// attribute, a native element, the hidden attribute, a CSS declaration
+		// to write yourself. Those have no manifest entry by design, so they are
+		// named here rather than being allowed to slip through as a typo would.
+		const known = classes.has(bare) || attributes.has(bare) || /^(aria-[a-z-]+(=.*)?|role=.*|popover|open|commandfor|hidden|inert|visibility: hidden|<details>|<dialog>|<summary>|details|dialog|summary|name)$/.test(name);
 		assert.ok(known, `${name} is not a Yeti class or attribute: ${line}`);
 	}
 });
