@@ -17,6 +17,14 @@ test.describe('frame', () => {
 		expect((p.top + p.bottom) / 2).toBeCloseTo((square.top + square.bottom) / 2, 0);
 	});
 
+	test('an iframe fills the frame the way an image does', async ({ page }) => {
+		await open(page, 'frame', 800);
+		const [frame, embed] = await Promise.all([rect(page, '#embed-frame'), rect(page, '#embed')]);
+		expect(frame.height).toBeCloseTo(frame.width * 9 / 16, 0);
+		expect(embed.width).toBeCloseTo(frame.width, 1);
+		expect(embed.height).toBeCloseTo(frame.height, 1);
+	});
+
 	test('has no accessibility violations', async ({ page }) => {
 		await open(page, 'frame');
 		expect(await axe(page)).toEqual([]);

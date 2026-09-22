@@ -286,7 +286,7 @@ Purely visual. Keep the page's h1 inside the cover when the cover is the hero.
 
 ## frame (layout, class="frame")
 
-Holds one child in a fixed aspect ratio, cropping media to fill it and centering anything else.
+Holds one child in a fixed aspect ratio, cropping an image, video or embedded document to fill it and centering anything else.
 
 Attributes:
 - data-ratio: 1/1 | 4/3 | 3/2 | 16/9 (default) | 21/9 — Width to height.
@@ -297,17 +297,17 @@ Use a frame wherever images of unpredictable shape must present as the same shap
 
 ### How it works
 
-`aspect-ratio` sizes the frame from its width, and `overflow: hidden` clips. An image or video child is stretched to both dimensions with `object-fit: cover`, so it fills without distortion and loses only the overflow. Any other child, a placeholder or an icon, is centered with flexbox.
+`aspect-ratio` sizes the frame from its width, and `overflow: hidden` clips. An image, video, `picture`, `iframe`, `embed` or `object` child is stretched to both dimensions with `object-fit: cover`, so it fills without distortion and loses only the overflow. Any other child, a placeholder or an icon, is centered with flexbox.
 
 ### Why this name
 
 It is what a picture frame does: fix the shape and crop what is inside it. Foundation 6 had `.responsive-embed` for video ratios only; a frame does the same for anything.
 
 Children:
-- > *: at least 1, at most 1. One child: an image, video or picture is cropped to fill; anything else is centered.
+- > *: at least 1, at most 1. One child: an image, video, picture, iframe, embed or object is stretched to fill and cropped; anything else is centered.
 
 Accessibility contract:
-Cropping hides parts of an image. Make sure the alt text describes what is visible, or use data-ratio to match the image so nothing is lost.
+Cropping hides parts of an image. Make sure the alt text describes what is visible, or use data-ratio to match the image so nothing is lost. An iframe needs a title saying what is in it, whatever shape it is cropped to.
 
 ## grid (layout, class="grid")
 
