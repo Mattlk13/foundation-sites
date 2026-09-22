@@ -16,7 +16,7 @@ The examples on these pages are live: each is a `demo`, a box you can drag from 
 
 Yeti is not released yet. There is no package on npm and nothing to download, so there is nothing to install today. This section will describe npm, the zip on the GitHub release page and a CDN path once there is a release to describe.
 
-Everything below is written the way it will work then. The package will ship `dist/`: the bundled `yeti.css`, the same source tree unbundled under `css/`, the six modules under `js/` and all of them in one `yeti.js`, the two example themes under `themes/`, and the machine-readable files described further down.
+Everything below is written the way it will work then. The package will ship `dist/`: the bundled `yeti.css`, the same source tree unbundled under `css/`, the nine modules under `js/` and all of them in one `yeti.js`, the two example themes under `themes/`, and the machine-readable files described further down.
 
 To try Yeti before the release, clone the repository and run `npm run build`. That writes the same `dist/` the package will ship, so read `dist/` wherever a path below says `node_modules/yeti-css/dist/`.
 
@@ -53,17 +53,41 @@ There is no class to remember, because that is where a skip link goes anyway. Th
 
 ## A module
 
-Every component works with no script. Six of them do more with one: the alert's close button, the tabs' roving focus, the dialog's opening, a dropdown that opens on hover, the carousel's dots, and a demo's frame built from the code beneath it. Each is a module you load once, anywhere in the page, with nothing to call:
+Every component works with no script. Some do more with one: the alert's close button, the tabs' roving focus, the dialog's backdrop and focus return, a dropdown that opens on hover, the carousel's dots, a range's filled track, a form's validation messages, a toc that follows the reader, and a demo's frame built from the code beneath it. Each is a module you load once, anywhere in the page, with nothing to call:
 
 ```html
 <script type="module" src="node_modules/yeti-css/dist/js/dialog.js"></script>
 ```
 
-A module finds its own elements and is safe on a page that has none of them. Leave it out and the component is still there, minus what the module adds; the [components guide](components.md) says what that is for each. A page that would rather not pick loads all six at once, about a kilobyte and a half compressed:
+A module finds its own elements and is safe on a page that has none of them. Leave it out and the component is still there, minus what the module adds; the [components guide](components.md) says what that is for each. A page that would rather not pick loads all nine at once, about nine kilobytes compressed:
 
 ```html
 <script type="module" src="node_modules/yeti-css/dist/yeti.js"></script>
 ```
+
+## Events
+
+A module says what it did. Each dispatches one `CustomEvent` on the component's own element, bubbling and composed, so a single listener on `document` hears every instance on the page:
+
+| Event | Dispatched on | Detail |
+| --- | --- | --- |
+| `yeti:close` | the `.alert`, before it is removed | none |
+| `yeti:open` | the `dialog`, once it is open | none |
+| `yeti:close` | the `dialog`, when it closes | none |
+| `yeti:select` | the `.tabs` | `{ tab, panel }` |
+| `yeti:slide` | the `.carousel` | `{ index, slide }` |
+| `yeti:invalid` | the `form`, when a submit is refused | `{ controls }` |
+| `yeti:current` | the `.toc`, when the mark moves | `{ link, heading }` |
+
+```html
+<script type="module">
+	document.addEventListener('yeti:select', (event) => {
+		history.replaceState(null, '', `#${event.detail.tab.id}`);
+	});
+</script>
+```
+
+None of them is cancelable: by the time one is dispatched the module has already acted. To stop something happening, prevent the platform event that caused it — the `click`, the `submit`, the `command` — which reaches your own listener first.
 
 ## Editor completion
 
