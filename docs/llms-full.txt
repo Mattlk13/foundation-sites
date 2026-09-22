@@ -1326,16 +1326,16 @@ The scrollbar under the track is hidden, since the dots already say where you ar
 		<blockquote id="quote-3" data-slide><p>Nothing to learn.</p></blockquote>
 	</div>
 	<ol data-dots role="list">
-		<li><a href="#quote-1"><span class="hidden">Quote 1</span></a></li>
-		<li><a href="#quote-2"><span class="hidden">Quote 2</span></a></li>
-		<li><a href="#quote-3"><span class="hidden">Quote 3</span></a></li>
+		<li><a href="#quote-1"><span class="visually-hidden">Quote 1</span></a></li>
+		<li><a href="#quote-2"><span class="visually-hidden">Quote 2</span></a></li>
+		<li><a href="#quote-3"><span class="visually-hidden">Quote 3</span></a></li>
 	</ol>
 </section>
 ```
 
 ### Accessibility
 
-Label the region and mark it with `aria-roledescription="carousel"`, so it is announced as a carousel rather than as an anonymous group. A dot has no room for visible text, so name each one: put the words inside it in a `span` carrying `hidden`, which leaves them in the accessibility tree and takes them off the screen, or use an `aria-label`.
+Label the region and mark it with `aria-roledescription="carousel"`, so it is announced as a carousel rather than as an anonymous group. A dot has no room for visible text, so name each one: put the words inside it in a `span` carrying `visually-hidden`, which leaves them in the accessibility tree and takes them off the screen, or use an `aria-label`.
 
 The dots take you to a slide; they do not tell you which slide you are on. CSS cannot know that, and the module deliberately does not track it either: watching scroll position to light up a dot is a different and much larger job. If that matters for what you are building, the honest answer is a list rather than a carousel.
 
@@ -1346,7 +1346,7 @@ Browser-drawn scroll markers will one day do this in CSS and report the current 
 Children:
 - > [data-track]: at least 1, at most 1. The scrolling track holding the slides. A scrolling region is an interactive one, so give it role="group", a name, and tabindex="0".
 - [data-slide]: at least 2. One slide each, with an id a dot can link to.
-- > [data-dots]: at least 0, at most 1. A list of links, one per slide, each named by a span carrying hidden or by an aria-label. With carousel.js loaded the module scrolls the track itself, so following one adds no history entry.
+- > [data-dots]: at least 0, at most 1. A list of links, one per slide, each named by a span carrying visually-hidden or by an aria-label. With carousel.js loaded the module scrolls the track itself, so following one adds no history entry.
 
 Tokens:
 - --yeti-carousel-dot — Colour of a dot.
@@ -1363,7 +1363,7 @@ Required: aria-label | aria-labelledby
 - Tab: Focuses the track, then each dot in turn.
 - ArrowLeft / ArrowRight: Scroll the track.
 - Enter: Scrolls to that dot's slide.
-Label the region and give it aria-roledescription="carousel" so it is announced as one. The dots are links to slide ids, so the browser does the scrolling and the keyboard works without help; each needs a name, from a span carrying hidden or from an aria-label, since a dot has no room for visible text. They jump to a slide but cannot report which slide is showing, because CSS cannot know that. Loading carousel.js keeps the back button useful by scrolling the track instead of navigating; without it the dots still work, and each one followed is one press of back. Nothing essential should live behind a slide a reader has to find. The track scrolls, so it must be reachable from the keyboard: give it role="group", an aria-label, and tabindex="0". It is a group rather than a region because the carousel itself is already the landmark.
+Label the region and give it aria-roledescription="carousel" so it is announced as one. The dots are links to slide ids, so the browser does the scrolling and the keyboard works without help; each needs a name, from a span carrying visually-hidden or from an aria-label, since a dot has no room for visible text. They jump to a slide but cannot report which slide is showing, because CSS cannot know that. Loading carousel.js keeps the back button useful by scrolling the track instead of navigating; without it the dots still work, and each one followed is one press of back. Nothing essential should live behind a slide a reader has to find. The track scrolls, so it must be reachable from the keyboard: give it role="group", an aria-label, and tabindex="0". It is a group rather than a region because the carousel itself is already the landmark.
 
 ## demo (component, class="demo")
 
@@ -2345,39 +2345,6 @@ Tokens:
 Accessibility contract:
 The clamp is the accessibility story. A size that is only a container unit has no floor and no ceiling: it shrinks past legibility in a narrow column and runs off the top of a wide screen, and a reader who zooms gets neither end back. The floor and the ceiling here are steps of the type scale, set in rem, so a larger default font size raises the floor and a fitted line can never fall below a legible step; the middle of the ramp, between the two ends, follows the container instead. Use it on a line, not on prose: body copy has a comfortable size that is not a percentage of a column.
 
-## hidden (utility, class="hidden")
-
-Takes words out of sight and leaves them in the accessibility tree, for the name a control needs when its face is a picture.
-
-### When to use it
-
-Words a screen reader needs and the page has no room for: the name of an icon-only button, the number on a carousel dot, the subject of the third "Read more" link on a page.
-
-It is not the `hidden` attribute, and the difference is the whole point. `hidden` takes the element out of the page and out of the accessibility tree with it, so a reader hears nothing. This class takes it out of sight and leaves it in the tree, so a reader hears everything.
-
-```html
-<a href="/trail-map.pdf">Read more<span class="hidden"> about the trail map</span></a>
-```
-
-### How it works
-
-The old clip-rect recipe, with `clip-path` in place of the deprecated `clip` property. The box is taken out of the flow with `position: absolute`, so it cannot open a gap in the line it sits in; it is sized a pixel square, because some engines drop a zero-size box altogether; and it is clipped to nothing with `clip-path: inset(50%)` and `overflow: hidden`. `white-space: nowrap` stops a long string being wrapped into a one-character column, which some screen readers read out letter by letter.
-
-`display: none` and `visibility: hidden` are both shorter, and both do the one thing this must not: they take the text out of the accessibility tree.
-
-Put only text in here. Everything inside is still in the page, so a link or a button inside would take Tab focus with nothing on screen to show for it, which is worse than either showing it or leaving it out.
-
-### Accessibility
-
-The text is announced in source order and becomes part of the accessible name of whatever contains it, which is what makes a button with a picture on its face and a word inside it a named button.
-
-A control is named once. Where an `aria-label` is present the browser uses that and ignores the text inside, so pick one: the label when the name is a rewording of the content, the hidden text when the name *is* the content and the design has no room for it.
-
-It is a tool of last resort. A control with room for a word should have the word.
-
-Accessibility contract:
-This is the opposite of the hidden attribute, which removes the element from the accessibility tree as well: text carrying this class is still announced, in source order, and becomes part of the accessible name of whatever contains it. A control named twice is named once: where an aria-label is present the browser uses it and ignores the text inside, so use one or the other. Put only text in here. Anything focusable is still focusable and would take Tab focus with nothing on screen to show for it.
-
 ## lede (utility, class="lede")
 
 The standfirst: the sentence under a page's heading that says what the page is, set larger than the prose it introduces.
@@ -2445,6 +2412,39 @@ Tokens:
 
 Accessibility contract:
 The lift answers :focus-visible on the element and on anything inside it, so a reader tabbing through a page of cards sees the same affordance a pointer gets. It is decoration on top of a focus ring, never a replacement for one; the ring comes from the reset and is untouched. Under reduced motion the element no longer moves and the deeper shadow carries the hover by itself.
+
+## visually-hidden (utility, class="visually-hidden")
+
+Takes words out of sight and leaves them in the accessibility tree, for the name a control needs when its face is a picture.
+
+### When to use it
+
+Words a screen reader needs and the page has no room for: the name of an icon-only button, the number on a carousel dot, the subject of the third "Read more" link on a page.
+
+It is not the `hidden` attribute, and the difference is the whole point — it is also why this is the one class in Yeti with two words in its name. `hidden` takes the element out of the page and out of the accessibility tree with it, so a reader hears nothing. This class takes it out of sight and leaves it in the tree, so a reader hears everything. The [visibility guide](guides/visibility.md) has both, and the seven other ways to hide something, on one page.
+
+```html
+<a href="/trail-map.pdf">Read more<span class="visually-hidden"> about the trail map</span></a>
+```
+
+### How it works
+
+The old clip-rect recipe, with `clip-path` in place of the deprecated `clip` property. The box is taken out of the flow with `position: absolute`, so it cannot open a gap in the line it sits in; it is sized a pixel square, because some engines drop a zero-size box altogether; and it is clipped to nothing with `clip-path: inset(50%)` and `overflow: hidden`. `white-space: nowrap` stops a long string being wrapped into a one-character column, which some screen readers read out letter by letter.
+
+`display: none` and `visibility: hidden` are both shorter, and both do the one thing this must not: they take the text out of the accessibility tree.
+
+Put only text in here. Everything inside is still in the page, so a link or a button inside would take Tab focus with nothing on screen to show for it, which is worse than either showing it or leaving it out.
+
+### Accessibility
+
+The text is announced in source order and becomes part of the accessible name of whatever contains it, which is what makes a button with a picture on its face and a word inside it a named button.
+
+A control is named once. Where an `aria-label` is present the browser uses that and ignores the text inside, so pick one: the label when the name is a rewording of the content, the hidden text when the name *is* the content and the design has no room for it.
+
+It is a tool of last resort. A control with room for a word should have the word.
+
+Accessibility contract:
+This is the opposite of the hidden attribute, which removes the element from the accessibility tree as well: text carrying this class is still announced, in source order, and becomes part of the accessible name of whatever contains it. The two words in the name are there to keep the two apart. A control named twice is named once: where an aria-label is present the browser uses it and ignores the text inside, so use one or the other. Put only text in here. Anything focusable is still focusable and would take Tab focus with nothing on screen to show for it.
 
 ## Tokens
 

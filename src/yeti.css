@@ -64,6 +64,6 @@
 @import "utilities/attention/attention.css";
 @import "utilities/enter/enter.css";
 @import "utilities/fit/fit.css";
-@import "utilities/hidden/hidden.css";
 @import "utilities/lede/lede.css";
 @import "utilities/lift/lift.css";
+@import "utilities/visually-hidden/visually-hidden.css";

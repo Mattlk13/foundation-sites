@@ -2,10 +2,10 @@
 
 Words a screen reader needs and the page has no room for: the name of an icon-only button, the number on a carousel dot, the subject of the third "Read more" link on a page.
 
-It is not the `hidden` attribute, and the difference is the whole point. `hidden` takes the element out of the page and out of the accessibility tree with it, so a reader hears nothing. This class takes it out of sight and leaves it in the tree, so a reader hears everything.
+It is not the `hidden` attribute, and the difference is the whole point — it is also why this is the one class in Yeti with two words in its name. `hidden` takes the element out of the page and out of the accessibility tree with it, so a reader hears nothing. This class takes it out of sight and leaves it in the tree, so a reader hears everything. The [visibility guide](guides/visibility.md) has both, and the seven other ways to hide something, on one page.
 
 ```html
-<a href="/trail-map.pdf">Read more<span class="hidden"> about the trail map</span></a>
+<a href="/trail-map.pdf">Read more<span class="visually-hidden"> about the trail map</span></a>
 ```
 
 ## How it works

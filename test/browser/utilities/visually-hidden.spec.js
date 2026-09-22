@@ -2,13 +2,13 @@ import { test, expect } from 'playwright/test';
 import { stage, rect, style, axe, painted } from '../lib/layout.js';
 
 const open = async (page, width = 1000) => {
-	const response = await page.goto('/test/browser/fixtures/utilities/hidden.html');
+	const response = await page.goto('/test/browser/fixtures/utilities/visually-hidden.html');
 	expect(response.status()).toBe(200);
 	await stage(page, width);
 	await painted(page);
 };
 
-test.describe('hidden', () => {
+test.describe('visually-hidden', () => {
 	test('the text is taken out of the flow and clipped to nothing', async ({ page }) => {
 		await open(page);
 		expect(await style(page, '#label', 'position')).toBe('absolute');
@@ -28,7 +28,7 @@ test.describe('hidden', () => {
 		expect(withHidden.width).toBeCloseTo(plain.width, 0);
 	});
 
-	test('hidden text is part of the accessible name; the hidden attribute drops it', async ({ page }) => {
+	test('the class keeps the words in the accessible name; the hidden attribute drops them', async ({ page }) => {
 		await open(page);
 		await expect(page.locator('#kept')).toHaveAccessibleName('Save changes');
 		await expect(page.locator('#dropped')).toHaveAccessibleName('Save');
