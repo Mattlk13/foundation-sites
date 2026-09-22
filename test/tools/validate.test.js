@@ -822,3 +822,16 @@ test('validateImportOrder rejects a theme imported into yeti.css', () => {
 	}));
 	assert.deepEqual(r.lines, ['src/yeti.css:4: themes are opt-in and must not be imported into yeti.css (found "themes/sharp.css")']);
 });
+
+// The fit vocabulary is read directly by fit.css rather than mapped into
+// attributes.css, so validateVocabulary cannot see it: a pair added to the
+// list with no rule behind it would be offered by the manifest, accepted by
+// the validator, and do nothing in the browser. This is that check.
+test('every value of the fit vocabulary has a rule in fit.css', () => {
+	const vocabulary = JSON.parse(fs.readFileSync(VOCABULARY_PATH, 'utf8'));
+	const css = fs.readFileSync(path.join(REPO_ROOT, 'src/utilities/fit/fit.css'), 'utf8');
+	assert.equal(vocabulary.fit.length, 28);
+	for (const value of vocabulary.fit) {
+		assert.ok(css.includes(`.fit[data-fit="${value}"]`), `${value} has no rule in fit.css`);
+	}
+});

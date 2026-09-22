@@ -433,6 +433,13 @@ Attributes:
 - data-stagger (boolean) — Animate the element's children one after another instead of the element itself, each a step later than the last.
 - data-view (boolean) — Play as the element scrolls into view instead of on load. Where a scroll timeline is unsupported, or the reader has asked for less motion, it plays on load instead.
 
+## fit (utility, class="fit")
+
+Sizes one line of type to the container it is in, clamped between two steps of the type scale.
+
+Attributes:
+- data-fit: xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | xs-display | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | sm-display | md-lg | md-xl | md-2xl | md-3xl (default) | md-display | lg-xl | lg-2xl | lg-3xl | lg-display | xl-2xl | xl-3xl | xl-display | 2xl-3xl | 2xl-display | 3xl-display — The two ends of the clamp, as a pair of type steps: the smallest the line may set and the largest.
+
 ## hidden (utility, class="hidden")
 
 Takes words out of sight and leaves them in the accessibility tree, for the name a control needs when its face is a picture.

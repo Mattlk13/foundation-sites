@@ -538,4 +538,14 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 
 </div>
 
+## Fit
+
+<div class="scroller" role="region" aria-label="Fit tokens" tabindex="0" markdown="1">
+
+| Token | Default | Description |
+| --- | --- | --- |
+| `--yeti-fit-width` | `var(--yeti-width-md)` | The container width at which a line carrying fit reaches the top of its pair; below it the size is in proportion, above it the clamp holds. |
+
+</div>
+
 Yeti also defines 47 internal `--_yeti-*` tokens. They derive from the public ones and may change between minor versions; override the public token instead.

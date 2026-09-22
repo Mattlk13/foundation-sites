@@ -133,6 +133,13 @@
 		--yeti-attention-duration: 600ms;
 		--yeti-attention-distance: 0.35rem;
 		--yeti-attention-scale: 1.06;
+
+		/* Fit: the container width at which a fitted line reaches the top of
+		   its pair. A divisor, not a breakpoint. The growth rate of the line
+		   is the pair's own maximum over this width, so a pair that ends
+		   higher grows faster and every pair arrives at its ceiling in the
+		   same box; a theme that moves this moves all twenty-eight together. */
+		--yeti-fit-width: var(--yeti-width-md);
 	}
 
 	/* The ring reads a token so the preference reaches it: a components-layer
