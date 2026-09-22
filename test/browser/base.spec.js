@@ -181,3 +181,58 @@ test.describe('base quotation attribution', () => {
 		expect(await before(page, 'caption', 'content')).toBe('none');
 	});
 });
+
+test.describe('base skip link', () => {
+	// Resolves a colour token the way token() resolves a length: through a probe
+	// element, because the declared value is a light-dark() pair and only a used
+	// value can be compared with what the link computed.
+	const colour = (page, name) => page.evaluate((n) => {
+		const probe = document.createElement('div');
+		probe.style.backgroundColor = `var(${n})`;
+		document.body.append(probe);
+		const value = getComputedStyle(probe).backgroundColor;
+		probe.remove();
+		return value;
+	}, name);
+
+	test.beforeEach(async ({ page }) => {
+		await page.setViewportSize({ width: 1024, height: 900 });
+		const response = await page.goto('/test/browser/fixtures/base-skip.html');
+		expect(response.status()).toBe(200);
+	});
+
+	test('it is out of sight but not out of the page', async ({ page }) => {
+		expect(await page.evaluate(() => document.getElementById('skip').getBoundingClientRect().width)).toBeLessThanOrEqual(1);
+		expect(await style(page, '#skip', 'position')).toBe('absolute');
+		expect(await style(page, '#skip', 'clipPath')).toBe('inset(50%)');
+		// Clipped, not hidden: display: none and visibility: hidden would both
+		// take the link out of the accessibility tree and out of Tab order,
+		// which is the one thing a skip link cannot afford.
+		expect(await page.locator('#skip').isVisible()).toBe(true);
+	});
+
+	test('the first Tab pins it to the top start corner with the focus ring', async ({ page, browserName }) => {
+		// WebKit leaves links out of Tab order unless full keyboard access is
+		// on; Alt+Tab is how nav.spec.js and dropdown.spec.js reach a link there.
+		await page.keyboard.press(browserName === 'webkit' ? 'Alt+Tab' : 'Tab');
+		expect(await page.evaluate(() => document.activeElement.id)).toBe('skip');
+		const gap = await token(page, '--yeti-space-sm');
+		const box = await page.evaluate(() => { const r = document.getElementById('skip').getBoundingClientRect(); return { top: r.top, left: r.left, width: r.width }; });
+		expect(box.top).toBeCloseTo(gap, 0);
+		expect(box.left).toBeCloseTo(gap, 0);
+		expect(box.width).toBeGreaterThan(40);
+		expect(await style(page, '#skip', 'position')).toBe('fixed');
+		expect(await style(page, '#skip', 'backgroundColor')).toBe(await colour(page, '--yeti-color-surface-raised'));
+		expect(await style(page, '#skip', 'outlineStyle')).toBe('solid');
+		expect(await px(page, '#skip', 'outlineWidth')).toBe(2);
+	});
+
+	test('a link that is not the body\'s first child is an ordinary link', async ({ page }) => {
+		expect(await style(page, '#second', 'position')).toBe('static');
+		expect(await page.evaluate(() => document.getElementById('second').getBoundingClientRect().width)).toBeGreaterThan(1);
+	});
+
+	test('has no accessibility violations', async ({ page }) => {
+		expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+	});
+});

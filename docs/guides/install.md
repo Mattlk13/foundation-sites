@@ -35,6 +35,22 @@ Yeti's rules live in cascade layers, so anything you write outside a layer wins 
 <link rel="stylesheet" href="node_modules/yeti-css/dist/themes/soft.css">
 ```
 
+## Bare HTML
+
+Most of Yeti is opt-in, but the base layer is not: it styles plain HTML the moment the stylesheet loads. Headings take the type scale, running text takes a measure, siblings in flow take the spacing rhythm, form controls and tables come out tidy, definition lists read as pairs, a quotation's caption reads as an attribution, and a `details` opens with a chevron and a panel that grows. A page with no Yeti markup in it at all still reads as a designed page.
+
+One base rule is a convention rather than an element. The first link in the body, if it points at a fragment of the same page, is treated as a skip link: it is out of sight until it is focused, and then it is a box pinned at the top start corner of the window with the focus ring on it.
+
+```html
+<body>
+	<a href="#content">Skip to content</a>
+	<header>…</header>
+	<main id="content">…</main>
+</body>
+```
+
+There is no class to remember, because that is where a skip link goes anyway. The cost runs the other way: if the first link in your body is not a skip link, it is invisible until someone focuses it. Put anything at all before it — a `header`, a `div`, the site's logo — and it is an ordinary link again.
+
 ## A module
 
 Every component works with no script. Six of them do more with one: the alert's close button, the tabs' roving focus, the dialog's opening, a dropdown that opens on hover, the carousel's dots, and a demo's frame built from the code beneath it. Each is a module you load once, anywhere in the page, with nothing to call:
