@@ -12,7 +12,7 @@
 	<main>
 		<h1>Dialog component</h1>
 		<div id="stage">
-			<button class="button" type="button" data-open="confirm" id="opener" data-contrast>Delete project</button>
+			<button class="button" type="button" commandfor="confirm" command="show-modal" id="opener" data-contrast>Delete project</button>
 			<p><a href="#" id="after">A link after the button.</a></p>
 
 			<dialog class="dialog" id="confirm" aria-labelledby="confirm-title">
@@ -21,7 +21,7 @@
 				<footer>
 					<form method="dialog"><button class="button" type="submit" id="cancel" data-emphasis="medium">Cancel</button></form>
 					<button class="button" type="button" id="confirm-go" data-variant="alert">Delete</button>
-					<button class="button" type="button" data-open="nested" id="nested-open" data-emphasis="low">Are you sure?</button>
+					<button class="button" type="button" commandfor="nested" command="show-modal" id="nested-open" data-emphasis="low">Are you sure?</button>
 				</footer>
 			</dialog>
 

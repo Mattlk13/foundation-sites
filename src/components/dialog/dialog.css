@@ -1,7 +1,7 @@
-/* Dialog: the native dialog element, styled. Opened as a modal by dialog.js,
-   which is what makes the rest of the page inert and keeps focus inside. The
-   reset already exempts dialog from the universal margin rule, so the
-   browser's own centring survives. */
+/* Dialog: the native dialog element, styled. Opened as a modal by a button's
+   commandfor and command="show-modal", which is what makes the rest of the
+   page inert and keeps focus inside. The reset already exempts dialog from
+   the universal margin rule, so the browser's own centring survives. */
 @layer yeti.components {
 	.dialog {
 		max-inline-size: min(var(--_yeti-width), 100% - 2 * var(--yeti-space-md));

@@ -241,7 +241,6 @@ Attributes:
 - data-variant: primary (default) | secondary | success | warning | alert | neutral — Which hue's ladder the button uses.
 - data-emphasis: high (default) | medium | low — How loud: high is a solid fill, medium an outline, low text alone.
 - data-size: sm | md (default) | lg — Scales the text and the padding together.
-- data-open (string) — The id of a dialog this button opens, when dialog.js is loaded.
 
 ## buttons (component, class="buttons")
 
@@ -296,7 +295,7 @@ module: demo.js (optional)
 
 ## dialog (component, class="dialog")
 
-The native dialog element as a modal, opened by a button that names it, with the page behind it inert and focus held inside.
+The native dialog element as a modal, opened by a button whose commandfor names it, with the page behind it inert and focus held inside.
 
 Attributes:
 - data-width: 2xs | xs | sm | md (default) | lg | xl | 2xl — How wide the dialog may grow.

@@ -1,7 +1,7 @@
 ---
 raw: true
 title: "Dialog"
-description: "The native dialog element as a modal, opened by a button that names it, with the page behind it inert and focus held inside."
+description: "The native dialog element as a modal, opened by a button whose commandfor names it, with the page behind it inert and focus held inside."
 nav_group: "Forms and Actions"
 nav_order: 4
 ---
@@ -9,18 +9,18 @@ nav_order: 4
 
 # Dialog
 
-<p class="lede">The native dialog element as a modal, opened by a button that names it, with the page behind it inert and focus held inside.</p>
+<p class="lede">The native dialog element as a modal, opened by a button whose commandfor names it, with the page behind it inert and focus held inside.</p>
 
 ## Example
 
 <figure class="demo" data-height="xl">
-<div data-preview="Dialog"><iframe title="Dialog, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;button class=&quot;button&quot; type=&quot;button&quot; data-open=&quot;delete-project&quot; data-variant=&quot;alert&quot;&gt;Delete project&lt;/button&gt;&#10;&#10;&lt;dialog class=&quot;dialog&quot; id=&quot;delete-project&quot; aria-labelledby=&quot;delete-project-title&quot;&gt;&#10;	&lt;h2 id=&quot;delete-project-title&quot;&gt;Delete this project?&lt;/h2&gt;&#10;	&lt;p&gt;Everything in it goes too, and this cannot be undone.&lt;/p&gt;&#10;	&lt;footer&gt;&#10;		&lt;form method=&quot;dialog&quot;&gt;&lt;button class=&quot;button&quot; type=&quot;submit&quot; data-emphasis=&quot;medium&quot;&gt;Cancel&lt;/button&gt;&lt;/form&gt;&#10;		&lt;button class=&quot;button&quot; type=&quot;button&quot; data-variant=&quot;alert&quot;&gt;Delete&lt;/button&gt;&#10;	&lt;/footer&gt;&#10;&lt;/dialog&gt;"></iframe></div>
+<div data-preview="Dialog"><iframe title="Dialog, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;button class=&quot;button&quot; type=&quot;button&quot; commandfor=&quot;delete-project&quot; command=&quot;show-modal&quot; data-variant=&quot;alert&quot;&gt;Delete project&lt;/button&gt;&#10;&#10;&lt;dialog class=&quot;dialog&quot; id=&quot;delete-project&quot; aria-labelledby=&quot;delete-project-title&quot;&gt;&#10;	&lt;h2 id=&quot;delete-project-title&quot;&gt;Delete this project?&lt;/h2&gt;&#10;	&lt;p&gt;Everything in it goes too, and this cannot be undone.&lt;/p&gt;&#10;	&lt;footer&gt;&#10;		&lt;form method=&quot;dialog&quot;&gt;&lt;button class=&quot;button&quot; type=&quot;submit&quot; data-emphasis=&quot;medium&quot;&gt;Cancel&lt;/button&gt;&lt;/form&gt;&#10;		&lt;button class=&quot;button&quot; type=&quot;button&quot; data-variant=&quot;alert&quot;&gt;Delete&lt;/button&gt;&#10;	&lt;/footer&gt;&#10;&lt;/dialog&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
 
 ```html
-<button class="button" type="button" data-open="delete-project" data-variant="alert">Delete project</button>
+<button class="button" type="button" commandfor="delete-project" command="show-modal" data-variant="alert">Delete project</button>
 
 <dialog class="dialog" id="delete-project" aria-labelledby="delete-project-title">
 	<h2 id="delete-project-title">Delete this project?</h2>
@@ -43,10 +43,10 @@ A decision that has to be made before anything else happens: confirming somethin
 
 A native `dialog`, opened as a modal. That one word is why the component exists in this shape: `showModal` makes everything behind the dialog inert, keeps focus inside it, closes it on Escape, and gives you a `::backdrop` to paint. None of that is Yeti's, and none of it needs ARIA.
 
-Opening is the one thing the browser will not do for you, so `dialog.js` does it: any button carrying `data-open` with a dialog's id opens it, a click on the backdrop closes it, and focus returns to the button that opened it. Closing needs no script at all if you use a form: a button inside `<form method="dialog">` closes the dialog on its own.
+Opening is native too. A `button` carrying `commandfor` with the dialog's id and `command="show-modal"` opens it modally, with no script. Closing needs none either if you use a form: a button inside `<form method="dialog">` closes the dialog on its own. `dialog.js` adds the two things the platform does not do yet: a click on the backdrop closes the dialog, and focus returns to the button that opened it when it closes.
 
 ```html
-<button class="button" type="button" data-open="share">Share</button>
+<button class="button" type="button" commandfor="share" command="show-modal">Share</button>
 
 <dialog class="dialog" id="share" data-width="sm" aria-labelledby="share-title">
 	<h2 id="share-title">Share this page</h2>
@@ -61,7 +61,7 @@ Opening is the one thing the browser will not do for you, so `dialog.js` does it
 
 Name the dialog with `aria-labelledby` pointing at its heading, so it is announced as something rather than as an unnamed dialog. Because it is opened modally the page behind it is genuinely inert, not merely covered, so a screen reader cannot wander out of it. Focus returns to the opener on close, which is what keeps a keyboard reader's place.
 
-Without the module the dialog never opens. That is a real limitation, not a detail: do not put the only way to reach something behind a dialog on a page that does not load `dialog.js`.
+Without the module the dialog still opens and Escape still closes it. What is lost is the backdrop click and, in Safari, the return of focus to the opener, because Safari does not focus a button when it is clicked. Load the module on any page where a keyboard reader will meet a dialog.
 
 ## Attributes
 
@@ -106,7 +106,7 @@ Without the module the dialog never opens. That is a real limitation, not a deta
 
 ## Accessibility
 
-- Give the dialog a name with aria-labelledby pointing at its heading. Opened with showModal, which is what dialog.js does, the browser makes everything behind it inert, holds focus inside, and closes on Escape; none of that needs ARIA. A button inside a form with method="dialog" closes it without any script. Without the module nothing opens the dialog, so never put the only route to something behind one on a page that does not load it.
+- Give the dialog a name with aria-labelledby pointing at its heading. A button with commandfor naming the dialog and command="show-modal" opens it modally: the browser makes everything behind it inert, holds focus inside, and closes on Escape; none of that needs ARIA or a script. A button inside a form with method="dialog" closes it without any script. dialog.js adds a backdrop click that closes the dialog and returns focus to the opening button on close; without it the dialog still opens and Escape still closes it.
 
 <div class="scroller" role="region" aria-label="Dialog keyboard shortcuts" tabindex="0" markdown="1">
 
@@ -119,7 +119,7 @@ Without the module the dialog never opens. That is a real limitation, not a deta
 
 ## Browser support
 
-- Used without guards: dialog, ::backdrop, @starting-style, transition-behavior: allow-discrete
+- Used without guards: invoker commands (commandfor and command), dialog, ::backdrop, @starting-style, transition-behavior: allow-discrete
 - Behind `@supports`: nothing
 
 ## JavaScript

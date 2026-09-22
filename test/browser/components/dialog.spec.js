@@ -14,7 +14,7 @@ const settle = (page, selector) => page.evaluate((s) => new Promise((resolve) =>
 	.then(() => Promise.all(document.querySelector(s).getAnimations().map((a) => a.finished.catch(() => {})))), selector);
 
 test.describe('dialog', () => {
-	test('data-open opens it modally and Escape closes it', async ({ page }) => {
+	test('commandfor opens it modally and Escape closes it', async ({ page }) => {
 		await open(page);
 		expect(await isOpen(page)).toBe(false);
 		await page.click('#opener');
@@ -85,11 +85,15 @@ test.describe('dialog', () => {
 		expect(await page.evaluate(() => document.activeElement.id)).not.toBe('after');
 	});
 
-	test('without the module the opener does nothing', async ({ page }) => {
+	test('without the module it still opens; only the backdrop click is lost', async ({ page }) => {
 		await withoutModule(page, 'dialog');
 		await open(page);
 		await page.click('#opener');
-		await page.waitForTimeout(200);
+		expect(await isOpen(page)).toBe(true);
+		expect(await isModal(page)).toBe(true);
+		await page.mouse.click(5, 5);
+		expect(await isOpen(page)).toBe(true);
+		await page.keyboard.press('Escape');
 		expect(await isOpen(page)).toBe(false);
 	});
 

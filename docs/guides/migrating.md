@@ -45,7 +45,7 @@ The table covers the grid and every component in the version 6 kitchen sink. "No
 | `.dropdown-pane` | `dropdown` | a popover, so no script and no z-index |
 | `.dropdown.menu` submenus | `dropdown` inside a `nav` item | one level; a mega menu is not shipped |
 | `.accordion-menu`, `.drilldown` | none | a site tree is a list of links in a `stack`; the browser's `<details>` disclosure for a section |
-| `.reveal` | `dialog`, opened by a `button` with `data-open` | the native dialog; the module opens it modally |
+| `.reveal` | `dialog`, opened by a `button` with `commandfor` | the native dialog opens itself; the module closes it from the backdrop |
 | `.tooltip` | `tooltip` | hover and focus, no script |
 | `.accordion` | `accordion` | native `<details>`; `name` for one-at-a-time |
 | `.tabs` | `tabs` | roving focus from the module |
