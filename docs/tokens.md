@@ -196,6 +196,86 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-color-border-strong` | `L 0.75 light, 0.40 dark` | Emphasised border: focused inputs, blockquote rule. |
 | `--yeti-color-scrim` | `the surface at 85%` | A wash over content so something on top of it can be read: a caption over a picture, a veil over a form. Thinned surface, so it dims with the theme rather than tinting. |
 | `--yeti-color-focus` | `var(--yeti-color-primary)` | Focus ring color. |
+| `--yeti-white` | `oklch(1 0 0)` | White, in both schemes and under every theme. One of the three colours that never move. |
+| `--yeti-black` | `oklch(0 0 0)` | Black, in both schemes and under every theme. |
+| `--yeti-grey` | `oklch(0.565 0 0)` | 18% reflectance, the photographic middle grey, in both schemes and under every theme. |
+| `--yeti-grey-0` | `0% from surface to text` | The page surface, as the first step of the greyscale. |
+| `--yeti-grey-10` | `10% from surface to text` | 10% of the way from the page surface to its text. Near the page in both schemes when the number is low. |
+| `--yeti-grey-20` | `20% from surface to text` | 20% of the way from the page surface to its text. Near the page in both schemes when the number is low. |
+| `--yeti-grey-30` | `30% from surface to text` | 30% of the way from the page surface to its text. Near the page in both schemes when the number is low. |
+| `--yeti-grey-40` | `40% from surface to text` | 40% of the way from the page surface to its text. Near the page in both schemes when the number is low. |
+| `--yeti-grey-50` | `50% from surface to text` | 50% of the way from the page surface to its text. Near the page in both schemes when the number is low. |
+| `--yeti-grey-60` | `60% from surface to text` | 60% of the way from the page surface to its text. Near the page in both schemes when the number is low. |
+| `--yeti-grey-70` | `70% from surface to text` | 70% of the way from the page surface to its text. Near the page in both schemes when the number is low. |
+| `--yeti-grey-80` | `80% from surface to text` | 80% of the way from the page surface to its text. Near the page in both schemes when the number is low. |
+| `--yeti-grey-90` | `90% from surface to text` | 90% of the way from the page surface to its text. Near the page in both schemes when the number is low. |
+| `--yeti-grey-100` | `100% from surface to text` | The page text colour, as the last step of the greyscale. |
+| `--yeti-color-primary-0` | `grey-0 at the primary hue` | The primary hue at the lightness of --yeti-grey-0; flips with the scheme as the grey does. |
+| `--yeti-color-primary-10` | `grey-10 at the primary hue` | The primary hue at the lightness of --yeti-grey-10; flips with the scheme as the grey does. |
+| `--yeti-color-primary-20` | `grey-20 at the primary hue` | The primary hue at the lightness of --yeti-grey-20; flips with the scheme as the grey does. |
+| `--yeti-color-primary-30` | `grey-30 at the primary hue` | The primary hue at the lightness of --yeti-grey-30; flips with the scheme as the grey does. |
+| `--yeti-color-primary-40` | `grey-40 at the primary hue` | The primary hue at the lightness of --yeti-grey-40; flips with the scheme as the grey does. |
+| `--yeti-color-primary-50` | `grey-50 at the primary hue` | The primary hue at the lightness of --yeti-grey-50; flips with the scheme as the grey does. |
+| `--yeti-color-primary-60` | `grey-60 at the primary hue` | The primary hue at the lightness of --yeti-grey-60; flips with the scheme as the grey does. |
+| `--yeti-color-primary-70` | `grey-70 at the primary hue` | The primary hue at the lightness of --yeti-grey-70; flips with the scheme as the grey does. |
+| `--yeti-color-primary-80` | `grey-80 at the primary hue` | The primary hue at the lightness of --yeti-grey-80; flips with the scheme as the grey does. |
+| `--yeti-color-primary-90` | `grey-90 at the primary hue` | The primary hue at the lightness of --yeti-grey-90; flips with the scheme as the grey does. |
+| `--yeti-color-primary-100` | `grey-100 at the primary hue` | The primary hue at the lightness of --yeti-grey-100; flips with the scheme as the grey does. |
+| `--yeti-color-secondary-0` | `grey-0 at the secondary hue` | The secondary hue at the lightness of --yeti-grey-0; flips with the scheme as the grey does. |
+| `--yeti-color-secondary-10` | `grey-10 at the secondary hue` | The secondary hue at the lightness of --yeti-grey-10; flips with the scheme as the grey does. |
+| `--yeti-color-secondary-20` | `grey-20 at the secondary hue` | The secondary hue at the lightness of --yeti-grey-20; flips with the scheme as the grey does. |
+| `--yeti-color-secondary-30` | `grey-30 at the secondary hue` | The secondary hue at the lightness of --yeti-grey-30; flips with the scheme as the grey does. |
+| `--yeti-color-secondary-40` | `grey-40 at the secondary hue` | The secondary hue at the lightness of --yeti-grey-40; flips with the scheme as the grey does. |
+| `--yeti-color-secondary-50` | `grey-50 at the secondary hue` | The secondary hue at the lightness of --yeti-grey-50; flips with the scheme as the grey does. |
+| `--yeti-color-secondary-60` | `grey-60 at the secondary hue` | The secondary hue at the lightness of --yeti-grey-60; flips with the scheme as the grey does. |
+| `--yeti-color-secondary-70` | `grey-70 at the secondary hue` | The secondary hue at the lightness of --yeti-grey-70; flips with the scheme as the grey does. |
+| `--yeti-color-secondary-80` | `grey-80 at the secondary hue` | The secondary hue at the lightness of --yeti-grey-80; flips with the scheme as the grey does. |
+| `--yeti-color-secondary-90` | `grey-90 at the secondary hue` | The secondary hue at the lightness of --yeti-grey-90; flips with the scheme as the grey does. |
+| `--yeti-color-secondary-100` | `grey-100 at the secondary hue` | The secondary hue at the lightness of --yeti-grey-100; flips with the scheme as the grey does. |
+| `--yeti-color-success-0` | `grey-0 at the success hue` | The success hue at the lightness of --yeti-grey-0; flips with the scheme as the grey does. |
+| `--yeti-color-success-10` | `grey-10 at the success hue` | The success hue at the lightness of --yeti-grey-10; flips with the scheme as the grey does. |
+| `--yeti-color-success-20` | `grey-20 at the success hue` | The success hue at the lightness of --yeti-grey-20; flips with the scheme as the grey does. |
+| `--yeti-color-success-30` | `grey-30 at the success hue` | The success hue at the lightness of --yeti-grey-30; flips with the scheme as the grey does. |
+| `--yeti-color-success-40` | `grey-40 at the success hue` | The success hue at the lightness of --yeti-grey-40; flips with the scheme as the grey does. |
+| `--yeti-color-success-50` | `grey-50 at the success hue` | The success hue at the lightness of --yeti-grey-50; flips with the scheme as the grey does. |
+| `--yeti-color-success-60` | `grey-60 at the success hue` | The success hue at the lightness of --yeti-grey-60; flips with the scheme as the grey does. |
+| `--yeti-color-success-70` | `grey-70 at the success hue` | The success hue at the lightness of --yeti-grey-70; flips with the scheme as the grey does. |
+| `--yeti-color-success-80` | `grey-80 at the success hue` | The success hue at the lightness of --yeti-grey-80; flips with the scheme as the grey does. |
+| `--yeti-color-success-90` | `grey-90 at the success hue` | The success hue at the lightness of --yeti-grey-90; flips with the scheme as the grey does. |
+| `--yeti-color-success-100` | `grey-100 at the success hue` | The success hue at the lightness of --yeti-grey-100; flips with the scheme as the grey does. |
+| `--yeti-color-warning-0` | `grey-0 at the warning hue` | The warning hue at the lightness of --yeti-grey-0; flips with the scheme as the grey does. |
+| `--yeti-color-warning-10` | `grey-10 at the warning hue` | The warning hue at the lightness of --yeti-grey-10; flips with the scheme as the grey does. |
+| `--yeti-color-warning-20` | `grey-20 at the warning hue` | The warning hue at the lightness of --yeti-grey-20; flips with the scheme as the grey does. |
+| `--yeti-color-warning-30` | `grey-30 at the warning hue` | The warning hue at the lightness of --yeti-grey-30; flips with the scheme as the grey does. |
+| `--yeti-color-warning-40` | `grey-40 at the warning hue` | The warning hue at the lightness of --yeti-grey-40; flips with the scheme as the grey does. |
+| `--yeti-color-warning-50` | `grey-50 at the warning hue` | The warning hue at the lightness of --yeti-grey-50; flips with the scheme as the grey does. |
+| `--yeti-color-warning-60` | `grey-60 at the warning hue` | The warning hue at the lightness of --yeti-grey-60; flips with the scheme as the grey does. |
+| `--yeti-color-warning-70` | `grey-70 at the warning hue` | The warning hue at the lightness of --yeti-grey-70; flips with the scheme as the grey does. |
+| `--yeti-color-warning-80` | `grey-80 at the warning hue` | The warning hue at the lightness of --yeti-grey-80; flips with the scheme as the grey does. |
+| `--yeti-color-warning-90` | `grey-90 at the warning hue` | The warning hue at the lightness of --yeti-grey-90; flips with the scheme as the grey does. |
+| `--yeti-color-warning-100` | `grey-100 at the warning hue` | The warning hue at the lightness of --yeti-grey-100; flips with the scheme as the grey does. |
+| `--yeti-color-alert-0` | `grey-0 at the alert hue` | The alert hue at the lightness of --yeti-grey-0; flips with the scheme as the grey does. |
+| `--yeti-color-alert-10` | `grey-10 at the alert hue` | The alert hue at the lightness of --yeti-grey-10; flips with the scheme as the grey does. |
+| `--yeti-color-alert-20` | `grey-20 at the alert hue` | The alert hue at the lightness of --yeti-grey-20; flips with the scheme as the grey does. |
+| `--yeti-color-alert-30` | `grey-30 at the alert hue` | The alert hue at the lightness of --yeti-grey-30; flips with the scheme as the grey does. |
+| `--yeti-color-alert-40` | `grey-40 at the alert hue` | The alert hue at the lightness of --yeti-grey-40; flips with the scheme as the grey does. |
+| `--yeti-color-alert-50` | `grey-50 at the alert hue` | The alert hue at the lightness of --yeti-grey-50; flips with the scheme as the grey does. |
+| `--yeti-color-alert-60` | `grey-60 at the alert hue` | The alert hue at the lightness of --yeti-grey-60; flips with the scheme as the grey does. |
+| `--yeti-color-alert-70` | `grey-70 at the alert hue` | The alert hue at the lightness of --yeti-grey-70; flips with the scheme as the grey does. |
+| `--yeti-color-alert-80` | `grey-80 at the alert hue` | The alert hue at the lightness of --yeti-grey-80; flips with the scheme as the grey does. |
+| `--yeti-color-alert-90` | `grey-90 at the alert hue` | The alert hue at the lightness of --yeti-grey-90; flips with the scheme as the grey does. |
+| `--yeti-color-alert-100` | `grey-100 at the alert hue` | The alert hue at the lightness of --yeti-grey-100; flips with the scheme as the grey does. |
+| `--yeti-color-neutral-0` | `grey-0 at the neutral hue` | The neutral hue at the lightness of --yeti-grey-0; flips with the scheme as the grey does. |
+| `--yeti-color-neutral-10` | `grey-10 at the neutral hue` | The neutral hue at the lightness of --yeti-grey-10; flips with the scheme as the grey does. |
+| `--yeti-color-neutral-20` | `grey-20 at the neutral hue` | The neutral hue at the lightness of --yeti-grey-20; flips with the scheme as the grey does. |
+| `--yeti-color-neutral-30` | `grey-30 at the neutral hue` | The neutral hue at the lightness of --yeti-grey-30; flips with the scheme as the grey does. |
+| `--yeti-color-neutral-40` | `grey-40 at the neutral hue` | The neutral hue at the lightness of --yeti-grey-40; flips with the scheme as the grey does. |
+| `--yeti-color-neutral-50` | `grey-50 at the neutral hue` | The neutral hue at the lightness of --yeti-grey-50; flips with the scheme as the grey does. |
+| `--yeti-color-neutral-60` | `grey-60 at the neutral hue` | The neutral hue at the lightness of --yeti-grey-60; flips with the scheme as the grey does. |
+| `--yeti-color-neutral-70` | `grey-70 at the neutral hue` | The neutral hue at the lightness of --yeti-grey-70; flips with the scheme as the grey does. |
+| `--yeti-color-neutral-80` | `grey-80 at the neutral hue` | The neutral hue at the lightness of --yeti-grey-80; flips with the scheme as the grey does. |
+| `--yeti-color-neutral-90` | `grey-90 at the neutral hue` | The neutral hue at the lightness of --yeti-grey-90; flips with the scheme as the grey does. |
+| `--yeti-color-neutral-100` | `grey-100 at the neutral hue` | The neutral hue at the lightness of --yeti-grey-100; flips with the scheme as the grey does. |
 
 </div>
 

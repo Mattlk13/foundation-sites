@@ -6,6 +6,7 @@
 @import "tokens/space.css";
 @import "tokens/type.css";
 @import "tokens/color.css";
+@import "tokens/tone.css";
 @import "tokens/motion.css";
 @import "tokens/surface.css";
 @import "tokens/components.css";
