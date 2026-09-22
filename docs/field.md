@@ -13,18 +13,38 @@ nav_order: 5
 
 ## Example
 
-<figure class="demo" data-height="lg">
-<div data-preview="Field"><iframe title="Field, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;field&quot;&gt;&#10;	&lt;label for=&quot;email&quot;&gt;Email&lt;/label&gt;&#10;	&lt;input id=&quot;email&quot; type=&quot;email&quot; required aria-describedby=&quot;email-hint email-error&quot;&gt;&#10;	&lt;p id=&quot;email-hint&quot; data-hint&gt;We only use it to sign you in.&lt;/p&gt;&#10;	&lt;p id=&quot;email-error&quot; data-error&gt;Enter an address with an @ in it.&lt;/p&gt;&#10;&lt;/div&gt;"></iframe></div>
+<figure class="demo" data-height="xl">
+<div data-preview="Field"><iframe title="Field, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;stack&quot; data-gap=&quot;lg&quot;&gt;&#10;	&lt;div class=&quot;field&quot;&gt;&#10;		&lt;label for=&quot;email&quot;&gt;Email&lt;/label&gt;&#10;		&lt;input id=&quot;email&quot; type=&quot;email&quot; required aria-describedby=&quot;email-hint email-error&quot;&gt;&#10;		&lt;p id=&quot;email-hint&quot; data-hint&gt;We only use it to sign you in.&lt;/p&gt;&#10;		&lt;p id=&quot;email-error&quot; data-error&gt;Enter an address with an @ in it.&lt;/p&gt;&#10;	&lt;/div&gt;&#10;	&lt;div class=&quot;field&quot;&gt;&#10;		&lt;input id=&quot;dark&quot; type=&quot;checkbox&quot; role=&quot;switch&quot;&gt;&#10;		&lt;label for=&quot;dark&quot;&gt;Dark mode&lt;/label&gt;&#10;	&lt;/div&gt;&#10;	&lt;div class=&quot;field&quot;&gt;&#10;		&lt;label for=&quot;quality&quot;&gt;Quality&lt;/label&gt;&#10;		&lt;input id=&quot;quality&quot; type=&quot;range&quot; min=&quot;0&quot; max=&quot;100&quot; value=&quot;70&quot; style=&quot;--yeti-range-value: 70%&quot;&gt;&#10;	&lt;/div&gt;&#10;	&lt;fieldset class=&quot;field&quot;&gt;&#10;		&lt;legend&gt;Notify me by&lt;/legend&gt;&#10;		&lt;div class=&quot;field&quot;&gt;&lt;input id=&quot;n-email&quot; type=&quot;checkbox&quot; name=&quot;notify&quot; value=&quot;email&quot; checked&gt;&lt;label for=&quot;n-email&quot;&gt;Email&lt;/label&gt;&lt;/div&gt;&#10;		&lt;div class=&quot;field&quot;&gt;&lt;input id=&quot;n-sms&quot; type=&quot;checkbox&quot; name=&quot;notify&quot; value=&quot;sms&quot;&gt;&lt;label for=&quot;n-sms&quot;&gt;Text message&lt;/label&gt;&lt;/div&gt;&#10;	&lt;/fieldset&gt;&#10;	&lt;fieldset class=&quot;field&quot;&gt;&#10;		&lt;legend&gt;Plan&lt;/legend&gt;&#10;		&lt;div class=&quot;field&quot;&gt;&lt;input id=&quot;plan-free&quot; type=&quot;radio&quot; name=&quot;plan&quot; value=&quot;free&quot; checked&gt;&lt;label for=&quot;plan-free&quot;&gt;Free&lt;/label&gt;&lt;/div&gt;&#10;		&lt;div class=&quot;field&quot;&gt;&lt;input id=&quot;plan-pro&quot; type=&quot;radio&quot; name=&quot;plan&quot; value=&quot;pro&quot;&gt;&lt;label for=&quot;plan-pro&quot;&gt;Pro&lt;/label&gt;&lt;/div&gt;&#10;	&lt;/fieldset&gt;&#10;&lt;/div&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
 
 ```html
-<div class="field">
-	<label for="email">Email</label>
-	<input id="email" type="email" required aria-describedby="email-hint email-error">
-	<p id="email-hint" data-hint>We only use it to sign you in.</p>
-	<p id="email-error" data-error>Enter an address with an @ in it.</p>
+<div class="stack" data-gap="lg">
+	<div class="field">
+		<label for="email">Email</label>
+		<input id="email" type="email" required aria-describedby="email-hint email-error">
+		<p id="email-hint" data-hint>We only use it to sign you in.</p>
+		<p id="email-error" data-error>Enter an address with an @ in it.</p>
+	</div>
+	<div class="field">
+		<input id="dark" type="checkbox" role="switch">
+		<label for="dark">Dark mode</label>
+	</div>
+	<div class="field">
+		<label for="quality">Quality</label>
+		<input id="quality" type="range" min="0" max="100" value="70" style="--yeti-range-value: 70%">
+	</div>
+	<fieldset class="field">
+		<legend>Notify me by</legend>
+		<div class="field"><input id="n-email" type="checkbox" name="notify" value="email" checked><label for="n-email">Email</label></div>
+		<div class="field"><input id="n-sms" type="checkbox" name="notify" value="sms"><label for="n-sms">Text message</label></div>
+	</fieldset>
+	<fieldset class="field">
+		<legend>Plan</legend>
+		<div class="field"><input id="plan-free" type="radio" name="plan" value="free" checked><label for="plan-free">Free</label></div>
+		<div class="field"><input id="plan-pro" type="radio" name="plan" value="pro"><label for="plan-pro">Pro</label></div>
+	</fieldset>
 </div>
 ```
 

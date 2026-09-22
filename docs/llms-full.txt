@@ -435,6 +435,12 @@ Children:
 - > [data-align-self]: at least 0. A child that places itself vertically: start, center, end, stretch, or baseline.
 - > [data-justify-self]: at least 0. A child that places itself horizontally: start, center, end, or stretch.
 
+Tokens:
+- --yeti-color-scrim — Wash behind a figure's caption, so it reads over the picture.
+- --yeti-color-text — A figure caption over the picture, which is not the aside a caption under one is.
+- --yeti-space-xs — Block padding of that caption.
+- --yeti-space-sm — Inline padding of that caption.
+
 Accessibility contract:
 Everything stays in reading order. Text laid over a picture needs a contrast treatment (a scrim or a solid panel); the layer does not add one.
 
@@ -479,6 +485,7 @@ Attributes:
 
 On children:
 - data-over on > * (boolean) — Lifts the child out of the flow and centers it over the box; exactly one child carries it.
+- data-fill on > [data-over] (boolean) — On the same child: cover the box rather than sit centred in it, which is what a veil, a dimmer or a loading state wants. Positioning only, so a veil that wants its own content centred puts a layout inside itself.
 
 ### When to use it
 
@@ -487,6 +494,20 @@ An overlay holds one thing on top of another without taking part in the layout u
 ### How it works
 
 The overlay is the box being covered, so it is positioned, and its plain children flow as usual. The one child carrying `data-over` is absolutely positioned with its top-left corner at the box's center, then translated back by half its own size, which centers it whatever its dimensions. Its maximum width and height are the box's minus a gap on each side, and it scrolls internally rather than growing beyond that. `data-fixed` on the overlay makes the held child `fixed`, so the box it centers on is the viewport.
+
+`data-fill`, on the same child as `data-over`, covers the box instead of sitting centred in it. The gap is the inset a centred child keeps from the edges and a cover has none, so the size caps go with it. That is what a veil, a dimmer or a loading state wants, and it only pays off with something translucent behind it: `--yeti-color-scrim` is the framework's wash for exactly this, the surface thinned so it dims with the theme rather than tinting.
+
+It positions and nothing else. A veil that wants its own content centred puts a layout inside itself, the way every other layout composes:
+
+```html
+<form class="overlay">
+	<label for="email">Email</label>
+	<input id="email" type="email">
+	<div class="cover" data-over data-fill style="background: var(--yeti-color-scrim)">
+		<p data-center>Saving…</p>
+	</div>
+</form>
+```
 
 ```html
 <form class="overlay">
@@ -1242,7 +1263,7 @@ Tokens:
 - --yeti-space-xs — Padding of the caption.
 - --yeti-text-sm — Text size of the caption.
 - --yeti-color-text-muted — The caption under a figure.
-- --yeti-color-surface — Background of a caption laid over the figure.
+- --yeti-color-scrim — Wash behind a caption laid over the figure, so it stays readable.
 - --yeti-space-sm — Gap between the footer's actions.
 
 Accessibility contract:
@@ -2346,6 +2367,7 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-color-text-muted (color): L 0.45 light, 0.70 dark — Secondary text: captions, help, metadata.
 - --yeti-color-border (color): L 0.88 light, 0.30 dark — Default border and divider.
 - --yeti-color-border-strong (color): L 0.75 light, 0.40 dark — Emphasised border: focused inputs, blockquote rule.
+- --yeti-color-scrim (color): the surface at 85% — A wash over content so something on top of it can be read: a caption over a picture, a veil over a form. Thinned surface, so it dims with the theme rather than tinting.
 - --yeti-color-focus (color): var(--yeti-color-primary) — Focus ring color.
 - --yeti-cover-height (layout): 100dvh — Minimum block size of a cover layout or a filled stack. Set to auto for one that is only as tall as its content.
 - --yeti-border-width (border): 1px — Width of every border a component draws.
@@ -2403,7 +2425,7 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-dialog-surface (dialog): var(--yeti-color-surface-raised) — Background of the dialog.
 - --yeti-dialog-radius (dialog): var(--yeti-radius-lg) — Corner of the dialog.
 - --yeti-dialog-padding (dialog): var(--yeti-space-lg) — Padding inside the dialog.
-- --yeti-dialog-backdrop (dialog): a translucent wash of the text colour — The backdrop behind an open dialog.
+- --yeti-dialog-backdrop (dialog): black at 60% — The backdrop behind an open dialog. Black rather than a theme colour, because a backdrop dims what is behind it in every theme.
 - --yeti-tooltip-surface (tooltip): var(--yeti-color-text) — Background of the bubble, inverted so it reads over anything.
 - --yeti-tooltip-text (tooltip): var(--yeti-color-surface) — Text of the bubble.
 - --yeti-tooltip-radius (tooltip): var(--yeti-radius-sm) — Corner of the bubble.

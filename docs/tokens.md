@@ -194,6 +194,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-color-text-muted` | `L 0.45 light, 0.70 dark` | Secondary text: captions, help, metadata. |
 | `--yeti-color-border` | `L 0.88 light, 0.30 dark` | Default border and divider. |
 | `--yeti-color-border-strong` | `L 0.75 light, 0.40 dark` | Emphasised border: focused inputs, blockquote rule. |
+| `--yeti-color-scrim` | `the surface at 85%` | A wash over content so something on top of it can be read: a caption over a picture, a veil over a form. Thinned surface, so it dims with the theme rather than tinting. |
 | `--yeti-color-focus` | `var(--yeti-color-primary)` | Focus ring color. |
 
 </div>
@@ -456,7 +457,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-dialog-surface` | `var(--yeti-color-surface-raised)` | Background of the dialog. |
 | `--yeti-dialog-radius` | `var(--yeti-radius-lg)` | Corner of the dialog. |
 | `--yeti-dialog-padding` | `var(--yeti-space-lg)` | Padding inside the dialog. |
-| `--yeti-dialog-backdrop` | `a translucent wash of the text colour` | The backdrop behind an open dialog. |
+| `--yeti-dialog-backdrop` | `black at 60%` | The backdrop behind an open dialog. Black rather than a theme colour, because a backdrop dims what is behind it in every theme. |
 
 </div>
 

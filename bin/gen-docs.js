@@ -92,7 +92,14 @@ export function renderDemo({ title, exampleHtml, stylesheet, height = 'lg', widt
 	// The frame is a whole Yeti page: the stylesheets and, beside the first,
 	// the bundle of every module, so a framed dialog opens, framed tabs switch,
 	// and an example that composes components gets all of their scripts.
-	const doc = `<base href="${base}">${links}<script type="module" src="${base}yeti.js"></script><body style="margin:0;padding:var(--yeti-space-md)">${exampleHtml.trim()}`;
+	// An example's placeholder links are written href="#", which in an ordinary
+	// page goes nowhere. Here it does: the base above is what makes a relative
+	// picture resolve, and it also makes "#" resolve against that base rather
+	// than against the frame, whose own URL is about:srcdoc. Clicking a nav item
+	// would load the whole docs page inside the demo. This cancels a click on a
+	// link that was only ever a placeholder, and leaves every real href alone.
+	const inert = '<script>addEventListener("click",function(e){var a=e.target.closest&&e.target.closest(\'a[href="#"]\');if(a)e.preventDefault();});</script>';
+	const doc = `<base href="${base}">${links}<script type="module" src="${base}yeti.js"></script>${inert}<body style="margin:0;padding:var(--yeti-space-md)">${exampleHtml.trim()}`;
 	const srcdoc = escapeAttribute(doc).replace(/\r?\n/g, '&#10;');
 	return [
 		`<figure class="demo" data-height="${height}"${width ? ` data-width="${width}"` : ''}${resize ? ` data-resize="${resize}"` : ''}>`,

@@ -14,7 +14,7 @@ nav_order: 1
 ## Example
 
 <figure class="demo" data-height="lg">
-<div data-preview="Box"><iframe title="Box, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;section class=&quot;box&quot; data-gap=&quot;lg&quot; data-surface=&quot;raised&quot; data-border&gt;&#10;	&lt;h2&gt;A box you can see&lt;/h2&gt;&#10;	&lt;p&gt;Prose inside a box keeps its rhythm; the box only adds room around it.&lt;/p&gt;&#10;&lt;/section&gt;"></iframe></div>
+<div data-preview="Box"><iframe title="Box, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;section class=&quot;box&quot; data-gap=&quot;lg&quot; data-surface=&quot;raised&quot; data-border&gt;&#10;	&lt;h2&gt;A box you can see&lt;/h2&gt;&#10;	&lt;p&gt;Prose inside a box keeps its rhythm; the box only adds room around it.&lt;/p&gt;&#10;&lt;/section&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>

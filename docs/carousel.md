@@ -13,8 +13,8 @@ nav_order: 3
 
 ## Example
 
-<figure class="demo" data-height="xl">
-<div data-preview="Carousel"><iframe title="Carousel, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;section class=&quot;carousel&quot; aria-roledescription=&quot;carousel&quot; aria-label=&quot;Featured work&quot;&gt;&#10;	&lt;div data-track role=&quot;group&quot; aria-label=&quot;Slides&quot; tabindex=&quot;0&quot;&gt;&#10;		&lt;article id=&quot;work-1&quot; data-slide&gt;&lt;h3&gt;A trail map&lt;/h3&gt;&lt;p&gt;Printed in two colours.&lt;/p&gt;&lt;/article&gt;&#10;		&lt;article id=&quot;work-2&quot; data-slide&gt;&lt;h3&gt;A field guide&lt;/h3&gt;&lt;p&gt;Three hundred pages.&lt;/p&gt;&lt;/article&gt;&#10;		&lt;article id=&quot;work-3&quot; data-slide&gt;&lt;h3&gt;A season of posters&lt;/h3&gt;&lt;p&gt;Twelve of them.&lt;/p&gt;&lt;/article&gt;&#10;	&lt;/div&gt;&#10;	&lt;ol data-dots role=&quot;list&quot;&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#work-1&quot; aria-label=&quot;Slide 1&quot;&gt;&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#work-2&quot; aria-label=&quot;Slide 2&quot;&gt;&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#work-3&quot; aria-label=&quot;Slide 3&quot;&gt;&lt;/a&gt;&lt;/li&gt;&#10;	&lt;/ol&gt;&#10;&lt;/section&gt;"></iframe></div>
+<figure class="demo" data-height="md">
+<div data-preview="Carousel"><iframe title="Carousel, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;section class=&quot;carousel&quot; aria-roledescription=&quot;carousel&quot; aria-label=&quot;Featured work&quot;&gt;&#10;	&lt;div data-track role=&quot;group&quot; aria-label=&quot;Slides&quot; tabindex=&quot;0&quot;&gt;&#10;		&lt;article id=&quot;work-1&quot; class=&quot;box&quot; data-surface=&quot;raised&quot; data-border data-slide&gt;&lt;h3&gt;A trail map&lt;/h3&gt;&lt;p&gt;Printed in two colours.&lt;/p&gt;&lt;/article&gt;&#10;		&lt;article id=&quot;work-2&quot; class=&quot;box&quot; data-surface=&quot;raised&quot; data-border data-slide&gt;&lt;h3&gt;A field guide&lt;/h3&gt;&lt;p&gt;Three hundred pages.&lt;/p&gt;&lt;/article&gt;&#10;		&lt;article id=&quot;work-3&quot; class=&quot;box&quot; data-surface=&quot;raised&quot; data-border data-slide&gt;&lt;h3&gt;A season of posters&lt;/h3&gt;&lt;p&gt;Twelve of them.&lt;/p&gt;&lt;/article&gt;&#10;	&lt;/div&gt;&#10;	&lt;ol data-dots role=&quot;list&quot;&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#work-1&quot; aria-label=&quot;Slide 1&quot;&gt;&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#work-2&quot; aria-label=&quot;Slide 2&quot;&gt;&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#work-3&quot; aria-label=&quot;Slide 3&quot;&gt;&lt;/a&gt;&lt;/li&gt;&#10;	&lt;/ol&gt;&#10;&lt;/section&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
@@ -22,9 +22,9 @@ nav_order: 3
 ```html
 <section class="carousel" aria-roledescription="carousel" aria-label="Featured work">
 	<div data-track role="group" aria-label="Slides" tabindex="0">
-		<article id="work-1" data-slide><h3>A trail map</h3><p>Printed in two colours.</p></article>
-		<article id="work-2" data-slide><h3>A field guide</h3><p>Three hundred pages.</p></article>
-		<article id="work-3" data-slide><h3>A season of posters</h3><p>Twelve of them.</p></article>
+		<article id="work-1" class="box" data-surface="raised" data-border data-slide><h3>A trail map</h3><p>Printed in two colours.</p></article>
+		<article id="work-2" class="box" data-surface="raised" data-border data-slide><h3>A field guide</h3><p>Three hundred pages.</p></article>
+		<article id="work-3" class="box" data-surface="raised" data-border data-slide><h3>A season of posters</h3><p>Twelve of them.</p></article>
 	</div>
 	<ol data-dots role="list">
 		<li><a href="#work-1" aria-label="Slide 1"></a></li>

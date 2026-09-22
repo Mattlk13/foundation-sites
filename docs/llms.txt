@@ -125,6 +125,7 @@ Attributes:
 
 On children:
 - data-over on > * (boolean) — Lifts the child out of the flow and centers it over the box; exactly one child carries it.
+- data-fill on > [data-over] (boolean) — On the same child: cover the box rather than sit centred in it, which is what a veil, a dimmer or a loading state wants. Positioning only, so a veil that wants its own content centred puts a layout inside itself.
 
 ## scroller (layout, class="scroller")
 

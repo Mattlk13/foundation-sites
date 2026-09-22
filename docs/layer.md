@@ -13,8 +13,8 @@ nav_order: 5
 
 ## Example
 
-<figure class="demo" data-height="lg">
-<div data-preview="Layer"><iframe title="Layer, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;figure class=&quot;layer&quot;&gt;&#10;	&lt;img src=&quot;harbour.jpg&quot; alt=&quot;Boats in a harbour at dawn&quot;&gt;&#10;	&lt;figcaption data-align-self=&quot;end&quot;&gt;Dawn at the harbour&lt;/figcaption&gt;&#10;&lt;/figure&gt;"></iframe></div>
+<figure class="demo" data-height="xl">
+<div data-preview="Layer"><iframe title="Layer, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;figure class=&quot;layer&quot;&gt;&#10;	&lt;img src=&quot;harbour.jpg&quot; alt=&quot;Boats in a harbour at dawn&quot;&gt;&#10;	&lt;figcaption data-align-self=&quot;end&quot;&gt;Dawn at the harbour&lt;/figcaption&gt;&#10;&lt;/figure&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
@@ -79,7 +79,16 @@ Attributes that descendants carry, not the root.
 
 ## Tokens
 
-No public tokens.
+<div class="scroller" role="region" aria-label="Layer tokens" tabindex="0" markdown="1">
+
+| Token | Description |
+| --- | --- |
+| `--yeti-color-scrim` | Wash behind a figure's caption, so it reads over the picture. |
+| `--yeti-color-text` | A figure caption over the picture, which is not the aside a caption under one is. |
+| `--yeti-space-xs` | Block padding of that caption. |
+| `--yeti-space-sm` | Inline padding of that caption. |
+
+</div>
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 

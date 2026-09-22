@@ -14,7 +14,7 @@ nav_order: 3
 ## Example
 
 <figure class="demo" data-height="xl">
-<div data-preview="Nav"><iframe title="Nav, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;nav class=&quot;nav&quot; aria-label=&quot;Site&quot;&gt;&#10;	&lt;a href=&quot;#&quot; data-brand&gt;Yeti&lt;/a&gt;&#10;	&lt;button type=&quot;button&quot; popovertarget=&quot;site-menu&quot; aria-label=&quot;Menu&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; viewBox=&quot;0 0 16 16&quot;&gt;&lt;path d=&quot;M2 4h12M2 8h12M2 12h12&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;&#10;	&lt;ul id=&quot;site-menu&quot; popover role=&quot;list&quot;&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#&quot; aria-current=&quot;page&quot;&gt;Docs&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#&quot;&gt;Blog&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#&quot;&gt;About&lt;/a&gt;&lt;/li&gt;&#10;	&lt;/ul&gt;&#10;	&lt;div data-actions&gt;&lt;a class=&quot;button&quot; href=&quot;#&quot; data-size=&quot;sm&quot;&gt;Get started&lt;/a&gt;&lt;/div&gt;&#10;&lt;/nav&gt;"></iframe></div>
+<div data-preview="Nav"><iframe title="Nav, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;nav class=&quot;nav&quot; aria-label=&quot;Site&quot;&gt;&#10;	&lt;a href=&quot;#&quot; data-brand&gt;Yeti&lt;/a&gt;&#10;	&lt;button type=&quot;button&quot; popovertarget=&quot;site-menu&quot; aria-label=&quot;Menu&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; viewBox=&quot;0 0 16 16&quot;&gt;&lt;path d=&quot;M2 4h12M2 8h12M2 12h12&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;&#10;	&lt;ul id=&quot;site-menu&quot; popover role=&quot;list&quot;&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#&quot; aria-current=&quot;page&quot;&gt;Docs&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#&quot;&gt;Blog&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li class=&quot;dropdown&quot;&gt;&#10;			&lt;button type=&quot;button&quot; popovertarget=&quot;resources-menu&quot;&gt;Resources&lt;/button&gt;&#10;			&lt;div id=&quot;resources-menu&quot; popover&gt;&#10;				&lt;a href=&quot;#&quot;&gt;Guides&lt;/a&gt;&#10;				&lt;a href=&quot;#&quot;&gt;Components&lt;/a&gt;&#10;				&lt;a href=&quot;#&quot;&gt;Changelog&lt;/a&gt;&#10;			&lt;/div&gt;&#10;		&lt;/li&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#&quot;&gt;About&lt;/a&gt;&lt;/li&gt;&#10;	&lt;/ul&gt;&#10;	&lt;div data-actions&gt;&lt;a class=&quot;button&quot; href=&quot;#&quot; data-size=&quot;sm&quot;&gt;Get started&lt;/a&gt;&lt;/div&gt;&#10;&lt;/nav&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
@@ -26,6 +26,14 @@ nav_order: 3
 	<ul id="site-menu" popover role="list">
 		<li><a href="#" aria-current="page">Docs</a></li>
 		<li><a href="#">Blog</a></li>
+		<li class="dropdown">
+			<button type="button" popovertarget="resources-menu">Resources</button>
+			<div id="resources-menu" popover>
+				<a href="#">Guides</a>
+				<a href="#">Components</a>
+				<a href="#">Changelog</a>
+			</div>
+		</li>
 		<li><a href="#">About</a></li>
 	</ul>
 	<div data-actions><a class="button" href="#" data-size="sm">Get started</a></div>

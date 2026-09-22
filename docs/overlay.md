@@ -13,8 +13,8 @@ nav_order: 7
 
 ## Example
 
-<figure class="demo" data-height="lg">
-<div data-preview="Overlay"><iframe title="Overlay, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;overlay&quot;&gt;&#10;	&lt;img src=&quot;photo.jpg&quot; alt=&quot;A lake at dawn&quot;&gt;&#10;	&lt;p data-over&gt;Sold out&lt;/p&gt;&#10;&lt;/div&gt;"></iframe></div>
+<figure class="demo" data-height="xl">
+<div data-preview="Overlay"><iframe title="Overlay, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;overlay&quot;&gt;&#10;	&lt;img src=&quot;photo.jpg&quot; alt=&quot;A lake at dawn&quot;&gt;&#10;	&lt;p class=&quot;box&quot; data-surface=&quot;base&quot; data-over&gt;Sold out&lt;/p&gt;&#10;&lt;/div&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
@@ -22,7 +22,7 @@ nav_order: 7
 ```html
 <div class="overlay">
 	<img src="photo.jpg" alt="A lake at dawn">
-	<p data-over>Sold out</p>
+	<p class="box" data-surface="base" data-over>Sold out</p>
 </div>
 ```
 
@@ -36,6 +36,20 @@ An overlay holds one thing on top of another without taking part in the layout u
 ## How it works
 
 The overlay is the box being covered, so it is positioned, and its plain children flow as usual. The one child carrying `data-over` is absolutely positioned with its top-left corner at the box's center, then translated back by half its own size, which centers it whatever its dimensions. Its maximum width and height are the box's minus a gap on each side, and it scrolls internally rather than growing beyond that. `data-fixed` on the overlay makes the held child `fixed`, so the box it centers on is the viewport.
+
+`data-fill`, on the same child as `data-over`, covers the box instead of sitting centred in it. The gap is the inset a centred child keeps from the edges and a cover has none, so the size caps go with it. That is what a veil, a dimmer or a loading state wants, and it only pays off with something translucent behind it: `--yeti-color-scrim` is the framework's wash for exactly this, the surface thinned so it dims with the theme rather than tinting.
+
+It positions and nothing else. A veil that wants its own content centred puts a layout inside itself, the way every other layout composes:
+
+```html
+<form class="overlay">
+	<label for="email">Email</label>
+	<input id="email" type="email">
+	<div class="cover" data-over data-fill style="background: var(--yeti-color-scrim)">
+		<p data-center>Saving…</p>
+	</div>
+</form>
+```
 
 ```html
 <form class="overlay">
@@ -69,6 +83,7 @@ Attributes that descendants carry, not the root.
 | Attribute | Type | Values | On | Description |
 | --- | --- | --- | --- | --- |
 | `data-over` | boolean |  | `> *` | Lifts the child out of the flow and centers it over the box; exactly one child carries it. |
+| `data-fill` | boolean |  | `> [data-over]` | On the same child: cover the box rather than sit centred in it, which is what a veil, a dimmer or a loading state wants. Positioning only, so a veil that wants its own content centred puts a layout inside itself. |
 
 </div>
 

@@ -14,7 +14,7 @@ nav_order: 5
 ## Example
 
 <figure class="demo" data-height="md">
-<div data-preview="Tooltip"><iframe title="Tooltip, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;span class=&quot;tooltip&quot; data-placement=&quot;bottom&quot;&gt;&#10;	&lt;button class=&quot;button&quot; type=&quot;button&quot; aria-describedby=&quot;save-tip&quot; data-emphasis=&quot;medium&quot;&gt;Save&lt;/button&gt;&#10;	&lt;span role=&quot;tooltip&quot; id=&quot;save-tip&quot;&gt;Saves without closing&lt;/span&gt;&#10;&lt;/span&gt;"></iframe></div>
+<div data-preview="Tooltip"><iframe title="Tooltip, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;span class=&quot;tooltip&quot; data-placement=&quot;bottom&quot;&gt;&#10;	&lt;button class=&quot;button&quot; type=&quot;button&quot; aria-describedby=&quot;save-tip&quot; data-emphasis=&quot;medium&quot;&gt;Save&lt;/button&gt;&#10;	&lt;span role=&quot;tooltip&quot; id=&quot;save-tip&quot;&gt;Saves without closing&lt;/span&gt;&#10;&lt;/span&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
