@@ -17,7 +17,7 @@ That is the whole bargain. A page of headings, paragraphs, lists, a table and a 
 
 Each section below shows the markup live, then the same markup once as a code block. The live sample sits in `<section class="box" data-border>` so you can see where it starts and stops. That wrapper is the only Yeti class in any sample on this page, it is there for the border, and everything inside it is bare HTML. The `section` element is deliberate too: it is one of the elements the flow rhythm treats as a container, which the [Flow](#flow) section explains.
 
-Each section ends with the public tokens its rules read, copied from the CSS by hand. The base has no manifests, so this page is hand-written and the token lists are checked by a human rather than generated.
+Each section ends with the public tokens its rules read, copied from the CSS by hand. The base has no manifests, so this page's prose and token lists are written by hand in `src/guides/base.md` and checked by a human rather than generated from a manifest.
 
 ## Type
 

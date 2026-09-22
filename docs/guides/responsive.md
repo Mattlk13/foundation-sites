@@ -83,14 +83,14 @@ When something has to respond, reach for these in order and stop at the first th
 
 **A container query second.** When the change is a switch rather than a flow, a row that becomes a stack, a card that puts its picture beside the text, a nav that folds behind a toggle, the component queries its own width against a threshold. In Yeti these are already written: you choose the threshold with an attribute, you do not write the query.
 
-<figure class="demo" data-height="md" data-width="xl">
-<div data-preview="Three tools, in this order (2)"><iframe title="Three tools, in this order (2), live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;nav class=&quot;nav&quot; aria-label=&quot;Site&quot; data-threshold=&quot;lg&quot;&gt;&#10;	&lt;a href=&quot;#&quot; data-brand&gt;Yeti&lt;/a&gt;&#10;	&lt;button type=&quot;button&quot; popovertarget=&quot;menu&quot; aria-label=&quot;Menu&quot;&gt;☰&lt;/button&gt;&#10;	&lt;ul id=&quot;menu&quot; popover role=&quot;list&quot;&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#&quot;&gt;Docs&lt;/a&gt;&lt;/li&gt;&#10;	&lt;/ul&gt;&#10;&lt;/nav&gt;"></iframe></div>
+<figure class="demo" data-height="md" data-width="lg">
+<div data-preview="Three tools, in this order (2)"><iframe title="Three tools, in this order (2), live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;nav class=&quot;nav&quot; aria-label=&quot;Site&quot; data-threshold=&quot;md&quot;&gt;&#10;	&lt;a href=&quot;#&quot; data-brand&gt;Yeti&lt;/a&gt;&#10;	&lt;button type=&quot;button&quot; popovertarget=&quot;menu&quot; aria-label=&quot;Menu&quot;&gt;☰&lt;/button&gt;&#10;	&lt;ul id=&quot;menu&quot; popover role=&quot;list&quot;&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#&quot;&gt;Docs&lt;/a&gt;&lt;/li&gt;&#10;	&lt;/ul&gt;&#10;&lt;/nav&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
 
 ```html
-<nav class="nav" aria-label="Site" data-threshold="lg">
+<nav class="nav" aria-label="Site" data-threshold="md">
 	<a href="#" data-brand>Yeti</a>
 	<button type="button" popovertarget="menu" aria-label="Menu">☰</button>
 	<ul id="menu" popover role="list">

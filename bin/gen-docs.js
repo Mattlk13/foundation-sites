@@ -351,8 +351,15 @@ export function renderGuideDemos(markdown, { file, title, stylesheet }) {
 	let heading = title;
 	const counts = new Map();
 	for (let i = 0; i < lines.length; i += 1) {
-		const fence = lines[i].match(/^(`{3,})(.*)$/);
+		const fence = lines[i].match(/^([`~]{3,})(.*)$/);
 		if (!fence) {
+			// A demo fence only opens at the left margin (the match above is
+			// anchored at column 0); one indented into a list or quoted into a
+			// blockquote is not silently a code block, it is an author's mistake,
+			// because a demo that quietly stops being a demo is exactly the drift
+			// the fence exists to catch.
+			const misplaced = lines[i].match(/^(\s+|>\s*)`{3,}html\s+demo\b/);
+			if (misplaced) errors.push({ file, line: i + 1, message: 'html demo: a demo fence must start at the left margin' });
 			// Only a line that opens no block can be a heading, which is what
 			// keeps a # inside a shell sample from renaming the demos after it.
 			const found = lines[i].match(/^#{1,6}\s+(.+?)\s*$/);
@@ -361,8 +368,9 @@ export function renderGuideDemos(markdown, { file, title, stylesheet }) {
 			continue;
 		}
 		const [, marker, info] = fence;
+		const closer = new RegExp(`^${marker[0]}{${marker.length},}$`);
 		let end = i + 1;
-		while (end < lines.length && lines[end].trim() !== marker) end += 1;
+		while (end < lines.length && !closer.test(lines[end].trim())) end += 1;
 		const demo = info.trim().match(/^html\s+demo\b(.*)$/);
 		if (!demo || end === lines.length) {
 			// A plain block goes through untouched, and so does an unclosed one:

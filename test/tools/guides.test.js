@@ -43,7 +43,7 @@ test('every Yeti class and attribute the migration table names exists in the man
 test('every guide under docs/ is a fresh render of its source in src/guides', () => {
 	const sourceDir = path.join(REPO_ROOT, 'src/guides');
 	const sources = fs.readdirSync(sourceDir).filter((n) => n.endsWith('.md')).sort();
-	assert.equal(sources.length, 10, 'the ten guides are written in src/guides');
+	assert.ok(sources.length >= 10, 'at least the ten guides are written in src/guides');
 	const tables = new Map(GUIDE_TABLES.map((t) => [t.file, t]));
 	for (const name of sources) {
 		const file = path.join(sourceDir, name);

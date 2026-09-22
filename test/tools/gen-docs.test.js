@@ -556,6 +556,27 @@ test('a heading inside a fenced block is code, not a heading', () => {
 	assert.deepEqual(previews(r.markdown), ['Composing']);
 });
 
+test('a heading inside a tilde-fenced block is code, not a heading', () => {
+	const body = '## Composing\n\n~~~markdown\n## Not a heading\n~~~\n\n```html demo\n<p>One</p>\n```\n';
+	const r = renderGuideDemos(demoGuide(body), { file: 'f', title: 'Layouts', stylesheet: '/yeti/yeti.css' });
+	assert.deepEqual(previews(r.markdown), ['Composing']);
+});
+
+test('an indented demo fence is an error naming the file and the line, not a silently skipped block', () => {
+	const markdown = '## Composing\n\n> ```html demo\n> <p>One</p>\n> ```\n';
+	const r = renderGuideDemos(markdown, { file: 'src/guides/responsive.md', title: 'Layouts', stylesheet: '/y.css' });
+	assert.equal(r.errors.length, 1);
+	assert.equal(r.errors[0].file, 'src/guides/responsive.md');
+	assert.equal(r.errors[0].line, 3);
+	assert.match(r.errors[0].message, /left margin/);
+});
+
+test('an indented plain html fence is not an error', () => {
+	const markdown = '## Composing\n\n  ```html\n  <p>One</p>\n  ```\n';
+	const r = renderGuideDemos(markdown, { file: 'f', title: 'Layouts', stylesheet: '/y.css' });
+	assert.deepEqual(r.errors, []);
+});
+
 test('renderGuideDemos reports a demo fence that is never closed', () => {
 	const r = renderGuideDemos(demoGuide('## Composing\n\n```html demo\n<p>One</p>\n'), { file: 'src/guides/layouts.md', title: 'Layouts', stylesheet: '/y.css' });
 	assert.equal(r.errors.length, 1);

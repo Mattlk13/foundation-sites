@@ -64,8 +64,8 @@ When something has to respond, reach for these in order and stop at the first th
 
 **A container query second.** When the change is a switch rather than a flow, a row that becomes a stack, a card that puts its picture beside the text, a nav that folds behind a toggle, the component queries its own width against a threshold. In Yeti these are already written: you choose the threshold with an attribute, you do not write the query.
 
-```html demo md xl
-<nav class="nav" aria-label="Site" data-threshold="lg">
+```html demo md lg
+<nav class="nav" aria-label="Site" data-threshold="md">
 	<a href="#" data-brand>Yeti</a>
 	<button type="button" popovertarget="menu" aria-label="Menu">☰</button>
 	<ul id="menu" popover role="list">
