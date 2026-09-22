@@ -21,11 +21,14 @@
 	/* data-span: a child's share of the row, as a multiple of its siblings'. */
 	.columns > [data-span] { flex-grow: var(--_yeti-span); }
 
-	/* data-limit: the first N share the row; every later child takes a full one. */
-	.columns[data-limit="2"] > :nth-child(n + 3),
-	.columns[data-limit="3"] > :nth-child(n + 4),
-	.columns[data-limit="4"] > :nth-child(n + 5),
-	.columns[data-limit="5"] > :nth-child(n + 6) {
+	/* data-columns: the most on one row; every later child takes a full one.
+	   1 and 6 are legal and dull: 1 is a stack, 6 leaves the seventh alone. */
+	.columns[data-columns="1"] > :nth-child(n + 2),
+	.columns[data-columns="2"] > :nth-child(n + 3),
+	.columns[data-columns="3"] > :nth-child(n + 4),
+	.columns[data-columns="4"] > :nth-child(n + 5),
+	.columns[data-columns="5"] > :nth-child(n + 6),
+	.columns[data-columns="6"] > :nth-child(n + 7) {
 		flex-basis: 100%;
 	}
 }

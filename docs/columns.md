@@ -36,10 +36,10 @@ Use columns for a set of equals: pricing tiers, feature summaries, a row of stat
 
 ## How it works
 
-Every child has the same `flex-basis`: the threshold minus the container's width, multiplied by a large number. In a container wider than the threshold that number is hugely negative, which `flex-basis` clamps to zero, so `flex-grow: 1` shares the row equally between them. In a narrower one it is hugely positive, so each child fills a row. `data-limit` caps how many share a row; any child past the cap takes a full row of its own.
+Every child has the same `flex-basis`: the threshold minus the container's width, multiplied by a large number. In a container wider than the threshold that number is hugely negative, which `flex-basis` clamps to zero, so `flex-grow: 1` shares the row equally between them. In a narrower one it is hugely positive, so each child fills a row. `data-columns` caps how many share a row; any child past the cap takes a full row of its own.
 
 ```html
-<div class="columns" data-threshold="sm" data-limit="2">
+<div class="columns" data-threshold="sm" data-columns="2">
 	<div>One</div>
 	<div>Two</div>
 	<div>Three, on its own row</div>
@@ -69,7 +69,7 @@ Yeti names layouts for what they do to their children, and what this one gives t
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `md` | Space between columns, and between rows once they stack. |
 | `data-align` | enum | `start`, `center`, `end`, `stretch`, `baseline` | `stretch` | Vertical alignment of the columns. |
 | `data-justify` | enum | `start`, `center`, `end`, `between`, `around`, `evenly` | `start` | Distribution of the columns along the row when they do not fill it. |
-| `data-limit` | enum | `2`, `3`, `4`, `5` |  | The most columns allowed on one row; further children each take a full row. |
+| `data-columns` | enum | `1`, `2`, `3`, `4`, `5`, `6` |  | The most columns on one row; further children each take a full row. |
 
 </div>
 
