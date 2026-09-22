@@ -29,3 +29,5 @@ Both states are `display: none` in the medium they are not for, which takes the 
 A paper-only line is not announced on screen. Never put anything a screen reader needs into one — an address a sighted reader can also see is fine, a warning is not. Text that should be heard and not seen is [visually-hidden](visually-hidden.md), which is a different tool for a different question; the [visibility guide](guides/visibility.md) has both side by side.
 
 A screen-only control is not on the page a reader prints. Nothing on paper may depend on it, so a form whose only submit button carries `data-print="none"` has printed a form nobody can return.
+
+`print` and `visually-hidden` do not combine on one element: on screen `print` removes it outright, so there is nothing left for `visually-hidden` to keep announced, and on paper the clip `visually-hidden` applies leaves a blank pixel where the printed content should be.

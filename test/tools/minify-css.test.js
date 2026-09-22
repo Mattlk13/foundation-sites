@@ -63,7 +63,7 @@ test('the targets are the last browsers of 2025, one semver byte each', () => {
 // lightningcss release adding one would be exactly the surprise this guards
 // against.
 test('minifyCss leaves tan(atan2()) and container query units alone', () => {
-	const css = `@layer yeti.base {\n\t:root {\n\t\t--_yeti-t: clamp(0, tan(atan2(100vw - 20rem, 80rem - 20rem)), 1);\n\t}\n}\n@layer yeti.utilities {\n\t.fit {\n\t\tfont-size: clamp(1rem, 2cqi, 2rem);\n\t}\n}\n`;
+	const css = `@layer yeti.base {\n\t:root {\n\t\t--_yeti-t: clamp(0, tan(atan2(100vw - 20rem, 80rem - 20rem)), 1);\n\t}\n}\n@layer yeti.utilities {\n\t.sample {\n\t\tfont-size: clamp(1rem, 2cqi, 2rem);\n\t}\n}\n`;
 	const { css: out } = minifyCss({ css });
 	assert.ok(out.includes('atan2('), 'the minifier dropped or rewrote atan2(');
 	assert.ok(out.includes('cqi'), 'the minifier dropped or rewrote cqi');

@@ -18,7 +18,7 @@ A component's shape comes from its markup and its manifest; its look comes from 
 
 ## Every attribute
 
-Those three are the ones that repeat. Here is the whole list, every attribute the components and the utilities declare, with the components that read each one. Three of the utilities in it are about who sees a thing rather than what it looks like — `visually-hidden`, `print`, and the `data-show` and `data-hide` markers — and the [visibility guide](visibility.md) puts them beside the browser's own six ways of hiding something, which are usually the right ones.
+Those three are the ones that repeat. Here is the whole list, every attribute the components and the utilities declare, with the components that read each one. `print` is a utility with an attribute in the table below; `visually-hidden` is a utility with no attributes, so it never appears in it. `data-show` and `data-hide` are markers declared on the `container` layout, not utilities, and the layouts guide's table is where they live. The [visibility guide](visibility.md) puts all of them beside the browser's own six ways of hiding something, which are usually the right ones.
 
 <!-- yeti:attributes:start -->
 

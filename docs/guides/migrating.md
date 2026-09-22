@@ -105,6 +105,6 @@ Five of those rows deserve more than a line, because what they did is still wort
 
 **A threshold, not a breakpoint.** There are no `small-`, `medium-`, `large-` prefixes and nothing at all that asks the window how wide an element is. A component changes shape at its own width, chosen from the stops with `data-threshold` or `data-max`; where a thing genuinely has no narrow form, `data-show` and `data-hide` remove it at a width of its own container. The [responsive guide](responsive.md) is the whole story, and the [visibility guide](visibility.md) is the part about hiding.
 
-**Nothing to initialise.** There is no `Foundation.init()`, no `data-` attributes for plugins, no jQuery. Six components have an optional module; you load it with one script tag, anywhere, and it finds its own elements. Without the module the component still works, minus what the module adds.
+**Nothing to initialise.** There is no `Foundation.init()`, no `data-` attributes for plugins, no jQuery. Eight components ship nine optional modules; you load one with one script tag, anywhere, and it finds its own elements. Without the module the component still works, minus what the module adds.
 
 **The browser does the opening and closing.** Dropdowns and the nav's menu are popovers; the dialog is a dialog; the accordion is `<details>`. Escape, light dismiss, the focus trap and the expanded state come from the platform. If you find yourself writing script to open something, look for the attribute that already does.

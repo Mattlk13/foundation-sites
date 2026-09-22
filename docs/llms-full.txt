@@ -245,7 +245,7 @@ One declaration: the box becomes a size container. Nothing else. To target it by
 
 The Yeti layouts that query themselves (`grid` with `data-fold`, `breakout` with notes, `timeline`) do not need one; this is for your own queries and for components that must restyle themselves.
 
-Two markers read this box directly. `data-show` shows an element only while the container is at least that wide, and `data-hide` removes it once the container is that wide; both take a width from the same scale as `data-threshold`, and both mean "at or above", so `data-show="md"` is *shown from `md` up* and `data-hide="md"` is the same sentence the other way round.
+Two markers read this box directly. `data-show` shows an element only while the container is at least that wide, and `data-hide` removes it once the container is that wide; both take a width from the same scale as `data-threshold`, and both mean "at or above", so `data-show="md"` is *shown from `md` up* and `data-hide="md"` is the same sentence the other way round. The widths are the tokens' defaults written as literals, because a container condition cannot read a custom property, so a theme that changes `--yeti-width-md` moves `data-threshold="md"` but not `data-show="md"`.
 
 ```html
 <div class="container">
@@ -254,11 +254,11 @@ Two markers read this box directly. `data-show` shows an element only while the 
 </div>
 ```
 
-They measure the nearest size container, not the window, which is the whole reason they exist: the same markup in a sidebar and in a full-width section makes two different decisions on one page. Reach for them last. A component that can change shape at its own threshold should do that instead — the two versions of a thing, one shown and one hidden, are two things to keep in step forever — and an element removed this way is removed from the accessibility tree with it, so nothing a reader needs may live only in the narrow version.
+They measure the nearest size container, not the window, which is the whole reason they exist: the same markup in a sidebar and in a full-width section makes two different decisions on one page. A `container` carrying `data-show` or `data-hide` itself is measured against its own nearest ancestor container, never its own box, because an element cannot query itself. Reach for them last. A component that can change shape at its own threshold should do that instead — the two versions of a thing, one shown and one hidden, are two things to keep in step forever — and an element removed this way is removed from the accessibility tree with it, so nothing a reader needs may live only in the narrow version.
 
 With no size container anywhere above it, a container query never matches and neither marker does anything: the element stays visible at every width. That is the failure mode to know. These layouts are size containers with no conditions attached, so anything inside one is already covered: `container`, `nav`, `pagination`, `timeline`, and the preview box inside a `demo`. Three more are containers only in a particular shape — a `grid` with `data-fold`, a `card` whose first child is a figure, and a `breakout` holding a note — and anything else needs a `container` around it.
 
-The [visibility guide](../guides/visibility.md) puts these beside the platform's own ways of hiding something, and says which to reach for first.
+The [visibility guide](guides/visibility.md) puts these beside the platform's own ways of hiding something, and says which to reach for first.
 
 ### Why this name
 
@@ -2473,6 +2473,8 @@ A paper-only line is not announced on screen. Never put anything a screen reader
 
 A screen-only control is not on the page a reader prints. Nothing on paper may depend on it, so a form whose only submit button carries `data-print="none"` has printed a form nobody can return.
 
+`print` and `visually-hidden` do not combine on one element: on screen `print` removes it outright, so there is nothing left for `visually-hidden` to keep announced, and on paper the clip `visually-hidden` applies leaves a blank pixel where the printed content should be.
+
 Accessibility contract:
 Both states are display: none in the medium they are not for, which takes the element out of the accessibility tree there as well. That is correct for this job and worth saying out loud: a paper-only line is not read out on screen, so it must never carry anything a reader on screen needs, and a screen-only control is not on the page a reader prints, so nothing on paper may depend on it. Text a screen reader should hear but nobody should see is visually-hidden, not this. A printed page is also a page with no colour guarantee, so never let the print state be the only thing carrying a meaning.
 
@@ -2484,7 +2486,7 @@ Takes words out of sight and leaves them in the accessibility tree, for the name
 
 Words a screen reader needs and the page has no room for: the name of an icon-only button, the number on a carousel dot, the subject of the third "Read more" link on a page.
 
-It is not the `hidden` attribute, and the difference is the whole point — it is also why this is the one class in Yeti with two words in its name. `hidden` takes the element out of the page and out of the accessibility tree with it, so a reader hears nothing. This class takes it out of sight and leaves it in the tree, so a reader hears everything. The [visibility guide](guides/visibility.md) has both, and the seven other ways to hide something, on one page.
+It is not the `hidden` attribute, and the difference is the whole point — it is also why this is the one class in Yeti with two words in its name. `hidden` takes the element out of the page and out of the accessibility tree with it, so a reader hears nothing. This class takes it out of sight and leaves it in the tree, so a reader hears everything. The [visibility guide](guides/visibility.md) has both, and the ten other ways to hide something, on one page.
 
 ```html
 <a href="/trail-map.pdf">Read more<span class="visually-hidden"> about the trail map</span></a>

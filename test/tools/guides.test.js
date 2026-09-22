@@ -35,7 +35,7 @@ test('every Yeti class and attribute the migration table names exists in the man
 		// attribute, a native element, the hidden attribute, a CSS declaration
 		// to write yourself. Those have no manifest entry by design, so they are
 		// named here rather than being allowed to slip through as a typo would.
-		const known = classes.has(bare) || attributes.has(bare) || /^(aria-[a-z-]+(=.*)?|role=.*|popover|open|commandfor|hidden|inert|visibility: hidden|<details>|<dialog>|<summary>|details|dialog|summary|name)$/.test(name);
+		const known = classes.has(bare) || attributes.has(bare) || /^(aria-[a-z-]+(=.*)?|role=.*|popover|open|commandfor|hidden|visibility: hidden|<details>|<dialog>|<summary>|details|dialog|summary|name)$/.test(name);
 		assert.ok(known, `${name} is not a Yeti class or attribute: ${line}`);
 	}
 });

@@ -61,8 +61,8 @@
 /* Utilities last, because the layer they declare is the last one in the
    cascade order and the file order should read the way the layers resolve.
    Alphabetical within the group: nothing here depends on anything else here. */
-@import "utilities/billboard/billboard.css";
 @import "utilities/attention/attention.css";
+@import "utilities/billboard/billboard.css";
 @import "utilities/enter/enter.css";
 @import "utilities/lede/lede.css";
 @import "utilities/lift/lift.css";

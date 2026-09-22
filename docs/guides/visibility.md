@@ -20,7 +20,7 @@ nav_order: 5
 | `display: none`, your own CSS | yes | yes | no | your rule not matching |
 | `visibility: hidden`, your own CSS | yes | yes | **yes** | your rule not matching |
 | `aria-hidden="true"` | **no** | yes | yes | removing the attribute |
-| `inert` | **no** | no — it is still read, just unreachable | yes | removing the attribute |
+| `inert` | **no** | yes | yes | removing the attribute |
 | `visually-hidden` | yes | **no** | no | nothing; it is always out of sight |
 | the skip link | yes | no | no | focus |
 | `details`, `popover`, `dialog` | while shut | while shut | no | the reader asking |
@@ -64,7 +64,7 @@ Never put it on anything focusable. A button a screen reader cannot see but can 
 
 ### `inert`
 
-Seen, read, and unreachable: no focus, no clicks, no find-in-page. It is for the page behind something — a custom overlay you built yourself, a form region disabled while a request is in flight.
+Seen, but unreachable and unannounced: no focus, no clicks, no find-in-page, and out of the accessibility tree. It is for the page behind something — a custom overlay you built yourself, a form region disabled while a request is in flight.
 
 ```html
 <div inert>
@@ -97,7 +97,7 @@ If you are about to write script to show something, this is the section to re-re
 
 ## What Yeti adds
 
-Three things, for the three questions the platform has no single word for.
+Four things, for the four questions the platform has no single word for.
 
 ### `visually-hidden`
 

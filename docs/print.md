@@ -61,6 +61,8 @@ A paper-only line is not announced on screen. Never put anything a screen reader
 
 A screen-only control is not on the page a reader prints. Nothing on paper may depend on it, so a form whose only submit button carries `data-print="none"` has printed a form nobody can return.
 
+`print` and `visually-hidden` do not combine on one element: on screen `print` removes it outright, so there is nothing left for `visually-hidden` to keep announced, and on paper the clip `visually-hidden` applies leaves a blank pixel where the printed content should be.
+
 ## Attributes
 
 <div class="scroller" role="region" aria-label="Print attributes" tabindex="0" markdown="1">
