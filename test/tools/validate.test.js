@@ -839,6 +839,25 @@ test('every value of the fit vocabulary has a rule in billboard.css', () => {
 	}
 });
 
+// The print vocabulary is read directly by print.css rather than mapped into
+// attributes.css, so validateVocabulary cannot see it: a value added to the
+// list with no rule behind it would be offered by the manifest, accepted by
+// the validator, and do nothing in the browser. The two selectors are not the
+// same shape — only is also what an absent attribute means, so it is written
+// as a :not() of the other value — which is why this names both rather than
+// building a selector from the value, and why a third value fails here loudly
+// instead of failing silently in a browser.
+test('every value of the print vocabulary has a rule in print.css', () => {
+	const expected = { only: '.print:not([data-print="none"])', none: '.print[data-print="none"]' };
+	const vocabulary = JSON.parse(fs.readFileSync(VOCABULARY_PATH, 'utf8'));
+	const css = fs.readFileSync(path.join(REPO_ROOT, 'src/utilities/print/print.css'), 'utf8');
+	assert.equal(vocabulary.print.length, 2);
+	for (const value of vocabulary.print) {
+		assert.ok(expected[value], `${value} is a print value this test has no expected selector for`);
+		assert.ok(css.includes(expected[value]), `${value} has no rule in print.css`);
+	}
+});
+
 test('a .js file in a component folder that the manifest does not declare is reported', () => {
 	const r = run(validTree({ 'src/layouts/rail/stray.js': '// nobody declared me\n' }));
 	assert.deepEqual(r.lines, ['src/layouts/rail/manifest.json: stray.js is in the folder but the manifest does not declare it under js']);

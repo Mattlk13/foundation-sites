@@ -51,6 +51,7 @@ Those three are the ones that repeat. Here is the whole list, every attribute th
 | `data-panel` | `sheet`, `drawer`, `screen` | nav |
 | `data-placement` | `top`, `bottom`, `start`, `end` | tooltip |
 | `data-preview` | string | demo (> div) |
+| `data-print` | `only`, `none` | print |
 | `data-raised` | boolean | card |
 | `data-ratio` | `1/1`, `4/3`, `3/2`, `16/9`, `21/9` | card |
 | `data-resize` | `width`, `both` | demo |

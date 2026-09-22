@@ -612,7 +612,10 @@ const MAPPED = {
 // keyframe name in a custom property that nothing else could ever read.
 // data-fit is here because each value sets two properties, not one: the two
 // ends of a clamp, which no single mapped property could carry.
-const READ_DIRECTLY = new Set(['data-side', 'data-emphasis', 'data-shape', 'data-edge', 'data-panel', 'data-orientation', 'data-placement', 'data-trigger', 'data-resize', 'data-enter', 'data-attention', 'data-surface', 'data-fit']);
+// data-print is here because its value sets no property at all: it decides
+// which of two media a rule applies in, and a custom property cannot carry a
+// media query.
+const READ_DIRECTLY = new Set(['data-side', 'data-emphasis', 'data-shape', 'data-edge', 'data-panel', 'data-orientation', 'data-placement', 'data-trigger', 'data-resize', 'data-enter', 'data-attention', 'data-surface', 'data-fit', 'data-print']);
 
 /** Every value of every mapped vocabulary must have a rule in layouts/attributes.css,
  *  and every manifest attribute that references a vocabulary must be checked against

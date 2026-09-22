@@ -467,6 +467,13 @@ The standfirst: the sentence under a page's heading that says what the page is, 
 
 Raises the element slightly and deepens its shadow while the pointer is on it or a keyboard is inside it.
 
+## print (utility, class="print")
+
+Marks an element as belonging to one medium: on the printed page only, or on the screen only.
+
+Attributes:
+- data-print: only (default) | none — Which medium the element belongs to: only, on paper and nowhere else, or none, everywhere but paper.
+
 ## visually-hidden (utility, class="visually-hidden")
 
 Takes words out of sight and leaves them in the accessibility tree, for the name a control needs when its face is a picture.
