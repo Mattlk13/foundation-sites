@@ -386,7 +386,7 @@ Attributes:
 - data-size: sm | md (default) | lg — Cell padding and text size; sm is the compact table.
 - data-striped (boolean) — Tint every other body row.
 - data-hover (boolean) — Tint the row under the pointer.
-- data-grid (boolean) — Borders around every cell instead of lines between rows.
+- data-border (boolean) — Borders around every cell instead of lines between rows, as a box draws its border.
 
 On children:
 - data-numeric on td, th (boolean) — A cell of numbers: end-aligned with tabular figures.
