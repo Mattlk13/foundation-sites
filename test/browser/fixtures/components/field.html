@@ -5,6 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Field fixture</title>
 	<link rel="stylesheet" href="../../../../src/yeti.css">
+	<script type="module" src="../../../../src/components/field/range.js"></script>
 	<style>#stage { inline-size: 100%; }</style>
 </head>
 <body>
@@ -45,7 +46,8 @@
 			</div>
 			<div class="field" id="range-field">
 				<label for="volume">Volume</label>
-				<input id="volume" type="range" min="0" max="100" value="40" style="--yeti-range-value: 40%">
+				<output for="volume" aria-hidden="true"></output>
+				<input id="volume" type="range" min="0" max="100" value="40">
 			</div>
 			<fieldset class="field" id="set">
 					<legend data-contrast>Plan</legend>

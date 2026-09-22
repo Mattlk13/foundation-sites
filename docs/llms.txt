@@ -326,6 +326,8 @@ On children:
 - data-hint on > * (boolean) — Help text, referenced by the control's aria-describedby.
 - data-error on > * (boolean) — The error message, hidden until the control is invalid.
 
+module: range.js (optional)
+
 ## nav (component, class="nav")
 
 A bar with a brand, a list of links, and actions, that collapses the links behind a toggle at its own width and opens them as a sheet, a drawer, or a screen.

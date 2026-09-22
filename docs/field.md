@@ -14,7 +14,7 @@ nav_order: 5
 ## Example
 
 <figure class="demo" data-height="xl">
-<div data-preview="Field"><iframe title="Field, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;stack&quot; data-gap=&quot;lg&quot;&gt;&#10;	&lt;div class=&quot;field&quot;&gt;&#10;		&lt;label for=&quot;email&quot;&gt;Email&lt;/label&gt;&#10;		&lt;input id=&quot;email&quot; type=&quot;email&quot; required aria-describedby=&quot;email-hint email-error&quot;&gt;&#10;		&lt;p id=&quot;email-hint&quot; data-hint&gt;We only use it to sign you in.&lt;/p&gt;&#10;		&lt;p id=&quot;email-error&quot; data-error&gt;Enter an address with an @ in it.&lt;/p&gt;&#10;	&lt;/div&gt;&#10;	&lt;div class=&quot;field&quot;&gt;&#10;		&lt;input id=&quot;dark&quot; type=&quot;checkbox&quot; role=&quot;switch&quot;&gt;&#10;		&lt;label for=&quot;dark&quot;&gt;Dark mode&lt;/label&gt;&#10;	&lt;/div&gt;&#10;	&lt;div class=&quot;field&quot;&gt;&#10;		&lt;label for=&quot;quality&quot;&gt;Quality&lt;/label&gt;&#10;		&lt;input id=&quot;quality&quot; type=&quot;range&quot; min=&quot;0&quot; max=&quot;100&quot; value=&quot;70&quot; style=&quot;--yeti-range-value: 70%&quot;&gt;&#10;	&lt;/div&gt;&#10;	&lt;fieldset class=&quot;field&quot;&gt;&#10;		&lt;legend&gt;Notify me by&lt;/legend&gt;&#10;		&lt;div class=&quot;field&quot;&gt;&lt;input id=&quot;n-email&quot; type=&quot;checkbox&quot; name=&quot;notify&quot; value=&quot;email&quot; checked&gt;&lt;label for=&quot;n-email&quot;&gt;Email&lt;/label&gt;&lt;/div&gt;&#10;		&lt;div class=&quot;field&quot;&gt;&lt;input id=&quot;n-sms&quot; type=&quot;checkbox&quot; name=&quot;notify&quot; value=&quot;sms&quot;&gt;&lt;label for=&quot;n-sms&quot;&gt;Text message&lt;/label&gt;&lt;/div&gt;&#10;	&lt;/fieldset&gt;&#10;	&lt;fieldset class=&quot;field&quot;&gt;&#10;		&lt;legend&gt;Plan&lt;/legend&gt;&#10;		&lt;div class=&quot;field&quot;&gt;&lt;input id=&quot;plan-free&quot; type=&quot;radio&quot; name=&quot;plan&quot; value=&quot;free&quot; checked&gt;&lt;label for=&quot;plan-free&quot;&gt;Free&lt;/label&gt;&lt;/div&gt;&#10;		&lt;div class=&quot;field&quot;&gt;&lt;input id=&quot;plan-pro&quot; type=&quot;radio&quot; name=&quot;plan&quot; value=&quot;pro&quot;&gt;&lt;label for=&quot;plan-pro&quot;&gt;Pro&lt;/label&gt;&lt;/div&gt;&#10;	&lt;/fieldset&gt;&#10;&lt;/div&gt;"></iframe></div>
+<div data-preview="Field"><iframe title="Field, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;stack&quot; data-gap=&quot;lg&quot;&gt;&#10;	&lt;div class=&quot;field&quot;&gt;&#10;		&lt;label for=&quot;email&quot;&gt;Email&lt;/label&gt;&#10;		&lt;input id=&quot;email&quot; type=&quot;email&quot; required aria-describedby=&quot;email-hint email-error&quot;&gt;&#10;		&lt;p id=&quot;email-hint&quot; data-hint&gt;We only use it to sign you in.&lt;/p&gt;&#10;		&lt;p id=&quot;email-error&quot; data-error&gt;Enter an address with an @ in it.&lt;/p&gt;&#10;	&lt;/div&gt;&#10;	&lt;div class=&quot;field&quot;&gt;&#10;		&lt;input id=&quot;dark&quot; type=&quot;checkbox&quot; role=&quot;switch&quot;&gt;&#10;		&lt;label for=&quot;dark&quot;&gt;Dark mode&lt;/label&gt;&#10;	&lt;/div&gt;&#10;	&lt;div class=&quot;field&quot;&gt;&#10;		&lt;label for=&quot;quality&quot;&gt;Quality&lt;/label&gt;&#10;		&lt;output for=&quot;quality&quot; aria-hidden=&quot;true&quot;&gt;&lt;/output&gt;&#10;		&lt;input id=&quot;quality&quot; type=&quot;range&quot; min=&quot;0&quot; max=&quot;100&quot; value=&quot;70&quot;&gt;&#10;	&lt;/div&gt;&#10;	&lt;fieldset class=&quot;field&quot;&gt;&#10;		&lt;legend&gt;Notify me by&lt;/legend&gt;&#10;		&lt;div class=&quot;field&quot;&gt;&lt;input id=&quot;n-email&quot; type=&quot;checkbox&quot; name=&quot;notify&quot; value=&quot;email&quot; checked&gt;&lt;label for=&quot;n-email&quot;&gt;Email&lt;/label&gt;&lt;/div&gt;&#10;		&lt;div class=&quot;field&quot;&gt;&lt;input id=&quot;n-sms&quot; type=&quot;checkbox&quot; name=&quot;notify&quot; value=&quot;sms&quot;&gt;&lt;label for=&quot;n-sms&quot;&gt;Text message&lt;/label&gt;&lt;/div&gt;&#10;	&lt;/fieldset&gt;&#10;	&lt;fieldset class=&quot;field&quot;&gt;&#10;		&lt;legend&gt;Plan&lt;/legend&gt;&#10;		&lt;div class=&quot;field&quot;&gt;&lt;input id=&quot;plan-free&quot; type=&quot;radio&quot; name=&quot;plan&quot; value=&quot;free&quot; checked&gt;&lt;label for=&quot;plan-free&quot;&gt;Free&lt;/label&gt;&lt;/div&gt;&#10;		&lt;div class=&quot;field&quot;&gt;&lt;input id=&quot;plan-pro&quot; type=&quot;radio&quot; name=&quot;plan&quot; value=&quot;pro&quot;&gt;&lt;label for=&quot;plan-pro&quot;&gt;Pro&lt;/label&gt;&lt;/div&gt;&#10;	&lt;/fieldset&gt;&#10;&lt;/div&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
@@ -33,7 +33,8 @@ nav_order: 5
 	</div>
 	<div class="field">
 		<label for="quality">Quality</label>
-		<input id="quality" type="range" min="0" max="100" value="70" style="--yeti-range-value: 70%">
+		<output for="quality" aria-hidden="true"></output>
+		<input id="quality" type="range" min="0" max="100" value="70">
 	</div>
 	<fieldset class="field">
 		<legend>Notify me by</legend>
@@ -68,18 +69,24 @@ A tight column: label, control, hint, error. The control is a native element sty
 </fieldset>
 ```
 
-A checkbox with `role="switch"` becomes a switch: a track with a thumb that slides to the end and takes the field's colour when on. A `range` input gets a thin track and a round thumb in the field's colour, the height of a control so it is easy to grab; the track is filled to `--yeti-range-value`, which CSS cannot work out for itself: set it inline for a static value, or from one line of your own script when the value moves.
+A checkbox with `role="switch"` becomes a switch: a track with a thumb that slides to the end and takes the field's colour when on. A `range` input gets a thin track and a round thumb in the field's colour, the height of a control so it is easy to grab.
+
+The filled part of the track is `--yeti-range-value`, how far along the value sits from 0 to 1, because CSS cannot read an input's value. `range.js` keeps it in step, and writes the value into an `output` placed before the input, which is drawn over the thumb. Give the output `aria-hidden`: the input announces its own value and a screen reader should not hear it twice. Leave the output out of a page that does not load the module, or it stays empty.
+
+The fill stops where the thumb's centre is, not at that share of the width. A thumb's centre only travels from half a thumb in to half a thumb from the end, so a plain percentage runs ahead of it, by eleven pixels at each end on a track this wide. The stylesheet makes that correction, because the thumb's width is an em it already knows and script would have to measure it again on every resize.
+
+Without the module the track sits wherever `--yeti-range-value` says, so set it on the input for a static one.
 
 ```html
 <div class="field"><input id="dark" type="checkbox" role="switch"><label for="dark">Dark mode</label></div>
-<div class="field"><label for="quality">Quality</label><input id="quality" type="range" min="0" max="100" value="70" style="--yeti-range-value: 70%"></div>
+<div class="field"><label for="quality">Quality</label><output for="quality" aria-hidden="true"></output><input id="quality" type="range" min="0" max="100" value="70"></div>
 ```
 
 ```html
 <div class="field"><label for="volume">Volume</label><input id="volume" type="range" min="0" max="100" value="40"></div>
 ```
 
-The script form: `const set = () => input.style.setProperty('--yeti-range-value', ((input.value - input.min) / (input.max - input.min) * 100) + '%'); input.addEventListener('input', set); set();`.
+Set by hand, it is a number rather than a percentage: `style="--yeti-range-value: 0.7"`.
 
 ## Accessibility
 
@@ -118,6 +125,7 @@ Attributes that descendants carry, not the root.
 - `> select`: 0 to 1. The control.
 - `> textarea`: 0 to 1. The control.
 - `> .affix`: 0 to 1. The control slot as an affix: a control with attachments, or two controls joined.
+- `> output`: 0 to 1. A range's value, written by range.js and drawn over the thumb. Put it before the input. Leave it out on a page that does not load the module, which would leave it empty.
 - `> [data-hint]`: 0 to 1. Help text, referenced by the control's aria-describedby.
 - `> [data-error]`: 0 to 1. The error message, hidden until the control is invalid.
 
@@ -131,7 +139,7 @@ Attributes that descendants carry, not the root.
 | `--yeti-control-size` | Minimum height of the control. |
 | `--yeti-control-radius` | Corner of the control. |
 | `--yeti-control-border` | Border of the control at rest. |
-| `--yeti-range-value` | The filled share of a range's track; set it on the input. |
+| `--yeti-range-value` | How far along a range's track the value sits, 0 to 1. range.js sets it; set it on the input yourself for a static one. |
 | `--yeti-control-surface` | Background of the control. |
 | `--yeti-control-chevron` | The select's chevron image. |
 | `--yeti-color-alert` | Border of an invalid control. |
@@ -160,6 +168,8 @@ Attributes that descendants carry, not the root.
 
 <details><summary>Internal tokens (may change between minor versions)</summary>
 
+- `--_yeti-range-thumb`
+- `--_yeti-range-at`
 - `--_yeti-variant`
 - `--_yeti-on-variant`
 - `--_yeti-size-text`
@@ -182,6 +192,6 @@ Attributes that descendants carry, not the root.
 
 ## JavaScript
 
-None. This component is CSS only.
+Optional enhancement: `components/field/range.js`. The component works without it.
 
 Available since 7.0.0.

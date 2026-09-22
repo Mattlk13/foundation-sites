@@ -9,6 +9,11 @@
 	}
 	.field:not([data-variant]) { --_yeti-variant: var(--yeti-color-primary); --_yeti-variant-subtle: var(--yeti-color-primary-subtle); --_yeti-variant-soft: var(--yeti-color-primary-soft); --_yeti-variant-strong: var(--yeti-color-primary-strong); --_yeti-variant-text: var(--yeti-color-primary-text); --_yeti-on-variant: var(--yeti-on-primary); }
 	.field:not([data-size]) { --_yeti-size-text: var(--yeti-text-md); --_yeti-size-space: var(--yeti-space-sm); }
+	/* The thumb's diameter, and the point its centre reaches for a given
+	   share. Named on the field so the readout beside the input can place
+	   itself on the same point the track fills to. */
+	.field { --_yeti-range-thumb: calc(1.25 * var(--_yeti-size-text)); }
+	.field { --_yeti-range-at: calc(0.5 * var(--_yeti-range-thumb) + var(--yeti-range-value) * (100% - var(--_yeti-range-thumb))); }
 	.field > * { margin: 0; }
 	.field > :is(label, legend) {
 		font-weight: var(--yeti-weight-strong);
@@ -85,9 +90,16 @@
 
 	/* A range: a thin track and a round thumb in the variant colour. The
 	   engine pseudo-elements take physical sizes; the input itself is a
-	   full control's height so the thumb is a comfortable target. The
-	   track is filled to --yeti-range-value, a share the author sets on
-	   the input, since CSS cannot read the value. */
+	   full control's height so the thumb is a comfortable target.
+
+	   --yeti-range-value is how far along the track the value sits, 0 to 1,
+	   because CSS cannot read the value. range.js sets it; set it yourself on
+	   the input for a static one. The fill is not that share of the width:
+	   the thumb's centre stops half a thumb from each end, so a plain
+	   percentage runs ahead of the thumb by that much at the extremes. The
+	   correction is done here rather than in the module, because the thumb's
+	   width is an em the stylesheet already knows and script would have to
+	   measure it and measure it again on every resize. */
 	.field input[type="range"] {
 		appearance: none;
 		inline-size: 100%;
@@ -100,28 +112,52 @@
 	.field input[type="range"]::-webkit-slider-runnable-track {
 		height: 0.25em;
 		border-radius: var(--yeti-radius-full);
-		background: linear-gradient(var(--_yeti-variant) 0 0) 0 0 / var(--yeti-range-value) 100% no-repeat var(--yeti-control-border);
+		background: linear-gradient(var(--_yeti-variant) 0 0) 0 0 / var(--_yeti-range-at) 100% no-repeat var(--yeti-control-border);
 	}
 	.field input[type="range"]::-moz-range-track {
 		height: 0.25em;
 		border-radius: var(--yeti-radius-full);
-		background: linear-gradient(var(--_yeti-variant) 0 0) 0 0 / var(--yeti-range-value) 100% no-repeat var(--yeti-control-border);
+		background: linear-gradient(var(--_yeti-variant) 0 0) 0 0 / var(--_yeti-range-at) 100% no-repeat var(--yeti-control-border);
 	}
 	.field input[type="range"]::-webkit-slider-thumb {
 		appearance: none;
-		width: 1.25em;
-		height: 1.25em;
-		margin-top: calc((0.25em - 1.25em) / 2);
+		width: var(--_yeti-range-thumb);
+		height: var(--_yeti-range-thumb);
+		margin-top: calc((0.25em - var(--_yeti-range-thumb)) / 2);
 		border: var(--yeti-border-width) solid var(--_yeti-variant);
 		border-radius: 50%;
 		background-color: var(--_yeti-variant);
 	}
 	.field input[type="range"]::-moz-range-thumb {
-		width: 1.25em;
-		height: 1.25em;
+		width: var(--_yeti-range-thumb);
+		height: var(--_yeti-range-thumb);
 		border: var(--yeti-border-width) solid var(--_yeti-variant);
 		border-radius: 50%;
 		background-color: var(--_yeti-variant);
+	}
+
+	/* The value, over the thumb. An output placed before the range in the
+	   field sits on its own line and slides along it, centred on the very
+	   point the fill reaches, so the number and the thumb never disagree.
+	   In flow rather than absolutely positioned: it takes its own row, which
+	   is honest about the height a range with a readout needs and keeps it
+	   clear of the label above.
+
+	   aria-hidden, because the input announces its own value and a screen
+	   reader should not hear it twice. range.js writes the text; a page
+	   without the module gets an empty one, so the author leaves it out. */
+	.field > output {
+		margin-inline-start: var(--_yeti-range-at);
+		/* Closer to the thumb than the field's own gap would put it: the number
+		   belongs to the track under it, not to the label above. */
+		margin-block-end: calc(var(--yeti-field-gap) * -0.5);
+		translate: -50%;
+		inline-size: max-content;
+		font-size: var(--yeti-text-sm);
+		/* So the number does not shift sideways as its digits change. */
+		font-variant-numeric: tabular-nums;
+		color: var(--yeti-color-text);
+		line-height: 1;
 	}
 
 	/* Inline: the label beside the control, for checkboxes, radios, and data-inline. */

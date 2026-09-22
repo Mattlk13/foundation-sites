@@ -101,6 +101,42 @@ test.describe('field', () => {
 		expect(label.left).toBeGreaterThan(box.right);
 	});
 
+	test('range.js fills the track to the thumb and writes the value over it', async ({ page }) => {
+		await open(page);
+		const read = () => page.evaluate(() => {
+			const input = document.getElementById('volume');
+			const out = document.querySelector('#range-field > output');
+			const style = getComputedStyle(input);
+			const thumb = 1.25 * parseFloat(style.fontSize);
+			const box = input.getBoundingClientRect();
+			const share = Number(input.value) / 100;
+			const outBox = out.getBoundingClientRect();
+			return {
+				text: out.textContent,
+				share: getComputedStyle(document.getElementById('range-field')).getPropertyValue('--yeti-range-value').trim(),
+				// Where the readout's centre sits against where the thumb's is.
+				offBy: Math.round((outBox.left + outBox.width / 2) - (box.left + thumb / 2 + share * (box.width - thumb))),
+			};
+		});
+		const start = await read();
+		expect(start.text).toBe('40');
+		expect(Number(start.share)).toBeCloseTo(0.4, 3);
+		expect(start.offBy).toBeCloseTo(0, 0);
+
+		// Both ends, where a plain percentage and the thumb part company.
+		for (const value of ['0', '100']) {
+			await page.evaluate((v) => {
+				const input = document.getElementById('volume');
+				input.value = v;
+				input.dispatchEvent(new Event('input', { bubbles: true }));
+			}, value);
+			const now = await read();
+			expect(now.text).toBe(value);
+			// toBeCloseTo, because WebKit rounds the far end to negative zero.
+			expect(now.offBy).toBeCloseTo(0, 0);
+		}
+	});
+
 	test('a range is a control-height track with a round variant thumb', async ({ page, browserName }) => {
 		await open(page);
 		expect((await rect(page, '#volume')).height).toBeGreaterThanOrEqual((await token(page, '--yeti-control-size')) - 0.5);
@@ -117,8 +153,22 @@ test.describe('field', () => {
 	test('a range fills its track to --yeti-range-value', async ({ page, browserName }) => {
 		await open(page);
 		test.skip(browserName !== 'firefox', 'track geometry is only readable through ::-moz-range-track');
-		const size = await page.evaluate(() => getComputedStyle(document.getElementById('volume'), '::-moz-range-track').backgroundSize);
-		expect(size.startsWith('40%')).toBe(true);
+		// Not a plain 40% of the width. The fill stops where the thumb's centre
+		// is, and that centre only travels between half a thumb from each end,
+		// so the width carries a correction of half a thumb less the share of
+		// one: at 0.4 of a 22.5px thumb that is 2.25px. Firefox leaves the two
+		// terms unresolved, which is exactly what makes them readable here.
+		const { size, thumb } = await page.evaluate(() => {
+			const input = document.getElementById('volume');
+			return {
+				size: getComputedStyle(input, '::-moz-range-track').backgroundSize,
+				thumb: 1.25 * parseFloat(getComputedStyle(input).fontSize),
+			};
+		});
+		const parts = size.match(/calc\(([\d.]+)%\s*\+\s*([\d.]+)px\)/);
+		expect(parts, `unreadable track width: ${size}`).not.toBeNull();
+		expect(Number(parts[1])).toBeCloseTo(40, 1);
+		expect(Number(parts[2])).toBeCloseTo(thumb * (0.5 - 0.4), 1);
 	});
 
 	test('a fieldset field groups inline fields under a legend', async ({ page }) => {

@@ -15,18 +15,24 @@ A tight column: label, control, hint, error. The control is a native element sty
 </fieldset>
 ```
 
-A checkbox with `role="switch"` becomes a switch: a track with a thumb that slides to the end and takes the field's colour when on. A `range` input gets a thin track and a round thumb in the field's colour, the height of a control so it is easy to grab; the track is filled to `--yeti-range-value`, which CSS cannot work out for itself: set it inline for a static value, or from one line of your own script when the value moves.
+A checkbox with `role="switch"` becomes a switch: a track with a thumb that slides to the end and takes the field's colour when on. A `range` input gets a thin track and a round thumb in the field's colour, the height of a control so it is easy to grab.
+
+The filled part of the track is `--yeti-range-value`, how far along the value sits from 0 to 1, because CSS cannot read an input's value. `range.js` keeps it in step, and writes the value into an `output` placed before the input, which is drawn over the thumb. Give the output `aria-hidden`: the input announces its own value and a screen reader should not hear it twice. Leave the output out of a page that does not load the module, or it stays empty.
+
+The fill stops where the thumb's centre is, not at that share of the width. A thumb's centre only travels from half a thumb in to half a thumb from the end, so a plain percentage runs ahead of it, by eleven pixels at each end on a track this wide. The stylesheet makes that correction, because the thumb's width is an em it already knows and script would have to measure it again on every resize.
+
+Without the module the track sits wherever `--yeti-range-value` says, so set it on the input for a static one.
 
 ```html
 <div class="field"><input id="dark" type="checkbox" role="switch"><label for="dark">Dark mode</label></div>
-<div class="field"><label for="quality">Quality</label><input id="quality" type="range" min="0" max="100" value="70" style="--yeti-range-value: 70%"></div>
+<div class="field"><label for="quality">Quality</label><output for="quality" aria-hidden="true"></output><input id="quality" type="range" min="0" max="100" value="70"></div>
 ```
 
 ```html
 <div class="field"><label for="volume">Volume</label><input id="volume" type="range" min="0" max="100" value="40"></div>
 ```
 
-The script form: `const set = () => input.style.setProperty('--yeti-range-value', ((input.value - input.min) / (input.max - input.min) * 100) + '%'); input.addEventListener('input', set); set();`.
+Set by hand, it is a number rather than a percentage: `style="--yeti-range-value: 0.7"`.
 
 ## Accessibility
 
