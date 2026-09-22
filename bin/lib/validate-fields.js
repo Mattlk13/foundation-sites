@@ -7,7 +7,7 @@ import { extractHtmlBlocks } from './markdown.js';
 export const FIELD_MESSAGE = '.field: the label must reference the control with for, and the control must carry that id';
 
 /** Every .field pairs its label with its control by for/id (or is a fieldset with a legend). */
-export function validateFields(entries, docsDir, fixturesDir) {
+export function validateFields(entries, guidesDir, fixturesDir) {
 	const errors = [];
 	const sources = [];
 	for (const entry of entries) {
@@ -15,8 +15,8 @@ export function validateFields(entries, docsDir, fixturesDir) {
 		const docsFile = path.join(entry.dir, 'docs.md');
 		if (fs.existsSync(docsFile)) for (const b of extractHtmlBlocks(fs.readFileSync(docsFile, 'utf8'))) sources.push({ file: docsFile, html: b.html, line: b.line - 1 });
 	}
-	if (fs.existsSync(docsDir)) {
-		for (const file of walkFiles(docsDir).filter((f) => f.endsWith('.md'))) {
+	if (fs.existsSync(guidesDir)) {
+		for (const file of walkFiles(guidesDir).filter((f) => f.endsWith('.md'))) {
 			for (const b of extractHtmlBlocks(fs.readFileSync(file, 'utf8'))) sources.push({ file, html: b.html, line: b.line - 1 });
 		}
 	}

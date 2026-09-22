@@ -11,7 +11,7 @@ npm run validate         # manifests, examples, spacing rule, layer contract
 npm run test:tools       # node:test suite for the tooling
 npm run test:browser     # Playwright smoke and accessibility checks
 npm run build            # writes dist/ (gitignored)
-npm run docs             # regenerates docs/*.md from the manifests
+npm run docs             # regenerates docs/ from the manifests and src/guides/
 npm test                 # validate, tools, browser
 ```
 
@@ -34,6 +34,8 @@ and say what changed in the commit message. A commit that re-blesses with no vis
 **No new dependencies.** The dev dependencies are Playwright, axe, parse5, and lightningcss. lightningcss is the single exception to this rule and was taken deliberately: minifying CSS correctly means parsing it, that is not a job to hand-roll, and it runs only here — it produces `dist/yeti.min.css` and never touches the source a user loads. A pull request that adds another dependency needs an issue first explaining why the job cannot be done without it.
 
 **Manifest first.** Every layout or component lands in one pull request with its `manifest.json`, its CSS, its `example.html`, a browser fixture, and the generated docs page. `npm run validate` must pass. If the manifest and the CSS disagree, the manifest is right and the CSS is wrong.
+
+**Docs are generated.** Nothing under `docs/` is written by hand. A component page comes from its `manifest.json`, `example.html` and `docs.md`; a guide comes from `src/guides/<name>.md`, which is where its prose lives. Run `npm run docs` and commit what it writes — CI regenerates and fails on a diff. In a guide, a fenced block written ```` ```html demo ```` renders as the live demo figure as well as the code, and takes an optional height (`sm md lg xl`), a width (`2xs` … `2xl`) and `both` to let the reader drag the box taller as well as wider: ```` ```html demo md lg both ````. A plain ```` ```html ```` block stays a code block.
 
 **Spacing belongs to layouts.** A component never sets its own outer margin. Layouts own the gaps between their children. The validator enforces this on the identity selector.
 

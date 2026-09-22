@@ -146,10 +146,10 @@ export function validateExamples(entries, merged) {
 	return errors;
 }
 
-export function validateGuides(docsDir, merged, entries = []) {
+export function validateGuides(guidesDir, merged, entries = []) {
 	const errors = [];
-	if (fs.existsSync(docsDir)) {
-		for (const file of walkFiles(docsDir).filter((f) => f.endsWith('.md'))) {
+	if (fs.existsSync(guidesDir)) {
+		for (const file of walkFiles(guidesDir).filter((f) => f.endsWith('.md'))) {
 			const markdown = fs.readFileSync(file, 'utf8');
 			for (const block of extractHtmlBlocks(markdown)) {
 				errors.push(...validateElementTree(parseHtml(block.html), merged, file, block.line - 1));
@@ -666,7 +666,7 @@ export function validateNoMediaQueries(srcDir) {
 
 export function validate({ root }) {
 	const srcDir = path.join(root, 'src');
-	const docsDir = path.join(root, 'docs', 'guides');
+	const guidesDir = path.join(root, 'src', 'guides');
 	const schema = loadSchema(path.join(root, 'schema', 'manifest.schema.json'));
 	const vocabFile = path.join(root, 'schema', 'vocabulary.json');
 	const vocabulary = fs.existsSync(vocabFile) ? loadVocabulary(vocabFile) : {};
@@ -674,7 +674,7 @@ export function validate({ root }) {
 	const all = [
 		...errors,
 		...validateExamples(entries, merged),
-		...validateGuides(docsDir, merged, entries),
+		...validateGuides(guidesDir, merged, entries),
 		...validateFixtures(path.join(root, 'test', 'browser', 'fixtures'), merged),
 		...validateSpacing(entries),
 		...validateLayers(srcDir),
@@ -689,7 +689,7 @@ export function validate({ root }) {
 		...validateVocabulary(root, entries),
 		...validateNoMediaQueries(srcDir),
 		...validateDocsFragments(entries),
-		...validateFields(entries, docsDir, path.join(root, 'test', 'browser', 'fixtures')),
+		...validateFields(entries, guidesDir, path.join(root, 'test', 'browser', 'fixtures')),
 		...validateThemes(root),
 	];
 	return { errors: all, count: Object.keys(merged).length };

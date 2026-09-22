@@ -1,7 +1,9 @@
 #!/usr/bin/env node
-// Renders one Markdown page per layout or component into docs/, in the front
-// matter shape foundationcss.com consumes. Only files carrying GENERATED_MARK
-// are ever deleted; hand-written guides are never touched.
+// Renders one Markdown page per layout or component into docs/, and one page
+// per guide written under src/guides/, in the front matter shape
+// foundationcss.com consumes. Every .md file under docs/ is generated: each
+// carries GENERATED_MARK naming the manifest or the guide source to edit
+// instead, and only a file carrying that mark is ever deleted.
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -274,6 +276,150 @@ export function replaceMarked(markdown, block) {
 	return `${markdown.slice(0, start + ATTRIBUTES_START.length)}\n\n${block}\n\n${markdown.slice(end)}`;
 }
 
+/** The markdown with the generated mark directly after its front matter, or null when it has none. */
+export function stampGuide(markdown, source) {
+	// isGenerated only accepts the mark as the first thing after the front
+	// matter, which is also where a reader looks, so that is where it goes.
+	const block = markdown.match(/^---\n[\s\S]*?\n---\n/);
+	if (!block) return null;
+	return `${block[0]}${GENERATED_MARK} from ${source}. Do not edit. -->\n${markdown.slice(block[0].length)}`;
+}
+
+/** The title out of a page's front matter, unquoted; '' when there is none. */
+export function frontMatterTitle(markdown) {
+	const block = markdown.match(/^---\n([\s\S]*?)\n---\n/);
+	const title = block && block[1].match(/^title:\s*"?(.*?)"?\s*$/m);
+	return title ? title[1] : '';
+}
+
+// A fenced block in a guide can ask to be shown as well as read: ```html demo
+// renders the same figure the component pages use, the frame filled and the
+// code beneath it, so a layout that stacks at its own width is something the
+// reader watches happen rather than something the paragraph promises. The
+// tokens after demo describe the box: a height, a width, and "both" to let the
+// reader drag it taller as well as wider. The two lists come from the schema so
+// they cannot drift from the demo component's own attributes, and they are read
+// here rather than from the tree being generated, because a host generating
+// into its own folder still writes this repo's guides.
+const VOCABULARY = loadVocabulary(path.join(SCHEMA_DIR, 'vocabulary.json'));
+export const DEMO_HEIGHTS = VOCABULARY.height;
+export const DEMO_WIDTHS = VOCABULARY.width;
+
+/**
+ * The tokens after `demo` on an info string, as options for renderDemo.
+ * sm, md, lg and xl are in both vocabularies, so an ambiguous one fills the
+ * height while the height is empty and the width afterwards; 2xs, xs and 2xl
+ * can only be widths. Every error names the file and the line, because that is
+ * what an author needs to find the fence again.
+ */
+export function parseDemoFence(info, { file, line }) {
+	const options = {};
+	const errors = [];
+	const fail = (message) => errors.push({ file, line, message });
+	for (const token of info.trim().split(/\s+/).filter(Boolean)) {
+		const height = DEMO_HEIGHTS.includes(token);
+		const width = DEMO_WIDTHS.includes(token);
+		if (token === 'both') {
+			if (options.resize) fail('html demo: both is given twice');
+			options.resize = 'both';
+		} else if (height && options.height === undefined) {
+			options.height = token;
+		} else if (width && options.width === undefined) {
+			options.width = token;
+		} else if (height || width) {
+			fail(`html demo: ${token} is a second ${height ? 'height' : 'width'}; a demo takes one height and one width`);
+		} else {
+			fail(`html demo: unknown token ${token}; expected a height (${DEMO_HEIGHTS.join(' ')}), a width (${DEMO_WIDTHS.join(' ')}), or both`);
+		}
+	}
+	return { options, errors };
+}
+
+/** A heading's plain text: code ticks and link syntax are markup, not part of a name. */
+export function headingText(text) {
+	return text.replace(/\[([^\]]+)\]\([^)]*\)/g, '$1').replace(/`/g, '').trim();
+}
+
+/** Every `html demo` block replaced by its figure; every other block passed through as it is. */
+export function renderGuideDemos(markdown, { file, title, stylesheet }) {
+	const lines = markdown.split('\n');
+	const out = [];
+	const errors = [];
+	// A demo is named after the heading above it, and a section with more than
+	// one numbers the rest: two iframes on a page may not share a name, and the
+	// name is what a screen reader has to tell them apart by.
+	let heading = title;
+	const counts = new Map();
+	for (let i = 0; i < lines.length; i += 1) {
+		const fence = lines[i].match(/^([`~]{3,})(.*)$/);
+		if (!fence) {
+			// A demo fence only opens at the left margin (the match above is
+			// anchored at column 0); one indented into a list or quoted into a
+			// blockquote is not silently a code block, it is an author's mistake,
+			// because a demo that quietly stops being a demo is exactly the drift
+			// the fence exists to catch.
+			const misplaced = lines[i].match(/^(\s+|>\s*)`{3,}html\s+demo\b/);
+			if (misplaced) errors.push({ file, line: i + 1, message: 'html demo: a demo fence must start at the left margin' });
+			// Only a line that opens no block can be a heading, which is what
+			// keeps a # inside a shell sample from renaming the demos after it.
+			const found = lines[i].match(/^#{1,6}\s+(.+?)\s*$/);
+			if (found) heading = headingText(found[1]);
+			out.push(lines[i]);
+			continue;
+		}
+		const [, marker, info] = fence;
+		const closer = new RegExp(`^${marker[0]}{${marker.length},}$`);
+		let end = i + 1;
+		while (end < lines.length && !closer.test(lines[end].trim())) end += 1;
+		const demo = info.trim().match(/^html\s+demo\b(.*)$/);
+		if (!demo || end === lines.length) {
+			// A plain block goes through untouched, and so does an unclosed one:
+			// the author is told where it is rather than having it guessed at.
+			if (demo) errors.push({ file, line: i + 1, message: 'html demo: this fence is never closed' });
+			out.push(...lines.slice(i, Math.min(end + 1, lines.length)));
+			i = end;
+			continue;
+		}
+		const { options, errors: bad } = parseDemoFence(demo[1], { file, line: i + 1 });
+		errors.push(...bad);
+		const seen = (counts.get(heading) ?? 0) + 1;
+		counts.set(heading, seen);
+		out.push(renderDemo({
+			title: seen === 1 ? heading : `${heading} (${seen})`,
+			// The example is the block verbatim, tabs and all: renderDemo trims
+			// its ends and writes it twice, framed and fenced, from this one copy.
+			exampleHtml: lines.slice(i + 1, end).join('\n'),
+			stylesheet,
+			...options,
+		}));
+		i = end;
+	}
+	return { markdown: out.join('\n'), errors };
+}
+
+// A guide is written by hand in src/guides/ and rendered into docs/guides/ the
+// way a component page is rendered from its manifest: the source owns the
+// prose, the attribute markers and the fenced examples, and the rendered page
+// carries the mark saying so, the filled table and, from here on, the demo
+// figures. Nothing under docs/ is a source any more.
+export function renderGuide({ markdown, source, file, table, merged, demoStylesheet = '/yeti/yeti.css' }) {
+	// The demos are rendered first, from the source exactly as it was written, so
+	// a bad info string is reported at the line the author will find it on: the
+	// table pass inserts about forty lines above the layouts guide's last two
+	// fences and would otherwise move every line number after it.
+	const demos = renderGuideDemos(markdown, { file, title: frontMatterTitle(markdown), stylesheet: demoStylesheet });
+	if (demos.errors.length) return { markdown: null, errors: demos.errors };
+	let out = demos.markdown;
+	if (table) {
+		const filled = replaceMarked(out, renderAttributeTable({ merged, kinds: table.kinds, label: table.label }));
+		if (filled === null) return { markdown: null, errors: [{ file, message: `no ${ATTRIBUTES_START} … ${ATTRIBUTES_END} pair for the generated attribute table` }] };
+		out = filled;
+	}
+	const stamped = stampGuide(out, source);
+	if (stamped === null) return { markdown: null, errors: [{ file, message: 'a guide needs front matter; the generated mark goes directly after it' }] };
+	return { markdown: stamped, errors: [] };
+}
+
 function countInternalTokens(tokensDir) {
 	const names = new Set();
 	for (const file of walkFiles(tokensDir).filter((f) => f.endsWith('.css'))) {
@@ -360,22 +506,49 @@ export function generateDocs({ root, demoStylesheet, outDir }) {
 			deleted.push(file);
 		}
 	}
-	// The guides are hand-written pages with one generated table in each, so
-	// they are written last and only between their markers. A host generating
-	// into its own tree may not have them; that is not an error.
+	// One rendered page per guide source. They are written on every run rather
+	// than only when they change, exactly like the component pages above: a host
+	// generating into its own tree wants its stylesheet in the frames whatever
+	// the source says, and the drift check reads what is on disk, not this
+	// function's report.
 	const guideErrors = [];
-	for (const { file, kinds, label } of GUIDE_TABLES) {
-		const guide = path.join(docsDir, file);
-		if (!fs.existsSync(guide)) continue;
-		const markdown = fs.readFileSync(guide, 'utf8');
-		const next = replaceMarked(markdown, renderAttributeTable({ merged, kinds, label }));
-		if (next === null) {
-			guideErrors.push({ file: guide, message: `no ${ATTRIBUTES_START} … ${ATTRIBUTES_END} pair for the generated attribute table` });
+	const guidesSrc = path.join(srcDir, 'guides');
+	const guidesOut = path.join(docsDir, 'guides');
+	const guides = fs.existsSync(guidesSrc) ? fs.readdirSync(guidesSrc).filter((n) => n.endsWith('.md')).sort() : [];
+	const tables = new Map(GUIDE_TABLES.map((t) => [t.file, t]));
+	if (guides.length) fs.mkdirSync(guidesOut, { recursive: true });
+	for (const name of guides) {
+		const file = path.join(guidesSrc, name);
+		const { markdown, errors: bad } = renderGuide({
+			markdown: fs.readFileSync(file, 'utf8'),
+			// The stamp is read by a person, so it spells the source the way the
+			// repo does, with forward slashes, on every platform.
+			source: `src/guides/${name}`,
+			file,
+			table: tables.get(`guides/${name}`),
+			merged,
+			demoStylesheet,
+		});
+		if (bad.length) {
+			guideErrors.push(...bad);
 			continue;
 		}
-		if (next === markdown) continue;
-		fs.writeFileSync(guide, next);
-		written.push(guide);
+		const out = path.join(guidesOut, name);
+		fs.writeFileSync(out, markdown);
+		written.push(out);
+	}
+	// A source that goes away takes its rendered page with it, the same sweep the
+	// component pages get: only a page carrying the mark is ever deleted, so a
+	// host's own page sitting in the same folder is safe.
+	if (fs.existsSync(guidesOut)) {
+		for (const name of fs.readdirSync(guidesOut)) {
+			if (!name.endsWith('.md') || guides.includes(name)) continue;
+			const file = path.join(guidesOut, name);
+			if (!fs.statSync(file).isFile()) continue;
+			if (!isGenerated(fs.readFileSync(file, 'utf8'))) continue;
+			fs.unlinkSync(file);
+			deleted.push(file);
+		}
 	}
 	return { written, deleted, errors: guideErrors };
 }
@@ -397,11 +570,10 @@ if (isMain) {
 	// Comma-separated, so a themed host can name the framework and its theme.
 	const demoStylesheet = flag === -1 ? undefined : process.argv[flag + 1]?.split(',').map((s) => s.trim()).filter(Boolean);
 	// Where the pages are written; docs/ when absent. A themed host generates
-	// into its own tree rather than over this one. The guide tables are only
-	// ever written into <out>/guides/*.md files that already exist there;
-	// this repo's own guides get copied into the host's tree first, and the
-	// foundationcss.com import relies on generating over that copy rather
-	// than being handed a guides/ directory of its own to invent.
+	// into its own tree rather than over this one. The guides are rendered into
+	// <out>/guides/ from src/guides/ whether or not anything is there already:
+	// the sources are the only copy there is, so there is nothing for a host to
+	// have brought along first, and last import's copies are overwritten.
 	const outFlag = process.argv.indexOf('--out');
 	const outDir = outFlag === -1 ? undefined : process.argv[outFlag + 1];
 	if ((flag !== -1 && !demoStylesheet?.length) || (outFlag !== -1 && !outDir)) {
