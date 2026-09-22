@@ -66,7 +66,11 @@
 		--yeti-dialog-surface: var(--yeti-color-surface-raised);
 		--yeti-dialog-radius: var(--yeti-radius-lg);
 		--yeti-dialog-padding: var(--yeti-space-lg);
-		--yeti-dialog-backdrop: color-mix(in oklch, var(--yeti-color-text) 45%, transparent);
+		/* Black, not the text colour. A backdrop's job is to dim what is behind
+		   it, and mixing the text colour inverts with the theme: on a dark
+		   theme the text is near-white, so the wash came out at brightness 227
+		   over a page at 16 and lit the page up instead of dimming it. */
+		--yeti-dialog-backdrop: color-mix(in oklch, black 60%, transparent);
 
 		--yeti-tooltip-surface: var(--yeti-color-text);
 		--yeti-tooltip-text: var(--yeti-color-surface);

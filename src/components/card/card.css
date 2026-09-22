@@ -60,7 +60,7 @@
 		padding: var(--yeti-space-xs) var(--yeti-card-padding);
 		font-size: var(--yeti-text-sm);
 		color: var(--yeti-color-text);
-		background-color: color-mix(in oklch, var(--yeti-color-surface) 85%, transparent);
+		background-color: var(--yeti-color-scrim);
 	}
 
 	/* The footer sits at the bottom of a taller card. */

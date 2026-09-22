@@ -33,7 +33,7 @@
     { "name": "--yeti-space-xs", "public": true, "description": "Padding of the caption." },
     { "name": "--yeti-text-sm", "public": true, "description": "Text size of the caption." },
     { "name": "--yeti-color-text-muted", "public": true, "description": "The caption under a figure." },
-    { "name": "--yeti-color-surface", "public": true, "description": "Background of a caption laid over the figure." },
+    { "name": "--yeti-color-scrim", "public": true, "description": "Wash behind a caption laid over the figure, so it stays readable." },
     { "name": "--yeti-space-sm", "public": true, "description": "Gap between the footer's actions." },
     { "name": "--_yeti-aspect", "public": false }
   ],

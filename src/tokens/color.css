@@ -97,6 +97,10 @@
 		--yeti-color-text-muted: light-dark(oklch(0.45 var(--_yeti-c-neutral) var(--yeti-hue-neutral)), oklch(0.70 var(--_yeti-c-neutral) var(--yeti-hue-neutral))); /* #4d5660 */
 		--yeti-color-border: light-dark(oklch(0.88 var(--_yeti-c-neutral) var(--yeti-hue-neutral)), oklch(0.30 var(--_yeti-c-neutral) var(--yeti-hue-neutral))); /* #ced9e5 */
 		--yeti-color-border-strong: light-dark(oklch(0.75 var(--_yeti-c-neutral) var(--yeti-hue-neutral)), oklch(0.40 var(--_yeti-c-neutral) var(--yeti-hue-neutral))); /* #a5afba */
+		/* The wash that goes over content so something on top of it can be read:
+		   a caption over a picture, a veil over a form. The surface, thinned,
+		   so it takes the theme with it and dims rather than tints. */
+		--yeti-color-scrim: color-mix(in oklch, var(--yeti-color-surface) 85%, transparent);
 		--yeti-color-focus: var(--yeti-color-primary); /* #006bbb */
 	}
 }
