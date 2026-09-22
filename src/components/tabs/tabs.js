@@ -35,12 +35,16 @@ for (const root of document.querySelectorAll('.tabs')) {
 }
 
 document.addEventListener('click', (event) => {
+	// The page's own listener ran first and asked for nothing to happen.
+	if (event.defaultPrevented) return;
 	const tab = event.target?.closest?.('.tabs [role="tab"]');
 	if (!tab) return;
 	choose(tab.closest('.tabs'), tab);
 });
 
 document.addEventListener('keydown', (event) => {
+	// The page's own listener ran first and asked for nothing to happen.
+	if (event.defaultPrevented) return;
 	const tab = event.target?.closest?.('.tabs [role="tab"]');
 	if (!tab) return;
 	const root = tab.closest('.tabs');

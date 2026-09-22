@@ -56,7 +56,7 @@ Following a link scrolls smoothly, from `--yeti-toc-scroll` applied to the page 
 
 ## Accessibility
 
-Label the `nav` — `aria-label="On this page"` — because a page with a toc has at least two navs and they have to be told apart. Put `role="list"` on the `ul`, which is what keeps it a list where the reset removes the markers. The current section's link carries `aria-current="true"`; the colour and the bar are the visible half of the same fact, never the only half. The links are ordinary same-page links, so the keyboard reaches them in order and Enter follows one with no script at all.
+Label the `nav` — `aria-label="On this page"` — because a page with a toc has at least two navs and they have to be told apart. Put `role="list"` on the `ul`, which is what keeps it a list where the reset removes the markers. The current section's link carries `aria-current="true"`; the colour and the bar are the visible half of the same fact, never the only half. The module owns that attribute on these links: it sets and clears `aria-current="true"` and strips any other `aria-current` value an author puts on a toc link. The links are ordinary same-page links, so the keyboard reaches them in order and Enter follows one with no script at all.
 
 ## Attributes
 
@@ -109,7 +109,7 @@ Label the `nav` — `aria-label="On this page"` — because a page with a toc ha
 ## Accessibility
 
 - Required attributes: `aria-label` or `aria-labelledby`
-- Give the nav an aria-label such as "On this page", since a page with a toc has at least two navs. Put role="list" on the ul, because the reset only removes list markers where that role says the list is decorative. The link for the section being read carries aria-current="true"; toc.js moves it, and a page that ships the mark in its HTML is correct without the module. Every link points at an id on this page, so the list works with no script at all.
+- Give the nav an aria-label such as "On this page", since a page with a toc has at least two navs. Put role="list" on the ul, because the reset only removes list markers where that role says the list is decorative. The link for the section being read carries aria-current="true"; toc.js moves it, and a page that ships the mark in its HTML is correct without the module. The module owns aria-current on these links: it sets and clears the value "true" and strips any other aria-current an author puts on a toc link. Every link points at an id on this page, so the list works with no script at all.
 
 ## Browser support
 

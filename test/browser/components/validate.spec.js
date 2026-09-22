@@ -21,6 +21,16 @@ const submitOutcome = (page) => page.evaluate(() => new Promise((resolve) => {
 	document.getElementById('send').click();
 }));
 
+// Every required control in the fixture, answered. The form has five of them,
+// in a field and out of one, so a test about one has to satisfy the rest.
+const fillAll = async (page) => {
+	await page.fill('#email', 'joe@example.com');
+	await page.fill('#name', 'Joe');
+	await page.check('#plan-free');
+	await page.selectOption('#size', 's');
+	await page.fill('#code', 'YETI');
+};
+
 test.describe('form validation', () => {
 	test('an empty required control is marked, told why, and focused', async ({ page }) => {
 		await open(page);
@@ -53,7 +63,7 @@ test.describe('form validation', () => {
 			}), { once: true });
 			document.getElementById('send').click();
 		}));
-		expect(caught).toEqual({ target: 'signup', bubbles: true, composed: true, controls: ['email', 'name'] });
+		expect(caught).toEqual({ target: 'signup', bubbles: true, composed: true, controls: ['email', 'name', 'plan-free', 'plan-pro', 'size', 'code'] });
 		expect(await submitOutcome(page)).toBe(true);
 	});
 
@@ -68,9 +78,79 @@ test.describe('form validation', () => {
 
 	test('a form with nothing wrong is left to submit', async ({ page }) => {
 		await open(page);
-		await page.fill('#email', 'joe@example.com');
-		await page.fill('#name', 'Joe');
+		await fillAll(page);
 		expect(await submitOutcome(page)).toBe(false);
+	});
+
+	test("a radio group's message goes to the fieldset that owns the slot", async ({ page }) => {
+		await open(page);
+		expect(await style(page, '#plan-error', 'display')).toBe('none');
+		await page.click('#send');
+		// Every radio of the group suffers from being missing, so every one of
+		// them is marked; the message belongs to the fieldset above them, not to
+		// the .field around each input, which has no slot at all.
+		expect(await invalid(page, 'plan-free')).toBe('true');
+		expect(await invalid(page, 'plan-pro')).toBe('true');
+		const message = await page.evaluate(() => document.getElementById('plan-free').validationMessage);
+		expect(message).not.toBe('');
+		expect(await text(page, 'plan-error')).toBe(message);
+		expect(await text(page, 'plan-error')).not.toBe('');
+		expect(await style(page, '#plan-error', 'display')).toBe('block');
+	});
+
+	test('a select in a plain field still gets its own message', async ({ page }) => {
+		await open(page);
+		await page.click('#send');
+		const message = await page.evaluate(() => document.getElementById('size').validationMessage);
+		expect(await text(page, 'size-error')).toBe(message);
+		expect(await style(page, '#size-error', 'display')).toBe('block');
+	});
+
+	test('picking one radio clears the mark on its siblings and hides the group error', async ({ page }) => {
+		await open(page);
+		await page.click('#send');
+		expect(await invalid(page, 'plan-free')).toBe('true');
+		expect(await invalid(page, 'plan-pro')).toBe('true');
+		// change fires on the radio that became checked and on no other, so the
+		// siblings would keep the mark and the group would stay red.
+		await page.check('#plan-pro');
+		expect(await invalid(page, 'plan-pro')).toBe(null);
+		expect(await invalid(page, 'plan-free')).toBe(null);
+		expect(await style(page, '#plan-error', 'display')).toBe('none');
+	});
+
+	test('an invalid control outside any field still stops the submit and is named', async ({ page }) => {
+		await open(page);
+		await fillAll(page);
+		await page.fill('#code', '');
+		await page.evaluate(() => {
+			window.caught = null;
+			window.prevented = null;
+			document.addEventListener('yeti:invalid', (event) => { window.caught = event.detail.controls.map((c) => c.id); }, { once: true });
+			document.addEventListener('submit', (event) => {
+				window.prevented = event.defaultPrevented;
+				event.preventDefault();
+			}, { once: true });
+		});
+		await page.click('#send');
+		// Nothing is written, because there is no slot; the submit stops all the
+		// same, which under novalidate is the only thing standing in the way.
+		expect(await page.evaluate(() => window.prevented)).toBe(true);
+		expect(await page.evaluate(() => window.caught)).toEqual(['code']);
+		expect(await invalid(page, 'code')).toBe('true');
+	});
+
+	test('a submit the page prevented first is left alone', async ({ page }) => {
+		await open(page);
+		// Capture phase, so it runs before the module's own listener on document.
+		await page.evaluate(() => document.addEventListener('submit', (event) => event.preventDefault(), { capture: true }));
+		await page.click('#send');
+		// Nothing marked and nothing written. The empty box the field shows is
+		// :user-invalid, which a submit attempt sets whatever any script does.
+		expect(await invalid(page, 'email')).toBe(null);
+		expect(await invalid(page, 'plan-free')).toBe(null);
+		expect(await invalid(page, 'code')).toBe(null);
+		expect(await text(page, 'email-error')).toBe('');
 	});
 
 	test('without the module nothing is marked and the submit goes through', async ({ page }) => {

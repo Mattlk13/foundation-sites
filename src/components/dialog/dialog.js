@@ -22,24 +22,31 @@ const outside = (dialog, event) => {
 };
 
 // A command event is dispatched on the dialog and does not bubble, so the
-// document hears it only on the capture phase. It fires before the browser
-// acts on it, so the close listener is in place before the dialog opens. An
-// already open dialog is left alone: the browser ignores the command, and a
-// second listener would only overwrite the opener with the wrong button.
+// document hears it only on the capture phase. An already open dialog is left
+// alone: the browser ignores the command, and a second listener would only
+// overwrite the opener with the wrong button.
 document.addEventListener('command', (event) => {
 	const dialog = event.target?.closest?.('dialog.dialog');
 	if (!dialog || dialog.open || event.command !== 'show-modal' || !event.source) return;
+	// The opener is recorded here, before the default action, because that is
+	// what moves focus off the button; by the time the dialog is open the
+	// button that was pressed is no longer knowable.
 	openers.set(dialog, event.source);
-	dialog.addEventListener('close', () => {
-		openers.get(dialog)?.focus?.({ preventScroll: true });
-		openers.delete(dialog);
-	}, { once: true });
-	// The command event fires before the browser acts on it, and a listener
-	// may still cancel it, so the announcement waits for the default action
-	// to run — the same task, before microtasks drain — and then checks the
-	// dialog really did open.
-	queueMicrotask(() => {
-		if (dialog.open) dialog.dispatchEvent(new CustomEvent('yeti:open', { bubbles: true, composed: true }));
+	// The command event fires before the browser acts on it, and a listener may
+	// still cancel it, so nothing is claimed here. The default action runs later
+	// in the same task, which makes a task the earliest point at which the
+	// dialog is known to be open. A microtask is too early for a trusted event:
+	// its checkpoint is reached with the stack already empty, before the default
+	// action, and the guard below would find the dialog still shut and say
+	// nothing. Registering the close listener here too means a cancelled command
+	// leaks nothing, since the listener only exists once the dialog really opened.
+	setTimeout(() => {
+		if (!dialog.open) return;
+		dialog.addEventListener('close', () => {
+			openers.get(dialog)?.focus?.({ preventScroll: true });
+			openers.delete(dialog);
+		}, { once: true });
+		dialog.dispatchEvent(new CustomEvent('yeti:open', { bubbles: true, composed: true }));
 	});
 }, { capture: true });
 

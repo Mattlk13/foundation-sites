@@ -36,6 +36,10 @@ for (const toc of document.querySelectorAll('.toc')) {
 		toc.dispatchEvent(new CustomEvent('yeti:current', { bubbles: true, composed: true, detail: { link, heading } }));
 	};
 
+	// Default options on purpose: threshold 0 with no root margin is what makes
+	// "topmost in view" mean "any part of the heading visible", which is the rule
+	// the headings.find above assumes. A margin or a higher threshold would shift
+	// the answer to a heading the reader can see but the observer cannot.
 	const observer = new IntersectionObserver((entries) => {
 		for (const entry of entries) {
 			if (entry.isIntersecting) visible.add(entry.target);

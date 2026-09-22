@@ -129,16 +129,21 @@ test.describe('carousel', () => {
 
 	test('following a dot dispatches yeti:slide with the slide and its index', async ({ page }) => {
 		await open(page);
-		const caught = await page.evaluate(() => new Promise((resolve) => {
-			document.addEventListener('yeti:slide', (event) => resolve({
-				target: event.target.id,
-				bubbles: event.bubbles,
-				composed: event.composed,
-				index: event.detail.index,
-				slide: event.detail.slide.id,
-			}), { once: true });
-			document.getElementById('dot3').click();
-		}));
-		expect(caught).toEqual({ target: 'one', bubbles: true, composed: true, index: 2, slide: 's3' });
+		// The listener is installed from script; the click is a real one, so the
+		// module is driven the way a reader drives it.
+		await page.evaluate(() => {
+			window.caught = null;
+			document.addEventListener('yeti:slide', (event) => {
+				window.caught = {
+					target: event.target.id,
+					bubbles: event.bubbles,
+					composed: event.composed,
+					index: event.detail.index,
+					slide: event.detail.slide.id,
+				};
+			}, { once: true });
+		});
+		await page.click('#dot3');
+		expect(await page.evaluate(() => window.caught)).toEqual({ target: 'one', bubbles: true, composed: true, index: 2, slide: 's3' });
 	});
 });

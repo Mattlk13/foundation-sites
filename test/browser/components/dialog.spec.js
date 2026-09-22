@@ -121,18 +121,34 @@ test.describe('dialog', () => {
 		expect(await page.evaluate(() => document.activeElement.id)).toBe('opener');
 	});
 
+	// The listeners are installed from script, but the input that triggers them
+	// is a real click and a real Escape. A scripted .click() keeps the evaluate
+	// frame on the stack, which holds the microtask checkpoint back until after
+	// the browser's show-modal default action has run; a trusted click drains
+	// microtasks first, so only a real one shows whether the module waited long
+	// enough to see the dialog open.
 	test('opening and closing dispatch yeti:open and yeti:close on the dialog', async ({ page }) => {
 		await open(page);
-		const opened = await page.evaluate(() => new Promise((resolve) => {
-			document.addEventListener('yeti:open', (event) => resolve({ target: event.target.id, open: event.target.open, bubbles: event.bubbles, composed: event.composed }), { once: true });
-			document.getElementById('opener').click();
-		}));
-		expect(opened).toEqual({ target: 'confirm', open: true, bubbles: true, composed: true });
-		const closed = await page.evaluate(() => new Promise((resolve) => {
-			document.addEventListener('yeti:close', (event) => resolve({ target: event.target.id, open: event.target.open, bubbles: event.bubbles, composed: event.composed }), { once: true });
-			document.getElementById('cancel').click();
-		}));
-		expect(closed).toEqual({ target: 'confirm', open: false, bubbles: true, composed: true });
+		await page.evaluate(() => {
+			window.caught = { open: 0, close: 0, opened: null, closed: null };
+			document.addEventListener('yeti:open', (event) => {
+				window.caught.open += 1;
+				window.caught.opened = { target: event.target.id, wasOpen: event.target.open, bubbles: event.bubbles, composed: event.composed };
+			});
+			document.addEventListener('yeti:close', (event) => {
+				window.caught.close += 1;
+				window.caught.closed = { target: event.target.id, wasOpen: event.target.open, bubbles: event.bubbles, composed: event.composed };
+			});
+		});
+		await page.click('#opener');
+		await settle(page, '#confirm');
+		// Polled rather than read once: both announcements arrive a task after
+		// the input, and the close event a dialog fires is itself queued.
+		await expect.poll(() => page.evaluate(() => window.caught.open)).toBe(1);
+		expect(await page.evaluate(() => window.caught.opened)).toEqual({ target: 'confirm', wasOpen: true, bubbles: true, composed: true });
+		await page.keyboard.press('Escape');
+		await expect.poll(() => page.evaluate(() => window.caught.close)).toBe(1);
+		expect(await page.evaluate(() => window.caught.closed)).toEqual({ target: 'confirm', wasOpen: false, bubbles: true, composed: true });
 	});
 
 	test('data-max caps the width from the width scale', async ({ page }) => {

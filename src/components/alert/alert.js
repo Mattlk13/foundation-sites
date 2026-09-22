@@ -2,6 +2,8 @@
 // Delegated, so alerts added after load work too; safe on pages with none.
 // The duration is the fast token, which reduced motion collapses.
 document.addEventListener('click', (event) => {
+	// The page's own listener ran first and asked for nothing to happen.
+	if (event.defaultPrevented) return;
 	const button = event.target?.closest?.('.alert > [data-close]');
 	if (!button) return;
 	const alert = button.parentElement;

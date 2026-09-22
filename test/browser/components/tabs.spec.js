@@ -74,17 +74,22 @@ test.describe('tabs', () => {
 
 	test('selecting a tab dispatches yeti:select with the tab and its panel', async ({ page }) => {
 		await open(page);
-		const caught = await page.evaluate(() => new Promise((resolve) => {
-			document.addEventListener('yeti:select', (event) => resolve({
-				target: event.target.id,
-				bubbles: event.bubbles,
-				composed: event.composed,
-				tab: event.detail.tab.id,
-				panel: event.detail.panel.id,
-			}), { once: true });
-			document.getElementById('t2').click();
-		}));
-		expect(caught).toEqual({ target: 'tabs', bubbles: true, composed: true, tab: 't2', panel: 'p2' });
+		// The listener is installed from script; the click is a real one, so the
+		// module is driven the way a reader drives it.
+		await page.evaluate(() => {
+			window.caught = null;
+			document.addEventListener('yeti:select', (event) => {
+				window.caught = {
+					target: event.target.id,
+					bubbles: event.bubbles,
+					composed: event.composed,
+					tab: event.detail.tab.id,
+					panel: event.detail.panel.id,
+				};
+			}, { once: true });
+		});
+		await page.click('#t2');
+		expect(await page.evaluate(() => window.caught)).toEqual({ target: 'tabs', bubbles: true, composed: true, tab: 't2', panel: 'p2' });
 	});
 
 	test('the pass at load dispatches nothing', async ({ page }) => {
