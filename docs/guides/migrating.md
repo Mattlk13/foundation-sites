@@ -55,7 +55,7 @@ The table covers the grid and every component in the version 6 kitchen sink. "No
 | `.switch` | `field` around a native checkbox with role="switch" | native, styled |
 | `.breadcrumbs` | `breadcrumbs` | with `aria-current` on the last |
 | `.pagination` | `pagination` | with `aria-current` on the current page |
-| `.close-button` | the dismiss button inside `alert`, `data-close` inside `nav` | a close button belongs to what it closes |
+| `.close-button` | `data-close`, inside `alert` or inside `nav` | a close button belongs to what it closes |
 | `.sticky` | none | one native `position: sticky` declaration on any element; nothing to add |
 | `.magellan` | none | a table of contents is a `stack` of links; scroll spying is script the page can add if it must |
 | `.responsive-embed` / `.flex-video` | `frame` with `data-ratio` | native `aspect-ratio` |
