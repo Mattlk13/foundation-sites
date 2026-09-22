@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
+import vm from 'node:vm';
 import { bundle, build } from '../../bin/build.js';
 import { makeTree, validManifest, validTree } from './helpers.js';
 
@@ -68,6 +69,24 @@ test('build writes a minified stylesheet beside the readable one, with the moder
 	assert.ok(minified.includes('light-dark('));
 	assert.ok(minified.includes('@starting-style'));
 	assert.ok(r.outputs.includes('yeti.min.css'));
+});
+
+test('build writes a minified module bundle that still parses', () => {
+	const root = makeTree(treeWithPkg({
+		'src/layouts/rail/manifest.json': validManifest({ js: [{ module: 'rail.js', optional: true }] }),
+		'src/layouts/rail/rail.js': '// Finds its own elements.\nconst home = "https://foundationcss.com/yeti/"; // not a comment above\ndocument.title = home;\n',
+	}));
+	const r = build({ root });
+	assert.deepEqual(r.errors, []);
+	const readable = fs.readFileSync(path.join(root, 'dist/yeti.js'), 'utf8');
+	const minified = fs.readFileSync(path.join(root, 'dist/yeti.min.js'), 'utf8');
+	assert.ok(minified.length < readable.length, `${minified.length} is not smaller than ${readable.length}`);
+	assert.ok(!minified.includes('Finds its own elements'));
+	assert.ok(minified.includes('"https://foundationcss.com/yeti/"'));
+	// The strip must not have broken the syntax; the modules import and export
+	// nothing, so the bundle compiles as a plain script.
+	assert.doesNotThrow(() => new vm.Script(minified));
+	assert.ok(r.outputs.includes('yeti.min.js'));
 });
 
 test('build refuses to run on validation errors and writes nothing', () => {

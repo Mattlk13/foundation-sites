@@ -12,6 +12,7 @@ import { writeIde } from './gen-ide.js';
 import { writeTypes } from './gen-types.js';
 import { writeLlms } from './gen-llms.js';
 import { minifyCss } from './lib/minify-css.js';
+import { minifyJs } from './lib/minify-js.js';
 
 export function readPackage(root) {
 	return JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
@@ -86,7 +87,12 @@ export function build({ root, pkg = readPackage(root) }) {
 	// each goes in its own block, which keeps their top-level names apart.
 	if (modules.length) {
 		const parts = modules.map((file) => `// ${path.basename(file)}\n{\n${fs.readFileSync(file, 'utf8').trim()}\n}\n`);
-		write('yeti.js', `// Yeti ${pkg.version}: every optional module in one file. Load with <script type="module">.\n\n${parts.join('\n')}`);
+		const all = `// Yeti ${pkg.version}: every optional module in one file. Load with <script type="module">.\n\n${parts.join('\n')}`;
+		write('yeti.js', all);
+		// The same bundle with the comments and blank lines gone. The strip
+		// throws on anything it cannot read, so a module that outgrows it
+		// stops the build rather than shipping half of itself.
+		write('yeti.min.js', `// Yeti ${pkg.version}: every optional module in one file, minified.\n${minifyJs(all)}`);
 	}
 
 	const schema = loadSchema(path.join(root, 'schema', 'manifest.schema.json'));
