@@ -36,5 +36,5 @@
 
 	/* Same as the sidebar's: a region stretched to the height of the body row
 	   has nowhere to stick to. */
-	.shell > div:has(> :is(nav, main, aside)) > [data-sticky] { align-self: start; }
+	.shell > div:has(> :is(nav, main, aside)) > :is(nav, aside)[data-sticky] { align-self: start; }
 }

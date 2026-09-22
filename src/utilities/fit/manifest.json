@@ -27,7 +27,7 @@
   "a11y": {
     "requiredAttributes": [],
     "keyboard": [],
-    "notes": "The clamp is the accessibility story. A size that is only a container unit has no floor and no ceiling: it shrinks past legibility in a narrow column and runs off the top of a wide screen, and a reader who zooms gets neither end back. Both ends here are steps of the type scale, which is set in rem, so browser zoom and a larger default font size still move the whole line. Use it on a line, not on prose: body copy has a comfortable size that is not a percentage of a column."
+    "notes": "The clamp is the accessibility story. A size that is only a container unit has no floor and no ceiling: it shrinks past legibility in a narrow column and runs off the top of a wide screen, and a reader who zooms gets neither end back. The floor and the ceiling here are steps of the type scale, set in rem, so a larger default font size raises the floor and a fitted line can never fall below a legible step; the middle of the ramp, between the two ends, follows the container instead. Use it on a line, not on prose: body copy has a comfortable size that is not a percentage of a column."
   },
   "js": null,
   "support": { "unguarded": ["container query units", "clamp()", "atan2() and tan()"], "guarded": [] },

@@ -16,10 +16,10 @@ Between the ends the size is a proportion of the container, and the proportion i
 </div>
 ```
 
-The container is the nearest ancestor with `container-type: inline-size`. That is what the [container](container.md) layout is for, and `grid`, `breakout`, `timeline`, `card`, `nav` and `demo` are already size containers themselves. It has to be an ancestor: an element cannot query itself, so putting `fit` and `container` on the same element measures the box outside it. With no container anywhere above, `cqi` falls back to the small viewport, so a fitted line on a bare page grows with the window instead — a lesser effect, not a broken one.
+The container is the nearest ancestor with `container-type: inline-size`. That is what the [container](container.md) layout is for; `grid`, `timeline`, `nav`, `pagination` and `demo` are already size containers, as is a `card` with a leading figure and a `breakout` with a note; anything else needs a `container` above it, or the line measures the viewport. It has to be an ancestor: an element cannot query itself, so putting `fit` and `container` on the same element measures the box outside it. With no container anywhere above, `cqi` falls back to the small viewport, so a fitted line on a bare page grows with the window instead — a lesser effect, not a broken one.
 
 ## Accessibility
 
-The clamp is the accessibility story. A size that is only `cqi` has no floor and no ceiling: it shrinks past legibility in a narrow column and runs off the top of a wide screen, and a reader who zooms in gets neither end back. Both ends here are steps of the type scale, which is set in `rem`, so browser zoom and a larger default font size still move the whole line.
+The clamp is the accessibility story. A size that is only `cqi` has no floor and no ceiling: it shrinks past legibility in a narrow column and runs off the top of a wide screen, and a reader who zooms in gets neither end back. The floor and the ceiling here are steps of the type scale, set in `rem`, so a larger default font size raises the floor and a fitted line can never fall below a legible step; the middle of the ramp, between the two ends, follows the container instead.
 
 Nothing here changes what an element is. A fitted `h1` is an `h1`; the class sizes it and says nothing about its rank.

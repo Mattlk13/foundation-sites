@@ -43,7 +43,16 @@ test.describe('fit', () => {
 
 	test('with no size container above it the line falls back to the viewport', async ({ page }) => {
 		await open(page);
-		expect(await px(page, '#bare-title', 'font-size')).toBeCloseTo(await token(page, '--yeti-text-3xl'), 0);
+		// The default viewport is wider than --yeti-fit-width (32rem = 512px),
+		// so the fallback alone would sit at the ceiling and prove nothing the
+		// clamp test above does not already prove. Shrinking the viewport
+		// below that width moves cqi onto the ramp, so a smaller reading here
+		// shows the bare line is tracking the window rather than sitting on a
+		// fixed size all along.
+		const wide = await px(page, '#bare-title', 'font-size');
+		await page.setViewportSize({ width: 360, height: 800 });
+		const narrow = await px(page, '#bare-title', 'font-size');
+		expect(narrow).toBeLessThan(wide);
 	});
 
 	test('has no accessibility violations', async ({ page }) => {

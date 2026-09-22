@@ -11,6 +11,8 @@
 		#tall { block-size: 1600px; }
 		#loose-tall { block-size: 1200px; }
 		#stack-tall { block-size: 1200px; }
+		#card-tall { block-size: 1600px; }
+		#nav-section { block-size: 1600px; }
 	</style>
 </head>
 <body>
@@ -29,7 +31,24 @@
 				<div class="item" id="stack-pinned" data-sticky>Pinned in a column</div>
 				<div class="item" id="stack-tall">A tall child, for the column case.</div>
 			</div>
+			<div class="sidebar" id="card-sidebar" data-width="xs">
+				<div class="card" id="pinned-card" data-sticky>
+					<p>Pinned card</p>
+				</div>
+				<div class="item" id="card-tall">A tall column that scrolls past the pinned card.</div>
+			</div>
 		</div>
+		<section id="nav-section">
+			<nav class="nav" id="pinned-nav" data-sticky aria-label="Site">
+				<a href="#" data-brand>Yeti</a>
+				<button type="button" popovertarget="sticky-nav-menu" aria-label="Menu"><svg aria-hidden="true" viewBox="0 0 16 16"><path d="M2 4h12M2 8h12M2 12h12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+				<ul id="sticky-nav-menu" popover role="list">
+					<li><a href="#" aria-current="page">Docs</a></li>
+					<li><a href="#">Blog</a></li>
+				</ul>
+			</nav>
+			<p>A tall section that scrolls past the pinned nav.</p>
+		</section>
 	</main>
 </body>
 </html>
