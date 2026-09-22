@@ -8,13 +8,13 @@ nav_order: 2
 
 # Base
 
-<p class="lede">The base is the one layer that is not opt-in. It styles plain HTML the moment the stylesheet loads, with element selectors only and never a class, and everything it draws is a token — so a theme changes the look of bare HTML without touching a line of markup.</p>
+<p class="lede">The base is the one layer that is not opt-in. It styles plain HTML the moment the stylesheet loads, and never with a class, and all but a couple of measurements it draws are tokens, so a theme changes the look of bare HTML without touching a line of markup.</p>
 
 That is the whole bargain. A page of headings, paragraphs, lists, a table and a form, with no Yeti class anywhere in it, comes out looking designed. Add a class and you are choosing something more; add none and nothing is broken.
 
 ## How to read this page
 
-Each section below shows the markup live, then the same markup once as a code block. The live sample sits in `<section class="box" data-border>` so you can see where it starts and stops. That wrapper is the only Yeti class on this page, it is there for the border, and everything inside it is bare HTML. The `section` element is deliberate too: it is one of the elements the flow rhythm treats as a container, which the [Flow](#flow) section explains.
+Each section below shows the markup live, then the same markup once as a code block. The live sample sits in `<section class="box" data-border>` so you can see where it starts and stops. That wrapper is the only Yeti class in any sample on this page, it is there for the border, and everything inside it is bare HTML. The `section` element is deliberate too: it is one of the elements the flow rhythm treats as a container, which the [Flow](#flow) section explains.
 
 Each section ends with the public tokens its rules read, copied from the CSS by hand. The base has no manifests, so this page is hand-written and the token lists are checked by a human rather than generated.
 
@@ -192,7 +192,7 @@ A caption under a quotation is an attribution, and the dash is what says so. It 
 
 `code`, `kbd` and `samp` are three different meanings with one look: the mono family, a slight tint of the raised surface, a small radius, and `0.9em` so a snippet sits level with the text around it at any size. The padding is in `em` for the same reason. A block of code takes the same family and tint at the medium radius, with the space token for padding and `overflow-x: auto` so a long line scrolls inside the block rather than widening the page.
 
-A block's leading is `--yeti-leading-sm`, a plain ratio, where running text uses `--yeti-leading-md`, which adds a constant to one em. The constant is what keeps headings tight as they grow; below body size it works the other way and loosens instead, so a code block set at `0.9em` on the body formula comes out near 1.66 and reads airy. A ratio keeps it even.
+A block's leading is `--yeti-leading-sm`, a plain ratio, where running text uses `--yeti-leading-md`, which adds a constant to one em. The constant is what keeps text tight as it grows; below body size it works the other way and loosens instead, so a code block set at `0.9em` on the body formula comes out near 1.66 and reads airy. A ratio keeps it even.
 
 `pre code` un-does the inline treatment — no padding, no radius, transparent, and the inherited size — so a `code` inside a `pre` does not draw a second box inside the first.
 
@@ -386,11 +386,13 @@ One base rule is a convention rather than an element. The first link in the body
 
 There is no live sample here, and there cannot be: the rule is `body > a[href^="#"]:first-child`, and a link in the middle of a page is by definition not the first child of the body. The [visibility guide](visibility.md#the-skip-link) owns the subject, with the markup, the Foundation 6 name for it, and the eight other ways to hide something beside it.
 
+**Tokens:** `--yeti-space-sm`, `--yeti-space-md`, `--yeti-radius-sm`, `--yeti-color-surface-raised`, `--yeti-color-text`, `--yeti-color-focus` (the ring).
+
 ## What the base leaves alone
 
 Every claim below was checked against the CSS rather than remembered.
 
-**Lists keep their markers.** Nothing in the base sets `list-style-type`, and the only list that loses its bullets is one the author marked `role="list"`. What the base does add to a prose list is an indent of `--yeti-space-lg` and `--yeti-list-gap` between items — that is all.
+**Lists keep their markers.** No rule in the base touches the markers on a prose list, and the only list that loses its bullets is one the author marked `role="list"`. What the base does add to a prose list is an indent of `--yeti-space-lg` and `--yeti-list-gap` between items — that is all.
 
 **A bare `button` is not faceless, but it has no opinions.** The base gives it the same hairline border, small radius, raised fill and `xs`/`sm` padding it gives a text input, plus `cursor: default`: tidy, undesigned, obviously a control. What it does not have is a hue, a loudness, a size step, a minimum target height, or `cursor: pointer`. Those arrive with the [button](../button.md) class, and until then a form still works and still looks deliberate.
 
@@ -400,6 +402,6 @@ Every claim below was checked against the CSS rather than remembered.
 
 **No font is loaded and no colour is guessed.** `--yeti-font-sans` is `system-ui, sans-serif` and `--yeti-font-mono` is `ui-monospace, monospace`; there is no `@font-face` anywhere in Yeti. There is no `:visited` style, no `text-transform`, no letter spacing, and no colour on a heading beyond the inherited text colour.
 
-**No element sets its own outer margin.** Every margin the base adds is between two siblings inside a flow container, plus the `dd` indent and the space above a definition term. Take the surrounding container away and every element in the base collapses back to zero.
+**No element sets its own outer margin.** Every margin the base adds is between two siblings inside a flow container, plus the `dd` indent and the space above a definition term or a wrapped pair. Take the surrounding container away and every element in the base collapses back to zero.
 
 **And nothing in the base is a class.** Element selectors, attribute selectors and pseudo-classes only. If you find a base rule you disagree with, you can outrank it with one unlayered declaration of your own, because everything here lives in `yeti.reset` and `yeti.base`, the two lowest sublayers, and plain unlayered CSS beats all of them.
