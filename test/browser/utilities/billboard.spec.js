@@ -2,12 +2,12 @@ import { test, expect } from 'playwright/test';
 import { px, token, axe, painted } from '../lib/layout.js';
 
 const open = async (page) => {
-	const response = await page.goto('/test/browser/fixtures/utilities/fit.html');
+	const response = await page.goto('/test/browser/fixtures/utilities/billboard.html');
 	expect(response.status()).toBe(200);
 	await painted(page);
 };
 
-test.describe('fit', () => {
+test.describe('billboard', () => {
 	test('the same line is set larger in a wider container', async ({ page }) => {
 		await open(page);
 		const [narrow, wide] = await Promise.all([px(page, '#narrow-title', 'font-size'), px(page, '#wide-title', 'font-size')]);
@@ -47,8 +47,8 @@ test.describe('fit', () => {
 		// so the fallback alone would sit at the ceiling and prove nothing the
 		// clamp test above does not already prove. Shrinking the viewport
 		// below that width moves cqi onto the ramp, so a smaller reading here
-		// shows the bare line is tracking the window rather than sitting on a
-		// fixed size all along.
+		// shows the bare billboard is tracking the window rather than sitting
+		// on a fixed size all along.
 		const wide = await px(page, '#bare-title', 'font-size');
 		await page.setViewportSize({ width: 360, height: 800 });
 		const narrow = await px(page, '#bare-title', 'font-size');

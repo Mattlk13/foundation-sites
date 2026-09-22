@@ -706,12 +706,12 @@ Attributes:
 
 The opening of a landing page: a headline and a call to action on one side, a picture on the other, filling the first screen. Below the threshold the two become rows and the band grows to fit. Put the picture first or last as you want it read; `data-side` moves it without changing the source. The copy must not have an img, video, or picture as a direct child (it would be taken for a second figure).
 
-A headline that should grow with the band can carry the [fit](../fit.md) utility. Make the copy a `container` first, so the line is sized by the column it is in and not by the whole band:
+A headline that should grow with the band can carry the [billboard](billboard.md) utility. Make the copy a `container` first, so the line is sized by the column it is in and not by the whole band:
 
 ```html
 <header class="hero">
 	<div class="container">
-		<h1 class="fit" data-fit="xl-display">Build interfaces that read their own container</h1>
+		<h1 class="billboard" data-fit="xl-display">Build interfaces that read their own container</h1>
 		<p>Fifteen layouts, one attribute vocabulary, no breakpoints.</p>
 		<a href="#">Get started</a>
 	</div>
@@ -2248,6 +2248,55 @@ Tokens:
 Accessibility contract:
 Motion is not an announcement. A change worth pointing at is worth saying, so put the element in a live region, or give it role="status", and the gesture becomes the visual half of something a screen reader already hears. It plays once and never repeats, so nothing here keeps moving under a reader who cannot dismiss it, and under reduced motion the duration collapses and the element simply sits still.
 
+## billboard (utility, class="billboard")
+
+Sizes display text to the container it is in, clamped between two steps of the type scale, so a headline fills the board it is on.
+
+Attributes:
+- data-fit: xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | xs-display | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | sm-display | md-lg | md-xl | md-2xl | md-3xl (default) | md-display | lg-xl | lg-2xl | lg-3xl | lg-display | xl-2xl | xl-3xl | xl-display | 2xl-3xl | 2xl-display | 3xl-display — The two ends of the clamp, as a pair of type steps: the smallest the line may set and the largest.
+
+### When to use it
+
+Display text: a hero's headline, a figure's number, a pull quote, the title on a card that is sometimes a column and sometimes a page. A billboard is sized to fill the board it is on and to be read from wherever the reader is standing, and the default pair says so — it runs from `md` to `3xl`, the top of the everyday scale.
+
+Not body copy. Prose has a measure and a comfortable size, and neither of them is a percentage of a column.
+
+### How it works
+
+`font-size` reads `cqi`, one percent of the container's inline size, so the line is sized by the box it is in rather than by the window. The same heading is one size in a card and another across a page, on the same page, which no viewport unit can say. It shrinks as readily as it grows: a billboard in a narrow column comes down to the bottom of its pair, which with the default is body size, not nothing.
+
+`data-fit` is a pair of steps from the type scale, `<min>-<max>`, and the pair is the two ends of a clamp: the line never sets smaller than the first step or larger than the second, whatever the container does. The attribute keeps the name the value has always had — it is the range the text fits within, the way `data-gap` is the gap — while the class names the thing. Any smaller of the eight steps can pair with any larger one, which makes twenty-eight pairs, and `md-3xl` is what you get when the attribute is absent.
+
+Between the ends the size is a proportion of the container, and the proportion is not a number in the stylesheet. It is the pair's own maximum divided by `--yeti-fit-width`, the container width at which a fitted line reaches its ceiling, `32rem` by default. So a pair that ends higher grows faster, every pair arrives at its ceiling in the same box, and a theme moves all twenty-eight by moving one token. With the default pair it works out between six and eleven percent of the container, depending where the fluid scale itself is standing.
+
+```html
+<div class="container">
+	<h1 class="billboard" data-fit="lg-display">Build interfaces that read their own container</h1>
+</div>
+```
+
+The container is the nearest ancestor with `container-type: inline-size`. That is what the [container](container.md) layout is for; `grid`, `timeline`, `nav`, `pagination` and `demo` are already size containers, as is a `card` with a leading figure and a `breakout` with a note; anything else needs a `container` above it, or the line measures the viewport. It has to be an ancestor: an element cannot query itself, so putting `billboard` and `container` on the same element measures the box outside it. With no container anywhere above, `cqi` falls back to the small viewport, so a billboard on a bare page grows with the window instead — a lesser effect, not a broken one.
+
+### Accessibility
+
+The clamp is the accessibility story. A size that is only `cqi` has no floor and no ceiling: it shrinks past legibility in a narrow column and runs off the top of a wide screen, and a reader who zooms in gets neither end back. The floor and the ceiling here are steps of the type scale, set in `rem`, so a larger default font size raises the floor and a billboard can never fall below a legible step; the middle of the ramp, between the two ends, follows the container instead.
+
+Nothing here changes what an element is. A billboard `h1` is an `h1`; the class sizes it and says nothing about its rank.
+
+Tokens:
+- --yeti-fit-width — The container width at which a fitted line reaches the top of its pair; below it the size is in proportion.
+- --yeti-text-xs — The xs end of a pair.
+- --yeti-text-sm — The sm end of a pair.
+- --yeti-text-md — The md end of a pair, and the floor when no pair is given.
+- --yeti-text-lg — The lg end of a pair.
+- --yeti-text-xl — The xl end of a pair.
+- --yeti-text-2xl — The 2xl end of a pair.
+- --yeti-text-3xl — The 3xl end of a pair, and the ceiling when no pair is given.
+- --yeti-text-display — The display end of a pair, the largest step there is.
+
+Accessibility contract:
+The clamp is the accessibility story. A size that is only a container unit has no floor and no ceiling: it shrinks past legibility in a narrow column and runs off the top of a wide screen, and a reader who zooms gets neither end back. The floor and the ceiling here are steps of the type scale, set in rem, so a larger default font size raises the floor and a fitted line can never fall below a legible step; the middle of the ramp, between the two ends, follows the container instead. Use it on a line, not on prose: body copy has a comfortable size that is not a percentage of a column.
+
 ## enter (utility, class="enter")
 
 Plays one arrival, on load or as the element scrolls into view, either for the element itself or for each of its children in turn.
@@ -2297,53 +2346,6 @@ Tokens:
 
 Accessibility contract:
 Purely visual, and safe by default: the element is only ever hidden by the animation's own backwards fill, so an element whose animation never runs is visible rather than stranded, and nothing here changes reading order or focus order. Under reduced motion the duration and the stagger step both collapse, so everything is simply present at once; the scroll-driven form is switched off entirely for the same reader, because a scroll timeline paces itself and would ignore a collapsed duration.
-
-## fit (utility, class="fit")
-
-Sizes one line of type to the container it is in, clamped between two steps of the type scale.
-
-Attributes:
-- data-fit: xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | xs-display | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | sm-display | md-lg | md-xl | md-2xl | md-3xl (default) | md-display | lg-xl | lg-2xl | lg-3xl | lg-display | xl-2xl | xl-3xl | xl-display | 2xl-3xl | 2xl-display | 3xl-display — The two ends of the clamp, as a pair of type steps: the smallest the line may set and the largest.
-
-### When to use it
-
-One line that should grow with the box around it: a hero's headline, a figure's number, a pull quote, the title on a card that is sometimes a column and sometimes a page. Not body copy — prose has a measure and a comfortable size, and neither of them is a percentage of a column.
-
-### How it works
-
-`font-size` reads `cqi`, one percent of the container's inline size, so the line is sized by the box it is in rather than by the window. The same heading is one size in a card and another across a page, on the same page, which no viewport unit can say.
-
-`data-fit` is a pair of steps from the type scale, `<min>-<max>`, and the pair is the two ends of a clamp: the line never sets smaller than the first step or larger than the second, whatever the container does. Any smaller of the eight steps can pair with any larger one, which makes twenty-eight pairs, and `md-3xl` is what you get when the attribute is absent.
-
-Between the ends the size is a proportion of the container, and the proportion is not a number in the stylesheet. It is the pair's own maximum divided by `--yeti-fit-width`, the container width at which a fitted line reaches its ceiling, `32rem` by default. So a pair that ends higher grows faster, every pair arrives at its ceiling in the same box, and a theme moves all twenty-eight by moving one token. With the default pair it works out between six and eleven percent of the container, depending where the fluid scale itself is standing.
-
-```html
-<div class="container">
-	<h1 class="fit" data-fit="lg-display">Build interfaces that read their own container</h1>
-</div>
-```
-
-The container is the nearest ancestor with `container-type: inline-size`. That is what the [container](container.md) layout is for; `grid`, `timeline`, `nav`, `pagination` and `demo` are already size containers, as is a `card` with a leading figure and a `breakout` with a note; anything else needs a `container` above it, or the line measures the viewport. It has to be an ancestor: an element cannot query itself, so putting `fit` and `container` on the same element measures the box outside it. With no container anywhere above, `cqi` falls back to the small viewport, so a fitted line on a bare page grows with the window instead — a lesser effect, not a broken one.
-
-### Accessibility
-
-The clamp is the accessibility story. A size that is only `cqi` has no floor and no ceiling: it shrinks past legibility in a narrow column and runs off the top of a wide screen, and a reader who zooms in gets neither end back. The floor and the ceiling here are steps of the type scale, set in `rem`, so a larger default font size raises the floor and a fitted line can never fall below a legible step; the middle of the ramp, between the two ends, follows the container instead.
-
-Nothing here changes what an element is. A fitted `h1` is an `h1`; the class sizes it and says nothing about its rank.
-
-Tokens:
-- --yeti-fit-width — The container width at which a fitted line reaches the top of its pair; below it the size is in proportion.
-- --yeti-text-xs — The xs end of a pair.
-- --yeti-text-sm — The sm end of a pair.
-- --yeti-text-md — The md end of a pair, and the floor when no pair is given.
-- --yeti-text-lg — The lg end of a pair.
-- --yeti-text-xl — The xl end of a pair.
-- --yeti-text-2xl — The 2xl end of a pair.
-- --yeti-text-3xl — The 3xl end of a pair, and the ceiling when no pair is given.
-- --yeti-text-display — The display end of a pair, the largest step there is.
-
-Accessibility contract:
-The clamp is the accessibility story. A size that is only a container unit has no floor and no ceiling: it shrinks past legibility in a narrow column and runs off the top of a wide screen, and a reader who zooms gets neither end back. The floor and the ceiling here are steps of the type scale, set in rem, so a larger default font size raises the floor and a fitted line can never fall below a legible step; the middle of the ramp, between the two ends, follows the container instead. Use it on a line, not on prose: body copy has a comfortable size that is not a percentage of a column.
 
 ## lede (utility, class="lede")
 
@@ -2645,4 +2647,4 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-attention-duration (attention): 600ms — How long the one pulse or shake takes. Collapses to 0.01ms under prefers-reduced-motion.
 - --yeti-attention-distance (attention): 0.35rem — How far a shake throws the element to each side.
 - --yeti-attention-scale (attention): 1.06 — How large a pulse swells the element at its peak.
-- --yeti-fit-width (fit): var(--yeti-width-md) — The container width at which a line carrying fit reaches the top of its pair; below it the size is in proportion, above it the clamp holds.
+- --yeti-fit-width (fit): var(--yeti-width-md) — The container width at which a line carrying billboard reaches the top of its pair; below it the size is in proportion, above it the clamp holds.

@@ -141,11 +141,14 @@
 		--yeti-attention-distance: 0.35rem;
 		--yeti-attention-scale: 1.06;
 
-		/* Fit: the container width at which a fitted line reaches the top of
-		   its pair. A divisor, not a breakpoint. The growth rate of the line
-		   is the pair's own maximum over this width, so a pair that ends
+		/* Billboard: the container width at which a billboard reaches the top
+		   of its pair. A divisor, not a breakpoint. The growth rate of the
+		   line is the pair's own maximum over this width, so a pair that ends
 		   higher grows faster and every pair arrives at its ceiling in the
-		   same box; a theme that moves this moves all twenty-eight together. */
+		   same box; a theme that moves this moves all twenty-eight together.
+		   The token keeps the name the attribute has, --yeti-fit-width, both
+		   because public token names are frozen and because it is the fit
+		   width it describes rather than the class that reads it. */
 		--yeti-fit-width: var(--yeti-width-md);
 	}
 

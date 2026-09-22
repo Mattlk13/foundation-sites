@@ -1,10 +1,10 @@
 {
   "$schema": "../../../schema/manifest.schema.json",
-  "name": "fit",
+  "name": "billboard",
   "kind": "utility",
   "group": "Content",
-  "description": "Sizes one line of type to the container it is in, clamped between two steps of the type scale.",
-  "class": "fit",
+  "description": "Sizes display text to the container it is in, clamped between two steps of the type scale, so a headline fills the board it is on.",
+  "class": "billboard",
   "attributes": [
     { "name": "data-fit", "type": "enum", "vocabulary": "fit", "default": "md-3xl", "description": "The two ends of the clamp, as a pair of type steps: the smallest the line may set and the largest." }
   ],

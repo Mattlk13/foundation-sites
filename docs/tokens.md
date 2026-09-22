@@ -554,7 +554,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 
 | Token | Default | Description |
 | --- | --- | --- |
-| `--yeti-fit-width` | `var(--yeti-width-md)` | The container width at which a line carrying fit reaches the top of its pair; below it the size is in proportion, above it the clamp holds. |
+| `--yeti-fit-width` | `var(--yeti-width-md)` | The container width at which a line carrying billboard reaches the top of its pair; below it the size is in proportion, above it the clamp holds. |
 
 </div>
 
