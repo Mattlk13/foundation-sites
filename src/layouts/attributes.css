@@ -181,3 +181,48 @@
 		inset-block-start: var(--yeti-sticky-offset);
 	}
 }
+
+/* data-show and data-hide: the two names in Yeti that answer "is there room
+   for this?" by removing the element rather than by changing its shape. A
+   component that can change shape should; these are for the case that cannot,
+   where a thing simply has no place in a narrow column and no substitute.
+   Markers rather than a layout's own attributes, so anything inside any size
+   container can carry one, and in the utilities layer for the same reason
+   data-sticky is: display: none has to outrank whatever display the element
+   already had from its own component, and yeti.utilities is the last layer.
+   The direction is data-threshold's, so the whole framework reads one way: a
+   width names the point at or above which the wide answer applies.
+   data-show="md" is shown from md up and gone below it; data-hide="md" is the
+   same sentence read the other way. There is deliberately no band form: a band
+   is two elements, or a nested container, and it was the rarest thing in the
+   classes these replace.
+   The widths are literal rem with the token named above each pair, because a
+   container condition cannot read a custom property; grid.css and card.css
+   write their thresholds the same way.
+   A container query with no size container above it never matches, so an
+   element carrying either marker outside one simply stays visible. That is
+   why these are declared on container: the page that explains the marker is
+   the page that explains the box it needs. */
+@layer yeti.utilities {
+	/* --yeti-width-2xs (12rem) */
+	@container (inline-size < 12rem) { [data-show="2xs"] { display: none; } }
+	@container (inline-size >= 12rem) { [data-hide="2xs"] { display: none; } }
+	/* --yeti-width-xs (16rem) */
+	@container (inline-size < 16rem) { [data-show="xs"] { display: none; } }
+	@container (inline-size >= 16rem) { [data-hide="xs"] { display: none; } }
+	/* --yeti-width-sm (24rem) */
+	@container (inline-size < 24rem) { [data-show="sm"] { display: none; } }
+	@container (inline-size >= 24rem) { [data-hide="sm"] { display: none; } }
+	/* --yeti-width-md (32rem) */
+	@container (inline-size < 32rem) { [data-show="md"] { display: none; } }
+	@container (inline-size >= 32rem) { [data-hide="md"] { display: none; } }
+	/* --yeti-width-lg (48rem) */
+	@container (inline-size < 48rem) { [data-show="lg"] { display: none; } }
+	@container (inline-size >= 48rem) { [data-hide="lg"] { display: none; } }
+	/* --yeti-width-xl (64rem) */
+	@container (inline-size < 64rem) { [data-show="xl"] { display: none; } }
+	@container (inline-size >= 64rem) { [data-hide="xl"] { display: none; } }
+	/* --yeti-width-2xl (80rem) */
+	@container (inline-size < 80rem) { [data-show="2xl"] { display: none; } }
+	@container (inline-size >= 80rem) { [data-hide="2xl"] { display: none; } }
+}

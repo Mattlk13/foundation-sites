@@ -59,6 +59,10 @@ On children:
 
 Makes its box the thing a container query measures, so what is inside can respond to its width instead of the viewport's.
 
+On children:
+- data-show on *: 2xs | xs | sm | md | lg | xl | 2xl — Show this element only while the nearest size container is this wide or wider. Below that width it is not rendered at all, and it is not in the accessibility tree either.
+- data-hide on *: 2xs | xs | sm | md | lg | xl | 2xl — Hide this element once the nearest size container is this wide or wider. Below that width it is rendered as usual.
+
 ## cover (layout, class="cover")
 
 Fills at least the viewport's height and centers one child vertically, with optional content pinned above and below it.

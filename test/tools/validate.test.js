@@ -265,6 +265,8 @@ const MAPPINGS = [
 	['data-span', 'span', '--_yeti-span', (v) => v],
 	['data-rows', 'rows', '--_yeti-rows', (v) => v],
 	['data-slides', 'slides', '--_yeti-slides', (v) => v],
+	['data-show', 'width', '--_yeti-show', (v) => v],
+	['data-hide', 'width', '--_yeti-hide', (v) => v],
 ];
 
 const layoutTree = (extra = {}) => validTree({
@@ -766,14 +768,14 @@ test('every anchor-name needs an anchor-scope in the same file', () => {
 
 test('container thresholds must be a width token default, a whole multiple of one, or a calc( of one', () => {
 	const css = (query) => `@layer yeti.components {\n\t.tag { container-type: inline-size; }\n\t@container (inline-size ${query}) {\n\t\t.tag > * { display: none; }\n\t}\n}\n`;
-	for (const ok of ['< 16rem', '>= 24rem', '< 32rem', '>= 48rem', '< 64rem', '>= 80rem', '>= 96rem', '>= 240rem', '< calc(24rem + 2 * 1rem)']) {
+	for (const ok of ['< 12rem', '< 16rem', '>= 24rem', '< 32rem', '>= 48rem', '< 64rem', '>= 80rem', '>= 96rem', '>= 240rem', '< calc(24rem + 2 * 1rem)']) {
 		assert.deepEqual(run(componentTree({ 'src/components/tag/tag.css': css(ok) })).lines, [], ok);
 	}
 	assert.deepEqual(run(componentTree({ 'src/components/tag/tag.css': css('< 22rem') })).lines, [
-		'src/components/tag/tag.css:3: @container threshold "22rem" is not a width token\'s default (16, 24, 32, 48, 64, 80rem), a whole multiple of one, or a calc( of one',
+		'src/components/tag/tag.css:3: @container threshold "22rem" is not a width token\'s default (12, 16, 24, 32, 48, 64, 80rem), a whole multiple of one, or a calc( of one',
 	]);
 	assert.deepEqual(run(componentTree({ 'src/components/tag/tag.css': css('> 400px') })).lines, [
-		'src/components/tag/tag.css:3: @container threshold "400px" is not a width token\'s default (16, 24, 32, 48, 64, 80rem), a whole multiple of one, or a calc( of one',
+		'src/components/tag/tag.css:3: @container threshold "400px" is not a width token\'s default (12, 16, 24, 32, 48, 64, 80rem), a whole multiple of one, or a calc( of one',
 	]);
 });
 

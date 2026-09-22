@@ -10,6 +10,10 @@
   "children": [
     { "selector": "> *", "min": 1, "max": null, "description": "Anything. The container itself arranges nothing." }
   ],
+  "markers": [
+    { "name": "data-show", "type": "enum", "vocabulary": "width", "on": "*", "description": "Show this element only while the nearest size container is this wide or wider. Below that width it is not rendered at all, and it is not in the accessibility tree either." },
+    { "name": "data-hide", "type": "enum", "vocabulary": "width", "on": "*", "description": "Hide this element once the nearest size container is this wide or wider. Below that width it is rendered as usual." }
+  ],
   "tokens": [],
   "a11y": { "requiredAttributes": [], "keyboard": [], "notes": "Purely structural." },
   "js": null,

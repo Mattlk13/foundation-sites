@@ -78,6 +78,7 @@ Every layout is configured with a small set of `data-*` attributes, drawn from a
 | `data-fixed` | boolean | overlay |
 | `data-fold` | boolean | grid |
 | `data-gap` | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | box, breakout, center, cluster, columns, cover, grid, hero, icon, masonry, media, overlay, scroller, shell, sidebar, stack, timeline |
+| `data-hide` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | container (*) |
 | `data-intrinsic` | boolean | center |
 | `data-justify` | `start`, `center`, `end`, `between`, `around`, `evenly` | cluster, columns |
 | `data-justify-self` | `start`, `center`, `end`, `stretch` | layer (> *) |
@@ -87,6 +88,7 @@ Every layout is configured with a small set of `data-*` attributes, drawn from a
 | `data-over` | boolean | overlay (> *) |
 | `data-ratio` | `1/1`, `4/3`, `3/2`, `16/9`, `21/9` | frame, hero, media |
 | `data-rows` | `2`, `3`, `4`, `5`, `6` | grid |
+| `data-show` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | container (*) |
 | `data-side` | `start`, `end` | hero, media, sidebar |
 | `data-snap` | boolean | scroller |
 | `data-span` | `1`, `2`, `3`, `4`, `5`, `6` | columns (> *) |
@@ -109,6 +111,8 @@ Gap alone also takes a fluid pair. `data-gap="sm-lg"` does not jump between the 
 `data-sticky` is the odd one in the table. Every other name there sets a private property for a layout to read; this one sets two properties on the child itself, `position: sticky` and the offset. A third is needed in a row and only in a row: an item stretched to the full height of its row has nowhere left to move and never sticks, so `sidebar` and the `shell`'s body row take their sticky children out of that stretch in their own stylesheets. A `stack` stretches sideways instead, which costs a sticky child nothing, so a sticky child of a stack keeps the full width of the column.
 
 Type can answer a container too. The [billboard](../billboard.md) utility's `data-fit` names a pair of type steps and clamps a font size between them, reading `cqi` in between, so a headline is sized by the column it is in rather than by the window. It needs a size container above it, which is what `container` is for.
+
+Two more names in the table belong to a container rather than to a layout. `data-show` and `data-hide` take a width from the same scale and mean the same direction as `data-threshold`: `data-show="md"` shows the element from `md` up, `data-hide="md"` removes it from `md` up. They measure the nearest size container, so the same markup decides differently in a sidebar and across a page, and outside a size container they do nothing at all. They are the last tool to reach for, not the first — a component that can change shape should — and the [visibility guide](visibility.md) says when the trade is worth it.
 
 ## The seventeen
 
