@@ -68,7 +68,7 @@ test.describe('grid', () => {
 		expect(perRow(await rects(page, '#fold6 > *'))).toBe(1);
 	});
 
-	test('data-ranks lines up the parts of neighbours', async ({ page }) => {
+	test('data-rows lines up the parts of neighbours', async ({ page }) => {
 		await open(page, 'grid', 1000);
 		const heads = await rects(page, '#ranked h2');
 		const paras = await rects(page, '#ranked p');

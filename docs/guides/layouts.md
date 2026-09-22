@@ -76,7 +76,7 @@ Every layout is configured with a small set of `data-*` attributes, drawn from a
 | `data-align-self` | `start`, `center`, `end`, `stretch`, `baseline` | a child of layer — places that child vertically |
 | `data-justify-self` | `start`, `center`, `end`, `stretch` | a child of layer — places that child horizontally |
 | `data-span` | `1`, `2`, `3`, `4`, `5`, `6` | a child of columns — that child's share of the row |
-| `data-ranks` | `2`, `3`, `4`, `5`, `6` | grid — how many parts each child has; lines up neighbours' parts across the row |
+| `data-rows` | `2`, `3`, `4`, `5`, `6` | grid — how many rows each child spans, one per part; lines up neighbours' parts across the row |
 | `data-fold` | boolean | grid — the column count halves as the grid narrows, instead of stepping down one at a time |
 | `data-note` | boolean | a child of breakout — a margin note beside the paragraph it follows |
 | `data-alternate` | boolean | timeline — entries take alternate sides of a centred rail once it is wide enough |

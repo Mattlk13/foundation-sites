@@ -143,12 +143,12 @@
 	[data-span="5"] { --_yeti-span: 5; }
 	[data-span="6"] { --_yeti-span: 6; }
 
-	/* data-ranks: how many parts each child of a ranked grid has */
-	[data-ranks="2"] { --_yeti-ranks: 2; }
-	[data-ranks="3"] { --_yeti-ranks: 3; }
-	[data-ranks="4"] { --_yeti-ranks: 4; }
-	[data-ranks="5"] { --_yeti-ranks: 5; }
-	[data-ranks="6"] { --_yeti-ranks: 6; }
+	/* data-rows: how many rows each child of a grid spans, one per part */
+	[data-rows="2"] { --_yeti-rows: 2; }
+	[data-rows="3"] { --_yeti-rows: 3; }
+	[data-rows="4"] { --_yeti-rows: 4; }
+	[data-rows="5"] { --_yeti-rows: 5; }
+	[data-rows="6"] { --_yeti-rows: 6; }
 
 	/* data-slides: how many slides of a carousel are visible at once */
 	[data-slides="1"] { --_yeti-slides: 1; }

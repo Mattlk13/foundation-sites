@@ -562,7 +562,7 @@ const MAPPED = {
 	'data-width': 'width', 'data-height': 'height', 'data-min': 'width-or-none', 'data-max': 'width', 'data-ratio': 'ratio', 'data-columns': 'columns',
 	'data-align-self': 'align', 'data-justify-self': 'self',
 	'data-variant': 'variant', 'data-size': 'size-control',
-	'data-span': 'span', 'data-ranks': 'ranks',
+	'data-span': 'span', 'data-rows': 'rows',
 	'data-slides': 'slides',
 };
 

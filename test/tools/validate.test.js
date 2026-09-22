@@ -263,7 +263,7 @@ const MAPPINGS = [
 	['data-variant', 'variant', '--_yeti-variant', () => '0'],
 	['data-size', 'size-control', '--_yeti-size-text', () => '0'],
 	['data-span', 'span', '--_yeti-span', (v) => v],
-	['data-ranks', 'ranks', '--_yeti-ranks', (v) => v],
+	['data-rows', 'rows', '--_yeti-rows', (v) => v],
 	['data-slides', 'slides', '--_yeti-slides', (v) => v],
 ];
 

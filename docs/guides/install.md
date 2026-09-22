@@ -61,7 +61,7 @@ VS Code, Cursor and Windsurf read a custom-data file. One setting, in `.vscode/s
 
 PhpStorm and WebStorm read web-types and find the file through `package.json` on their own. Install the package and the completions are there.
 
-One limit is worth knowing. Neither format can tie a completion to a class, and a Yeti component's identity is its class, so every attribute is offered on every element: typing inside a `p` will offer `data-ranks`. Each description opens with the components that accept the attribute, so the list explains itself, and a wrong value is still a validator error rather than a silent nothing.
+One limit is worth knowing. Neither format can tie a completion to a class, and a Yeti component's identity is its class, so every attribute is offered on every element: typing inside a `p` will offer `data-rows`. Each description opens with the components that accept the attribute, so the list explains itself, and a wrong value is still a validator error rather than a silent nothing.
 
 For a TypeScript project the package ships types for the two JSON files and the vocabularies they are built from:
 
