@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
-import { renderPage, generateDocs, isGenerated, GENERATED_MARK, renderTokensPage, escapeAttribute, renderDemo, renderAttributeTable, replaceMarked, ATTRIBUTES_START, ATTRIBUTES_END, GUIDE_TABLES } from '../../bin/gen-docs.js';
+import { renderPage, generateDocs, isGenerated, GENERATED_MARK, renderTokensPage, escapeAttribute, renderDemo, renderAttributeTable, replaceMarked, ATTRIBUTES_START, ATTRIBUTES_END, GUIDE_TABLES, renderGuide, stampGuide, frontMatterTitle } from '../../bin/gen-docs.js';
 import { makeTree, validManifest, validTree, TOKENS_SCHEMA_PATH, REPO_ROOT } from './helpers.js';
 import { KIND_DIRS } from '../../bin/lib/manifest.js';
 
@@ -389,31 +389,86 @@ test('replaceMarked returns null when the markers are missing or reversed', () =
 	assert.equal(replaceMarked(`${ATTRIBUTES_END}\n${ATTRIBUTES_START}\n`, 'x'), null);
 });
 
-test('generateDocs writes the attribute table into a guide that carries the markers', () => {
-	const root = makeTree(validTree({
-		'docs/guides/layouts.md': `# Layouts\n\n${ATTRIBUTES_START}\n\nstale\n\n${ATTRIBUTES_END}\n`,
-	}));
-	const r = generateDocs({ root });
-	assert.deepEqual(r.errors, []);
-	const guide = fs.readFileSync(path.join(root, 'docs/guides/layouts.md'), 'utf8');
-	assert.ok(!guide.includes('stale'));
-	assert.ok(guide.includes('| `data-gap` | `s`, `m`, `l` | rail |'));
-	assert.ok(guide.startsWith('# Layouts\n'));
-	assert.ok(r.written.some((f) => f.endsWith(path.join('guides', 'layouts.md'))));
+/** A guide source: front matter for the stamp to follow, a heading, then a body. */
+const guideSource = (title, body) => `---\nraw: true\ntitle: "${title}"\nnav_group: "Guides"\nnav_order: 1\n---\n\n# ${title}\n\n${body}`;
+/** A rendered guide with its stamp line taken back off, for comparing against the source. */
+const unstamp = (page) => page.replace(/^(---\n[\s\S]*?\n---\n)<!--[^\n]*-->\n/, '$1');
+
+test('stampGuide puts the generated mark directly after the front matter', () => {
+	const stamped = stampGuide('---\ntitle: "X"\n---\n\n# X\n', 'src/guides/x.md');
+	assert.equal(stamped, `---\ntitle: "X"\n---\n${GENERATED_MARK} from src/guides/x.md. Do not edit. -->\n\n# X\n`);
+	assert.equal(isGenerated(stamped), true);
+	assert.equal(stampGuide('# No front matter\n', 'src/guides/x.md'), null);
 });
 
-test('generateDocs reports a guide whose markers are missing', () => {
-	const root = makeTree(validTree({ 'docs/guides/layouts.md': '# Layouts\n\nNo markers here.\n' }));
+test('frontMatterTitle reads the title a demo falls back to', () => {
+	assert.equal(frontMatterTitle('---\nraw: true\ntitle: "Visibility"\nnav_order: 6\n---\n\n# V\n'), 'Visibility');
+	assert.equal(frontMatterTitle('# No front matter\n'), '');
+});
+
+test('generateDocs renders every guide source into docs/guides and stamps it', () => {
+	const root = makeTree(validTree({ 'src/guides/theming.md': guideSource('Theming', 'Prose only.\n') }));
+	const r = generateDocs({ root });
+	assert.deepEqual(r.errors, []);
+	const page = fs.readFileSync(path.join(root, 'docs/guides/theming.md'), 'utf8');
+	assert.ok(page.includes(`${GENERATED_MARK} from src/guides/theming.md. Do not edit. -->`));
+	assert.equal(isGenerated(page), true);
+	assert.ok(r.written.some((f) => f.endsWith(path.join('guides', 'theming.md'))));
+});
+
+test('a rendered guide is its source with the stamp and nothing else', () => {
+	const source = guideSource('Theming', 'Prose, and a plain block.\n\n```html\n<div class="rail" data-gap="l"><p>x</p></div>\n```\n');
+	const root = makeTree(validTree({ 'src/guides/theming.md': source }));
+	generateDocs({ root });
+	assert.equal(unstamp(fs.readFileSync(path.join(root, 'docs/guides/theming.md'), 'utf8')), source);
+});
+
+test('generateDocs fills the attribute markers in the guide that declares them, and never writes the source', () => {
+	const root = makeTree(validTree({ 'src/guides/layouts.md': guideSource('Layouts', `${ATTRIBUTES_START}\n\nstale\n\n${ATTRIBUTES_END}\n`) }));
+	const r = generateDocs({ root });
+	assert.deepEqual(r.errors, []);
+	const page = fs.readFileSync(path.join(root, 'docs/guides/layouts.md'), 'utf8');
+	assert.ok(!page.includes('stale'));
+	assert.ok(page.includes('| `data-gap` | `s`, `m`, `l` | rail |'));
+	// The markers stay in the output, so a second run finds them again.
+	assert.ok(page.includes(ATTRIBUTES_START) && page.includes(ATTRIBUTES_END));
+	assert.ok(fs.readFileSync(path.join(root, 'src/guides/layouts.md'), 'utf8').includes('stale'));
+});
+
+test('generateDocs reports a guide source whose attribute markers are missing, and writes no page', () => {
+	const root = makeTree(validTree({ 'src/guides/layouts.md': guideSource('Layouts', 'No markers here.\n') }));
 	const r = generateDocs({ root });
 	assert.equal(r.errors.length, 1);
 	assert.match(r.errors[0].message, /yeti:attributes:start/);
+	assert.ok(r.errors[0].file.endsWith(path.join('src', 'guides', 'layouts.md')));
+	assert.ok(!fs.existsSync(path.join(root, 'docs/guides/layouts.md')));
 });
 
-test('generateDocs leaves a guide it was not told about alone', () => {
-	const root = makeTree(validTree({ 'docs/guides/theming.md': '# Theming\n' }));
+test('generateDocs refuses a guide source with no front matter to stamp', () => {
+	const root = makeTree(validTree({ 'src/guides/theming.md': '# Theming\n' }));
 	const r = generateDocs({ root });
+	assert.equal(r.errors.length, 1);
+	assert.match(r.errors[0].message, /front matter/);
+});
+
+test('generateDocs deletes a rendered guide whose source is gone and keeps a page it never wrote', () => {
+	const root = makeTree(validTree({
+		'src/guides/theming.md': guideSource('Theming', 'Prose.\n'),
+		'docs/guides/removed.md': `---\ntitle: "Removed"\n---\n${GENERATED_MARK} from src/guides/removed.md. Do not edit. -->\n`,
+		'docs/guides/hand-written.md': '# Somebody else\'s page\n',
+	}));
+	const r = generateDocs({ root });
+	assert.deepEqual(r.deleted.map((f) => path.relative(root, f)), ['docs/guides/removed.md']);
+	assert.ok(fs.existsSync(path.join(root, 'docs/guides/hand-written.md')));
+});
+
+test('generateDocs renders the guides into --out and leaves this repo\'s docs alone', () => {
+	const root = makeTree(validTree({ 'src/guides/theming.md': guideSource('Theming', 'Prose.\n') }));
+	const outDir = path.join(makeTree({}), 'site');
+	const r = generateDocs({ root, outDir });
 	assert.deepEqual(r.errors, []);
-	assert.equal(fs.readFileSync(path.join(root, 'docs/guides/theming.md'), 'utf8'), '# Theming\n');
+	assert.ok(fs.existsSync(path.join(outDir, 'guides/theming.md')));
+	assert.ok(!fs.existsSync(path.join(root, 'docs/guides/theming.md')));
 });
 
 test('every guide table names a kind the manifests actually use', () => {

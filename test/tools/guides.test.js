@@ -23,7 +23,7 @@ function yetiColumn(markdown) {
 }
 
 test('every Yeti class and attribute the migration table names exists in the manifest', () => {
-	const markdown = fs.readFileSync(path.join(REPO_ROOT, 'docs/guides/migrating.md'), 'utf8');
+	const markdown = fs.readFileSync(path.join(REPO_ROOT, 'src/guides/migrating.md'), 'utf8');
 	const names = yetiColumn(markdown);
 	assert.ok(names.length > 20, 'the table has rows');
 	const classes = new Set(Object.values(merged).map((c) => c.class));

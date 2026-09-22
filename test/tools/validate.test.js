@@ -93,11 +93,11 @@ test('extractHtmlBlocks returns each fenced html block with its starting line', 
 	]);
 });
 
-test('fenced html blocks in docs/guides are validated with the right line', () => {
+test('fenced html blocks in src/guides are validated with the right line', () => {
 	const r = run(validTree({
-		'docs/guides/layouts.md': '# Layouts\n\n```html\n<div class="rail" data-gap="huge"><p>x</p></div>\n```\n',
+		'src/guides/layouts.md': '# Layouts\n\n```html\n<div class="rail" data-gap="huge"><p>x</p></div>\n```\n',
 	}));
-	assert.deepEqual(r.lines, ['docs/guides/layouts.md:4: .rail <div>: data-gap="huge" is not one of s, m, l']);
+	assert.deepEqual(r.lines, ['src/guides/layouts.md:4: .rail <div>: data-gap="huge" is not one of s, m, l']);
 });
 
 test('findBareMargin flags margin on the bare identity selector only', () => {
