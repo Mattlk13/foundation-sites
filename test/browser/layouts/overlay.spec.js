@@ -30,6 +30,23 @@ test.describe('overlay', () => {
 		expect(center(overlay).y).toBeCloseTo(center(host).y, 0);
 	});
 
+	test('data-fill covers the box instead of centering in it', async ({ page }) => {
+		await open(page, 'overlay');
+		const [host, filled] = await Promise.all([rect(page, '#fill-host'), rect(page, '#filled')]);
+		// Every edge, not just the size: a box that merely matched the host's
+		// dimensions while sitting somewhere else would pass a size check.
+		expect(filled.x).toBeCloseTo(host.x, 0);
+		expect(filled.y).toBeCloseTo(host.y, 0);
+		expect(filled.width).toBeCloseTo(host.width, 0);
+		expect(filled.height).toBeCloseTo(host.height, 0);
+	});
+
+	test('without data-fill the held child is smaller than the box it covers', async ({ page }) => {
+		await open(page, 'overlay');
+		const [host, centred] = await Promise.all([rect(page, '#host'), rect(page, '#overlay')]);
+		expect(centred.height).toBeLessThan(host.height);
+	});
+
 	test('has no accessibility violations', async ({ page }) => {
 		await open(page, 'overlay');
 		expect(await axe(page)).toEqual([]);

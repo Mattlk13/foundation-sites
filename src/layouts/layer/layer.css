@@ -20,4 +20,16 @@
 	   without them it follows the layer's data-align. */
 	.layer > :not([data-align-self]) { --_yeti-align-self: auto; }
 	.layer > :not([data-justify-self]) { --_yeti-justify-self: auto; }
+
+	/* A caption over a picture needs a scrim to stay readable, and it is not
+	   the aside a caption under one is, so it drops the muted colour too. The
+	   card has said this since the start, for a figure.layer that is its first
+	   child; the same markup outside a card was left unreadable. Only a figure's
+	   caption, because that is the case: a layer is otherwise a stacking
+	   layout with no opinion about what is stacked in it. */
+	figure.layer > figcaption {
+		padding: var(--yeti-space-xs) var(--yeti-space-sm);
+		color: var(--yeti-color-text);
+		background-color: var(--yeti-color-scrim);
+	}
 }
