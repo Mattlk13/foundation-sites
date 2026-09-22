@@ -49,7 +49,9 @@
     ],
     "notes": "Give the tablist a name with aria-label or aria-labelledby. Every tab is a button whose aria-controls names its panel, and every panel names its tab back with aria-labelledby; that pairing is what the module reads. With tabs.js loaded one tab is selected, the rest take tabindex=\"-1\" for a roving focus, and the inactive panels are hidden. Without it nothing is hidden and every tab is focusable, which is plainer but never traps content."
   },
-  "js": { "module": "tabs.js", "optional": true },
+  "js": [{ "module": "tabs.js", "optional": true, "events": [
+    { "name": "yeti:select", "detail": "{ tab, panel }", "description": "Dispatched on the .tabs when a click or an arrow key selects a tab; never for the pass at load." }
+  ] }],
   "support": { "unguarded": ["logical properties"], "guarded": [] },
   "since": "7.0.0",
   "example": "example.html"

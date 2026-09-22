@@ -8,23 +8,79 @@ nav_order: 2
 
 # Components
 
-<p class="lede">Layouts arrange; components have a face. The first eight are the essentials every site needs — a button, a badge, a card, a form, a table, a seam — and the face is quiet on purpose: flat surfaces, one border width, no shadow unless you ask for one. Every visual value a component draws is a token, so a theme changes the look without touching a single class or selector in your markup.</p>
+<p class="lede">Layouts arrange; components have a face. The essentials every site needs — a button, a badge, a card, a form, a table, a seam — and the face is quiet on purpose: flat surfaces, one border width, no shadow unless you ask for one. Every visual value a component draws is a token, so a theme changes the look without touching a single class or selector in your markup.</p>
 
 ## Three attributes
 
 A component's shape comes from its markup and its manifest; its look comes from three `data-*` attributes, the same three names wherever they apply.
 
+`data-variant` picks a hue from the palette; the component reads that hue's ladder for its fill, its border, or its text. `data-emphasis` picks how much of the ladder shows: `high` is a solid fill, `medium` an outline or a tint, `low` the hue in text alone. `data-size` scales text and padding together, one step at a time, so nothing looks stretched between sizes. A component that does not carry an attribute uses its default, set the same way every other component sets its defaults: `.name:not([data-size])` and the like. Editors can complete every attribute and value from the package; the [installation guide](install.md) has the one setting.
+
+## Every attribute
+
+Those three are the ones that repeat. Here is the whole list, every attribute the components and the utilities declare, with the components that read each one. `print` is a utility with an attribute in the table below; `visually-hidden` is a utility with no attributes, so it never appears in it. `data-show` and `data-hide` are markers declared on the `container` layout, not utilities, and the layouts guide's table is where they live. The [visibility guide](visibility.md) puts all of them beside the browser's own six ways of hiding something, which are usually the right ones.
+
+<!-- yeti:attributes:start -->
+
+<div class="scroller" role="region" aria-label="Component attributes" tabindex="0" markdown="1">
+
 | Attribute | Values | Read by |
 | --- | --- | --- |
-| `data-variant` | `primary`, `secondary`, `success`, `warning`, `danger` (or `alert`, its Foundation 6 name), `neutral` | button, badge, card, field, alert, nav, pagination, progress, spinner, tabs |
-| `data-emphasis` | `high`, `medium`, `low` | button, badge |
-| `data-size` | `sm`, `md`, `lg` | button, badge, field, table, seam |
+| `data-actions` | boolean | nav (> *) |
+| `data-affix` | boolean | buttons |
+| `data-attention` | `pulse`, `shake` | attention |
+| `data-border` | boolean | table |
+| `data-brand` | boolean | nav (> *) |
+| `data-close` | boolean | alert (> button), nav (li) |
+| `data-dots` | boolean | carousel (> *) |
+| `data-edge` | `top`, `bottom`, `both` | seam |
+| `data-emphasis` | `high`, `medium`, `low` | alert, badge, button |
+| `data-enter` | `fade`, `rise`, `scale` | enter |
+| `data-error` | boolean | field (> *) |
+| `data-fit` | `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `xs-display`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `sm-display`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `md-display`, `lg-xl`, `lg-2xl`, `lg-3xl`, `lg-display`, `xl-2xl`, `xl-3xl`, `xl-display`, `2xl-3xl`, `2xl-display`, `3xl-display` | billboard |
+| `data-flip` | boolean | seam |
+| `data-gap` | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | buttons, carousel, nav, tabs |
+| `data-height` | `sm`, `md`, `lg`, `xl` | demo |
+| `data-hint` | boolean | field (> *) |
+| `data-hover` | boolean | table |
+| `data-inline` | boolean | field |
+| `data-justify` | `start`, `center`, `end`, `between`, `around`, `evenly` | pagination |
+| `data-max` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | dialog |
+| `data-numeric` | boolean | table (td, th) |
+| `data-orientation` | `horizontal`, `vertical` | tabs |
+| `data-panel` | `sheet`, `drawer`, `screen` | nav |
+| `data-placement` | `top`, `bottom`, `start`, `end` | tooltip |
+| `data-preview` | string | demo (> div) |
+| `data-print` | `only`, `none` | print |
+| `data-raised` | boolean | card |
+| `data-ratio` | `1/1`, `4/3`, `3/2`, `16/9`, `21/9` | card |
+| `data-resize` | `width`, `both` | demo |
+| `data-shape` | `slant`, `curve`, `wave` | seam |
+| `data-side` | `start`, `end` | dropdown |
+| `data-size` | `sm`, `md`, `lg` | badge, breadcrumbs, button, field, pagination, progress, seam, spinner, table, toc |
+| `data-slide` | boolean | carousel (> [data-track] > *) |
+| `data-slides` | `1`, `2`, `3`, `4` | carousel |
+| `data-stagger` | boolean | enter |
+| `data-sticky` | boolean | nav |
+| `data-stretch` | boolean | card (a) |
+| `data-striped` | boolean | table |
+| `data-stylesheet` | string | demo |
+| `data-threshold` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | card, nav, pagination |
+| `data-track` | boolean | carousel (> *) |
+| `data-trigger` | `click`, `hover` | dropdown |
+| `data-variant` | `primary`, `secondary`, `success`, `warning`, `alert`, `danger`, `neutral` | alert, badge, button, card, field, nav, pagination, progress, spinner, tabs, toc |
+| `data-view` | boolean | enter |
+| `data-width` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | demo |
 
-`data-variant` picks a hue from the palette; the component reads that hue's ladder for its fill, its border, or its text. `data-emphasis` picks how much of the ladder shows: `high` is a solid fill, `medium` an outline or a tint, `low` the hue in text alone. `data-size` scales text and padding together, one step at a time, so nothing looks stretched between sizes. A component that does not carry an attribute uses its default, set the same way every other component sets its defaults: `.name:not([data-size])` and the like. Editors can complete every attribute and value from the package; the [installation guide](install.md) has the one setting.
+</div>
+
+<!-- yeti:attributes:end -->
+
+A name in parentheses is the descendant that carries the attribute, not the component itself: `alert (> button)` means the close button inside an `alert`. This table is generated from the manifests by `npm run docs`; the prose around it is not.
 
 ## State is native
 
-None of the eight components invents a state attribute. Every state a person sees is one the browser or ARIA already knows, so it appears the moment the underlying element is in that state, with no script to set a class.
+No component invents a state attribute. Every state a person sees is one the browser or ARIA already knows, so it appears the moment the underlying element is in that state, with no script to set a class.
 
 | State | Where it comes from |
 | --- | --- |
@@ -118,7 +174,7 @@ A `nav` is one list of links in two modes, not two lists. Below `data-threshold`
 
 Where anchor positioning is missing, the sheet cannot anchor under the bar, so it starts at the top of the viewport and covers the bar instead; Escape and a click outside still close it either way.
 
-`breadcrumbs` is a trail of steps with a separator between them that is seen and not read, generated by CSS so nothing but the steps themselves reaches a screen reader. `pagination` is a row of page links that compacts to Previous, the current page, and Next below its own threshold, the same shrinking a `nav` does but on a row of pages instead of a row of links.
+`breadcrumbs` is a trail of steps with a separator between them that is seen and not read, generated by CSS so nothing but the steps themselves reaches a screen reader. `pagination` is a row of page links that compacts to Previous, the current page, and Next below its own threshold, the same shrinking a `nav` does but on a row of pages instead of a row of links. `toc` is the same idea turned inwards: a column of links to the headings of the page it sits on, with `toc.js` moving `aria-current` to whichever section the reader has scrolled to.
 
 ```html
 <nav class="nav" aria-label="Site">
@@ -180,7 +236,9 @@ A `demo` is a live example in a box the reader can drag narrower and wider, with
 
 Yeti's JavaScript lives in `dist/js/`, one module per component, dependency-free and optional: nothing in the CSS expects it, so a page that never loads a module still gets the component, minus whatever that module would have added. Link it with a single `<script type="module" src="…/js/alert.js"></script>` anywhere in the page — there is no init call to run and no order to get right — and it is safe to include on a page with none of that component at all; it simply finds nothing to listen on. Leave the module out and the alert's close button sits there inert, the rest of the component unaffected.
 
-Today that list is six modules long: `alert.js`, for the close button's fade and removal; `tabs.js`, for hiding inactive panels and roving focus between tabs; `dialog.js`, for closing the dialog from its backdrop and returning focus to its opener; `hover.js`, for opening a dropdown under the pointer when it is asked to with `data-trigger="hover"`; `carousel.js`, so that following a dot scrolls the track rather than adding an entry to the browser's history; and `demo.js`, which builds a demo's frame from the code written once beneath it. The architecture set the budget at five for 7.0 and moved it once, for the demo, because that script serves the people writing docs rather than the people reading sites; no further component in this release will bring one.
+Today that list is nine modules long: `alert.js`, for the close button's fade and removal; `tabs.js`, for hiding inactive panels and roving focus between tabs; `dialog.js`, for closing the dialog from its backdrop and returning focus to its opener; `hover.js`, for opening a dropdown under the pointer when it is asked to with `data-trigger="hover"`; `carousel.js`, so that following a dot scrolls the track rather than adding an entry to the browser's history; `demo.js`, which builds a demo's frame from the code written once beneath it; `range.js`, which keeps a range's filled track and its readout in step with the thumb; `validate.js`, which puts the browser's own validation message into a field's error slot when a form is submitted; and `toc.js`, which marks the section a reader has scrolled to. The budget was five for 7.0. Three additions have earned their place since — the demo's script for docs, then the range and the validator for forms, then the toc — each one integration for the whole page rather than one component's own behaviour. `demo.js` serves the people writing docs, `validate.js` serves a form of any fields at all, and `toc.js` serves the page it sits beside. A component that cannot work without its script is still the thing that will not ship.
+
+Every module that changes something dispatches one event as it does, on the component's own element, named in Yeti's namespace: `yeti:close` from an alert; `yeti:open` and `yeti:close` from a dialog; `yeti:select` from tabs, with `{ tab, panel }`; `yeti:slide` from a carousel, with `{ index, slide }`; `yeti:invalid` from a form, with `{ controls }`; `yeti:current` from a toc, with `{ link, heading }`. All of them bubble and are composed, so one listener on `document` hears every instance on the page and a component inside a shadow root is still heard outside it. None is cancelable: the module has already acted by the time it speaks, and a page that wants to prevent something prevents the event the platform dispatched first. Each component's own page lists its events in a table.
 
 `hover.js` is the one with an end already written down. The `interestfor` attribute is that same feature standardised, and it exists in one engine today; when it reaches Baseline the module goes and the attribute maps to it instead.
 

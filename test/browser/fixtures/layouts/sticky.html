@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Sticky fixture</title>
+	<link rel="stylesheet" href="../../../../src/yeti.css">
+	<style>
+		#stage { inline-size: 100%; }
+		.item { background: var(--yeti-color-primary-soft); padding: 0.5rem; }
+		#tall { block-size: 1600px; }
+		#loose-tall { block-size: 1200px; }
+		#stack-tall { block-size: 1200px; }
+		#card-tall { block-size: 1600px; }
+		#nav-section { block-size: 1600px; }
+	</style>
+</head>
+<body>
+	<main>
+		<h1>Sticky</h1>
+		<div id="stage">
+			<div class="sidebar" id="sidebar" data-width="xs">
+				<nav class="item" id="pinned" data-sticky aria-label="Section">Pinned</nav>
+				<div class="item" id="tall">A tall column that scrolls past the pinned one.</div>
+			</div>
+			<div class="sidebar" id="loose" data-width="xs">
+				<div class="item" id="loose-side">Not pinned</div>
+				<div class="item" id="loose-tall">A second tall column, for the control.</div>
+			</div>
+			<div class="stack" id="stack" data-gap="sm">
+				<div class="item" id="stack-pinned" data-sticky>Pinned in a column</div>
+				<div class="item" id="stack-tall">A tall child, for the column case.</div>
+			</div>
+			<div class="sidebar" id="card-sidebar" data-width="xs">
+				<div class="card" id="pinned-card" data-sticky>
+					<p>Pinned card</p>
+				</div>
+				<div class="item" id="card-tall">A tall column that scrolls past the pinned card.</div>
+			</div>
+		</div>
+		<section id="nav-section">
+			<nav class="nav" id="pinned-nav" data-sticky aria-label="Site">
+				<a href="#" data-brand>Yeti</a>
+				<button type="button" popovertarget="sticky-nav-menu" aria-label="Menu"><svg aria-hidden="true" viewBox="0 0 16 16"><path d="M2 4h12M2 8h12M2 12h12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+				<ul id="sticky-nav-menu" popover role="list">
+					<li><a href="#" aria-current="page">Docs</a></li>
+					<li><a href="#">Blog</a></li>
+				</ul>
+			</nav>
+			<p>A tall section that scrolls past the pinned nav.</p>
+		</section>
+	</main>
+</body>
+</html>

@@ -13,7 +13,7 @@ const merged = {
 		markers: [{ name: 'data-span', type: 'enum', values: ['1', '2'], on: '> *', description: 'Shares of the row.' }],
 		classes: [], children: [{ selector: '> *', min: 1, max: null, description: 'The items.' }], tokens: [{ name: '--rail-gap', public: true, description: 'The gap.' }],
 		a11y: { requiredAttributes: ['aria-label | aria-labelledby'], keyboard: [{ key: 'Tab', action: 'Moves between items.' }], notes: 'Give it a name.' },
-		js: { module: 'rail.js', optional: true }, support: { unguarded: ['flexbox'], guarded: [] }, since: '7.0.0', example: 'example.html',
+		js: [{ module: 'rail.js', optional: true, events: [{ name: 'yeti:slide', detail: '{ index }', description: 'The rail moved.' }] }], support: { unguarded: ['flexbox'], guarded: [] }, since: '7.0.0', example: 'example.html',
 	},
 	pill: {
 		name: 'pill', kind: 'component', class: 'pill', description: 'A pill.',
@@ -33,6 +33,12 @@ test('the compact file names every component once with its class, kind and attri
 	assert.ok(out.includes('- data-span on > *: 1 | 2 — Shares of the row.'));
 	assert.ok(out.includes('module: rail.js (optional)'));
 	assert.ok(out.indexOf('## rail') < out.indexOf('## pill'), 'layouts come before components');
+});
+
+test('the compact file names each module and the events it dispatches', () => {
+	const out = renderCompact(merged, pkg);
+	assert.ok(out.includes('module: rail.js (optional)'));
+	assert.ok(out.includes('- event yeti:slide with detail { index } — The rail moved.'));
 });
 
 test('the compact file opens with the framework name, version and the three-part model', () => {

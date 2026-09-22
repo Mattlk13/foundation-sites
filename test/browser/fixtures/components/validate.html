@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Form validation fixture</title>
+	<link rel="stylesheet" href="../../../../src/yeti.css">
+	<script type="module" src="../../../../src/components/field/validate.js"></script>
+	<style>#stage { inline-size: 100%; }</style>
+</head>
+<body>
+	<main>
+		<h1>Form validation</h1>
+		<div id="stage">
+			<form class="stack" data-gap="md" id="signup" novalidate>
+				<div class="field" id="email-field">
+					<label for="email">Email</label>
+					<input id="email" type="email" required aria-describedby="email-error">
+					<p id="email-error" data-error></p>
+				</div>
+				<div class="field" id="name-field">
+					<label for="name">Name</label>
+					<input id="name" type="text" required aria-describedby="name-error">
+					<p id="name-error" data-error>Tell us what to call you.</p>
+				</div>
+				<div class="field" id="notes-field">
+					<label for="notes">Notes</label>
+					<textarea id="notes"></textarea>
+				</div>
+				<!-- A group: the slot belongs to the fieldset, and the div around
+				     each input is a .field with no slot of its own. -->
+				<fieldset class="field" id="plan-field">
+					<legend>Plan</legend>
+					<div class="field"><input id="plan-free" type="radio" name="plan" value="free" required aria-describedby="plan-error"><label for="plan-free">Free</label></div>
+					<div class="field"><input id="plan-pro" type="radio" name="plan" value="pro" aria-describedby="plan-error"><label for="plan-pro">Pro</label></div>
+					<p id="plan-error" data-error></p>
+				</fieldset>
+				<div class="field" id="size-field">
+					<label for="size">Size</label>
+					<select id="size" required aria-describedby="size-error">
+						<option value="">Choose a size</option>
+						<option value="s">Small</option>
+						<option value="l">Large</option>
+					</select>
+					<p id="size-error" data-error></p>
+				</div>
+				<!-- Outside any .field, so there is nowhere to write a message;
+				     the submit still has to stop. -->
+				<div id="code-outside">
+					<label for="code">Invite code</label>
+					<input id="code" type="text" required>
+				</div>
+				<button class="button" type="submit" id="send">Send</button>
+			</form>
+		</div>
+	</main>
+</body>
+</html>

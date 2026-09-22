@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Visually hidden fixture</title>
+	<link rel="stylesheet" href="../../../../src/yeti.css">
+	<style>#stage { inline-size: 100%; }</style>
+</head>
+<body>
+	<main>
+		<h1>Visually hidden</h1>
+		<div id="stage">
+			<p><a href="#hidden-trail" id="link">Read more<span class="visually-hidden" id="label"> about the trail map</span></a></p>
+			<p><a href="#hidden-guide" id="plain">Read more</a></p>
+			<p>
+				<button type="button" id="kept">Save<span class="visually-hidden"> changes</span></button>
+				<button type="button" id="dropped">Save<span hidden> changes</span></button>
+			</p>
+		</div>
+	</main>
+</body>
+</html>

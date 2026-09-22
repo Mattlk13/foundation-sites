@@ -15,6 +15,9 @@
   "children": [
     { "selector": "> *", "min": 2, "max": 2, "description": "Exactly two: the sidebar and the content, in either order according to data-side." }
   ],
+  "markers": [
+    { "name": "data-sticky", "type": "boolean", "on": "> *", "description": "Pins this child at --yeti-sticky-offset from the top of the scrollport while the other one scrolls past it. It takes its own height rather than the row's, since a stretched item has nowhere to move." }
+  ],
   "tokens": [
     { "name": "--yeti-width-sm", "public": true, "description": "The default sidebar width." },
     { "name": "--yeti-space-md", "public": true, "description": "The default gap." },

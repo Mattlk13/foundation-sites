@@ -3,7 +3,7 @@ raw: true
 title: "What is stable"
 description: "What 7.0.0-beta means: the names that will not change before 7.0.0, and the things that still may."
 nav_group: "Guides"
-nav_order: 8
+nav_order: 9
 ---
 
 # What is stable
@@ -12,12 +12,13 @@ nav_order: 8
 
 ## Frozen
 
-- **Component class names.** `card` is `card`. The forty-one names in the manifest.
+- **Component class names.** `card` is `card`. The forty-nine names in the manifest.
 - **Attribute names and their value lists.** `data-gap` takes the values it takes today; a value may be added, none will be removed or renamed.
 - **Vocabularies.** The named value lists attributes draw from, `gap`, `width`, `height` and the rest; a value may be added, none removed.
 - **Marker names and values.** `data-span` on a column, `data-numeric` on a cell, and the rest.
 - **Public token names.** Every `--yeti-*` in the catalogue. Their default values may still be tuned; their names and meanings will not change.
-- **Module file names.** `alert.js`, `tabs.js`, `dialog.js`, `hover.js`, `carousel.js`, `demo.js`, and that each is optional.
+- **Module file names.** `alert.js`, `tabs.js`, `dialog.js`, `hover.js`, `carousel.js`, `demo.js`, `range.js`, `validate.js`, `toc.js`, and that each is optional.
+- **Event names.** `yeti:close`, `yeti:open`, `yeti:select`, `yeti:slide`, `yeti:invalid`, `yeti:current`, what each is dispatched on, and the keys in its `detail`. An event may be added; none will be renamed or lose a key.
 - **The manifest and token catalogue schemas**, and the package `exports` map, so tooling built on `yeti-css/manifest` and `yeti-css/tokens` keeps working.
 
 ## Not frozen

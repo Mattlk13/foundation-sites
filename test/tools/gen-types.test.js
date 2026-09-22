@@ -24,7 +24,7 @@ const merged = {
 	},
 	pill: {
 		name: 'pill', kind: 'component', class: 'pill', description: 'A pill.',
-		attributes: [], markers: [], classes: [], children: [], tokens: [], a11y: { requiredAttributes: [], keyboard: [] }, js: { module: 'pill.js', optional: true }, support: { unguarded: [], guarded: [] }, since: '7.0.0', example: 'example.html',
+		attributes: [], markers: [], classes: [], children: [], tokens: [], a11y: { requiredAttributes: [], keyboard: [] }, js: [{ module: 'pill.js', optional: true }], support: { unguarded: [], guarded: [] }, since: '7.0.0', example: 'example.html',
 	},
 };
 
@@ -43,7 +43,7 @@ test('renderTypes emits one string union per vocabulary and a union of component
 
 test('renderTypes types the manifest and token catalogue shapes', () => {
 	const out = renderTypes(merged, vocabulary, tokensSchema);
-	for (const name of ['YetiAttribute', 'YetiMarker', 'YetiToken', 'YetiChild', 'YetiA11y', 'YetiComponent', 'YetiManifest', 'YetiTokenEntry', 'YetiTokenCatalogue']) {
+	for (const name of ['YetiAttribute', 'YetiMarker', 'YetiToken', 'YetiChild', 'YetiA11y', 'YetiModule', 'YetiEvent', 'YetiComponent', 'YetiManifest', 'YetiTokenEntry', 'YetiTokenCatalogue']) {
 		assert.ok(out.includes(`export interface ${name}`) || out.includes(`export type ${name}`), name);
 	}
 	assert.ok(out.includes('components: Record<YetiComponentName, YetiComponent>;'));
@@ -92,9 +92,16 @@ test('YetiTokenEntry types group as the closed list of group names in the tokens
 	assert.ok(out.includes(`\tgroup: ${expected};`), 'group is not the schema enum');
 });
 
-test('a component with a module types optional as the const true the schema requires', () => {
+test('a component types its modules as a list, with optional as the const true the schema requires', () => {
 	const out = renderTypes(merged, vocabulary, tokensSchema);
-	assert.ok(out.includes('js: { module: string; optional: true } | null;'));
+	assert.ok(out.includes('js: YetiModule[] | null;'));
+	assert.ok(out.includes('\toptional: true;'));
+});
+
+test('YetiModule and YetiEvent declare every property their schema definitions do', () => {
+	const out = renderTypes(merged, vocabulary, tokensSchema);
+	for (const key of Object.keys(schema.$defs.module.properties)) assert.ok(fieldsOf(out, 'YetiModule').has(key), key);
+	for (const key of Object.keys(schema.$defs.event.properties)) assert.ok(fieldsOf(out, 'YetiEvent').has(key), key);
 });
 
 test('markers is not optional, because the loader always normalises it to a list', () => {

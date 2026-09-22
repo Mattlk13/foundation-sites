@@ -226,6 +226,10 @@ Purely visual. Reading order is source order in both arrangements.
 
 Makes its box the thing a container query measures, so what is inside can respond to its width instead of the viewport's.
 
+On children:
+- data-show on *: 2xs | xs | sm | md | lg | xl | 2xl — Show this element only while the nearest size container is this wide or wider. Below that width it is not rendered at all, and it is not in the accessibility tree either.
+- data-hide on *: 2xs | xs | sm | md | lg | xl | 2xl — Hide this element once the nearest size container is this wide or wider. Below that width it is rendered as usual.
+
 ### When to use it
 
 Around anything that should change shape at its own width, when the thing itself cannot measure its own box. A layout can query itself and change its children, but nothing can change its own tracks from inside its own query; wrap it in a container and query that.
@@ -240,6 +244,21 @@ One declaration: the box becomes a size container. Nothing else. To target it by
 ```
 
 The Yeti layouts that query themselves (`grid` with `data-fold`, `breakout` with notes, `timeline`) do not need one; this is for your own queries and for components that must restyle themselves.
+
+Two markers read this box directly. `data-show` shows an element only while the container is at least that wide, and `data-hide` removes it once the container is that wide; both take a width from the same scale as `data-threshold`, and both mean "at or above", so `data-show="md"` is *shown from `md` up* and `data-hide="md"` is the same sentence the other way round. The widths are the tokens' defaults written as literals, because a container condition cannot read a custom property, so a theme that changes `--yeti-width-md` moves `data-threshold="md"` but not `data-show="md"`.
+
+```html
+<div class="container">
+	<p data-show="md">Shown once this column is 32rem or wider.</p>
+	<p data-hide="md">Gone once this column is 32rem or wider.</p>
+</div>
+```
+
+They measure the nearest size container, not the window, which is the whole reason they exist: the same markup in a sidebar and in a full-width section makes two different decisions on one page. A `container` carrying `data-show` or `data-hide` itself is measured against its own nearest ancestor container, never its own box, because an element cannot query itself. Reach for them last. A component that can change shape at its own threshold should do that instead — the two versions of a thing, one shown and one hidden, are two things to keep in step forever — and an element removed this way is removed from the accessibility tree with it, so nothing a reader needs may live only in the narrow version.
+
+With no size container anywhere above it, a container query never matches and neither marker does anything: the element stays visible at every width. That is the failure mode to know. These layouts are size containers with no conditions attached, so anything inside one is already covered: `container`, `nav`, `pagination`, `timeline`, and the preview box inside a `demo`. Three more are containers only in a particular shape — a `grid` with `data-fold`, a `card` whose first child is a figure, and a `breakout` holding a note — and anything else needs a `container` around it.
+
+The [visibility guide](guides/visibility.md) puts these beside the platform's own ways of hiding something, and says which to reach for first.
 
 ### Why this name
 
@@ -574,6 +593,9 @@ Attributes:
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the two children, side by side or stacked.
 - data-align: start | center | end | stretch (default) | baseline — Vertical alignment of the two children when side by side.
 
+On children:
+- data-sticky on > * (boolean) — Pins this child at --yeti-sticky-offset from the top of the scrollport while the other one scrolls past it. It takes its own height rather than the row's, since a stretched item has nowhere to move.
+
 ### When to use it
 
 A sidebar pairs something with a natural width, such as a navigation list, a figure, or a form's summary, with content that should take whatever is left. It handles the awkward middle widths on its own: the two sit side by side as long as the content keeps at least half the space, and stack when it cannot.
@@ -588,6 +610,8 @@ Both children live in a wrapping flex row. The sidebar child gets `data-width` a
 	<aside>Shown after it.</aside>
 </div>
 ```
+
+Either child can carry `data-sticky` and stay put while the other scrolls past it, which is what a section nav beside a long article wants. It stops `--yeti-sticky-offset` from the top of the scrollport and takes its own height rather than the row's: a flex item stretched to the height of the row it is in has nowhere left to move, and would never stick at all.
 
 ### Why this name
 
@@ -614,6 +638,7 @@ Attributes:
 
 On children:
 - data-split on > * (boolean) — Pushes the child and everything after it to the end of the stack when the stack is taller than its content.
+- data-sticky on > * (boolean) — Pins this child at --yeti-sticky-offset from the top of the scrollport while the rest of the stack scrolls past it. It keeps the full width of the column, a stack stretching its children on the inline axis.
 
 ### When to use it
 
@@ -630,6 +655,8 @@ The stack is a flex column with a `gap`, so the space between children is the st
 	<a href="#" data-split>Action</a>
 </div>
 ```
+
+A child carrying `data-sticky` stays at `--yeti-sticky-offset` from the top of the scrollport while the rest of the stack scrolls past it, and keeps the full width of the column while it does. A stack stretches its children sideways, and sideways is not the direction a sticky child moves in, so nothing has to be taken away for it to work — which is not true in a row, where the same marker costs the child the row's height.
 
 ### Why this name
 
@@ -697,6 +724,19 @@ Attributes:
 ### When to use it
 
 The opening of a landing page: a headline and a call to action on one side, a picture on the other, filling the first screen. Below the threshold the two become rows and the band grows to fit. Put the picture first or last as you want it read; `data-side` moves it without changing the source. The copy must not have an img, video, or picture as a direct child (it would be taken for a second figure).
+
+A headline that should grow with the band can carry the [billboard](billboard.md) utility. Make the copy a `container` first, so the line is sized by the column it is in and not by the whole band:
+
+```html
+<header class="hero">
+	<div class="container">
+		<h1 class="billboard" data-fit="xl-display">Build interfaces that read their own container</h1>
+		<p>Fifteen layouts, one attribute vocabulary, no breakpoints.</p>
+		<a href="#">Get started</a>
+	</div>
+	<img src="peak.jpg" alt="A snow ridge at first light">
+</header>
+```
 
 ### Built from primitives
 
@@ -795,9 +835,14 @@ Attributes:
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the rows, and between nav, main, and aside.
 - data-width: 2xs | xs | sm (default) | md | lg | xl | 2xl — The preferred width of nav and aside. Three regions share a row once the container is about four times this width plus the gaps; two regions need about half that.
 
+On children:
+- data-sticky on > div > :is(nav, aside) (boolean) — Pins the nav or the aside at --yeti-sticky-offset from the top of the scrollport while main scrolls past it.
+
 ### When to use it
 
 Every page has a skeleton, and most of them are this one: a header, a footer that should sit at the bottom of the screen even when the page is short, and a middle that may have navigation down one side or related material down the other. Put the class on `body` and the landmarks do the rest. Three regions share a row once the container is about four times `data-width` plus the gaps; two regions need about half that.
+
+The body row's `nav` and `aside` can each carry `data-sticky` and stay in place while `main` scrolls past them. Each stops `--yeti-sticky-offset` from the top of the scrollport and keeps its own height instead of the row's, which is what lets it move at all.
 
 ### Built from primitives
 
@@ -964,6 +1009,7 @@ On children:
 - data-close on > button (boolean) — The close button; removes the alert when alert.js is loaded.
 
 module: alert.js (optional)
+- event yeti:close — Dispatched on the .alert after the fade and before it is removed, while it is still in the page.
 
 ### When to use it
 
@@ -1277,6 +1323,7 @@ On children:
 - data-dots on > * (boolean) — The list of links to the slides, one per slide.
 
 module: carousel.js (optional)
+- event yeti:slide with detail { index, slide } — Dispatched on the .carousel when a dot scrolls the track, with the slide's zero-based index.
 
 ### When to use it
 
@@ -1298,16 +1345,16 @@ The scrollbar under the track is hidden, since the dots already say where you ar
 		<blockquote id="quote-3" data-slide><p>Nothing to learn.</p></blockquote>
 	</div>
 	<ol data-dots role="list">
-		<li><a href="#quote-1" aria-label="Quote 1"></a></li>
-		<li><a href="#quote-2" aria-label="Quote 2"></a></li>
-		<li><a href="#quote-3" aria-label="Quote 3"></a></li>
+		<li><a href="#quote-1"><span class="visually-hidden">Quote 1</span></a></li>
+		<li><a href="#quote-2"><span class="visually-hidden">Quote 2</span></a></li>
+		<li><a href="#quote-3"><span class="visually-hidden">Quote 3</span></a></li>
 	</ol>
 </section>
 ```
 
 ### Accessibility
 
-Label the region and mark it with `aria-roledescription="carousel"`, so it is announced as a carousel rather than as an anonymous group. Every dot is a link with an `aria-label`, because a dot has no room for text and there is no visually-hidden utility in Yeti.
+Label the region and mark it with `aria-roledescription="carousel"`, so it is announced as a carousel rather than as an anonymous group. A dot has no room for visible text, so name each one: put the words inside it in a `span` carrying `visually-hidden`, which leaves them in the accessibility tree and takes them off the screen, or use an `aria-label`.
 
 The dots take you to a slide; they do not tell you which slide you are on. CSS cannot know that, and the module deliberately does not track it either: watching scroll position to light up a dot is a different and much larger job. If that matters for what you are building, the honest answer is a list rather than a carousel.
 
@@ -1318,7 +1365,7 @@ Browser-drawn scroll markers will one day do this in CSS and report the current 
 Children:
 - > [data-track]: at least 1, at most 1. The scrolling track holding the slides. A scrolling region is an interactive one, so give it role="group", a name, and tabindex="0".
 - [data-slide]: at least 2. One slide each, with an id a dot can link to.
-- > [data-dots]: at least 0, at most 1. A list of links, one per slide, each named with aria-label. With carousel.js loaded the module scrolls the track itself, so following one adds no history entry.
+- > [data-dots]: at least 0, at most 1. A list of links, one per slide, each named by a span carrying visually-hidden or by an aria-label. With carousel.js loaded the module scrolls the track itself, so following one adds no history entry.
 
 Tokens:
 - --yeti-carousel-dot — Colour of a dot.
@@ -1335,7 +1382,7 @@ Required: aria-label | aria-labelledby
 - Tab: Focuses the track, then each dot in turn.
 - ArrowLeft / ArrowRight: Scroll the track.
 - Enter: Scrolls to that dot's slide.
-Label the region and give it aria-roledescription="carousel" so it is announced as one. The dots are links to slide ids, so the browser does the scrolling and the keyboard works without help; each needs an aria-label, since a dot has no room for text and Yeti ships no visually-hidden utility. They jump to a slide but cannot report which slide is showing, because CSS cannot know that. Loading carousel.js keeps the back button useful by scrolling the track instead of navigating; without it the dots still work, and each one followed is one press of back. Nothing essential should live behind a slide a reader has to find. The track scrolls, so it must be reachable from the keyboard: give it role="group", an aria-label, and tabindex="0". It is a group rather than a region because the carousel itself is already the landmark.
+Label the region and give it aria-roledescription="carousel" so it is announced as one. The dots are links to slide ids, so the browser does the scrolling and the keyboard works without help; each needs a name, from a span carrying visually-hidden or from an aria-label, since a dot has no room for visible text. They jump to a slide but cannot report which slide is showing, because CSS cannot know that. Loading carousel.js keeps the back button useful by scrolling the track instead of navigating; without it the dots still work, and each one followed is one press of back. Nothing essential should live behind a slide a reader has to find. The track scrolls, so it must be reachable from the keyboard: give it role="group", an aria-label, and tabindex="0". It is a group rather than a region because the carousel itself is already the landmark.
 
 ## demo (component, class="demo")
 
@@ -1432,6 +1479,8 @@ Attributes:
 - data-max: 2xs | xs | sm | md (default) | lg | xl | 2xl — The widest the dialog may grow, from the width scale; it is always narrower than the viewport by a gutter.
 
 module: dialog.js (optional)
+- event yeti:open — Dispatched on the dialog once the browser has opened it from a commandfor button.
+- event yeti:close — Dispatched on the dialog when it closes, however it was closed.
 
 ### When to use it
 
@@ -1581,6 +1630,9 @@ On children:
 
 module: range.js (optional)
 
+module: validate.js (optional)
+- event yeti:invalid with detail { controls } — Dispatched on the form when a submit is refused, carrying the invalid controls in document order.
+
 ### When to use it
 
 Every control in a form: text, email, number, select, textarea, checkbox, radio, switch, range. A form is a `stack` of fields and a button; the field owns what bare HTML cannot, the label's link to its control, the help text, and the error.
@@ -1616,6 +1668,21 @@ Without the module the track sits wherever `--yeti-range-value` says, so set it 
 ```
 
 Set by hand, it is a number rather than a percentage: `style="--yeti-range-value: 0.7"`.
+
+`validate.js` is the field's second module, and it is about the form rather than one control. On submit it finds every invalid control in the form, inside a `.field` or not, and sets `aria-invalid="true"` on each — which is the same attribute a server round trip would set, so the error shows and the border turns at once — writes the browser's own message into the empty `[data-error]` of the nearest field that has one, focuses the first control, and stops the submission. A control outside every field is counted and stops the submit like any other; there is simply nowhere to put its message, and under `novalidate` nothing else was going to stop it. A radio or checkbox group gets its message on the `fieldset.field` that carries the slot, not on the bare `.field` around each input. It dispatches `yeti:invalid` on the form with the controls it found, so a page can count them, scroll a summary into view, or send them somewhere. Typing or picking a valid value clears the mark again.
+
+Give a form that loads it `novalidate`. Without that attribute the browser opens its own bubble on the first invalid control and never fires a submit event at all, so the module never runs and the page gets the bubble instead of its own error text. An error element you fill in yourself is never overwritten; an empty one is the slot the module writes into.
+
+```html
+<form class="stack" data-gap="md" novalidate>
+	<div class="field">
+		<label for="signup-email">Email</label>
+		<input id="signup-email" type="email" required aria-describedby="signup-email-error">
+		<p id="signup-email-error" data-error></p>
+	</div>
+	<button class="button" type="submit">Sign up</button>
+</form>
+```
 
 ### Accessibility
 
@@ -1663,7 +1730,7 @@ Tokens:
 - --yeti-space-md — Padding of a fieldset.
 
 Accessibility contract:
-The label's for must match the control's id; the validator checks it. Reference the hint and the error from the control with aria-describedby so both are announced. Use aria-invalid="true" for errors found on the server. The required marker is decoration; the required attribute is what assistive tech reads. A switch is a checkbox with role="switch"; its label reads as the switch's name. A range needs a label like any control, and aria-valuetext when the numbers are not what a person would say.
+The label's for must match the control's id; the validator checks it. Reference the hint and the error from the control with aria-describedby so both are announced. Use aria-invalid="true" for errors found on the server. The required marker is decoration; the required attribute is what assistive tech reads. A switch is a checkbox with role="switch"; its label reads as the switch's name. A range needs a label like any control, and aria-valuetext when the numbers are not what a person would say. With validate.js loaded, the same aria-invalid is set from the browser's own check when a submit is refused, and the browser's message is written into an empty [data-error].
 
 ## nav (component, class="nav")
 
@@ -1674,6 +1741,7 @@ Attributes:
 - data-threshold: 2xs | xs | sm | md (default) | lg | xl | 2xl — The nav's own width at or above which the links sit in the bar; below it they are behind the toggle.
 - data-panel: sheet (default) | drawer | screen — The shape of the open list below the threshold: a sheet under the bar, a drawer from the start edge, or the whole screen.
 - data-gap: none | xs | sm (default) | md | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the bar's parts and between the links.
+- data-sticky (boolean) — Keep the bar at the top of the scrollport as the page scrolls, at --yeti-sticky-offset from the edge.
 
 On children:
 - data-brand on > * (boolean) — The site's name or mark, usually a link home.
@@ -1707,6 +1775,8 @@ A panel that is open stays a panel until it is dismissed, whatever the nav's wid
 A nav item may hold a `dropdown` for a section with children of its own: the item becomes a button rather than a link, since the dropdown brings its own trigger. Its panel is in the top layer, so the bar's own containment cannot clip it.
 
 The panel changes shape with the nav. In the bar it is the dropdown's usual card, anchored under its trigger. Once the links are behind the toggle it becomes a full-width block instead, docked to the foot of its trigger and squared off against the panel's own edges, so a sheet, a drawer and a screen each keep their submenu inside them. It is still a popover, so it covers the items below rather than pushing them down, and Escape or a click outside closes it before the panel it sits in. Where anchor positioning is missing the block docks to the foot of the viewport, which is still full width and still within reach.
+
+`data-sticky` keeps the bar at the top of the scrollport as the page scrolls, `--yeti-sticky-offset` from the edge. Everything else on the page that sticks stops at that same offset and would slide under the bar, so set the token to the bar's own height plus the gap you want on whatever holds them — the shell's body row, say — and leave the nav itself reading the default.
 
 ### Accessibility
 
@@ -1991,6 +2061,7 @@ Attributes:
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the list and the panels.
 
 module: tabs.js (optional)
+- event yeti:select with detail { tab, panel } — Dispatched on the .tabs when a click or an arrow key selects a tab; never for the pass at load.
 
 ### When to use it
 
@@ -2044,6 +2115,65 @@ Accessibility contract:
 - Home / End: Selects the first or the last tab.
 - Tab: Leaves the list for the selected panel.
 Give the tablist a name with aria-label or aria-labelledby. Every tab is a button whose aria-controls names its panel, and every panel names its tab back with aria-labelledby; that pairing is what the module reads. With tabs.js loaded one tab is selected, the rest take tabindex="-1" for a roving focus, and the inactive panels are hidden. Without it nothing is hidden and every tab is focusable, which is plainer but never traps content.
+
+## toc (component, class="toc")
+
+A column of links to the headings on the page, with the one being read marked as the reader scrolls.
+
+Attributes:
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — The hue of the current link and its edge bar.
+- data-size: sm | md (default) | lg — The text step, and the inset of each link with it.
+
+module: toc.js (optional)
+- event yeti:current with detail { link, heading } — Dispatched on the .toc when the mark moves to another link.
+
+### When to use it
+
+A long page a reader scrolls rather than clicks through: a guide, a reference, a post with sections. The list says what is on the page and how far through it the reader is. A page with three short sections does not need one, and neither does a page whose headings would not fit down one side.
+
+### How it works
+
+A column of links, each pointing at the id of a heading on the same page. The current one carries `aria-current="true"` and takes the variant's colour, a strong weight, and a bar down its start edge; the bar is on every link and transparent until then, so nothing shifts as the mark moves. `data-variant` picks the hue and `data-size` steps the text.
+
+`toc.js` moves the mark. It watches the linked headings with one `IntersectionObserver` and marks the link of whichever heading is topmost in view, dispatching `yeti:current` on the `.toc` with the link and the heading each time it moves. Between two headings nothing is in view, and the last mark stays rather than flickering off. Without the module the list is a working list of links, and a page that knows its own current section can simply ship the attribute in its HTML.
+
+Following a link scrolls smoothly, from `--yeti-toc-scroll` applied to the page — the token collapses to `auto` under `prefers-reduced-motion`, which a plain `scroll-behavior` in this layer could not, since it would outrank the reset's own rule.
+
+```html
+<nav class="toc" aria-label="On this page" data-variant="secondary" data-size="sm">
+	<ul role="list">
+		<li><a href="#install">Install</a></li>
+		<li><a href="#usage">Usage</a></li>
+	</ul>
+</nav>
+```
+
+### Accessibility
+
+Label the `nav` — `aria-label="On this page"` — because a page with a toc has at least two navs and they have to be told apart. Put `role="list"` on the `ul`, which is what keeps it a list where the reset removes the markers. The current section's link carries `aria-current="true"`; the colour and the bar are the visible half of the same fact, never the only half. The module owns that attribute on these links: it sets and clears `aria-current="true"` and strips any other `aria-current` value an author puts on a toc link. The links are ordinary same-page links, so the keyboard reaches them in order and Enter follows one with no script at all.
+
+Children:
+- > ul: at least 1, at most 1. The links, one per li, with role="list".
+- li: at least 1. One entry, holding a link whose href is the id of a heading on this page.
+
+Tokens:
+- --yeti-toc-scroll — How the page scrolls when a link is followed.
+- --yeti-color-text-muted — A link that is not the current one.
+- --yeti-color-text — A link under the pointer.
+- --yeti-space-xs — Gap between links, and their block padding.
+- --yeti-space-sm — The space step when data-size is absent.
+- --yeti-text-md — Text size when data-size is absent.
+- --yeti-border-width — The edge bar is three of them.
+- --yeti-weight-strong — Weight of the current link.
+- --yeti-duration-fast — How long the mark takes to move.
+- --yeti-ease — The curve of that transition.
+- --yeti-color-primary — The default variant's colour, when data-variant is absent.
+- --yeti-color-primary-subtle — The default variant's hover tint.
+- --yeti-color-primary-text — The default variant's text colour.
+
+Accessibility contract:
+Required: aria-label | aria-labelledby
+Give the nav an aria-label such as "On this page", since a page with a toc has at least two navs. Put role="list" on the ul, because the reset only removes list markers where that role says the list is decorative. The link for the section being read carries aria-current="true"; toc.js moves it, and a page that ships the mark in its HTML is correct without the module. The module owns aria-current on these links: it sets and clears the value "true" and strips any other aria-current an author puts on a toc link. Every link points at an id on this page, so the list works with no script at all.
 
 ## tooltip (component, class="tooltip")
 
@@ -2136,6 +2266,55 @@ Tokens:
 
 Accessibility contract:
 Motion is not an announcement. A change worth pointing at is worth saying, so put the element in a live region, or give it role="status", and the gesture becomes the visual half of something a screen reader already hears. It plays once and never repeats, so nothing here keeps moving under a reader who cannot dismiss it, and under reduced motion the duration collapses and the element simply sits still.
+
+## billboard (utility, class="billboard")
+
+Sizes display text to the container it is in, clamped between two steps of the type scale, so a headline fills the board it is on.
+
+Attributes:
+- data-fit: xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | xs-display | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | sm-display | md-lg | md-xl | md-2xl | md-3xl (default) | md-display | lg-xl | lg-2xl | lg-3xl | lg-display | xl-2xl | xl-3xl | xl-display | 2xl-3xl | 2xl-display | 3xl-display — The two ends of the clamp, as a pair of type steps: the smallest the line may set and the largest.
+
+### When to use it
+
+Display text: a hero's headline, a figure's number, a pull quote, the title on a card that is sometimes a column and sometimes a page. A billboard is sized to fill the board it is on and to be read from wherever the reader is standing, and the default pair says so — it runs from `md` to `3xl`, the top of the everyday scale.
+
+Not body copy. Prose has a measure and a comfortable size, and neither of them is a percentage of a column.
+
+### How it works
+
+`font-size` reads `cqi`, one percent of the container's inline size, so the line is sized by the box it is in rather than by the window. The same heading is one size in a card and another across a page, on the same page, which no viewport unit can say. It shrinks as readily as it grows: a billboard in a narrow column comes down to the bottom of its pair, which with the default is body size, not nothing.
+
+`data-fit` is a pair of steps from the type scale, `<min>-<max>`, and the pair is the two ends of a clamp: the line never sets smaller than the first step or larger than the second, whatever the container does. The attribute keeps the name the value has always had — it is the range the text fits within, the way `data-gap` is the gap — while the class names the thing. Any smaller of the eight steps can pair with any larger one, which makes twenty-eight pairs, and `md-3xl` is what you get when the attribute is absent.
+
+Between the ends the size is a proportion of the container, and the proportion is not a number in the stylesheet. It is the pair's own maximum divided by `--yeti-fit-width`, the container width at which a fitted line reaches its ceiling, `32rem` by default. So a pair that ends higher grows faster, every pair arrives at its ceiling in the same box, and a theme moves all twenty-eight by moving one token. With the default pair it works out between six and eleven percent of the container, depending where the fluid scale itself is standing.
+
+```html
+<div class="container">
+	<h1 class="billboard" data-fit="lg-display">Build interfaces that read their own container</h1>
+</div>
+```
+
+The container is the nearest ancestor with `container-type: inline-size`. That is what the [container](container.md) layout is for; `grid`, `timeline`, `nav`, `pagination` and `demo` are already size containers, as is a `card` with a leading figure and a `breakout` with a note; anything else needs a `container` above it, or the line measures the viewport. It has to be an ancestor: an element cannot query itself, so putting `billboard` and `container` on the same element measures the box outside it. With no container anywhere above, `cqi` falls back to the small viewport, so a billboard on a bare page grows with the window instead — a lesser effect, not a broken one.
+
+### Accessibility
+
+The clamp is the accessibility story. A size that is only `cqi` has no floor and no ceiling: it shrinks past legibility in a narrow column and runs off the top of a wide screen, and a reader who zooms in gets neither end back. The floor and the ceiling here are steps of the type scale, set in `rem`, so a larger default font size raises the floor and a billboard can never fall below a legible step; the middle of the ramp, between the two ends, follows the container instead.
+
+Nothing here changes what an element is. A billboard `h1` is an `h1`; the class sizes it and says nothing about its rank.
+
+Tokens:
+- --yeti-fit-width — The container width at which a fitted line reaches the top of its pair; below it the size is in proportion.
+- --yeti-text-xs — The xs end of a pair.
+- --yeti-text-sm — The sm end of a pair.
+- --yeti-text-md — The md end of a pair, and the floor when no pair is given.
+- --yeti-text-lg — The lg end of a pair.
+- --yeti-text-xl — The xl end of a pair.
+- --yeti-text-2xl — The 2xl end of a pair.
+- --yeti-text-3xl — The 3xl end of a pair, and the ceiling when no pair is given.
+- --yeti-text-display — The display end of a pair, the largest step there is.
+
+Accessibility contract:
+The clamp is the accessibility story. A size that is only a container unit has no floor and no ceiling: it shrinks past legibility in a narrow column and runs off the top of a wide screen, and a reader who zooms gets neither end back. The floor and the ceiling here are steps of the type scale, set in rem, so a larger default font size raises the floor and a fitted line can never fall below a legible step; the middle of the ramp, between the two ends, follows the container instead. Use it on a line, not on prose: body copy has a comfortable size that is not a percentage of a column.
 
 ## enter (utility, class="enter")
 
@@ -2255,6 +2434,83 @@ Tokens:
 Accessibility contract:
 The lift answers :focus-visible on the element and on anything inside it, so a reader tabbing through a page of cards sees the same affordance a pointer gets. It is decoration on top of a focus ring, never a replacement for one; the ring comes from the reset and is untouched. Under reduced motion the element no longer moves and the deeper shadow carries the hover by itself.
 
+## print (utility, class="print")
+
+Marks an element as belonging to one medium: on the printed page only, or on the screen only.
+
+Attributes:
+- data-print: only (default) | none — Which medium the element belongs to: only, on paper and nowhere else, or none, everywhere but paper.
+
+### When to use it
+
+Two jobs, and they are opposites.
+
+Something the paper needs and the screen does not: the address behind a link, since a printed link is a dead end; the date a page was printed; a note about where the document came from.
+
+```html
+<p class="print">Printed from https://foundationcss.com/guides/visibility</p>
+```
+
+Something the screen needs and the paper does not: a share button, a video, a "back to top" link, a cookie banner, a nav bar. Give those `data-print="none"`.
+
+```html
+<button class="button print" data-print="none" type="button">Share this page</button>
+```
+
+### How it works
+
+Two rules in two media queries. `only`, which is what you get when the attribute is absent, hides the element everywhere but the printed page; `none` hides it on the printed page and nowhere else. Both use `display: none`, and both sit in the utilities layer, which is last in Yeti's cascade order, so a component's own `display` does not win: a `button` really does come off the page.
+
+This is the one place in Yeti where a media query is the right tool. Every width in the framework is a container query, because a rule that switches on the window breaks the moment its element moves into a narrower box. A medium is not a width — no container is ever printed at a different medium from the page around it — so there is no box to measure here and nothing a container query could say.
+
+Print styling stops there. Yeti does not set page margins, force a colour scheme, or break pages for you; `@page`, `break-inside` and the rest are yours to write, and this utility is only about which elements are on the sheet at all.
+
+### Accessibility
+
+Both states are `display: none` in the medium they are not for, which takes the element out of the accessibility tree there too. That is the right behaviour for this job, and it has two consequences worth stating.
+
+A paper-only line is not announced on screen. Never put anything a screen reader needs into one — an address a sighted reader can also see is fine, a warning is not. Text that should be heard and not seen is [visually-hidden](visually-hidden.md), which is a different tool for a different question; the [visibility guide](guides/visibility.md) has both side by side.
+
+A screen-only control is not on the page a reader prints. Nothing on paper may depend on it, so a form whose only submit button carries `data-print="none"` has printed a form nobody can return.
+
+`print` and `visually-hidden` do not combine on one element: on screen `print` removes it outright, so there is nothing left for `visually-hidden` to keep announced, and on paper the clip `visually-hidden` applies leaves a blank pixel where the printed content should be.
+
+Accessibility contract:
+Both states are display: none in the medium they are not for, which takes the element out of the accessibility tree there as well. That is correct for this job and worth saying out loud: a paper-only line is not read out on screen, so it must never carry anything a reader on screen needs, and a screen-only control is not on the page a reader prints, so nothing on paper may depend on it. Text a screen reader should hear but nobody should see is visually-hidden, not this. A printed page is also a page with no colour guarantee, so never let the print state be the only thing carrying a meaning.
+
+## visually-hidden (utility, class="visually-hidden")
+
+Takes words out of sight and leaves them in the accessibility tree, for the name a control needs when its face is a picture.
+
+### When to use it
+
+Words a screen reader needs and the page has no room for: the name of an icon-only button, the number on a carousel dot, the subject of the third "Read more" link on a page.
+
+It is not the `hidden` attribute, and the difference is the whole point — it is also why this is the one class in Yeti with two words in its name. `hidden` takes the element out of the page and out of the accessibility tree with it, so a reader hears nothing. This class takes it out of sight and leaves it in the tree, so a reader hears everything. The [visibility guide](guides/visibility.md) has both, and the ten other ways to hide something, on one page.
+
+```html
+<a href="/trail-map.pdf">Read more<span class="visually-hidden"> about the trail map</span></a>
+```
+
+### How it works
+
+The old clip-rect recipe, with `clip-path` in place of the deprecated `clip` property. The box is taken out of the flow with `position: absolute`, so it cannot open a gap in the line it sits in; it is sized a pixel square, because some engines drop a zero-size box altogether; and it is clipped to nothing with `clip-path: inset(50%)` and `overflow: hidden`. `white-space: nowrap` stops a long string being wrapped into a one-character column, which some screen readers read out letter by letter.
+
+`display: none` and `visibility: hidden` are both shorter, and both do the one thing this must not: they take the text out of the accessibility tree.
+
+Put only text in here. Everything inside is still in the page, so a link or a button inside would take Tab focus with nothing on screen to show for it, which is worse than either showing it or leaving it out.
+
+### Accessibility
+
+The text is announced in source order and becomes part of the accessible name of whatever contains it, which is what makes a button with a picture on its face and a word inside it a named button.
+
+A control is named once. Where an `aria-label` is present the browser uses that and ignores the text inside, so pick one: the label when the name is a rewording of the content, the hidden text when the name *is* the content and the design has no room for it.
+
+It is a tool of last resort. A control with room for a word should have the word.
+
+Accessibility contract:
+This is the opposite of the hidden attribute, which removes the element from the accessibility tree as well: text carrying this class is still announced, in source order, and becomes part of the accessible name of whatever contains it. The two words in the name are there to keep the two apart. A control named twice is named once: where an aria-label is present the browser uses it and ignores the text inside, so use one or the other. Put only text in here. Anything focusable is still focusable and would take Tab focus with nothing on screen to show for it.
+
 ## Tokens
 
 Every public custom property, with its group and default. A theme is a file that sets some of these after yeti.css.
@@ -2373,6 +2629,7 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-color-scrim (color): the surface at 85% — A wash over content so something on top of it can be read: a caption over a picture, a veil over a form. Thinned surface, so it dims with the theme rather than tinting.
 - --yeti-color-focus (color): var(--yeti-color-primary) — Focus ring color.
 - --yeti-cover-height (layout): 100dvh — Minimum block size of a cover layout or a filled stack. Set to auto for one that is only as tall as its content.
+- --yeti-sticky-offset (layout): var(--yeti-space-md) — How far from the leading edge of the scrollport a child carrying data-sticky stops. Set it to a sticky bar's height on whatever holds the things that stick below it.
 - --yeti-border-width (border): 1px — Width of every border a component draws.
 - --yeti-weight-normal (weight): 400 — Body weight.
 - --yeti-weight-bold (weight): 700 — Headings, th, strong and b. Separate from --yeti-weight-strong so display text and control labels can be tuned apart.
@@ -2435,6 +2692,7 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-carousel-dot (carousel): var(--yeti-color-border-strong) — Colour of a slide dot.
 - --yeti-carousel-dot-size (carousel): 0.75rem — Diameter of a slide dot.
 - --yeti-carousel-scroll (carousel): smooth, and auto under reduced motion — How the track scrolls when a dot is followed. A components-layer declaration outranks the reset, so the preference reaches the track through this token.
+- --yeti-toc-scroll (toc): smooth, and auto under reduced motion — How the page scrolls when a link in a toc is followed. A components-layer declaration outranks the reset, so the preference reaches the page through this token.
 - --yeti-range-value (field): 0% — The filled share of a range's track. Set it on the input, inline or from your own script, since CSS cannot read the value. Not a theme value.
 - --yeti-demo-border (demo): var(--yeti-color-border) — The preview box's edge.
 - --yeti-demo-radius (demo): var(--yeti-radius-md) — The preview box's corner, the summary's, and the stop label's.
@@ -2452,3 +2710,4 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-attention-duration (attention): 600ms — How long the one pulse or shake takes. Collapses to 0.01ms under prefers-reduced-motion.
 - --yeti-attention-distance (attention): 0.35rem — How far a shake throws the element to each side.
 - --yeti-attention-scale (attention): 1.06 — How large a pulse swells the element at its peak.
+- --yeti-fit-width (fit): var(--yeti-width-md) — The container width at which a line carrying billboard reaches the top of its pair; below it the size is in proportion, above it the clamp holds.

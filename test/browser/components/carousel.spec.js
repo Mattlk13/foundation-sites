@@ -126,4 +126,24 @@ test.describe('carousel', () => {
 		await open(page);
 		expect(await axe(page)).toEqual([]);
 	});
+
+	test('following a dot dispatches yeti:slide with the slide and its index', async ({ page }) => {
+		await open(page);
+		// The listener is installed from script; the click is a real one, so the
+		// module is driven the way a reader drives it.
+		await page.evaluate(() => {
+			window.caught = null;
+			document.addEventListener('yeti:slide', (event) => {
+				window.caught = {
+					target: event.target.id,
+					bubbles: event.bubbles,
+					composed: event.composed,
+					index: event.detail.index,
+					slide: event.detail.slide.id,
+				};
+			}, { once: true });
+		});
+		await page.click('#dot3');
+		expect(await page.evaluate(() => window.caught)).toEqual({ target: 'one', bubbles: true, composed: true, index: 2, slide: 's3' });
+	});
 });

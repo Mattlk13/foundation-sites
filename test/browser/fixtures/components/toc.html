@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Toc fixture</title>
+	<link rel="stylesheet" href="../../../../src/yeti.css">
+	<script type="module" src="../../../../src/components/toc/toc.js"></script>
+	<style>#stage { inline-size: 100%; } .section { block-size: 150vh; }</style>
+</head>
+<body>
+	<main>
+		<h1>Toc component</h1>
+		<div id="stage">
+			<nav class="toc" aria-label="On this page" id="toc">
+				<ul role="list">
+					<li><a href="#one" id="link-one">Getting the files</a></li>
+					<li><a href="#two" id="link-two">The stylesheet</a></li>
+					<li><a href="#three" id="link-three">A module</a></li>
+				</ul>
+			</nav>
+			<section class="section"><h2 id="one">Getting the files</h2><p>First section.</p></section>
+			<section class="section"><h2 id="two">The stylesheet</h2><p>Second section.</p></section>
+			<section class="section"><h2 id="three">A module</h2><p>Third section.</p></section>
+		</div>
+	</main>
+</body>
+</html>

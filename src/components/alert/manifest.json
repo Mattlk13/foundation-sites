@@ -40,7 +40,9 @@
     { "name": "--_yeti-variant-soft", "public": false }
   ],
   "a11y": { "requiredAttributes": [], "keyboard": [ { "key": "Enter / Space", "action": "On the close button, removes the alert." } ], "notes": "Use role=\"status\" for the usual notice, which is announced politely, and role=\"alert\" only for something urgent, which interrupts. Content present at page load is not announced by either role; the roles matter for alerts inserted later. Meaning carried by the colour must also be in the words. The close button needs a name. Without the module the button does nothing, so leave it out on pages that do not load alert.js." },
-  "js": { "module": "alert.js", "optional": true },
+  "js": [{ "module": "alert.js", "optional": true, "events": [
+    { "name": "yeti:close", "description": "Dispatched on the .alert after the fade and before it is removed, while it is still in the page." }
+  ] }],
   "support": { "unguarded": ["lh unit", "color-mix()"], "guarded": [] },
   "since": "7.0.0",
   "example": "example.html",

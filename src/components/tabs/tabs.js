@@ -17,19 +17,34 @@ function select(root, tab) {
 	}
 }
 
+// Selecting is what both handlers do, and only a selection a reader made is
+// an event: the pass at load is not a change, it is the markup being obeyed.
+function choose(root, tab) {
+	select(root, tab);
+	tab.focus();
+	root.dispatchEvent(new CustomEvent('yeti:select', {
+		bubbles: true,
+		composed: true,
+		detail: { tab, panel: document.getElementById(tab.getAttribute('aria-controls')) },
+	}));
+}
+
 for (const root of document.querySelectorAll('.tabs')) {
 	const tabs = tabsOf(root);
 	if (tabs.length) select(root, tabs.find((tab) => tab.getAttribute('aria-selected') === 'true') ?? tabs[0]);
 }
 
 document.addEventListener('click', (event) => {
+	// The page's own listener ran first and asked for nothing to happen.
+	if (event.defaultPrevented) return;
 	const tab = event.target?.closest?.('.tabs [role="tab"]');
 	if (!tab) return;
-	select(tab.closest('.tabs'), tab);
-	tab.focus();
+	choose(tab.closest('.tabs'), tab);
 });
 
 document.addEventListener('keydown', (event) => {
+	// The page's own listener ran first and asked for nothing to happen.
+	if (event.defaultPrevented) return;
 	const tab = event.target?.closest?.('.tabs [role="tab"]');
 	if (!tab) return;
 	const root = tab.closest('.tabs');
@@ -42,6 +57,5 @@ document.addEventListener('keydown', (event) => {
 	else if (event.key === 'End') target = tabs[tabs.length - 1];
 	if (!target) return;
 	event.preventDefault();
-	select(root, target);
-	target.focus();
+	choose(root, target);
 });

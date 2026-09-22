@@ -49,6 +49,8 @@ Both children live in a wrapping flex row. The sidebar child gets `data-width` a
 </div>
 ```
 
+Either child can carry `data-sticky` and stay put while the other scrolls past it, which is what a section nav beside a long article wants. It stops `--yeti-sticky-offset` from the top of the scrollport and takes its own height rather than the row's: a flex item stretched to the height of the row it is in has nowhere left to move, and would never stick at all.
+
 ## Why this name
 
 The word says exactly what the fixed child is. Foundation 6 built this with `.grid-x` columns and `medium-8`/`medium-4` classes, which fixed the switch to a viewport breakpoint rather than to the content.
@@ -63,6 +65,18 @@ The word says exactly what the fixed child is. Foundation 6 built this with `.gr
 | `data-width` | enum | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `sm` | The sidebar's preferred width. |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `md` | Space between the two children, side by side or stacked. |
 | `data-align` | enum | `start`, `center`, `end`, `stretch`, `baseline` | `stretch` | Vertical alignment of the two children when side by side. |
+
+</div>
+
+## Markers
+
+Attributes that descendants carry, not the root.
+
+<div class="scroller" role="region" aria-label="Sidebar markers" tabindex="0" markdown="1">
+
+| Attribute | Type | Values | On | Description |
+| --- | --- | --- | --- | --- |
+| `data-sticky` | boolean |  | `> *` | Pins this child at --yeti-sticky-offset from the top of the scrollport while the other one scrolls past it. It takes its own height rather than the row's, since a stretched item has nowhere to move. |
 
 </div>
 

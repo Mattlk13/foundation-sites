@@ -221,6 +221,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | Token | Default | Description |
 | --- | --- | --- |
 | `--yeti-cover-height` | `100dvh` | Minimum block size of a cover layout or a filled stack. Set to auto for one that is only as tall as its content. |
+| `--yeti-sticky-offset` | `var(--yeti-space-md)` | How far from the leading edge of the scrollport a child carrying data-sticky stops. Set it to a sticky bar's height on whatever holds the things that stick below it. |
 
 </div>
 
@@ -373,6 +374,16 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | Token | Default | Description |
 | --- | --- | --- |
 | `--yeti-pagination-radius` | `var(--yeti-radius-md)` | Corner of each page target. |
+
+</div>
+
+## Toc
+
+<div class="scroller" role="region" aria-label="Toc tokens" tabindex="0" markdown="1">
+
+| Token | Default | Description |
+| --- | --- | --- |
+| `--yeti-toc-scroll` | `smooth, and auto under reduced motion` | How the page scrolls when a link in a toc is followed. A components-layer declaration outranks the reset, so the preference reaches the page through this token. |
 
 </div>
 
@@ -534,6 +545,16 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-attention-duration` | `600ms` | How long the one pulse or shake takes. Collapses to 0.01ms under prefers-reduced-motion. |
 | `--yeti-attention-distance` | `0.35rem` | How far a shake throws the element to each side. |
 | `--yeti-attention-scale` | `1.06` | How large a pulse swells the element at its peak. |
+
+</div>
+
+## Fit
+
+<div class="scroller" role="region" aria-label="Fit tokens" tabindex="0" markdown="1">
+
+| Token | Default | Description |
+| --- | --- | --- |
+| `--yeti-fit-width` | `var(--yeti-width-md)` | The container width at which a line carrying billboard reaches the top of its pair; below it the size is in proportion, above it the clamp holds. |
 
 </div>
 

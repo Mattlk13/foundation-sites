@@ -16,7 +16,8 @@
     { "selector": "> [data-split]", "min": 0, "max": 1, "description": "At most one child may carry data-split; it and everything after it are pushed to the end of the stack when the stack is taller than its content." }
   ],
   "markers": [
-    { "name": "data-split", "type": "boolean", "on": "> *", "description": "Pushes the child and everything after it to the end of the stack when the stack is taller than its content." }
+    { "name": "data-split", "type": "boolean", "on": "> *", "description": "Pushes the child and everything after it to the end of the stack when the stack is taller than its content." },
+    { "name": "data-sticky", "type": "boolean", "on": "> *", "description": "Pins this child at --yeti-sticky-offset from the top of the scrollport while the rest of the stack scrolls past it. It keeps the full width of the column, a stack stretching its children on the inline axis." }
   ],
   "tokens": [
     { "name": "--yeti-space-md", "public": true, "description": "The default gap." },

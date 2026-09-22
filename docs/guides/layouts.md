@@ -61,29 +61,58 @@ The [responsive guide](responsive.md) takes this idea through the whole framewor
 
 Every layout is configured with a small set of `data-*` attributes, drawn from a shared list of values.
 
+<!-- yeti:attributes:start -->
+
+<div class="scroller" role="region" aria-label="Layout attributes" tabindex="0" markdown="1">
+
 | Attribute | Values | Read by |
 | --- | --- | --- |
-| `data-gap` | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, plus a fluid pair of any two of those (`xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl`) | stack, cluster, sidebar, columns, cover, grid, scroller, overlay, box, center, icon |
-| `data-align` | `start`, `center`, `end`, `stretch`, `baseline` | stack, cluster, sidebar, columns, icon |
+| `data-align` | `start`, `center`, `end`, `stretch`, `baseline` | cluster, columns, hero, icon, layer, media, sidebar, stack |
+| `data-align-self` | `start`, `center`, `end`, `stretch`, `baseline` | layer (> *) |
+| `data-alternate` | boolean | timeline |
+| `data-bleed` | boolean | breakout (> *) |
+| `data-border` | boolean | box |
+| `data-center` | boolean | cover (> *) |
+| `data-columns` | `1`, `2`, `3`, `4`, `5`, `6` | columns, grid, masonry |
+| `data-fill` | boolean | overlay (> [data-over]), stack |
+| `data-fixed` | boolean | overlay |
+| `data-fold` | boolean | grid |
+| `data-gap` | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | box, breakout, center, cluster, columns, cover, grid, hero, icon, masonry, media, overlay, scroller, shell, sidebar, stack, timeline |
+| `data-hide` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | container (*) |
+| `data-intrinsic` | boolean | center |
 | `data-justify` | `start`, `center`, `end`, `between`, `around`, `evenly` | cluster, columns |
-| `data-threshold` | `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | columns |
-| `data-width` | `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | sidebar, scroller |
-| `data-min` | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | grid |
-| `data-max` | `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | center |
-| `data-ratio` | `1/1`, `4/3`, `3/2`, `16/9`, `21/9` | frame |
-| `data-side` | `start`, `end` | sidebar |
-| `data-columns` | `1`, `2`, `3`, `4`, `5`, `6` | grid, masonry — the most columns allowed; columns — the first N share a row, every later child takes a full row |
-| `data-align-self` | `start`, `center`, `end`, `stretch`, `baseline` | a child of layer — places that child vertically |
-| `data-justify-self` | `start`, `center`, `end`, `stretch` | a child of layer — places that child horizontally |
-| `data-span` | `1`, `2`, `3`, `4`, `5`, `6` | a child of columns — that child's share of the row |
-| `data-rows` | `2`, `3`, `4`, `5`, `6` | grid — how many rows each child spans, one per part; lines up neighbours' parts across the row |
-| `data-fold` | boolean | grid — the column count halves as the grid narrows, instead of stepping down one at a time |
-| `data-note` | boolean | a child of breakout — a margin note beside the paragraph it follows |
-| `data-alternate` | boolean | timeline — entries take alternate sides of a centred rail once it is wide enough |
+| `data-justify-self` | `start`, `center`, `end`, `stretch` | layer (> *) |
+| `data-max` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | breakout, center |
+| `data-min` | `none`, `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | grid, masonry |
+| `data-note` | boolean | breakout (> *) |
+| `data-over` | boolean | overlay (> *) |
+| `data-ratio` | `1/1`, `4/3`, `3/2`, `16/9`, `21/9` | frame, hero, media |
+| `data-rows` | `2`, `3`, `4`, `5`, `6` | grid |
+| `data-show` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | container (*) |
+| `data-side` | `start`, `end` | hero, media, sidebar |
+| `data-snap` | boolean | scroller |
+| `data-span` | `1`, `2`, `3`, `4`, `5`, `6` | columns (> *) |
+| `data-split` | boolean | stack (> *) |
+| `data-sticky` | boolean | shell (> div > :is(nav, aside)), sidebar (> *), stack (> *) |
+| `data-surface` | `base`, `raised`, `sunken` | box |
+| `data-threshold` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | columns, hero |
+| `data-width` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | media, scroller, shell, sidebar |
+
+</div>
+
+<!-- yeti:attributes:end -->
+
+A name in parentheses is the descendant that carries the attribute, not the layout itself: `layer (> *)` means a child of a `layer`. This table is generated from the manifests by `npm run docs`; the paragraphs around it are not.
 
 For the sizing attributes the mapping rule is always the same: a value is a token suffix. `data-gap="lg"` reads `--yeti-space-lg`; `data-width="sm"` reads `--yeti-width-sm`. The attribute names the property to set; the value names the step on Yeti's scale to set it to. The rest — `data-align`, `data-justify`, `data-ratio`, `data-columns`, `data-side` — name a behaviour rather than a token; `attributes.css` maps each value to the CSS keyword it means.
 
 Gap alone also takes a fluid pair. `data-gap="sm-lg"` does not jump between the two: it runs from the `sm` stop at the narrow end of the viewport to the `lg` stop at the wide end, the same way the type scale itself is fluid. `none` never anchors a pair, so any smaller of the remaining seven sized stops can pair with any larger one, which is what makes twenty-one pairs out of seven.
+
+`data-sticky` is the odd one in the table. Every other name there sets a private property for a layout to read; this one sets two properties on the child itself, `position: sticky` and the offset. A third is needed in a row and only in a row: an item stretched to the full height of its row has nowhere left to move and never sticks, so `sidebar` and the `shell`'s body row take their sticky children out of that stretch in their own stylesheets. A `stack` stretches sideways instead, which costs a sticky child nothing, so a sticky child of a stack keeps the full width of the column.
+
+Type can answer a container too. The [billboard](../billboard.md) utility's `data-fit` names a pair of type steps and clamps a font size between them, reading `cqi` in between, so a headline is sized by the column it is in rather than by the window. It needs a size container above it, which is what `container` is for.
+
+Two more names in the table belong to a container rather than to a layout. `data-show` and `data-hide` take a width from the same scale and mean the same direction as `data-threshold`: `data-show="md"` shows the element from `md` up, `data-hide="md"` removes it from `md` up. They measure the nearest size container, so the same markup decides differently in a sidebar and across a page, and outside a size container they do nothing at all. They are the last tool to reach for, not the first — a component that can change shape should — and the [visibility guide](visibility.md) says when the trade is worth it.
 
 ## The seventeen
 

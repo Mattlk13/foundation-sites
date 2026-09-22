@@ -32,10 +32,11 @@ Here the `columns` sits in the sidebar's main area. When that area is narrower t
 
 A breakpoint is a screen width chosen ahead of time, usually from a list of devices, and every component on the page changes at the same one. A threshold is a width where one component's behaviour changes, chosen from Yeti's width vocabulary, and it belongs to that component alone.
 
-The vocabulary is six stops:
+The vocabulary is seven stops:
 
 | Name | Width | About |
 | --- | --- | --- |
+| `2xs` | 12rem | a badge, or a dialog's narrowest size |
 | `xs` | 16rem | a phone held sideways, or a narrow sidebar |
 | `sm` | 24rem | a phone, or a card |
 | `md` | 32rem | a reading column |
@@ -75,6 +76,8 @@ When something has to respond, reach for these in order and stop at the first th
 
 **A viewport query almost never.** The one thing a component cannot measure is the screen, and the one thing that is legitimately about the screen is the page's outermost frame: whether the `shell` shows its nav beside the main area or above it. Even there Yeti asks the shell's own width, since the shell is the page. If you find yourself writing `@media (width >= …)` around a Yeti component, the component is being asked to know something it should not need to.
 
+There is a fourth tool, and it is fourth on purpose: `data-show` and `data-hide` remove an element outright at a container width, instead of changing anything's shape. Reach for it when a thing genuinely has no narrow form — not when writing the narrow form is merely more work. Two versions of one thing are two things to keep in step forever, and the removed one is out of the accessibility tree while it is gone. The [visibility guide](visibility.md) has it, and everything else that hides.
+
 ## Who reads which width
 
 | Attribute | On | What the width means |
@@ -83,5 +86,7 @@ When something has to respond, reach for these in order and stop at the first th
 | `data-max` | `breakout`, `center`, `dialog` | the widest the content column, or the dialog, may grow |
 | `data-width` | `media`, `scroller`, `shell`, `sidebar` | the preferred width of the part it sizes: the media's figure, each item in a scroller, the shell's nav and aside, or the sidebar |
 | `data-min` | `grid`, `masonry` | the narrowest a column may be before one drops, or `none`, which leaves the count to `data-columns` |
+| `data-show` | anything inside a `container` or another size container | shown from the stop up |
+| `data-hide` | anything inside a `container` or another size container | hidden from the stop up |
 
-The values are the six stops above, `none` aside, and every one of them is a token: `--yeti-width-sm` is `24rem` until a theme says otherwise.
+The values are the seven stops above, `none` aside, and every one of them is a token: `--yeti-width-sm` is `24rem` until a theme says otherwise.

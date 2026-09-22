@@ -59,8 +59,12 @@ export function loadManifests(srcDir, schema, vocabulary = {}) {
 			for (const attr of manifest.attributes) resolveValues(attr, 'attribute', vocabulary, file, errors);
 			for (const marker of manifest.markers) resolveValues(marker, 'marker', vocabulary, file, errors);
 
-			if (manifest.js && !fs.existsSync(path.join(dir, manifest.js.module))) {
-				errors.push({ file, message: `js.module "${manifest.js.module}" does not exist` });
+			// A component may ship more than one module; field ships the range's
+			// fill and the form validator, each loaded on its own.
+			for (const mod of manifest.js ?? []) {
+				if (!fs.existsSync(path.join(dir, mod.module))) {
+					errors.push({ file, message: `js.module "${mod.module}" does not exist` });
+				}
 			}
 
 			entries.push({ dir, file, kind, name: manifest.name, manifest });

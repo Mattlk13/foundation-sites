@@ -2,6 +2,8 @@
 
 Every page has a skeleton, and most of them are this one: a header, a footer that should sit at the bottom of the screen even when the page is short, and a middle that may have navigation down one side or related material down the other. Put the class on `body` and the landmarks do the rest. Three regions share a row once the container is about four times `data-width` plus the gaps; two regions need about half that.
 
+The body row's `nav` and `aside` can each carry `data-sticky` and stay in place while `main` scrolls past them. Each stops `--yeti-sticky-offset` from the top of the scrollport and keeps its own height instead of the row's, which is what lets it move at all.
+
 ## Built from primitives
 
 A `stack` with `data-fill` is at least as tall as the viewport, and a footer carrying `data-split` drops to its bottom. In the middle, a `sidebar` puts the nav beside the main content until the content would fall below half the width. That is the whole page.

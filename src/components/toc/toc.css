@@ -1,0 +1,48 @@
+/* Table of contents: the page's own headings as a column of links, with the
+   one being read marked. The mark is aria-current, because where the reader
+   is is state, and state is native or ARIA, never a class. toc.js moves it;
+   without the module the list is a list of links and every one still works. */
+@layer yeti.components {
+	/* Only a page that has one, so a site-wide stylesheet does not change how
+	   every other page scrolls. */
+	html:has(.toc) { scroll-behavior: var(--yeti-toc-scroll); }
+
+	.toc:not([data-variant]) {
+		--_yeti-variant: var(--yeti-color-primary);
+		--_yeti-variant-subtle: var(--yeti-color-primary-subtle);
+		--_yeti-variant-text: var(--yeti-color-primary-text);
+	}
+	.toc:not([data-size]) { --_yeti-size-text: var(--yeti-text-md); --_yeti-size-space: var(--yeti-space-sm); }
+	.toc > ul {
+		display: flex;
+		flex-direction: column;
+		gap: var(--yeti-space-xs);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		font-size: var(--_yeti-size-text);
+	}
+	/* The prose layer spaces list items with margin-block-start; the column
+	   owns that space through its own gap instead. */
+	.toc > ul > li { margin: 0; }
+	.toc a {
+		display: block;
+		padding-block: var(--yeti-space-xs);
+		padding-inline: var(--_yeti-size-space);
+		/* The bar is on every link, transparent until the link is current, so
+		   the text never shifts sideways as the mark moves down the list. */
+		border-inline-start: calc(var(--yeti-border-width) * 3) solid transparent;
+		color: var(--yeti-color-text-muted);
+		text-decoration: none;
+		transition: color var(--yeti-duration-fast) var(--yeti-ease), border-color var(--yeti-duration-fast) var(--yeti-ease);
+	}
+	.toc a:hover {
+		background-color: var(--_yeti-variant-subtle);
+		color: var(--yeti-color-text);
+	}
+	.toc a[aria-current] {
+		border-inline-start-color: var(--_yeti-variant);
+		color: var(--_yeti-variant-text);
+		font-weight: var(--yeti-weight-strong);
+	}
+}

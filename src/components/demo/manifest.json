@@ -51,7 +51,7 @@
     ],
     "notes": "Give the iframe a title. Give a box holding direct markup tabindex=\"0\": markup taller than the box scrolls, and a scrollable region must be reachable from the keyboard. A framed box does not need one, because the iframe fills it exactly and it never scrolls. The resize handle is the browser's and works with a mouse or trackpad; a keyboard or touch reader sees the demo at its starting size and has the code, so a demo must never be the only place the markup appears. The bar and the stop label are generated content and are not announced; the name in data-preview is a visual heading for the box, and the iframe's title carries the same name to assistive tech. A frame the module creates is titled from that name too."
   },
-  "js": { "module": "demo.js", "optional": true },
+  "js": [{ "module": "demo.js", "optional": true }],
   "support": { "unguarded": ["container size queries", "resize", "iframe srcdoc"], "guarded": [] },
   "since": "7.0.0",
   "example": "example.html",

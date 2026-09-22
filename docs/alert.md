@@ -134,4 +134,14 @@ Attributes that descendants carry, not the root.
 
 Optional enhancement: `components/alert/alert.js`. The component works without it.
 
+Each event bubbles, crosses a shadow boundary, and cannot be cancelled.
+
+<div class="scroller" role="region" aria-label="Alert events" tabindex="0" markdown="1">
+
+| Event | Module | Detail | Description |
+| --- | --- | --- | --- |
+| `yeti:close` | `alert.js` | none | Dispatched on the .alert after the fade and before it is removed, while it is still in the page. |
+
+</div>
+
 Available since 7.0.0.

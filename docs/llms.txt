@@ -59,6 +59,10 @@ On children:
 
 Makes its box the thing a container query measures, so what is inside can respond to its width instead of the viewport's.
 
+On children:
+- data-show on *: 2xs | xs | sm | md | lg | xl | 2xl — Show this element only while the nearest size container is this wide or wider. Below that width it is not rendered at all, and it is not in the accessibility tree either.
+- data-hide on *: 2xs | xs | sm | md | lg | xl | 2xl — Hide this element once the nearest size container is this wide or wider. Below that width it is rendered as usual.
+
 ## cover (layout, class="cover")
 
 Fills at least the viewport's height and centers one child vertically, with optional content pinned above and below it.
@@ -146,6 +150,9 @@ Attributes:
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the two children, side by side or stacked.
 - data-align: start | center | end | stretch (default) | baseline — Vertical alignment of the two children when side by side.
 
+On children:
+- data-sticky on > * (boolean) — Pins this child at --yeti-sticky-offset from the top of the scrollport while the other one scrolls past it. It takes its own height rather than the row's, since a stretched item has nowhere to move.
+
 ## stack (layout, class="stack")
 
 Stacks its children vertically with one consistent gap between them.
@@ -157,6 +164,7 @@ Attributes:
 
 On children:
 - data-split on > * (boolean) — Pushes the child and everything after it to the end of the stack when the stack is taller than its content.
+- data-sticky on > * (boolean) — Pins this child at --yeti-sticky-offset from the top of the scrollport while the rest of the stack scrolls past it. It keeps the full width of the column, a stack stretching its children on the inline axis.
 
 ## timeline (layout, class="timeline")
 
@@ -196,6 +204,9 @@ Attributes:
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the rows, and between nav, main, and aside.
 - data-width: 2xs | xs | sm (default) | md | lg | xl | 2xl — The preferred width of nav and aside. Three regions share a row once the container is about four times this width plus the gaps; two regions need about half that.
 
+On children:
+- data-sticky on > div > :is(nav, aside) (boolean) — Pins the nav or the aside at --yeti-sticky-offset from the top of the scrollport while main scrolls past it.
+
 ## accordion (component, class="accordion")
 
 A column of disclosures built on details and summary, each opening to show its panel, with the browser doing the opening, the keyboard, and the announcing.
@@ -216,6 +227,7 @@ On children:
 - data-close on > button (boolean) — The close button; removes the alert when alert.js is loaded.
 
 module: alert.js (optional)
+- event yeti:close — Dispatched on the .alert after the fade and before it is removed, while it is still in the page.
 
 ## badge (component, class="badge")
 
@@ -277,6 +289,7 @@ On children:
 - data-dots on > * (boolean) — The list of links to the slides, one per slide.
 
 module: carousel.js (optional)
+- event yeti:slide with detail { index, slide } — Dispatched on the .carousel when a dot scrolls the track, with the slide's zero-based index.
 
 ## demo (component, class="demo")
 
@@ -301,6 +314,8 @@ Attributes:
 - data-max: 2xs | xs | sm | md (default) | lg | xl | 2xl — The widest the dialog may grow, from the width scale; it is always narrower than the viewport by a gutter.
 
 module: dialog.js (optional)
+- event yeti:open — Dispatched on the dialog once the browser has opened it from a commandfor button.
+- event yeti:close — Dispatched on the dialog when it closes, however it was closed.
 
 ## dropdown (component, class="dropdown")
 
@@ -327,6 +342,9 @@ On children:
 
 module: range.js (optional)
 
+module: validate.js (optional)
+- event yeti:invalid with detail { controls } — Dispatched on the form when a submit is refused, carrying the invalid controls in document order.
+
 ## nav (component, class="nav")
 
 A bar with a brand, a list of links, and actions, that collapses the links behind a toggle at its own width and opens them as a sheet, a drawer, or a screen.
@@ -336,6 +354,7 @@ Attributes:
 - data-threshold: 2xs | xs | sm | md (default) | lg | xl | 2xl — The nav's own width at or above which the links sit in the bar; below it they are behind the toggle.
 - data-panel: sheet (default) | drawer | screen — The shape of the open list below the threshold: a sheet under the bar, a drawer from the start edge, or the whole screen.
 - data-gap: none | xs | sm (default) | md | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the bar's parts and between the links.
+- data-sticky (boolean) — Keep the bar at the top of the scrollport as the page scrolls, at --yeti-sticky-offset from the edge.
 
 On children:
 - data-brand on > * (boolean) — The site's name or mark, usually a link home.
@@ -401,6 +420,18 @@ Attributes:
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the list and the panels.
 
 module: tabs.js (optional)
+- event yeti:select with detail { tab, panel } — Dispatched on the .tabs when a click or an arrow key selects a tab; never for the pass at load.
+
+## toc (component, class="toc")
+
+A column of links to the headings on the page, with the one being read marked as the reader scrolls.
+
+Attributes:
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — The hue of the current link and its edge bar.
+- data-size: sm | md (default) | lg — The text step, and the inset of each link with it.
+
+module: toc.js (optional)
+- event yeti:current with detail { link, heading } — Dispatched on the .toc when the mark moves to another link.
 
 ## tooltip (component, class="tooltip")
 
@@ -415,6 +446,13 @@ Plays one pulse or one shake on load, to point at something that has just change
 
 Attributes:
 - data-attention: pulse (default) | shake — Which gesture: a swell and settle, or a shake from side to side.
+
+## billboard (utility, class="billboard")
+
+Sizes display text to the container it is in, clamped between two steps of the type scale, so a headline fills the board it is on.
+
+Attributes:
+- data-fit: xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | xs-display | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | sm-display | md-lg | md-xl | md-2xl | md-3xl (default) | md-display | lg-xl | lg-2xl | lg-3xl | lg-display | xl-2xl | xl-3xl | xl-display | 2xl-3xl | 2xl-display | 3xl-display — The two ends of the clamp, as a pair of type steps: the smallest the line may set and the largest.
 
 ## enter (utility, class="enter")
 
@@ -432,3 +470,14 @@ The standfirst: the sentence under a page's heading that says what the page is, 
 ## lift (utility, class="lift")
 
 Raises the element slightly and deepens its shadow while the pointer is on it or a keyboard is inside it.
+
+## print (utility, class="print")
+
+Marks an element as belonging to one medium: on the printed page only, or on the screen only.
+
+Attributes:
+- data-print: only (default) | none — Which medium the element belongs to: only, on paper and nowhere else, or none, everywhere but paper.
+
+## visually-hidden (utility, class="visually-hidden")
+
+Takes words out of sight and leaves them in the accessibility tree, for the name a control needs when its face is a picture.

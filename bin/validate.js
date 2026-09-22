@@ -495,7 +495,11 @@ export function validateMotion(srcDir) {
 	return errors;
 }
 
-const WIDTH_DEFAULTS = [16, 24, 32, 48, 64, 80];
+// The width tokens' defaults, in rem. Every container threshold in the
+// framework is one of these or a whole multiple of one, so every breakpoint is
+// a documented size rather than a number somebody liked. 12 is --yeti-width-2xs
+// and arrived with data-show and data-hide, which map all seven stops.
+const WIDTH_DEFAULTS = [12, 16, 24, 32, 48, 64, 80];
 
 /**
  * Anchors are scoped so nested components never bind to an outer one's name, and
@@ -535,8 +539,10 @@ export function validateManifestTokens(entries) {
 		const file = entry.file;
 		const css = stripComments(fs.readFileSync(path.join(entry.dir, `${entry.name}.css`), 'utf8'));
 		const reads = new Set([...css.matchAll(PUBLIC_READ_RE)].map((m) => m[1]));
-		if (entry.manifest.js) {
-			const js = fs.readFileSync(path.join(entry.dir, entry.manifest.js.module), 'utf8');
+		for (const mod of entry.manifest.js ?? []) {
+			const moduleFile = path.join(entry.dir, mod.module);
+			if (!fs.existsSync(moduleFile)) continue;
+			const js = fs.readFileSync(moduleFile, 'utf8');
 			for (const m of js.matchAll(/--yeti-[a-z0-9-]+/g)) reads.add(m[0]);
 		}
 		const declares = new Set([...css.matchAll(PRIVATE_DECL_RE)].map((m) => m[1]));
@@ -557,6 +563,44 @@ export function validateManifestTokens(entries) {
 	return errors;
 }
 
+const EVENT_RE = /yeti:[a-z]+/g;
+
+/**
+ * A component's folder, its manifest and its module sources must agree: every
+ * .js file in the folder is declared, every event the manifest promises is
+ * named in the module that promises it, and every yeti: event a module names
+ * is declared. The scan is over the raw source, comments included, because a
+ * comment naming an event nothing declares is the same disagreement said
+ * quietly, and the manifest is what the docs and the install guide are built
+ * from.
+ */
+export function validateModules(entries) {
+	const errors = [];
+	for (const entry of entries) {
+		const declared = entry.manifest.js ?? [];
+		const names = new Set(declared.map((mod) => mod.module));
+		for (const name of fs.readdirSync(entry.dir).filter((f) => f.endsWith('.js')).sort()) {
+			if (!names.has(name)) errors.push({ file: entry.file, message: `${name} is in the folder but the manifest does not declare it under js` });
+		}
+		for (const mod of declared) {
+			const moduleFile = path.join(entry.dir, mod.module);
+			// A module the manifest names but the folder does not hold is the
+			// loader's error to report, not this one's.
+			if (!fs.existsSync(moduleFile)) continue;
+			const source = fs.readFileSync(moduleFile, 'utf8');
+			const named = new Set([...source.matchAll(EVENT_RE)].map((m) => m[0]));
+			const promised = new Set((mod.events ?? []).map((e) => e.name));
+			for (const name of promised) {
+				if (!named.has(name)) errors.push({ file: entry.file, message: `${mod.module} is declared to dispatch ${name} but its source never names it` });
+			}
+			for (const name of named) {
+				if (!promised.has(name)) errors.push({ file: entry.file, message: `${mod.module} names ${name} but the manifest does not declare it under js[].events` });
+			}
+		}
+	}
+	return errors;
+}
+
 const MAPPED = {
 	'data-gap': 'gap', 'data-align': 'align', 'data-justify': 'justify', 'data-threshold': 'width',
 	'data-width': 'width', 'data-height': 'height', 'data-min': 'width-or-none', 'data-max': 'width', 'data-ratio': 'ratio', 'data-columns': 'columns',
@@ -564,13 +608,19 @@ const MAPPED = {
 	'data-variant': 'variant', 'data-size': 'size-control',
 	'data-span': 'span', 'data-rows': 'rows',
 	'data-slides': 'slides',
+	'data-show': 'width', 'data-hide': 'width',
 };
 
 // Read directly by their own layout's CSS, so they have no attributes.css rule.
 // data-enter and data-attention are here for the same reason: each value names
 // an animation on the utility's own selector, and a mapped property would be a
 // keyframe name in a custom property that nothing else could ever read.
-const READ_DIRECTLY = new Set(['data-side', 'data-emphasis', 'data-shape', 'data-edge', 'data-panel', 'data-orientation', 'data-placement', 'data-trigger', 'data-resize', 'data-enter', 'data-attention', 'data-surface']);
+// data-fit is here because each value sets two properties, not one: the two
+// ends of a clamp, which no single mapped property could carry.
+// data-print is here because its value sets no property at all: it decides
+// which of two media a rule applies in, and a custom property cannot carry a
+// media query.
+const READ_DIRECTLY = new Set(['data-side', 'data-emphasis', 'data-shape', 'data-edge', 'data-panel', 'data-orientation', 'data-placement', 'data-trigger', 'data-resize', 'data-enter', 'data-attention', 'data-surface', 'data-fit', 'data-print']);
 
 /** Every value of every mapped vocabulary must have a rule in layouts/attributes.css,
  *  and every manifest attribute that references a vocabulary must be checked against
@@ -632,6 +682,7 @@ export function validate({ root }) {
 		...validateImportant(srcDir),
 		...validateTokens(root, entries),
 		...validateManifestTokens(entries),
+		...validateModules(entries),
 		...validateTokenReads(root),
 		...validateMotion(srcDir),
 		...validateAnchorsAndContainers(srcDir),

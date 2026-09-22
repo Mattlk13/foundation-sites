@@ -17,7 +17,7 @@ Yeti gives a designer the structure and the visual system to build a coherent si
 ```
 
 - **CSS-first and native.** Container queries, cascade layers, native nesting, `light-dark()`, `dialog`, `popover`, and scroll-snap do the work that used to need JavaScript or a preprocessor.
-- **Zero build, ever.** No Sass, no Node, no bundler required to use it. It composes into your build if you have one, but never demands it.
+- **Zero build, ever.** No Sass, no Node, no bundler required to use it. It composes into your build if you have one, but never demands it. The repository's own `npm run build` concatenates the source and writes a minified copy beside it; nobody using Yeti has to run it.
 - **Named layouts, not utility soup.** Intent-based layout primitives and composed recipes, configured with a few data attributes.
 - **One token scale.** Type and space derive from one base and one ratio at runtime. Change the ratio and the whole system recomputes.
 - **Accessible by default.** Correct focus handling and ARIA on every component, checked in CI.
@@ -33,7 +33,7 @@ Yeti targets **Baseline 2025**. Anything that reached Baseline by the end of 202
 
 ## Try it today
 
-The tokens, reset, base layer, seventeen layout primitives, three recipes, and twenty components are in, with two example themes; see the [Layouts guide](docs/guides/layouts.md). Link the unbuilt source and write plain HTML:
+The tokens, reset, base layer, seventeen layout primitives, three recipes, twenty-two components, and seven utilities are in, with two example themes; see the [Layouts guide](docs/guides/layouts.md). Link the unbuilt source and write plain HTML:
 
 ```html
 <link rel="stylesheet" href="src/yeti.css">

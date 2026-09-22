@@ -9,7 +9,8 @@
     { "name": "data-variant", "type": "enum", "vocabulary": "variant", "default": "primary", "description": "The hue of the current link and of the hover tint." },
     { "name": "data-threshold", "type": "enum", "vocabulary": "width", "default": "md", "description": "The nav's own width at or above which the links sit in the bar; below it they are behind the toggle." },
     { "name": "data-panel", "type": "enum", "vocabulary": "panel", "default": "sheet", "description": "The shape of the open list below the threshold: a sheet under the bar, a drawer from the start edge, or the whole screen." },
-    { "name": "data-gap", "type": "enum", "vocabulary": "gap", "default": "sm", "description": "Space between the bar's parts and between the links." }
+    { "name": "data-gap", "type": "enum", "vocabulary": "gap", "default": "sm", "description": "Space between the bar's parts and between the links." },
+    { "name": "data-sticky", "type": "boolean", "description": "Keep the bar at the top of the scrollport as the page scrolls, at --yeti-sticky-offset from the edge." }
   ],
   "classes": [],
   "children": [

@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {
 	validate, formatError, validateElementTree, validateHtmlString, extractHtmlBlocks, findBareMargin, validateLayers, validateImportOrder, validateImportant, validateTokens,
-	validateVocabulary, validateNoMediaQueries, validateDocsFragments, validateFields, validateThemes, validateMotion, validateAnchorsAndContainers, validateTokenReads,
+	validateVocabulary, validateNoMediaQueries, validateDocsFragments, validateFields, validateThemes, validateMotion, validateAnchorsAndContainers, validateTokenReads, validateModules,
 } from '../../bin/validate.js';
 import { parseHtml } from '../../bin/lib/html.js';
 import { makeTree, validManifest, validTree, REPO_ROOT, TOKENS_SCHEMA_PATH, VOCABULARY_PATH } from './helpers.js';
@@ -265,6 +265,8 @@ const MAPPINGS = [
 	['data-span', 'span', '--_yeti-span', (v) => v],
 	['data-rows', 'rows', '--_yeti-rows', (v) => v],
 	['data-slides', 'slides', '--_yeti-slides', (v) => v],
+	['data-show', 'width', '--_yeti-show', (v) => v],
+	['data-hide', 'width', '--_yeti-hide', (v) => v],
 ];
 
 const layoutTree = (extra = {}) => validTree({
@@ -669,7 +671,7 @@ test('validateManifestTokens counts a token the JS module reads as read', () => 
 		),
 		'src/layouts/rail/manifest.json': validManifest({
 			tokens: [{ name: '--yeti-space-md', public: true, description: 'The gap.' }, { name: '--yeti-space-lg', public: true, description: 'The wide gap.' }],
-			js: { module: 'rail.js', optional: true },
+			js: [{ module: 'rail.js', optional: true }],
 		}),
 		'src/layouts/rail/rail.js': "getComputedStyle(el).getPropertyValue('--yeti-space-lg');\n",
 	});
@@ -766,14 +768,14 @@ test('every anchor-name needs an anchor-scope in the same file', () => {
 
 test('container thresholds must be a width token default, a whole multiple of one, or a calc( of one', () => {
 	const css = (query) => `@layer yeti.components {\n\t.tag { container-type: inline-size; }\n\t@container (inline-size ${query}) {\n\t\t.tag > * { display: none; }\n\t}\n}\n`;
-	for (const ok of ['< 16rem', '>= 24rem', '< 32rem', '>= 48rem', '< 64rem', '>= 80rem', '>= 96rem', '>= 240rem', '< calc(24rem + 2 * 1rem)']) {
+	for (const ok of ['< 12rem', '< 16rem', '>= 24rem', '< 32rem', '>= 48rem', '< 64rem', '>= 80rem', '>= 96rem', '>= 240rem', '< calc(24rem + 2 * 1rem)']) {
 		assert.deepEqual(run(componentTree({ 'src/components/tag/tag.css': css(ok) })).lines, [], ok);
 	}
 	assert.deepEqual(run(componentTree({ 'src/components/tag/tag.css': css('< 22rem') })).lines, [
-		'src/components/tag/tag.css:3: @container threshold "22rem" is not a width token\'s default (16, 24, 32, 48, 64, 80rem), a whole multiple of one, or a calc( of one',
+		'src/components/tag/tag.css:3: @container threshold "22rem" is not a width token\'s default (12, 16, 24, 32, 48, 64, 80rem), a whole multiple of one, or a calc( of one',
 	]);
 	assert.deepEqual(run(componentTree({ 'src/components/tag/tag.css': css('> 400px') })).lines, [
-		'src/components/tag/tag.css:3: @container threshold "400px" is not a width token\'s default (16, 24, 32, 48, 64, 80rem), a whole multiple of one, or a calc( of one',
+		'src/components/tag/tag.css:3: @container threshold "400px" is not a width token\'s default (12, 16, 24, 32, 48, 64, 80rem), a whole multiple of one, or a calc( of one',
 	]);
 });
 
@@ -821,4 +823,68 @@ test('validateImportOrder rejects a theme imported into yeti.css', () => {
 		'src/yeti.css': '@import "layers.css";\n@import "tokens/scale.css";\n@import "layouts/rail/rail.css";\n@import "themes/sharp.css";\n',
 	}));
 	assert.deepEqual(r.lines, ['src/yeti.css:4: themes are opt-in and must not be imported into yeti.css (found "themes/sharp.css")']);
+});
+
+// The fit vocabulary is read directly by billboard.css rather than mapped
+// into attributes.css, so validateVocabulary cannot see it: a pair added to
+// the list with no rule behind it would be offered by the manifest, accepted
+// by the validator, and do nothing in the browser. This is that check. The
+// vocabulary and the attribute are still called fit after the class became
+// billboard, because they name the range the text fits within rather than the
+// thing that reads it.
+test('every value of the fit vocabulary has a rule in billboard.css', () => {
+	const vocabulary = JSON.parse(fs.readFileSync(VOCABULARY_PATH, 'utf8'));
+	const css = fs.readFileSync(path.join(REPO_ROOT, 'src/utilities/billboard/billboard.css'), 'utf8');
+	assert.equal(vocabulary.fit.length, 28);
+	for (const value of vocabulary.fit) {
+		assert.ok(css.includes(`.billboard[data-fit="${value}"]`), `${value} has no rule in billboard.css`);
+	}
+});
+
+// The print vocabulary is read directly by print.css rather than mapped into
+// attributes.css, so validateVocabulary cannot see it: a value added to the
+// list with no rule behind it would be offered by the manifest, accepted by
+// the validator, and do nothing in the browser. The two selectors are not the
+// same shape — only is also what an absent attribute means, so it is written
+// as a :not() of the other value — which is why this names both rather than
+// building a selector from the value, and why a third value fails here loudly
+// instead of failing silently in a browser.
+test('every value of the print vocabulary has a rule in print.css', () => {
+	const expected = { only: '.print:not([data-print="none"])', none: '.print[data-print="none"]' };
+	const vocabulary = JSON.parse(fs.readFileSync(VOCABULARY_PATH, 'utf8'));
+	const css = fs.readFileSync(path.join(REPO_ROOT, 'src/utilities/print/print.css'), 'utf8');
+	assert.equal(vocabulary.print.length, 2);
+	for (const value of vocabulary.print) {
+		assert.ok(expected[value], `${value} is a print value this test has no expected selector for`);
+		assert.ok(css.includes(expected[value]), `${value} has no rule in print.css`);
+	}
+});
+
+test('a .js file in a component folder that the manifest does not declare is reported', () => {
+	const r = run(validTree({ 'src/layouts/rail/stray.js': '// nobody declared me\n' }));
+	assert.deepEqual(r.lines, ['src/layouts/rail/manifest.json: stray.js is in the folder but the manifest does not declare it under js']);
+});
+
+test('an event the manifest promises must be named in the module source', () => {
+	const r = run(validTree({
+		'src/layouts/rail/manifest.json': validManifest({ js: [{ module: 'rail.js', optional: true, events: [{ name: 'yeti:slide', description: 'The rail moved.' }] }] }),
+		'src/layouts/rail/rail.js': '// says nothing\n',
+	}));
+	assert.deepEqual(r.lines, ['src/layouts/rail/manifest.json: rail.js is declared to dispatch yeti:slide but its source never names it']);
+});
+
+test('an event a module dispatches must be declared in the manifest', () => {
+	const r = run(validTree({
+		'src/layouts/rail/manifest.json': validManifest({ js: [{ module: 'rail.js', optional: true }] }),
+		'src/layouts/rail/rail.js': "document.dispatchEvent(new CustomEvent('yeti:slide'));\n",
+	}));
+	assert.deepEqual(r.lines, ['src/layouts/rail/manifest.json: rail.js names yeti:slide but the manifest does not declare it under js[].events']);
+});
+
+test('a module and its declared events agreeing is silent', () => {
+	const r = run(validTree({
+		'src/layouts/rail/manifest.json': validManifest({ js: [{ module: 'rail.js', optional: true, events: [{ name: 'yeti:slide', detail: '{ index }', description: 'The rail moved.' }] }] }),
+		'src/layouts/rail/rail.js': "document.dispatchEvent(new CustomEvent('yeti:slide', { detail: { index: 0 } }));\n",
+	}));
+	assert.deepEqual(r.lines, []);
 });
