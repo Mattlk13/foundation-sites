@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { loadSchema, loadAndMerge, loadVocabulary } from '../../bin/lib/manifest.js';
 import { REPO_ROOT } from './helpers.js';
+import { renderAttributeTable, replaceMarked, GUIDE_TABLES } from '../../bin/gen-docs.js';
 
 const schema = loadSchema(path.join(REPO_ROOT, 'schema/manifest.schema.json'));
 const vocabulary = loadVocabulary(path.join(REPO_ROOT, 'schema/vocabulary.json'));
@@ -31,5 +32,26 @@ test('every Yeti class and attribute the migration table names exists in the man
 		const bare = name.replace(/^\./, '').replace(/=.*$/, '').replace(/^<|>$/g, '').replace(/^\[|\]$/g, '');
 		const known = classes.has(bare) || attributes.has(bare) || /^(aria-[a-z-]+(=.*)?|role=.*|popover|open|commandfor|<details>|<dialog>|<summary>|details|dialog|summary|name)$/.test(name);
 		assert.ok(known, `${name} is not a Yeti class or attribute: ${line}`);
+	}
+});
+
+test('the attribute table committed in each guide matches a fresh render', () => {
+	for (const { file, kinds, label } of GUIDE_TABLES) {
+		const guide = path.join(REPO_ROOT, 'docs', file);
+		const markdown = fs.readFileSync(guide, 'utf8');
+		const fresh = replaceMarked(markdown, renderAttributeTable({ merged, kinds, label }));
+		assert.notEqual(fresh, null, `${file} has lost its markers`);
+		assert.equal(fresh, markdown, `${file} is stale; run npm run docs and commit it`);
+	}
+});
+
+test('each guide table has at least one row for every component of its kinds', () => {
+	for (const { file, kinds, label } of GUIDE_TABLES) {
+		const table = renderAttributeTable({ merged, kinds, label });
+		for (const [name, m] of Object.entries(merged)) {
+			if (!kinds.includes(m.kind)) continue;
+			if (!m.attributes.length && !(m.markers ?? []).length) continue;
+			assert.ok(table.includes(name), `${file} never names ${name}`);
+		}
 	}
 });

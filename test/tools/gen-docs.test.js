@@ -2,8 +2,9 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
-import { renderPage, generateDocs, isGenerated, GENERATED_MARK, renderTokensPage, escapeAttribute, renderDemo } from '../../bin/gen-docs.js';
+import { renderPage, generateDocs, isGenerated, GENERATED_MARK, renderTokensPage, escapeAttribute, renderDemo, renderAttributeTable, replaceMarked, ATTRIBUTES_START, ATTRIBUTES_END, GUIDE_TABLES } from '../../bin/gen-docs.js';
 import { makeTree, validManifest, validTree, TOKENS_SCHEMA_PATH, REPO_ROOT } from './helpers.js';
+import { KIND_DIRS } from '../../bin/lib/manifest.js';
 
 const exampleHtml = '<div class="rail" data-gap="l"><p>One</p><p>Two</p></div>\n';
 
@@ -337,4 +338,87 @@ test('renderPage puts the demo where the bare example was and honours the styles
 test('renderPage defaults the demo stylesheet to the site path', () => {
 	const page = renderPage({ manifest: validManifest(), exampleHtml, navOrder: 1 });
 	assert.ok(page.includes('href=&quot;/yeti/yeti.css&quot;'));
+});
+
+test('renderAttributeTable gives one row per attribute with its values and its readers', () => {
+	const merged = {
+		rail: validManifest(),
+		siding: validManifest({ name: 'siding', class: 'siding', attributes: [{ name: 'data-gap', type: 'enum', values: ['s', 'm', 'l'], description: 'Gap between items.' }] }),
+		badge: validManifest({ name: 'badge', class: 'badge', kind: 'component' }),
+	};
+	const table = renderAttributeTable({ merged, kinds: ['layout'], label: 'Layout attributes' });
+	assert.ok(table.startsWith('<div class="scroller" role="region" aria-label="Layout attributes" tabindex="0" markdown="1">'));
+	assert.ok(table.includes('| Attribute | Values | Read by |'));
+	// Alphabetical by attribute, then by reader, and the other kinds are left out.
+	assert.ok(table.includes('| `data-count` | number | rail |'));
+	assert.ok(table.includes('| `data-gap` | `s`, `m`, `l` | rail, siding |'));
+	assert.ok(table.includes('| `data-wrap` | boolean | rail |'));
+	assert.ok(!table.includes('badge'));
+	assert.ok(table.indexOf('`data-count`') < table.indexOf('`data-gap`'));
+});
+
+test('renderAttributeTable names the element a marker is carried on', () => {
+	const merged = {
+		rail: validManifest({ markers: [{ name: 'data-split', type: 'boolean', on: '> *', description: 'Pinned to the end.' }] }),
+		siding: validManifest({ name: 'siding', class: 'siding', attributes: [], markers: [{ name: 'data-split', type: 'boolean', on: 'td, th', description: 'Also split.' }] }),
+	};
+	const table = renderAttributeTable({ merged, kinds: ['layout'], label: 'Layout attributes' });
+	// The parentheses keep a selector's own comma out of the list of readers.
+	assert.ok(table.includes('| `data-split` | boolean | rail (> *), siding (td, th) |'));
+});
+
+test('renderAttributeTable spells a string and a number attribute by their type', () => {
+	const merged = { rail: validManifest({ attributes: [{ name: 'data-label', type: 'string', description: 'A name.' }, { name: 'data-count', type: 'number', description: 'How many.' }] }) };
+	const table = renderAttributeTable({ merged, kinds: ['layout'], label: 'Layout attributes' });
+	assert.ok(table.includes('| `data-label` | string | rail |'));
+	assert.ok(table.includes('| `data-count` | number | rail |'));
+});
+
+test('replaceMarked puts the block between the markers and leaves the rest alone', () => {
+	const markdown = `# Guide\n\nBefore.\n\n${ATTRIBUTES_START}\n\nold table\n\n${ATTRIBUTES_END}\n\nAfter.\n`;
+	assert.equal(replaceMarked(markdown, 'new table'), `# Guide\n\nBefore.\n\n${ATTRIBUTES_START}\n\nnew table\n\n${ATTRIBUTES_END}\n\nAfter.\n`);
+});
+
+test('replaceMarked is idempotent', () => {
+	const markdown = `${ATTRIBUTES_START}\n\nsame\n\n${ATTRIBUTES_END}\n`;
+	assert.equal(replaceMarked(markdown, 'same'), markdown);
+});
+
+test('replaceMarked returns null when the markers are missing or reversed', () => {
+	assert.equal(replaceMarked('# Guide\n', 'x'), null);
+	assert.equal(replaceMarked(`${ATTRIBUTES_END}\n${ATTRIBUTES_START}\n`, 'x'), null);
+});
+
+test('generateDocs writes the attribute table into a guide that carries the markers', () => {
+	const root = makeTree(validTree({
+		'docs/guides/layouts.md': `# Layouts\n\n${ATTRIBUTES_START}\n\nstale\n\n${ATTRIBUTES_END}\n`,
+	}));
+	const r = generateDocs({ root });
+	assert.deepEqual(r.errors, []);
+	const guide = fs.readFileSync(path.join(root, 'docs/guides/layouts.md'), 'utf8');
+	assert.ok(!guide.includes('stale'));
+	assert.ok(guide.includes('| `data-gap` | `s`, `m`, `l` | rail |'));
+	assert.ok(guide.startsWith('# Layouts\n'));
+	assert.ok(r.written.some((f) => f.endsWith(path.join('guides', 'layouts.md'))));
+});
+
+test('generateDocs reports a guide whose markers are missing', () => {
+	const root = makeTree(validTree({ 'docs/guides/layouts.md': '# Layouts\n\nNo markers here.\n' }));
+	const r = generateDocs({ root });
+	assert.equal(r.errors.length, 1);
+	assert.match(r.errors[0].message, /yeti:attributes:start/);
+});
+
+test('generateDocs leaves a guide it was not told about alone', () => {
+	const root = makeTree(validTree({ 'docs/guides/theming.md': '# Theming\n' }));
+	const r = generateDocs({ root });
+	assert.deepEqual(r.errors, []);
+	assert.equal(fs.readFileSync(path.join(root, 'docs/guides/theming.md'), 'utf8'), '# Theming\n');
+});
+
+test('every guide table names a kind the manifests actually use', () => {
+	const kinds = new Set(Object.values(KIND_DIRS));
+	for (const entry of GUIDE_TABLES) {
+		for (const kind of entry.kinds) assert.ok(kinds.has(kind), `${kind} is not a manifest kind`);
+	}
 });

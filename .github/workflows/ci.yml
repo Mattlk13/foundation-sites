@@ -17,6 +17,13 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run validate
+      # The component pages, the tokens page and the two guides' attribute
+      # tables are generated and committed. Regenerating them here is how a
+      # pull request that edited a manifest without running npm run docs is
+      # caught, and the diff names the file that is stale.
+      - run: npm run docs
+      - name: The generated docs are committed
+        run: git diff --exit-code docs
       - run: npm run test:tools
       - run: npm run build
 

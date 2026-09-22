@@ -229,6 +229,49 @@ export function renderTokensPage(entries, internalCount, groups = TOKEN_GROUPS) 
 	return out.join('\n');
 }
 
+// The two guides each carry a table of every attribute their kinds declare.
+// The rows come from the manifests, so a new attribute reaches the guide the
+// moment it validates and a rename can never leave the guide behind. Only
+// what is between the markers is generated; the prose around them is written
+// by hand and never touched.
+export const ATTRIBUTES_START = '<!-- yeti:attributes:start -->';
+export const ATTRIBUTES_END = '<!-- yeti:attributes:end -->';
+export const GUIDE_TABLES = [
+	{ file: 'guides/layouts.md', kinds: ['layout', 'recipe'], label: 'Layout attributes' },
+	{ file: 'guides/components.md', kinds: ['component', 'utility'], label: 'Component attributes' },
+];
+
+/** One row per attribute of the given kinds: its values, and every component that reads it. */
+export function renderAttributeTable({ merged, kinds, label }) {
+	const rows = new Map();
+	const add = (attr, reader) => {
+		const row = rows.get(attr.name) ?? { attr, readers: [] };
+		row.readers.push(reader);
+		rows.set(attr.name, row);
+	};
+	for (const name of Object.keys(merged).sort()) {
+		const m = merged[name];
+		if (!kinds.includes(m.kind)) continue;
+		for (const attr of m.attributes) add(attr, name);
+		// A marker is carried by a descendant, so the reader names the element
+		// it goes on. The parentheses matter: a selector such as "td, th" has a
+		// comma of its own, and the readers are comma-separated.
+		for (const marker of m.markers ?? []) add(marker, `${name} (${marker.on ?? 'a descendant'})`);
+	}
+	return table(label, ['Attribute', 'Values', 'Read by'], [...rows.keys()].sort().map((name) => {
+		const { attr, readers } = rows.get(name);
+		return [code(name), attr.type === 'enum' ? attr.values.map(code).join(', ') : attr.type, readers.join(', ')];
+	}));
+}
+
+/** The markdown with `block` between the markers, or null when the file has no usable pair. */
+export function replaceMarked(markdown, block) {
+	const start = markdown.indexOf(ATTRIBUTES_START);
+	const end = markdown.indexOf(ATTRIBUTES_END);
+	if (start === -1 || end === -1 || end < start) return null;
+	return `${markdown.slice(0, start + ATTRIBUTES_START.length)}\n\n${block}\n\n${markdown.slice(end)}`;
+}
+
 function countInternalTokens(tokensDir) {
 	const names = new Set();
 	for (const file of walkFiles(tokensDir).filter((f) => f.endsWith('.css'))) {
@@ -315,7 +358,23 @@ export function generateDocs({ root, demoStylesheet, outDir }) {
 			deleted.push(file);
 		}
 	}
-	return { written, deleted, errors: [] };
+	// The guides are hand-written pages with one generated table in each, so
+	// they are written last and only between their markers. A host generating
+	// into its own tree may not have them; that is not an error.
+	const guideErrors = [];
+	for (const { file, kinds, label } of GUIDE_TABLES) {
+		const guide = path.join(docsDir, file);
+		if (!fs.existsSync(guide)) continue;
+		const markdown = fs.readFileSync(guide, 'utf8');
+		const next = replaceMarked(markdown, renderAttributeTable({ merged, kinds, label }));
+		if (next === null) {
+			guideErrors.push({ file: guide, message: `no ${ATTRIBUTES_START} … ${ATTRIBUTES_END} pair for the generated attribute table` });
+			continue;
+		}
+		if (next !== markdown) fs.writeFileSync(guide, next);
+		written.push(guide);
+	}
+	return { written, deleted, errors: guideErrors };
 }
 
 /** True only when the generated mark is the first thing after the front matter block. */

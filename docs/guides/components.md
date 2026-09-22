@@ -14,13 +14,68 @@ nav_order: 2
 
 A component's shape comes from its markup and its manifest; its look comes from three `data-*` attributes, the same three names wherever they apply.
 
+`data-variant` picks a hue from the palette; the component reads that hue's ladder for its fill, its border, or its text. `data-emphasis` picks how much of the ladder shows: `high` is a solid fill, `medium` an outline or a tint, `low` the hue in text alone. `data-size` scales text and padding together, one step at a time, so nothing looks stretched between sizes. A component that does not carry an attribute uses its default, set the same way every other component sets its defaults: `.name:not([data-size])` and the like. Editors can complete every attribute and value from the package; the [installation guide](install.md) has the one setting.
+
+## Every attribute
+
+Those three are the ones that repeat. Here is the whole list, every attribute the components and the utilities declare, with the components that read each one.
+
+<!-- yeti:attributes:start -->
+
+<div class="scroller" role="region" aria-label="Component attributes" tabindex="0" markdown="1">
+
 | Attribute | Values | Read by |
 | --- | --- | --- |
-| `data-variant` | `primary`, `secondary`, `success`, `warning`, `danger` (or `alert`, its Foundation 6 name), `neutral` | button, badge, card, field, alert, nav, pagination, progress, spinner, tabs |
-| `data-emphasis` | `high`, `medium`, `low` | button, badge |
-| `data-size` | `sm`, `md`, `lg` | button, badge, field, table, seam |
+| `data-actions` | boolean | nav (> *) |
+| `data-affix` | boolean | buttons |
+| `data-attention` | `pulse`, `shake` | attention |
+| `data-border` | boolean | table |
+| `data-brand` | boolean | nav (> *) |
+| `data-close` | boolean | alert (> button), nav (li) |
+| `data-dots` | boolean | carousel (> *) |
+| `data-edge` | `top`, `bottom`, `both` | seam |
+| `data-emphasis` | `high`, `medium`, `low` | alert, badge, button |
+| `data-enter` | `fade`, `rise`, `scale` | enter |
+| `data-error` | boolean | field (> *) |
+| `data-fit` | `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `xs-display`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `sm-display`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `md-display`, `lg-xl`, `lg-2xl`, `lg-3xl`, `lg-display`, `xl-2xl`, `xl-3xl`, `xl-display`, `2xl-3xl`, `2xl-display`, `3xl-display` | fit |
+| `data-flip` | boolean | seam |
+| `data-gap` | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | buttons, carousel, nav, tabs |
+| `data-height` | `sm`, `md`, `lg`, `xl` | demo |
+| `data-hint` | boolean | field (> *) |
+| `data-hover` | boolean | table |
+| `data-inline` | boolean | field |
+| `data-justify` | `start`, `center`, `end`, `between`, `around`, `evenly` | pagination |
+| `data-max` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | dialog |
+| `data-numeric` | boolean | table (td, th) |
+| `data-orientation` | `horizontal`, `vertical` | tabs |
+| `data-panel` | `sheet`, `drawer`, `screen` | nav |
+| `data-placement` | `top`, `bottom`, `start`, `end` | tooltip |
+| `data-preview` | string | demo (> div) |
+| `data-raised` | boolean | card |
+| `data-ratio` | `1/1`, `4/3`, `3/2`, `16/9`, `21/9` | card |
+| `data-resize` | `width`, `both` | demo |
+| `data-shape` | `slant`, `curve`, `wave` | seam |
+| `data-side` | `start`, `end` | dropdown |
+| `data-size` | `sm`, `md`, `lg` | badge, breadcrumbs, button, field, pagination, progress, seam, spinner, table, toc |
+| `data-slide` | boolean | carousel (> [data-track] > *) |
+| `data-slides` | `1`, `2`, `3`, `4` | carousel |
+| `data-stagger` | boolean | enter |
+| `data-sticky` | boolean | nav |
+| `data-stretch` | boolean | card (a) |
+| `data-striped` | boolean | table |
+| `data-stylesheet` | string | demo |
+| `data-threshold` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | card, nav, pagination |
+| `data-track` | boolean | carousel (> *) |
+| `data-trigger` | `click`, `hover` | dropdown |
+| `data-variant` | `primary`, `secondary`, `success`, `warning`, `alert`, `danger`, `neutral` | alert, badge, button, card, field, nav, pagination, progress, spinner, tabs, toc |
+| `data-view` | boolean | enter |
+| `data-width` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | demo |
 
-`data-variant` picks a hue from the palette; the component reads that hue's ladder for its fill, its border, or its text. `data-emphasis` picks how much of the ladder shows: `high` is a solid fill, `medium` an outline or a tint, `low` the hue in text alone. `data-size` scales text and padding together, one step at a time, so nothing looks stretched between sizes. A component that does not carry an attribute uses its default, set the same way every other component sets its defaults: `.name:not([data-size])` and the like. Editors can complete every attribute and value from the package; the [installation guide](install.md) has the one setting.
+</div>
+
+<!-- yeti:attributes:end -->
+
+A name in parentheses is the descendant that carries the attribute, not the component itself: `alert (button)` means the close button inside an `alert`. This table is generated from the manifests by `npm run docs`; the prose around it is not.
 
 ## State is native
 
