@@ -35,6 +35,28 @@
 			<thead><tr><th id="th">Head</th><th>Head</th></tr></thead>
 			<tbody><tr><td id="td">Cell</td><td>Cell</td></tr><tr><td>Cell</td><td>Cell</td></tr></tbody>
 		</table>
+		<details id="details">
+			<summary id="summary">What the base layer does</summary>
+			<p id="panel">It styles bare HTML. This panel is inside a details with no class on it.</p>
+		</details>
+		<details id="details-open" open>
+			<summary id="summary-open">And what it leaves alone</summary>
+			<p>Anything you class yourself.</p>
+		</details>
+		<dl id="dl">
+			<dt id="dt1">Layout</dt>
+			<dd id="dd1">A class that arranges its children and owns the gaps between them.</dd>
+			<dt id="dt2">Component</dt>
+			<dd id="dd2">A class with a look of its own and a manifest that describes it.</dd>
+		</dl>
+		<dl id="dl-wrapped">
+			<div><dt>Token</dt><dd>A custom property a theme may set.</dd></div>
+			<div id="pair2"><dt>Marker</dt><dd>A bare attribute a parent reads.</dd></div>
+		</dl>
+		<figure id="quote-figure">
+			<blockquote id="quoted"><p>Everything should be made as simple as possible, but no simpler.</p></blockquote>
+			<figcaption id="cite">Albert Einstein</figcaption>
+		</figure>
 	</main>
 </body>
 </html>

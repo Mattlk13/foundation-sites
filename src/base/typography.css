@@ -47,6 +47,38 @@
 		color: var(--yeti-color-primary-strong);
 	}
 
+	/* The skip link: the first link in the body, jumping past the furniture to
+	   the content. It is a base rule and not a class because a skip link is the
+	   first link in the body by convention anyway, and a class would be one
+	   more thing to remember; the cost is that a body whose first link is
+	   something else gets it hidden, which the install guide says plainly.
+	   The clip-rect recipe is what hides it: display: none and visibility:
+	   hidden would take it out of the accessibility tree and out of Tab order,
+	   and a skip link that cannot be tabbed to is not one. */
+	body > a[href^="#"]:first-child:not(:focus-visible) {
+		position: absolute;
+		inline-size: 1px;
+		block-size: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
+	/* Fixed, so it stays at the corner of the window on a page already
+	   scrolled, and above the sticky bars and affixed controls that take
+	   z-index: 1, which would otherwise paint over it: it is the first element
+	   in the body, so everything else is painted after it. The ring is the
+	   one every focusable element gets, from the rule below. */
+	body > a[href^="#"]:first-child:focus-visible {
+		position: fixed;
+		z-index: 2;
+		inset-block-start: var(--yeti-space-sm);
+		inset-inline-start: var(--yeti-space-sm);
+		padding: var(--yeti-space-sm) var(--yeti-space-md);
+		border-radius: var(--yeti-radius-sm);
+		background-color: var(--yeti-color-surface-raised);
+		color: var(--yeti-color-text);
+	}
+
 	:focus-visible {
 		outline: 2px solid var(--yeti-color-focus);
 		outline-offset: 2px;

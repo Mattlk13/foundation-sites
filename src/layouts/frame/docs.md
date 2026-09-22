@@ -4,7 +4,7 @@ Use a frame wherever images of unpredictable shape must present as the same shap
 
 ## How it works
 
-`aspect-ratio` sizes the frame from its width, and `overflow: hidden` clips. An image or video child is stretched to both dimensions with `object-fit: cover`, so it fills without distortion and loses only the overflow. Any other child, a placeholder or an icon, is centered with flexbox.
+`aspect-ratio` sizes the frame from its width, and `overflow: hidden` clips. An image, video, `picture`, `iframe`, `embed` or `object` child is stretched to both dimensions with `object-fit: cover`, so it fills without distortion and loses only the overflow. Any other child, a placeholder or an icon, is centered with flexbox.
 
 ## Why this name
 

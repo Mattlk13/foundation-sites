@@ -36,4 +36,23 @@
 		   spaces items like short paragraphs. */
 		margin-block-start: var(--yeti-list-gap);
 	}
+
+	/* A definition list. The flow rule at the top of this file deliberately
+	   does not list dl as a flow container: a term and its definition are one
+	   pair, so the space goes between pairs and not between every line. */
+	dt {
+		font-weight: var(--yeti-weight-strong);
+	}
+	dd {
+		margin-inline-start: var(--yeti-space-md);
+	}
+	dl > dt:not(:first-child) {
+		margin-block-start: var(--yeti-space-sm);
+	}
+	/* The other legal shape of the same list: each pair wrapped in a div,
+	   where the term is no longer a child of the dl and the rule above cannot
+	   see it. */
+	dl > div + div {
+		margin-block-start: var(--yeti-space-sm);
+	}
 }

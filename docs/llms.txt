@@ -71,7 +71,7 @@ On children:
 
 ## frame (layout, class="frame")
 
-Holds one child in a fixed aspect ratio, cropping media to fill it and centering anything else.
+Holds one child in a fixed aspect ratio, cropping an image, video or embedded document to fill it and centering anything else.
 
 Attributes:
 - data-ratio: 1/1 | 4/3 | 3/2 | 16/9 (default) | 21/9 — Width to height.

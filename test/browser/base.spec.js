@@ -92,3 +92,148 @@ test.describe('base controls and media', () => {
 		expect(await style(page, '#caption', 'color')).toBe(await style(page, 'caption', 'color'));
 	});
 });
+
+test.describe('base disclosures', () => {
+	// ::after and ::details-content are read through getPropertyValue, which
+	// takes the hyphenated property name, unlike the style() helper above.
+	const after = (page, id, prop) => page.evaluate(([i, p]) => getComputedStyle(document.getElementById(i), '::after').getPropertyValue(p), [id, prop]);
+	const content = (page, id, prop) => page.evaluate(([i, p]) => getComputedStyle(document.getElementById(i), '::details-content').getPropertyValue(p), [id, prop]);
+
+	test.beforeEach(async ({ page }) => {
+		await page.setViewportSize({ width: 1024, height: 900 });
+		await page.goto('/test/browser/fixtures/base.html');
+	});
+
+	test('a summary is strong, padded, pressable, and has lost the browser marker', async ({ page }) => {
+		expect(await style(page, '#summary', 'fontWeight')).toBe(await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--yeti-weight-strong').trim()));
+		expect(await px(page, '#summary', 'paddingTop')).toBeCloseTo(await token(page, '--yeti-space-sm'), 1);
+		expect(await style(page, '#summary', 'cursor')).toBe('pointer');
+		expect(await style(page, '#summary', 'listStyleType')).toBe('none');
+		expect(await style(page, '#summary', 'display')).toBe('flex');
+	});
+
+	test('the chevron turns when the panel opens', async ({ page }) => {
+		expect(await after(page, 'summary', 'content')).not.toBe('none');
+		expect(await after(page, 'summary', 'rotate')).not.toBe(await after(page, 'summary-open', 'rotate'));
+		expect(parseFloat(await after(page, 'summary', 'transition-duration'))).toBeGreaterThan(0.01);
+	});
+
+	test('the panel is a grid row that grows from nothing', async ({ page }) => {
+		// The row is what the transition runs on, so it is the row that has to
+		// differ between the two states; a panel that only faded arrived at full
+		// height at once and read as a flash.
+		expect(await style(page, '#details', 'display')).toBe('grid');
+		const [shut, opened] = await Promise.all([style(page, '#details', 'gridTemplateRows'), style(page, '#details-open', 'gridTemplateRows')]);
+		expect(parseFloat(shut.split(' ')[1])).toBe(0);
+		expect(parseFloat(opened.split(' ')[1])).toBeGreaterThan(0);
+		expect(await style(page, '#details', 'transitionProperty')).toBe('grid-template-rows');
+		expect(parseFloat(await style(page, '#details', 'transitionDuration'))).toBeGreaterThan(0.01);
+		expect(await content(page, 'details', 'overflow-y')).toBe('hidden');
+	});
+
+	test('under reduced motion the panel opens at once', async ({ page }) => {
+		await page.emulateMedia({ reducedMotion: 'reduce' });
+		await page.goto('/test/browser/fixtures/base.html');
+		expect(await style(page, '#details', 'transitionProperty')).toBe('grid-template-rows');
+		expect(parseFloat(await style(page, '#details', 'transitionDuration'))).toBeLessThanOrEqual(0.01);
+	});
+});
+
+test.describe('base definition lists', () => {
+	test.beforeEach(async ({ page }) => {
+		await page.setViewportSize({ width: 1024, height: 900 });
+		await page.goto('/test/browser/fixtures/base.html');
+	});
+
+	test('a term is strong, its definition is indented, and pairs are spaced', async ({ page }) => {
+		expect(await style(page, '#dt1', 'fontWeight')).toBe(await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--yeti-weight-strong').trim()));
+		expect(await px(page, '#dd1', 'marginLeft')).toBeCloseTo(await token(page, '--yeti-space-md'), 1);
+		// The space belongs between pairs, not between every line: a term and
+		// its definition are one thing, so only the second term is pushed down.
+		expect(await px(page, '#dt1', 'marginTop')).toBe(0);
+		expect(await px(page, '#dd1', 'marginTop')).toBe(0);
+		expect(await px(page, '#dt2', 'marginTop')).toBeCloseTo(await token(page, '--yeti-space-sm'), 1);
+	});
+
+	test('a dl that wraps each pair in a div is spaced the same way', async ({ page }) => {
+		expect(await px(page, '#pair2', 'marginTop')).toBeCloseTo(await token(page, '--yeti-space-sm'), 1);
+	});
+});
+
+test.describe('base quotation attribution', () => {
+	const before = (page, id, prop) => page.evaluate(([i, p]) => getComputedStyle(document.getElementById(i), '::before').getPropertyValue(p), [id, prop]);
+
+	test.beforeEach(async ({ page }) => {
+		await page.setViewportSize({ width: 1024, height: 900 });
+		await page.goto('/test/browser/fixtures/base.html');
+	});
+
+	test('a caption after a quotation leads with a dash that is seen and not read', async ({ page }) => {
+		const content = await before(page, 'cite', 'content');
+		expect(content).toContain('—');
+		// The alternative text is empty, as the breadcrumbs separator's is, so a
+		// screen reader hears the name and no stray punctuation.
+		expect(content.replace(/\s/g, '')).toMatch(/""$/);
+		expect(await style(page, '#cite', 'color')).toBe(await style(page, '#caption', 'color'));
+		expect(await px(page, '#cite', 'fontSize')).toBeCloseTo(await token(page, '--yeti-text-sm'), 1);
+	});
+
+	test('a caption under a picture is still a caption', async ({ page }) => {
+		expect(await before(page, 'caption', 'content')).toBe('none');
+	});
+});
+
+test.describe('base skip link', () => {
+	// Resolves a colour token the way token() resolves a length: through a probe
+	// element, because the declared value is a light-dark() pair and only a used
+	// value can be compared with what the link computed.
+	const colour = (page, name) => page.evaluate((n) => {
+		const probe = document.createElement('div');
+		probe.style.backgroundColor = `var(${n})`;
+		document.body.append(probe);
+		const value = getComputedStyle(probe).backgroundColor;
+		probe.remove();
+		return value;
+	}, name);
+
+	test.beforeEach(async ({ page }) => {
+		await page.setViewportSize({ width: 1024, height: 900 });
+		const response = await page.goto('/test/browser/fixtures/base-skip.html');
+		expect(response.status()).toBe(200);
+	});
+
+	test('it is out of sight but not out of the page', async ({ page }) => {
+		expect(await page.evaluate(() => document.getElementById('skip').getBoundingClientRect().width)).toBeLessThanOrEqual(1);
+		expect(await style(page, '#skip', 'position')).toBe('absolute');
+		expect(await style(page, '#skip', 'clipPath')).toBe('inset(50%)');
+		// Clipped, not hidden: display: none and visibility: hidden would both
+		// take the link out of the accessibility tree and out of Tab order,
+		// which is the one thing a skip link cannot afford.
+		expect(await page.locator('#skip').isVisible()).toBe(true);
+	});
+
+	test('the first Tab pins it to the top start corner with the focus ring', async ({ page, browserName }) => {
+		// WebKit leaves links out of Tab order unless full keyboard access is
+		// on; Alt+Tab is how nav.spec.js and dropdown.spec.js reach a link there.
+		await page.keyboard.press(browserName === 'webkit' ? 'Alt+Tab' : 'Tab');
+		expect(await page.evaluate(() => document.activeElement.id)).toBe('skip');
+		const gap = await token(page, '--yeti-space-sm');
+		const box = await page.evaluate(() => { const r = document.getElementById('skip').getBoundingClientRect(); return { top: r.top, left: r.left, width: r.width }; });
+		expect(box.top).toBeCloseTo(gap, 0);
+		expect(box.left).toBeCloseTo(gap, 0);
+		expect(box.width).toBeGreaterThan(40);
+		expect(await style(page, '#skip', 'position')).toBe('fixed');
+		expect(await style(page, '#skip', 'backgroundColor')).toBe(await colour(page, '--yeti-color-surface-raised'));
+		expect(await style(page, '#skip', 'outlineStyle')).toBe('solid');
+		expect(await px(page, '#skip', 'outlineWidth')).toBe(2);
+	});
+
+	test('a link that is not the body\'s first child is an ordinary link', async ({ page }) => {
+		expect(await style(page, '#second', 'position')).toBe('static');
+		expect(await page.evaluate(() => document.getElementById('second').getBoundingClientRect().width)).toBeGreaterThan(1);
+	});
+
+	test('has no accessibility violations', async ({ page }) => {
+		expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+	});
+});

@@ -1,7 +1,7 @@
 ---
 raw: true
 title: "Frame"
-description: "Holds one child in a fixed aspect ratio, cropping media to fill it and centering anything else."
+description: "Holds one child in a fixed aspect ratio, cropping an image, video or embedded document to fill it and centering anything else."
 nav_group: "Boxes and Stacks"
 nav_order: 3
 ---
@@ -9,7 +9,7 @@ nav_order: 3
 
 # Frame
 
-<p class="lede">Holds one child in a fixed aspect ratio, cropping media to fill it and centering anything else.</p>
+<p class="lede">Holds one child in a fixed aspect ratio, cropping an image, video or embedded document to fill it and centering anything else.</p>
 
 ## Example
 
@@ -34,7 +34,7 @@ Use a frame wherever images of unpredictable shape must present as the same shap
 
 ## How it works
 
-`aspect-ratio` sizes the frame from its width, and `overflow: hidden` clips. An image or video child is stretched to both dimensions with `object-fit: cover`, so it fills without distortion and loses only the overflow. Any other child, a placeholder or an icon, is centered with flexbox.
+`aspect-ratio` sizes the frame from its width, and `overflow: hidden` clips. An image, video, `picture`, `iframe`, `embed` or `object` child is stretched to both dimensions with `object-fit: cover`, so it fills without distortion and loses only the overflow. Any other child, a placeholder or an icon, is centered with flexbox.
 
 ## Why this name
 
@@ -52,7 +52,7 @@ It is what a picture frame does: fix the shape and crop what is inside it. Found
 
 ## Children
 
-- `> *`: exactly 1. One child: an image, video or picture is cropped to fill; anything else is centered.
+- `> *`: exactly 1. One child: an image, video, picture, iframe, embed or object is stretched to fill and cropped; anything else is centered.
 
 ## Tokens
 
@@ -66,7 +66,7 @@ No public tokens.
 
 ## Accessibility
 
-- Cropping hides parts of an image. Make sure the alt text describes what is visible, or use data-ratio to match the image so nothing is lost.
+- Cropping hides parts of an image. Make sure the alt text describes what is visible, or use data-ratio to match the image so nothing is lost. An iframe needs a title saying what is in it, whatever shape it is cropped to.
 
 ## Browser support
 
