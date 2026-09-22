@@ -109,6 +109,7 @@ test.describe('base disclosures', () => {
 		expect(await px(page, '#summary', 'paddingTop')).toBeCloseTo(await token(page, '--yeti-space-sm'), 1);
 		expect(await style(page, '#summary', 'cursor')).toBe('pointer');
 		expect(await style(page, '#summary', 'listStyleType')).toBe('none');
+		expect(await style(page, '#summary', 'display')).toBe('flex');
 	});
 
 	test('the chevron turns when the panel opens', async ({ page }) => {

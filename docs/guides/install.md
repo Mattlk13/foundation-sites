@@ -49,7 +49,7 @@ One base rule is a convention rather than an element. The first link in the body
 </body>
 ```
 
-There is no class to remember, because that is where a skip link goes anyway. The cost runs the other way: if the first link in your body is not a skip link, it is invisible until someone focuses it. Put anything at all before it — a `header`, a `div`, the site's logo — and it is an ordinary link again.
+There is no class to remember, because that is where a skip link goes anyway. The cost runs the other way: if the first link in your body points at a fragment and is not a skip link, it is invisible until someone focuses it. Put anything at all before it — a `header`, a `div`, the site's logo — and it is an ordinary link again.
 
 ## A module
 
