@@ -1,7 +1,7 @@
 ---
 raw: true
 title: "Buttons"
-description: "A group of buttons: a wrapping row, or one fused control with data-attach."
+description: "A group of buttons: a wrapping row, or one joined control with data-affix."
 nav_group: "Forms and Actions"
 nav_order: 3
 ---
@@ -9,18 +9,18 @@ nav_order: 3
 
 # Buttons
 
-<p class="lede">A group of buttons: a wrapping row, or one fused control with data-attach.</p>
+<p class="lede">A group of buttons: a wrapping row, or one joined control with data-affix.</p>
 
 ## Example
 
 <figure class="demo" data-height="sm">
-<div data-preview="Buttons"><iframe title="Buttons, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;buttons&quot; role=&quot;group&quot; aria-label=&quot;Text style&quot; data-attach&gt;&#10;	&lt;button class=&quot;button&quot; type=&quot;button&quot; data-emphasis=&quot;medium&quot; aria-pressed=&quot;true&quot;&gt;Bold&lt;/button&gt;&#10;	&lt;button class=&quot;button&quot; type=&quot;button&quot; data-emphasis=&quot;medium&quot; aria-pressed=&quot;false&quot;&gt;Italic&lt;/button&gt;&#10;	&lt;button class=&quot;button&quot; type=&quot;button&quot; data-emphasis=&quot;medium&quot; aria-pressed=&quot;false&quot;&gt;Underline&lt;/button&gt;&#10;&lt;/div&gt;"></iframe></div>
+<div data-preview="Buttons"><iframe title="Buttons, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;buttons&quot; role=&quot;group&quot; aria-label=&quot;Text style&quot; data-affix&gt;&#10;	&lt;button class=&quot;button&quot; type=&quot;button&quot; data-emphasis=&quot;medium&quot; aria-pressed=&quot;true&quot;&gt;Bold&lt;/button&gt;&#10;	&lt;button class=&quot;button&quot; type=&quot;button&quot; data-emphasis=&quot;medium&quot; aria-pressed=&quot;false&quot;&gt;Italic&lt;/button&gt;&#10;	&lt;button class=&quot;button&quot; type=&quot;button&quot; data-emphasis=&quot;medium&quot; aria-pressed=&quot;false&quot;&gt;Underline&lt;/button&gt;&#10;&lt;/div&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
 
 ```html
-<div class="buttons" role="group" aria-label="Text style" data-attach>
+<div class="buttons" role="group" aria-label="Text style" data-affix>
 	<button class="button" type="button" data-emphasis="medium" aria-pressed="true">Bold</button>
 	<button class="button" type="button" data-emphasis="medium" aria-pressed="false">Italic</button>
 	<button class="button" type="button" data-emphasis="medium" aria-pressed="false">Underline</button>
@@ -32,11 +32,11 @@ nav_order: 3
 
 ## When to use it
 
-Two or more buttons that belong together: a form's submit and cancel, a set of view toggles, a toolbar row. Loose, they sit in a row at a small gap and wrap when they must. Attached, they become one control with shared borders, the shape of a segmented toggle.
+Two or more buttons that belong together: a form's submit and cancel, a set of view toggles, a toolbar row. Loose, they sit in a row at a small gap and wrap when they must. Affixed, they become one control with shared borders, the shape of a segmented toggle.
 
 ## How it works
 
-Loose is a wrapping flex row at `data-gap`. `data-attach` removes the gap, squares the inner corners, and overlaps each border with the next so the seam is one line wide. A focused member is lifted above its neighbours so its focus ring is not covered.
+Loose is a wrapping flex row at `data-gap`. `data-affix` removes the gap, squares the inner corners, and overlaps each border with the next so the seam is one line wide. A focused member is lifted above its neighbours so its focus ring is not covered.
 
 ```html
 <div class="buttons" role="group" aria-label="Form actions">
@@ -47,7 +47,7 @@ Loose is a wrapping flex row at `data-gap`. `data-attach` removes the gap, squar
 
 ## Accessibility
 
-The group carries `role="group"` and a name, so a screen reader announces the set once. A segmented toggle puts `aria-pressed` on each button and the pressed look follows. Do not use an attached group as tabs; tabs have their own roles and keyboard behaviour and are a separate component.
+The group carries `role="group"` and a name, so a screen reader announces the set once. A segmented toggle puts `aria-pressed` on each button and the pressed look follows. Do not use an affixed group as tabs; tabs have their own roles and keyboard behaviour and are a separate component.
 
 ## Attributes
 
@@ -55,8 +55,8 @@ The group carries `role="group"` and a name, so a screen reader announces the se
 
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
-| `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `sm` | Space between buttons when not attached. |
-| `data-attach` | boolean |  |  | Fuse the buttons into one segmented control that shares borders. |
+| `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `sm` | Space between buttons when not affixed. |
+| `data-affix` | boolean |  |  | Join the buttons into one segmented control that shares borders. |
 
 </div>
 
@@ -71,7 +71,7 @@ The group carries `role="group"` and a name, so a screen reader announces the se
 | Token | Description |
 | --- | --- |
 | `--yeti-space-sm` | The default gap. |
-| `--yeti-border-width` | The width the attached members overlap by. |
+| `--yeti-border-width` | The width the joined members overlap by. |
 
 </div>
 

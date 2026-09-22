@@ -244,11 +244,11 @@ Attributes:
 
 ## buttons (component, class="buttons")
 
-A group of buttons: a wrapping row, or one fused control with data-attach.
+A group of buttons: a wrapping row, or one joined control with data-affix.
 
 Attributes:
-- data-gap: none | xs | sm (default) | md | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between buttons when not attached.
-- data-attach (boolean) — Fuse the buttons into one segmented control that shares borders.
+- data-gap: none | xs | sm (default) | md | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between buttons when not affixed.
+- data-affix (boolean) — Join the buttons into one segmented control that shares borders.
 
 ## card (component, class="card")
 

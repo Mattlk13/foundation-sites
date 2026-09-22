@@ -908,7 +908,7 @@ Joins a control with what belongs beside it, a unit, a symbol, a button, or anot
 
 ### When to use it
 
-A price with its currency, a distance with its unit, a search box with its button, a URL with a fixed domain after it, a country code beside a phone number. Whatever is joined shares one border and one height, so the parts read as one thing.
+A price with its currency, a distance with its unit, a search box with its button, a URL with a fixed domain after it, a country code beside a phone number. Whatever is joined shares one border and one height, so the parts read as one thing. A row of buttons joined the same way is `buttons` with `data-affix`.
 
 ### How it works
 
@@ -1163,19 +1163,19 @@ Put the class on a button, an a, or a submit input, nothing else. Use button for
 
 ## buttons (component, class="buttons")
 
-A group of buttons: a wrapping row, or one fused control with data-attach.
+A group of buttons: a wrapping row, or one joined control with data-affix.
 
 Attributes:
-- data-gap: none | xs | sm (default) | md | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between buttons when not attached.
-- data-attach (boolean) — Fuse the buttons into one segmented control that shares borders.
+- data-gap: none | xs | sm (default) | md | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between buttons when not affixed.
+- data-affix (boolean) — Join the buttons into one segmented control that shares borders.
 
 ### When to use it
 
-Two or more buttons that belong together: a form's submit and cancel, a set of view toggles, a toolbar row. Loose, they sit in a row at a small gap and wrap when they must. Attached, they become one control with shared borders, the shape of a segmented toggle.
+Two or more buttons that belong together: a form's submit and cancel, a set of view toggles, a toolbar row. Loose, they sit in a row at a small gap and wrap when they must. Affixed, they become one control with shared borders, the shape of a segmented toggle.
 
 ### How it works
 
-Loose is a wrapping flex row at `data-gap`. `data-attach` removes the gap, squares the inner corners, and overlaps each border with the next so the seam is one line wide. A focused member is lifted above its neighbours so its focus ring is not covered.
+Loose is a wrapping flex row at `data-gap`. `data-affix` removes the gap, squares the inner corners, and overlaps each border with the next so the seam is one line wide. A focused member is lifted above its neighbours so its focus ring is not covered.
 
 ```html
 <div class="buttons" role="group" aria-label="Form actions">
@@ -1186,14 +1186,14 @@ Loose is a wrapping flex row at `data-gap`. `data-attach` removes the gap, squar
 
 ### Accessibility
 
-The group carries `role="group"` and a name, so a screen reader announces the set once. A segmented toggle puts `aria-pressed` on each button and the pressed look follows. Do not use an attached group as tabs; tabs have their own roles and keyboard behaviour and are a separate component.
+The group carries `role="group"` and a name, so a screen reader announces the set once. A segmented toggle puts `aria-pressed` on each button and the pressed look follows. Do not use an affixed group as tabs; tabs have their own roles and keyboard behaviour and are a separate component.
 
 Children:
 - > .button: at least 2. The buttons.
 
 Tokens:
 - --yeti-space-sm — The default gap.
-- --yeti-border-width — The width the attached members overlap by.
+- --yeti-border-width — The width the joined members overlap by.
 
 Accessibility contract:
 Required: role, aria-label | aria-labelledby

@@ -3,11 +3,11 @@
   "name": "buttons",
   "kind": "component",
   "group": "Forms and Actions",
-  "description": "A group of buttons: a wrapping row, or one fused control with data-attach.",
+  "description": "A group of buttons: a wrapping row, or one joined control with data-affix.",
   "class": "buttons",
   "attributes": [
-    { "name": "data-gap", "type": "enum", "vocabulary": "gap", "default": "sm", "description": "Space between buttons when not attached." },
-    { "name": "data-attach", "type": "boolean", "description": "Fuse the buttons into one segmented control that shares borders." }
+    { "name": "data-gap", "type": "enum", "vocabulary": "gap", "default": "sm", "description": "Space between buttons when not affixed." },
+    { "name": "data-affix", "type": "boolean", "description": "Join the buttons into one segmented control that shares borders." }
   ],
   "classes": [],
   "children": [
@@ -15,7 +15,7 @@
   ],
   "tokens": [
     { "name": "--yeti-space-sm", "public": true, "description": "The default gap." },
-    { "name": "--yeti-border-width", "public": true, "description": "The width the attached members overlap by." },
+    { "name": "--yeti-border-width", "public": true, "description": "The width the joined members overlap by." },
     { "name": "--_yeti-gap", "public": false }
   ],
   "a11y": { "role": "group", "requiredAttributes": ["role", "aria-label | aria-labelledby"], "keyboard": [], "notes": "role=\"group\" with a name, so the set is announced as one thing. A segmented toggle sets aria-pressed on each member; a set of tabs is the tabs component, not this." },
