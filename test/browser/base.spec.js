@@ -137,3 +137,24 @@ test.describe('base disclosures', () => {
 		expect(parseFloat(await style(page, '#details', 'transitionDuration'))).toBeLessThanOrEqual(0.01);
 	});
 });
+
+test.describe('base definition lists', () => {
+	test.beforeEach(async ({ page }) => {
+		await page.setViewportSize({ width: 1024, height: 900 });
+		await page.goto('/test/browser/fixtures/base.html');
+	});
+
+	test('a term is strong, its definition is indented, and pairs are spaced', async ({ page }) => {
+		expect(await style(page, '#dt1', 'fontWeight')).toBe(await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--yeti-weight-strong').trim()));
+		expect(await px(page, '#dd1', 'marginLeft')).toBeCloseTo(await token(page, '--yeti-space-md'), 1);
+		// The space belongs between pairs, not between every line: a term and
+		// its definition are one thing, so only the second term is pushed down.
+		expect(await px(page, '#dt1', 'marginTop')).toBe(0);
+		expect(await px(page, '#dd1', 'marginTop')).toBe(0);
+		expect(await px(page, '#dt2', 'marginTop')).toBeCloseTo(await token(page, '--yeti-space-sm'), 1);
+	});
+
+	test('a dl that wraps each pair in a div is spaced the same way', async ({ page }) => {
+		expect(await px(page, '#pair2', 'marginTop')).toBeCloseTo(await token(page, '--yeti-space-sm'), 1);
+	});
+});
