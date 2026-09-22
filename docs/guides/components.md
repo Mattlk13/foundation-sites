@@ -3,7 +3,7 @@ raw: true
 title: "Components"
 description: "Buttons, badges, cards, forms, tables, and seams: three attributes, native state, and tokens for everything visual."
 nav_group: "Guides"
-nav_order: 3
+nav_order: 4
 ---
 
 # Components
