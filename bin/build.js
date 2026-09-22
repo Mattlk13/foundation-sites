@@ -11,6 +11,7 @@ import { walkFiles } from './lib/files.js';
 import { writeIde } from './gen-ide.js';
 import { writeTypes } from './gen-types.js';
 import { writeLlms } from './gen-llms.js';
+import { minifyCss } from './lib/minify-css.js';
 
 export function readPackage(root) {
 	return JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
@@ -21,14 +22,26 @@ export function bundle({ root, pkg }) {
 	if (errors.length) return { css: null, errors };
 	const header = `/*! ${pkg.name} ${pkg.version} | ${pkg.license} | ${pkg.homepage} */\n`;
 	const body = files.map((f) => `\n/* ${path.relative(root, f.path)} */\n${f.css.trim()}\n`).join('');
-	return { css: header + body, errors: [] };
+	// The banner and the stylesheet come back separately as well as joined:
+	// the minified file needs the banner prepended to output that has had
+	// every comment taken out of it.
+	return { css: header + body, header, body, errors: [] };
 }
 
 export function build({ root, pkg = readPackage(root) }) {
 	const checked = validate({ root });
-	if (checked.errors.length) return { errors: checked.errors, outputs: [] };
+	if (checked.errors.length) return { errors: checked.errors, outputs: [], warnings: [] };
 	const bundled = bundle({ root, pkg });
-	if (bundled.errors.length) return { errors: bundled.errors, outputs: [] };
+	if (bundled.errors.length) return { errors: bundled.errors, outputs: [], warnings: [] };
+
+	// Minify before anything is written, so a stylesheet lightningcss cannot
+	// parse leaves the previous dist/ alone instead of half-replacing it.
+	let minified;
+	try {
+		minified = minifyCss({ css: bundled.body, filename: 'yeti.css' });
+	} catch (e) {
+		return { errors: [{ file: path.join(root, 'src', 'yeti.css'), message: `lightningcss could not minify the bundle: ${e.message}` }], outputs: [], warnings: [] };
+	}
 
 	const srcDir = path.join(root, 'src');
 	const distDir = path.join(root, 'dist');
@@ -44,6 +57,7 @@ export function build({ root, pkg = readPackage(root) }) {
 	fs.mkdirSync(path.join(distDir, 'js'), { recursive: true });
 
 	write('yeti.css', bundled.css);
+	write('yeti.min.css', `${bundled.header}${minified.css}\n`);
 
 	fs.cpSync(srcDir, path.join(distDir, 'css'), {
 		recursive: true,
@@ -103,13 +117,14 @@ export function build({ root, pkg = readPackage(root) }) {
 	outputs.push(...writeTypes({ root, merged, vocabulary, tokensSchema }));
 	outputs.push(...writeLlms({ root, merged, entries, pkg }));
 
-	return { errors: [], outputs };
+	return { errors: [], outputs, warnings: minified.warnings };
 }
 
 const isMain = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
 if (isMain) {
 	const root = process.cwd();
-	const { errors, outputs } = build({ root });
+	const { errors, outputs, warnings } = build({ root });
+	for (const w of warnings) console.warn(`build: lightningcss: ${w.message}`);
 	for (const e of errors) console.error(formatError(root, e));
 	if (errors.length) {
 		console.error(`build: aborted, ${errors.length} problem${errors.length === 1 ? '' : 's'}`);

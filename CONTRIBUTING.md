@@ -5,7 +5,7 @@ Thanks for helping. Yeti is small on purpose, so most of this document is about 
 ## Running things
 
 ```bash
-npm ci                   # install the three dev dependencies
+npm ci                   # install the four dev dependencies
 npx playwright install   # once, for the browser tests
 npm run validate         # manifests, examples, spacing rule, layer contract
 npm run test:tools       # node:test suite for the tooling
@@ -29,9 +29,9 @@ and say what changed in the commit message. A commit that re-blesses with no vis
 
 ## The rules that shape every change
 
-**No build step, ever.** Nothing a user needs can depend on Node, Sass, or a bundler. The source tree under `src/` must load in a browser as-is; the build only concatenates.
+**No build step, ever.** Nothing a user needs can depend on Node, Sass, or a bundler. The source tree under `src/` must load in a browser as-is; the build concatenates it, writes a minified copy of the result beside it, and does nothing else to it.
 
-**No new dependencies.** The dev dependencies are Playwright, axe, and parse5. A pull request that adds one needs an issue first explaining why the job cannot be done without it.
+**No new dependencies.** The dev dependencies are Playwright, axe, parse5, and lightningcss. lightningcss is the single exception to this rule and was taken deliberately: minifying CSS correctly means parsing it, that is not a job to hand-roll, and it runs only here — it produces `dist/yeti.min.css` and never touches the source a user loads. A pull request that adds another dependency needs an issue first explaining why the job cannot be done without it.
 
 **Manifest first.** Every layout or component lands in one pull request with its `manifest.json`, its CSS, its `example.html`, a browser fixture, and the generated docs page. `npm run validate` must pass. If the manifest and the CSS disagree, the manifest is right and the CSS is wrong.
 

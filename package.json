@@ -50,6 +50,7 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4",
+    "lightningcss": "^1.33.0",
     "parse5": "^7",
     "playwright": "^1"
   }

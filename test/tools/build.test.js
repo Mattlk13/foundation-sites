@@ -53,6 +53,23 @@ test('build writes dist/ with the bundle, a verbatim css tree, js modules, and t
 	assert.ok(html.globalAttributes.some((a) => a.name === 'data-gap'));
 });
 
+test('build writes a minified stylesheet beside the readable one, with the modern syntax intact', () => {
+	const root = makeTree(treeWithPkg({
+		'src/layouts/rail/rail.css': '@layer yeti.layouts {\n\t.rail { display: flex; background: light-dark(#ffffff, #111111); }\n\t@starting-style {\n\t\t.rail { opacity: 0; }\n\t}\n}\n',
+	}));
+	const r = build({ root });
+	assert.deepEqual(r.errors, []);
+	const readable = fs.readFileSync(path.join(root, 'dist/yeti.css'), 'utf8');
+	const minified = fs.readFileSync(path.join(root, 'dist/yeti.min.css'), 'utf8');
+	assert.ok(minified.length < readable.length, `${minified.length} is not smaller than ${readable.length}`);
+	// The banner is prepended after minifying, because lightningcss drops
+	// comments, and a shipped file has to carry its licence.
+	assert.ok(minified.startsWith('/*! yeti-css 7.0.0-alpha.0 | MIT | https://foundationcss.com/yeti/ */\n'));
+	assert.ok(minified.includes('light-dark('));
+	assert.ok(minified.includes('@starting-style'));
+	assert.ok(r.outputs.includes('yeti.min.css'));
+});
+
 test('build refuses to run on validation errors and writes nothing', () => {
 	const root = makeTree(treeWithPkg({ 'src/layouts/rail/example.html': '<div class="rail" data-gap="huge"><p>x</p></div>' }));
 	const r = build({ root });

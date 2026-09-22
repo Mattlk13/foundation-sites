@@ -16,7 +16,7 @@ The examples on these pages are live: each is a `demo`, a box you can drag from 
 
 Yeti is not released yet. There is no package on npm and nothing to download, so there is nothing to install today. This section will describe npm, the zip on the GitHub release page and a CDN path once there is a release to describe.
 
-Everything below is written the way it will work then. The package will ship `dist/`: the bundled `yeti.css`, the same source tree unbundled under `css/`, the nine modules under `js/` and all of them in one `yeti.js`, the two example themes under `themes/`, and the machine-readable files described further down.
+Everything below is written the way it will work then. The package will ship `dist/`: the bundled `yeti.css` and its minified twin `yeti.min.css`, the same source tree unbundled under `css/`, the nine modules under `js/` and all of them in one `yeti.js`, the two example themes under `themes/`, and the machine-readable files described further down.
 
 To try Yeti before the release, clone the repository and run `npm run build`. That writes the same `dist/` the package will ship, so read `dist/` wherever a path below says `node_modules/yeti-css/dist/`.
 
@@ -34,6 +34,18 @@ Yeti's rules live in cascade layers, so anything you write outside a layer wins 
 <link rel="stylesheet" href="node_modules/yeti-css/dist/yeti.css">
 <link rel="stylesheet" href="node_modules/yeti-css/dist/themes/soft.css">
 ```
+
+## The minified copy
+
+`dist/yeti.min.css` is the same stylesheet with the comments and the whitespace taken out. Link it instead when you are counting bytes:
+
+```html
+<link rel="stylesheet" href="node_modules/yeti-css/dist/yeti.min.css">
+```
+
+The package's `style` field and its `.` export still point at the readable `yeti.css`, because that is the one worth stepping through in devtools; name the minified file yourself when you want it.
+
+Minified is not transpiled. `light-dark()`, `@starting-style`, container queries, `oklch()` and anchor positioning are left exactly as they are written, because Yeti's floor is Baseline 2025 and every browser at that floor already has them. The minified file and the readable one are the same CSS.
 
 ## Bare HTML
 
