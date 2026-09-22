@@ -37,7 +37,7 @@ Yeti's rules live in cascade layers, so anything you write outside a layer wins 
 
 ## The minified copies
 
-`dist/yeti.min.css` is the same stylesheet with the comments and the whitespace taken out, and `dist/yeti.min.js` is the same module bundle with its comments taken out. Link them instead when you are counting bytes:
+`dist/yeti.min.css` is the same stylesheet with the whitespace and the comments taken out, and `dist/yeti.min.js` is the same module bundle with its comments taken out — in both, save for the one-line licence banner every shipped file carries. Link them instead when you are counting bytes:
 
 ```html
 <link rel="stylesheet" href="node_modules/yeti-css/dist/yeti.min.css">

@@ -4,16 +4,17 @@ import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
 import { bundle, build } from '../../bin/build.js';
+import { LAYER_STATEMENT } from '../../bin/lib/layers.js';
 import { makeTree, validManifest, validTree } from './helpers.js';
 
-const pkg = { name: 'yeti-css', version: '7.0.0-alpha.0', license: 'MIT', homepage: 'https://foundationcss.com/yeti/' };
+const pkg = { name: 'yeti-css', version: '7.0.0-alpha.0', license: 'FSL-1.1-MIT', homepage: 'https://foundationcss.com/yeti/' };
 const treeWithPkg = (extra = {}) => validTree({ 'package.json': pkg, ...extra });
 
 test('bundle writes a header and each file in cascade order with source comments', () => {
 	const root = makeTree(treeWithPkg());
 	const r = bundle({ root, pkg });
 	assert.deepEqual(r.errors, []);
-	assert.ok(r.css.startsWith('/*! yeti-css 7.0.0-alpha.0 | MIT | https://foundationcss.com/yeti/ */\n'));
+	assert.ok(r.css.startsWith('/*! yeti-css 7.0.0-alpha.0 | FSL-1.1-MIT | https://foundationcss.com/yeti/ */\n'));
 	const layers = r.css.indexOf('/* src/layers.css */');
 	const rail = r.css.indexOf('/* src/layouts/rail/rail.css */');
 	const entry = r.css.indexOf('/* src/yeti.css */');
@@ -65,7 +66,12 @@ test('build writes a minified stylesheet beside the readable one, with the moder
 	assert.ok(minified.length < readable.length, `${minified.length} is not smaller than ${readable.length}`);
 	// The banner is prepended after minifying, because lightningcss drops
 	// comments, and a shipped file has to carry its licence.
-	assert.ok(minified.startsWith('/*! yeti-css 7.0.0-alpha.0 | MIT | https://foundationcss.com/yeti/ */\n'));
+	assert.ok(minified.startsWith('/*! yeti-css 7.0.0-alpha.0 | FSL-1.1-MIT | https://foundationcss.com/yeti/ */\n'));
+	// lightningcss folds the standalone @layer statement into the five layer
+	// blocks it emits, which leaves the cascade order implicit; the statement
+	// is put back so the minified file orders layers the same way the source
+	// declares them, not by accident of emission.
+	assert.ok(minified.includes(`${LAYER_STATEMENT}\n`), 'minified css is missing the standalone @layer statement');
 	assert.ok(minified.includes('light-dark('));
 	assert.ok(minified.includes('@starting-style'));
 	assert.ok(r.outputs.includes('yeti.min.css'));
@@ -81,12 +87,32 @@ test('build writes a minified module bundle that still parses', () => {
 	const readable = fs.readFileSync(path.join(root, 'dist/yeti.js'), 'utf8');
 	const minified = fs.readFileSync(path.join(root, 'dist/yeti.min.js'), 'utf8');
 	assert.ok(minified.length < readable.length, `${minified.length} is not smaller than ${readable.length}`);
+	// Both JS bundles carry the same licence banner the CSS files do, as their
+	// first line; the minifier strips comments, so it is added back after.
+	assert.equal(readable.split('\n')[0], '/*! yeti-css 7.0.0-alpha.0 | FSL-1.1-MIT | https://foundationcss.com/yeti/ */');
+	assert.equal(minified.split('\n')[0], '/*! yeti-css 7.0.0-alpha.0 | FSL-1.1-MIT | https://foundationcss.com/yeti/ */');
 	assert.ok(!minified.includes('Finds its own elements'));
 	assert.ok(minified.includes('"https://foundationcss.com/yeti/"'));
 	// The strip must not have broken the syntax; the modules import and export
 	// nothing, so the bundle compiles as a plain script.
 	assert.doesNotThrow(() => new vm.Script(minified));
 	assert.ok(r.outputs.includes('yeti.min.js'));
+});
+
+test('a module the minifier cannot read stops the build before dist is touched', () => {
+	const root = makeTree(treeWithPkg({
+		'src/layouts/rail/manifest.json': validManifest({ js: [{ module: 'rail.js', optional: true }] }),
+		'src/layouts/rail/rail.js': 'const broken = 1; /* unterminated\n',
+	}));
+	fs.mkdirSync(path.join(root, 'dist'), { recursive: true });
+	fs.writeFileSync(path.join(root, 'dist', 'stale.txt'), 'old');
+	const r = build({ root });
+	assert.equal(r.errors.length, 1);
+	assert.match(r.errors[0].message, /rail\.js/);
+	assert.match(r.errors[0].message, /unterminated block comment/);
+	// The pre-existing dist/ must be exactly as it was: the throw happens
+	// before fs.rmSync wipes it, the same guard the CSS minifier already gets.
+	assert.equal(fs.readFileSync(path.join(root, 'dist', 'stale.txt'), 'utf8'), 'old');
 });
 
 test('build refuses to run on validation errors and writes nothing', () => {

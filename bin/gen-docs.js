@@ -371,7 +371,8 @@ export function generateDocs({ root, demoStylesheet, outDir }) {
 			guideErrors.push({ file: guide, message: `no ${ATTRIBUTES_START} … ${ATTRIBUTES_END} pair for the generated attribute table` });
 			continue;
 		}
-		if (next !== markdown) fs.writeFileSync(guide, next);
+		if (next === markdown) continue;
+		fs.writeFileSync(guide, next);
 		written.push(guide);
 	}
 	return { written, deleted, errors: guideErrors };
@@ -394,7 +395,11 @@ if (isMain) {
 	// Comma-separated, so a themed host can name the framework and its theme.
 	const demoStylesheet = flag === -1 ? undefined : process.argv[flag + 1]?.split(',').map((s) => s.trim()).filter(Boolean);
 	// Where the pages are written; docs/ when absent. A themed host generates
-	// into its own tree rather than over this one.
+	// into its own tree rather than over this one. The guide tables are only
+	// ever written into <out>/guides/*.md files that already exist there;
+	// this repo's own guides get copied into the host's tree first, and the
+	// foundationcss.com import relies on generating over that copy rather
+	// than being handed a guides/ directory of its own to invent.
 	const outFlag = process.argv.indexOf('--out');
 	const outDir = outFlag === -1 ? undefined : process.argv[outFlag + 1];
 	if ((flag !== -1 && !demoStylesheet?.length) || (outFlag !== -1 && !outDir)) {

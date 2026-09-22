@@ -67,7 +67,7 @@ The table covers the grid and every component in the version 6 kitchen sink. "No
 | Abide | none | native validation attributes; the field shows the browser's state |
 | Equalizer | none | `columns` and `grid` align heights on their own |
 | Interchange | none | `<picture>` and `srcset` |
-| Toggler | none | `popover`, `<details>`, and `aria-expanded` cover every case it had |
+| Toggler | none | `<details>`, `popover`, `<dialog>`, and `:has()` cover every case it had |
 | Motion UI | none | components transition on the motion tokens; reduced motion is honoured through them |
 
 ### What Yeti does instead
@@ -78,7 +78,7 @@ Four of those rows deserve more than a line, because what they did is still wort
 
 **Label and badge** were two components with one look. Yeti has one, `badge`, and `data-emphasis` is the difference: `high` is the solid fill the old badge had, `medium` an outline, `low` the hue in the text alone. `data-variant` picks the hue and `data-size` the step, so every label-and-badge combination version 6 shipped is three attributes on one class.
 
-**Sticky** was a plugin with a placeholder element, a pin offset, and a list of edge cases. It is the `data-sticky` marker now: put it on a child of a `sidebar`, a `shell` or a `stack`, and that child sticks, `--yeti-sticky-offset` deciding how far below the top it stops. There is nothing to initialise and nothing to tear down.
+**Sticky** was a plugin with a placeholder element, a pin offset, and a list of edge cases. It is the `data-sticky` marker now: put it on a child of a `sidebar` or a `stack`, on the `nav` or `aside` inside a `shell`'s body row, or on a `nav` itself, and that child sticks, `--yeti-sticky-offset` deciding how far below the top it stops. There is nothing to initialise and nothing to tear down.
 
 **Reveal** is the `dialog` row above. The native element does the opening, the modal backdrop, the focus trap and Escape; `dialog.js` adds the click on the backdrop and the return of focus to the opener, and without the module the dialog still opens and closes.
 

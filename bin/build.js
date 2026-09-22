@@ -13,6 +13,7 @@ import { writeTypes } from './gen-types.js';
 import { writeLlms } from './gen-llms.js';
 import { minifyCss } from './lib/minify-css.js';
 import { minifyJs } from './lib/minify-js.js';
+import { LAYER_STATEMENT } from './lib/layers.js';
 
 export function readPackage(root) {
 	return JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
@@ -35,6 +36,9 @@ export function build({ root, pkg = readPackage(root) }) {
 	const bundled = bundle({ root, pkg });
 	if (bundled.errors.length) return { errors: bundled.errors, outputs: [], warnings: [] };
 
+	const srcDir = path.join(root, 'src');
+	const distDir = path.join(root, 'dist');
+
 	// Minify before anything is written, so a stylesheet lightningcss cannot
 	// parse leaves the previous dist/ alone instead of half-replacing it.
 	let minified;
@@ -44,8 +48,32 @@ export function build({ root, pkg = readPackage(root) }) {
 		return { errors: [{ file: path.join(root, 'src', 'yeti.css'), message: `lightningcss could not minify the bundle: ${e.message}` }], outputs: [], warnings: [] };
 	}
 
-	const srcDir = path.join(root, 'src');
-	const distDir = path.join(root, 'dist');
+	// One file with every module, for a page that would rather load one
+	// script than pick. The modules import nothing and export nothing, so
+	// each goes in its own block, which keeps their top-level names apart.
+	// Minified in this same pre-write step, beside the stylesheet: the strip
+	// throws on anything it cannot read, and that has to stop the build with
+	// a named error rather than surface as an uncaught throw after dist/ has
+	// already been wiped below.
+	const modules = walkFiles(srcDir).filter((f) => f.endsWith('.js')).sort((a, b) => path.basename(a).localeCompare(path.basename(b)));
+	let allJs = null;
+	let allJsMinified = null;
+	if (modules.length) {
+		const parts = modules.map((file) => `// ${path.basename(file)}\n{\n${fs.readFileSync(file, 'utf8').trim()}\n}\n`);
+		allJs = `// Yeti ${pkg.version}: every optional module in one file. Load with <script type="module">.\n\n${parts.join('\n')}`;
+		try {
+			allJsMinified = minifyJs(allJs);
+		} catch (e) {
+			// The strip's error is an offset into the concatenated bundle, which
+			// names no file; re-running it module by module finds the one that
+			// broke, so this error reads like every other one build() reports.
+			const broken = modules.find((file) => {
+				try { minifyJs(fs.readFileSync(file, 'utf8')); return false; } catch { return true; }
+			}) ?? modules[0];
+			return { errors: [{ file: broken, message: `could not minify ${path.basename(broken)}: ${e.message}` }], outputs: [], warnings: [] };
+		}
+	}
+
 	const outputs = [];
 	const write = (rel, content) => {
 		const file = path.join(distDir, rel);
@@ -58,7 +86,10 @@ export function build({ root, pkg = readPackage(root) }) {
 	fs.mkdirSync(path.join(distDir, 'js'), { recursive: true });
 
 	write('yeti.css', bundled.css);
-	write('yeti.min.css', `${bundled.header}${minified.css}\n`);
+	// lightningcss folds the standalone @layer statement into the five layer
+	// blocks it emits, which leaves the cascade order implicit; put it back
+	// so the minified file declares the same order the source does.
+	write('yeti.min.css', `${bundled.header}${LAYER_STATEMENT}\n${minified.css}\n`);
 
 	fs.cpSync(srcDir, path.join(distDir, 'css'), {
 		recursive: true,
@@ -76,23 +107,16 @@ export function build({ root, pkg = readPackage(root) }) {
 		}
 	}
 
-	const modules = walkFiles(srcDir).filter((f) => f.endsWith('.js')).sort((a, b) => path.basename(a).localeCompare(path.basename(b)));
 	for (const file of modules) {
 		const rel = `js/${path.basename(file)}`;
 		fs.copyFileSync(file, path.join(distDir, rel));
 		outputs.push(rel);
 	}
-	// One file with every module, for a page that would rather load one
-	// script than pick. The modules import nothing and export nothing, so
-	// each goes in its own block, which keeps their top-level names apart.
-	if (modules.length) {
-		const parts = modules.map((file) => `// ${path.basename(file)}\n{\n${fs.readFileSync(file, 'utf8').trim()}\n}\n`);
-		const all = `// Yeti ${pkg.version}: every optional module in one file. Load with <script type="module">.\n\n${parts.join('\n')}`;
-		write('yeti.js', all);
-		// The same bundle with the comments and blank lines gone. The strip
-		// throws on anything it cannot read, so a module that outgrows it
-		// stops the build rather than shipping half of itself.
-		write('yeti.min.js', `// Yeti ${pkg.version}: every optional module in one file, minified.\n${minifyJs(all)}`);
+	if (allJs !== null) {
+		write('yeti.js', `${bundled.header}${allJs}`);
+		// The banner goes back on after minifying, same as the stylesheet:
+		// the strip takes every comment out, including one it did not write.
+		write('yeti.min.js', `${bundled.header}${allJsMinified}`);
 	}
 
 	const schema = loadSchema(path.join(root, 'schema', 'manifest.schema.json'));
