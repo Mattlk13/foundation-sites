@@ -70,6 +70,18 @@ The table covers the grid and every component in the version 6 kitchen sink. "No
 | Toggler | none | `popover`, `<details>`, and `aria-expanded` cover every case it had |
 | Motion UI | none | components transition on the motion tokens; reduced motion is honoured through them |
 
+### What Yeti does instead
+
+Four of those rows deserve more than a line, because what they did is still worth doing.
+
+**Toggler** set a class or an attribute on another element to show it, hide it, or animate it. Every case it covered has a platform answer now. A disclosure is `<details>` with `<summary>`. A panel that closes on Escape and on a click outside is `popover`. A modal is `<dialog>`, opened by a button with `commandfor` and `command="show-modal"`. A parent that has to react to the state of something inside it is `:has()`. None of the four needs a script, and each announces itself to a screen reader, which a toggled class never did.
+
+**Label and badge** were two components with one look. Yeti has one, `badge`, and `data-emphasis` is the difference: `high` is the solid fill the old badge had, `medium` an outline, `low` the hue in the text alone. `data-variant` picks the hue and `data-size` the step, so every label-and-badge combination version 6 shipped is three attributes on one class.
+
+**Sticky** was a plugin with a placeholder element, a pin offset, and a list of edge cases. It is the `data-sticky` marker now: put it on a child of a `sidebar`, a `shell` or a `stack`, and that child sticks, `--yeti-sticky-offset` deciding how far below the top it stops. There is nothing to initialise and nothing to tear down.
+
+**Reveal** is the `dialog` row above. The native element does the opening, the modal backdrop, the focus trap and Escape; `dialog.js` adds the click on the backdrop and the return of focus to the opener, and without the module the dialog still opens and closes.
+
 ## The five habits
 
 **Attributes, not modifier classes.** `.button.primary.large.hollow` becomes `class="button" data-variant="primary" data-size="lg" data-emphasis="medium"`. Each attribute has a fixed list of values, and a value outside the list is a validator error. Your own classes never collide with Yeti's, because Yeti only ever has one.
