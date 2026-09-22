@@ -47,7 +47,7 @@ Version 6 had a class for each of these. Most of them are the browser's job, and
 
 | Foundation 6 | Yeti | Notes |
 | --- | --- | --- |
-| `.button`, `.button.primary`, `.hollow`, `.clear` | `button` with `data-variant` and `data-emphasis` | emphasis replaces hollow and clear |
+| `.button`, `.button.primary`, <br> `.hollow`, `.clear` | `button` with `data-variant` and `data-emphasis` | emphasis replaces hollow and clear |
 | `.button-group` | `buttons` | a named group of buttons |
 | `.callout` | `alert` for a message, `box` with `data-border` for a plain panel | the callout did two jobs |
 | `.card` | `card` | the figure bleeds on its own; `data-stretch` for a whole-card link |
