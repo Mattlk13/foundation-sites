@@ -135,7 +135,7 @@ Where anchor positioning is missing, the sheet cannot anchor under the bar, so i
 
 ## Feedback
 
-An `alert` carries `role="status"` for the usual notice, announced politely, or `role="alert"` for something urgent enough to interrupt. Neither role announces content that is already on the page when it loads; they only matter for an alert inserted after the fact, so a banner baked into the page needs no role at all to be seen, just one to be right. The close button is a `button` with `data-dismiss`; on its own it does nothing; loaded once anywhere in the page, `alert.js` listens on the document and fades the alert away on a click.
+An `alert` carries `role="status"` for the usual notice, announced politely, or `role="alert"` for something urgent enough to interrupt. Neither role announces content that is already on the page when it loads; they only matter for an alert inserted after the fact, so a banner baked into the page needs no role at all to be seen, just one to be right. The close button is a `button` with `data-close`; on its own it does nothing; loaded once anywhere in the page, `alert.js` listens on the document and fades the alert away on a click.
 
 A `progress` bar fills to its value, and without one it goes indeterminate: the track takes diagonal stripes that move along it, for work whose length is not known rather than work with none. A `spinner` is the same idea with no value at all, a turning ring sized to the text around it. A button with `aria-busy="true"` draws that same ring after its label, so the one waiting indicator serves a standalone wait and a button's wait alike.
 
@@ -143,7 +143,7 @@ A `progress` bar fills to its value, and without one it goes indeterminate: the 
 <div class="alert" role="status" data-variant="success">
 	<svg aria-hidden="true" viewBox="0 0 16 16"><path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
 	<div><strong>Saved.</strong> Your changes are live.</div>
-	<button type="button" data-dismiss aria-label="Dismiss">×</button>
+	<button type="button" data-close aria-label="Dismiss">×</button>
 </div>
 ```
 

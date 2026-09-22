@@ -213,7 +213,7 @@ Attributes:
 - data-emphasis: high | medium (default) | low — How loud: medium is a tint, high a solid fill, low the border alone.
 
 On children:
-- data-dismiss on > button (boolean) — The close button; removes the alert when alert.js is loaded.
+- data-close on > button (boolean) — The close button; removes the alert when alert.js is loaded.
 
 module: alert.js (optional)
 

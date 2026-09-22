@@ -12,11 +12,11 @@
   "classes": [],
   "children": [
     { "selector": "> svg", "min": 0, "max": 1, "description": "An icon, first, sized to the text." },
-    { "selector": "> [data-dismiss]", "min": 0, "max": 1, "description": "A button, last, that removes the alert when alert.js is loaded." },
+    { "selector": "> [data-close]", "min": 0, "max": 1, "description": "A button, last, that removes the alert when alert.js is loaded." },
     { "selector": "> *", "min": 1, "max": null, "description": "The message, in any element." }
   ],
   "markers": [
-    { "name": "data-dismiss", "type": "boolean", "on": "> button", "description": "The close button; removes the alert when alert.js is loaded." }
+    { "name": "data-close", "type": "boolean", "on": "> button", "description": "The close button; removes the alert when alert.js is loaded." }
   ],
   "tokens": [
     { "name": "--yeti-alert-radius", "public": true, "description": "Corner radius." },

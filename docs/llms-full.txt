@@ -966,7 +966,7 @@ Attributes:
 - data-emphasis: high | medium (default) | low — How loud: medium is a tint, high a solid fill, low the border alone.
 
 On children:
-- data-dismiss on > button (boolean) — The close button; removes the alert when alert.js is loaded.
+- data-close on > button (boolean) — The close button; removes the alert when alert.js is loaded.
 
 module: alert.js (optional)
 
@@ -978,12 +978,12 @@ Something the reader should know now: the form was saved, the trial ends on Frid
 
 A flex row: an optional icon, the message, and an optional close button pushed to the end. The hue draws the border and, at `medium` emphasis, a tint behind the text; `high` fills the box for the message that must be seen; `low` keeps the border alone. The start edge is four border widths thick, the same mark the card uses for a variant.
 
-The close button is a `button` carrying `data-dismiss`. Yeti's `alert.js`, loaded once with `<script type="module" src="…/js/alert.js">`, listens on the document: a click fades the alert over the fast duration and removes it. Without the module the button does nothing, so leave it out on pages that do not load the module.
+The close button is a `button` carrying `data-close`. Yeti's `alert.js`, loaded once with `<script type="module" src="…/js/alert.js">`, listens on the document: a click fades the alert over the fast duration and removes it. Without the module the button does nothing, so leave it out on pages that do not load the module.
 
 ```html
 <div class="alert" role="alert" data-variant="alert" data-emphasis="high">
 	<div><strong>Payment failed.</strong> The card was declined.</div>
-	<button type="button" data-dismiss aria-label="Dismiss">×</button>
+	<button type="button" data-close aria-label="Dismiss">×</button>
 </div>
 ```
 
@@ -993,7 +993,7 @@ The close button is a `button` carrying `data-dismiss`. Yeti's `alert.js`, loade
 
 Children:
 - > svg: at least 0, at most 1. An icon, first, sized to the text.
-- > [data-dismiss]: at least 0, at most 1. A button, last, that removes the alert when alert.js is loaded.
+- > [data-close]: at least 0, at most 1. A button, last, that removes the alert when alert.js is loaded.
 - > *: at least 1. The message, in any element.
 
 Tokens:

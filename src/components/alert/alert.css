@@ -15,7 +15,7 @@
 	}
 	.alert:not([data-variant]) { --_yeti-variant: var(--yeti-color-primary); --_yeti-variant-subtle: var(--yeti-color-primary-subtle); --_yeti-variant-soft: var(--yeti-color-primary-soft); --_yeti-variant-strong: var(--yeti-color-primary-strong); --_yeti-variant-text: var(--yeti-color-primary-text); --_yeti-on-variant: var(--yeti-on-primary); }
 	.alert > * { margin: 0; }
-	.alert > :not(svg, [data-dismiss]) { flex: 1; }
+	.alert > :not(svg, [data-close]) { flex: 1; }
 	.alert[data-emphasis="high"] {
 		background-color: var(--_yeti-variant);
 		border-color: var(--_yeti-variant-strong);
@@ -35,7 +35,7 @@
 
 	/* The close button: a control-sized square at the end, pulled into the
 	   first line's height so the alert is no taller for it. */
-	.alert > [data-dismiss] {
+	.alert > [data-close] {
 		appearance: none;
 		display: inline-flex;
 		align-items: center;
@@ -53,5 +53,5 @@
 		font: inherit;
 		cursor: pointer;
 	}
-	.alert > [data-dismiss]:hover { background-color: color-mix(in oklch, currentColor 12%, transparent); }
+	.alert > [data-close]:hover { background-color: color-mix(in oklch, currentColor 12%, transparent); }
 }
