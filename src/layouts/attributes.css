@@ -128,6 +128,9 @@
 	[data-variant="success"] { --_yeti-variant: var(--yeti-color-success); --_yeti-variant-subtle: var(--yeti-color-success-subtle); --_yeti-variant-soft: var(--yeti-color-success-soft); --_yeti-variant-strong: var(--yeti-color-success-strong); --_yeti-variant-text: var(--yeti-color-success-text); --_yeti-on-variant: var(--yeti-on-success); }
 	[data-variant="warning"] { --_yeti-variant: var(--yeti-color-warning); --_yeti-variant-subtle: var(--yeti-color-warning-subtle); --_yeti-variant-soft: var(--yeti-color-warning-soft); --_yeti-variant-strong: var(--yeti-color-warning-strong); --_yeti-variant-text: var(--yeti-color-warning-text); --_yeti-on-variant: var(--yeti-on-warning); }
 	[data-variant="alert"] { --_yeti-variant: var(--yeti-color-alert); --_yeti-variant-subtle: var(--yeti-color-alert-subtle); --_yeti-variant-soft: var(--yeti-color-alert-soft); --_yeti-variant-strong: var(--yeti-color-alert-strong); --_yeti-variant-text: var(--yeti-color-alert-text); --_yeti-on-variant: var(--yeti-on-alert); }
+	/* danger is the alert ladder under a name that is not also a component,
+	   so an alert that is an alert does not read data-variant="alert". */
+	[data-variant="danger"] { --_yeti-variant: var(--yeti-color-alert); --_yeti-variant-subtle: var(--yeti-color-alert-subtle); --_yeti-variant-soft: var(--yeti-color-alert-soft); --_yeti-variant-strong: var(--yeti-color-alert-strong); --_yeti-variant-text: var(--yeti-color-alert-text); --_yeti-on-variant: var(--yeti-on-alert); }
 	[data-variant="neutral"] { --_yeti-variant: var(--yeti-color-neutral); --_yeti-variant-subtle: var(--yeti-color-neutral-subtle); --_yeti-variant-soft: var(--yeti-color-neutral-soft); --_yeti-variant-strong: var(--yeti-color-neutral-strong); --_yeti-variant-text: var(--yeti-color-neutral-text); --_yeti-on-variant: var(--yeti-on-neutral); }
 
 	/* data-size on components: a text step and the space step one below it */

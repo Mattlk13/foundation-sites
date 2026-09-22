@@ -98,7 +98,7 @@ The label must point at the control with `for` and the control must carry that `
 
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
-| `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral` | `primary` | The colour of a checked checkbox or radio. |
+| `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `danger`, `neutral` | `primary` | The colour of a checked checkbox or radio. |
 | `data-size` | enum | `sm`, `md`, `lg` | `md` | Scales the control's height and text. |
 | `data-inline` | boolean |  |  | Put the label beside the control. Checkboxes and radios are inline without it. |
 

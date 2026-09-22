@@ -68,4 +68,21 @@ test.describe('alert', () => {
 		await expect(page.locator('#closable')).toHaveCount(0);
 		expect(await page.evaluate(() => document.querySelector('#stage').getAttribute('tabindex'))).toBe('0');
 	});
+
+	test('data-variant="danger" is the alert hue under a name that is not the component', async ({ page }) => {
+		await open(page);
+		const colours = await page.evaluate(() => {
+			const make = (variant) => {
+				const el = document.createElement('div');
+				el.className = 'alert';
+				el.setAttribute('data-variant', variant);
+				el.textContent = variant;
+				document.getElementById('stage').append(el);
+				return getComputedStyle(el).borderColor;
+			};
+			return [make('danger'), make('alert'), make('primary')];
+		});
+		expect(colours[0]).toBe(colours[1]);
+		expect(colours[0]).not.toBe(colours[2]);
+	});
 });

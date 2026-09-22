@@ -209,7 +209,7 @@ Joins a control with what belongs beside it, a unit, a symbol, a button, or anot
 A message in a hue: a tinted box with a coloured edge, an optional icon, and an optional close button that the module wires up.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | neutral — Which hue: success for done, warning for careful, alert for wrong, primary for news.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — Which hue: success for done, warning for careful, danger for wrong (alert is the same ladder under its Foundation 6 name), primary for news.
 - data-emphasis: high | medium (default) | low — How loud: medium is a tint, high a solid fill, low the border alone.
 
 On children:
@@ -222,7 +222,7 @@ module: alert.js (optional)
 A small inline label for a status or a count, tinted by a hue.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | neutral — Which hue tints the badge.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — Which hue tints the badge.
 - data-emphasis: high | medium (default) | low — medium is a subtle tint with dark text, high a solid fill, low text alone.
 - data-size: sm | md (default) | lg — The text size the badge sits beside; the badge renders one step smaller.
 
@@ -238,7 +238,7 @@ Attributes:
 An action with a face: a hue, an emphasis, and a size, with every state taken from the element itself.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | neutral — Which hue's ladder the button uses.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — Which hue's ladder the button uses.
 - data-emphasis: high (default) | medium | low — How loud: high is a solid fill, medium an outline, low text alone.
 - data-size: sm | md (default) | lg — Scales the text and the padding together.
 
@@ -255,7 +255,7 @@ Attributes:
 A bordered surface for one thing: an optional figure that bleeds to the edges, a body, and a footer that sits at the bottom; a row with the picture beside the text once the card's content reaches the md width.
 
 Attributes:
-- data-variant: primary | secondary | success | warning | alert | neutral — Tints the border and adds a bar along the top; the body stays plain.
+- data-variant: primary | secondary | success | warning | alert | danger | neutral — Tints the border and adds a bar along the top; the body stays plain.
 - data-threshold: 2xs | xs | sm | md (default) | lg | xl | 2xl — The card's own width from which the picture sits beside the text instead of on top.
 - data-ratio: 1/1 | 4/3 | 3/2 | 16/9 (default) | 21/9 — The picture's aspect ratio while it sits on top of the body. Past data-threshold the picture moves beside the body and fills that column, and the ratio stops applying.
 - data-raised (boolean) — A shadow instead of a border.
@@ -317,7 +317,7 @@ module: hover.js (optional)
 One form control with its label, an optional hint, and an error that shows itself when the control is invalid.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | neutral — The colour of a checked checkbox or radio.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — The colour of a checked checkbox or radio.
 - data-size: sm | md (default) | lg — Scales the control's height and text.
 - data-inline (boolean) — Put the label beside the control. Checkboxes and radios are inline without it.
 
@@ -332,7 +332,7 @@ module: range.js (optional)
 A bar with a brand, a list of links, and actions, that collapses the links behind a toggle at its own width and opens them as a sheet, a drawer, or a screen.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | neutral — The hue of the current link and of the hover tint.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — The hue of the current link and of the hover tint.
 - data-threshold: 2xs | xs | sm | md (default) | lg | xl | 2xl — The nav's own width at or above which the links sit in the bar; below it they are behind the toggle.
 - data-panel: sheet (default) | drawer | screen — The shape of the open list below the threshold: a sheet under the bar, a drawer from the start edge, or the whole screen.
 - data-gap: none | xs | sm (default) | md | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the bar's parts and between the links.
@@ -347,7 +347,7 @@ On children:
 Links to the pages of a long list, each a square target, the current one filled, shrinking to Previous, the current page, and Next when it is narrow.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | neutral — The hue of the current page and of the hover tint.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — The hue of the current page and of the hover tint.
 - data-size: sm | md (default) | lg — The text step.
 - data-threshold: 2xs | xs | sm (default) | md | lg | xl | 2xl — The pagination's own width below which only Previous, the current page, and Next remain.
 - data-justify: start (default) | center | end | between | around | evenly — Where the links sit in the row.
@@ -357,7 +357,7 @@ Attributes:
 The native progress element as a thin bar in a hue, filled to its value, or striped and moving when it has none.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | neutral — The hue of the filled part.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — The hue of the filled part.
 - data-size: sm | md (default) | lg — The bar's thickness: half the size's space step.
 
 ## seam (component, class="seam")
@@ -375,7 +375,7 @@ Attributes:
 A turning ring in a hue, the size of the text, for waiting with no known end; a busy button shows the same ring after its label.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | neutral — The hue of the bright edge.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — The hue of the bright edge.
 - data-size: sm | md (default) | lg — The ring is one em of the size's text step.
 
 ## table (component, class="table")
@@ -396,7 +396,7 @@ On children:
 A row of tabs over their panels, showing one at a time when its module is loaded and all of them when it is not.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | neutral — The hue of the selected tab and its edge.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — The hue of the selected tab and its edge.
 - data-orientation: horizontal (default) | vertical — Whether the tab list runs along the top or down the side.
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the list and the panels.
 

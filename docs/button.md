@@ -55,7 +55,7 @@ A `button` is a button and an `a` is a link; the class changes the look, not the
 
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
-| `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral` | `primary` | Which hue's ladder the button uses. |
+| `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `danger`, `neutral` | `primary` | Which hue's ladder the button uses. |
 | `data-emphasis` | enum | `high`, `medium`, `low` | `high` | How loud: high is a solid fill, medium an outline, low text alone. |
 | `data-size` | enum | `sm`, `md`, `lg` | `md` | Scales the text and the padding together. |
 

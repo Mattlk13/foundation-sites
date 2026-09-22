@@ -16,7 +16,7 @@ A component's shape comes from its markup and its manifest; its look comes from 
 
 | Attribute | Values | Read by |
 | --- | --- | --- |
-| `data-variant` | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral` | button, badge, card, field |
+| `data-variant` | `primary`, `secondary`, `success`, `warning`, `danger` (or `alert`, its Foundation 6 name), `neutral` | button, badge, card, field, alert, nav, pagination, progress, spinner, tabs |
 | `data-emphasis` | `high`, `medium`, `low` | button, badge |
 | `data-size` | `sm`, `md`, `lg` | button, badge, field, table, seam |
 
