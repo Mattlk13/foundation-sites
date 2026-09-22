@@ -67,6 +67,18 @@ export function renderTypes(merged, vocabulary, tokensSchema) {
 	lines.push('\tdescription?: string;');
 	lines.push('}');
 	lines.push('');
+	lines.push('export interface YetiEvent {');
+	lines.push('\tname: `yeti:${string}`;');
+	lines.push('\tdetail?: string;');
+	lines.push('\tdescription: string;');
+	lines.push('}');
+	lines.push('');
+	lines.push('export interface YetiModule {');
+	lines.push('\tmodule: string;');
+	lines.push('\toptional: true;');
+	lines.push('\tevents?: YetiEvent[];');
+	lines.push('}');
+	lines.push('');
 	lines.push('export interface YetiA11y {');
 	lines.push('\trole?: string;');
 	lines.push('\trequiredAttributes: string[];');
@@ -92,7 +104,7 @@ export function renderTypes(merged, vocabulary, tokensSchema) {
 	lines.push('\tmarkers: YetiMarker[];');
 	lines.push('\ttokens: YetiToken[];');
 	lines.push('\ta11y: YetiA11y;');
-	lines.push('\tjs: { module: string; optional: true } | null;');
+	lines.push('\tjs: YetiModule[] | null;');
 	lines.push('\tsupport: { unguarded: string[]; guarded: string[] };');
 	lines.push('\tsince: string;');
 	lines.push('\texample: string;');

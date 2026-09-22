@@ -74,8 +74,38 @@ test('enum attributes need values and non-enum attributes must not have them', (
 });
 
 test('js.module must exist', () => {
-	const r = load(validTree({ 'src/layouts/rail/manifest.json': validManifest({ js: { module: 'rail.js', optional: true } }) }));
+	const r = load(validTree({ 'src/layouts/rail/manifest.json': validManifest({ js: [{ module: 'rail.js', optional: true }] }) }));
 	assert.deepEqual(messages(r), ['js.module "rail.js" does not exist']);
+});
+
+test('every module in the list is checked, not only the first', () => {
+	const r = load(validTree({
+		'src/layouts/rail/manifest.json': validManifest({ js: [{ module: 'rail.js', optional: true }, { module: 'siding.js', optional: true }] }),
+		'src/layouts/rail/rail.js': '// present\n',
+	}));
+	assert.deepEqual(messages(r), ['js.module "siding.js" does not exist']);
+});
+
+test('a module may declare the events it dispatches', () => {
+	const r = load(validTree({
+		'src/layouts/rail/manifest.json': validManifest({ js: [{ module: 'rail.js', optional: true, events: [{ name: 'yeti:slide', detail: '{ index }', description: 'The rail moved.' }] }] }),
+		'src/layouts/rail/rail.js': '// present\n',
+	}));
+	assert.deepEqual(r.errors, []);
+	assert.equal(r.merged.rail.js[0].events[0].name, 'yeti:slide');
+});
+
+test('an event name outside the yeti: namespace is rejected', () => {
+	const r = load(validTree({
+		'src/layouts/rail/manifest.json': validManifest({ js: [{ module: 'rail.js', optional: true, events: [{ name: 'slide', description: 'The rail moved.' }] }] }),
+		'src/layouts/rail/rail.js': '// present\n',
+	}));
+	assert.deepEqual(messages(r), ['$.js[0].events[0].name: "slide" does not match ^yeti:[a-z]+$']);
+});
+
+test('an empty module list is rejected; null is how a component says it has none', () => {
+	const r = load(validTree({ 'src/layouts/rail/manifest.json': validManifest({ js: [] }) }));
+	assert.deepEqual(messages(r), ['$.js: expected at least 1 items, got 0']);
 });
 
 test('duplicate names across kinds are rejected', () => {

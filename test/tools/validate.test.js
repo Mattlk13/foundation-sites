@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {
 	validate, formatError, validateElementTree, validateHtmlString, extractHtmlBlocks, findBareMargin, validateLayers, validateImportOrder, validateImportant, validateTokens,
-	validateVocabulary, validateNoMediaQueries, validateDocsFragments, validateFields, validateThemes, validateMotion, validateAnchorsAndContainers, validateTokenReads,
+	validateVocabulary, validateNoMediaQueries, validateDocsFragments, validateFields, validateThemes, validateMotion, validateAnchorsAndContainers, validateTokenReads, validateModules,
 } from '../../bin/validate.js';
 import { parseHtml } from '../../bin/lib/html.js';
 import { makeTree, validManifest, validTree, REPO_ROOT, TOKENS_SCHEMA_PATH, VOCABULARY_PATH } from './helpers.js';
@@ -669,7 +669,7 @@ test('validateManifestTokens counts a token the JS module reads as read', () => 
 		),
 		'src/layouts/rail/manifest.json': validManifest({
 			tokens: [{ name: '--yeti-space-md', public: true, description: 'The gap.' }, { name: '--yeti-space-lg', public: true, description: 'The wide gap.' }],
-			js: { module: 'rail.js', optional: true },
+			js: [{ module: 'rail.js', optional: true }],
 		}),
 		'src/layouts/rail/rail.js': "getComputedStyle(el).getPropertyValue('--yeti-space-lg');\n",
 	});
@@ -834,4 +834,33 @@ test('every value of the fit vocabulary has a rule in fit.css', () => {
 	for (const value of vocabulary.fit) {
 		assert.ok(css.includes(`.fit[data-fit="${value}"]`), `${value} has no rule in fit.css`);
 	}
+});
+
+test('a .js file in a component folder that the manifest does not declare is reported', () => {
+	const r = run(validTree({ 'src/layouts/rail/stray.js': '// nobody declared me\n' }));
+	assert.deepEqual(r.lines, ['src/layouts/rail/manifest.json: stray.js is in the folder but the manifest does not declare it under js']);
+});
+
+test('an event the manifest promises must be named in the module source', () => {
+	const r = run(validTree({
+		'src/layouts/rail/manifest.json': validManifest({ js: [{ module: 'rail.js', optional: true, events: [{ name: 'yeti:slide', description: 'The rail moved.' }] }] }),
+		'src/layouts/rail/rail.js': '// says nothing\n',
+	}));
+	assert.deepEqual(r.lines, ['src/layouts/rail/manifest.json: rail.js is declared to dispatch yeti:slide but its source never names it']);
+});
+
+test('an event a module dispatches must be declared in the manifest', () => {
+	const r = run(validTree({
+		'src/layouts/rail/manifest.json': validManifest({ js: [{ module: 'rail.js', optional: true }] }),
+		'src/layouts/rail/rail.js': "document.dispatchEvent(new CustomEvent('yeti:slide'));\n",
+	}));
+	assert.deepEqual(r.lines, ['src/layouts/rail/manifest.json: rail.js names yeti:slide but the manifest does not declare it under js[].events']);
+});
+
+test('a module and its declared events agreeing is silent', () => {
+	const r = run(validTree({
+		'src/layouts/rail/manifest.json': validManifest({ js: [{ module: 'rail.js', optional: true, events: [{ name: 'yeti:slide', detail: '{ index }', description: 'The rail moved.' }] }] }),
+		'src/layouts/rail/rail.js': "document.dispatchEvent(new CustomEvent('yeti:slide', { detail: { index: 0 } }));\n",
+	}));
+	assert.deepEqual(r.lines, []);
 });

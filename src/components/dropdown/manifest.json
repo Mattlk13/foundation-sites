@@ -39,7 +39,7 @@
     ],
     "notes": "With data-trigger=\"hover\" the module adds opening under the pointer and changes nothing else: the click, the keyboard, focus and the expanded state are all still the browser's, and a pointer that cannot hover never gets it. The trigger needs a name, and the browser sets its expanded state from popovertarget. The items are deliberately ordinary links and buttons with no menu roles: role=\"menu\" promises arrow-key semantics that belong to application menus, and on a website a disclosure panel is both simpler and better announced. Inside a nav, put the dropdown in the li beside the link it belongs to."
   },
-  "js": { "module": "hover.js", "optional": true },
+  "js": [{ "module": "hover.js", "optional": true }],
   "support": { "unguarded": ["popover", "@starting-style"], "guarded": ["anchor positioning (fallback: the panel is centred by the user agent)"] },
   "since": "7.0.0",
   "example": "example.html"

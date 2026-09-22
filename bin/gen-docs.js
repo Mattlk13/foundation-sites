@@ -191,9 +191,22 @@ export function renderPage({ manifest: m, exampleHtml, navOrder, docsMd = '', de
 	out.push('');
 
 	out.push('## JavaScript', '');
-	out.push(m.js
-		? `Optional enhancement: ${code(`${dir}/${m.name}/${m.js.module}`)}. The component works without it.`
-		: 'None. This component is CSS only.');
+	// A component may ship more than one module, each loaded on its own; the
+	// events come after the list because they are the contract between the
+	// modules and a page's own script, not a property of any one file.
+	const modules = m.js ?? [];
+	if (!modules.length) {
+		out.push('None. This component is CSS only.');
+	} else {
+		out.push(modules.map((mod) => `Optional enhancement: ${code(`${dir}/${m.name}/${mod.module}`)}. The component works without it.`).join('\n\n'));
+		const events = modules.flatMap((mod) => (mod.events ?? []).map((e) => [e, mod]));
+		if (events.length) {
+			out.push('', 'Each event bubbles, crosses a shadow boundary, and cannot be cancelled.', '');
+			out.push(table(`${title} events`, ['Event', 'Module', 'Detail', 'Description'], events.map(([e, mod]) => [
+				code(e.name), code(mod.module), e.detail ? code(e.detail) : 'none', e.description,
+			])));
+		}
+	}
 	out.push('', `Available since ${m.since}.`, '');
 
 	return out.join('\n');

@@ -284,7 +284,9 @@
     "keyboard": [],
     "notes": "The label's for must match the control's id; the validator checks it. Reference the hint and the error from the control with aria-describedby so both are announced. Use aria-invalid=\"true\" for errors found on the server. The required marker is decoration; the required attribute is what assistive tech reads. A switch is a checkbox with role=\"switch\"; its label reads as the switch's name. A range needs a label like any control, and aria-valuetext when the numbers are not what a person would say."
   },
-  "js": { "module": "range.js", "optional": true },
+  "js": [
+    { "module": "range.js", "optional": true }
+  ],
   "support": {
     "unguarded": [
       ":has()",

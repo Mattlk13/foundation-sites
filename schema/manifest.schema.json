@@ -38,13 +38,10 @@
       }
     },
     "js": {
-      "type": ["object", "null"],
-      "additionalProperties": false,
-      "required": ["module", "optional"],
-      "properties": {
-        "module": { "type": "string", "description": "Path relative to the component folder." },
-        "optional": { "const": true }
-      }
+      "type": ["array", "null"],
+      "minItems": 1,
+      "description": "The optional modules this component ships, in load order. null when it ships none; one entry is the usual case, and field ships two.",
+      "items": { "$ref": "#/$defs/module" }
     },
     "support": {
       "type": "object",
@@ -105,6 +102,26 @@
         "vocabulary": { "type": "string", "description": "Name of a list in schema/vocabulary.json; resolved into values at load. Mutually exclusive with values." },
         "on": { "type": "string", "description": "Which descendants carry it, as a child selector: '> *', '> li', '> [data-track] > *'. Documentation only." },
         "description": { "type": "string" }
+      }
+    },
+    "module": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["module", "optional"],
+      "properties": {
+        "module": { "type": "string", "description": "Path relative to the component folder." },
+        "optional": { "const": true },
+        "events": { "type": "array", "items": { "$ref": "#/$defs/event" }, "description": "The events this module dispatches. Optional; an absent list means none." }
+      }
+    },
+    "event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "description"],
+      "properties": {
+        "name": { "type": "string", "pattern": "^yeti:[a-z]+$", "description": "The event type, in Yeti's own namespace." },
+        "detail": { "type": "string", "description": "The shape of event.detail, written as it would be destructured: \"{ tab, panel }\". Absent when the event carries none." },
+        "description": { "type": "string", "pattern": "\\S", "description": "One sentence: what happened, and which element it is dispatched on." }
       }
     },
     "token": {

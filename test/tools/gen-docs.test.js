@@ -36,7 +36,7 @@ test('renderPage handles roles, keyboard, js, and multi-word names', () => {
 	const manifest = validManifest({
 		name: 'tab-strip', class: 'tab-strip', kind: 'component',
 		a11y: { role: 'tablist', requiredAttributes: ['aria-label'], keyboard: [{ key: 'ArrowRight', action: 'Next tab' }], notes: 'Labels are required.' },
-		js: { module: 'tab-strip.js', optional: true },
+		js: [{ module: 'tab-strip.js', optional: true }],
 		support: { unguarded: [], guarded: ['anchor positioning'] },
 	});
 	const page = renderPage({ manifest, exampleHtml, navOrder: 1 });
@@ -47,6 +47,35 @@ test('renderPage handles roles, keyboard, js, and multi-word names', () => {
 	assert.ok(page.includes('| `ArrowRight` | Next tab |'));
 	assert.ok(page.includes('Optional enhancement: `components/tab-strip/tab-strip.js`. The component works without it.'));
 	assert.ok(page.includes('- Behind `@supports`: anchor positioning'));
+});
+
+test('renderPage lists every module a component ships', () => {
+	const manifest = validManifest({
+		name: 'tab-strip', class: 'tab-strip', kind: 'component',
+		js: [{ module: 'tab-strip.js', optional: true }, { module: 'validate.js', optional: true }],
+	});
+	const page = renderPage({ manifest, exampleHtml, navOrder: 1 });
+	assert.ok(page.includes('Optional enhancement: `components/tab-strip/tab-strip.js`. The component works without it.'));
+	assert.ok(page.includes('Optional enhancement: `components/tab-strip/validate.js`. The component works without it.'));
+});
+
+test('renderPage renders a module\'s events as a table', () => {
+	const manifest = validManifest({
+		name: 'tab-strip', class: 'tab-strip', kind: 'component',
+		js: [{ module: 'tab-strip.js', optional: true, events: [
+			{ name: 'yeti:select', detail: '{ tab, panel }', description: 'A tab was selected.' },
+			{ name: 'yeti:close', description: 'The strip closed.' },
+		] }],
+	});
+	const page = renderPage({ manifest, exampleHtml, navOrder: 1 });
+	assert.ok(page.includes('| Event | Module | Detail | Description |'));
+	assert.ok(page.includes('| `yeti:select` | `tab-strip.js` | `{ tab, panel }` | A tab was selected. |'));
+	assert.ok(page.includes('| `yeti:close` | `tab-strip.js` | none | The strip closed. |'));
+});
+
+test('renderPage says nothing about events when no module dispatches any', () => {
+	const manifest = validManifest({ name: 'tab-strip', class: 'tab-strip', kind: 'component', js: [{ module: 'tab-strip.js', optional: true }] });
+	assert.ok(!renderPage({ manifest, exampleHtml, navOrder: 1 }).includes('| Event |'));
 });
 
 test('generateDocs writes a page per component, removes orphans, and leaves hand-written files alone', () => {

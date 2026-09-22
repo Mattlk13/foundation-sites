@@ -40,7 +40,10 @@ function block(c) {
 	const lines = [`## ${c.name} (${c.kind}, class="${c.class}")`, '', c.description];
 	if (c.attributes.length) { lines.push('', 'Attributes:'); for (const a of c.attributes) lines.push(attributeLine(a)); }
 	if (c.markers?.length) { lines.push('', 'On children:'); for (const m of c.markers) lines.push(markerLine(m)); }
-	if (c.js) lines.push('', `module: ${c.js.module}${c.js.optional ? ' (optional)' : ''}`);
+	for (const mod of c.js ?? []) {
+		lines.push('', `module: ${mod.module}${mod.optional ? ' (optional)' : ''}`);
+		for (const e of mod.events ?? []) lines.push(`- event ${e.name}${e.detail ? ` with detail ${e.detail}` : ''} — ${e.description}`);
+	}
 	return lines;
 }
 

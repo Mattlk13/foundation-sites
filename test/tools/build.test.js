@@ -23,7 +23,7 @@ test('bundle writes a header and each file in cascade order with source comments
 
 test('build writes dist/ with the bundle, a verbatim css tree, js modules, and the merged manifest', () => {
 	const root = makeTree(treeWithPkg({
-		'src/layouts/rail/manifest.json': validManifest({ js: { module: 'rail.js', optional: true } }),
+		'src/layouts/rail/manifest.json': validManifest({ js: [{ module: 'rail.js', optional: true }] }),
 		'src/layouts/rail/rail.js': 'export default 1;\n',
 		'src/tokens/.gitkeep': '',
 	}));
