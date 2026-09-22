@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Sticky fixture</title>
+	<link rel="stylesheet" href="../../../../src/yeti.css">
+	<style>
+		#stage { inline-size: 100%; }
+		.item { background: var(--yeti-color-primary-soft); padding: 0.5rem; }
+		#tall { block-size: 1600px; }
+		#loose-tall { block-size: 1200px; }
+		#stack-tall { block-size: 1200px; }
+	</style>
+</head>
+<body>
+	<main>
+		<h1>Sticky</h1>
+		<div id="stage">
+			<div class="sidebar" id="sidebar" data-width="xs">
+				<nav class="item" id="pinned" data-sticky aria-label="Section">Pinned</nav>
+				<div class="item" id="tall">A tall column that scrolls past the pinned one.</div>
+			</div>
+			<div class="sidebar" id="loose" data-width="xs">
+				<div class="item" id="loose-side">Not pinned</div>
+				<div class="item" id="loose-tall">A second tall column, for the control.</div>
+			</div>
+			<div class="stack" id="stack" data-gap="sm">
+				<div class="item" id="stack-pinned" data-sticky>Pinned in a column</div>
+				<div class="item" id="stack-tall">A tall child, for the column case.</div>
+			</div>
+		</div>
+	</main>
+</body>
+</html>

@@ -27,4 +27,8 @@
 		flex-grow: 999;
 		min-inline-size: 50%;
 	}
+
+	/* A sidebar child is stretched to the height of the row, and a flex item
+	   that fills its containing block has nowhere to stick to. */
+	.sidebar > [data-sticky] { align-self: start; }
 }

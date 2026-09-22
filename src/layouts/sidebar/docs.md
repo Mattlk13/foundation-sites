@@ -13,6 +13,8 @@ Both children live in a wrapping flex row. The sidebar child gets `data-width` a
 </div>
 ```
 
+Either child can carry `data-sticky` and stay put while the other scrolls past it, which is what a section nav beside a long article wants. It stops `--yeti-sticky-offset` from the top of the scrollport and takes its own height rather than the row's: a flex item stretched to the height of the row it is in has nowhere left to move, and would never stick at all.
+
 ## Why this name
 
 The word says exactly what the fixed child is. Foundation 6 built this with `.grid-x` columns and `medium-8`/`medium-4` classes, which fixed the switch to a viewport breakpoint rather than to the content.

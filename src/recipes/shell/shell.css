@@ -33,4 +33,8 @@
 		flex-grow: 999;
 		min-inline-size: 50%;
 	}
+
+	/* Same as the sidebar's: a region stretched to the height of the body row
+	   has nowhere to stick to. */
+	.shell > div:has(> :is(nav, main, aside)) > [data-sticky] { align-self: start; }
 }

@@ -41,6 +41,8 @@ nav_order: 5
 
 Every page has a skeleton, and most of them are this one: a header, a footer that should sit at the bottom of the screen even when the page is short, and a middle that may have navigation down one side or related material down the other. Put the class on `body` and the landmarks do the rest. Three regions share a row once the container is about four times `data-width` plus the gaps; two regions need about half that.
 
+The body row's `nav` and `aside` can each carry `data-sticky` and stay in place while `main` scrolls past them. Each stops `--yeti-sticky-offset` from the top of the scrollport and keeps its own height instead of the row's, which is what lets it move at all.
+
 ## Built from primitives
 
 A `stack` with `data-fill` is at least as tall as the viewport, and a footer carrying `data-split` drops to its bottom. In the middle, a `sidebar` puts the nav beside the main content until the content would fall below half the width. That is the whole page.
@@ -73,6 +75,18 @@ A shell is the part of the page that is there before any content is, and stays w
 | --- | --- | --- | --- | --- |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `md` | Space between the rows, and between nav, main, and aside. |
 | `data-width` | enum | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `sm` | The preferred width of nav and aside. Three regions share a row once the container is about four times this width plus the gaps; two regions need about half that. |
+
+</div>
+
+## Markers
+
+Attributes that descendants carry, not the root.
+
+<div class="scroller" role="region" aria-label="Shell markers" tabindex="0" markdown="1">
+
+| Attribute | Type | Values | On | Description |
+| --- | --- | --- | --- | --- |
+| `data-sticky` | boolean |  | `> div > :is(nav, aside)` | Pins the nav or the aside at --yeti-sticky-offset from the top of the scrollport while main scrolls past it. |
 
 </div>
 

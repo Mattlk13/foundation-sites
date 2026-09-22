@@ -80,10 +80,13 @@ Every layout is configured with a small set of `data-*` attributes, drawn from a
 | `data-fold` | boolean | grid — the column count halves as the grid narrows, instead of stepping down one at a time |
 | `data-note` | boolean | a child of breakout — a margin note beside the paragraph it follows |
 | `data-alternate` | boolean | timeline — entries take alternate sides of a centred rail once it is wide enough |
+| `data-sticky` | boolean | a child of sidebar, shell, or stack, and nav itself — pins it at `--yeti-sticky-offset` from the top of the scrollport while the rest scrolls |
 
 For the sizing attributes the mapping rule is always the same: a value is a token suffix. `data-gap="lg"` reads `--yeti-space-lg`; `data-width="sm"` reads `--yeti-width-sm`. The attribute names the property to set; the value names the step on Yeti's scale to set it to. The rest — `data-align`, `data-justify`, `data-ratio`, `data-columns`, `data-side` — name a behaviour rather than a token; `attributes.css` maps each value to the CSS keyword it means.
 
 Gap alone also takes a fluid pair. `data-gap="sm-lg"` does not jump between the two: it runs from the `sm` stop at the narrow end of the viewport to the `lg` stop at the wide end, the same way the type scale itself is fluid. `none` never anchors a pair, so any smaller of the remaining seven sized stops can pair with any larger one, which is what makes twenty-one pairs out of seven.
+
+`data-sticky` is the odd one in the table. Every other name there sets a private property for a layout to read; this one sets two properties on the child itself, `position: sticky` and the offset. A third is needed in a row and only in a row: an item stretched to the full height of its row has nowhere left to move and never sticks, so `sidebar` and the `shell`'s body row take their sticky children out of that stretch in their own stylesheets. A `stack` stretches sideways instead, which costs a sticky child nothing, so a sticky child of a stack keeps the full width of the column.
 
 ## The seventeen
 

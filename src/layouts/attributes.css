@@ -158,4 +158,19 @@
 	[data-slides="2"] { --_yeti-slides: 2; }
 	[data-slides="3"] { --_yeti-slides: 3; }
 	[data-slides="4"] { --_yeti-slides: 4; }
+
+	/* data-sticky: a marker, not a mapping. It sets the properties on the
+	   child itself rather than a private property for a layout to read,
+	   because sticking is the same two lines wherever it is done and no
+	   layout needs to know it happened. Only these two are here. A flex item
+	   stretched to the height of its row fills its own containing block, has
+	   nowhere left to move, and quietly never sticks — but that is true of a
+	   row and not of a column, so the start alignment that fixes it lives in
+	   sidebar.css and shell.css, whose rows stretch. A stack stretches on the
+	   inline axis instead, which costs a sticky child nothing and would cost
+	   it its width if this rule tried to cover both. */
+	[data-sticky] {
+		position: sticky;
+		inset-block-start: var(--yeti-sticky-offset);
+	}
 }

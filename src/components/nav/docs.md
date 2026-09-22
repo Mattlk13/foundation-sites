@@ -26,6 +26,8 @@ A nav item may hold a `dropdown` for a section with children of its own: the ite
 
 The panel changes shape with the nav. In the bar it is the dropdown's usual card, anchored under its trigger. Once the links are behind the toggle it becomes a full-width block instead, docked to the foot of its trigger and squared off against the panel's own edges, so a sheet, a drawer and a screen each keep their submenu inside them. It is still a popover, so it covers the items below rather than pushing them down, and Escape or a click outside closes it before the panel it sits in. Where anchor positioning is missing the block docks to the foot of the viewport, which is still full width and still within reach.
 
+`data-sticky` keeps the bar at the top of the scrollport as the page scrolls, `--yeti-sticky-offset` from the edge. Everything else on the page that sticks stops at that same offset and would slide under the bar, so set the token to the bar's own height plus the gap you want on whatever holds them — the shell's body row, say — and leave the nav itself reading the default.
+
 ## Accessibility
 
 Give the `nav` an `aria-label`, since a page often has more than one. The toggle needs a name, from `aria-label` or visible text; the browser sets its expanded state. Mark the current page's link with `aria-current="page"`. Put `role="list"` on the `ul`: Yeti's reset only removes list markers where that role says the list is decorative. The open panel follows the toggle in the tab order, so Tab from the toggle reaches the first link; Escape closes the panel and returns focus to the toggle.

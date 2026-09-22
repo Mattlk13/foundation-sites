@@ -574,6 +574,9 @@ Attributes:
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the two children, side by side or stacked.
 - data-align: start | center | end | stretch (default) | baseline — Vertical alignment of the two children when side by side.
 
+On children:
+- data-sticky on > * (boolean) — Pins this child at --yeti-sticky-offset from the top of the scrollport while the other one scrolls past it. It takes its own height rather than the row's, since a stretched item has nowhere to move.
+
 ### When to use it
 
 A sidebar pairs something with a natural width, such as a navigation list, a figure, or a form's summary, with content that should take whatever is left. It handles the awkward middle widths on its own: the two sit side by side as long as the content keeps at least half the space, and stack when it cannot.
@@ -588,6 +591,8 @@ Both children live in a wrapping flex row. The sidebar child gets `data-width` a
 	<aside>Shown after it.</aside>
 </div>
 ```
+
+Either child can carry `data-sticky` and stay put while the other scrolls past it, which is what a section nav beside a long article wants. It stops `--yeti-sticky-offset` from the top of the scrollport and takes its own height rather than the row's: a flex item stretched to the height of the row it is in has nowhere left to move, and would never stick at all.
 
 ### Why this name
 
@@ -614,6 +619,7 @@ Attributes:
 
 On children:
 - data-split on > * (boolean) — Pushes the child and everything after it to the end of the stack when the stack is taller than its content.
+- data-sticky on > * (boolean) — Pins this child at --yeti-sticky-offset from the top of the scrollport while the rest of the stack scrolls past it. It keeps the full width of the column, a stack stretching its children on the inline axis.
 
 ### When to use it
 
@@ -630,6 +636,8 @@ The stack is a flex column with a `gap`, so the space between children is the st
 	<a href="#" data-split>Action</a>
 </div>
 ```
+
+A child carrying `data-sticky` stays at `--yeti-sticky-offset` from the top of the scrollport while the rest of the stack scrolls past it, and keeps the full width of the column while it does. A stack stretches its children sideways, and sideways is not the direction a sticky child moves in, so nothing has to be taken away for it to work — which is not true in a row, where the same marker costs the child the row's height.
 
 ### Why this name
 
@@ -795,9 +803,14 @@ Attributes:
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the rows, and between nav, main, and aside.
 - data-width: 2xs | xs | sm (default) | md | lg | xl | 2xl — The preferred width of nav and aside. Three regions share a row once the container is about four times this width plus the gaps; two regions need about half that.
 
+On children:
+- data-sticky on > div > :is(nav, aside) (boolean) — Pins the nav or the aside at --yeti-sticky-offset from the top of the scrollport while main scrolls past it.
+
 ### When to use it
 
 Every page has a skeleton, and most of them are this one: a header, a footer that should sit at the bottom of the screen even when the page is short, and a middle that may have navigation down one side or related material down the other. Put the class on `body` and the landmarks do the rest. Three regions share a row once the container is about four times `data-width` plus the gaps; two regions need about half that.
+
+The body row's `nav` and `aside` can each carry `data-sticky` and stay in place while `main` scrolls past them. Each stops `--yeti-sticky-offset` from the top of the scrollport and keeps its own height instead of the row's, which is what lets it move at all.
 
 ### Built from primitives
 
@@ -1674,6 +1687,7 @@ Attributes:
 - data-threshold: 2xs | xs | sm | md (default) | lg | xl | 2xl — The nav's own width at or above which the links sit in the bar; below it they are behind the toggle.
 - data-panel: sheet (default) | drawer | screen — The shape of the open list below the threshold: a sheet under the bar, a drawer from the start edge, or the whole screen.
 - data-gap: none | xs | sm (default) | md | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the bar's parts and between the links.
+- data-sticky (boolean) — Keep the bar at the top of the scrollport as the page scrolls, at --yeti-sticky-offset from the edge.
 
 On children:
 - data-brand on > * (boolean) — The site's name or mark, usually a link home.
@@ -1707,6 +1721,8 @@ A panel that is open stays a panel until it is dismissed, whatever the nav's wid
 A nav item may hold a `dropdown` for a section with children of its own: the item becomes a button rather than a link, since the dropdown brings its own trigger. Its panel is in the top layer, so the bar's own containment cannot clip it.
 
 The panel changes shape with the nav. In the bar it is the dropdown's usual card, anchored under its trigger. Once the links are behind the toggle it becomes a full-width block instead, docked to the foot of its trigger and squared off against the panel's own edges, so a sheet, a drawer and a screen each keep their submenu inside them. It is still a popover, so it covers the items below rather than pushing them down, and Escape or a click outside closes it before the panel it sits in. Where anchor positioning is missing the block docks to the foot of the viewport, which is still full width and still within reach.
+
+`data-sticky` keeps the bar at the top of the scrollport as the page scrolls, `--yeti-sticky-offset` from the edge. Everything else on the page that sticks stops at that same offset and would slide under the bar, so set the token to the bar's own height plus the gap you want on whatever holds them — the shell's body row, say — and leave the nav itself reading the default.
 
 ### Accessibility
 
@@ -2406,6 +2422,7 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-color-scrim (color): the surface at 85% — A wash over content so something on top of it can be read: a caption over a picture, a veil over a form. Thinned surface, so it dims with the theme rather than tinting.
 - --yeti-color-focus (color): var(--yeti-color-primary) — Focus ring color.
 - --yeti-cover-height (layout): 100dvh — Minimum block size of a cover layout or a filled stack. Set to auto for one that is only as tall as its content.
+- --yeti-sticky-offset (layout): var(--yeti-space-md) — How far from the leading edge of the scrollport a child carrying data-sticky stops. Set it to a sticky bar's height on whatever holds the things that stick below it.
 - --yeti-border-width (border): 1px — Width of every border a component draws.
 - --yeti-weight-normal (weight): 400 — Body weight.
 - --yeti-weight-bold (weight): 700 — Headings, th, strong and b. Separate from --yeti-weight-strong so display text and control labels can be tuned apart.

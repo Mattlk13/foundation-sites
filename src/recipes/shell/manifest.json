@@ -17,6 +17,9 @@
     { "selector": "> main", "min": 0, "max": 1 },
     { "selector": "> div", "min": 0, "max": 1, "description": "The body row. Its nav and aside take data-width; its main takes the rest and never drops below half." }
   ],
+  "markers": [
+    { "name": "data-sticky", "type": "boolean", "on": "> div > :is(nav, aside)", "description": "Pins the nav or the aside at --yeti-sticky-offset from the top of the scrollport while main scrolls past it." }
+  ],
   "tokens": [
     { "name": "--yeti-cover-height", "public": true, "description": "The shell's minimum block size; the viewport by default." },
     { "name": "--yeti-space-md", "public": true, "description": "The default gap." },

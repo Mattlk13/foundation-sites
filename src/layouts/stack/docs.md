@@ -14,6 +14,8 @@ The stack is a flex column with a `gap`, so the space between children is the st
 </div>
 ```
 
+A child carrying `data-sticky` stays at `--yeti-sticky-offset` from the top of the scrollport while the rest of the stack scrolls past it, and keeps the full width of the column while it does. A stack stretches its children sideways, and sideways is not the direction a sticky child moves in, so nothing has to be taken away for it to work — which is not true in a row, where the same marker costs the child the row's height.
+
 ## Why this name
 
 No other word says it as plainly: things stacked, one on another. Foundation 6 had no equivalent; the space between blocks came from each element's own margins.

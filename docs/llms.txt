@@ -146,6 +146,9 @@ Attributes:
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the two children, side by side or stacked.
 - data-align: start | center | end | stretch (default) | baseline — Vertical alignment of the two children when side by side.
 
+On children:
+- data-sticky on > * (boolean) — Pins this child at --yeti-sticky-offset from the top of the scrollport while the other one scrolls past it. It takes its own height rather than the row's, since a stretched item has nowhere to move.
+
 ## stack (layout, class="stack")
 
 Stacks its children vertically with one consistent gap between them.
@@ -157,6 +160,7 @@ Attributes:
 
 On children:
 - data-split on > * (boolean) — Pushes the child and everything after it to the end of the stack when the stack is taller than its content.
+- data-sticky on > * (boolean) — Pins this child at --yeti-sticky-offset from the top of the scrollport while the rest of the stack scrolls past it. It keeps the full width of the column, a stack stretching its children on the inline axis.
 
 ## timeline (layout, class="timeline")
 
@@ -195,6 +199,9 @@ The page skeleton: header on top, footer at the bottom of the viewport when the 
 Attributes:
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the rows, and between nav, main, and aside.
 - data-width: 2xs | xs | sm (default) | md | lg | xl | 2xl — The preferred width of nav and aside. Three regions share a row once the container is about four times this width plus the gaps; two regions need about half that.
+
+On children:
+- data-sticky on > div > :is(nav, aside) (boolean) — Pins the nav or the aside at --yeti-sticky-offset from the top of the scrollport while main scrolls past it.
 
 ## accordion (component, class="accordion")
 
@@ -336,6 +343,7 @@ Attributes:
 - data-threshold: 2xs | xs | sm | md (default) | lg | xl | 2xl — The nav's own width at or above which the links sit in the bar; below it they are behind the toggle.
 - data-panel: sheet (default) | drawer | screen — The shape of the open list below the threshold: a sheet under the bar, a drawer from the start edge, or the whole screen.
 - data-gap: none | xs | sm (default) | md | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the bar's parts and between the links.
+- data-sticky (boolean) — Keep the bar at the top of the scrollport as the page scrolls, at --yeti-sticky-offset from the edge.
 
 On children:
 - data-brand on > * (boolean) — The site's name or mark, usually a link home.
