@@ -139,4 +139,14 @@ Name the tablist, since a page may have more than one. Each tab's `aria-controls
 
 Optional enhancement: `components/tabs/tabs.js`. The component works without it.
 
+Each event bubbles, crosses a shadow boundary, and cannot be cancelled.
+
+<div class="scroller" role="region" aria-label="Tabs events" tabindex="0" markdown="1">
+
+| Event | Module | Detail | Description |
+| --- | --- | --- | --- |
+| `yeti:select` | `tabs.js` | `{ tab, panel }` | Dispatched on the .tabs when a click or an arrow key selects a tab; never for the pass at load. |
+
+</div>
+
 Available since 7.0.0.

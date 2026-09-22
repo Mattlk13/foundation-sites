@@ -34,6 +34,13 @@ document.addEventListener('command', (event) => {
 		openers.get(dialog)?.focus?.({ preventScroll: true });
 		openers.delete(dialog);
 	}, { once: true });
+	// The command event fires before the browser acts on it, and a listener
+	// may still cancel it, so the announcement waits for the default action
+	// to run — the same task, before microtasks drain — and then checks the
+	// dialog really did open.
+	queueMicrotask(() => {
+		if (dialog.open) dialog.dispatchEvent(new CustomEvent('yeti:open', { bubbles: true, composed: true }));
+	});
 }, { capture: true });
 
 document.addEventListener('pointerdown', (event) => {
@@ -49,3 +56,13 @@ document.addEventListener('click', (event) => {
 	if (!dialog || !dialog.open || event.detail === 0) return;
 	if (outside(dialog, event) && pressedOutside.get(dialog)) dialog.close();
 });
+
+// close does not bubble, so the document hears it only on the capture phase.
+// Every close passes through here, whether it came from Escape, a form
+// button, the backdrop click above, or a script calling close() — so the
+// event does not depend on how the dialog was opened, the way the focus
+// return above does.
+document.addEventListener('close', (event) => {
+	const dialog = event.target?.closest?.('dialog.dialog');
+	if (dialog) dialog.dispatchEvent(new CustomEvent('yeti:close', { bubbles: true, composed: true }));
+}, { capture: true });

@@ -69,6 +69,22 @@ test.describe('alert', () => {
 		expect(await page.evaluate(() => document.querySelector('#stage').getAttribute('tabindex'))).toBe('0');
 	});
 
+	test('closing dispatches yeti:close on the alert, while it is still in the page', async ({ page }) => {
+		await open(page);
+		const caught = await page.evaluate(() => new Promise((resolve) => {
+			document.addEventListener('yeti:close', (event) => resolve({
+				target: event.target.id,
+				connected: event.target.isConnected,
+				bubbles: event.bubbles,
+				composed: event.composed,
+				cancelable: event.cancelable,
+				detail: event.detail,
+			}), { once: true });
+			document.getElementById('close').click();
+		}));
+		expect(caught).toEqual({ target: 'closable', connected: true, bubbles: true, composed: true, cancelable: false, detail: null });
+	});
+
 	test('data-variant="danger" is the alert hue under a name that is not the component', async ({ page }) => {
 		await open(page);
 		const colours = await page.evaluate(() => {

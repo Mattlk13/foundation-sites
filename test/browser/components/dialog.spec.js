@@ -121,6 +121,20 @@ test.describe('dialog', () => {
 		expect(await page.evaluate(() => document.activeElement.id)).toBe('opener');
 	});
 
+	test('opening and closing dispatch yeti:open and yeti:close on the dialog', async ({ page }) => {
+		await open(page);
+		const opened = await page.evaluate(() => new Promise((resolve) => {
+			document.addEventListener('yeti:open', (event) => resolve({ target: event.target.id, open: event.target.open, bubbles: event.bubbles, composed: event.composed }), { once: true });
+			document.getElementById('opener').click();
+		}));
+		expect(opened).toEqual({ target: 'confirm', open: true, bubbles: true, composed: true });
+		const closed = await page.evaluate(() => new Promise((resolve) => {
+			document.addEventListener('yeti:close', (event) => resolve({ target: event.target.id, open: event.target.open, bubbles: event.bubbles, composed: event.composed }), { once: true });
+			document.getElementById('cancel').click();
+		}));
+		expect(closed).toEqual({ target: 'confirm', open: false, bubbles: true, composed: true });
+	});
+
 	test('data-max caps the width from the width scale', async ({ page }) => {
 		await open(page);
 		await page.click('#opener');

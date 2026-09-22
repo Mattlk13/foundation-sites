@@ -126,4 +126,19 @@ test.describe('carousel', () => {
 		await open(page);
 		expect(await axe(page)).toEqual([]);
 	});
+
+	test('following a dot dispatches yeti:slide with the slide and its index', async ({ page }) => {
+		await open(page);
+		const caught = await page.evaluate(() => new Promise((resolve) => {
+			document.addEventListener('yeti:slide', (event) => resolve({
+				target: event.target.id,
+				bubbles: event.bubbles,
+				composed: event.composed,
+				index: event.detail.index,
+				slide: event.detail.slide.id,
+			}), { once: true });
+			document.getElementById('dot3').click();
+		}));
+		expect(caught).toEqual({ target: 'one', bubbles: true, composed: true, index: 2, slide: 's3' });
+	});
 });

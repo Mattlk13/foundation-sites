@@ -71,4 +71,28 @@ test.describe('tabs', () => {
 		await open(page);
 		expect(await axe(page)).toEqual([]);
 	});
+
+	test('selecting a tab dispatches yeti:select with the tab and its panel', async ({ page }) => {
+		await open(page);
+		const caught = await page.evaluate(() => new Promise((resolve) => {
+			document.addEventListener('yeti:select', (event) => resolve({
+				target: event.target.id,
+				bubbles: event.bubbles,
+				composed: event.composed,
+				tab: event.detail.tab.id,
+				panel: event.detail.panel.id,
+			}), { once: true });
+			document.getElementById('t2').click();
+		}));
+		expect(caught).toEqual({ target: 'tabs', bubbles: true, composed: true, tab: 't2', panel: 'p2' });
+	});
+
+	test('the pass at load dispatches nothing', async ({ page }) => {
+		await page.addInitScript(() => {
+			window.selects = 0;
+			document.addEventListener('yeti:select', () => { window.selects += 1; });
+		});
+		await open(page);
+		expect(await page.evaluate(() => window.selects)).toBe(0);
+	});
 });

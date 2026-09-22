@@ -34,4 +34,15 @@ document.addEventListener('click', (event) => {
 	const rtl = getComputedStyle(track).direction === 'rtl';
 	const [own, target] = [track.getBoundingClientRect(), slide.getBoundingClientRect()];
 	track.scrollTo({ left: track.scrollLeft + (rtl ? target.right - own.right : target.left - own.left) });
+
+	// The index is the slide's place among its own track's slides, which is
+	// what a counter or a caption beside the carousel needs; the scroll above
+	// may still be travelling, and the event is about the choice, not the
+	// arrival.
+	const slides = [...track.querySelectorAll(':scope > [data-slide]')];
+	carousel.dispatchEvent(new CustomEvent('yeti:slide', {
+		bubbles: true,
+		composed: true,
+		detail: { index: slides.indexOf(slide), slide },
+	}));
 });

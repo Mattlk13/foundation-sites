@@ -126,4 +126,15 @@ Without the module the dialog still opens and Escape still closes it. What is lo
 
 Optional enhancement: `components/dialog/dialog.js`. The component works without it.
 
+Each event bubbles, crosses a shadow boundary, and cannot be cancelled.
+
+<div class="scroller" role="region" aria-label="Dialog events" tabindex="0" markdown="1">
+
+| Event | Module | Detail | Description |
+| --- | --- | --- | --- |
+| `yeti:open` | `dialog.js` | none | Dispatched on the dialog once the browser has opened it from a commandfor button. |
+| `yeti:close` | `dialog.js` | none | Dispatched on the dialog when it closes, however it was closed. |
+
+</div>
+
 Available since 7.0.0.

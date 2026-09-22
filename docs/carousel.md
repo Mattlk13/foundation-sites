@@ -153,4 +153,14 @@ Attributes that descendants carry, not the root.
 
 Optional enhancement: `components/carousel/carousel.js`. The component works without it.
 
+Each event bubbles, crosses a shadow boundary, and cannot be cancelled.
+
+<div class="scroller" role="region" aria-label="Carousel events" tabindex="0" markdown="1">
+
+| Event | Module | Detail | Description |
+| --- | --- | --- | --- |
+| `yeti:slide` | `carousel.js` | `{ index, slide }` | Dispatched on the .carousel when a dot scrolls the track, with the slide's zero-based index. |
+
+</div>
+
 Available since 7.0.0.

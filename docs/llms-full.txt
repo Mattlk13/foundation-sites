@@ -990,6 +990,7 @@ On children:
 - data-close on > button (boolean) — The close button; removes the alert when alert.js is loaded.
 
 module: alert.js (optional)
+- event yeti:close — Dispatched on the .alert after the fade and before it is removed, while it is still in the page.
 
 ### When to use it
 
@@ -1303,6 +1304,7 @@ On children:
 - data-dots on > * (boolean) — The list of links to the slides, one per slide.
 
 module: carousel.js (optional)
+- event yeti:slide with detail { index, slide } — Dispatched on the .carousel when a dot scrolls the track, with the slide's zero-based index.
 
 ### When to use it
 
@@ -1458,6 +1460,8 @@ Attributes:
 - data-max: 2xs | xs | sm | md (default) | lg | xl | 2xl — The widest the dialog may grow, from the width scale; it is always narrower than the viewport by a gutter.
 
 module: dialog.js (optional)
+- event yeti:open — Dispatched on the dialog once the browser has opened it from a commandfor button.
+- event yeti:close — Dispatched on the dialog when it closes, however it was closed.
 
 ### When to use it
 
@@ -2020,6 +2024,7 @@ Attributes:
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the list and the panels.
 
 module: tabs.js (optional)
+- event yeti:select with detail { tab, panel } — Dispatched on the .tabs when a click or an arrow key selects a tab; never for the pass at load.
 
 ### When to use it
 
