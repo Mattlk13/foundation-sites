@@ -282,10 +282,17 @@
   "a11y": {
     "requiredAttributes": [],
     "keyboard": [],
-    "notes": "The label's for must match the control's id; the validator checks it. Reference the hint and the error from the control with aria-describedby so both are announced. Use aria-invalid=\"true\" for errors found on the server. The required marker is decoration; the required attribute is what assistive tech reads. A switch is a checkbox with role=\"switch\"; its label reads as the switch's name. A range needs a label like any control, and aria-valuetext when the numbers are not what a person would say."
+    "notes": "The label's for must match the control's id; the validator checks it. Reference the hint and the error from the control with aria-describedby so both are announced. Use aria-invalid=\"true\" for errors found on the server. The required marker is decoration; the required attribute is what assistive tech reads. A switch is a checkbox with role=\"switch\"; its label reads as the switch's name. A range needs a label like any control, and aria-valuetext when the numbers are not what a person would say. With validate.js loaded, the same aria-invalid is set from the browser's own check when a submit is refused, and the browser's message is written into an empty [data-error]."
   },
   "js": [
-    { "module": "range.js", "optional": true }
+    { "module": "range.js", "optional": true },
+    {
+      "module": "validate.js",
+      "optional": true,
+      "events": [
+        { "name": "yeti:invalid", "detail": "{ controls }", "description": "Dispatched on the form when a submit is refused, carrying the invalid controls in document order." }
+      ]
+    }
   ],
   "support": {
     "unguarded": [

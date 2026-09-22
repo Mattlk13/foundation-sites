@@ -34,6 +34,21 @@ Without the module the track sits wherever `--yeti-range-value` says, so set it 
 
 Set by hand, it is a number rather than a percentage: `style="--yeti-range-value: 0.7"`.
 
+`validate.js` is the field's second module, and it is about the form rather than one control. On submit it finds every invalid control inside a `.field`, sets `aria-invalid="true"` on each — which is the same attribute a server round trip would set, so the error shows and the border turns at once — writes the browser's own message into an empty `[data-error]`, focuses the first one, and stops the submission. It dispatches `yeti:invalid` on the form with the controls it found, so a page can count them, scroll a summary into view, or send them somewhere. Typing or picking a valid value clears the mark again.
+
+Give a form that loads it `novalidate`. Without that attribute the browser opens its own bubble on the first invalid control and never fires a submit event at all, so the module never runs and the page gets the bubble instead of its own error text. An error element you fill in yourself is never overwritten; an empty one is the slot the module writes into.
+
+```html
+<form class="stack" data-gap="md" novalidate>
+	<div class="field">
+		<label for="signup-email">Email</label>
+		<input id="signup-email" type="email" required aria-describedby="signup-email-error">
+		<p id="signup-email-error" data-error></p>
+	</div>
+	<button class="button" type="submit">Sign up</button>
+</form>
+```
+
 ## Accessibility
 
 The label must point at the control with `for` and the control must carry that `id`; Yeti's validator refuses an example without the pair. Put the hint's and the error's ids in the control's `aria-describedby`, so a screen reader hears the help text with the control and the error the moment it appears. Errors found on the server are shown with `aria-invalid="true"`. The required marker is a visual echo of the `required` attribute, which is what is announced.

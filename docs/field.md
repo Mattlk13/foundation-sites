@@ -88,6 +88,21 @@ Without the module the track sits wherever `--yeti-range-value` says, so set it 
 
 Set by hand, it is a number rather than a percentage: `style="--yeti-range-value: 0.7"`.
 
+`validate.js` is the field's second module, and it is about the form rather than one control. On submit it finds every invalid control inside a `.field`, sets `aria-invalid="true"` on each — which is the same attribute a server round trip would set, so the error shows and the border turns at once — writes the browser's own message into an empty `[data-error]`, focuses the first one, and stops the submission. It dispatches `yeti:invalid` on the form with the controls it found, so a page can count them, scroll a summary into view, or send them somewhere. Typing or picking a valid value clears the mark again.
+
+Give a form that loads it `novalidate`. Without that attribute the browser opens its own bubble on the first invalid control and never fires a submit event at all, so the module never runs and the page gets the bubble instead of its own error text. An error element you fill in yourself is never overwritten; an empty one is the slot the module writes into.
+
+```html
+<form class="stack" data-gap="md" novalidate>
+	<div class="field">
+		<label for="signup-email">Email</label>
+		<input id="signup-email" type="email" required aria-describedby="signup-email-error">
+		<p id="signup-email-error" data-error></p>
+	</div>
+	<button class="button" type="submit">Sign up</button>
+</form>
+```
+
 ## Accessibility
 
 The label must point at the control with `for` and the control must carry that `id`; Yeti's validator refuses an example without the pair. Put the hint's and the error's ids in the control's `aria-describedby`, so a screen reader hears the help text with the control and the error the moment it appears. Errors found on the server are shown with `aria-invalid="true"`. The required marker is a visual echo of the `required` attribute, which is what is announced.
@@ -183,7 +198,7 @@ Attributes that descendants carry, not the root.
 
 ## Accessibility
 
-- The label's for must match the control's id; the validator checks it. Reference the hint and the error from the control with aria-describedby so both are announced. Use aria-invalid="true" for errors found on the server. The required marker is decoration; the required attribute is what assistive tech reads. A switch is a checkbox with role="switch"; its label reads as the switch's name. A range needs a label like any control, and aria-valuetext when the numbers are not what a person would say.
+- The label's for must match the control's id; the validator checks it. Reference the hint and the error from the control with aria-describedby so both are announced. Use aria-invalid="true" for errors found on the server. The required marker is decoration; the required attribute is what assistive tech reads. A switch is a checkbox with role="switch"; its label reads as the switch's name. A range needs a label like any control, and aria-valuetext when the numbers are not what a person would say. With validate.js loaded, the same aria-invalid is set from the browser's own check when a submit is refused, and the browser's message is written into an empty [data-error].
 
 ## Browser support
 
@@ -193,5 +208,17 @@ Attributes that descendants carry, not the root.
 ## JavaScript
 
 Optional enhancement: `components/field/range.js`. The component works without it.
+
+Optional enhancement: `components/field/validate.js`. The component works without it.
+
+Each event bubbles, crosses a shadow boundary, and cannot be cancelled.
+
+<div class="scroller" role="region" aria-label="Field events" tabindex="0" markdown="1">
+
+| Event | Module | Detail | Description |
+| --- | --- | --- | --- |
+| `yeti:invalid` | `validate.js` | `{ controls }` | Dispatched on the form when a submit is refused, carrying the invalid controls in document order. |
+
+</div>
 
 Available since 7.0.0.

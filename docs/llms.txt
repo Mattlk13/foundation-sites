@@ -338,6 +338,9 @@ On children:
 
 module: range.js (optional)
 
+module: validate.js (optional)
+- event yeti:invalid with detail { controls } — Dispatched on the form when a submit is refused, carrying the invalid controls in document order.
+
 ## nav (component, class="nav")
 
 A bar with a brand, a list of links, and actions, that collapses the links behind a toggle at its own width and opens them as a sheet, a drawer, or a screen.
