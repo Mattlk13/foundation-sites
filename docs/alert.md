@@ -14,7 +14,7 @@ nav_order: 1
 ## Example
 
 <figure class="demo" data-height="sm">
-<div data-preview="Alert"><iframe title="Alert, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;alert&quot; role=&quot;status&quot; data-variant=&quot;success&quot;&gt;&#10;	&lt;svg aria-hidden=&quot;true&quot; viewBox=&quot;0 0 16 16&quot;&gt;&lt;path d=&quot;M3 8.5l3 3 7-7&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/&gt;&lt;/svg&gt;&#10;	&lt;div&gt;&lt;strong&gt;Saved.&lt;/strong&gt; Your changes are live.&lt;/div&gt;&#10;	&lt;button type=&quot;button&quot; data-dismiss aria-label=&quot;Dismiss&quot;&gt;×&lt;/button&gt;&#10;&lt;/div&gt;"></iframe></div>
+<div data-preview="Alert"><iframe title="Alert, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;alert&quot; role=&quot;status&quot; data-variant=&quot;success&quot;&gt;&#10;	&lt;svg aria-hidden=&quot;true&quot; viewBox=&quot;0 0 16 16&quot;&gt;&lt;path d=&quot;M3 8.5l3 3 7-7&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/&gt;&lt;/svg&gt;&#10;	&lt;div&gt;&lt;strong&gt;Saved.&lt;/strong&gt; Your changes are live.&lt;/div&gt;&#10;	&lt;button type=&quot;button&quot; data-close aria-label=&quot;Dismiss&quot;&gt;×&lt;/button&gt;&#10;&lt;/div&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
@@ -23,7 +23,7 @@ nav_order: 1
 <div class="alert" role="status" data-variant="success">
 	<svg aria-hidden="true" viewBox="0 0 16 16"><path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
 	<div><strong>Saved.</strong> Your changes are live.</div>
-	<button type="button" data-dismiss aria-label="Dismiss">×</button>
+	<button type="button" data-close aria-label="Dismiss">×</button>
 </div>
 ```
 
@@ -38,12 +38,12 @@ Something the reader should know now: the form was saved, the trial ends on Frid
 
 A flex row: an optional icon, the message, and an optional close button pushed to the end. The hue draws the border and, at `medium` emphasis, a tint behind the text; `high` fills the box for the message that must be seen; `low` keeps the border alone. The start edge is four border widths thick, the same mark the card uses for a variant.
 
-The close button is a `button` carrying `data-dismiss`. Yeti's `alert.js`, loaded once with `<script type="module" src="…/js/alert.js">`, listens on the document: a click fades the alert over the fast duration and removes it. Without the module the button does nothing, so leave it out on pages that do not load the module.
+The close button is a `button` carrying `data-close`. Yeti's `alert.js`, loaded once with `<script type="module" src="…/js/alert.js">`, listens on the document: a click fades the alert over the fast duration and removes it. Without the module the button does nothing, so leave it out on pages that do not load the module.
 
 ```html
 <div class="alert" role="alert" data-variant="alert" data-emphasis="high">
 	<div><strong>Payment failed.</strong> The card was declined.</div>
-	<button type="button" data-dismiss aria-label="Dismiss">×</button>
+	<button type="button" data-close aria-label="Dismiss">×</button>
 </div>
 ```
 
@@ -57,7 +57,7 @@ The close button is a `button` carrying `data-dismiss`. Yeti's `alert.js`, loade
 
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
-| `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral` | `primary` | Which hue: success for done, warning for careful, alert for wrong, primary for news. |
+| `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `danger`, `neutral` | `primary` | Which hue: success for done, warning for careful, danger for wrong (alert is the same ladder under its Foundation 6 name), primary for news. |
 | `data-emphasis` | enum | `high`, `medium`, `low` | `medium` | How loud: medium is a tint, high a solid fill, low the border alone. |
 
 </div>
@@ -70,14 +70,14 @@ Attributes that descendants carry, not the root.
 
 | Attribute | Type | Values | On | Description |
 | --- | --- | --- | --- | --- |
-| `data-dismiss` | boolean |  | `> button` | The close button; removes the alert when alert.js is loaded. |
+| `data-close` | boolean |  | `> button` | The close button; removes the alert when alert.js is loaded. |
 
 </div>
 
 ## Children
 
 - `> svg`: 0 to 1. An icon, first, sized to the text.
-- `> [data-dismiss]`: 0 to 1. A button, last, that removes the alert when alert.js is loaded.
+- `> [data-close]`: 0 to 1. A button, last, that removes the alert when alert.js is loaded.
 - `> *`: at least 1. The message, in any element.
 
 ## Tokens

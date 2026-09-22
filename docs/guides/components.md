@@ -16,7 +16,7 @@ A component's shape comes from its markup and its manifest; its look comes from 
 
 | Attribute | Values | Read by |
 | --- | --- | --- |
-| `data-variant` | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral` | button, badge, card, field |
+| `data-variant` | `primary`, `secondary`, `success`, `warning`, `danger` (or `alert`, its Foundation 6 name), `neutral` | button, badge, card, field, alert, nav, pagination, progress, spinner, tabs |
 | `data-emphasis` | `high`, `medium`, `low` | button, badge |
 | `data-size` | `sm`, `md`, `lg` | button, badge, field, table, seam |
 
@@ -135,7 +135,7 @@ Where anchor positioning is missing, the sheet cannot anchor under the bar, so i
 
 ## Feedback
 
-An `alert` carries `role="status"` for the usual notice, announced politely, or `role="alert"` for something urgent enough to interrupt. Neither role announces content that is already on the page when it loads; they only matter for an alert inserted after the fact, so a banner baked into the page needs no role at all to be seen, just one to be right. The close button is a `button` with `data-dismiss`; on its own it does nothing; loaded once anywhere in the page, `alert.js` listens on the document and fades the alert away on a click.
+An `alert` carries `role="status"` for the usual notice, announced politely, or `role="alert"` for something urgent enough to interrupt. Neither role announces content that is already on the page when it loads; they only matter for an alert inserted after the fact, so a banner baked into the page needs no role at all to be seen, just one to be right. The close button is a `button` with `data-close`; on its own it does nothing; loaded once anywhere in the page, `alert.js` listens on the document and fades the alert away on a click.
 
 A `progress` bar fills to its value, and without one it goes indeterminate: the track takes diagonal stripes that move along it, for work whose length is not known rather than work with none. A `spinner` is the same idea with no value at all, a turning ring sized to the text around it. A button with `aria-busy="true"` draws that same ring after its label, so the one waiting indicator serves a standalone wait and a button's wait alike.
 
@@ -143,19 +143,21 @@ A `progress` bar fills to its value, and without one it goes indeterminate: the 
 <div class="alert" role="status" data-variant="success">
 	<svg aria-hidden="true" viewBox="0 0 16 16"><path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
 	<div><strong>Saved.</strong> Your changes are live.</div>
-	<button type="button" data-dismiss aria-label="Dismiss">×</button>
+	<button type="button" data-close aria-label="Dismiss">×</button>
 </div>
 ```
 
 ## Things that open
 
-Six components hold something shut until a person asks for it, and each hands that job to whatever the platform already does best. An accordion opens on `details` and `summary`. A dropdown opens on `popover`. A dialog opens on the `dialog` element. A tooltip opens on hover and focus. A carousel moves on scroll-snap. Tabs select a panel with `aria-controls` and `aria-labelledby`. Of the six, only two ever need a script: the dialog, because nothing else can call `showModal`, and tabs, because nothing else can hide the inactive panels and rove focus between the tabs. The other four are complete in CSS and HTML alone.
+Six components hold something shut until a person asks for it, and each hands that job to whatever the platform already does best. An accordion opens on `details` and `summary`. A dropdown opens on `popover`. A dialog opens on the `dialog` element. A tooltip opens on hover and focus. A carousel moves on scroll-snap. Tabs select a panel with `aria-controls` and `aria-labelledby`. Of the six, only tabs needs a script to work at all, because nothing else can hide the inactive panels and rove focus between the tabs. The dialog opens on its own: a `button` with `commandfor` naming the dialog and `command="show-modal"` calls `showModal` itself, and `dialog.js` only adds the backdrop click that closes it and the return of focus to the opener. The other four are complete in CSS and HTML alone.
+
+Three attributes name a side, and the word differs because the geometry does. `data-side` is `start` or `end`: which edge of its trigger a `dropdown` panel lines up with, as it is which child a `sidebar` treats as the sidebar. `data-placement` is one of four: which side of its trigger a `tooltip` sits on. `data-edge` is `top`, `bottom`, or `both`: which edge a `seam` cuts. A two-value side, a four-value placement, a cut edge.
 
 The accordion's one-at-a-time mode is not a Yeti attribute. Give every `details` in a set the same `name` and the browser closes the others when one opens, the same way radio buttons share a name to close each other out. Yeti adds nothing for it, because CSS cannot set an attribute on an element — only the markup or a script can — and here the markup already can.
 
 The dropdown's panel holds ordinary links and a button, with no `role="menu"` anywhere in it. `role="menu"` promises the full keyboard contract of an application menu — arrow keys moving selection, typeahead, a required active descendant — and a page that does not deliver the rest of that contract leaves a screen reader announcing a menu that does not behave like one. A disclosure panel of ordinary links needs none of it: Tab walks the items in document order, Enter activates whichever one has focus, and a screen reader announces exactly what is there, links and a button, nothing promised and unmet.
 
-Tabs and the dialog fail differently without their module, and the difference matters. Without `tabs.js`, nothing is hidden — every panel stays in the page and every tab stays focusable, which is plainer to navigate but never traps content behind a script that failed to load. Without `dialog.js`, the dialog does not open at all; there is no fallback state, because nothing but `showModal` can put it up. Never put the only route to something behind a dialog on a page that might not load the module.
+Tabs fails softly without its module, and that is by design. Without `tabs.js`, nothing is hidden — every panel stays in the page and every tab stays focusable, which is plainer to navigate but never traps content behind a script that failed to load. The dialog fails softer still: without `dialog.js` it opens and closes as before, and only the backdrop click is lost, along with the focus return in Safari.
 
 A tooltip is never the only place something is said. It shows on hover and on focus, and touch has neither, so whatever the bubble says must also live somewhere a touch user can reach it: the trigger's own label, a field's hint, or the surrounding text. Treat the tooltip as a short-hand restatement of something already true elsewhere, not as the one place it is written down.
 
@@ -178,7 +180,7 @@ A `demo` is a live example in a box the reader can drag narrower and wider, with
 
 Yeti's JavaScript lives in `dist/js/`, one module per component, dependency-free and optional: nothing in the CSS expects it, so a page that never loads a module still gets the component, minus whatever that module would have added. Link it with a single `<script type="module" src="…/js/alert.js"></script>` anywhere in the page — there is no init call to run and no order to get right — and it is safe to include on a page with none of that component at all; it simply finds nothing to listen on. Leave the module out and the alert's close button sits there inert, the rest of the component unaffected.
 
-Today that list is six modules long: `alert.js`, for the close button's fade and removal; `tabs.js`, for hiding inactive panels and roving focus between tabs; `dialog.js`, for opening the dialog with `showModal`; `hover.js`, for opening a dropdown under the pointer when it is asked to with `data-trigger="hover"`; `carousel.js`, so that following a dot scrolls the track rather than adding an entry to the browser's history; and `demo.js`, which builds a demo's frame from the code written once beneath it. The architecture set the budget at five for 7.0 and moved it once, for the demo, because that script serves the people writing docs rather than the people reading sites; no further component in this release will bring one.
+Today that list is six modules long: `alert.js`, for the close button's fade and removal; `tabs.js`, for hiding inactive panels and roving focus between tabs; `dialog.js`, for closing the dialog from its backdrop and returning focus to its opener; `hover.js`, for opening a dropdown under the pointer when it is asked to with `data-trigger="hover"`; `carousel.js`, so that following a dot scrolls the track rather than adding an entry to the browser's history; and `demo.js`, which builds a demo's frame from the code written once beneath it. The architecture set the budget at five for 7.0 and moved it once, for the demo, because that script serves the people writing docs rather than the people reading sites; no further component in this release will bring one.
 
 `hover.js` is the one with an end already written down. The `interestfor` attribute is that same feature standardised, and it exists in one engine today; when it reaches Baseline the module goes and the attribute maps to it instead.
 

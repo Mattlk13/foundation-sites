@@ -34,14 +34,14 @@ test.describe('alert', () => {
 
 	test('with the module, the close button removes the alert', async ({ page }) => {
 		await open(page);
-		await page.click('#dismiss');
+		await page.click('#close');
 		await expect(page.locator('#closable')).toHaveCount(0);
 	});
 
 	test('without the module, the close button does nothing', async ({ page }) => {
 		await withoutModule(page, 'alert');
 		await open(page);
-		await page.click('#dismiss');
+		await page.click('#close');
 		await page.waitForTimeout(300);
 		await expect(page.locator('#closable')).toHaveCount(1);
 		await expect(page.locator('#closable')).toBeVisible();
@@ -52,9 +52,9 @@ test.describe('alert', () => {
 		expect(await axe(page)).toEqual([]);
 	});
 
-	test('dismissing with the keyboard keeps focus where the alert was', async ({ page }) => {
+	test('closing with the keyboard keeps focus where the alert was', async ({ page }) => {
 		await open(page);
-		await page.focus('#dismiss');
+		await page.focus('#close');
 		await page.keyboard.press('Enter');
 		await expect(page.locator('#closable')).toHaveCount(0);
 		expect(await page.evaluate(() => document.activeElement === document.body)).toBe(false);
@@ -63,9 +63,26 @@ test.describe('alert', () => {
 	test('a parent with its own tabindex keeps it after the focus return', async ({ page }) => {
 		await open(page);
 		await page.evaluate(() => document.querySelector('#stage').setAttribute('tabindex', '0'));
-		await page.focus('#dismiss');
+		await page.focus('#close');
 		await page.keyboard.press('Enter');
 		await expect(page.locator('#closable')).toHaveCount(0);
 		expect(await page.evaluate(() => document.querySelector('#stage').getAttribute('tabindex'))).toBe('0');
+	});
+
+	test('data-variant="danger" is the alert hue under a name that is not the component', async ({ page }) => {
+		await open(page);
+		const colours = await page.evaluate(() => {
+			const make = (variant) => {
+				const el = document.createElement('div');
+				el.className = 'alert';
+				el.setAttribute('data-variant', variant);
+				el.textContent = variant;
+				document.getElementById('stage').append(el);
+				return getComputedStyle(el).borderColor;
+			};
+			return [make('danger'), make('alert'), make('primary')];
+		});
+		expect(colours[0]).toBe(colours[1]);
+		expect(colours[0]).not.toBe(colours[2]);
 	});
 });

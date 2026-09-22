@@ -49,7 +49,7 @@ A `progress` element is a progress bar to assistive tech already; it needs a nam
 
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
-| `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral` | `primary` | The hue of the filled part. |
+| `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `danger`, `neutral` | `primary` | The hue of the filled part. |
 | `data-size` | enum | `sm`, `md`, `lg` | `md` | The bar's thickness: half the size's space step. |
 
 </div>

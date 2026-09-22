@@ -23,7 +23,7 @@ test.describe('columns', () => {
 		expect(new Set((await rects(page, '#columns > *')).map((r) => r.top)).size).toBe(3);
 	});
 
-	test('data-limit="2" wraps the third child to a full row', async ({ page }) => {
+	test('data-columns="2" wraps the third child to a full row', async ({ page }) => {
 		await open(page, 'columns', 1000);
 		const [l1, l2, l3] = await Promise.all([rect(page, '#l1'), rect(page, '#l2'), rect(page, '#l3')]);
 		expect(l1.top).toBeCloseTo(l2.top, 1);

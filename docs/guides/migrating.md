@@ -45,7 +45,7 @@ The table covers the grid and every component in the version 6 kitchen sink. "No
 | `.dropdown-pane` | `dropdown` | a popover, so no script and no z-index |
 | `.dropdown.menu` submenus | `dropdown` inside a `nav` item | one level; a mega menu is not shipped |
 | `.accordion-menu`, `.drilldown` | none | a site tree is a list of links in a `stack`; the browser's `<details>` disclosure for a section |
-| `.reveal` | `dialog`, opened by a `button` with `data-open` | the native dialog; the module opens it modally |
+| `.reveal` | `dialog`, opened by a `button` with `commandfor` | the native dialog opens itself; the module closes it from the backdrop |
 | `.tooltip` | `tooltip` | hover and focus, no script |
 | `.accordion` | `accordion` | native `<details>`; `name` for one-at-a-time |
 | `.tabs` | `tabs` | roving focus from the module |
@@ -55,7 +55,7 @@ The table covers the grid and every component in the version 6 kitchen sink. "No
 | `.switch` | `field` around a native checkbox with role="switch" | native, styled |
 | `.breadcrumbs` | `breadcrumbs` | with `aria-current` on the last |
 | `.pagination` | `pagination` | with `aria-current` on the current page |
-| `.close-button` | the dismiss button inside `alert`, `data-close` inside `nav` | a close button belongs to what it closes |
+| `.close-button` | `data-close`, inside `alert` or inside `nav` | a close button belongs to what it closes |
 | `.sticky` | none | one native `position: sticky` declaration on any element; nothing to add |
 | `.magellan` | none | a table of contents is a `stack` of links; scroll spying is script the page can add if it must |
 | `.responsive-embed` / `.flex-video` | `frame` with `data-ratio` | native `aspect-ratio` |

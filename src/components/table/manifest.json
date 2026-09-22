@@ -9,7 +9,7 @@
     { "name": "data-size", "type": "enum", "vocabulary": "size-control", "default": "md", "description": "Cell padding and text size; sm is the compact table." },
     { "name": "data-striped", "type": "boolean", "description": "Tint every other body row." },
     { "name": "data-hover", "type": "boolean", "description": "Tint the row under the pointer." },
-    { "name": "data-grid", "type": "boolean", "description": "Borders around every cell instead of lines between rows." }
+    { "name": "data-border", "type": "boolean", "description": "Borders around every cell instead of lines between rows, as a box draws its border." }
   ],
   "classes": [],
   "children": [
@@ -28,7 +28,7 @@
     { "name": "--yeti-text-md", "public": true, "description": "Text size when data-size is absent." },
     { "name": "--yeti-space-sm", "public": true, "description": "The space step when data-size is absent; a cell's inline padding follows it." },
     { "name": "--yeti-weight-strong", "public": true, "description": "Weight of the caption and of header cells." },
-    { "name": "--yeti-border-width", "public": true, "description": "Width of the row rules, and of every cell border with data-grid." },
+    { "name": "--yeti-border-width", "public": true, "description": "Width of the row rules, and of every cell border with data-border." },
     { "name": "--yeti-color-surface-sunken", "public": true, "description": "Background of a row under the pointer with data-hover." },
     { "name": "--_yeti-size-text", "public": false },
     { "name": "--_yeti-size-space", "public": false }

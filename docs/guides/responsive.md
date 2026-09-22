@@ -80,8 +80,8 @@ When something has to respond, reach for these in order and stop at the first th
 | Attribute | On | What the width means |
 | --- | --- | --- |
 | `data-threshold` | `columns`, `hero`, `nav`, `pagination` | at or above it, the wide form |
-| `data-max` | `breakout`, `center` | the widest the content column gets |
-| `data-width` | `dialog`, `media`, `scroller`, `shell`, `sidebar` | the preferred width of the part it sizes: the dialog itself, the media's figure, each item in a scroller, the shell's nav and aside, or the sidebar |
+| `data-max` | `breakout`, `center`, `dialog` | the widest the content column, or the dialog, may grow |
+| `data-width` | `media`, `scroller`, `shell`, `sidebar` | the preferred width of the part it sizes: the media's figure, each item in a scroller, the shell's nav and aside, or the sidebar |
 | `data-min` | `grid`, `masonry` | the narrowest a column may be before one drops, or `none`, which leaves the count to `data-columns` |
 
 The values are the six stops above, `none` aside, and every one of them is a token: `--yeti-width-sm` is `24rem` until a theme says otherwise.

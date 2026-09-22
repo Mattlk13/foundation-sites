@@ -65,7 +65,7 @@ Label the `nav` `aria-label="Pagination"`. The current page's link carries `aria
 
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
-| `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral` | `primary` | The hue of the current page and of the hover tint. |
+| `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `danger`, `neutral` | `primary` | The hue of the current page and of the hover tint. |
 | `data-size` | enum | `sm`, `md`, `lg` | `md` | The text step. |
 | `data-threshold` | enum | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `sm` | The pagination's own width below which only Previous, the current page, and Next remain. |
 | `data-justify` | enum | `start`, `center`, `end`, `between`, `around`, `evenly` | `start` | Where the links sit in the row. |

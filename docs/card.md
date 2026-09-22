@@ -40,7 +40,7 @@ One thing in a box: an article in a listing, a product, a person, a plan. Put ca
 
 ## How it works
 
-A card is a flex column on the raised surface with a border and a radius. A picture, video, or `figure` placed first bleeds through the padding to the card's edges and, while it sits on top, is cropped to `data-ratio`. Everything after it is the body, spaced at the card's gap. A `footer` is pushed to the bottom, so a row of cards of different lengths keeps its actions aligned. `data-raised` trades the border for a shadow; `data-variant` colours the border and draws a bar along the top without tinting the text. From the `md` width of content, a card with a picture becomes a two-column row: the picture down the left, the body taking the rest. The picture fills that column, so `data-ratio` has nothing to say about it any more; narrower than that the card stacks, picture on top, the form a phone and a grid cell want, and the ratio governs it again. `data-threshold` moves that switch to any width stop: `xs` for a card that should be a row almost everywhere, `xl` for one that should stack until it has a whole column. A card in a ranked grid keeps its picture and footer aligned with its neighbours' and does not switch to the row.
+A card is a flex column on the raised surface with a border and a radius. A picture, video, or `figure` placed first bleeds through the padding to the card's edges and, while it sits on top, is cropped to `data-ratio`. Everything after it is the body, spaced at the card's gap. A `footer` is pushed to the bottom, so a row of cards of different lengths keeps its actions aligned. `data-raised` trades the border for a shadow; `data-variant` colours the border and draws a bar along the top without tinting the text. From the `md` width of content, a card with a picture becomes a two-column row: the picture down the left, the body taking the rest. The picture fills that column, so `data-ratio` has nothing to say about it any more; narrower than that the card stacks, picture on top, the form a phone and a grid cell want, and the ratio governs it again. `data-threshold` moves that switch to any width stop: `xs` for a card that should be a row almost everywhere, `xl` for one that should stack until it has a whole column. A card in a grid with `data-rows` keeps its picture and footer aligned with its neighbours' and does not switch to the row. It is not the `box` layout's `data-surface="raised"`, which is a tone.
 
 Two things follow from how that query works. Only a card with a picture is a size container, because a size container has no intrinsic width: a card that always was one collapsed to its padding as a cluster item. And anything pressable inside a card sits above a stretched link, so a footer button in a card whose heading carries `data-stretch` still takes the click.
 
@@ -72,7 +72,7 @@ Do not wrap a card in a link. Put the link on the heading and add `data-stretch`
 
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
-| `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral` |  | Tints the border and adds a bar along the top; the body stays plain. |
+| `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `danger`, `neutral` |  | Tints the border and adds a bar along the top; the body stays plain. |
 | `data-threshold` | enum | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `md` | The card's own width from which the picture sits beside the text instead of on top. |
 | `data-ratio` | enum | `1/1`, `4/3`, `3/2`, `16/9`, `21/9` | `16/9` | The picture's aspect ratio while it sits on top of the body. Past data-threshold the picture moves beside the body and fills that column, and the ratio stops applying. |
 | `data-raised` | boolean |  |  | A shadow instead of a border. |
@@ -95,7 +95,7 @@ Attributes that descendants carry, not the root.
 
 - `> *`: at least 1. A figure first if there is one, then the body, then an optional footer.
 - `> figure`: 0 to 1. A figure element holding media and a caption; only the media is cropped.
-- `> footer`: 0 to 1. Actions, pushed to the bottom of the card; in a ranked grid it takes the last row.
+- `> footer`: 0 to 1. Actions, pushed to the bottom of the card; in a grid with data-rows it takes the last row.
 - `[data-stretch]`: 0 to 1. One link that is stretched over the whole card, so the card is clickable while the link keeps its own name.
 
 ## Tokens

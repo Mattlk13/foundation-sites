@@ -177,7 +177,7 @@ Attributes:
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between columns, and between rows once they stack.
 - data-align: start | center | end | stretch (default) | baseline — Vertical alignment of the columns.
 - data-justify: start (default) | center | end | between | around | evenly — Distribution of the columns along the row when they do not fill it.
-- data-limit: 2 | 3 | 4 | 5 — The most columns allowed on one row; further children each take a full row.
+- data-columns: 1 | 2 | 3 | 4 | 5 | 6 — The most columns on one row; further children each take a full row.
 
 On children:
 - data-span on > *: 1 | 2 | 3 | 4 | 5 | 6 — How many shares of the row the child takes: 2 is twice a plain sibling. Below the threshold it stacks like the rest.
@@ -188,10 +188,10 @@ Use columns for a set of equals: pricing tiers, feature summaries, a row of stat
 
 ### How it works
 
-Every child has the same `flex-basis`: the threshold minus the container's width, multiplied by a large number. In a container wider than the threshold that number is hugely negative, which `flex-basis` clamps to zero, so `flex-grow: 1` shares the row equally between them. In a narrower one it is hugely positive, so each child fills a row. `data-limit` caps how many share a row; any child past the cap takes a full row of its own.
+Every child has the same `flex-basis`: the threshold minus the container's width, multiplied by a large number. In a container wider than the threshold that number is hugely negative, which `flex-basis` clamps to zero, so `flex-grow: 1` shares the row equally between them. In a narrower one it is hugely positive, so each child fills a row. `data-columns` caps how many share a row; any child past the cap takes a full row of its own.
 
 ```html
-<div class="columns" data-threshold="sm" data-limit="2">
+<div class="columns" data-threshold="sm" data-columns="2">
 	<div>One</div>
 	<div>Two</div>
 	<div>Three, on its own row</div>
@@ -317,7 +317,7 @@ Attributes:
 - data-min: none | 2xs | xs (default) | sm | md | lg | xl | 2xl — The narrowest a column may be. With none, only data-columns decides the count; none is meant to be paired with data-columns, and alone gives a single full-width column.
 - data-columns: 1 | 2 | 3 | 4 | 5 | 6 — The most columns allowed. Fewer appear when the container cannot fit that many at data-min; with data-min="none" the count is exact. With data-fold, the count only ever halves.
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between columns and rows.
-- data-ranks: 2 | 3 | 4 | 5 | 6 — Line up the parts of the children across each row: the value is how many parts a child has, and each part takes one row.
+- data-rows: 2 | 3 | 4 | 5 | 6 — Line up the parts of the children across each row: the value is how many rows each child spans, one per part.
 - data-fold (boolean) — Halve the column count as the grid narrows instead of stepping down one at a time. Needs data-columns 2, 4, or 6 and uses data-min as the width per column. data-min="none" has no meaning with a fold: the count needs a width per column.
 
 ### When to use it
@@ -348,7 +348,7 @@ Add `data-fold` and the count halves instead of stepping: with `data-min="xs"` a
 
 The fold is one attribute on one element; the nest is two wrappers. Use whichever you would rather explain.
 
-`data-ranks` lines up neighbours' parts: with `data-ranks="3"` each child is a subgrid of three rows, so every first part sits in row one, every second in row two, and so on, across the row. Give the number of parts the fullest child has; a child with fewer leaves its last rows empty. A card in a ranked grid keeps its picture and footer aligned with its neighbours' and does not switch to its side-by-side row. A ranked child cannot also be a size container, because a size container cannot be a subgrid; the card turns its own container off inside a ranked grid for this reason.
+`data-rows` lines up neighbours' parts: with `data-rows="3"` each child is a subgrid of three rows, so every first part sits in row one, every second in row two, and so on, across the row. Give the number of parts the fullest child has; a child with fewer leaves its last rows empty. A card in a grid with rows keeps its picture and footer aligned with its neighbours' and does not switch to its side-by-side row. A child that spans rows cannot also be a size container, because a size container cannot be a subgrid; the card turns its own container off inside such a grid for this reason.
 
 ### Why this name
 
@@ -495,7 +495,7 @@ An overlay holds one thing on top of another without taking part in the layout u
 
 The overlay is the box being covered, so it is positioned, and its plain children flow as usual. The one child carrying `data-over` is absolutely positioned with its top-left corner at the box's center, then translated back by half its own size, which centers it whatever its dimensions. Its maximum width and height are the box's minus a gap on each side, and it scrolls internally rather than growing beyond that. `data-fixed` on the overlay makes the held child `fixed`, so the box it centers on is the viewport.
 
-`data-fill`, on the same child as `data-over`, covers the box instead of sitting centred in it. The gap is the inset a centred child keeps from the edges and a cover has none, so the size caps go with it. That is what a veil, a dimmer or a loading state wants, and it only pays off with something translucent behind it: `--yeti-color-scrim` is the framework's wash for exactly this, the surface thinned so it dims with the theme rather than tinting.
+`data-fill`, on the same child as `data-over`, covers the box instead of sitting centred in it. The gap is the inset a centred child keeps from the edges and a cover has none, so the size caps go with it. That is what a veil, a dimmer or a loading state wants, and it only pays off with something translucent behind it: `--yeti-color-scrim` is the framework's wash for exactly this, the surface thinned so it dims with the theme rather than tinting. On a `stack`, `data-fill` is the layout's own height instead: at least the viewport's.
 
 It positions and nothing else. A veil that wants its own content centred puts a layout inside itself, the way every other layout composes:
 
@@ -621,7 +621,7 @@ Reach for a stack whenever things sit one above another and should be spaced eve
 
 ### How it works
 
-The stack is a flex column with a `gap`, so the space between children is the stack's decision and children's own margins are zeroed. `data-align` controls horizontal alignment. Give one child `data-split` and it, with everything after it, moves to the end whenever the stack is taller than its content, which is how a card keeps its actions at the bottom. Add `data-fill` and the stack is at least as tall as the viewport, which with a `data-split` footer is the whole of a sticky footer.
+The stack is a flex column with a `gap`, so the space between children is the stack's decision and children's own margins are zeroed. `data-align` controls horizontal alignment. Give one child `data-split` and it, with everything after it, moves to the end whenever the stack is taller than its content, which is how a card keeps its actions at the bottom. Add `data-fill` and the stack is at least as tall as the viewport, which with a `data-split` footer is the whole of a sticky footer. It is the stack that fills; on a child of an `overlay`, the same word means the child covers its box.
 
 ```html
 <div class="stack" data-gap="sm" data-align="start">
@@ -908,7 +908,7 @@ Joins a control with what belongs beside it, a unit, a symbol, a button, or anot
 
 ### When to use it
 
-A price with its currency, a distance with its unit, a search box with its button, a URL with a fixed domain after it, a country code beside a phone number. Whatever is joined shares one border and one height, so the parts read as one thing.
+A price with its currency, a distance with its unit, a search box with its button, a URL with a fixed domain after it, a country code beside a phone number. Whatever is joined shares one border and one height, so the parts read as one thing. A row of buttons joined the same way is `buttons` with `data-affix`.
 
 ### How it works
 
@@ -962,11 +962,11 @@ A prefix or suffix that carries meaning (a currency, a unit) must reach the cont
 A message in a hue: a tinted box with a coloured edge, an optional icon, and an optional close button that the module wires up.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | neutral — Which hue: success for done, warning for careful, alert for wrong, primary for news.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — Which hue: success for done, warning for careful, danger for wrong (alert is the same ladder under its Foundation 6 name), primary for news.
 - data-emphasis: high | medium (default) | low — How loud: medium is a tint, high a solid fill, low the border alone.
 
 On children:
-- data-dismiss on > button (boolean) — The close button; removes the alert when alert.js is loaded.
+- data-close on > button (boolean) — The close button; removes the alert when alert.js is loaded.
 
 module: alert.js (optional)
 
@@ -978,12 +978,12 @@ Something the reader should know now: the form was saved, the trial ends on Frid
 
 A flex row: an optional icon, the message, and an optional close button pushed to the end. The hue draws the border and, at `medium` emphasis, a tint behind the text; `high` fills the box for the message that must be seen; `low` keeps the border alone. The start edge is four border widths thick, the same mark the card uses for a variant.
 
-The close button is a `button` carrying `data-dismiss`. Yeti's `alert.js`, loaded once with `<script type="module" src="…/js/alert.js">`, listens on the document: a click fades the alert over the fast duration and removes it. Without the module the button does nothing, so leave it out on pages that do not load the module.
+The close button is a `button` carrying `data-close`. Yeti's `alert.js`, loaded once with `<script type="module" src="…/js/alert.js">`, listens on the document: a click fades the alert over the fast duration and removes it. Without the module the button does nothing, so leave it out on pages that do not load the module.
 
 ```html
 <div class="alert" role="alert" data-variant="alert" data-emphasis="high">
 	<div><strong>Payment failed.</strong> The card was declined.</div>
-	<button type="button" data-dismiss aria-label="Dismiss">×</button>
+	<button type="button" data-close aria-label="Dismiss">×</button>
 </div>
 ```
 
@@ -993,7 +993,7 @@ The close button is a `button` carrying `data-dismiss`. Yeti's `alert.js`, loade
 
 Children:
 - > svg: at least 0, at most 1. An icon, first, sized to the text.
-- > [data-dismiss]: at least 0, at most 1. A button, last, that removes the alert when alert.js is loaded.
+- > [data-close]: at least 0, at most 1. A button, last, that removes the alert when alert.js is loaded.
 - > *: at least 1. The message, in any element.
 
 Tokens:
@@ -1020,7 +1020,7 @@ Use role="status" for the usual notice, which is announced politely, and role="a
 A small inline label for a status or a count, tinted by a hue.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | neutral — Which hue tints the badge.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — Which hue tints the badge.
 - data-emphasis: high | medium (default) | low — medium is a subtle tint with dark text, high a solid fill, low text alone.
 - data-size: sm | md (default) | lg — The text size the badge sits beside; the badge renders one step smaller.
 
@@ -1111,10 +1111,9 @@ Put aria-label="Breadcrumb" on the nav. The last step carries aria-current="page
 An action with a face: a hue, an emphasis, and a size, with every state taken from the element itself.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | neutral — Which hue's ladder the button uses.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — Which hue's ladder the button uses.
 - data-emphasis: high (default) | medium | low — How loud: high is a solid fill, medium an outline, low text alone.
 - data-size: sm | md (default) | lg — Scales the text and the padding together.
-- data-open (string) — The id of a dialog this button opens, when dialog.js is loaded.
 
 ### When to use it
 
@@ -1164,19 +1163,19 @@ Put the class on a button, an a, or a submit input, nothing else. Use button for
 
 ## buttons (component, class="buttons")
 
-A group of buttons: a wrapping row, or one fused control with data-attach.
+A group of buttons: a wrapping row, or one joined control with data-affix.
 
 Attributes:
-- data-gap: none | xs | sm (default) | md | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between buttons when not attached.
-- data-attach (boolean) — Fuse the buttons into one segmented control that shares borders.
+- data-gap: none | xs | sm (default) | md | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between buttons when not affixed.
+- data-affix (boolean) — Join the buttons into one segmented control that shares borders.
 
 ### When to use it
 
-Two or more buttons that belong together: a form's submit and cancel, a set of view toggles, a toolbar row. Loose, they sit in a row at a small gap and wrap when they must. Attached, they become one control with shared borders, the shape of a segmented toggle.
+Two or more buttons that belong together: a form's submit and cancel, a set of view toggles, a toolbar row. Loose, they sit in a row at a small gap and wrap when they must. Affixed, they become one control with shared borders, the shape of a segmented toggle.
 
 ### How it works
 
-Loose is a wrapping flex row at `data-gap`. `data-attach` removes the gap, squares the inner corners, and overlaps each border with the next so the seam is one line wide. A focused member is lifted above its neighbours so its focus ring is not covered.
+Loose is a wrapping flex row at `data-gap`. `data-affix` removes the gap, squares the inner corners, and overlaps each border with the next so the seam is one line wide. A focused member is lifted above its neighbours so its focus ring is not covered.
 
 ```html
 <div class="buttons" role="group" aria-label="Form actions">
@@ -1187,14 +1186,14 @@ Loose is a wrapping flex row at `data-gap`. `data-attach` removes the gap, squar
 
 ### Accessibility
 
-The group carries `role="group"` and a name, so a screen reader announces the set once. A segmented toggle puts `aria-pressed` on each button and the pressed look follows. Do not use an attached group as tabs; tabs have their own roles and keyboard behaviour and are a separate component.
+The group carries `role="group"` and a name, so a screen reader announces the set once. A segmented toggle puts `aria-pressed` on each button and the pressed look follows. Do not use an affixed group as tabs; tabs have their own roles and keyboard behaviour and are a separate component.
 
 Children:
 - > .button: at least 2. The buttons.
 
 Tokens:
 - --yeti-space-sm — The default gap.
-- --yeti-border-width — The width the attached members overlap by.
+- --yeti-border-width — The width the joined members overlap by.
 
 Accessibility contract:
 Required: role, aria-label | aria-labelledby
@@ -1205,7 +1204,7 @@ role="group" with a name, so the set is announced as one thing. A segmented togg
 A bordered surface for one thing: an optional figure that bleeds to the edges, a body, and a footer that sits at the bottom; a row with the picture beside the text once the card's content reaches the md width.
 
 Attributes:
-- data-variant: primary | secondary | success | warning | alert | neutral — Tints the border and adds a bar along the top; the body stays plain.
+- data-variant: primary | secondary | success | warning | alert | danger | neutral — Tints the border and adds a bar along the top; the body stays plain.
 - data-threshold: 2xs | xs | sm | md (default) | lg | xl | 2xl — The card's own width from which the picture sits beside the text instead of on top.
 - data-ratio: 1/1 | 4/3 | 3/2 | 16/9 (default) | 21/9 — The picture's aspect ratio while it sits on top of the body. Past data-threshold the picture moves beside the body and fills that column, and the ratio stops applying.
 - data-raised (boolean) — A shadow instead of a border.
@@ -1219,7 +1218,7 @@ One thing in a box: an article in a listing, a product, a person, a plan. Put ca
 
 ### How it works
 
-A card is a flex column on the raised surface with a border and a radius. A picture, video, or `figure` placed first bleeds through the padding to the card's edges and, while it sits on top, is cropped to `data-ratio`. Everything after it is the body, spaced at the card's gap. A `footer` is pushed to the bottom, so a row of cards of different lengths keeps its actions aligned. `data-raised` trades the border for a shadow; `data-variant` colours the border and draws a bar along the top without tinting the text. From the `md` width of content, a card with a picture becomes a two-column row: the picture down the left, the body taking the rest. The picture fills that column, so `data-ratio` has nothing to say about it any more; narrower than that the card stacks, picture on top, the form a phone and a grid cell want, and the ratio governs it again. `data-threshold` moves that switch to any width stop: `xs` for a card that should be a row almost everywhere, `xl` for one that should stack until it has a whole column. A card in a ranked grid keeps its picture and footer aligned with its neighbours' and does not switch to the row.
+A card is a flex column on the raised surface with a border and a radius. A picture, video, or `figure` placed first bleeds through the padding to the card's edges and, while it sits on top, is cropped to `data-ratio`. Everything after it is the body, spaced at the card's gap. A `footer` is pushed to the bottom, so a row of cards of different lengths keeps its actions aligned. `data-raised` trades the border for a shadow; `data-variant` colours the border and draws a bar along the top without tinting the text. From the `md` width of content, a card with a picture becomes a two-column row: the picture down the left, the body taking the rest. The picture fills that column, so `data-ratio` has nothing to say about it any more; narrower than that the card stacks, picture on top, the form a phone and a grid cell want, and the ratio governs it again. `data-threshold` moves that switch to any width stop: `xs` for a card that should be a row almost everywhere, `xl` for one that should stack until it has a whole column. A card in a grid with `data-rows` keeps its picture and footer aligned with its neighbours' and does not switch to the row. It is not the `box` layout's `data-surface="raised"`, which is a tone.
 
 Two things follow from how that query works. Only a card with a picture is a size container, because a size container has no intrinsic width: a card that always was one collapsed to its padding as a cluster item. And anything pressable inside a card sits above a stretched link, so a footer button in a card whose heading carries `data-stretch` still takes the click.
 
@@ -1248,7 +1247,7 @@ Do not wrap a card in a link. Put the link on the heading and add `data-stretch`
 Children:
 - > *: at least 1. A figure first if there is one, then the body, then an optional footer.
 - > figure: at least 0, at most 1. A figure element holding media and a caption; only the media is cropped.
-- > footer: at least 0, at most 1. Actions, pushed to the bottom of the card; in a ranked grid it takes the last row.
+- > footer: at least 0, at most 1. Actions, pushed to the bottom of the card; in a grid with data-rows it takes the last row.
 - [data-stretch]: at least 0, at most 1. One link that is stretched over the whole card, so the card is clickable while the link keeps its own name.
 
 Tokens:
@@ -1432,10 +1431,10 @@ Give the iframe a title. Give a box holding direct markup tabindex="0": markup t
 
 ## dialog (component, class="dialog")
 
-The native dialog element as a modal, opened by a button that names it, with the page behind it inert and focus held inside.
+The native dialog element as a modal, opened by a button whose commandfor names it, with the page behind it inert and focus held inside.
 
 Attributes:
-- data-width: 2xs | xs | sm | md (default) | lg | xl | 2xl — How wide the dialog may grow.
+- data-max: 2xs | xs | sm | md (default) | lg | xl | 2xl — The widest the dialog may grow, from the width scale; it is always narrower than the viewport by a gutter.
 
 module: dialog.js (optional)
 
@@ -1447,12 +1446,12 @@ A decision that has to be made before anything else happens: confirming somethin
 
 A native `dialog`, opened as a modal. That one word is why the component exists in this shape: `showModal` makes everything behind the dialog inert, keeps focus inside it, closes it on Escape, and gives you a `::backdrop` to paint. None of that is Yeti's, and none of it needs ARIA.
 
-Opening is the one thing the browser will not do for you, so `dialog.js` does it: any button carrying `data-open` with a dialog's id opens it, a click on the backdrop closes it, and focus returns to the button that opened it. Closing needs no script at all if you use a form: a button inside `<form method="dialog">` closes the dialog on its own.
+Opening is native too. A `button` carrying `commandfor` with the dialog's id and `command="show-modal"` opens it modally, with no script. Closing needs none either if you use a form: a button inside `<form method="dialog">` closes the dialog on its own. `dialog.js` adds the two things the platform does not do yet: a click on the backdrop closes the dialog, and focus returns to the button that opened it when it closes.
 
 ```html
-<button class="button" type="button" data-open="share">Share</button>
+<button class="button" type="button" commandfor="share" command="show-modal">Share</button>
 
-<dialog class="dialog" id="share" data-width="sm" aria-labelledby="share-title">
+<dialog class="dialog" id="share" data-max="sm" aria-labelledby="share-title">
 	<h2 id="share-title">Share this page</h2>
 	<p>Anyone with the link can read it.</p>
 	<footer>
@@ -1465,7 +1464,7 @@ Opening is the one thing the browser will not do for you, so `dialog.js` does it
 
 Name the dialog with `aria-labelledby` pointing at its heading, so it is announced as something rather than as an unnamed dialog. Because it is opened modally the page behind it is genuinely inert, not merely covered, so a screen reader cannot wander out of it. Focus returns to the opener on close, which is what keeps a keyboard reader's place.
 
-Without the module the dialog never opens. That is a real limitation, not a detail: do not put the only way to reach something behind a dialog on a page that does not load `dialog.js`.
+Without the module the dialog still opens and Escape still closes it. What is lost is the backdrop click and, in Safari, the return of focus to the opener, because Safari does not focus a button when it is clicked. Load the module on any page where a keyboard reader will meet a dialog.
 
 Children:
 - > *: at least 1. The contents: a heading that names the dialog, then whatever it is for.
@@ -1479,7 +1478,7 @@ Tokens:
 - --yeti-shadow-md — The dialog's shadow.
 - --yeti-space-md — The least margin kept between the dialog and the viewport's edges.
 - --yeti-color-text — The dialog's text.
-- --yeti-width-md — The default width, when data-width is absent.
+- --yeti-width-md — The default maximum, when data-max is absent.
 - --yeti-space-sm — Gap between the footer's actions.
 - --yeti-duration-fast — How long the dialog and its backdrop take to appear.
 - --yeti-ease — The curve of that transition.
@@ -1487,7 +1486,7 @@ Tokens:
 Accessibility contract:
 - Escape: Closes the dialog.
 - Tab: Cycles inside the dialog, since the rest of the page is inert.
-Give the dialog a name with aria-labelledby pointing at its heading. Opened with showModal, which is what dialog.js does, the browser makes everything behind it inert, holds focus inside, and closes on Escape; none of that needs ARIA. A button inside a form with method="dialog" closes it without any script. Without the module nothing opens the dialog, so never put the only route to something behind one on a page that does not load it.
+Give the dialog a name with aria-labelledby pointing at its heading. A button with commandfor naming the dialog and command="show-modal" opens it modally: the browser makes everything behind it inert, holds focus inside, and closes on Escape; none of that needs ARIA or a script. A button inside a form with method="dialog" closes it without any script. dialog.js adds a backdrop click that closes the dialog and returns focus to the opening button on close; without it the dialog still opens and Escape still closes it.
 
 ## dropdown (component, class="dropdown")
 
@@ -1577,7 +1576,7 @@ With data-trigger="hover" the module adds opening under the pointer and changes 
 One form control with its label, an optional hint, and an error that shows itself when the control is invalid.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | neutral — The colour of a checked checkbox or radio.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — The colour of a checked checkbox or radio.
 - data-size: sm | md (default) | lg — Scales the control's height and text.
 - data-inline (boolean) — Put the label beside the control. Checkboxes and radios are inline without it.
 
@@ -1676,7 +1675,7 @@ The label's for must match the control's id; the validator checks it. Reference 
 A bar with a brand, a list of links, and actions, that collapses the links behind a toggle at its own width and opens them as a sheet, a drawer, or a screen.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | neutral — The hue of the current link and of the hover tint.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — The hue of the current link and of the hover tint.
 - data-threshold: 2xs | xs | sm | md (default) | lg | xl | 2xl — The nav's own width at or above which the links sit in the bar; below it they are behind the toggle.
 - data-panel: sheet (default) | drawer | screen — The shape of the open list below the threshold: a sheet under the bar, a drawer from the start edge, or the whole screen.
 - data-gap: none | xs | sm (default) | md | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the bar's parts and between the links.
@@ -1764,7 +1763,7 @@ Give the nav an aria-label, since a page often has more than one. The toggle nee
 Links to the pages of a long list, each a square target, the current one filled, shrinking to Previous, the current page, and Next when it is narrow.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | neutral — The hue of the current page and of the hover tint.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — The hue of the current page and of the hover tint.
 - data-size: sm | md (default) | lg — The text step.
 - data-threshold: 2xs | xs | sm (default) | md | lg | xl | 2xl — The pagination's own width below which only Previous, the current page, and Next remain.
 - data-justify: start (default) | center | end | between | around | evenly — Where the links sit in the row.
@@ -1819,7 +1818,7 @@ Put aria-label="Pagination" on the nav. The current page's link carries aria-cur
 The native progress element as a thin bar in a hue, filled to its value, or striped and moving when it has none.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | neutral — The hue of the filled part.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — The hue of the filled part.
 - data-size: sm | md (default) | lg — The bar's thickness: half the size's space step.
 
 ### When to use it
@@ -1898,7 +1897,7 @@ Decorative only; nothing changes for assistive tech. The seam adds its depth as 
 A turning ring in a hue, the size of the text, for waiting with no known end; a busy button shows the same ring after its label.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | neutral — The hue of the bright edge.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — The hue of the bright edge.
 - data-size: sm | md (default) | lg — The ring is one em of the size's text step.
 
 ### When to use it
@@ -1941,7 +1940,7 @@ Attributes:
 - data-size: sm | md (default) | lg — Cell padding and text size; sm is the compact table.
 - data-striped (boolean) — Tint every other body row.
 - data-hover (boolean) — Tint the row under the pointer.
-- data-grid (boolean) — Borders around every cell instead of lines between rows.
+- data-border (boolean) — Borders around every cell instead of lines between rows, as a box draws its border.
 
 On children:
 - data-numeric on td, th (boolean) — A cell of numbers: end-aligned with tabular figures.
@@ -1952,11 +1951,11 @@ Rows and columns of data: prices, results, comparisons. If the content is a list
 
 ### How it works
 
-The class goes on the `table`. Cells get padding from `data-size` and a line beneath each row; the header row gets a stronger rule. `data-striped` tints every other row, `data-hover` the row under the pointer, `data-grid` draws every cell. Mark a column of numbers with `data-numeric` on its cells and header: they align to the end with tabular figures, so the digits line up. A table that is wider than its container goes inside a `scroller`, which scrolls it sideways while the table itself stays a table.
+The class goes on the `table`. Cells get padding from `data-size` and a line beneath each row; the header row gets a stronger rule. `data-striped` tints every other row, `data-hover` the row under the pointer, `data-border` draws every cell. Mark a column of numbers with `data-numeric` on its cells and header: they align to the end with tabular figures, so the digits line up. A table that is wider than its container goes inside a `scroller`, which scrolls it sideways while the table itself stays a table.
 
 ```html
 <div class="scroller" role="region" aria-label="Quarterly results" tabindex="0">
-	<table class="table" data-size="sm" data-grid>
+	<table class="table" data-size="sm" data-border>
 		<caption>Quarterly results</caption>
 		<thead><tr><th scope="col">Region</th><th scope="col" data-numeric>Q1</th><th scope="col" data-numeric>Q2</th></tr></thead>
 		<tbody><tr><th scope="row">North</th><td data-numeric>120</td><td data-numeric>132</td></tr></tbody>
@@ -1981,7 +1980,7 @@ Tokens:
 - --yeti-text-md — Text size when data-size is absent.
 - --yeti-space-sm — The space step when data-size is absent; a cell's inline padding follows it.
 - --yeti-weight-strong — Weight of the caption and of header cells.
-- --yeti-border-width — Width of the row rules, and of every cell border with data-grid.
+- --yeti-border-width — Width of the row rules, and of every cell border with data-border.
 - --yeti-color-surface-sunken — Background of a row under the pointer with data-hover.
 
 Accessibility contract:
@@ -1992,7 +1991,7 @@ Give the table a caption, or aria-label / aria-labelledby. Header cells carry sc
 A row of tabs over their panels, showing one at a time when its module is loaded and all of them when it is not.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | neutral — The hue of the selected tab and its edge.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — The hue of the selected tab and its edge.
 - data-orientation: horizontal (default) | vertical — Whether the tab list runs along the top or down the side.
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the list and the panels.
 

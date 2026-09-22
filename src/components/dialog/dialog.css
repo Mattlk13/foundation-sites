@@ -1,10 +1,10 @@
-/* Dialog: the native dialog element, styled. Opened as a modal by dialog.js,
-   which is what makes the rest of the page inert and keeps focus inside. The
-   reset already exempts dialog from the universal margin rule, so the
-   browser's own centring survives. */
+/* Dialog: the native dialog element, styled. Opened as a modal by a button's
+   commandfor and command="show-modal", which is what makes the rest of the
+   page inert and keeps focus inside. The reset already exempts dialog from
+   the universal margin rule, so the browser's own centring survives. */
 @layer yeti.components {
 	.dialog {
-		max-inline-size: min(var(--_yeti-width), 100% - 2 * var(--yeti-space-md));
+		max-inline-size: min(var(--_yeti-max), 100% - 2 * var(--yeti-space-md));
 		padding: var(--yeti-dialog-padding);
 		border: 0;
 		border-radius: var(--yeti-dialog-radius);
@@ -12,7 +12,7 @@
 		color: var(--yeti-color-text);
 		box-shadow: var(--yeti-shadow-md);
 	}
-	.dialog:not([data-width]) { --_yeti-width: var(--yeti-width-md); }
+	.dialog:not([data-max]) { --_yeti-max: var(--yeti-width-md); }
 	.dialog::backdrop { background-color: var(--yeti-dialog-backdrop); }
 	.dialog > footer {
 		display: flex;

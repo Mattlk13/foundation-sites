@@ -128,6 +128,9 @@
 	[data-variant="success"] { --_yeti-variant: var(--yeti-color-success); --_yeti-variant-subtle: var(--yeti-color-success-subtle); --_yeti-variant-soft: var(--yeti-color-success-soft); --_yeti-variant-strong: var(--yeti-color-success-strong); --_yeti-variant-text: var(--yeti-color-success-text); --_yeti-on-variant: var(--yeti-on-success); }
 	[data-variant="warning"] { --_yeti-variant: var(--yeti-color-warning); --_yeti-variant-subtle: var(--yeti-color-warning-subtle); --_yeti-variant-soft: var(--yeti-color-warning-soft); --_yeti-variant-strong: var(--yeti-color-warning-strong); --_yeti-variant-text: var(--yeti-color-warning-text); --_yeti-on-variant: var(--yeti-on-warning); }
 	[data-variant="alert"] { --_yeti-variant: var(--yeti-color-alert); --_yeti-variant-subtle: var(--yeti-color-alert-subtle); --_yeti-variant-soft: var(--yeti-color-alert-soft); --_yeti-variant-strong: var(--yeti-color-alert-strong); --_yeti-variant-text: var(--yeti-color-alert-text); --_yeti-on-variant: var(--yeti-on-alert); }
+	/* danger is the alert ladder under a name that is not also a component,
+	   so an alert that is an alert does not read data-variant="alert". */
+	[data-variant="danger"] { --_yeti-variant: var(--yeti-color-alert); --_yeti-variant-subtle: var(--yeti-color-alert-subtle); --_yeti-variant-soft: var(--yeti-color-alert-soft); --_yeti-variant-strong: var(--yeti-color-alert-strong); --_yeti-variant-text: var(--yeti-color-alert-text); --_yeti-on-variant: var(--yeti-on-alert); }
 	[data-variant="neutral"] { --_yeti-variant: var(--yeti-color-neutral); --_yeti-variant-subtle: var(--yeti-color-neutral-subtle); --_yeti-variant-soft: var(--yeti-color-neutral-soft); --_yeti-variant-strong: var(--yeti-color-neutral-strong); --_yeti-variant-text: var(--yeti-color-neutral-text); --_yeti-on-variant: var(--yeti-on-neutral); }
 
 	/* data-size on components: a text step and the space step one below it */
@@ -143,12 +146,12 @@
 	[data-span="5"] { --_yeti-span: 5; }
 	[data-span="6"] { --_yeti-span: 6; }
 
-	/* data-ranks: how many parts each child of a ranked grid has */
-	[data-ranks="2"] { --_yeti-ranks: 2; }
-	[data-ranks="3"] { --_yeti-ranks: 3; }
-	[data-ranks="4"] { --_yeti-ranks: 4; }
-	[data-ranks="5"] { --_yeti-ranks: 5; }
-	[data-ranks="6"] { --_yeti-ranks: 6; }
+	/* data-rows: how many rows each child of a grid spans, one per part */
+	[data-rows="2"] { --_yeti-rows: 2; }
+	[data-rows="3"] { --_yeti-rows: 3; }
+	[data-rows="4"] { --_yeti-rows: 4; }
+	[data-rows="5"] { --_yeti-rows: 5; }
+	[data-rows="6"] { --_yeti-rows: 6; }
 
 	/* data-slides: how many slides of a carousel are visible at once */
 	[data-slides="1"] { --_yeti-slides: 1; }

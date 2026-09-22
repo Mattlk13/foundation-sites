@@ -96,22 +96,22 @@
 		border-block-start-width: calc(var(--yeti-border-width) * 4);
 	}
 
-	/* In a ranked grid the card is a subgrid of the grid's rows, so its parts
-	   line up with its neighbours'; the footer sits in the last row instead of
+	/* In a grid with data-rows the card is a subgrid of the grid's rows, so its
+	   parts line up with its neighbours'; the footer sits in the last row instead of
 	   being pushed. The side-by-side form below is switched off there. The footer
 	   is placed in the last row explicitly so a card with fewer parts still
 	   aligns its footer. container-type is turned off here: a subgridded axis
 	   shares track sizing with its ancestor, which containment forbids, so a
 	   query container cannot also be a subgrid; the side-by-side query never
-	   matches a ranked card anyway. */
-	.grid[data-ranks] > .card {
+	   matches a card that spans rows anyway. */
+	.grid[data-rows] > .card {
 		display: grid;
 		grid-template-rows: subgrid;
-		grid-row: span var(--_yeti-ranks);
+		grid-row: span var(--_yeti-rows);
 		row-gap: var(--yeti-card-gap);
 		container-type: normal;
 	}
-	.grid[data-ranks] > .card > footer { margin-block-start: 0; grid-row: -2; }
+	.grid[data-rows] > .card > footer { margin-block-start: 0; grid-row: -2; }
 
 	/* Wide: the picture beside the text, a media object. Only cards with a
 	   figure change, and only once the card has room for both: stacked, the
@@ -141,7 +141,7 @@
 	   container's own children can branch on. */
 	/* --yeti-width-xs (16rem) */
 	@container (inline-size >= 16rem) {
-		.card[data-threshold="xs"]:not(.grid[data-ranks] > .card) > :is(img, video, picture, figure):first-child {
+		.card[data-threshold="xs"]:not(.grid[data-rows] > .card) > :is(img, video, picture, figure):first-child {
 			position: absolute;
 			inset-block-start: 0;
 			inset-inline-start: 0;
@@ -150,19 +150,19 @@
 			margin: 0;
 			aspect-ratio: auto;
 		}
-		.card[data-threshold="xs"]:not(.grid[data-ranks] > .card) > figure:first-child > :is(img, video, picture) {
+		.card[data-threshold="xs"]:not(.grid[data-rows] > .card) > figure:first-child > :is(img, video, picture) {
 			flex: 1;
 			min-block-size: 0;
 			block-size: 100%;
 			aspect-ratio: auto;
 		}
-		.card[data-threshold="xs"]:not(.grid[data-ranks] > .card) > :is(img, video, picture, figure):first-child ~ * {
+		.card[data-threshold="xs"]:not(.grid[data-rows] > .card) > :is(img, video, picture, figure):first-child ~ * {
 			margin-inline-start: calc(40% - 0.2 * var(--yeti-card-padding) + var(--yeti-card-gap));
 		}
 	}
 	/* --yeti-width-sm (24rem) */
 	@container (inline-size >= 24rem) {
-		.card[data-threshold="sm"]:not(.grid[data-ranks] > .card) > :is(img, video, picture, figure):first-child {
+		.card[data-threshold="sm"]:not(.grid[data-rows] > .card) > :is(img, video, picture, figure):first-child {
 			position: absolute;
 			inset-block-start: 0;
 			inset-inline-start: 0;
@@ -171,19 +171,19 @@
 			margin: 0;
 			aspect-ratio: auto;
 		}
-		.card[data-threshold="sm"]:not(.grid[data-ranks] > .card) > figure:first-child > :is(img, video, picture) {
+		.card[data-threshold="sm"]:not(.grid[data-rows] > .card) > figure:first-child > :is(img, video, picture) {
 			flex: 1;
 			min-block-size: 0;
 			block-size: 100%;
 			aspect-ratio: auto;
 		}
-		.card[data-threshold="sm"]:not(.grid[data-ranks] > .card) > :is(img, video, picture, figure):first-child ~ * {
+		.card[data-threshold="sm"]:not(.grid[data-rows] > .card) > :is(img, video, picture, figure):first-child ~ * {
 			margin-inline-start: calc(40% - 0.2 * var(--yeti-card-padding) + var(--yeti-card-gap));
 		}
 	}
 	/* --yeti-width-md (32rem) */
 	@container (inline-size >= 32rem) {
-		.card:is([data-threshold="md"], :not([data-threshold])):not(.grid[data-ranks] > .card) > :is(img, video, picture, figure):first-child {
+		.card:is([data-threshold="md"], :not([data-threshold])):not(.grid[data-rows] > .card) > :is(img, video, picture, figure):first-child {
 			position: absolute;
 			inset-block-start: 0;
 			inset-inline-start: 0;
@@ -192,19 +192,19 @@
 			margin: 0;
 			aspect-ratio: auto;
 		}
-		.card:is([data-threshold="md"], :not([data-threshold])):not(.grid[data-ranks] > .card) > figure:first-child > :is(img, video, picture) {
+		.card:is([data-threshold="md"], :not([data-threshold])):not(.grid[data-rows] > .card) > figure:first-child > :is(img, video, picture) {
 			flex: 1;
 			min-block-size: 0;
 			block-size: 100%;
 			aspect-ratio: auto;
 		}
-		.card:is([data-threshold="md"], :not([data-threshold])):not(.grid[data-ranks] > .card) > :is(img, video, picture, figure):first-child ~ * {
+		.card:is([data-threshold="md"], :not([data-threshold])):not(.grid[data-rows] > .card) > :is(img, video, picture, figure):first-child ~ * {
 			margin-inline-start: calc(40% - 0.2 * var(--yeti-card-padding) + var(--yeti-card-gap));
 		}
 	}
 	/* --yeti-width-lg (48rem) */
 	@container (inline-size >= 48rem) {
-		.card[data-threshold="lg"]:not(.grid[data-ranks] > .card) > :is(img, video, picture, figure):first-child {
+		.card[data-threshold="lg"]:not(.grid[data-rows] > .card) > :is(img, video, picture, figure):first-child {
 			position: absolute;
 			inset-block-start: 0;
 			inset-inline-start: 0;
@@ -213,19 +213,19 @@
 			margin: 0;
 			aspect-ratio: auto;
 		}
-		.card[data-threshold="lg"]:not(.grid[data-ranks] > .card) > figure:first-child > :is(img, video, picture) {
+		.card[data-threshold="lg"]:not(.grid[data-rows] > .card) > figure:first-child > :is(img, video, picture) {
 			flex: 1;
 			min-block-size: 0;
 			block-size: 100%;
 			aspect-ratio: auto;
 		}
-		.card[data-threshold="lg"]:not(.grid[data-ranks] > .card) > :is(img, video, picture, figure):first-child ~ * {
+		.card[data-threshold="lg"]:not(.grid[data-rows] > .card) > :is(img, video, picture, figure):first-child ~ * {
 			margin-inline-start: calc(40% - 0.2 * var(--yeti-card-padding) + var(--yeti-card-gap));
 		}
 	}
 	/* --yeti-width-xl (64rem) */
 	@container (inline-size >= 64rem) {
-		.card[data-threshold="xl"]:not(.grid[data-ranks] > .card) > :is(img, video, picture, figure):first-child {
+		.card[data-threshold="xl"]:not(.grid[data-rows] > .card) > :is(img, video, picture, figure):first-child {
 			position: absolute;
 			inset-block-start: 0;
 			inset-inline-start: 0;
@@ -234,19 +234,19 @@
 			margin: 0;
 			aspect-ratio: auto;
 		}
-		.card[data-threshold="xl"]:not(.grid[data-ranks] > .card) > figure:first-child > :is(img, video, picture) {
+		.card[data-threshold="xl"]:not(.grid[data-rows] > .card) > figure:first-child > :is(img, video, picture) {
 			flex: 1;
 			min-block-size: 0;
 			block-size: 100%;
 			aspect-ratio: auto;
 		}
-		.card[data-threshold="xl"]:not(.grid[data-ranks] > .card) > :is(img, video, picture, figure):first-child ~ * {
+		.card[data-threshold="xl"]:not(.grid[data-rows] > .card) > :is(img, video, picture, figure):first-child ~ * {
 			margin-inline-start: calc(40% - 0.2 * var(--yeti-card-padding) + var(--yeti-card-gap));
 		}
 	}
 	/* --yeti-width-2xl (80rem) */
 	@container (inline-size >= 80rem) {
-		.card[data-threshold="2xl"]:not(.grid[data-ranks] > .card) > :is(img, video, picture, figure):first-child {
+		.card[data-threshold="2xl"]:not(.grid[data-rows] > .card) > :is(img, video, picture, figure):first-child {
 			position: absolute;
 			inset-block-start: 0;
 			inset-inline-start: 0;
@@ -255,13 +255,13 @@
 			margin: 0;
 			aspect-ratio: auto;
 		}
-		.card[data-threshold="2xl"]:not(.grid[data-ranks] > .card) > figure:first-child > :is(img, video, picture) {
+		.card[data-threshold="2xl"]:not(.grid[data-rows] > .card) > figure:first-child > :is(img, video, picture) {
 			flex: 1;
 			min-block-size: 0;
 			block-size: 100%;
 			aspect-ratio: auto;
 		}
-		.card[data-threshold="2xl"]:not(.grid[data-ranks] > .card) > :is(img, video, picture, figure):first-child ~ * {
+		.card[data-threshold="2xl"]:not(.grid[data-rows] > .card) > :is(img, video, picture, figure):first-child ~ * {
 			margin-inline-start: calc(40% - 0.2 * var(--yeti-card-padding) + var(--yeti-card-gap));
 		}
 	}

@@ -1,6 +1,6 @@
 ## When to use it
 
-A price with its currency, a distance with its unit, a search box with its button, a URL with a fixed domain after it, a country code beside a phone number. Whatever is joined shares one border and one height, so the parts read as one thing.
+A price with its currency, a distance with its unit, a search box with its button, a URL with a fixed domain after it, a country code beside a phone number. Whatever is joined shares one border and one height, so the parts read as one thing. A row of buttons joined the same way is `buttons` with `data-affix`.
 
 ## How it works
 

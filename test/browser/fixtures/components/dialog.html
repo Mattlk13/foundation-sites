@@ -12,7 +12,7 @@
 	<main>
 		<h1>Dialog component</h1>
 		<div id="stage">
-			<button class="button" type="button" data-open="confirm" id="opener" data-contrast>Delete project</button>
+			<button class="button" type="button" commandfor="confirm" command="show-modal" id="opener" data-contrast>Delete project</button>
 			<p><a href="#" id="after">A link after the button.</a></p>
 
 			<dialog class="dialog" id="confirm" aria-labelledby="confirm-title">
@@ -21,12 +21,13 @@
 				<footer>
 					<form method="dialog"><button class="button" type="submit" id="cancel" data-emphasis="medium">Cancel</button></form>
 					<button class="button" type="button" id="confirm-go" data-variant="alert">Delete</button>
-					<button class="button" type="button" data-open="nested" id="nested-open" data-emphasis="low">Are you sure?</button>
+					<button class="button" type="button" commandfor="nested" command="show-modal" id="nested-open" data-emphasis="low">Are you sure?</button>
 				</footer>
 			</dialog>
 
-			<dialog class="dialog" id="nested" aria-labelledby="nested-title" data-width="sm">
+			<dialog class="dialog" id="nested" aria-labelledby="nested-title" data-max="sm">
 				<h2 id="nested-title">Really delete?</h2>
+				<p>Deleting removes the project, every file inside it, the history of every change anyone made, and the links other people have saved, and none of that can be brought back afterwards by you or by us.</p>
 				<footer>
 					<form method="dialog"><button class="button" type="submit" id="nested-cancel">No</button></form>
 				</footer>

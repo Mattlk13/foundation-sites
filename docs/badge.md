@@ -48,7 +48,7 @@ Colour is decoration here; the word is the meaning, so "Live" and "Draft" work w
 
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
-| `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral` | `primary` | Which hue tints the badge. |
+| `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `danger`, `neutral` | `primary` | Which hue tints the badge. |
 | `data-emphasis` | enum | `high`, `medium`, `low` | `medium` | medium is a subtle tint with dark text, high a solid fill, low text alone. |
 | `data-size` | enum | `sm`, `md`, `lg` | `md` | The text size the badge sits beside; the badge renders one step smaller. |
 

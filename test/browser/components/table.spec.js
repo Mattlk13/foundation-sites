@@ -22,13 +22,13 @@ test.describe('table', () => {
 		expect(await style(page, '#n1', 'font-variant-numeric')).toBe('tabular-nums');
 	});
 
-	test('data-grid borders every cell and data-size="sm" tightens padding', async ({ page }) => {
+	test('data-border borders every cell and data-size="sm" tightens padding', async ({ page }) => {
 		await open(page);
 		expect(await px(page, '#g1', 'border-left-width')).toBeGreaterThan(0);
 		expect(await px(page, '#g1', 'padding-top')).toBeLessThan(await px(page, '#n1', 'padding-top'));
 	});
 
-	test('the header rule survives data-grid', async ({ page }) => {
+	test('the header rule survives data-border', async ({ page }) => {
 		await open(page);
 		expect(await style(page, '#g-head', 'border-bottom-color')).not.toBe(await style(page, '#g1', 'border-bottom-color'));
 	});

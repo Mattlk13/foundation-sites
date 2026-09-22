@@ -263,7 +263,7 @@ const MAPPINGS = [
 	['data-variant', 'variant', '--_yeti-variant', () => '0'],
 	['data-size', 'size-control', '--_yeti-size-text', () => '0'],
 	['data-span', 'span', '--_yeti-span', (v) => v],
-	['data-ranks', 'ranks', '--_yeti-ranks', (v) => v],
+	['data-rows', 'rows', '--_yeti-rows', (v) => v],
 	['data-slides', 'slides', '--_yeti-slides', (v) => v],
 ];
 
@@ -692,7 +692,7 @@ test('fixtures are validated against the manifests, with the test-only contrast 
 	});
 	assert.deepEqual(run(fixture('<span class="tag" data-contrast data-contrast-border data-contrast-id="a" data-contrast-edge-id="b">New</span>')).lines, []);
 	assert.deepEqual(run(fixture('<span class="tag" data-glow>New</span>')).lines, ['test/browser/fixtures/components/tag.html:4: .tag <span>: unknown attribute data-glow']);
-	assert.deepEqual(run(fixture('<span class="tag" data-variant="loud">New</span>')).lines, ['test/browser/fixtures/components/tag.html:4: .tag <span>: data-variant="loud" is not one of primary, secondary, success, warning, alert, neutral']);
+	assert.deepEqual(run(fixture('<span class="tag" data-variant="loud">New</span>')).lines, ['test/browser/fixtures/components/tag.html:4: .tag <span>: data-variant="loud" is not one of primary, secondary, success, warning, alert, danger, neutral']);
 });
 
 test('a fixture whose body carries the class is validated like any other element', () => {

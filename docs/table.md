@@ -42,11 +42,11 @@ Rows and columns of data: prices, results, comparisons. If the content is a list
 
 ## How it works
 
-The class goes on the `table`. Cells get padding from `data-size` and a line beneath each row; the header row gets a stronger rule. `data-striped` tints every other row, `data-hover` the row under the pointer, `data-grid` draws every cell. Mark a column of numbers with `data-numeric` on its cells and header: they align to the end with tabular figures, so the digits line up. A table that is wider than its container goes inside a `scroller`, which scrolls it sideways while the table itself stays a table.
+The class goes on the `table`. Cells get padding from `data-size` and a line beneath each row; the header row gets a stronger rule. `data-striped` tints every other row, `data-hover` the row under the pointer, `data-border` draws every cell. Mark a column of numbers with `data-numeric` on its cells and header: they align to the end with tabular figures, so the digits line up. A table that is wider than its container goes inside a `scroller`, which scrolls it sideways while the table itself stays a table.
 
 ```html
 <div class="scroller" role="region" aria-label="Quarterly results" tabindex="0">
-	<table class="table" data-size="sm" data-grid>
+	<table class="table" data-size="sm" data-border>
 		<caption>Quarterly results</caption>
 		<thead><tr><th scope="col">Region</th><th scope="col" data-numeric>Q1</th><th scope="col" data-numeric>Q2</th></tr></thead>
 		<tbody><tr><th scope="row">North</th><td data-numeric>120</td><td data-numeric>132</td></tr></tbody>
@@ -67,7 +67,7 @@ A table needs a name: a `caption`, or `aria-label` or `aria-labelledby` on the e
 | `data-size` | enum | `sm`, `md`, `lg` | `md` | Cell padding and text size; sm is the compact table. |
 | `data-striped` | boolean |  |  | Tint every other body row. |
 | `data-hover` | boolean |  |  | Tint the row under the pointer. |
-| `data-grid` | boolean |  |  | Borders around every cell instead of lines between rows. |
+| `data-border` | boolean |  |  | Borders around every cell instead of lines between rows, as a box draws its border. |
 
 </div>
 
@@ -102,7 +102,7 @@ Attributes that descendants carry, not the root.
 | `--yeti-text-md` | Text size when data-size is absent. |
 | `--yeti-space-sm` | The space step when data-size is absent; a cell's inline padding follows it. |
 | `--yeti-weight-strong` | Weight of the caption and of header cells. |
-| `--yeti-border-width` | Width of the row rules, and of every cell border with data-grid. |
+| `--yeti-border-width` | Width of the row rules, and of every cell border with data-border. |
 | `--yeti-color-surface-sunken` | Background of a row under the pointer with data-hover. |
 
 </div>

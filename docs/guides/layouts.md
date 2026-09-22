@@ -71,18 +71,17 @@ Every layout is configured with a small set of `data-*` attributes, drawn from a
 | `data-min` | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | grid |
 | `data-max` | `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | center |
 | `data-ratio` | `1/1`, `4/3`, `3/2`, `16/9`, `21/9` | frame |
-| `data-columns` | `1`, `2`, `3`, `4`, `5`, `6` | grid |
 | `data-side` | `start`, `end` | sidebar |
-| `data-limit` | `2`, `3`, `4`, `5` | columns — the first N share a row; every later child takes a full row |
+| `data-columns` | `1`, `2`, `3`, `4`, `5`, `6` | grid, masonry — the most columns allowed; columns — the first N share a row, every later child takes a full row |
 | `data-align-self` | `start`, `center`, `end`, `stretch`, `baseline` | a child of layer — places that child vertically |
 | `data-justify-self` | `start`, `center`, `end`, `stretch` | a child of layer — places that child horizontally |
 | `data-span` | `1`, `2`, `3`, `4`, `5`, `6` | a child of columns — that child's share of the row |
-| `data-ranks` | `2`, `3`, `4`, `5`, `6` | grid — how many parts each child has; lines up neighbours' parts across the row |
+| `data-rows` | `2`, `3`, `4`, `5`, `6` | grid — how many rows each child spans, one per part; lines up neighbours' parts across the row |
 | `data-fold` | boolean | grid — the column count halves as the grid narrows, instead of stepping down one at a time |
 | `data-note` | boolean | a child of breakout — a margin note beside the paragraph it follows |
 | `data-alternate` | boolean | timeline — entries take alternate sides of a centred rail once it is wide enough |
 
-For the sizing attributes the mapping rule is always the same: a value is a token suffix. `data-gap="lg"` reads `--yeti-space-lg`; `data-width="sm"` reads `--yeti-width-sm`. The attribute names the property to set; the value names the step on Yeti's scale to set it to. The rest — `data-align`, `data-justify`, `data-ratio`, `data-columns`, `data-side`, `data-limit` — name a behaviour rather than a token; `attributes.css` maps each value to the CSS keyword it means.
+For the sizing attributes the mapping rule is always the same: a value is a token suffix. `data-gap="lg"` reads `--yeti-space-lg`; `data-width="sm"` reads `--yeti-width-sm`. The attribute names the property to set; the value names the step on Yeti's scale to set it to. The rest — `data-align`, `data-justify`, `data-ratio`, `data-columns`, `data-side` — name a behaviour rather than a token; `attributes.css` maps each value to the CSS keyword it means.
 
 Gap alone also takes a fluid pair. `data-gap="sm-lg"` does not jump between the two: it runs from the `sm` stop at the narrow end of the viewport to the `lg` stop at the wide end, the same way the type scale itself is fluid. `none` never anchors a pair, so any smaller of the remaining seven sized stops can pair with any larger one, which is what makes twenty-one pairs out of seven.
 

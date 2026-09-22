@@ -10,7 +10,7 @@ const open = async (page, width = 1000) => {
 };
 
 test.describe('buttons', () => {
-	test('a loose group keeps a gap; an attached group fuses its members', async ({ page }) => {
+	test('a loose group keeps a gap; an affixed group fuses its members', async ({ page }) => {
 		await open(page);
 		const [l1, l2] = await Promise.all([rect(page, '#l1'), rect(page, '#l2')]);
 		expect(l2.left - l1.right).toBeCloseTo(await token(page, '--yeti-space-sm'), 0);
