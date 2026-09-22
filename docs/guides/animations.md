@@ -3,7 +3,7 @@ raw: true
 title: "Animations"
 description: "How Yeti times everything that moves, what happens for a reader who asks for less motion, and how to turn on the crossfade between one page and the next."
 nav_group: "Guides"
-nav_order: 5
+nav_order: 6
 ---
 
 # Animations

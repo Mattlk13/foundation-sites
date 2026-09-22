@@ -75,6 +75,8 @@ When something has to respond, reach for these in order and stop at the first th
 
 **A viewport query almost never.** The one thing a component cannot measure is the screen, and the one thing that is legitimately about the screen is the page's outermost frame: whether the `shell` shows its nav beside the main area or above it. Even there Yeti asks the shell's own width, since the shell is the page. If you find yourself writing `@media (width >= …)` around a Yeti component, the component is being asked to know something it should not need to.
 
+There is a fourth tool, and it is fourth on purpose: `data-show` and `data-hide` remove an element outright at a container width, instead of changing anything's shape. Reach for it when a thing genuinely has no narrow form — not when writing the narrow form is merely more work. Two versions of one thing are two things to keep in step forever, and the removed one is out of the accessibility tree while it is gone. The [visibility guide](visibility.md) has it, and everything else that hides.
+
 ## Who reads which width
 
 | Attribute | On | What the width means |
