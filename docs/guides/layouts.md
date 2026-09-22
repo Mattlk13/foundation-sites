@@ -3,7 +3,7 @@ raw: true
 title: "Layouts"
 description: "Seventeen intrinsic layouts that respond to their container, one attribute vocabulary, and the responsive model behind them."
 nav_group: "Guides"
-nav_order: 3
+nav_order: 4
 ---
 
 # Layouts
