@@ -25,7 +25,7 @@ The table covers the grid and every component in the version 6 kitchen sink. "No
 | `.grid-x.grid-margin-x` | `columns` with `data-gap` | the gap is a token, not a gutter class |
 | `.small-up-3` / `.large-up-4` | `grid` with `data-columns` | as many columns as fit; `data-fold` for a fixed count above a width |
 | `.grid-y` | `stack` | vertical rhythm, no grid needed |
-| `.grid-frame` / `.cell-block` | `cover` and `scroller` | full-height frame; a region that scrolls |
+| `.grid-frame` / `.cell-block` | `cover` and `scroller` | full-height frame, or `data-height` for a band shorter than the screen; a region that scrolls |
 | `.float-left` / `.float-right` | none | floats are for text wrapping; a layout is a `sidebar` or a `cluster` |
 | `.show-for-medium` / `.hide-for-small` | `data-show` / `data-hide` inside a `container` | at or above a width, measured on the nearest container and not the window; a component that can change shape at its own threshold still should |
 | `.text-center` and friends | `data-align` and `data-justify` on the layout | alignment is a layout's attribute, not a text utility |

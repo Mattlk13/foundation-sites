@@ -31,7 +31,9 @@
     "sm",
     "md",
     "lg",
-    "xl"
+    "xl",
+    "half",
+    "full"
   ],
   "placement": ["top", "bottom", "start", "end"],
   "orientation": ["horizontal", "vertical"],

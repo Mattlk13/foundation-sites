@@ -178,11 +178,16 @@
 
 	/* data-height: a block size, for the few things that take one. It reads
 	   the height family the way data-width reads the width family; the demo's
-	   preview box is the first taker, and a second reads the same property. */
+	   preview box was the first taker, and cover and hero read the same
+	   property as a minimum. half and full are the viewport's, because a band
+	   half the screen tall cannot be said in rem; full is what a cover is
+	   with no attribute at all. */
 	[data-height="sm"] { --_yeti-height: var(--yeti-height-sm); }
 	[data-height="md"] { --_yeti-height: var(--yeti-height-md); }
 	[data-height="lg"] { --_yeti-height: var(--yeti-height-lg); }
 	[data-height="xl"] { --_yeti-height: var(--yeti-height-xl); }
+	[data-height="half"] { --_yeti-height: var(--yeti-height-half); }
+	[data-height="full"] { --_yeti-height: var(--yeti-cover-height); }
 
 	[data-min="none"] { --_yeti-min: 0px; }
 	[data-min="2xs"] { --_yeti-min: var(--yeti-width-2xs); }

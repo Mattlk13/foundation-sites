@@ -36,7 +36,7 @@ A cover is the hero section, the sign-in screen, the "coming soon" page: one thi
 
 ## How it works
 
-The cover is a flex column with a minimum block size of `--yeti-cover-height`, `100dvh` by default so it tracks the browser chrome on phones. The child marked `data-center` gets automatic block margins, which take up all the free space equally above and below it; anything else sits at its natural size at the top or bottom. The gap keeps the centered child from touching its neighbours when the content is taller than the viewport.
+The cover is a flex column with a minimum block size: the viewport by default, from `--yeti-cover-height`, `100dvh` so it tracks the browser chrome on phones, or whatever `data-height` names, a stop of the height scale from `sm` to `xl`, `half` the viewport, or `full`. It is a minimum and never a fixed size, so a band whose content is taller than its name simply grows; nothing is cut off. A band with a heading in the middle of it is the answer to "more padding than the scale has": `data-height="md"` with the heading marked `data-center`. The child marked `data-center` gets automatic block margins, which take up all the free space equally above and below it; anything else sits at its natural size at the top or bottom. The gap keeps the centered child from touching its neighbours when the content is taller than the viewport.
 
 ## Why this name
 
@@ -49,6 +49,7 @@ The block covers the viewport. Foundation 6 had no primitive for this; people co
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `md` | Minimum space between the centered child and whatever sits above or below it. |
+| `data-height` | enum | `sm`, `md`, `lg`, `xl`, `half`, `full` | `full` | The band's least height: a stop of the height scale, half the viewport, or the whole of it. Content taller than the band grows it; nothing is cut off. |
 
 </div>
 
@@ -75,7 +76,7 @@ Attributes that descendants carry, not the root.
 
 | Token | Description |
 | --- | --- |
-| `--yeti-cover-height` | The minimum block size. Set it to auto for a cover no taller than its content. |
+| `--yeti-cover-height` | The least height with no data-height, and at data-height="full". |
 | `--yeti-space-md` | The default gap. |
 
 </div>
@@ -83,6 +84,7 @@ Attributes that descendants carry, not the root.
 <details><summary>Internal tokens (may change between minor versions)</summary>
 
 - `--_yeti-gap`
+- `--_yeti-height`
 
 </details>
 

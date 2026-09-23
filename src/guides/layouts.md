@@ -136,7 +136,7 @@ Two more names in the table belong to a container rather than to a layout. `data
 
 ## Fine-tuning spacing
 
-Most of what version 6's margin and padding classes did was adjust a layout that already worked, and Yeti keeps those adjustments on the layout. Padding is a `box`: any element takes the class, `data-gap` pads all four sides, and `data-gap-inline` or `data-gap-block` pads one axis over that. Space between siblings is a `stack`'s gap, and the one child that needs more or less carries `data-space` with the gap it wants before it. There is no margin class, because a margin on an element is a decision the layout can no longer see; the same words, on the layout or its child, keep the rule and the exception in one place.
+Most of what version 6's margin and padding classes did was adjust a layout that already worked, and Yeti keeps those adjustments on the layout. Padding is a `box`: any element takes the class, `data-gap` pads all four sides, and `data-gap-inline` or `data-gap-block` pads one axis over that. Space between siblings is a `stack`'s gap, and the one child that needs more or less carries `data-space` with the gap it wants before it. There is no margin class, because a margin on an element is a decision the layout can no longer see; the same words, on the layout or its child, keep the rule and the exception in one place. And room bigger than the scale is not padding at all: a band that claims height is a `cover` with `data-height`, from a stop of the height scale to half or all of the viewport, with its content marked `data-center`. The height is a minimum, so the band grows if the content is taller.
 
 ```html demo md
 <div class="stack" data-gap="sm">

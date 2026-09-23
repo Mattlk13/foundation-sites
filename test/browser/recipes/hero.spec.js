@@ -31,6 +31,16 @@ test.describe('hero recipe', () => {
 		expect(cf.top).toBeGreaterThanOrEqual(cc.bottom);
 	});
 
+	test('data-height names the band\'s least height', async ({ page }) => {
+		await open(page);
+		// xl is taller than the band's own content at this width, so the band is
+		// exactly its named height; md would be outgrown by the picture and prove
+		// only the minimum.
+		expect((await rect(page, '#xl-band')).height).toBeCloseTo(await token(page, '--yeti-height-xl'), 0);
+		// Falsification: the named band is not the viewport-tall hero beside it.
+		expect((await rect(page, '#xl-band')).height).not.toBeCloseTo((await rect(page, '#classed')).height, 0);
+	});
+
 	test('data-side="start" moves a last-in-source figure to the start', async ({ page }) => {
 		await open(page, 1000);
 		const [copy, figure, band] = await Promise.all([rect(page, '#f-copy'), rect(page, '#f-figure'), rect(page, '#forced')]);

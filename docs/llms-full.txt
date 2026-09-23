@@ -288,6 +288,7 @@ Fills at least the viewport's height and centers one child vertically, with opti
 
 Attributes:
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Minimum space between the centered child and whatever sits above or below it.
+- data-height: sm | md | lg | xl | half | full (default) — The band's least height: a stop of the height scale, half the viewport, or the whole of it. Content taller than the band grows it; nothing is cut off.
 
 On children:
 - data-center on > * (boolean) — Centers the child in the space the others leave; exactly one child carries it.
@@ -298,7 +299,7 @@ A cover is the hero section, the sign-in screen, the "coming soon" page: one thi
 
 ### How it works
 
-The cover is a flex column with a minimum block size of `--yeti-cover-height`, `100dvh` by default so it tracks the browser chrome on phones. The child marked `data-center` gets automatic block margins, which take up all the free space equally above and below it; anything else sits at its natural size at the top or bottom. The gap keeps the centered child from touching its neighbours when the content is taller than the viewport.
+The cover is a flex column with a minimum block size: the viewport by default, from `--yeti-cover-height`, `100dvh` so it tracks the browser chrome on phones, or whatever `data-height` names, a stop of the height scale from `sm` to `xl`, `half` the viewport, or `full`. It is a minimum and never a fixed size, so a band whose content is taller than its name simply grows; nothing is cut off. A band with a heading in the middle of it is the answer to "more padding than the scale has": `data-height="md"` with the heading marked `data-center`. The child marked `data-center` gets automatic block margins, which take up all the free space equally above and below it; anything else sits at its natural size at the top or bottom. The gap keeps the centered child from touching its neighbours when the content is taller than the viewport.
 
 ### Why this name
 
@@ -309,7 +310,7 @@ Children:
 - > [data-center]: at least 1, at most 1. Exactly one child carries data-center and is centered in the remaining space.
 
 Tokens:
-- --yeti-cover-height — The minimum block size. Set it to auto for a cover no taller than its content.
+- --yeti-cover-height — The least height with no data-height, and at data-height="full".
 - --yeti-space-md — The default gap.
 
 Accessibility contract:
@@ -744,10 +745,11 @@ Attributes:
 - data-ratio: 1/1 | 4/3 (default) | 3/2 | 16/9 | 21/9 — The figure's aspect ratio.
 - data-align: start | center (default) | end | stretch | baseline — Vertical alignment of copy and figure when side by side.
 - data-side: start | end — Force the figure to the start or the end regardless of source order. Moves it visually only; reading order stays as written.
+- data-height: sm | md | lg | xl | half | full (default) — The band's least height: a stop of the height scale, half the viewport, or the whole of it, as a cover takes it. Content taller than the band grows it.
 
 ### When to use it
 
-The opening of a landing page: a headline and a call to action on one side, a picture on the other, filling the first screen. Below the threshold the two become rows and the band grows to fit. Put the picture first or last as you want it read; `data-side` moves it without changing the source. The copy must not have an img, video, or picture as a direct child (it would be taken for a second figure).
+The opening of a landing page: a headline and a call to action on one side, a picture on the other, filling the first screen, or a shorter band with `data-height`, as a cover takes it. Below the threshold the two become rows and the band grows to fit. Put the picture first or last as you want it read; `data-side` moves it without changing the source. The copy must not have an img, video, or picture as a direct child (it would be taken for a second figure).
 
 A headline that should grow with the band can carry the [billboard](billboard.md) utility. Make the copy a `container` first, so the line is sized by the column it is in and not by the whole band:
 
@@ -791,7 +793,7 @@ Children:
 - > *: at least 2, at most 2. Exactly two: the copy and the figure (an img, video, or picture, or an element wrapping one); the copy (the body) must not have an img, video, or picture as a direct child (it would be taken for a second figure). A figure with a figcaption keeps its caption below the picture.
 
 Tokens:
-- --yeti-cover-height — The band's minimum block size.
+- --yeti-cover-height — The least height with no data-height, and at data-height="full".
 - --yeti-width-lg — The default threshold.
 - --yeti-space-lg — The default gap.
 - --yeti-space-sm — The gap between the copy's children.
@@ -1413,7 +1415,7 @@ Label the region and give it aria-roledescription="carousel" so it is announced 
 A live example in a box the reader can drag narrower and wider, with a bar naming the example and the width stop the box is at, and the code beneath it.
 
 Attributes:
-- data-height: sm | md (default) | lg | xl — The preview box's height. A frame inside cannot size to its content, so this is where that is set; with data-resize="both" it is the starting height.
+- data-height: sm | md (default) | lg | xl | half | full — The preview box's height. A frame inside cannot size to its content, so this is where that is set; with data-resize="both" it is the starting height.
 - data-width: 2xs | xs | sm | md | lg | xl | 2xl — The preview box's starting width, before the reader drags it. Full width when absent.
 - data-resize: width (default) | both — Which way the reader can drag the box: its width only, or both width and height.
 - data-stylesheet (string) — Read by the module: the stylesheet the frame it builds should load, when it is not the host page's own yeti.css; yeti.js is expected beside it.
@@ -2577,6 +2579,7 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-height-md (height): 20rem — Block size at data-height="md", and with no attribute.
 - --yeti-height-lg (height): 32rem — Block size at data-height="lg".
 - --yeti-height-xl (height): 48rem — Block size at data-height="xl".
+- --yeti-height-half (height): 50dvh — Block size at data-height="half": half the viewport, dynamic so it tracks the browser chrome on phones.
 - --yeti-text-xs (text): step -2 — Captions and fine print.
 - --yeti-text-sm (text): step -1 — Small text; h6.
 - --yeti-text-md (text): step 0 — Body text; h5 in bold.

@@ -12,6 +12,13 @@
       "vocabulary": "gap",
       "default": "md",
       "description": "Minimum space between the centered child and whatever sits above or below it."
+    },
+    {
+      "name": "data-height",
+      "type": "enum",
+      "vocabulary": "height",
+      "default": "full",
+      "description": "The band's least height: a stop of the height scale, half the viewport, or the whole of it. Content taller than the band grows it; nothing is cut off."
     }
   ],
   "classes": [],
@@ -41,7 +48,7 @@
     {
       "name": "--yeti-cover-height",
       "public": true,
-      "description": "The minimum block size. Set it to auto for a cover no taller than its content."
+      "description": "The least height with no data-height, and at data-height=\"full\"."
     },
     {
       "name": "--yeti-space-md",
@@ -50,6 +57,10 @@
     },
     {
       "name": "--_yeti-gap",
+      "public": false
+    },
+    {
+      "name": "--_yeti-height",
       "public": false
     }
   ],

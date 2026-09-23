@@ -75,6 +75,7 @@ Fills at least the viewport's height and centers one child vertically, with opti
 
 Attributes:
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Minimum space between the centered child and whatever sits above or below it.
+- data-height: sm | md | lg | xl | half | full (default) — The band's least height: a stop of the height scale, half the viewport, or the whole of it. Content taller than the band grows it; nothing is cut off.
 
 On children:
 - data-center on > * (boolean) — Centers the child in the space the others leave; exactly one child carries it.
@@ -191,6 +192,7 @@ Attributes:
 - data-ratio: 1/1 | 4/3 (default) | 3/2 | 16/9 | 21/9 — The figure's aspect ratio.
 - data-align: start | center (default) | end | stretch | baseline — Vertical alignment of copy and figure when side by side.
 - data-side: start | end — Force the figure to the start or the end regardless of source order. Moves it visually only; reading order stays as written.
+- data-height: sm | md | lg | xl | half | full (default) — The band's least height: a stop of the height scale, half the viewport, or the whole of it, as a cover takes it. Content taller than the band grows it.
 
 ## media (recipe, class="media")
 
@@ -303,7 +305,7 @@ module: carousel.js (optional)
 A live example in a box the reader can drag narrower and wider, with a bar naming the example and the width stop the box is at, and the code beneath it.
 
 Attributes:
-- data-height: sm | md (default) | lg | xl — The preview box's height. A frame inside cannot size to its content, so this is where that is set; with data-resize="both" it is the starting height.
+- data-height: sm | md (default) | lg | xl | half | full — The preview box's height. A frame inside cannot size to its content, so this is where that is set; with data-resize="both" it is the starting height.
 - data-width: 2xs | xs | sm | md | lg | xl | 2xl — The preview box's starting width, before the reader drags it. Full width when absent.
 - data-resize: width (default) | both — Which way the reader can drag the box: its width only, or both width and height.
 - data-stylesheet (string) — Read by the module: the stylesheet the frame it builds should load, when it is not the host page's own yeti.css; yeti.js is expected beside it.

@@ -47,6 +47,9 @@
 		--yeti-height-md: 20rem;
 		--yeti-height-lg: 32rem;
 		--yeti-height-xl: 48rem;
+		/* Half the viewport, dynamic like the cover's height so it tracks the
+		   browser chrome on phones. */
+		--yeti-height-half: 50dvh;
 
 		--yeti-cover-height: 100dvh;
 

@@ -39,6 +39,13 @@
       "type": "enum",
       "vocabulary": "side",
       "description": "Force the figure to the start or the end regardless of source order. Moves it visually only; reading order stays as written."
+    },
+    {
+      "name": "data-height",
+      "type": "enum",
+      "vocabulary": "height",
+      "default": "full",
+      "description": "The band's least height: a stop of the height scale, half the viewport, or the whole of it, as a cover takes it. Content taller than the band grows it."
     }
   ],
   "classes": [],
@@ -54,7 +61,7 @@
     {
       "name": "--yeti-cover-height",
       "public": true,
-      "description": "The band's minimum block size."
+      "description": "The least height with no data-height, and at data-height=\"full\"."
     },
     {
       "name": "--yeti-width-lg",
@@ -95,6 +102,10 @@
     },
     {
       "name": "--_yeti-aspect",
+      "public": false
+    },
+    {
+      "name": "--_yeti-height",
       "public": false
     }
   ],

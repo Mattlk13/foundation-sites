@@ -7,10 +7,11 @@
 		flex-wrap: wrap;
 		align-content: center;
 		align-items: var(--_yeti-align);
-		min-block-size: var(--yeti-cover-height);
+		min-block-size: var(--_yeti-height);
 		gap: var(--_yeti-gap);
 	}
 	.hero:not([data-gap]) { --_yeti-gap: var(--yeti-space-lg); }
+	.hero:not([data-height]) { --_yeti-height: var(--yeti-cover-height); }
 	.hero:not([data-threshold]) { --_yeti-threshold: var(--yeti-width-lg); }
 	.hero:not([data-align]) { --_yeti-align: center; }
 	.hero:not([data-ratio]) { --_yeti-aspect: 4 / 3; }

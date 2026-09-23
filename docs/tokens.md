@@ -91,6 +91,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-height-md` | `20rem` | Block size at data-height="md", and with no attribute. |
 | `--yeti-height-lg` | `32rem` | Block size at data-height="lg". |
 | `--yeti-height-xl` | `48rem` | Block size at data-height="xl". |
+| `--yeti-height-half` | `50dvh` | Block size at data-height="half": half the viewport, dynamic so it tracks the browser chrome on phones. |
 
 </div>
 

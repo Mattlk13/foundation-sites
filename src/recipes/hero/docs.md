@@ -1,6 +1,6 @@
 ## When to use it
 
-The opening of a landing page: a headline and a call to action on one side, a picture on the other, filling the first screen. Below the threshold the two become rows and the band grows to fit. Put the picture first or last as you want it read; `data-side` moves it without changing the source. The copy must not have an img, video, or picture as a direct child (it would be taken for a second figure).
+The opening of a landing page: a headline and a call to action on one side, a picture on the other, filling the first screen, or a shorter band with `data-height`, as a cover takes it. Below the threshold the two become rows and the band grows to fit. Put the picture first or last as you want it read; `data-side` moves it without changing the source. The copy must not have an img, video, or picture as a direct child (it would be taken for a second figure).
 
 A headline that should grow with the band can carry the [billboard](billboard.md) utility. Make the copy a `container` first, so the line is sized by the column it is in and not by the whole band:
 
