@@ -32,6 +32,14 @@
 	   tile in a grid where a rise would break the row's line. The shadow
 	   still deepens; reduced motion takes the growth to one the way it takes
 	   the distance to zero. */
+	/* Its own layer, always, so the growth scales one bitmap of the tile
+	   rather than re-laying its text at every fractional size along the way,
+	   which snapped the glyphs from pixel to pixel and read as the heading
+	   moving inside a box that was not. The rise has no such problem: a
+	   translate by whole pixels moves the text with the box. A few tiles on
+	   a layer each is a small price; a whole page of them is the one case
+	   to think about, and a page of growing tiles is already the wrong page. */
+	.lift[data-lift="scale"] { will-change: scale; }
 	.lift[data-lift="scale"]:hover,
 	.lift[data-lift="scale"]:focus-visible,
 	.lift[data-lift="scale"]:has(:focus-visible) {
