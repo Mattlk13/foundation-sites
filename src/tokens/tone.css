@@ -32,7 +32,7 @@
 
 		/* Primary: the grey of the same number at this hue. Chroma eases off
 		   toward the poles the way the ladder's subtle and soft steps do, so the
-		   extremes stay in gamut. */
+		   extremes stay close to gamut. */
 		--yeti-color-primary-0: oklch(from var(--yeti-grey-0) l var(--_yeti-c-subtle) var(--yeti-hue-primary));
 		--yeti-color-primary-10: oklch(from var(--yeti-grey-10) l var(--_yeti-c-subtle) var(--yeti-hue-primary));
 		--yeti-color-primary-20: oklch(from var(--yeti-grey-20) l var(--_yeti-c-soft) var(--yeti-hue-primary));
@@ -47,7 +47,7 @@
 
 		/* Secondary: the grey of the same number at this hue. Chroma eases off
 		   toward the poles the way the ladder's subtle and soft steps do, so the
-		   extremes stay in gamut. */
+		   extremes stay close to gamut. */
 		--yeti-color-secondary-0: oklch(from var(--yeti-grey-0) l var(--_yeti-c-subtle) var(--yeti-hue-secondary));
 		--yeti-color-secondary-10: oklch(from var(--yeti-grey-10) l var(--_yeti-c-subtle) var(--yeti-hue-secondary));
 		--yeti-color-secondary-20: oklch(from var(--yeti-grey-20) l var(--_yeti-c-soft) var(--yeti-hue-secondary));
@@ -62,7 +62,7 @@
 
 		/* Success: the grey of the same number at this hue. Chroma eases off
 		   toward the poles the way the ladder's subtle and soft steps do, so the
-		   extremes stay in gamut. */
+		   extremes stay close to gamut. */
 		--yeti-color-success-0: oklch(from var(--yeti-grey-0) l var(--_yeti-c-subtle) var(--yeti-hue-success));
 		--yeti-color-success-10: oklch(from var(--yeti-grey-10) l var(--_yeti-c-subtle) var(--yeti-hue-success));
 		--yeti-color-success-20: oklch(from var(--yeti-grey-20) l var(--_yeti-c-soft) var(--yeti-hue-success));
@@ -77,7 +77,7 @@
 
 		/* Warning: the grey of the same number at this hue. Chroma eases off
 		   toward the poles the way the ladder's subtle and soft steps do, so the
-		   extremes stay in gamut. */
+		   extremes stay close to gamut. */
 		--yeti-color-warning-0: oklch(from var(--yeti-grey-0) l var(--_yeti-c-subtle) var(--yeti-hue-warning));
 		--yeti-color-warning-10: oklch(from var(--yeti-grey-10) l var(--_yeti-c-subtle) var(--yeti-hue-warning));
 		--yeti-color-warning-20: oklch(from var(--yeti-grey-20) l var(--_yeti-c-soft) var(--yeti-hue-warning));
@@ -92,7 +92,7 @@
 
 		/* Alert: the grey of the same number at this hue. Chroma eases off
 		   toward the poles the way the ladder's subtle and soft steps do, so the
-		   extremes stay in gamut. */
+		   extremes stay close to gamut. */
 		--yeti-color-alert-0: oklch(from var(--yeti-grey-0) l var(--_yeti-c-subtle) var(--yeti-hue-alert));
 		--yeti-color-alert-10: oklch(from var(--yeti-grey-10) l var(--_yeti-c-subtle) var(--yeti-hue-alert));
 		--yeti-color-alert-20: oklch(from var(--yeti-grey-20) l var(--_yeti-c-soft) var(--yeti-hue-alert));
@@ -107,7 +107,7 @@
 
 		/* Neutral: the grey of the same number at this hue. Chroma eases off
 		   toward the poles the way the ladder's subtle and soft steps do, so the
-		   extremes stay in gamut. */
+		   extremes stay close to gamut. */
 		--yeti-color-neutral-0: oklch(from var(--yeti-grey-0) l var(--_yeti-c-neutral) var(--yeti-hue-neutral));
 		--yeti-color-neutral-10: oklch(from var(--yeti-grey-10) l var(--_yeti-c-neutral) var(--yeti-hue-neutral));
 		--yeti-color-neutral-20: oklch(from var(--yeti-grey-20) l var(--_yeti-c-neutral) var(--yeti-hue-neutral));

@@ -26,10 +26,11 @@ There is no corner radius, on purpose. A box is square. A rounded panel that lif
 ```html
 <section data-paint="primary">A band in the brand colour, with the text made for it.</section>
 <aside class="box" data-paint="grey-20">A quiet panel, a little off the page.</aside>
-<figcaption data-paint="black" data-text="white">A caption band that is black on every page.</figcaption>
+<figcaption data-paint="black">A caption band that is black on every page.</figcaption>
+<p data-text="grey-60">Muted words, with no background painted.</p>
 ```
 
-A painted hue takes the text its base colour was made for, the same pair a button uses. A painted grey takes the page text up to `grey-40` and the page surface from `grey-50`, because half-way toward the text is where the text stops reading. `data-text` sets the words alone, from the same list, and on an element that is also painted it wins over that automatic colour.
+A painted hue takes the text its base colour was made for, the same pair a button uses. A painted grey takes the page text up to `grey-40` and the page surface from `grey-50`, because half-way toward the text is where the text stops reading. The middle steps, `grey-40` to `grey-60`, suit a fill more than a block of text: no text colour reaches full contrast on them. `data-text` sets the words alone, from the same list, and on an element that is also painted it wins over that automatic colour.
 
 The greyscale is scheme-aware. `grey-0` is the page surface and `grey-100` is the page text, each step ten percent further from the one toward the other, so `grey-20` is near the page in light mode and in dark mode, and a theme that sets its own surface and text gets its own greys. A grey names a distance, not a colour. `white`, `black` and `grey` (18% reflectance, the photographic middle) are the only three colours in Yeti that never move; reach for them when a thing must be that colour on every page, and for the scale otherwise.
 

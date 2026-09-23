@@ -204,11 +204,11 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-grey-20` | `20% from surface to text` | 20% of the way from the page surface to its text. Near the page in both schemes when the number is low. |
 | `--yeti-grey-30` | `30% from surface to text` | 30% of the way from the page surface to its text. Near the page in both schemes when the number is low. |
 | `--yeti-grey-40` | `40% from surface to text` | 40% of the way from the page surface to its text. Near the page in both schemes when the number is low. |
-| `--yeti-grey-50` | `50% from surface to text` | 50% of the way from the page surface to its text. Near the page in both schemes when the number is low. |
-| `--yeti-grey-60` | `60% from surface to text` | 60% of the way from the page surface to its text. Near the page in both schemes when the number is low. |
-| `--yeti-grey-70` | `70% from surface to text` | 70% of the way from the page surface to its text. Near the page in both schemes when the number is low. |
-| `--yeti-grey-80` | `80% from surface to text` | 80% of the way from the page surface to its text. Near the page in both schemes when the number is low. |
-| `--yeti-grey-90` | `90% from surface to text` | 90% of the way from the page surface to its text. Near the page in both schemes when the number is low. |
+| `--yeti-grey-50` | `50% from surface to text` | 50% of the way from the page surface to its text. Near the text in both schemes when the number is high. |
+| `--yeti-grey-60` | `60% from surface to text` | 60% of the way from the page surface to its text. Near the text in both schemes when the number is high. |
+| `--yeti-grey-70` | `70% from surface to text` | 70% of the way from the page surface to its text. Near the text in both schemes when the number is high. |
+| `--yeti-grey-80` | `80% from surface to text` | 80% of the way from the page surface to its text. Near the text in both schemes when the number is high. |
+| `--yeti-grey-90` | `90% from surface to text` | 90% of the way from the page surface to its text. Near the text in both schemes when the number is high. |
 | `--yeti-grey-100` | `100% from surface to text` | The page text colour, as the last step of the greyscale. |
 | `--yeti-color-primary-0` | `grey-0 at the primary hue` | The primary hue at the lightness of --yeti-grey-0; flips with the scheme as the grey does. |
 | `--yeti-color-primary-10` | `grey-10 at the primary hue` | The primary hue at the lightness of --yeti-grey-10; flips with the scheme as the grey does. |

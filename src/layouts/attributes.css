@@ -237,9 +237,9 @@
    painted grey takes the page text up to grey-40 and the page surface from
    grey-50: half-way toward the text is where the text stops reading, and
    the rule holds in both schemes because the greys do. The constants take
-   the constant that reads on them; black on grey clears AA where white is a
-   hair short. data-text is written after data-paint at equal specificity,
-   so on an element carrying both it wins. */
+   the constant that reads on them; on 18% grey black and white both clear
+   AA, black by a hair more. data-text is written after data-paint at equal
+   specificity, so on an element carrying both it wins. */
 @layer yeti.utilities {
 	[data-paint="primary"] { background-color: var(--yeti-color-primary); color: var(--yeti-on-primary); }
 	[data-paint="secondary"] { background-color: var(--yeti-color-secondary); color: var(--yeti-on-secondary); }
