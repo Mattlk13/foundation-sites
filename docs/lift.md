@@ -14,7 +14,7 @@ nav_order: 3
 ## Example
 
 <figure class="demo" data-height="md">
-<div data-preview="Lift"><iframe title="Lift, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;cluster&quot; data-gap=&quot;md&quot;&gt;&#10;	&lt;article class=&quot;card lift&quot; data-raised&gt;&#10;		&lt;h3&gt;&lt;a href=&quot;#lift-one&quot; data-stretch&gt;Hover me&lt;/a&gt;&lt;/h3&gt;&#10;		&lt;p&gt;The card rises and its shadow deepens.&lt;/p&gt;&#10;	&lt;/article&gt;&#10;	&lt;article class=&quot;card lift&quot; data-raised&gt;&#10;		&lt;h3&gt;&lt;a href=&quot;#lift-two&quot; data-stretch&gt;Or tab to me&lt;/a&gt;&lt;/h3&gt;&#10;		&lt;p&gt;A keyboard inside the card lifts it too.&lt;/p&gt;&#10;	&lt;/article&gt;&#10;&lt;/div&gt;"></iframe></div>
+<div data-preview="Lift"><iframe title="Lift, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;cluster&quot; data-gap=&quot;md&quot;&gt;&#10;	&lt;article class=&quot;card lift&quot; data-raised&gt;&#10;		&lt;h3&gt;&lt;a href=&quot;#lift-one&quot; data-stretch&gt;Hover me&lt;/a&gt;&lt;/h3&gt;&#10;		&lt;p&gt;The card rises and its shadow deepens.&lt;/p&gt;&#10;	&lt;/article&gt;&#10;	&lt;article class=&quot;card lift&quot; data-raised&gt;&#10;		&lt;h3&gt;&lt;a href=&quot;#lift-two&quot; data-stretch&gt;Or tab to me&lt;/a&gt;&lt;/h3&gt;&#10;		&lt;p&gt;A keyboard inside the card lifts it too.&lt;/p&gt;&#10;	&lt;/article&gt;&#10;	&lt;article class=&quot;card lift&quot; data-lift=&quot;scale&quot; data-raised&gt;&#10;		&lt;h3&gt;&lt;a href=&quot;#lift-three&quot; data-stretch&gt;This one grows&lt;/a&gt;&lt;/h3&gt;&#10;		&lt;p&gt;A scale instead of a rise, for a tile in a row.&lt;/p&gt;&#10;	&lt;/article&gt;&#10;&lt;/div&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
@@ -28,6 +28,10 @@ nav_order: 3
 	<article class="card lift" data-raised>
 		<h3><a href="#lift-two" data-stretch>Or tab to me</a></h3>
 		<p>A keyboard inside the card lifts it too.</p>
+	</article>
+	<article class="card lift" data-lift="scale" data-raised>
+		<h3><a href="#lift-three" data-stretch>This one grows</a></h3>
+		<p>A scale instead of a rise, for a tile in a row.</p>
 	</article>
 </div>
 ```

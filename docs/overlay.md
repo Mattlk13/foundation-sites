@@ -14,7 +14,7 @@ nav_order: 7
 ## Example
 
 <figure class="demo" data-height="xl">
-<div data-preview="Overlay"><iframe title="Overlay, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;overlay&quot;&gt;&#10;	&lt;img src=&quot;photo.jpg&quot; alt=&quot;A lake at dawn&quot;&gt;&#10;	&lt;p class=&quot;box&quot; data-surface=&quot;base&quot; data-over&gt;Sold out&lt;/p&gt;&#10;&lt;/div&gt;"></iframe></div>
+<div data-preview="Overlay"><iframe title="Overlay, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;overlay&quot;&gt;&#10;	&lt;img src=&quot;photo.jpg&quot; alt=&quot;A lake at dawn&quot;&gt;&#10;	&lt;p class=&quot;box&quot; data-paint=&quot;alert&quot; data-over&gt;Sold out&lt;/p&gt;&#10;&lt;/div&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
@@ -22,7 +22,7 @@ nav_order: 7
 ```html
 <div class="overlay">
 	<img src="photo.jpg" alt="A lake at dawn">
-	<p class="box" data-surface="base" data-over>Sold out</p>
+	<p class="box" data-paint="alert" data-over>Sold out</p>
 </div>
 ```
 

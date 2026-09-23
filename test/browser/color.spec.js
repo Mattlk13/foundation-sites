@@ -28,7 +28,9 @@ for (const scheme of ['light', 'dark']) {
 		});
 
 		test('hued text on the surface reaches 4.5:1 and subtle backgrounds keep body text readable', async ({ page }) => {
-			expect(await ratio(page, '#primary-text')).toBeGreaterThanOrEqual(4.5);
+			for (const id of ['primary', 'secondary', 'success', 'warning', 'alert']) {
+				expect(await ratio(page, `#${id}-text`), `${id}-text`).toBeGreaterThanOrEqual(4.5);
+			}
 			expect(await ratio(page, '#subtle')).toBeGreaterThanOrEqual(7);
 		});
 
