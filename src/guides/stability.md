@@ -33,6 +33,10 @@ nav_order: 11
 
 Renaming a class, removing an attribute value, changing what a value does, renaming a public token, or making a module required. None of these happens before `7.0.0`. After `7.0.0`, any of them is a major version.
 
+## Checking it
+
+The list above is checked by a script, not by reading. `node bin/frozen.js <ref>` reads every frozen name at a git ref and at the current tree and prints each addition and each break; it exits non-zero on a break, so it can gate a release the way the validator does. Before a release it runs against the previous tag; before merging anything that touches a manifest, against `develop`.
+
 ## Screenshots
 
 The screenshot baselines are part of how this is kept. A change to how something looks is re-blessed in the same commit that causes it, with the reason in the message. A re-bless with no visible reason is a review question.
