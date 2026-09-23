@@ -26,7 +26,7 @@ test('bundle writes a header and each file in cascade order with source comments
 test('build writes dist/ with the bundle, a verbatim css tree, js modules, and the merged manifest', () => {
 	const root = makeTree(treeWithPkg({
 		'src/layouts/rail/manifest.json': validManifest({ js: [{ module: 'rail.js', optional: true }] }),
-		'src/layouts/rail/rail.js': 'export default 1;\n',
+		'src/layouts/rail/rail.js': 'document.title = "rail";\n',
 		'src/tokens/.gitkeep': '',
 	}));
 	const r = build({ root });
@@ -36,9 +36,9 @@ test('build writes dist/ with the bundle, a verbatim css tree, js modules, and t
 	assert.equal(fs.readFileSync(dist('css/layouts/rail/rail.css'), 'utf8'), fs.readFileSync(path.join(root, 'src/layouts/rail/rail.css'), 'utf8'));
 	assert.equal(fs.readFileSync(dist('css/yeti.css'), 'utf8'), fs.readFileSync(path.join(root, 'src/yeti.css'), 'utf8'));
 	assert.ok(!fs.existsSync(dist('css/tokens/.gitkeep')));
-	assert.equal(fs.readFileSync(dist('js/rail.js'), 'utf8'), 'export default 1;\n');
+	assert.equal(fs.readFileSync(dist('js/rail.js'), 'utf8'), 'document.title = "rail";\n');
 	// The one-file bundle carries each module in its own block and names it.
-	assert.ok(fs.readFileSync(dist('yeti.js'), 'utf8').includes('// rail.js\n{\nexport default 1;\n}'));
+	assert.ok(fs.readFileSync(dist('yeti.js'), 'utf8').includes('// rail.js\n{\ndocument.title = "rail";\n}'));
 	assert.ok(r.outputs.includes('yeti.js'));
 	const manifest = JSON.parse(fs.readFileSync(dist('yeti.manifest.json'), 'utf8'));
 	assert.equal(manifest.framework, 'yeti');
@@ -97,19 +97,28 @@ test('build writes a minified module bundle that still parses', () => {
 	// nothing, so the bundle compiles as a plain script.
 	assert.doesNotThrow(() => new vm.Script(minified));
 	assert.ok(r.outputs.includes('yeti.min.js'));
+	// The map beside it points at the readable bundle, and its first generated
+	// line is the banner the minifier never saw, so the mappings start with an
+	// empty line.
+	assert.equal(minified.trimEnd().split('\n').at(-1), '//# sourceMappingURL=yeti.min.js.map');
+	const map = JSON.parse(fs.readFileSync(path.join(root, 'dist/yeti.min.js.map'), 'utf8'));
+	assert.equal(map.file, 'yeti.min.js');
+	assert.deepEqual(map.sources, ['yeti.js']);
+	assert.ok(map.mappings.startsWith(';'), 'the banner line is empty in the map');
+	assert.ok(r.outputs.includes('yeti.min.js.map'));
 });
 
 test('a module the minifier cannot read stops the build before dist is touched', () => {
 	const root = makeTree(treeWithPkg({
 		'src/layouts/rail/manifest.json': validManifest({ js: [{ module: 'rail.js', optional: true }] }),
-		'src/layouts/rail/rail.js': 'const broken = 1; /* unterminated\n',
+		'src/layouts/rail/rail.js': 'const broken = ;\n',
 	}));
 	fs.mkdirSync(path.join(root, 'dist'), { recursive: true });
 	fs.writeFileSync(path.join(root, 'dist', 'stale.txt'), 'old');
 	const r = build({ root });
 	assert.equal(r.errors.length, 1);
 	assert.match(r.errors[0].message, /rail\.js/);
-	assert.match(r.errors[0].message, /unterminated block comment/);
+	assert.match(r.errors[0].message, /could not minify rail\.js: .*\d+:\d+/);
 	// The pre-existing dist/ must be exactly as it was: the throw happens
 	// before fs.rmSync wipes it, the same guard the CSS minifier already gets.
 	assert.equal(fs.readFileSync(path.join(root, 'dist', 'stale.txt'), 'utf8'), 'old');

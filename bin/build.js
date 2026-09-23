@@ -12,7 +12,7 @@ import { writeIde } from './gen-ide.js';
 import { writeTypes } from './gen-types.js';
 import { writeLlms } from './gen-llms.js';
 import { minifyCss } from './lib/minify-css.js';
-import { minifyJs } from './lib/minify-js.js';
+import { minifyJs, bannered } from './lib/minify-js.js';
 import { LAYER_STATEMENT } from './lib/layers.js';
 
 export function readPackage(root) {
@@ -51,10 +51,11 @@ export function build({ root, pkg = readPackage(root) }) {
 	// One file with every module, for a page that would rather load one
 	// script than pick. The modules import nothing and export nothing, so
 	// each goes in its own block, which keeps their top-level names apart.
-	// Minified in this same pre-write step, beside the stylesheet: the strip
-	// throws on anything it cannot read, and that has to stop the build with
+	// Minified in this same pre-write step, beside the stylesheet: esbuild
+	// throws on anything it cannot parse, and that has to stop the build with
 	// a named error rather than surface as an uncaught throw after dist/ has
-	// already been wiped below.
+	// already been wiped below. What is minified is the exact text of the
+	// readable file, banner and all, so the source map points into yeti.js.
 	const modules = walkFiles(srcDir).filter((f) => f.endsWith('.js')).sort((a, b) => path.basename(a).localeCompare(path.basename(b)));
 	let allJs = null;
 	let allJsMinified = null;
@@ -62,10 +63,10 @@ export function build({ root, pkg = readPackage(root) }) {
 		const parts = modules.map((file) => `// ${path.basename(file)}\n{\n${fs.readFileSync(file, 'utf8').trim()}\n}\n`);
 		allJs = `// Yeti ${pkg.version}: every optional module in one file. Load with <script type="module">.\n\n${parts.join('\n')}`;
 		try {
-			allJsMinified = minifyJs(allJs);
+			allJsMinified = minifyJs(`${bundled.header}${allJs}`, { sourcefile: 'yeti.js' });
 		} catch (e) {
-			// The strip's error is an offset into the concatenated bundle, which
-			// names no file; re-running it module by module finds the one that
+			// esbuild's error is a line in the concatenated bundle, which names
+			// no file; re-running it module by module finds the one that
 			// broke, so this error reads like every other one build() reports.
 			const broken = modules.find((file) => {
 				try { minifyJs(fs.readFileSync(file, 'utf8')); return false; } catch { return true; }
@@ -114,9 +115,11 @@ export function build({ root, pkg = readPackage(root) }) {
 	}
 	if (allJs !== null) {
 		write('yeti.js', `${bundled.header}${allJs}`);
-		// The banner goes back on after minifying, same as the stylesheet:
-		// the strip takes every comment out, including one it did not write.
-		write('yeti.min.js', `${bundled.header}${allJsMinified}`);
+		// The banner goes back on after minifying, same as the stylesheet, on
+		// its own line; the map is shifted by that line so it still points at
+		// yeti.js exactly. The map is named on the last line, as browsers expect.
+		write('yeti.min.js', `${bundled.header}${allJsMinified.js}\n//# sourceMappingURL=yeti.min.js.map\n`);
+		write('yeti.min.js.map', `${JSON.stringify(bannered(allJsMinified.map, { file: 'yeti.min.js' }))}\n`);
 	}
 
 	const schema = loadSchema(path.join(root, 'schema', 'manifest.schema.json'));

@@ -1,61 +1,50 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
-import { minifyJs } from '../../bin/lib/minify-js.js';
+import { minifyJs, bannered } from '../../bin/lib/minify-js.js';
 
-test('line and block comments and blank lines go, code stays', () => {
-	const source = '// why this exists\nconst a = 1;\n\n/* a block\n   over two lines */\nconst b = 2; // trailing\n';
-	assert.equal(minifyJs(source), 'const a = 1;\nconst b = 2;\n');
+test('comments and whitespace go, names shorten, and the result still parses', () => {
+	const source = '// why this exists\nconst greeting = "hello"; /* a block */\nfunction announce(message) { return `${greeting} ${message}`; }\ndocument.title = announce("world");\n';
+	const { js } = minifyJs(source);
+	assert.ok(js.length < source.length, `${js.length} is not smaller than ${source.length}`);
+	assert.ok(!js.includes('why this exists') && !js.includes('a block'));
+	assert.ok(!js.includes('\n'), 'one line');
+	assert.ok(js.includes('"hello"'), 'strings survive');
+	assert.doesNotThrow(() => new vm.Script(js));
 });
 
-test('a comment marker inside a string is not a comment', () => {
-	const source = 'const url = "https://foundationcss.com/yeti/"; // the home page\nconst q = \'a // b\';\n';
-	assert.equal(minifyJs(source), 'const url = "https://foundationcss.com/yeti/";\nconst q = \'a // b\';\n');
+test('a comment marker inside a string, a template or a regex is not a comment', () => {
+	const source = 'const url = "https://foundationcss.com/yeti/";\nconst t = `a // ${url} /* b */`;\nconst re = /\\/\\/ not a comment/g;\ndocument.title = t + re.source;\n';
+	const { js } = minifyJs(source);
+	assert.ok(js.includes('https://foundationcss.com/yeti/'));
+	assert.ok(js.includes('/* b */'), 'the template keeps its text');
+	assert.ok(js.includes('not a comment'), 'the regex keeps its text');
+	assert.doesNotThrow(() => new vm.Script(js));
 });
 
-test('a template literal keeps its expressions, its nested strings and its slashes', () => {
-	const source = 'const s = `${box.dataset.preview || \'Example\'}: //${a / b}`; // note\n';
-	assert.equal(minifyJs(source), 'const s = `${box.dataset.preview || \'Example\'}: //${a / b}`;\n');
+test('modern syntax is kept, not transpiled', () => {
+	const source = 'const a = document.querySelector?.(".x") ?? null;\nclass K { #hidden = 1; static of() { return new K(); } }\ndocument.title = String(a ?? K.of());\n';
+	const { js } = minifyJs(source);
+	assert.ok(js.includes('?.') && js.includes('??'), 'optional chaining and nullish coalescing stay');
+	assert.ok(js.includes('#'), 'the private field stays a private field');
 });
 
-test('a nested template inside an expression is read as a template', () => {
-	const source = 'const s = `a${`b${c}`}d`; /* gone */\n';
-	assert.equal(minifyJs(source), 'const s = `a${`b${c}`}d`;\n');
+test('a source the minifier cannot read stops the build with the line named', () => {
+	assert.throws(() => minifyJs('const a = "unterminated;\n'), /1:/);
+	assert.throws(() => minifyJs('const a = /unterminated\n'), /1:/);
+	assert.throws(() => minifyJs('function ( {\n'), Error);
 });
 
-test('a regex literal keeps its slashes and its comment markers', () => {
-	const source = 'const re = /a\\/\\/b/g; // strips nothing\nconst m = "x".match(/[/*]/);\n';
-	assert.equal(minifyJs(source), 'const re = /a\\/\\/b/g;\nconst m = "x".match(/[/*]/);\n');
+test('the map names its one source and maps into it', () => {
+	const { map } = minifyJs('const a = 1;\n\nconst b = 2;\n', { sourcefile: 'yeti.js' });
+	assert.deepEqual(map.sources, ['yeti.js']);
+	assert.equal(map.sourcesContent, undefined, 'the readable file is beside it; its text is not repeated');
+	assert.ok(map.mappings.length > 0);
 });
 
-test('division is not mistaken for a regex', () => {
-	const source = 'const half = total / 2; // half\nconst other = (a + b) / c;\n';
-	assert.equal(minifyJs(source), 'const half = total / 2;\nconst other = (a + b) / c;\n');
-});
-
-test('a regex after return is a regex', () => {
-	assert.equal(minifyJs('function f() { return /a/.test(b); } // x\n'), 'function f() { return /a/.test(b); }\n');
-});
-
-test('an unterminated string stops the build instead of eating the file', () => {
-	assert.throws(() => minifyJs('const a = "open;\nconst b = 2;\n'), /unterminated string/);
-});
-
-test('an unterminated block comment stops the build', () => {
-	assert.throws(() => minifyJs('/* open\nconst b = 2;\n'), /unterminated block comment/);
-});
-
-test('the output of a real-shaped module still parses', () => {
-	const source = [
-		'// Closes the alert when its close button is clicked.',
-		'document.addEventListener("click", (event) => {',
-		'\tconst button = event.target.closest("[data-close]");',
-		'\tif (!button) return; // nothing of ours',
-		'\tbutton.closest(".alert")?.remove();',
-		'});',
-		'',
-	].join('\n');
-	const out = minifyJs(source);
-	assert.ok(!out.includes('//'));
-	assert.doesNotThrow(() => new vm.Script(out));
+test('bannered shifts the map down one generated line and names the file', () => {
+	const shifted = bannered({ version: 3, sources: ['yeti.js'], mappings: 'AAAA;' }, { file: 'yeti.min.js' });
+	assert.equal(shifted.file, 'yeti.min.js');
+	assert.equal(shifted.mappings, ';AAAA;');
+	assert.deepEqual(shifted.sources, ['yeti.js']);
 });
