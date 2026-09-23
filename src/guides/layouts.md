@@ -134,6 +134,20 @@ Two more names in the table belong to a container rather than to a layout. `data
 - [container](../container.md): makes its box the thing a container query measures, so what is inside can respond to its width instead of the viewport's.
 - [timeline](../timeline.md): lays its entries along a rail with a marker each, on one side, or on alternate sides of a centred rail when it is wide.
 
+## Fine-tuning spacing
+
+Most of what version 6's margin and padding classes did was adjust a layout that already worked, and Yeti keeps those adjustments on the layout. Padding is a `box`: any element takes the class, `data-gap` pads all four sides, and `data-gap-inline` or `data-gap-block` pads one axis over that. Space between siblings is a `stack`'s gap, and the one child that needs more or less carries `data-space` with the gap it wants before it. There is no margin class, because a margin on an element is a decision the layout can no longer see; the same words, on the layout or its child, keep the rule and the exception in one place.
+
+```html demo md
+<div class="stack" data-gap="sm">
+	<p>A stack at a small gap.</p>
+	<p>Its paragraphs sit close.</p>
+	<h3 data-space="xl">A heading with room above it</h3>
+	<p>Then back to the stack's own rhythm.</p>
+	<div class="box" data-gap="sm" data-gap-inline="xl" data-surface="raised" data-border>A box padded a little top and bottom and a lot at the sides.</div>
+</div>
+```
+
 ## Composing
 
 None of these layouts do much alone. Nest a few and they add up to a page.

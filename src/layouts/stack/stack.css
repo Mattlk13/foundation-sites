@@ -10,6 +10,17 @@
 	.stack:not([data-gap]) { --_yeti-gap: var(--yeti-space-md); }
 	.stack:not([data-align]) { --_yeti-align: stretch; }
 	.stack > * { margin: 0; }
+	/* data-space: the gap before this one child is the value named, larger
+	   or smaller than the stack's. The flex gap stays for everyone, and the
+	   marked child carries the difference as a margin, which may be negative.
+	   The stack's gap is re-exported under a name a plain child never sets,
+	   so the calculation reads the parent's gap and not one the child brought
+	   with it. A marked child that is itself a stack with its own data-gap is
+	   the one case that reads its own; give it a plain wrapper. On a first
+	   child there is no gap before it, so the marker does nothing there, and
+	   data-split's auto margin wins on a child that carries both. */
+	.stack { --_yeti-stack-gap: var(--_yeti-gap); }
+	.stack > * + [data-space] { margin-block-start: calc(var(--_yeti-space) - var(--_yeti-stack-gap)); }
 	.stack > [data-split] { margin-block-start: auto; }
 	.stack[data-fill] { min-block-size: var(--yeti-cover-height); }
 }

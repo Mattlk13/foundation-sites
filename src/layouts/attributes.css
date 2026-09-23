@@ -36,6 +36,114 @@
 	[data-gap="xl-3xl"] { --_yeti-gap: calc(var(--yeti-space-xl-static) + (var(--_yeti-space-3xl-max) - var(--yeti-space-xl-static)) * var(--_yeti-t)); }
 	[data-gap="2xl-3xl"] { --_yeti-gap: calc(var(--yeti-space-2xl-static) + (var(--_yeti-space-3xl-max) - var(--yeti-space-2xl-static)) * var(--_yeti-t)); }
 
+	/* data-gap-inline and data-gap-block: the gap vocabulary again, for the
+	   two axes of a box's padding, so a band can be wide at the sides and
+	   ordinary top and bottom without a second scale. Mapped here rather than
+	   read by box.css so the fluid pairs are written once. */
+	/* data-gap-inline: one stop */
+	[data-gap-inline="none"] { --_yeti-gap-inline: var(--yeti-space-none); }
+	[data-gap-inline="xs"] { --_yeti-gap-inline: var(--yeti-space-xs); }
+	[data-gap-inline="sm"] { --_yeti-gap-inline: var(--yeti-space-sm); }
+	[data-gap-inline="md"] { --_yeti-gap-inline: var(--yeti-space-md); }
+	[data-gap-inline="lg"] { --_yeti-gap-inline: var(--yeti-space-lg); }
+	[data-gap-inline="xl"] { --_yeti-gap-inline: var(--yeti-space-xl); }
+	[data-gap-inline="2xl"] { --_yeti-gap-inline: var(--yeti-space-2xl); }
+	[data-gap-inline="3xl"] { --_yeti-gap-inline: var(--yeti-space-3xl); }
+
+	/* data-gap-inline: fluid pairs. From the small stop's narrow value to the large
+	   stop's wide value, driven by the scale's interpolant. */
+	[data-gap-inline="xs-sm"] { --_yeti-gap-inline: calc(var(--yeti-space-xs-static) + (var(--_yeti-space-sm-max) - var(--yeti-space-xs-static)) * var(--_yeti-t)); }
+	[data-gap-inline="xs-md"] { --_yeti-gap-inline: calc(var(--yeti-space-xs-static) + (var(--_yeti-space-md-max) - var(--yeti-space-xs-static)) * var(--_yeti-t)); }
+	[data-gap-inline="xs-lg"] { --_yeti-gap-inline: calc(var(--yeti-space-xs-static) + (var(--_yeti-space-lg-max) - var(--yeti-space-xs-static)) * var(--_yeti-t)); }
+	[data-gap-inline="xs-xl"] { --_yeti-gap-inline: calc(var(--yeti-space-xs-static) + (var(--_yeti-space-xl-max) - var(--yeti-space-xs-static)) * var(--_yeti-t)); }
+	[data-gap-inline="xs-2xl"] { --_yeti-gap-inline: calc(var(--yeti-space-xs-static) + (var(--_yeti-space-2xl-max) - var(--yeti-space-xs-static)) * var(--_yeti-t)); }
+	[data-gap-inline="xs-3xl"] { --_yeti-gap-inline: calc(var(--yeti-space-xs-static) + (var(--_yeti-space-3xl-max) - var(--yeti-space-xs-static)) * var(--_yeti-t)); }
+	[data-gap-inline="sm-md"] { --_yeti-gap-inline: calc(var(--yeti-space-sm-static) + (var(--_yeti-space-md-max) - var(--yeti-space-sm-static)) * var(--_yeti-t)); }
+	[data-gap-inline="sm-lg"] { --_yeti-gap-inline: calc(var(--yeti-space-sm-static) + (var(--_yeti-space-lg-max) - var(--yeti-space-sm-static)) * var(--_yeti-t)); }
+	[data-gap-inline="sm-xl"] { --_yeti-gap-inline: calc(var(--yeti-space-sm-static) + (var(--_yeti-space-xl-max) - var(--yeti-space-sm-static)) * var(--_yeti-t)); }
+	[data-gap-inline="sm-2xl"] { --_yeti-gap-inline: calc(var(--yeti-space-sm-static) + (var(--_yeti-space-2xl-max) - var(--yeti-space-sm-static)) * var(--_yeti-t)); }
+	[data-gap-inline="sm-3xl"] { --_yeti-gap-inline: calc(var(--yeti-space-sm-static) + (var(--_yeti-space-3xl-max) - var(--yeti-space-sm-static)) * var(--_yeti-t)); }
+	[data-gap-inline="md-lg"] { --_yeti-gap-inline: calc(var(--yeti-space-md-static) + (var(--_yeti-space-lg-max) - var(--yeti-space-md-static)) * var(--_yeti-t)); }
+	[data-gap-inline="md-xl"] { --_yeti-gap-inline: calc(var(--yeti-space-md-static) + (var(--_yeti-space-xl-max) - var(--yeti-space-md-static)) * var(--_yeti-t)); }
+	[data-gap-inline="md-2xl"] { --_yeti-gap-inline: calc(var(--yeti-space-md-static) + (var(--_yeti-space-2xl-max) - var(--yeti-space-md-static)) * var(--_yeti-t)); }
+	[data-gap-inline="md-3xl"] { --_yeti-gap-inline: calc(var(--yeti-space-md-static) + (var(--_yeti-space-3xl-max) - var(--yeti-space-md-static)) * var(--_yeti-t)); }
+	[data-gap-inline="lg-xl"] { --_yeti-gap-inline: calc(var(--yeti-space-lg-static) + (var(--_yeti-space-xl-max) - var(--yeti-space-lg-static)) * var(--_yeti-t)); }
+	[data-gap-inline="lg-2xl"] { --_yeti-gap-inline: calc(var(--yeti-space-lg-static) + (var(--_yeti-space-2xl-max) - var(--yeti-space-lg-static)) * var(--_yeti-t)); }
+	[data-gap-inline="lg-3xl"] { --_yeti-gap-inline: calc(var(--yeti-space-lg-static) + (var(--_yeti-space-3xl-max) - var(--yeti-space-lg-static)) * var(--_yeti-t)); }
+	[data-gap-inline="xl-2xl"] { --_yeti-gap-inline: calc(var(--yeti-space-xl-static) + (var(--_yeti-space-2xl-max) - var(--yeti-space-xl-static)) * var(--_yeti-t)); }
+	[data-gap-inline="xl-3xl"] { --_yeti-gap-inline: calc(var(--yeti-space-xl-static) + (var(--_yeti-space-3xl-max) - var(--yeti-space-xl-static)) * var(--_yeti-t)); }
+	[data-gap-inline="2xl-3xl"] { --_yeti-gap-inline: calc(var(--yeti-space-2xl-static) + (var(--_yeti-space-3xl-max) - var(--yeti-space-2xl-static)) * var(--_yeti-t)); }
+
+	/* data-gap-block: one stop */
+	[data-gap-block="none"] { --_yeti-gap-block: var(--yeti-space-none); }
+	[data-gap-block="xs"] { --_yeti-gap-block: var(--yeti-space-xs); }
+	[data-gap-block="sm"] { --_yeti-gap-block: var(--yeti-space-sm); }
+	[data-gap-block="md"] { --_yeti-gap-block: var(--yeti-space-md); }
+	[data-gap-block="lg"] { --_yeti-gap-block: var(--yeti-space-lg); }
+	[data-gap-block="xl"] { --_yeti-gap-block: var(--yeti-space-xl); }
+	[data-gap-block="2xl"] { --_yeti-gap-block: var(--yeti-space-2xl); }
+	[data-gap-block="3xl"] { --_yeti-gap-block: var(--yeti-space-3xl); }
+
+	/* data-gap-block: fluid pairs. From the small stop's narrow value to the large
+	   stop's wide value, driven by the scale's interpolant. */
+	[data-gap-block="xs-sm"] { --_yeti-gap-block: calc(var(--yeti-space-xs-static) + (var(--_yeti-space-sm-max) - var(--yeti-space-xs-static)) * var(--_yeti-t)); }
+	[data-gap-block="xs-md"] { --_yeti-gap-block: calc(var(--yeti-space-xs-static) + (var(--_yeti-space-md-max) - var(--yeti-space-xs-static)) * var(--_yeti-t)); }
+	[data-gap-block="xs-lg"] { --_yeti-gap-block: calc(var(--yeti-space-xs-static) + (var(--_yeti-space-lg-max) - var(--yeti-space-xs-static)) * var(--_yeti-t)); }
+	[data-gap-block="xs-xl"] { --_yeti-gap-block: calc(var(--yeti-space-xs-static) + (var(--_yeti-space-xl-max) - var(--yeti-space-xs-static)) * var(--_yeti-t)); }
+	[data-gap-block="xs-2xl"] { --_yeti-gap-block: calc(var(--yeti-space-xs-static) + (var(--_yeti-space-2xl-max) - var(--yeti-space-xs-static)) * var(--_yeti-t)); }
+	[data-gap-block="xs-3xl"] { --_yeti-gap-block: calc(var(--yeti-space-xs-static) + (var(--_yeti-space-3xl-max) - var(--yeti-space-xs-static)) * var(--_yeti-t)); }
+	[data-gap-block="sm-md"] { --_yeti-gap-block: calc(var(--yeti-space-sm-static) + (var(--_yeti-space-md-max) - var(--yeti-space-sm-static)) * var(--_yeti-t)); }
+	[data-gap-block="sm-lg"] { --_yeti-gap-block: calc(var(--yeti-space-sm-static) + (var(--_yeti-space-lg-max) - var(--yeti-space-sm-static)) * var(--_yeti-t)); }
+	[data-gap-block="sm-xl"] { --_yeti-gap-block: calc(var(--yeti-space-sm-static) + (var(--_yeti-space-xl-max) - var(--yeti-space-sm-static)) * var(--_yeti-t)); }
+	[data-gap-block="sm-2xl"] { --_yeti-gap-block: calc(var(--yeti-space-sm-static) + (var(--_yeti-space-2xl-max) - var(--yeti-space-sm-static)) * var(--_yeti-t)); }
+	[data-gap-block="sm-3xl"] { --_yeti-gap-block: calc(var(--yeti-space-sm-static) + (var(--_yeti-space-3xl-max) - var(--yeti-space-sm-static)) * var(--_yeti-t)); }
+	[data-gap-block="md-lg"] { --_yeti-gap-block: calc(var(--yeti-space-md-static) + (var(--_yeti-space-lg-max) - var(--yeti-space-md-static)) * var(--_yeti-t)); }
+	[data-gap-block="md-xl"] { --_yeti-gap-block: calc(var(--yeti-space-md-static) + (var(--_yeti-space-xl-max) - var(--yeti-space-md-static)) * var(--_yeti-t)); }
+	[data-gap-block="md-2xl"] { --_yeti-gap-block: calc(var(--yeti-space-md-static) + (var(--_yeti-space-2xl-max) - var(--yeti-space-md-static)) * var(--_yeti-t)); }
+	[data-gap-block="md-3xl"] { --_yeti-gap-block: calc(var(--yeti-space-md-static) + (var(--_yeti-space-3xl-max) - var(--yeti-space-md-static)) * var(--_yeti-t)); }
+	[data-gap-block="lg-xl"] { --_yeti-gap-block: calc(var(--yeti-space-lg-static) + (var(--_yeti-space-xl-max) - var(--yeti-space-lg-static)) * var(--_yeti-t)); }
+	[data-gap-block="lg-2xl"] { --_yeti-gap-block: calc(var(--yeti-space-lg-static) + (var(--_yeti-space-2xl-max) - var(--yeti-space-lg-static)) * var(--_yeti-t)); }
+	[data-gap-block="lg-3xl"] { --_yeti-gap-block: calc(var(--yeti-space-lg-static) + (var(--_yeti-space-3xl-max) - var(--yeti-space-lg-static)) * var(--_yeti-t)); }
+	[data-gap-block="xl-2xl"] { --_yeti-gap-block: calc(var(--yeti-space-xl-static) + (var(--_yeti-space-2xl-max) - var(--yeti-space-xl-static)) * var(--_yeti-t)); }
+	[data-gap-block="xl-3xl"] { --_yeti-gap-block: calc(var(--yeti-space-xl-static) + (var(--_yeti-space-3xl-max) - var(--yeti-space-xl-static)) * var(--_yeti-t)); }
+	[data-gap-block="2xl-3xl"] { --_yeti-gap-block: calc(var(--yeti-space-2xl-static) + (var(--_yeti-space-3xl-max) - var(--yeti-space-2xl-static)) * var(--_yeti-t)); }
+
+	/* data-space: the gap before one child of a stack, in the same words as
+	   the stack's own gap. The stack reads it against its gap; see stack.css. */
+	/* data-space: one stop */
+	[data-space="none"] { --_yeti-space: var(--yeti-space-none); }
+	[data-space="xs"] { --_yeti-space: var(--yeti-space-xs); }
+	[data-space="sm"] { --_yeti-space: var(--yeti-space-sm); }
+	[data-space="md"] { --_yeti-space: var(--yeti-space-md); }
+	[data-space="lg"] { --_yeti-space: var(--yeti-space-lg); }
+	[data-space="xl"] { --_yeti-space: var(--yeti-space-xl); }
+	[data-space="2xl"] { --_yeti-space: var(--yeti-space-2xl); }
+	[data-space="3xl"] { --_yeti-space: var(--yeti-space-3xl); }
+
+	/* data-space: fluid pairs. From the small stop's narrow value to the large
+	   stop's wide value, driven by the scale's interpolant. */
+	[data-space="xs-sm"] { --_yeti-space: calc(var(--yeti-space-xs-static) + (var(--_yeti-space-sm-max) - var(--yeti-space-xs-static)) * var(--_yeti-t)); }
+	[data-space="xs-md"] { --_yeti-space: calc(var(--yeti-space-xs-static) + (var(--_yeti-space-md-max) - var(--yeti-space-xs-static)) * var(--_yeti-t)); }
+	[data-space="xs-lg"] { --_yeti-space: calc(var(--yeti-space-xs-static) + (var(--_yeti-space-lg-max) - var(--yeti-space-xs-static)) * var(--_yeti-t)); }
+	[data-space="xs-xl"] { --_yeti-space: calc(var(--yeti-space-xs-static) + (var(--_yeti-space-xl-max) - var(--yeti-space-xs-static)) * var(--_yeti-t)); }
+	[data-space="xs-2xl"] { --_yeti-space: calc(var(--yeti-space-xs-static) + (var(--_yeti-space-2xl-max) - var(--yeti-space-xs-static)) * var(--_yeti-t)); }
+	[data-space="xs-3xl"] { --_yeti-space: calc(var(--yeti-space-xs-static) + (var(--_yeti-space-3xl-max) - var(--yeti-space-xs-static)) * var(--_yeti-t)); }
+	[data-space="sm-md"] { --_yeti-space: calc(var(--yeti-space-sm-static) + (var(--_yeti-space-md-max) - var(--yeti-space-sm-static)) * var(--_yeti-t)); }
+	[data-space="sm-lg"] { --_yeti-space: calc(var(--yeti-space-sm-static) + (var(--_yeti-space-lg-max) - var(--yeti-space-sm-static)) * var(--_yeti-t)); }
+	[data-space="sm-xl"] { --_yeti-space: calc(var(--yeti-space-sm-static) + (var(--_yeti-space-xl-max) - var(--yeti-space-sm-static)) * var(--_yeti-t)); }
+	[data-space="sm-2xl"] { --_yeti-space: calc(var(--yeti-space-sm-static) + (var(--_yeti-space-2xl-max) - var(--yeti-space-sm-static)) * var(--_yeti-t)); }
+	[data-space="sm-3xl"] { --_yeti-space: calc(var(--yeti-space-sm-static) + (var(--_yeti-space-3xl-max) - var(--yeti-space-sm-static)) * var(--_yeti-t)); }
+	[data-space="md-lg"] { --_yeti-space: calc(var(--yeti-space-md-static) + (var(--_yeti-space-lg-max) - var(--yeti-space-md-static)) * var(--_yeti-t)); }
+	[data-space="md-xl"] { --_yeti-space: calc(var(--yeti-space-md-static) + (var(--_yeti-space-xl-max) - var(--yeti-space-md-static)) * var(--_yeti-t)); }
+	[data-space="md-2xl"] { --_yeti-space: calc(var(--yeti-space-md-static) + (var(--_yeti-space-2xl-max) - var(--yeti-space-md-static)) * var(--_yeti-t)); }
+	[data-space="md-3xl"] { --_yeti-space: calc(var(--yeti-space-md-static) + (var(--_yeti-space-3xl-max) - var(--yeti-space-md-static)) * var(--_yeti-t)); }
+	[data-space="lg-xl"] { --_yeti-space: calc(var(--yeti-space-lg-static) + (var(--_yeti-space-xl-max) - var(--yeti-space-lg-static)) * var(--_yeti-t)); }
+	[data-space="lg-2xl"] { --_yeti-space: calc(var(--yeti-space-lg-static) + (var(--_yeti-space-2xl-max) - var(--yeti-space-lg-static)) * var(--_yeti-t)); }
+	[data-space="lg-3xl"] { --_yeti-space: calc(var(--yeti-space-lg-static) + (var(--_yeti-space-3xl-max) - var(--yeti-space-lg-static)) * var(--_yeti-t)); }
+	[data-space="xl-2xl"] { --_yeti-space: calc(var(--yeti-space-xl-static) + (var(--_yeti-space-2xl-max) - var(--yeti-space-xl-static)) * var(--_yeti-t)); }
+	[data-space="xl-3xl"] { --_yeti-space: calc(var(--yeti-space-xl-static) + (var(--_yeti-space-3xl-max) - var(--yeti-space-xl-static)) * var(--_yeti-t)); }
+	[data-space="2xl-3xl"] { --_yeti-space: calc(var(--yeti-space-2xl-static) + (var(--_yeti-space-3xl-max) - var(--yeti-space-2xl-static)) * var(--_yeti-t)); }
+
 	/* data-align: cross-axis alignment */
 	[data-align="start"] { --_yeti-align: flex-start; }
 	[data-align="center"] { --_yeti-align: center; }

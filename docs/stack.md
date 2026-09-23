@@ -47,6 +47,17 @@ The stack is a flex column with a `gap`, so the space between children is the st
 </div>
 ```
 
+The gap is the stack's, but one child can ask for a different gap before it. `data-space` on a child takes the same words as `data-gap` and sets the space above that child alone, larger or smaller than the stack's own: more room above a heading that opens a new run of paragraphs, less between a label and the field under it. The rest of the stack keeps its rhythm. It does nothing on the first child, which has no gap before it, and `data-split` wins on a child carrying both. This is Yeti's margin utility, and it lives on the layout on purpose: the exception is one word on one child, and the stack still owns the rule.
+
+```html
+<div class="stack" data-gap="sm">
+	<p>One paragraph.</p>
+	<p>Another, at the stack's gap.</p>
+	<h3 data-space="xl">A heading with room above it</h3>
+	<p>And its paragraph, back at the stack's gap.</p>
+</div>
+```
+
 A child carrying `data-sticky` stays at `--yeti-sticky-offset` from the top of the scrollport while the rest of the stack scrolls past it, and keeps the full width of the column while it does. A stack stretches its children sideways, and sideways is not the direction a sticky child moves in, so nothing has to be taken away for it to work — which is not true in a row, where the same marker costs the child the row's height.
 
 ## Why this name
@@ -74,6 +85,7 @@ Attributes that descendants carry, not the root.
 | Attribute | Type | Values | On | Description |
 | --- | --- | --- | --- | --- |
 | `data-split` | boolean |  | `> *` | Pushes the child and everything after it to the end of the stack when the stack is taller than its content. |
+| `data-space` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `> *` | The gap before this one child, larger or smaller than the stack's own: more room above a heading, less between a label and its field. Does nothing on the first child; data-split wins on a child carrying both. |
 | `data-sticky` | boolean |  | `> *` | Pins this child at --yeti-sticky-offset from the top of the scrollport while the rest of the stack scrolls past it. It keeps the full width of the column, a stack stretching its children on the inline axis. |
 
 </div>
@@ -98,6 +110,7 @@ Attributes that descendants carry, not the root.
 
 - `--_yeti-gap`
 - `--_yeti-align`
+- `--_yeti-stack-gap`
 
 </details>
 

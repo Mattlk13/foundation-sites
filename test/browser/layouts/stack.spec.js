@@ -10,6 +10,20 @@ test.describe('stack', () => {
 		expect(sb.top - sa.bottom).toBeCloseTo(await token(page, '--yeti-space-sm'), 1);
 	});
 
+	test('data-space changes the gap before one child only', async ({ page }) => {
+		await open(page, 'stack');
+		const [xs, md, xl] = await Promise.all(['xs', 'md', 'xl'].map((s) => token(page, `--yeti-space-${s}`)));
+		const [stack, e1, e2, e3, e4] = await Promise.all(['#spaced', '#e1', '#e2', '#e3', '#e4'].map((s) => rect(page, s)));
+		expect(e2.top - e1.bottom).toBeCloseTo(xl, 1);
+		expect(e3.top - e2.bottom).toBeCloseTo(xs, 1);
+		expect(e4.top - e3.bottom).toBeCloseTo(md, 1);
+		// The first child has no gap before it, so its marker does nothing.
+		expect(e1.top).toBeCloseTo(stack.top, 1);
+		// Falsification: the three gaps are three different distances.
+		expect(xl).toBeGreaterThan(md);
+		expect(md).toBeGreaterThan(xs);
+	});
+
 	test('data-split pushes the child to the end', async ({ page }) => {
 		await open(page, 'stack');
 		const [stack, d] = await Promise.all([rect(page, '#stack'), rect(page, '#d')]);
@@ -34,7 +48,7 @@ test.describe('stack', () => {
 
 	test('children have no margins', async ({ page }) => {
 		await open(page, 'stack');
-		await expectNoChildMargins(page, '.stack');
+		await expectNoChildMargins(page, '.stack', '[data-split], [data-center], [data-space]');
 	});
 
 	test('has no accessibility violations', async ({ page }) => {

@@ -11,6 +11,20 @@ test.describe('box', () => {
 		expect(await px(page, '#bordered', 'padding-top')).toBeCloseTo(await token(page, '--yeti-space-lg'), 1);
 	});
 
+	test('one axis can be padded over data-gap', async ({ page }) => {
+		await open(page, 'box');
+		const [sm, md, lg, xl] = await Promise.all(['sm', 'md', 'lg', 'xl'].map((s) => token(page, `--yeti-space-${s}`)));
+		expect(await px(page, '#axes', 'padding-left')).toBeCloseTo(xl, 1);
+		expect(await px(page, '#axes', 'padding-right')).toBeCloseTo(xl, 1);
+		expect(await px(page, '#axes', 'padding-top')).toBeCloseTo(sm, 1);
+		expect(await px(page, '#axes', 'padding-bottom')).toBeCloseTo(sm, 1);
+		expect(await px(page, '#block-only', 'padding-top')).toBeCloseTo(lg, 1);
+		expect(await px(page, '#block-only', 'padding-bottom')).toBeCloseTo(lg, 1);
+		expect(await px(page, '#block-only', 'padding-left')).toBeCloseTo(md, 1);
+		// Falsification: the two axes differ, so a shorthand did not leak across.
+		expect(xl).not.toBeCloseTo(sm, 1);
+	});
+
 	test('data-border draws a one-pixel border', async ({ page }) => {
 		await open(page, 'box');
 		expect(await px(page, '#box', 'border-top-width')).toBe(0);

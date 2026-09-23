@@ -29,6 +29,8 @@ The table covers the grid and every component in the version 6 kitchen sink. "No
 | `.float-left` / `.float-right` | none | floats are for text wrapping; a layout is a `sidebar` or a `cluster` |
 | `.show-for-medium` / `.hide-for-small` | `data-show` / `data-hide` inside a `container` | at or above a width, measured on the nearest container and not the window; a component that can change shape at its own threshold still should |
 | `.text-center` and friends | `data-align` and `data-justify` on the layout | alignment is a layout's attribute, not a text utility |
+| `.padding-1`, `.padding-horizontal-2` and the rest | `box` with `data-gap`, `data-gap-inline`, `data-gap-block` | any element is a box with the class; the box says how much |
+| `.margin-1`, `.margin-top-2` and the rest | a `stack` gap, with `data-space` on the one child that differs | spacing belongs to the layout; two things with nothing around them go in a stack |
 
 ### Visibility
 
@@ -87,7 +89,7 @@ Version 6 had a class for each of these. Most of them are the browser's job, and
 
 ### What Yeti does instead
 
-Five of those rows deserve more than a line, because what they did is still worth doing.
+Six of those rows deserve more than a line, because what they did is still worth doing.
 
 **Toggler** set a class or an attribute on another element to show it, hide it, or animate it. Every case it covered has a platform answer now. A disclosure is `<details>` with `<summary>`. A panel that closes on Escape and on a click outside is `popover`. A modal is `<dialog>`, opened by a button with `commandfor` and `command="show-modal"`. A parent that has to react to the state of something inside it is `:has()`. None of the four needs a script, and each announces itself to a screen reader, which a toggled class never did.
 
@@ -96,6 +98,8 @@ Five of those rows deserve more than a line, because what they did is still wort
 **Sticky** was a plugin with a placeholder element, a pin offset, and a list of edge cases. It is the `data-sticky` marker now: put it on a child of a `sidebar` or a `stack`, on the `nav` or `aside` inside a `shell`'s body row, or on a `nav` itself, and that child sticks, `--yeti-sticky-offset` deciding how far below the top it stops. There is nothing to initialise and nothing to tear down.
 
 **Visibility** was a grid of classes: `show-for-medium`, `hide-for-large`, `show-for-medium-only`, and a `-portrait` and `-landscape` for good measure. Every one of them asked the window how wide the element was, and the window is the wrong thing to ask — the moment the same markup is dropped into a sidebar, a card or a dialog, the class is talking about a width the element has not had for some time. Yeti asks the box instead: `data-show` and `data-hide` read the nearest size container, so one piece of markup makes two different decisions on one page. The rest of the version 6 set is in the table above and most of it belongs to the browser now. There is no `-only` band and no `-portrait`: a band is two elements or a nested container, and both were rare.
+
+**Margin and padding helpers** were the classes people reached for most, and almost always to fine-tune a layout they had already built. Yeti has no margin classes, on purpose: spacing belongs to the layout, so a component never sets an outer margin and a page never fights one. The padding helper is `box`, on any element, with `data-gap` for all four sides and `data-gap-inline` and `data-gap-block` for one axis. The margin helper is the `stack`'s gap, and for the one child that needs more or less, `data-space` on that child. The exception is a word on the child; the rule stays with the layout, which is what keeps the next person's edit from undoing yours.
 
 **Reveal** is the `dialog` row above. The native element does the opening, the modal backdrop, the focus trap and Escape; `dialog.js` adds the click on the backdrop and the return of focus to the opener, and without the module the dialog still opens and closes.
 

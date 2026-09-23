@@ -39,6 +39,8 @@ A box is the thing to reach for when content needs breathing room from its edges
 
 `data-surface` takes the three surface tones. `raised` is a step above the page and is what a panel usually wants; `sunken` is a step below, for a well that content sits in; `base` is the page's own surface, for a panel inside a sunken area that should not change tone. Without it a box is transparent and only its padding does anything, which is right when the thing behind it is already a surface.
 
+`data-gap-inline` and `data-gap-block` pad one axis over whatever `data-gap` set, so a band that is wide at the sides and ordinary top and bottom is `data-gap-inline="xl"` and nothing else. They take the same words as `data-gap`, fluid pairs included. This is the whole of Yeti's padding utility: any element becomes a box with the class, and the box says how much.
+
 There is no corner radius, on purpose. A box is square. A rounded panel that lifts off the page is a `card`, and the two should not blur into each other.
 
 ```html
@@ -65,6 +67,8 @@ There is no plainer word for a padded rectangle. Foundation 6's Callout was a st
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `md` | Padding on every side. |
+| `data-gap-inline` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` |  | Padding on the two sides only, over whatever data-gap set: a band wide at the sides and ordinary top and bottom. |
+| `data-gap-block` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` |  | Padding top and bottom only, over whatever data-gap set. |
 | `data-surface` | enum | `base`, `raised`, `sunken` |  | Fill the box with one of the three surface tones, making it a visible panel. Absent, the box is transparent and only its padding does anything. |
 | `data-border` | boolean |  |  | Draw a border of the border width, in the border color. |
 

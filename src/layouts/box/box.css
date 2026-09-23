@@ -3,6 +3,10 @@
 @layer yeti.layouts {
 	.box { padding: var(--_yeti-gap); }
 	.box:not([data-gap]) { --_yeti-gap: var(--yeti-space-md); }
+	/* One axis at a time, on top of data-gap: a band that is wide at the sides
+	   and ordinary top and bottom says data-gap-inline="xl" and nothing else. */
+	.box[data-gap-inline] { padding-inline: var(--_yeti-gap-inline); }
+	.box[data-gap-block] { padding-block: var(--_yeti-gap-block); }
 	.box[data-border] { border: var(--yeti-border-width) solid var(--yeti-color-border); }
 	/* The three surface tokens, which until now almost nothing read. A box is
 	   where they belong: it is the padded rectangle, and a padded rectangle you

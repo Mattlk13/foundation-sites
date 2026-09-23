@@ -615,6 +615,7 @@ const MAPPED = {
 	'data-slides': 'slides',
 	'data-show': 'width', 'data-hide': 'width',
 	'data-paint': 'paint', 'data-text': 'paint',
+	'data-gap-inline': 'gap', 'data-gap-block': 'gap', 'data-space': 'gap',
 };
 
 // Read directly by their own layout's CSS, so they have no attributes.css rule.

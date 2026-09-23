@@ -276,6 +276,9 @@ const MAPPINGS = [
 	['data-hide', 'width', '--_yeti-hide', (v) => v],
 	['data-paint', 'paint', 'background-color', () => 'red'],
 	['data-text', 'paint', 'color', () => 'red'],
+	['data-gap-inline', 'gap', '--_yeti-gap-inline', () => '0'],
+	['data-gap-block', 'gap', '--_yeti-gap-block', () => '0'],
+	['data-space', 'gap', '--_yeti-space', () => '0'],
 ];
 
 const layoutTree = (extra = {}) => validTree({

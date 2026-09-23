@@ -97,6 +97,8 @@ Every layout is configured with a small set of `data-*` attributes, drawn from a
 | `data-fixed` | boolean | overlay |
 | `data-fold` | boolean | grid |
 | `data-gap` | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | box, breakout, center, cluster, columns, cover, grid, hero, icon, masonry, media, overlay, scroller, shell, sidebar, stack, timeline |
+| `data-gap-block` | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | box |
+| `data-gap-inline` | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | box |
 | `data-hide` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | container (*) |
 | `data-intrinsic` | boolean | center |
 | `data-justify` | `start`, `center`, `end`, `between`, `around`, `evenly` | cluster, columns |
@@ -111,6 +113,7 @@ Every layout is configured with a small set of `data-*` attributes, drawn from a
 | `data-show` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | container (*) |
 | `data-side` | `start`, `end` | hero, media, sidebar |
 | `data-snap` | boolean | scroller |
+| `data-space` | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | stack (> *) |
 | `data-span` | `1`, `2`, `3`, `4`, `5`, `6` | columns (> *) |
 | `data-split` | boolean | stack (> *) |
 | `data-sticky` | boolean | shell (> div > :is(nav, aside)), sidebar (> *), stack (> *) |
@@ -154,6 +157,29 @@ Two more names in the table belong to a container rather than to a layout. `data
 - [layer](../layer.md): stacks its children in one box, later ones on top, with the box as tall as the tallest of them.
 - [container](../container.md): makes its box the thing a container query measures, so what is inside can respond to its width instead of the viewport's.
 - [timeline](../timeline.md): lays its entries along a rail with a marker each, on one side, or on alternate sides of a centred rail when it is wide.
+
+## Fine-tuning spacing
+
+Most of what version 6's margin and padding classes did was adjust a layout that already worked, and Yeti keeps those adjustments on the layout. Padding is a `box`: any element takes the class, `data-gap` pads all four sides, and `data-gap-inline` or `data-gap-block` pads one axis over that. Space between siblings is a `stack`'s gap, and the one child that needs more or less carries `data-space` with the gap it wants before it. There is no margin class, because a margin on an element is a decision the layout can no longer see; the same words, on the layout or its child, keep the rule and the exception in one place.
+
+<figure class="demo" data-height="md">
+<div data-preview="Fine-tuning spacing"><iframe title="Fine-tuning spacing, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;stack&quot; data-gap=&quot;sm&quot;&gt;&#10;	&lt;p&gt;A stack at a small gap.&lt;/p&gt;&#10;	&lt;p&gt;Its paragraphs sit close.&lt;/p&gt;&#10;	&lt;h3 data-space=&quot;xl&quot;&gt;A heading with room above it&lt;/h3&gt;&#10;	&lt;p&gt;Then back to the stack&#39;s own rhythm.&lt;/p&gt;&#10;	&lt;div class=&quot;box&quot; data-gap=&quot;sm&quot; data-gap-inline=&quot;xl&quot; data-surface=&quot;raised&quot; data-border&gt;A box padded a little top and bottom and a lot at the sides.&lt;/div&gt;&#10;&lt;/div&gt;"></iframe></div>
+
+<details markdown="1">
+<summary>View Code</summary>
+
+```html
+<div class="stack" data-gap="sm">
+	<p>A stack at a small gap.</p>
+	<p>Its paragraphs sit close.</p>
+	<h3 data-space="xl">A heading with room above it</h3>
+	<p>Then back to the stack's own rhythm.</p>
+	<div class="box" data-gap="sm" data-gap-inline="xl" data-surface="raised" data-border>A box padded a little top and bottom and a lot at the sides.</div>
+</div>
+```
+
+</details>
+</figure>
 
 ## Composing
 
