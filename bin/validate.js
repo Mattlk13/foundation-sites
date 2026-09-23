@@ -93,7 +93,10 @@ export function validateElementTree(root, merged, file, lineOffset = 0, allowed 
 			}
 			const markers = new Map((m.markers ?? []).map((k) => [k.name, k]));
 			if (!markers.size) continue;
-			walkElements(el, (d) => {
+			// The declaring element carries the same markers as its descendants
+			// (a box painted on its own root is still a box), so it is checked
+			// with the same logic rather than only what walkElements finds below it.
+			const checkMarkers = (d) => {
 				for (const [name, value] of attributes(d)) {
 					const marker = markers.get(name);
 					if (!marker) continue;
@@ -105,7 +108,9 @@ export function validateElementTree(root, merged, file, lineOffset = 0, allowed 
 					if (marker.type === 'enum' && !marker.values.includes(value)) report(`${name}="${value}" on <${d.tagName}> is not one of ${marker.values.join(', ')}`);
 					if (marker.type === 'boolean' && value !== '') report(`${name} on <${d.tagName}> is a boolean attribute and takes no value`);
 				}
-			});
+			};
+			checkMarkers(el);
+			walkElements(el, checkMarkers);
 		}
 	});
 	return errors;

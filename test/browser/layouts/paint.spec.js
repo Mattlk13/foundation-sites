@@ -61,6 +61,11 @@ for (const scheme of ['light', 'dark']) {
 			expect(rgb(await fg(page, '#paint-black'))).toEqual([255, 255, 255]);
 			expect(rgb(await fg(page, '#paint-grey'))).toEqual([0, 0, 0]);
 			expect(contrast(rgb(await bg(page, '#paint-grey')), rgb(await fg(page, '#paint-grey')))).toBeGreaterThanOrEqual(4.5);
+			// A plain link and a caption inside a painted band take the band's text
+			// colour; before this rule the link was primary on primary.
+			expect(rgb(await fg(page, '#paint-link'))).toEqual(rgb(await fg(page, '#paint-primary')));
+			expect(rgb(await fg(page, '#paint-link'))).not.toEqual(rgb(await bg(page, '#paint-primary')));
+			expect(rgb(await fg(page, '#paint-caption'))).toEqual([255, 255, 255]);
 		});
 
 		test('data-text wins over the automatic text colour, and works alone', async ({ page }) => {

@@ -282,4 +282,11 @@
 	[data-text="grey-80"] { color: var(--yeti-grey-80); }
 	[data-text="grey-90"] { color: var(--yeti-grey-90); }
 	[data-text="grey-100"] { color: var(--yeti-grey-100); }
+
+	/* A plain link and a caption set their own colour in the base layer, so
+	   inside a painted band a link was primary on primary and a caption was
+	   muted on black. Both take the band's colour instead; a link that is a
+	   button keeps its own. */
+	[data-paint] :is(a:not([class]), figcaption),
+	[data-text] :is(a:not([class]), figcaption) { color: inherit; }
 }

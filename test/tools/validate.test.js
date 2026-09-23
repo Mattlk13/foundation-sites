@@ -618,9 +618,10 @@ test('data-paint and data-text are markers checked against the paint vocabulary'
 				{ name: 'data-text', type: 'enum', vocabulary: 'paint', on: '*', description: 'x' },
 			],
 		}),
-		'src/layouts/rail/example.html': '<div class="rail">\n\t<p data-paint="grey-75">x</p>\n\t<span data-text="blue">y</span>\n</div>\n',
+		'src/layouts/rail/example.html': '<div class="rail" data-paint="gray-20">\n\t<p data-paint="grey-75">x</p>\n\t<span data-text="blue">y</span>\n</div>\n',
 	});
 	assert.deepEqual(run(tree).lines, [
+		'src/layouts/rail/example.html:1: .rail <div>: attribute data-paint="gray-20" on <div> is not one of primary, secondary, success, warning, alert, neutral, white, black, grey, grey-0, grey-10, grey-20, grey-30, grey-40, grey-50, grey-60, grey-70, grey-80, grey-90, grey-100',
 		'src/layouts/rail/example.html:2: .rail <div>: attribute data-paint="grey-75" on <p> is not one of primary, secondary, success, warning, alert, neutral, white, black, grey, grey-0, grey-10, grey-20, grey-30, grey-40, grey-50, grey-60, grey-70, grey-80, grey-90, grey-100',
 		'src/layouts/rail/example.html:3: .rail <div>: attribute data-text="blue" on <span> is not one of primary, secondary, success, warning, alert, neutral, white, black, grey, grey-0, grey-10, grey-20, grey-30, grey-40, grey-50, grey-60, grey-70, grey-80, grey-90, grey-100',
 	]);
