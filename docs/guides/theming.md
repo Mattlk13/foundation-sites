@@ -30,6 +30,12 @@ That is why hues and colors have different group names. A hue is something you s
 
 You can still override any derived color directly. `--yeti-color-primary: #0a7;` wins over the derivation for that one role, and every role that reads it, like `--yeti-color-focus`, follows.
 
+Two more families derive from those. The greyscale `--yeti-grey-0` to `--yeti-grey-100`, in tens, mixes the page surface toward the page text, so it follows a theme that sets either pole and flips with the scheme as they do. The hued tones `--yeti-color-primary-0` to `-100`, and the same for every hue, take each grey's lightness and put the hue's angle and chroma under it, so moving `--yeti-hue-primary` moves all eleven. Three constants stand outside the derivation and never move: `--yeti-white`, `--yeti-black`, and `--yeti-grey` at 18% reflectance. A class of your own can read any of them:
+
+```css
+.promo { background-color: var(--yeti-color-primary-20); color: var(--yeti-color-primary-90); }
+```
+
 Two things to know about where you set tokens. Hues, chroma, and the scale inputs only take effect on `:root`, because Yeti computes every derived token there. Forcing a color scheme, and overriding a derived token such as `--yeti-color-primary`, work on any element, so to give one section a different accent, set its derived colors on that section rather than its hue.
 
 ## Reading an oklch value
