@@ -110,7 +110,7 @@ A grey names a distance, not a color. In light mode the scale runs from white to
 </div>
 ```
 
-Inside a painted element, a plain link and a caption take the element's color too. Without that, a link inside a primary band would be primary on primary. A link that is a button keeps its own colors, because it is a button, and a caption that names its own `data-text` keeps that. A painted element also keeps its background on paper: browsers drop backgrounds when printing unless told otherwise, and a band's words were chosen for that background, so Yeti asks for them to stay; the reader's own print setting can still take them away.
+A button inside a painted band keeps its own colors, and on a band in the brand hue a brand-colored button disappears; paint the button too, `data-paint="white"` on a primary band, and it reads. Inside a painted element, a plain link and a caption take the element's color too. Without that, a link inside a primary band would be primary on primary. A link that is a button keeps its own colors, because it is a button, and a caption that names its own `data-text` keeps that. A painted element also keeps its background on paper: browsers drop backgrounds when printing unless told otherwise, and a band's words were chosen for that background, so Yeti asks for them to stay; the reader's own print setting can still take them away.
 
 ```html demo md
 <div class="stack" data-gap="md">

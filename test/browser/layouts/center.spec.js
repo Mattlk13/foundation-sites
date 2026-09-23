@@ -27,6 +27,21 @@ test.describe('center', () => {
 		expect((button.left + button.right) / 2).toBeCloseTo((box.left + box.right) / 2, 0);
 	});
 
+	test('keeps its width inside a stack, where auto margins would shrink it', async ({ page }) => {
+		await open(page, 'center', 1000);
+		const [sm, md] = await Promise.all([token(page, '--yeti-width-sm'), token(page, '--yeti-space-md')]);
+		let [stack, stacked] = await Promise.all([rect(page, '#in-stack'), rect(page, '#stacked')]);
+		// Wide: the content is capped at sm plus the two gutters, and centered.
+		expect(stacked.width).toBeCloseTo(sm + 2 * md, 0);
+		expect(stacked.left - stack.left).toBeCloseTo((stack.width - stacked.width) / 2, 0);
+		// Narrow: it is the stack's whole width, gutters included.
+		await stage(page, 300);
+		[stack, stacked] = await Promise.all([rect(page, '#in-stack'), rect(page, '#stacked')]);
+		expect(stacked.width).toBeCloseTo(stack.width, 0);
+		// Falsification: the paragraph inside is narrower than the column by the gutters.
+		expect((await rect(page, '#stacked p')).width).toBeCloseTo(stack.width - 2 * md, 0);
+	});
+
 	test('has no accessibility violations', async ({ page }) => {
 		await open(page, 'center');
 		expect(await axe(page)).toEqual([]);

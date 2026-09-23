@@ -3,6 +3,13 @@
 @layer yeti.layouts {
 	.center {
 		box-sizing: content-box;
+		/* An explicit width rather than auto, and the gutters taken off it so
+		   the box is still the container's width. In block flow auto would do
+		   the same; inside a stack, a flex column, it would not: auto margins
+		   take the free space before alignment can stretch the item, and a
+		   center in a stack collapsed to its content. A page that is a stack
+		   of centered sections is the most ordinary page there is. */
+		inline-size: calc(100% - 2 * var(--_yeti-gap));
 		max-inline-size: var(--_yeti-max);
 		margin-inline: auto;
 		padding-inline: var(--_yeti-gap);
