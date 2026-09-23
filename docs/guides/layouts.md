@@ -105,6 +105,7 @@ Every layout is configured with a small set of `data-*` attributes, drawn from a
 | `data-min` | `none`, `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | grid, masonry |
 | `data-note` | boolean | breakout (> *) |
 | `data-over` | boolean | overlay (> *) |
+| `data-paint` | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral`, `white`, `black`, `grey`, `grey-0`, `grey-10`, `grey-20`, `grey-30`, `grey-40`, `grey-50`, `grey-60`, `grey-70`, `grey-80`, `grey-90`, `grey-100` | box (*) |
 | `data-ratio` | `1/1`, `4/3`, `3/2`, `16/9`, `21/9` | frame, hero, media |
 | `data-rows` | `2`, `3`, `4`, `5`, `6` | grid |
 | `data-show` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | container (*) |
@@ -114,6 +115,7 @@ Every layout is configured with a small set of `data-*` attributes, drawn from a
 | `data-split` | boolean | stack (> *) |
 | `data-sticky` | boolean | shell (> div > :is(nav, aside)), sidebar (> *), stack (> *) |
 | `data-surface` | `base`, `raised`, `sunken` | box |
+| `data-text` | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral`, `white`, `black`, `grey`, `grey-0`, `grey-10`, `grey-20`, `grey-30`, `grey-40`, `grey-50`, `grey-60`, `grey-70`, `grey-80`, `grey-90`, `grey-100` | box (*) |
 | `data-threshold` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | columns, hero |
 | `data-width` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | media, scroller, shell, sidebar |
 
