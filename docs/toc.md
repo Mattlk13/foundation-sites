@@ -13,8 +13,8 @@ nav_order: 6
 
 ## Example
 
-<figure class="demo" data-height="sm">
-<div data-preview="Toc"><iframe title="Toc, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;nav class=&quot;toc&quot; aria-label=&quot;On this page&quot;&gt;&#10;	&lt;ul role=&quot;list&quot;&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#getting-the-files&quot; aria-current=&quot;true&quot;&gt;Getting the files&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#the-stylesheet&quot;&gt;The stylesheet&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#a-module&quot;&gt;A module&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#editor-completion&quot;&gt;Editor completion&lt;/a&gt;&lt;/li&gt;&#10;	&lt;/ul&gt;&#10;&lt;/nav&gt;"></iframe></div>
+<figure class="demo" data-height="lg">
+<div data-preview="Toc"><iframe title="Toc, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;nav class=&quot;toc&quot; aria-label=&quot;On this page&quot;&gt;&#10;	&lt;ul role=&quot;list&quot;&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#&quot;&gt;Getting the files&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#&quot; aria-current=&quot;true&quot;&gt;The stylesheet&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#&quot;&gt;A module&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#&quot;&gt;The vocabulary&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#&quot;&gt;A first layout&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#&quot;&gt;Editor completion&lt;/a&gt;&lt;/li&gt;&#10;		&lt;li&gt;&lt;a href=&quot;#&quot;&gt;Going further&lt;/a&gt;&lt;/li&gt;&#10;	&lt;/ul&gt;&#10;&lt;/nav&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
@@ -22,10 +22,13 @@ nav_order: 6
 ```html
 <nav class="toc" aria-label="On this page">
 	<ul role="list">
-		<li><a href="#getting-the-files" aria-current="true">Getting the files</a></li>
-		<li><a href="#the-stylesheet">The stylesheet</a></li>
-		<li><a href="#a-module">A module</a></li>
-		<li><a href="#editor-completion">Editor completion</a></li>
+		<li><a href="#">Getting the files</a></li>
+		<li><a href="#" aria-current="true">The stylesheet</a></li>
+		<li><a href="#">A module</a></li>
+		<li><a href="#">The vocabulary</a></li>
+		<li><a href="#">A first layout</a></li>
+		<li><a href="#">Editor completion</a></li>
+		<li><a href="#">Going further</a></li>
 	</ul>
 </nav>
 ```

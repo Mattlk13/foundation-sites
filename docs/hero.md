@@ -13,18 +13,18 @@ nav_order: 4
 
 ## Example
 
-<figure class="demo" data-height="xl">
-<div data-preview="Hero"><iframe title="Hero, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;header class=&quot;hero&quot;&gt;&#10;	&lt;div&gt;&#10;		&lt;h1&gt;Build interfaces that read their own container&lt;/h1&gt;&#10;		&lt;p&gt;Fifteen layouts, one attribute vocabulary, no breakpoints.&lt;/p&gt;&#10;		&lt;a href=&quot;#&quot;&gt;Get started&lt;/a&gt;&#10;	&lt;/div&gt;&#10;	&lt;img src=&quot;peak.jpg&quot; alt=&quot;A snow ridge at first light&quot;&gt;&#10;&lt;/header&gt;"></iframe></div>
+<figure class="demo" data-height="xl" data-resize="both">
+<div data-preview="Hero"><iframe title="Hero, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;header class=&quot;hero box&quot; data-threshold=&quot;sm&quot; data-gap=&quot;lg&quot; data-surface=&quot;sunken&quot;&gt;&#10;	&lt;div&gt;&#10;		&lt;h1&gt;Build interfaces that read their own container&lt;/h1&gt;&#10;		&lt;p&gt;Fifteen layouts, one attribute vocabulary, no breakpoints.&lt;/p&gt;&#10;		&lt;a class=&quot;button&quot; href=&quot;#&quot;&gt;Get started&lt;/a&gt;&#10;	&lt;/div&gt;&#10;	&lt;img src=&quot;peak.jpg&quot; alt=&quot;A snow ridge at first light&quot;&gt;&#10;&lt;/header&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
 
 ```html
-<header class="hero">
+<header class="hero box" data-threshold="sm" data-gap="lg" data-surface="sunken">
 	<div>
 		<h1>Build interfaces that read their own container</h1>
 		<p>Fifteen layouts, one attribute vocabulary, no breakpoints.</p>
-		<a href="#">Get started</a>
+		<a class="button" href="#">Get started</a>
 	</div>
 	<img src="peak.jpg" alt="A snow ridge at first light">
 </header>

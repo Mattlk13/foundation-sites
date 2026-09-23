@@ -13,21 +13,22 @@ nav_order: 7
 
 ## Example
 
-<figure class="demo" data-height="md">
-<div data-preview="Seam"><iframe title="Seam, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;section class=&quot;box&quot; data-surface=&quot;raised&quot; data-gap=&quot;sm&quot;&gt;&#10;	&lt;p&gt;A plain section above.&lt;/p&gt;&#10;&lt;/section&gt;&#10;&lt;section class=&quot;seam box&quot; data-shape=&quot;wave&quot; data-surface=&quot;sunken&quot; data-gap=&quot;sm&quot;&gt;&#10;	&lt;p&gt;A wave cut from this section&#39;s own background, so what is behind shows through it.&lt;/p&gt;&#10;&lt;/section&gt;&#10;&lt;section class=&quot;box&quot; data-surface=&quot;raised&quot; data-gap=&quot;sm&quot;&gt;&#10;	&lt;p&gt;And a plain section below.&lt;/p&gt;&#10;&lt;/section&gt;"></iframe></div>
+<figure class="demo" data-height="xl">
+<div data-preview="Seam"><iframe title="Seam, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:0&quot;&gt;&lt;section class=&quot;center box&quot; data-max=&quot;lg&quot;&gt;&#10;	&lt;p&gt;A plain section above. Its bottom edge is a straight line, the way a section&#39;s edge always was, and the seam below is cut from the next section&#39;s own background, so this one shows through the cut.&lt;/p&gt;&#10;&lt;/section&gt;&#10;&lt;section class=&quot;seam box&quot; data-shape=&quot;wave&quot; data-edge=&quot;both&quot; data-surface=&quot;raised&quot; data-gap=&quot;lg&quot;&gt;&#10;	&lt;p&gt;A wave cut into both edges of this section, top and bottom, out of its own background. The cut is part of the section, not a stripe laid over the join, so it runs the full width of whatever the section is in: drag the box narrower and the wave is redrawn to fit.&lt;/p&gt;&#10;	&lt;p&gt;The depth of the cut is added as space on the cut edge, so the text never sits in the wave. Pick a slant or a curve from the controls, or flip the shape, and the section keeps its content where it was.&lt;/p&gt;&#10;&lt;/section&gt;&#10;&lt;section class=&quot;center box&quot; data-max=&quot;lg&quot;&gt;&#10;	&lt;p&gt;And a plain section below, showing through the cut above it. Give this one a seam too and the page alternates, section by section.&lt;/p&gt;&#10;&lt;/section&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
 
 ```html
-<section class="box" data-surface="raised" data-gap="sm">
-	<p>A plain section above.</p>
+<section class="center box" data-max="lg">
+	<p>A plain section above. Its bottom edge is a straight line, the way a section's edge always was, and the seam below is cut from the next section's own background, so this one shows through the cut.</p>
 </section>
-<section class="seam box" data-shape="wave" data-surface="sunken" data-gap="sm">
-	<p>A wave cut from this section's own background, so what is behind shows through it.</p>
+<section class="seam box" data-shape="wave" data-edge="both" data-surface="raised" data-gap="lg">
+	<p>A wave cut into both edges of this section, top and bottom, out of its own background. The cut is part of the section, not a stripe laid over the join, so it runs the full width of whatever the section is in: drag the box narrower and the wave is redrawn to fit.</p>
+	<p>The depth of the cut is added as space on the cut edge, so the text never sits in the wave. Pick a slant or a curve from the controls, or flip the shape, and the section keeps its content where it was.</p>
 </section>
-<section class="box" data-surface="raised" data-gap="sm">
-	<p>And a plain section below.</p>
+<section class="center box" data-max="lg">
+	<p>And a plain section below, showing through the cut above it. Give this one a seam too and the page alternates, section by section.</p>
 </section>
 ```
 

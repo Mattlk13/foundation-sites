@@ -84,7 +84,7 @@ export function escapeAttribute(text) {
 // ahead of everything else points relative example URLs — images, above all —
 // at the stylesheet's own folder, since a srcdoc frame otherwise resolves
 // them against the docs page.
-export function renderDemo({ title, exampleHtml, stylesheet, height = 'lg', width, resize }) {
+export function renderDemo({ title, exampleHtml, stylesheet, height = 'lg', width, resize, bleed = false }) {
 	// More than one stylesheet is allowed, and is how a themed host should do
 	// it: the page has already fetched yeti.css, so naming that same URL first
 	// and a small theme after it costs the frame one short file rather than a
@@ -103,7 +103,12 @@ export function renderDemo({ title, exampleHtml, stylesheet, height = 'lg', widt
 	// would load the whole docs page inside the demo. This cancels a click on a
 	// link that was only ever a placeholder, and leaves every real href alone.
 	const inert = '<script>addEventListener("click",function(e){var a=e.target.closest&&e.target.closest(\'a[href="#"]\');if(a)e.preventDefault();});</script>';
-	const doc = `<base href="${base}">${links}<script type="module" src="${base}yeti.js"></script>${inert}<body style="margin:0;padding:var(--yeti-space-md)">${exampleHtml.trim()}`;
+	// The body is padded so an example sits off the frame's edge, as it would
+	// on a page. A demo that bleeds asks for that padding to go, because its
+	// point is the edge: a seam cut across the full width, a band that runs
+	// out of the box. The reader sees the example reach the frame's border.
+	const padding = bleed ? '0' : 'var(--yeti-space-md)';
+	const doc = `<base href="${base}">${links}<script type="module" src="${base}yeti.js"></script>${inert}<body style="margin:0;padding:${padding}">${exampleHtml.trim()}`;
 	const srcdoc = escapeAttribute(doc).replace(/\r?\n/g, '&#10;');
 	return [
 		`<figure class="demo" data-height="${height}"${width ? ` data-width="${width}"` : ''}${resize ? ` data-resize="${resize}"` : ''}>`,
@@ -141,7 +146,7 @@ export function renderPage({ manifest: m, exampleHtml, navOrder, docsMd = '', de
 	// layout would otherwise lose it silently.
 	out.push(`${GENERATED_MARK} from src/${dir}/${m.name}/manifest.json. Do not edit. -->`, '', `# ${title}`, '', `<p class="lede">${m.description}</p>`, '');
 
-	out.push('## Example', '', renderDemo({ title, exampleHtml, stylesheet: demoStylesheet, height: m.demo?.height, width: m.demo?.width, resize: m.demo?.resize }), '');
+	out.push('## Example', '', renderDemo({ title, exampleHtml, stylesheet: demoStylesheet, height: m.demo?.height, width: m.demo?.width, resize: m.demo?.resize, bleed: m.demo?.bleed }), '');
 	if (docsMd.trim()) out.push(docsMd.trim(), '');
 
 	out.push('## Attributes', '');

@@ -300,6 +300,15 @@ test('renderPage passes a manifest demo block through to the figure', () => {
 	assert.ok(page.includes('<figure class="demo" data-height="sm" data-width="md">'));
 });
 
+test('renderDemo pads the frame body unless the demo bleeds', () => {
+	const padded = renderDemo({ title: 'Seam', exampleHtml: '<p></p>', stylesheet: '/y.css' });
+	assert.ok(padded.includes('padding:var(--yeti-space-md)'), 'a body padded by default');
+	const bled = renderDemo({ title: 'Seam', exampleHtml: '<p></p>', stylesheet: '/y.css', bleed: true });
+	assert.ok(bled.includes('margin:0;padding:0&quot;'), 'no padding when the demo bleeds');
+	assert.ok(!bled.includes('yeti-space-md'), 'and the padded form is gone');
+	assert.ok(!bled.includes('data-bleed'), 'the figure itself carries nothing for it');
+});
+
 test('renderDemo links the module bundle into every frame, beside the stylesheet', () => {
 	const out = renderDemo({ title: 'Dialog', exampleHtml: '<p></p>', stylesheet: '/assets/y.css' });
 	assert.ok(out.includes('&lt;link rel=&quot;stylesheet&quot; href=&quot;/assets/y.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/assets/yeti.js&quot;&gt;&lt;/script&gt;'));

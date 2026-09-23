@@ -54,7 +54,7 @@
     },
     "since": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
     "example": { "const": "example.html" },
-    "demo": { "type": "object", "additionalProperties": false, "description": "How the docs frame this component's example: the preview box's height (lg when absent) and its starting width (the full column when absent).", "properties": { "height": { "enum": ["sm", "md", "lg", "xl"] }, "width": { "enum": ["xs", "sm", "md", "lg", "xl", "2xl"] }, "resize": { "enum": ["width", "both"] } } }
+    "demo": { "type": "object", "additionalProperties": false, "description": "How the docs frame this component's example: the preview box's height (lg when absent), its starting width (the full column when absent), whether the reader can pull it taller, and whether the example bleeds to the frame's edge.", "properties": { "height": { "enum": ["sm", "md", "lg", "xl"] }, "width": { "enum": ["xs", "sm", "md", "lg", "xl", "2xl"] }, "resize": { "enum": ["width", "both"] }, "bleed": { "type": "boolean", "description": "Drop the frame body's padding, so the example reaches the frame's edge." } } }
   },
   "$defs": {
     "attribute": {

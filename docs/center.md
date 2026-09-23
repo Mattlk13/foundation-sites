@@ -14,15 +14,16 @@ nav_order: 2
 ## Example
 
 <figure class="demo" data-height="lg">
-<div data-preview="Center"><iframe title="Center, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;main class=&quot;center box&quot; data-max=&quot;lg&quot; data-surface=&quot;raised&quot; data-border&gt;&#10;	&lt;h1&gt;A readable column&lt;/h1&gt;&#10;	&lt;p&gt;Never wider than the maximum, never touching the screen edge.&lt;/p&gt;&#10;&lt;/main&gt;"></iframe></div>
+<div data-preview="Center"><iframe title="Center, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;main class=&quot;center box&quot; data-max=&quot;md&quot; data-surface=&quot;raised&quot; data-border&gt;&#10;	&lt;h1&gt;A readable column&lt;/h1&gt;&#10;	&lt;p&gt;Never wider than the maximum, never touching the screen edge. This is the page column: the wrapper around an article, a settings form, a sign-in screen, anything that should sit in the middle of a wide screen at a width the eye can follow.&lt;/p&gt;&#10;	&lt;p&gt;Drag the box narrower and the column keeps its gutters, so the text never meets the edge. Widen it past the maximum and the column stops growing and the space on either side grows instead.&lt;/p&gt;&#10;&lt;/main&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
 
 ```html
-<main class="center box" data-max="lg" data-surface="raised" data-border>
+<main class="center box" data-max="md" data-surface="raised" data-border>
 	<h1>A readable column</h1>
-	<p>Never wider than the maximum, never touching the screen edge.</p>
+	<p>Never wider than the maximum, never touching the screen edge. This is the page column: the wrapper around an article, a settings form, a sign-in screen, anything that should sit in the middle of a wide screen at a width the eye can follow.</p>
+	<p>Drag the box narrower and the column keeps its gutters, so the text never meets the edge. Widen it past the maximum and the column stops growing and the space on either side grows instead.</p>
 </main>
 ```
 

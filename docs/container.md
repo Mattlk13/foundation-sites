@@ -13,8 +13,8 @@ nav_order: 2
 
 ## Example
 
-<figure class="demo" data-height="lg">
-<div data-preview="Container"><iframe title="Container, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;container box&quot; data-surface=&quot;raised&quot; data-border&gt;&#10;	&lt;nav class=&quot;cluster&quot; aria-label=&quot;Site&quot;&gt;&#10;		&lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;&#10;		&lt;a href=&quot;#&quot;&gt;Docs&lt;/a&gt;&#10;	&lt;/nav&gt;&#10;&lt;/div&gt;"></iframe></div>
+<figure class="demo" data-height="sm">
+<div data-preview="Container"><iframe title="Container, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;container box&quot; data-surface=&quot;raised&quot; data-border&gt;&#10;	&lt;nav class=&quot;cluster&quot; aria-label=&quot;Site&quot;&gt;&#10;		&lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;&#10;		&lt;a href=&quot;#&quot;&gt;Docs&lt;/a&gt;&#10;		&lt;a href=&quot;#&quot; data-show=&quot;sm&quot;&gt;Guides&lt;/a&gt;&#10;		&lt;a href=&quot;#&quot; data-show=&quot;sm&quot;&gt;Blog&lt;/a&gt;&#10;		&lt;a href=&quot;#&quot; data-show=&quot;md&quot;&gt;Changelog&lt;/a&gt;&#10;		&lt;a href=&quot;#&quot; data-show=&quot;md&quot;&gt;Community&lt;/a&gt;&#10;		&lt;a href=&quot;#&quot; data-show=&quot;lg&quot;&gt;Contact&lt;/a&gt;&#10;	&lt;/nav&gt;&#10;	&lt;p data-hide=&quot;sm&quot;&gt;Narrower than sm: two links.&lt;/p&gt;&#10;	&lt;p data-show=&quot;sm&quot; data-hide=&quot;md&quot;&gt;At least sm wide: four links.&lt;/p&gt;&#10;	&lt;p data-show=&quot;md&quot; data-hide=&quot;lg&quot;&gt;At least md wide: six links.&lt;/p&gt;&#10;	&lt;p data-show=&quot;lg&quot;&gt;At least lg wide: every link.&lt;/p&gt;&#10;&lt;/div&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
@@ -24,7 +24,16 @@ nav_order: 2
 	<nav class="cluster" aria-label="Site">
 		<a href="#">Home</a>
 		<a href="#">Docs</a>
+		<a href="#" data-show="sm">Guides</a>
+		<a href="#" data-show="sm">Blog</a>
+		<a href="#" data-show="md">Changelog</a>
+		<a href="#" data-show="md">Community</a>
+		<a href="#" data-show="lg">Contact</a>
 	</nav>
+	<p data-hide="sm">Narrower than sm: two links.</p>
+	<p data-show="sm" data-hide="md">At least sm wide: four links.</p>
+	<p data-show="md" data-hide="lg">At least md wide: six links.</p>
+	<p data-show="lg">At least lg wide: every link.</p>
 </div>
 ```
 

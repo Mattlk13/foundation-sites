@@ -10,9 +10,21 @@
   "children": [],
   "markers": [],
   "tokens": [
-    { "name": "--yeti-lede-size", "public": true, "description": "How large a lede reads." },
-    { "name": "--yeti-lede-measure", "public": true, "description": "The lede's line length; moves with its size, since ch is a unit of the font." },
-    { "name": "--yeti-leading-md", "public": true, "description": "Its line height, the same as body prose." }
+    {
+      "name": "--yeti-lede-size",
+      "public": true,
+      "description": "How large a lede reads."
+    },
+    {
+      "name": "--yeti-lede-measure",
+      "public": true,
+      "description": "The lede's line length; moves with its size, since ch is a unit of the font."
+    },
+    {
+      "name": "--yeti-leading-md",
+      "public": true,
+      "description": "Its line height, the same as body prose."
+    }
   ],
   "a11y": {
     "requiredAttributes": [],
@@ -20,7 +32,13 @@
     "notes": "A lede takes no role and announces nothing of its own. It is ordinary prose set larger, and its position under the heading already says what it is."
   },
   "js": null,
-  "support": { "unguarded": [], "guarded": [] },
+  "support": {
+    "unguarded": [],
+    "guarded": []
+  },
   "since": "7.0.0",
-  "example": "example.html"
+  "example": "example.html",
+  "demo": {
+    "height": "md"
+  }
 }
