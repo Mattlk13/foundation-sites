@@ -387,6 +387,7 @@ The native progress element as a thin bar in a hue, filled to its value, or stri
 Attributes:
 - data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — The hue of the filled part.
 - data-size: sm | md (default) | lg — The bar's thickness: half the size's space step.
+- data-scroll (boolean) — Fill with how far the nearest scroll container has been scrolled, the page when the bar is at its top, instead of with a value: a reading-progress bar. On a block with the class, not a progress element, and hidden from assistive tech; where a scroll timeline is unsupported the bar is not shown.
 
 ## seam (component, class="seam")
 

@@ -1911,6 +1911,7 @@ The native progress element as a thin bar in a hue, filled to its value, or stri
 Attributes:
 - data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — The hue of the filled part.
 - data-size: sm | md (default) | lg — The bar's thickness: half the size's space step.
+- data-scroll (boolean) — Fill with how far the nearest scroll container has been scrolled, the page when the bar is at its top, instead of with a value: a reading-progress bar. On a block with the class, not a progress element, and hidden from assistive tech; where a scroll timeline is unsupported the bar is not shown.
 
 ### When to use it
 
@@ -1924,6 +1925,19 @@ The native `progress` element, with its own drawing switched off and a thin roun
 <progress class="progress" data-variant="success" data-size="lg" value="3" max="5" aria-label="Steps">3 of 5</progress>
 <progress class="progress" aria-label="Loading">Loading</progress>
 ```
+
+### Reading progress
+
+`data-scroll` makes the bar fill with how far the nearest scroll container has been scrolled: the page, when the bar sits at its top, or a `scroller`, when the bar is inside one. It is the one form of progress that is not a `progress` element, because there is no value to announce: it is a block with the class, and it carries `aria-hidden` so a reader is not told about a bar that only mirrors their own scrolling. Pin it with `data-sticky` as the first child of the page's stack.
+
+```html
+<div class="stack">
+	<div class="progress" data-scroll aria-hidden="true" data-sticky></div>
+	…
+</div>
+```
+
+It is guarded by `@supports`, and where a scroll timeline is missing the bar is not shown at all: a bar that never moved would say the reader had not started. It is not switched off under reduced motion, because nothing in it moves on its own; the fill follows the reader's hand and stops when they do.
 
 ### Accessibility
 
@@ -1945,8 +1959,8 @@ Tokens:
 - --yeti-motion-iterations — How many times the indeterminate sweep repeats; one under reduced motion.
 
 Accessibility contract:
-Required: aria-label | aria-labelledby
-Put the class on a progress element and give it a name with aria-label or aria-labelledby. Keep its text content current ("40%"), since older assistive tech reads that. Leave out value for work whose length is unknown; the element is then indeterminate and says so.
+Required: aria-label | aria-labelledby | aria-hidden
+Put the class on a progress element and give it a name with aria-label or aria-labelledby. Keep its text content current ("40%"), since older assistive tech reads that. Leave out value for work whose length is unknown; the element is then indeterminate and says so. A reading-progress bar has no value to announce, so it carries aria-hidden instead of a name; the rule accepts either.
 
 ## seam (component, class="seam")
 

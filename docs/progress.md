@@ -13,14 +13,21 @@ nav_order: 3
 
 ## Example
 
-<figure class="demo" data-height="sm">
-<div data-preview="Progress"><iframe title="Progress, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;progress class=&quot;progress&quot; value=&quot;40&quot; max=&quot;100&quot; aria-label=&quot;Upload&quot;&gt;40%&lt;/progress&gt;"></iframe></div>
+<figure class="demo" data-height="md">
+<div data-preview="Progress"><iframe title="Progress, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;stack&quot; data-gap=&quot;md&quot;&gt;&#10;	&lt;div class=&quot;progress&quot; data-scroll aria-hidden=&quot;true&quot; data-sticky&gt;&lt;/div&gt;&#10;	&lt;progress class=&quot;progress&quot; value=&quot;40&quot; max=&quot;100&quot; aria-label=&quot;Upload&quot;&gt;40%&lt;/progress&gt;&#10;	&lt;p&gt;The thin bar pinned at the top is a reading-progress bar: it fills as this box is scrolled, and it is the one form of progress that is not a progress element, since there is no value to announce.&lt;/p&gt;&#10;	&lt;p&gt;The bar under it is the ordinary kind, a native progress element with a value, drawn in the hue.&lt;/p&gt;&#10;	&lt;p&gt;Scroll on and the top bar fills; scroll back and it empties. It follows the reader&#39;s own hand and never moves by itself, which is why it stays on under reduced motion.&lt;/p&gt;&#10;	&lt;p&gt;Where a scroll timeline is unsupported the top bar is not shown at all. A bar that never moved would say the reader had not started.&lt;/p&gt;&#10;&lt;/div&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
 
 ```html
-<progress class="progress" value="40" max="100" aria-label="Upload">40%</progress>
+<div class="stack" data-gap="md">
+	<div class="progress" data-scroll aria-hidden="true" data-sticky></div>
+	<progress class="progress" value="40" max="100" aria-label="Upload">40%</progress>
+	<p>The thin bar pinned at the top is a reading-progress bar: it fills as this box is scrolled, and it is the one form of progress that is not a progress element, since there is no value to announce.</p>
+	<p>The bar under it is the ordinary kind, a native progress element with a value, drawn in the hue.</p>
+	<p>Scroll on and the top bar fills; scroll back and it empties. It follows the reader's own hand and never moves by itself, which is why it stays on under reduced motion.</p>
+	<p>Where a scroll timeline is unsupported the top bar is not shown at all. A bar that never moved would say the reader had not started.</p>
+</div>
 ```
 
 </details>
@@ -39,6 +46,19 @@ The native `progress` element, with its own drawing switched off and a thin roun
 <progress class="progress" aria-label="Loading">Loading</progress>
 ```
 
+## Reading progress
+
+`data-scroll` makes the bar fill with how far the nearest scroll container has been scrolled: the page, when the bar sits at its top, or a `scroller`, when the bar is inside one. It is the one form of progress that is not a `progress` element, because there is no value to announce: it is a block with the class, and it carries `aria-hidden` so a reader is not told about a bar that only mirrors their own scrolling. Pin it with `data-sticky` as the first child of the page's stack.
+
+```html
+<div class="stack">
+	<div class="progress" data-scroll aria-hidden="true" data-sticky></div>
+	…
+</div>
+```
+
+It is guarded by `@supports`, and where a scroll timeline is missing the bar is not shown at all: a bar that never moved would say the reader had not started. It is not switched off under reduced motion, because nothing in it moves on its own; the fill follows the reader's hand and stops when they do.
+
 ## Accessibility
 
 A `progress` element is a progress bar to assistive tech already; it needs a name, from `aria-label` or `aria-labelledby`. Keep the text between the tags current, since some readers announce that rather than the value. An indeterminate bar is announced as busy with no percentage, which is right.
@@ -51,6 +71,7 @@ A `progress` element is a progress bar to assistive tech already; it needs a nam
 | --- | --- | --- | --- | --- |
 | `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `danger`, `neutral` | `primary` | The hue of the filled part. |
 | `data-size` | enum | `sm`, `md`, `lg` | `md` | The bar's thickness: half the size's space step. |
+| `data-scroll` | boolean |  |  | Fill with how far the nearest scroll container has been scrolled, the page when the bar is at its top, instead of with a value: a reading-progress bar. On a block with the class, not a progress element, and hidden from assistive tech; where a scroll timeline is unsupported the bar is not shown. |
 
 </div>
 
@@ -95,13 +116,13 @@ No structural requirements.
 
 ## Accessibility
 
-- Required attributes: `aria-label` or `aria-labelledby`
-- Put the class on a progress element and give it a name with aria-label or aria-labelledby. Keep its text content current ("40%"), since older assistive tech reads that. Leave out value for work whose length is unknown; the element is then indeterminate and says so.
+- Required attributes: `aria-label` or `aria-labelledby` or `aria-hidden`
+- Put the class on a progress element and give it a name with aria-label or aria-labelledby. Keep its text content current ("40%"), since older assistive tech reads that. Leave out value for work whose length is unknown; the element is then indeterminate and says so. A reading-progress bar has no value to announce, so it carries aria-hidden instead of a name; the rule accepts either.
 
 ## Browser support
 
-- Used without guards: appearance: none on progress
-- Behind `@supports`: nothing
+- Used without guards: appearance: none on progress, :dir()
+- Behind `@supports`: animation-timeline: scroll()
 
 ## JavaScript
 

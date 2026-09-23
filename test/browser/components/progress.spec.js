@@ -53,6 +53,29 @@ test.describe('progress', () => {
 		expect(new Set(positions).size).toBe(1);
 	});
 
+	test('data-scroll fills with the scroll of the page, or is not shown where a scroll timeline is missing', async ({ page }) => {
+		await open(page);
+		const supported = await page.evaluate(() => CSS.supports('animation-timeline: scroll()'));
+		if (!supported) {
+			expect(await style(page, '#scroll', 'display')).toBe('none');
+			return;
+		}
+		// A scroll timeline advances with the rendered frame, not the scroll
+		// call, so two frames are waited on after every move.
+		const frames = () => page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
+		const fill = () => page.evaluate(() => parseFloat(getComputedStyle(document.getElementById('scroll'), '::before').scale.split(' ')[0]));
+		await frames();
+		expect(await fill()).toBeCloseTo(0, 1);
+		await page.evaluate(() => window.scrollTo(0, (document.documentElement.scrollHeight - innerHeight) / 2));
+		await frames(); await page.waitForTimeout(100); await frames();
+		expect(await fill()).toBeCloseTo(0.5, 1);
+		await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+		await frames(); await page.waitForTimeout(100); await frames();
+		expect(await fill()).toBeCloseTo(1, 1);
+		// Falsification: a plain value bar has no such fill.
+		expect(await page.evaluate(() => getComputedStyle(document.getElementById('bar'), '::before').content)).toBe('none');
+	});
+
 	test('has no accessibility violations', async ({ page }) => {
 		await open(page);
 		expect(await axe(page)).toEqual([]);

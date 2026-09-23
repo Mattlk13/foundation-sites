@@ -44,3 +44,7 @@ The animation itself stays the browser's. Its crossfade already blends the two s
 Re-timing it is also the only way to honour reduced motion here. No selector reaches an at-rule, and the reset's universal rule does not match a `::view-transition` pseudo-element, so the collapsed `--yeti-page-duration` is what stills the crossfade. Write your own view-transition animations and you take that back on yourself, so read the same two tokens if you do.
 
 A page transition is a whole-page crossfade and nothing more. Carrying one element across two pages needs `view-transition-name` on both, which Yeti has no vocabulary for yet.
+
+## Scroll-driven
+
+Two things in Yeti are paced by the scroll rather than the clock: an `enter` with `data-view` plays its arrival as the element comes into view, and a `progress` with `data-scroll` fills as the page is read. Both use `animation-timeline`, which is below Baseline, so both are guarded by `@supports`, and each fallback is honest: the arrival plays on load, and the reading bar is not shown. They answer reduced motion differently, on purpose. The arrival is switched off, because a scroll-paced animation ignores the collapsed duration and would move content a reader asked not to see move. The reading bar stays, because nothing in it moves on its own; it only mirrors the reader's hand.

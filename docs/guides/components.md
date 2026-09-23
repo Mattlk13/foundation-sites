@@ -57,6 +57,7 @@ Those three are the ones that repeat. Here is the whole list, every attribute th
 | `data-raised` | boolean | card |
 | `data-ratio` | `1/1`, `4/3`, `3/2`, `16/9`, `21/9` | card |
 | `data-resize` | `width`, `both` | demo |
+| `data-scroll` | boolean | progress |
 | `data-shape` | `slant`, `curve`, `wave` | seam |
 | `data-side` | `start`, `end` | dropdown, enter |
 | `data-size` | `sm`, `md`, `lg` | badge, breadcrumbs, button, field, pagination, progress, seam, spinner, table, toc |
