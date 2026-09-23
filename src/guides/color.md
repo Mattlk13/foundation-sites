@@ -77,65 +77,35 @@ Anything can be painted. `data-paint` sets the background of any element, and th
 - **`white`, `black` and `grey`** are the only three colors in Yeti that never move: white and black are what they say, and `grey` is 18% reflectance, the photographic middle. White takes black text, black takes white, and grey takes black. Reach for them when a thing must be that color on every page, a caption band over a photograph, and for the greyscale otherwise.
 - **`grey-0` to `grey-100`**, in tens, is the greyscale. `grey-0` is the page surface and `grey-100` is the page text, and each step is ten percent of the way from the one toward the other. A painted grey takes the page text up to `grey-40` and the page surface from `grey-50`, because half-way toward the text is where the text stops reading. The middle steps, `grey-40` to `grey-60`, suit a fill more than a block of text: no text color reaches full contrast on them.
 
-A grey names a distance, not a color. In light mode the scale runs from white toward black; in dark mode from black toward white; and `grey-20` is a quiet panel near the page in both. That is the whole reason the steps are numbers and not names. The frame below forces one column light and the other dark, so both readings sit side by side whatever your own setting is; the second row of each is the primary hue at the same eleven steps, which is a token rather than a paint value.
+A grey names a distance, not a color. In light mode the scale runs from white toward black; in dark mode from black toward white; and `grey-20` is a quiet panel near the page in both. That is the whole reason the steps are numbers and not names. The frame below shows the scale the way the page's own scheme reads it, so on a page that follows your setting it reverses when you change it; the second row is the primary hue at the same eleven steps, which is a token rather than a paint value.
 
-```html demo md
-<div class="columns" data-threshold="sm" data-gap="sm">
-	<div class="box" data-paint="grey-0" style="color-scheme: light">
-		<div class="cluster" data-gap="xs">
-			<span class="box" data-gap="xs" data-paint="grey-0">0</span>
-			<span class="box" data-gap="xs" data-paint="grey-10">10</span>
-			<span class="box" data-gap="xs" data-paint="grey-20">20</span>
-			<span class="box" data-gap="xs" data-paint="grey-30">30</span>
-			<span class="box" data-gap="xs" data-paint="grey-40">40</span>
-			<span class="box" data-gap="xs" data-paint="grey-50">50</span>
-			<span class="box" data-gap="xs" data-paint="grey-60">60</span>
-			<span class="box" data-gap="xs" data-paint="grey-70">70</span>
-			<span class="box" data-gap="xs" data-paint="grey-80">80</span>
-			<span class="box" data-gap="xs" data-paint="grey-90">90</span>
-			<span class="box" data-gap="xs" data-paint="grey-100">100</span>
-		</div>
-		<div class="cluster" data-gap="xs" aria-hidden="true">
-			<span class="box" data-gap="sm" style="background-color: var(--yeti-color-primary-0)"></span>
-			<span class="box" data-gap="sm" style="background-color: var(--yeti-color-primary-10)"></span>
-			<span class="box" data-gap="sm" style="background-color: var(--yeti-color-primary-20)"></span>
-			<span class="box" data-gap="sm" style="background-color: var(--yeti-color-primary-30)"></span>
-			<span class="box" data-gap="sm" style="background-color: var(--yeti-color-primary-40)"></span>
-			<span class="box" data-gap="sm" style="background-color: var(--yeti-color-primary-50)"></span>
-			<span class="box" data-gap="sm" style="background-color: var(--yeti-color-primary-60)"></span>
-			<span class="box" data-gap="sm" style="background-color: var(--yeti-color-primary-70)"></span>
-			<span class="box" data-gap="sm" style="background-color: var(--yeti-color-primary-80)"></span>
-			<span class="box" data-gap="sm" style="background-color: var(--yeti-color-primary-90)"></span>
-			<span class="box" data-gap="sm" style="background-color: var(--yeti-color-primary-100)"></span>
-		</div>
+```html demo sm
+<div class="stack" data-gap="sm">
+	<div class="cluster" data-gap="xs">
+		<span class="box" data-gap="xs" data-paint="grey-0">0</span>
+		<span class="box" data-gap="xs" data-paint="grey-10">10</span>
+		<span class="box" data-gap="xs" data-paint="grey-20">20</span>
+		<span class="box" data-gap="xs" data-paint="grey-30">30</span>
+		<span class="box" data-gap="xs" data-paint="grey-40">40</span>
+		<span class="box" data-gap="xs" data-paint="grey-50">50</span>
+		<span class="box" data-gap="xs" data-paint="grey-60">60</span>
+		<span class="box" data-gap="xs" data-paint="grey-70">70</span>
+		<span class="box" data-gap="xs" data-paint="grey-80">80</span>
+		<span class="box" data-gap="xs" data-paint="grey-90">90</span>
+		<span class="box" data-gap="xs" data-paint="grey-100">100</span>
 	</div>
-	<div class="box" data-paint="grey-0" style="color-scheme: dark">
-		<div class="cluster" data-gap="xs">
-			<span class="box" data-gap="xs" data-paint="grey-0">0</span>
-			<span class="box" data-gap="xs" data-paint="grey-10">10</span>
-			<span class="box" data-gap="xs" data-paint="grey-20">20</span>
-			<span class="box" data-gap="xs" data-paint="grey-30">30</span>
-			<span class="box" data-gap="xs" data-paint="grey-40">40</span>
-			<span class="box" data-gap="xs" data-paint="grey-50">50</span>
-			<span class="box" data-gap="xs" data-paint="grey-60">60</span>
-			<span class="box" data-gap="xs" data-paint="grey-70">70</span>
-			<span class="box" data-gap="xs" data-paint="grey-80">80</span>
-			<span class="box" data-gap="xs" data-paint="grey-90">90</span>
-			<span class="box" data-gap="xs" data-paint="grey-100">100</span>
-		</div>
-		<div class="cluster" data-gap="xs" aria-hidden="true">
-			<span class="box" data-gap="sm" style="background-color: var(--yeti-color-primary-0)"></span>
-			<span class="box" data-gap="sm" style="background-color: var(--yeti-color-primary-10)"></span>
-			<span class="box" data-gap="sm" style="background-color: var(--yeti-color-primary-20)"></span>
-			<span class="box" data-gap="sm" style="background-color: var(--yeti-color-primary-30)"></span>
-			<span class="box" data-gap="sm" style="background-color: var(--yeti-color-primary-40)"></span>
-			<span class="box" data-gap="sm" style="background-color: var(--yeti-color-primary-50)"></span>
-			<span class="box" data-gap="sm" style="background-color: var(--yeti-color-primary-60)"></span>
-			<span class="box" data-gap="sm" style="background-color: var(--yeti-color-primary-70)"></span>
-			<span class="box" data-gap="sm" style="background-color: var(--yeti-color-primary-80)"></span>
-			<span class="box" data-gap="sm" style="background-color: var(--yeti-color-primary-90)"></span>
-			<span class="box" data-gap="sm" style="background-color: var(--yeti-color-primary-100)"></span>
-		</div>
+	<div class="cluster" data-gap="xs" aria-hidden="true">
+		<span class="box" data-gap="sm" style="background-color: var(--yeti-color-primary-0)"></span>
+		<span class="box" data-gap="sm" style="background-color: var(--yeti-color-primary-10)"></span>
+		<span class="box" data-gap="sm" style="background-color: var(--yeti-color-primary-20)"></span>
+		<span class="box" data-gap="sm" style="background-color: var(--yeti-color-primary-30)"></span>
+		<span class="box" data-gap="sm" style="background-color: var(--yeti-color-primary-40)"></span>
+		<span class="box" data-gap="sm" style="background-color: var(--yeti-color-primary-50)"></span>
+		<span class="box" data-gap="sm" style="background-color: var(--yeti-color-primary-60)"></span>
+		<span class="box" data-gap="sm" style="background-color: var(--yeti-color-primary-70)"></span>
+		<span class="box" data-gap="sm" style="background-color: var(--yeti-color-primary-80)"></span>
+		<span class="box" data-gap="sm" style="background-color: var(--yeti-color-primary-90)"></span>
+		<span class="box" data-gap="sm" style="background-color: var(--yeti-color-primary-100)"></span>
 	</div>
 </div>
 ```
@@ -149,7 +119,7 @@ Inside a painted element, a plain link and a caption take the element's color to
 		<p>Its words are the color made for it, and so is <a href="#">a link inside it</a>. A heading, a paragraph and a link, all readable, nothing set by hand.</p>
 	</section>
 	<section class="box" data-paint="grey-80" data-gap="lg">
-		<p>Past the middle of the scale the words flip to the page surface. This is <code>grey-80</code>, a dark panel on a light page and a pale one on a dark page.</p>
+		<p>Past the middle of the scale the words flip to the page surface. This is grey-80, a dark panel on a light page and a pale one on a dark page.</p>
 	</section>
 	<p data-text="grey-60">Muted words, with no background painted at all.</p>
 </div>
@@ -157,7 +127,7 @@ Inside a painted element, a plain link and a caption take the element's color to
 
 ## Light and dark
 
-Yeti declares `color-scheme: light dark` on the root, so the page follows the reader's setting and every color above resolves for the scheme in use. To force one, set `color-scheme: light` or `dark` on any element and everything below it flips: the hues, the page roles, the greys and the tones. The demo above does exactly that on its two columns. Force it on the root to opt a whole site out of dark mode; force it on a section to keep a photograph's caption band dark on a light page.
+Yeti declares `color-scheme: light dark` on the root, so the page follows the reader's setting and every color above resolves for the scheme in use. To force one, set `color-scheme: light` or `dark` on any element and everything below it flips: the hues, the page roles, the greys and the tones. Force it on the root to opt a whole site out of dark mode; force it on a section to keep a photograph's caption band dark on a light page.
 
 Two things to know. The inputs, the hues and the chroma, only take effect on the root, because the ladder is computed there; so are the greys and the tones. A derived color, `--yeti-color-primary` or `--yeti-color-surface`, can be set on any element, and every role that reads it there follows; the greys do not, because they were mixed at the root from the poles the root had. If a section needs its own greys, force its scheme rather than its surface.
 
