@@ -59,6 +59,6 @@
   "since": "7.0.0",
   "example": "example.html",
   "demo": {
-    "height": "md"
+    "height": "lg"
   }
 }

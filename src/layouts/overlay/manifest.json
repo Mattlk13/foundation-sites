@@ -73,5 +73,7 @@
   },
   "since": "7.0.0",
   "example": "example.html",
-  "demo": { "height": "xl" }
+  "demo": {
+    "height": "lg"
+  }
 }

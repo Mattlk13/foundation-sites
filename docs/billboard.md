@@ -13,7 +13,7 @@ nav_order: 2
 
 ## Example
 
-<figure class="demo" data-height="sm">
+<figure class="demo" data-height="md">
 <div data-preview="Billboard"><iframe title="Billboard, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;container cover box&quot; data-height=&quot;sm&quot; data-paint=&quot;primary&quot;&gt;&#10;	&lt;h2 class=&quot;billboard&quot; data-fit=&quot;lg-3xl&quot; data-center&gt;Type that fills the board it is on&lt;/h2&gt;&#10;&lt;/div&gt;"></iframe></div>
 
 <details markdown="1">
