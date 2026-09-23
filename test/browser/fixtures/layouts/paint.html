@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Paint fixture</title>
+	<link rel="stylesheet" href="../../../../src/yeti.css">
+	<style>
+		#stage { inline-size: 100%; }
+		body { background-color: var(--yeti-color-surface); color: var(--yeti-color-text); }
+		.swatch { display: inline-block; inline-size: 3rem; block-size: 3rem; }
+		.sample { padding: var(--yeti-space-xs) var(--yeti-space-sm); }
+		#p20 { background-color: var(--yeti-color-primary-20); }
+		#alert-probe { color: var(--yeti-color-alert); }
+	</style>
+</head>
+<body>
+	<main>
+		<h1>Paint</h1>
+		<div id="stage">
+			<p>The greyscale, page surface to page text. Swatches only, so the marginal middle carries no text.</p>
+			<div class="cluster" data-gap="xs" aria-hidden="true">
+				<span class="swatch" id="g0" data-paint="grey-0"></span>
+				<span class="swatch" id="g10" data-paint="grey-10"></span>
+				<span class="swatch" id="g20" data-paint="grey-20"></span>
+				<span class="swatch" id="g30" data-paint="grey-30"></span>
+				<span class="swatch" id="g40" data-paint="grey-40"></span>
+				<span class="swatch" id="g50" data-paint="grey-50"></span>
+				<span class="swatch" id="g60" data-paint="grey-60"></span>
+				<span class="swatch" id="g70" data-paint="grey-70"></span>
+				<span class="swatch" id="g80" data-paint="grey-80"></span>
+				<span class="swatch" id="g90" data-paint="grey-90"></span>
+				<span class="swatch" id="g100" data-paint="grey-100"></span>
+				<span class="swatch" id="p20"></span>
+			</div>
+			<div class="stack" data-gap="sm">
+				<p class="sample" id="paint-primary" data-paint="primary">primary, with on-primary, and <a href="#" id="paint-link">a link that inherits it</a></p>
+				<p class="sample" id="paint-white" data-paint="white">white, with black text</p>
+				<p class="sample" id="paint-black" data-paint="black">black, with white text</p>
+				<p class="sample" id="paint-grey" data-paint="grey">grey, the 18% constant, with black text</p>
+				<p class="sample" id="paint-g20" data-paint="grey-20">grey-20, page text on it</p>
+				<p class="sample" id="paint-g80" data-paint="grey-80">grey-80, page surface on it</p>
+				<p class="sample" id="both" data-paint="grey-80" data-text="grey-20">grey-80 painted, grey-20 text: data-text wins</p>
+				<figure id="paint-figure" data-paint="black"><figcaption id="paint-caption">a caption that inherits the band's white</figcaption></figure>
+				<p class="sample" id="text-alert" data-text="alert">alert text on the page</p>
+				<span id="alert-probe" hidden>probe</span>
+			</div>
+		</div>
+	</main>
+</body>
+</html>

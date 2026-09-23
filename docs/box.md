@@ -50,6 +50,23 @@ There is no corner radius, on purpose. A box is square. A rounded panel that lif
 </div>
 ```
 
+## Painting anything
+
+`data-surface` names a role of the page: raised, sunken, or the page itself. `data-paint` names a colour, and any element can carry it, not only a box: a section, a heading, a table cell. The value is one of the six hues at its base step, one of three constants, or a step of the greyscale.
+
+```html
+<section data-paint="primary">A band in the brand colour, with the text made for it.</section>
+<aside class="box" data-paint="grey-20">A quiet panel, a little off the page.</aside>
+<figcaption data-paint="black">A caption band that is black on every page.</figcaption>
+<p data-text="grey-60">Muted words, with no background painted.</p>
+```
+
+A painted hue takes the text its base colour was made for, the same pair a button uses. A painted grey takes the page text up to `grey-40` and the page surface from `grey-50`, because half-way toward the text is where the text stops reading. The middle steps, `grey-40` to `grey-60`, suit a fill more than a block of text: no text colour reaches full contrast on them. `data-text` sets the words alone, from the same list, and on an element that is also painted it wins over that automatic colour.
+
+The greyscale is scheme-aware. `grey-0` is the page surface and `grey-100` is the page text, each step ten percent further from the one toward the other, so `grey-20` is near the page in light mode and in dark mode, and a theme that sets its own surface and text gets its own greys. A grey names a distance, not a colour. `white`, `black` and `grey` (18% reflectance, the photographic middle) are the only three colours in Yeti that never move; reach for them when a thing must be that colour on every page, and for the scale otherwise.
+
+Every step is a token, `--yeti-grey-20`, and every hue has the same eleven steps, `--yeti-color-primary-20`, for your own classes; the [theming guide](guides/theming.md) says how they derive.
+
 ## Why this name
 
 There is no plainer word for a padded rectangle. Foundation 6's Callout was a styled box with a colour scheme; the plain one had no name.
@@ -63,6 +80,19 @@ There is no plainer word for a padded rectangle. Foundation 6's Callout was a st
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `md` | Padding on every side. |
 | `data-surface` | enum | `base`, `raised`, `sunken` |  | Fill the box with one of the three surface tones, making it a visible panel. Absent, the box is transparent and only its padding does anything. |
 | `data-border` | boolean |  |  | Draw a border of the border width, in the border colour. |
+
+</div>
+
+## Markers
+
+Attributes that descendants carry, not the root.
+
+<div class="scroller" role="region" aria-label="Box markers" tabindex="0" markdown="1">
+
+| Attribute | Type | Values | On | Description |
+| --- | --- | --- | --- | --- |
+| `data-paint` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral`, `white`, `black`, `grey`, `grey-0`, `grey-10`, `grey-20`, `grey-30`, `grey-40`, `grey-50`, `grey-60`, `grey-70`, `grey-80`, `grey-90`, `grey-100` | `*` | Fill this element with a colour by name: a hue at its base step with the text made for it, a constant, or a step of the greyscale. Up to grey-40 the text stays the page text; from grey-50 it becomes the page surface. |
+| `data-text` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral`, `white`, `black`, `grey`, `grey-0`, `grey-10`, `grey-20`, `grey-30`, `grey-40`, `grey-50`, `grey-60`, `grey-70`, `grey-80`, `grey-90`, `grey-100` | `*` | Colour this element's words by name, from the same list. On an element that is also painted it wins over the automatic text colour. |
 
 </div>
 
