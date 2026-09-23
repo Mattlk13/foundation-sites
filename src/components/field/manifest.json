@@ -11,7 +11,7 @@
       "type": "enum",
       "vocabulary": "variant",
       "default": "primary",
-      "description": "The colour of a checked checkbox or radio."
+      "description": "The color of a checked checkbox or radio."
     },
     {
       "name": "data-size",
@@ -149,7 +149,7 @@
     {
       "name": "--yeti-color-primary",
       "public": true,
-      "description": "The default variant's colour, when data-variant is absent."
+      "description": "The default variant's color, when data-variant is absent."
     },
     {
       "name": "--yeti-color-primary-subtle",
@@ -169,12 +169,12 @@
     {
       "name": "--yeti-color-primary-text",
       "public": true,
-      "description": "The default variant's text colour."
+      "description": "The default variant's text color."
     },
     {
       "name": "--yeti-on-primary",
       "public": true,
-      "description": "Text on the default variant's colour."
+      "description": "Text on the default variant's color."
     },
     {
       "name": "--yeti-text-md",

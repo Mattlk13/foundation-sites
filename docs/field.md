@@ -58,7 +58,7 @@ Every control in a form: text, email, number, select, textarea, checkbox, radio,
 
 ## How it works
 
-A tight column: label, control, hint, error. The control is a native element styled to the control tokens, so a theme that changes `--yeti-control-radius` changes every input. The error is hidden until the control is invalid *and* the visitor has touched it (`:user-invalid`), or until you set `aria-invalid="true"` after a server round trip; then it shows and the border turns to the alert colour. A `required` control gets a marker after its label. A checkbox or radio is laid out inline automatically, label after the control, and its checked mark is a variant-coloured centre inside a ring of the surface colour.
+A tight column: label, control, hint, error. The control is a native element styled to the control tokens, so a theme that changes `--yeti-control-radius` changes every input. The error is hidden until the control is invalid *and* the visitor has touched it (`:user-invalid`), or until you set `aria-invalid="true"` after a server round trip; then it shows and the border turns to the alert color. A `required` control gets a marker after its label. A checkbox or radio is laid out inline automatically, label after the control, and its checked mark is a variant-colored centre inside a ring of the surface color.
 
 ```html
 <fieldset class="field">
@@ -69,7 +69,7 @@ A tight column: label, control, hint, error. The control is a native element sty
 </fieldset>
 ```
 
-A checkbox with `role="switch"` becomes a switch: a track with a thumb that slides to the end and takes the field's colour when on. A `range` input gets a thin track and a round thumb in the field's colour, the height of a control so it is easy to grab.
+A checkbox with `role="switch"` becomes a switch: a track with a thumb that slides to the end and takes the field's color when on. A `range` input gets a thin track and a round thumb in the field's color, the height of a control so it is easy to grab.
 
 The filled part of the track is `--yeti-range-value`, how far along the value sits from 0 to 1, because CSS cannot read an input's value. `range.js` keeps it in step, and writes the value into an `output` placed before the input, which is drawn over the thumb. Give the output `aria-hidden`: the input announces its own value and a screen reader should not hear it twice. Leave the output out of a page that does not load the module, or it stays empty.
 
@@ -113,7 +113,7 @@ The label must point at the control with `for` and the control must carry that `
 
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
-| `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `danger`, `neutral` | `primary` | The colour of a checked checkbox or radio. |
+| `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `danger`, `neutral` | `primary` | The color of a checked checkbox or radio. |
 | `data-size` | enum | `sm`, `md`, `lg` | `md` | Scales the control's height and text. |
 | `data-inline` | boolean |  |  | Put the label beside the control. Checkboxes and radios are inline without it. |
 
@@ -158,12 +158,12 @@ Attributes that descendants carry, not the root.
 | `--yeti-control-surface` | Background of the control. |
 | `--yeti-control-chevron` | The select's chevron image. |
 | `--yeti-color-alert` | Border of an invalid control. |
-| `--yeti-color-primary` | The default variant's colour, when data-variant is absent. |
+| `--yeti-color-primary` | The default variant's color, when data-variant is absent. |
 | `--yeti-color-primary-subtle` | The default variant's tint. |
 | `--yeti-color-primary-soft` | The default variant's soft stop. |
 | `--yeti-color-primary-strong` | The default variant's strong stop. |
-| `--yeti-color-primary-text` | The default variant's text colour. |
-| `--yeti-on-primary` | Text on the default variant's colour. |
+| `--yeti-color-primary-text` | The default variant's text color. |
+| `--yeti-on-primary` | Text on the default variant's color. |
 | `--yeti-text-md` | Text size when data-size is absent. |
 | `--yeti-space-sm` | The space step when data-size is absent; a fieldset's padding follows it. |
 | `--yeti-weight-strong` | Weight of the label or legend. |

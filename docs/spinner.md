@@ -32,7 +32,7 @@ A wait with no known end: a page section still fetching, a search running. When 
 
 ## How it works
 
-A one-em ring: a border in the hue's subtle step with the top edge in the hue, turning once per `--yeti-spinner-duration`. `data-size` sets the em through the text step, so a spinner sits in a line of text at that text's size. A button with `aria-busy="true"` draws the same ring after its label from its own text colour, so it reads on a filled button and an outlined one alike.
+A one-em ring: a border in the hue's subtle step with the top edge in the hue, turning once per `--yeti-spinner-duration`. `data-size` sets the em through the text step, so a spinner sits in a line of text at that text's size. A button with `aria-busy="true"` draws the same ring after its label from its own text color, so it reads on a filled button and an outlined one alike.
 
 ```html
 <button class="button" aria-busy="true" aria-disabled="true">Saving</button>
@@ -66,12 +66,12 @@ No structural requirements.
 | `--yeti-spinner-duration` | One turn. |
 | `--yeti-spinner-width` | Thickness of the ring. |
 | `--yeti-motion-iterations` | How many times the ring turns; one under reduced motion. |
-| `--yeti-color-primary` | The default variant's colour, when data-variant is absent. |
+| `--yeti-color-primary` | The default variant's color, when data-variant is absent. |
 | `--yeti-color-primary-subtle` | The default variant's tint. |
 | `--yeti-color-primary-soft` | The default variant's soft stop. |
 | `--yeti-color-primary-strong` | The default variant's strong stop. |
-| `--yeti-color-primary-text` | The default variant's text colour. |
-| `--yeti-on-primary` | Text on the default variant's colour. |
+| `--yeti-color-primary-text` | The default variant's text color. |
+| `--yeti-on-primary` | Text on the default variant's color. |
 | `--yeti-text-md` | The text step when data-size is absent; the ring's diameter follows it. |
 | `--yeti-space-sm` | The space step when data-size is absent. |
 

@@ -1,5 +1,5 @@
 /* Alert: a message with a hue, an emphasis, an optional icon, and an
-   optional close button. The colour is a border and a tint; the words are
+   optional close button. The color is a border and a tint; the words are
    the message. */
 @layer yeti.components {
 	.alert {

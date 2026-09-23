@@ -51,7 +51,7 @@ Two rules in two media queries. `only`, which is what you get when the attribute
 
 This is the one place in Yeti where a media query is the right tool. Every width in the framework is a container query, because a rule that switches on the window breaks the moment its element moves into a narrower box. A medium is not a width — no container is ever printed at a different medium from the page around it — so there is no box to measure here and nothing a container query could say.
 
-Print styling stops there. Yeti does not set page margins, force a colour scheme, or break pages for you; `@page`, `break-inside` and the rest are yours to write, and this utility is only about which elements are on the sheet at all.
+Print styling stops there. Yeti does not set page margins, force a color scheme, or break pages for you; `@page`, `break-inside` and the rest are yours to write, and this utility is only about which elements are on the sheet at all.
 
 ## Accessibility
 
@@ -83,7 +83,7 @@ No public tokens.
 
 ## Accessibility
 
-- Both states are display: none in the medium they are not for, which takes the element out of the accessibility tree there as well. That is correct for this job and worth saying out loud: a paper-only line is not read out on screen, so it must never carry anything a reader on screen needs, and a screen-only control is not on the page a reader prints, so nothing on paper may depend on it. Text a screen reader should hear but nobody should see is visually-hidden, not this. A printed page is also a page with no colour guarantee, so never let the print state be the only thing carrying a meaning.
+- Both states are display: none in the medium they are not for, which takes the element out of the accessibility tree there as well. That is correct for this job and worth saying out loud: a paper-only line is not read out on screen, so it must never carry anything a reader on screen needs, and a screen-only control is not on the page a reader prints, so nothing on paper may depend on it. Text a screen reader should hear but nobody should see is visually-hidden, not this. A printed page is also a page with no color guarantee, so never let the print state be the only thing carrying a meaning.
 
 ## Browser support
 

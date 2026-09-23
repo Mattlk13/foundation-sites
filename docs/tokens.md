@@ -196,7 +196,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-color-border-strong` | `L 0.75 light, 0.40 dark` | Emphasised border: focused inputs, blockquote rule. |
 | `--yeti-color-scrim` | `the surface at 85%` | A wash over content so something on top of it can be read: a caption over a picture, a veil over a form. Thinned surface, so it dims with the theme rather than tinting. |
 | `--yeti-color-focus` | `var(--yeti-color-primary)` | Focus ring color. |
-| `--yeti-white` | `oklch(1 0 0)` | White, in both schemes and under every theme. One of the three colours that never move. |
+| `--yeti-white` | `oklch(1 0 0)` | White, in both schemes and under every theme. One of the three colors that never move. |
 | `--yeti-black` | `oklch(0 0 0)` | Black, in both schemes and under every theme. |
 | `--yeti-grey` | `oklch(0.565 0 0)` | 18% reflectance, the photographic middle grey, in both schemes and under every theme. |
 | `--yeti-grey-0` | `0% from surface to text` | The page surface, as the first step of the greyscale. |
@@ -209,7 +209,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-grey-70` | `70% from surface to text` | 70% of the way from the page surface to its text. Near the text in both schemes when the number is high. |
 | `--yeti-grey-80` | `80% from surface to text` | 80% of the way from the page surface to its text. Near the text in both schemes when the number is high. |
 | `--yeti-grey-90` | `90% from surface to text` | 90% of the way from the page surface to its text. Near the text in both schemes when the number is high. |
-| `--yeti-grey-100` | `100% from surface to text` | The page text colour, as the last step of the greyscale. |
+| `--yeti-grey-100` | `100% from surface to text` | The page text color, as the last step of the greyscale. |
 | `--yeti-color-primary-0` | `grey-0 at the primary hue` | The primary hue at the lightness of --yeti-grey-0; flips with the scheme as the grey does. |
 | `--yeti-color-primary-10` | `grey-10 at the primary hue` | The primary hue at the lightness of --yeti-grey-10; flips with the scheme as the grey does. |
 | `--yeti-color-primary-20` | `grey-20 at the primary hue` | The primary hue at the lightness of --yeti-grey-20; flips with the scheme as the grey does. |
@@ -333,9 +333,9 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 
 | Token | Default | Description |
 | --- | --- | --- |
-| `--yeti-shadow-color` | `black at 14% in light, 55% in dark` | The colour every shadow is drawn in; a theme changes offsets without losing the scheme flip. |
+| `--yeti-shadow-color` | `black at 14% in light, 55% in dark` | The color every shadow is drawn in; a theme changes offsets without losing the scheme flip. |
 | `--yeti-shadow-sm` | `0 1px 2px (black at 14% light, 55% dark)` | Raised cards. |
-| `--yeti-shadow-md` | `0 4px 12px (the same colour)` | Floating surfaces; phase 4's menus and dialogs. |
+| `--yeti-shadow-md` | `0 4px 12px (the same color)` | Floating surfaces; phase 4's menus and dialogs. |
 
 </div>
 
@@ -508,7 +508,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-accordion-border` | `var(--yeti-color-border)` | The line between one panel and the next, and around the set. |
 | `--yeti-accordion-padding` | `var(--yeti-space-md)` | Padding of a summary and of its panel. |
 | `--yeti-accordion-surface` | `var(--yeti-color-surface)` | Background of the set, and so of an open panel. |
-| `--yeti-accordion-summary` | `color-mix(in oklch, var(--yeti-accordion-surface) 88%, var(--yeti-color-text))` | Background of a summary row, set apart from the panel below it. Mixed toward the text colour, so it darkens the row in light and lifts it in dark. |
+| `--yeti-accordion-summary` | `color-mix(in oklch, var(--yeti-accordion-surface) 88%, var(--yeti-color-text))` | Background of a summary row, set apart from the panel below it. Mixed toward the text color, so it darkens the row in light and lifts it in dark. |
 | `--yeti-accordion-summary-hover` | `color-mix(in oklch, var(--yeti-accordion-surface) 80%, var(--yeti-color-text))` | Background of a summary under the pointer, one step further from the panel than at rest. |
 
 </div>
@@ -548,7 +548,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-dialog-surface` | `var(--yeti-color-surface-raised)` | Background of the dialog. |
 | `--yeti-dialog-radius` | `var(--yeti-radius-lg)` | Corner of the dialog. |
 | `--yeti-dialog-padding` | `var(--yeti-space-lg)` | Padding inside the dialog. |
-| `--yeti-dialog-backdrop` | `black at 60%` | The backdrop behind an open dialog. Black rather than a theme colour, because a backdrop dims what is behind it in every theme. |
+| `--yeti-dialog-backdrop` | `black at 60%` | The backdrop behind an open dialog. Black rather than a theme color, because a backdrop dims what is behind it in every theme. |
 
 </div>
 
@@ -570,7 +570,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 
 | Token | Default | Description |
 | --- | --- | --- |
-| `--yeti-carousel-dot` | `var(--yeti-color-border-strong)` | Colour of a slide dot. |
+| `--yeti-carousel-dot` | `var(--yeti-color-border-strong)` | Color of a slide dot. |
 | `--yeti-carousel-dot-size` | `0.75rem` | Diameter of a slide dot. |
 | `--yeti-carousel-scroll` | `smooth, and auto under reduced motion` | How the track scrolls when a dot is followed. A components-layer declaration outranks the reset, so the preference reaches the track through this token. |
 

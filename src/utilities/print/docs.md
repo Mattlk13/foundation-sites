@@ -20,7 +20,7 @@ Two rules in two media queries. `only`, which is what you get when the attribute
 
 This is the one place in Yeti where a media query is the right tool. Every width in the framework is a container query, because a rule that switches on the window breaks the moment its element moves into a narrower box. A medium is not a width — no container is ever printed at a different medium from the page around it — so there is no box to measure here and nothing a container query could say.
 
-Print styling stops there. Yeti does not set page margins, force a colour scheme, or break pages for you; `@page`, `break-inside` and the rest are yours to write, and this utility is only about which elements are on the sheet at all.
+Print styling stops there. Yeti does not set page margins, force a color scheme, or break pages for you; `@page`, `break-inside` and the rest are yours to write, and this utility is only about which elements are on the sheet at all.
 
 ## Accessibility
 

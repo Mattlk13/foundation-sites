@@ -33,7 +33,7 @@
 	   are separately positioned boxes that meet on a fractional edge, since the
 	   space token is fluid, and two such edges leave a hairline of background
 	   between them at most zoom levels. Overlapping by a pixel closes it; the
-	   caret is the same colour as the bubble, so the overlap cannot show. */
+	   caret is the same color as the bubble, so the overlap cannot show. */
 	.tooltip > [role="tooltip"] {
 		--_yeti-caret: var(--yeti-space-xs);
 		--_yeti-caret-overlap: 1px;

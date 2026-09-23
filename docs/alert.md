@@ -1,7 +1,7 @@
 ---
 raw: true
 title: "Alert"
-description: "A message in a hue: a tinted box with a coloured edge, an optional icon, and an optional close button that the module wires up."
+description: "A message in a hue: a tinted box with a colored edge, an optional icon, and an optional close button that the module wires up."
 nav_group: "Feedback"
 nav_order: 1
 ---
@@ -9,7 +9,7 @@ nav_order: 1
 
 # Alert
 
-<p class="lede">A message in a hue: a tinted box with a coloured edge, an optional icon, and an optional close button that the module wires up.</p>
+<p class="lede">A message in a hue: a tinted box with a colored edge, an optional icon, and an optional close button that the module wires up.</p>
 
 ## Example
 
@@ -49,7 +49,7 @@ The close button is a `button` carrying `data-close`. Yeti's `alert.js`, loaded 
 
 ## Accessibility
 
-`role="status"` for the usual notice, which is announced politely when it appears; `role="alert"` only for something urgent, which interrupts whatever the reader is doing. Neither role announces content that is already on the page at load; they matter for alerts inserted later. The colour is decoration: say "Saved" or "Failed" in the words. The close button needs a name, and after it removes the alert focus moves to where the alert was, so the reader keeps their place; put an alert near the thing it describes rather than far above it.
+`role="status"` for the usual notice, which is announced politely when it appears; `role="alert"` only for something urgent, which interrupts whatever the reader is doing. Neither role announces content that is already on the page at load; they matter for alerts inserted later. The color is decoration: say "Saved" or "Failed" in the words. The close button needs a name, and after it removes the alert focus moves to where the alert was, so the reader keeps their place; put an alert near the thing it describes rather than far above it.
 
 ## Attributes
 
@@ -92,12 +92,12 @@ Attributes that descendants carry, not the root.
 | `--yeti-border-width` | The border; the start edge is four of them. |
 | `--yeti-space-sm` | Gap between the icon, the body, and the close button. |
 | `--yeti-color-text` | The body text. |
-| `--yeti-color-primary` | The default variant's colour, when data-variant is absent. |
+| `--yeti-color-primary` | The default variant's color, when data-variant is absent. |
 | `--yeti-color-primary-subtle` | The default variant's tint. |
 | `--yeti-color-primary-soft` | The default variant's soft stop. |
 | `--yeti-color-primary-strong` | The default variant's strong stop. |
-| `--yeti-color-primary-text` | The default variant's text colour. |
-| `--yeti-on-primary` | Text on the default variant's colour. |
+| `--yeti-color-primary-text` | The default variant's text color. |
+| `--yeti-on-primary` | Text on the default variant's color. |
 | `--yeti-duration-fast` | How long the alert takes to fade out when alert.js dismisses it. |
 
 </div>
@@ -115,7 +115,7 @@ Attributes that descendants carry, not the root.
 
 ## Accessibility
 
-- Use role="status" for the usual notice, which is announced politely, and role="alert" only for something urgent, which interrupts. Content present at page load is not announced by either role; the roles matter for alerts inserted later. Meaning carried by the colour must also be in the words. The close button needs a name. Without the module the button does nothing, so leave it out on pages that do not load alert.js.
+- Use role="status" for the usual notice, which is announced politely, and role="alert" only for something urgent, which interrupts. Content present at page load is not announced by either role; the roles matter for alerts inserted later. Meaning carried by the color must also be in the words. The close button needs a name. Without the module the button does nothing, so leave it out on pages that do not load alert.js.
 
 <div class="scroller" role="region" aria-label="Alert keyboard shortcuts" tabindex="0" markdown="1">
 

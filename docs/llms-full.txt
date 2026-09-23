@@ -9,11 +9,11 @@ Pads its content on all sides, with an optional border and an optional surface.
 Attributes:
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Padding on every side.
 - data-surface: base | raised | sunken — Fill the box with one of the three surface tones, making it a visible panel. Absent, the box is transparent and only its padding does anything.
-- data-border (boolean) — Draw a border of the border width, in the border colour.
+- data-border (boolean) — Draw a border of the border width, in the border color.
 
 On children:
-- data-paint on *: primary | secondary | success | warning | alert | neutral | white | black | grey | grey-0 | grey-10 | grey-20 | grey-30 | grey-40 | grey-50 | grey-60 | grey-70 | grey-80 | grey-90 | grey-100 — Fill this element with a colour by name: a hue at its base step with the text made for it, a constant, or a step of the greyscale. Up to grey-40 the text stays the page text; from grey-50 it becomes the page surface.
-- data-text on *: primary | secondary | success | warning | alert | neutral | white | black | grey | grey-0 | grey-10 | grey-20 | grey-30 | grey-40 | grey-50 | grey-60 | grey-70 | grey-80 | grey-90 | grey-100 — Colour this element's words by name, from the same list. On an element that is also painted it wins over the automatic text colour.
+- data-paint on *: primary | secondary | success | warning | alert | neutral | white | black | grey | grey-0 | grey-10 | grey-20 | grey-30 | grey-40 | grey-50 | grey-60 | grey-70 | grey-80 | grey-90 | grey-100 — Fill this element with a color by name: a hue at its base step with the text made for it, a constant, or a step of the greyscale. Up to grey-40 the text stays the page text; from grey-50 it becomes the page surface.
+- data-text on *: primary | secondary | success | warning | alert | neutral | white | black | grey | grey-0 | grey-10 | grey-20 | grey-30 | grey-40 | grey-50 | grey-60 | grey-70 | grey-80 | grey-90 | grey-100 — Color this element's words by name, from the same list. On an element that is also painted it wins over the automatic text color.
 
 ### When to use it
 
@@ -38,24 +38,11 @@ There is no corner radius, on purpose. A box is square. A rounded panel that lif
 
 ### Painting anything
 
-`data-surface` names a role of the page: raised, sunken, or the page itself. `data-paint` names a colour, and any element can carry it, not only a box: a section, a heading, a table cell. The value is one of the six hues at its base step, one of three constants, or a step of the greyscale.
-
-```html
-<section data-paint="primary">A band in the brand colour, with the text made for it.</section>
-<aside class="box" data-paint="grey-20">A quiet panel, a little off the page.</aside>
-<figcaption data-paint="black">A caption band that is black on every page.</figcaption>
-<p data-text="grey-60">Muted words, with no background painted.</p>
-```
-
-A painted hue takes the text its base colour was made for, the same pair a button uses. A painted grey takes the page text up to `grey-40` and the page surface from `grey-50`, because half-way toward the text is where the text stops reading. The middle steps, `grey-40` to `grey-60`, suit a fill more than a block of text: no text colour reaches full contrast on them. `data-text` sets the words alone, from the same list, and on an element that is also painted it wins over that automatic colour.
-
-The greyscale is scheme-aware. `grey-0` is the page surface and `grey-100` is the page text, each step ten percent further from the one toward the other, so `grey-20` is near the page in light mode and in dark mode, and a theme that sets its own surface and text gets its own greys. A grey names a distance, not a colour. `white`, `black` and `grey` (18% reflectance, the photographic middle) are the only three colours in Yeti that never move; reach for them when a thing must be that colour on every page, and for the scale otherwise.
-
-Every step is a token, `--yeti-grey-20`, and every hue has the same eleven steps, `--yeti-color-primary-20`, for your own classes; the [theming guide](guides/theming.md) says how they derive.
+`data-surface` names a role of the page: raised, sunken, or the page itself. A color by name is `data-paint`, and any element can carry it, not only a box: a hue at its base step, one of three constants, or a step of a greyscale that flips with the scheme, with `data-text` for the words alone. The [color guide](guides/color.md) has the list, the rule for the text on each, and what a grey step means.
 
 ### Why this name
 
-There is no plainer word for a padded rectangle. Foundation 6's Callout was a styled box with a colour scheme; the plain one had no name.
+There is no plainer word for a padded rectangle. Foundation 6's Callout was a styled box with a color scheme; the plain one had no name.
 
 Tokens:
 - --yeti-space-md — The default padding.
@@ -118,7 +105,7 @@ Tokens:
 - --yeti-width-md — The default column width, chosen under the base measure so paragraphs fill it.
 - --yeti-space-md — The default gutter and row gap.
 - --yeti-text-sm — The note's text size.
-- --yeti-color-text-muted — The note's text colour.
+- --yeti-color-text-muted — The note's text color.
 
 Accessibility contract:
 Purely visual. A bleeding child is still in reading order.
@@ -414,11 +401,11 @@ Attributes:
 
 ### When to use it
 
-Wrap an inline SVG in an icon whenever it should behave like a character: in a link, a button, a list item, a heading. It takes the size and colour of the text around it and stays aligned with it, at any font size.
+Wrap an inline SVG in an icon whenever it should behave like a character: in a link, a button, a list item, a heading. It takes the size and color of the text around it and stays aligned with it, at any font size.
 
 ### How it works
 
-The wrapper is an inline flex row with a small gap. The SVG is sized to one em, so it follows the text size, and `currentColor` inside it follows the text colour. `data-align` chooses between centering on the line, which suits buttons and labels, and sitting on the baseline, which suits running text; the baseline setting nudges the glyph down an eighth of an em, because an icon whose bottom edge sits exactly on the baseline reads as floating.
+The wrapper is an inline flex row with a small gap. The SVG is sized to one em, so it follows the text size, and `currentColor` inside it follows the text color. `data-align` chooses between centering on the line, which suits buttons and labels, and sitting on the baseline, which suits running text; the baseline setting nudges the glyph down an eighth of an em, because an icon whose bottom edge sits exactly on the baseline reads as floating.
 
 ```html
 <button class="icon" type="button">
@@ -918,7 +905,7 @@ Each panel is a `details` with a `summary`, so the opening, the keyboard, and th
 
 Each summary sits on its own surface, clearly apart from the answer below it, and moves a step further under the pointer. That is what keeps a set of rows reading as rows rather than as one undivided block; an open one also keeps a line under it. Three tokens carry it: `--yeti-accordion-surface` for the set and so for the panels, `--yeti-accordion-summary` for a row at rest, and `--yeti-accordion-summary-hover` for the one under the pointer.
 
-The last two are mixed from the first toward the text colour rather than picked off the surface ramp, because the ramp's own steps are too small to read here. Mixing toward text also moves the right way by itself in both schemes, darkening the row on a light page and lifting it on a dark one, and a theme that restyles `--yeti-color-surface` or `--yeti-color-text` gets a header that still works without redefining anything.
+The last two are mixed from the first toward the text color rather than picked off the surface ramp, because the ramp's own steps are too small to read here. Mixing toward text also moves the right way by itself in both schemes, darkening the row on a light page and lifting it on a dark one, and a theme that restyles `--yeti-color-surface` or `--yeti-color-text` gets a header that still works without redefining anything.
 
 The panel grows open rather than appearing. A `details` cannot animate its own height to `auto` in every engine, because the keywords that make `auto` interpolable are Chromium's alone, so the base layer makes every `details` a two-row grid instead: the summary takes the first row and the generated panel the second, and the transition runs on that row's size. That works in all three engines, and the panel clips its overflow so the content is revealed rather than squashed. The rows are packed to the start of the grid, because an `fr` row is a share of the leftover space and the summary would otherwise take part in that sum and visibly swell while the share was being interpolated. That rule is in the base, not here, which is why a lone `details` on a page with no classes opens exactly the same way.
 
@@ -973,7 +960,7 @@ A price with its currency, a distance with its unit, a search box with its butto
 
 ### How it works
 
-A flex row. Every control grows; a `span` becomes a labelled box on the sunken surface; a `button` keeps its own colours. Inner corners are squared and each border overlaps the next by one width, so the seam is a single line. The group sets no size of its own: it reads the field around it, so `data-size` on the field scales the whole row.
+A flex row. Every control grows; a `span` becomes a labelled box on the sunken surface; a `button` keeps its own colors. Inner corners are squared and each border overlaps the next by one width, so the seam is a single line. The group sets no size of its own: it reads the field around it, so `data-size` on the field scales the whole row.
 
 ```html
 <div class="field" data-size="lg">
@@ -1020,7 +1007,7 @@ A prefix or suffix that carries meaning (a currency, a unit) must reach the cont
 
 ## alert (component, class="alert")
 
-A message in a hue: a tinted box with a coloured edge, an optional icon, and an optional close button that the module wires up.
+A message in a hue: a tinted box with a colored edge, an optional icon, and an optional close button that the module wires up.
 
 Attributes:
 - data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — Which hue: success for done, warning for careful, danger for wrong (alert is the same ladder under its Foundation 6 name), primary for news.
@@ -1051,7 +1038,7 @@ The close button is a `button` carrying `data-close`. Yeti's `alert.js`, loaded 
 
 ### Accessibility
 
-`role="status"` for the usual notice, which is announced politely when it appears; `role="alert"` only for something urgent, which interrupts whatever the reader is doing. Neither role announces content that is already on the page at load; they matter for alerts inserted later. The colour is decoration: say "Saved" or "Failed" in the words. The close button needs a name, and after it removes the alert focus moves to where the alert was, so the reader keeps their place; put an alert near the thing it describes rather than far above it.
+`role="status"` for the usual notice, which is announced politely when it appears; `role="alert"` only for something urgent, which interrupts whatever the reader is doing. Neither role announces content that is already on the page at load; they matter for alerts inserted later. The color is decoration: say "Saved" or "Failed" in the words. The close button needs a name, and after it removes the alert focus moves to where the alert was, so the reader keeps their place; put an alert near the thing it describes rather than far above it.
 
 Children:
 - > svg: at least 0, at most 1. An icon, first, sized to the text.
@@ -1065,17 +1052,17 @@ Tokens:
 - --yeti-border-width — The border; the start edge is four of them.
 - --yeti-space-sm — Gap between the icon, the body, and the close button.
 - --yeti-color-text — The body text.
-- --yeti-color-primary — The default variant's colour, when data-variant is absent.
+- --yeti-color-primary — The default variant's color, when data-variant is absent.
 - --yeti-color-primary-subtle — The default variant's tint.
 - --yeti-color-primary-soft — The default variant's soft stop.
 - --yeti-color-primary-strong — The default variant's strong stop.
-- --yeti-color-primary-text — The default variant's text colour.
-- --yeti-on-primary — Text on the default variant's colour.
+- --yeti-color-primary-text — The default variant's text color.
+- --yeti-on-primary — Text on the default variant's color.
 - --yeti-duration-fast — How long the alert takes to fade out when alert.js dismisses it.
 
 Accessibility contract:
 - Enter / Space: On the close button, removes the alert.
-Use role="status" for the usual notice, which is announced politely, and role="alert" only for something urgent, which interrupts. Content present at page load is not announced by either role; the roles matter for alerts inserted later. Meaning carried by the colour must also be in the words. The close button needs a name. Without the module the button does nothing, so leave it out on pages that do not load alert.js.
+Use role="status" for the usual notice, which is announced politely, and role="alert" only for something urgent, which interrupts. Content present at page load is not announced by either role; the roles matter for alerts inserted later. Meaning carried by the color must also be in the words. The close button needs a name. Without the module the button does nothing, so leave it out on pages that do not load alert.js.
 
 ## badge (component, class="badge")
 
@@ -1100,7 +1087,7 @@ An inline box one step smaller than the text around it, with a pill corner by de
 
 ### Accessibility
 
-Colour is decoration here; the word is the meaning, so "Live" and "Draft" work with no colour at all. A count beside a button or a tab is read as separate text, which is rarely what you want; put it into the control's `aria-label` instead. Text over every tint meets AA in both schemes.
+Color is decoration here; the word is the meaning, so "Live" and "Draft" work with no color at all. A count beside a button or a tab is read as separate text, which is rarely what you want; put it into the control's `aria-label` instead. Text over every tint meets AA in both schemes.
 
 Children:
 - > svg: at least 0, at most 1. An optional icon, sized to the text.
@@ -1111,17 +1098,17 @@ Tokens:
 - --yeti-space-xs — Gap between the icon and the text.
 - --yeti-leading-tight — Line height.
 - --yeti-border-width — Border width.
-- --yeti-color-primary — The default variant's colour, when data-variant is absent.
+- --yeti-color-primary — The default variant's color, when data-variant is absent.
 - --yeti-color-primary-subtle — The default variant's tint.
 - --yeti-color-primary-soft — The default variant's soft stop.
 - --yeti-color-primary-strong — The default variant's strong stop.
-- --yeti-color-primary-text — The default variant's text colour.
-- --yeti-on-primary — Text on the default variant's colour.
+- --yeti-color-primary-text — The default variant's text color.
+- --yeti-on-primary — Text on the default variant's color.
 - --yeti-text-md — Text size when data-size is absent.
 - --yeti-space-sm — The space step when data-size is absent.
 
 Accessibility contract:
-A badge is text. If the colour carries meaning, the text must carry it too. A count that belongs to a control goes into that control's accessible name, not beside it.
+A badge is text. If the color carries meaning, the text must carry it too. A count that belongs to a control goes into that control's accessible name, not beside it.
 
 ## breadcrumbs (component, class="breadcrumbs")
 
@@ -1136,7 +1123,7 @@ Deep pages: a doc inside a section inside a manual, a product inside a category.
 
 ### How it works
 
-A wrapping row of steps at a small gap. Every step after the first is preceded by a separator drawn by CSS from `--yeti-breadcrumbs-separator`, a slash by default, which a theme may change to a chevron. Links are muted until hovered; the current step is the text colour in a strong weight. `data-size` steps the text.
+A wrapping row of steps at a small gap. Every step after the first is preceded by a separator drawn by CSS from `--yeti-breadcrumbs-separator`, a slash by default, which a theme may change to a chevron. Links are muted until hovered; the current step is the text color in a strong weight. `data-size` steps the text.
 
 ```html
 <nav class="breadcrumbs" aria-label="Breadcrumb" data-size="sm">
@@ -1194,7 +1181,7 @@ Three attributes and no classes. `data-variant` picks a hue from the palette and
 
 ### Accessibility
 
-A `button` is a button and an `a` is a link; the class changes the look, not the role, so use the element that matches what happens. An icon-only button needs an `aria-label`. A toggle carries `aria-pressed`, and the pressed look follows it. A button that is waiting on a request carries `aria-busy="true"` and `aria-disabled="true"` together: it dims, shows a progress cursor, and your handler ignores presses until the request returns. The focus ring is the page's ring and is never removed. Text over every fill meets AA in both colour schemes; the test suite checks each variant.
+A `button` is a button and an `a` is a link; the class changes the look, not the role, so use the element that matches what happens. An icon-only button needs an `aria-label`. A toggle carries `aria-pressed`, and the pressed look follows it. A button that is waiting on a request carries `aria-busy="true"` and `aria-disabled="true"` together: it dims, shows a progress cursor, and your handler ignores presses until the request returns. The focus ring is the page's ring and is never removed. Text over every fill meets AA in both color schemes; the test suite checks each variant.
 
 Children:
 - > svg: at least 0, at most 1. An optional icon, sized to the text.
@@ -1209,12 +1196,12 @@ Tokens:
 - --yeti-leading-tight — Line height.
 - --yeti-duration-fast — How long a hover or press takes to settle.
 - --yeti-ease — The curve of that transition.
-- --yeti-color-primary — The default variant's colour, when data-variant is absent.
+- --yeti-color-primary — The default variant's color, when data-variant is absent.
 - --yeti-color-primary-subtle — The default variant's tint.
 - --yeti-color-primary-soft — The default variant's soft stop.
 - --yeti-color-primary-strong — The default variant's strong stop.
-- --yeti-color-primary-text — The default variant's text colour.
-- --yeti-on-primary — Text on the default variant's colour.
+- --yeti-color-primary-text — The default variant's text color.
+- --yeti-on-primary — Text on the default variant's color.
 - --yeti-text-md — Text size when data-size is absent.
 - --yeti-space-sm — The space step when data-size is absent.
 - --yeti-opacity-muted — Opacity when disabled or busy.
@@ -1280,7 +1267,7 @@ One thing in a box: an article in a listing, a product, a person, a plan. Put ca
 
 ### How it works
 
-A card is a flex column on the raised surface with a border and a radius. A picture, video, or `figure` placed first bleeds through the padding to the card's edges and, while it sits on top, is cropped to `data-ratio`. Everything after it is the body, spaced at the card's gap. A `footer` is pushed to the bottom, so a row of cards of different lengths keeps its actions aligned. `data-raised` trades the border for a shadow; `data-variant` colours the border and draws a bar along the top without tinting the text. From the `md` width of content, a card with a picture becomes a two-column row: the picture down the left, the body taking the rest. The picture fills that column, so `data-ratio` has nothing to say about it any more; narrower than that the card stacks, picture on top, the form a phone and a grid cell want, and the ratio governs it again. `data-threshold` moves that switch to any width stop: `xs` for a card that should be a row almost everywhere, `xl` for one that should stack until it has a whole column. A card in a grid with `data-rows` keeps its picture and footer aligned with its neighbours' and does not switch to the row. It is not the `box` layout's `data-surface="raised"`, which is a tone.
+A card is a flex column on the raised surface with a border and a radius. A picture, video, or `figure` placed first bleeds through the padding to the card's edges and, while it sits on top, is cropped to `data-ratio`. Everything after it is the body, spaced at the card's gap. A `footer` is pushed to the bottom, so a row of cards of different lengths keeps its actions aligned. `data-raised` trades the border for a shadow; `data-variant` colors the border and draws a bar along the top without tinting the text. From the `md` width of content, a card with a picture becomes a two-column row: the picture down the left, the body taking the rest. The picture fills that column, so `data-ratio` has nothing to say about it any more; narrower than that the card stacks, picture on top, the form a phone and a grid cell want, and the ratio governs it again. `data-threshold` moves that switch to any width stop: `xs` for a card that should be a row almost everywhere, `xl` for one that should stack until it has a whole column. A card in a grid with `data-rows` keeps its picture and footer aligned with its neighbours' and does not switch to the row. It is not the `box` layout's `data-surface="raised"`, which is a tone.
 
 Two things follow from how that query works. Only a card with a picture is a size container, because a size container has no intrinsic width: a card that always was one collapsed to its padding as a cluster item. And anything pressable inside a card sits above a stretched link, so a footer button in a card whose heading carries `data-stretch` still takes the click.
 
@@ -1316,7 +1303,7 @@ Tokens:
 - --yeti-card-radius — Corner radius.
 - --yeti-card-padding — Padding inside the card; the figure bleeds through it.
 - --yeti-card-gap — Space between the card's parts.
-- --yeti-card-border — Border colour.
+- --yeti-card-border — Border color.
 - --yeti-card-surface — Background.
 - --yeti-shadow-sm — The shadow when raised.
 - --yeti-color-text — The card's text, and a caption laid over the figure.
@@ -1484,7 +1471,7 @@ Tokens:
 - --yeti-space-xs — Clearance direct markup keeps from the box's resize grip; the bar's block padding; the stop label's offset and inline padding.
 - --yeti-space-sm — The bar's inline padding, and the stop label's inset from the end.
 - --yeti-text-sm — Text size of the caption, the bar, the stop label, and the summary.
-- --yeti-color-text-muted — The caption's colour, the stop label's, and the summary's at rest.
+- --yeti-color-text-muted — The caption's color, the stop label's, and the summary's at rest.
 - --yeti-font-mono — The stop label's typeface, so it reads as a readout, not prose.
 - --yeti-leading-md — Line height of the bar and the stop label.
 
@@ -1641,7 +1628,7 @@ With data-trigger="hover" the module adds opening under the pointer and changes 
 One form control with its label, an optional hint, and an error that shows itself when the control is invalid.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — The colour of a checked checkbox or radio.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — The color of a checked checkbox or radio.
 - data-size: sm | md (default) | lg — Scales the control's height and text.
 - data-inline (boolean) — Put the label beside the control. Checkboxes and radios are inline without it.
 
@@ -1660,7 +1647,7 @@ Every control in a form: text, email, number, select, textarea, checkbox, radio,
 
 ### How it works
 
-A tight column: label, control, hint, error. The control is a native element styled to the control tokens, so a theme that changes `--yeti-control-radius` changes every input. The error is hidden until the control is invalid *and* the visitor has touched it (`:user-invalid`), or until you set `aria-invalid="true"` after a server round trip; then it shows and the border turns to the alert colour. A `required` control gets a marker after its label. A checkbox or radio is laid out inline automatically, label after the control, and its checked mark is a variant-coloured centre inside a ring of the surface colour.
+A tight column: label, control, hint, error. The control is a native element styled to the control tokens, so a theme that changes `--yeti-control-radius` changes every input. The error is hidden until the control is invalid *and* the visitor has touched it (`:user-invalid`), or until you set `aria-invalid="true"` after a server round trip; then it shows and the border turns to the alert color. A `required` control gets a marker after its label. A checkbox or radio is laid out inline automatically, label after the control, and its checked mark is a variant-colored centre inside a ring of the surface color.
 
 ```html
 <fieldset class="field">
@@ -1671,7 +1658,7 @@ A tight column: label, control, hint, error. The control is a native element sty
 </fieldset>
 ```
 
-A checkbox with `role="switch"` becomes a switch: a track with a thumb that slides to the end and takes the field's colour when on. A `range` input gets a thin track and a round thumb in the field's colour, the height of a control so it is easy to grab.
+A checkbox with `role="switch"` becomes a switch: a track with a thumb that slides to the end and takes the field's color when on. A `range` input gets a thin track and a round thumb in the field's color, the height of a control so it is easy to grab.
 
 The filled part of the track is `--yeti-range-value`, how far along the value sits from 0 to 1, because CSS cannot read an input's value. `range.js` keeps it in step, and writes the value into an `output` placed before the input, which is drawn over the thumb. Give the output `aria-hidden`: the input announces its own value and a screen reader should not hear it twice. Leave the output out of a page that does not load the module, or it stays empty.
 
@@ -1729,12 +1716,12 @@ Tokens:
 - --yeti-control-surface — Background of the control.
 - --yeti-control-chevron — The select's chevron image.
 - --yeti-color-alert — Border of an invalid control.
-- --yeti-color-primary — The default variant's colour, when data-variant is absent.
+- --yeti-color-primary — The default variant's color, when data-variant is absent.
 - --yeti-color-primary-subtle — The default variant's tint.
 - --yeti-color-primary-soft — The default variant's soft stop.
 - --yeti-color-primary-strong — The default variant's strong stop.
-- --yeti-color-primary-text — The default variant's text colour.
-- --yeti-on-primary — Text on the default variant's colour.
+- --yeti-color-primary-text — The default variant's text color.
+- --yeti-on-primary — Text on the default variant's color.
 - --yeti-text-md — Text size when data-size is absent.
 - --yeti-space-sm — The space step when data-size is absent; a fieldset's padding follows it.
 - --yeti-weight-strong — Weight of the label or legend.
@@ -1824,12 +1811,12 @@ Tokens:
 - --yeti-color-text — The bar's text, and the open panel's.
 - --yeti-border-width — Width of the bar's bottom edge, and of the sheet's.
 - --yeti-space-sm — The default gap; a link's inline padding and the close item's inset follow it.
-- --yeti-color-primary — The default variant's colour, when data-variant is absent.
+- --yeti-color-primary — The default variant's color, when data-variant is absent.
 - --yeti-color-primary-subtle — The default variant's tint.
 - --yeti-color-primary-soft — The default variant's soft stop.
 - --yeti-color-primary-strong — The default variant's strong stop.
-- --yeti-color-primary-text — The default variant's text colour.
-- --yeti-on-primary — Text on the default variant's colour.
+- --yeti-color-primary-text — The default variant's text color.
+- --yeti-on-primary — Text on the default variant's color.
 - --yeti-weight-strong — Weight of the brand, and of the current page's link.
 - --yeti-space-xs — Block padding of a link, and of the close button.
 - --yeti-duration-fast — How long the panel takes to open.
@@ -1884,12 +1871,12 @@ Children:
 Tokens:
 - --yeti-pagination-radius — Corner of each target.
 - --yeti-control-size — Minimum size of each target.
-- --yeti-color-primary — The default variant's colour, when data-variant is absent.
+- --yeti-color-primary — The default variant's color, when data-variant is absent.
 - --yeti-color-primary-subtle — The default variant's tint.
 - --yeti-color-primary-soft — The default variant's soft stop.
 - --yeti-color-primary-strong — The default variant's strong stop.
-- --yeti-color-primary-text — The default variant's text colour.
-- --yeti-on-primary — Text on the default variant's colour.
+- --yeti-color-primary-text — The default variant's text color.
+- --yeti-on-primary — Text on the default variant's color.
 - --yeti-text-md — Text size when data-size is absent.
 - --yeti-space-sm — The space step when data-size is absent; a target's inline padding follows it.
 - --yeti-space-xs — Gap between targets.
@@ -1927,12 +1914,12 @@ A `progress` element is a progress bar to assistive tech already; it needs a nam
 Tokens:
 - --yeti-progress-radius — Corner of the bar and of its value.
 - --yeti-color-surface-sunken — The track.
-- --yeti-color-primary — The default variant's colour, when data-variant is absent.
+- --yeti-color-primary — The default variant's color, when data-variant is absent.
 - --yeti-color-primary-subtle — The default variant's tint.
 - --yeti-color-primary-soft — The default variant's soft stop.
 - --yeti-color-primary-strong — The default variant's strong stop.
-- --yeti-color-primary-text — The default variant's text colour.
-- --yeti-on-primary — Text on the default variant's colour.
+- --yeti-color-primary-text — The default variant's text color.
+- --yeti-on-primary — Text on the default variant's color.
 - --yeti-text-md — The text step when data-size is absent.
 - --yeti-space-sm — The space step when data-size is absent; the bar's height follows it.
 - --yeti-duration-base — How long the value takes to move; one cycle of the indeterminate sweep is four of it.
@@ -1992,7 +1979,7 @@ A wait with no known end: a page section still fetching, a search running. When 
 
 ### How it works
 
-A one-em ring: a border in the hue's subtle step with the top edge in the hue, turning once per `--yeti-spinner-duration`. `data-size` sets the em through the text step, so a spinner sits in a line of text at that text's size. A button with `aria-busy="true"` draws the same ring after its label from its own text colour, so it reads on a filled button and an outlined one alike.
+A one-em ring: a border in the hue's subtle step with the top edge in the hue, turning once per `--yeti-spinner-duration`. `data-size` sets the em through the text step, so a spinner sits in a line of text at that text's size. A button with `aria-busy="true"` draws the same ring after its label from its own text color, so it reads on a filled button and an outlined one alike.
 
 ```html
 <button class="button" aria-busy="true" aria-disabled="true">Saving</button>
@@ -2006,12 +1993,12 @@ Tokens:
 - --yeti-spinner-duration — One turn.
 - --yeti-spinner-width — Thickness of the ring.
 - --yeti-motion-iterations — How many times the ring turns; one under reduced motion.
-- --yeti-color-primary — The default variant's colour, when data-variant is absent.
+- --yeti-color-primary — The default variant's color, when data-variant is absent.
 - --yeti-color-primary-subtle — The default variant's tint.
 - --yeti-color-primary-soft — The default variant's soft stop.
 - --yeti-color-primary-strong — The default variant's strong stop.
-- --yeti-color-primary-text — The default variant's text colour.
-- --yeti-on-primary — Text on the default variant's colour.
+- --yeti-color-primary-text — The default variant's text color.
+- --yeti-on-primary — Text on the default variant's color.
 - --yeti-text-md — The text step when data-size is absent; the ring's diameter follows it.
 - --yeti-space-sm — The space step when data-size is absent.
 
@@ -2119,15 +2106,15 @@ Tokens:
 - --yeti-tabs-padding — Padding of one tab.
 - --yeti-border-width — Width of that line; the selected mark is twice it.
 - --yeti-space-md — The default gap between the list and the panel.
-- --yeti-color-primary — The default variant's colour, when data-variant is absent.
+- --yeti-color-primary — The default variant's color, when data-variant is absent.
 - --yeti-color-primary-subtle — The default variant's tint.
 - --yeti-color-primary-soft — The default variant's soft stop.
 - --yeti-color-primary-strong — The default variant's strong stop.
-- --yeti-color-primary-text — The default variant's text colour.
-- --yeti-on-primary — Text on the default variant's colour.
+- --yeti-color-primary-text — The default variant's text color.
+- --yeti-on-primary — Text on the default variant's color.
 - --yeti-space-xs — Gap between tabs.
 - --yeti-weight-strong — Weight of a tab's label.
-- --yeti-duration-fast — How long a tab takes to change colour.
+- --yeti-duration-fast — How long a tab takes to change color.
 - --yeti-ease — The curve of that transition.
 
 Accessibility contract:
@@ -2154,7 +2141,7 @@ A long page a reader scrolls rather than clicks through: a guide, a reference, a
 
 ### How it works
 
-A column of links, each pointing at the id of a heading on the same page. The current one carries `aria-current="true"` and takes the variant's colour, a strong weight, and a bar down its start edge; the bar is on every link and transparent until then, so nothing shifts as the mark moves. `data-variant` picks the hue and `data-size` steps the text.
+A column of links, each pointing at the id of a heading on the same page. The current one carries `aria-current="true"` and takes the variant's color, a strong weight, and a bar down its start edge; the bar is on every link and transparent until then, so nothing shifts as the mark moves. `data-variant` picks the hue and `data-size` steps the text.
 
 `toc.js` moves the mark. It watches the linked headings with one `IntersectionObserver` and marks the link of whichever heading is topmost in view, dispatching `yeti:current` on the `.toc` with the link and the heading each time it moves. Between two headings nothing is in view, and the last mark stays rather than flickering off. Without the module the list is a working list of links, and a page that knows its own current section can simply ship the attribute in its HTML.
 
@@ -2171,7 +2158,7 @@ Following a link scrolls smoothly, from `--yeti-toc-scroll` applied to the page 
 
 ### Accessibility
 
-Label the `nav` — `aria-label="On this page"` — because a page with a toc has at least two navs and they have to be told apart. Put `role="list"` on the `ul`, which is what keeps it a list where the reset removes the markers. The current section's link carries `aria-current="true"`; the colour and the bar are the visible half of the same fact, never the only half. The module owns that attribute on these links: it sets and clears `aria-current="true"` and strips any other `aria-current` value an author puts on a toc link. The links are ordinary same-page links, so the keyboard reaches them in order and Enter follows one with no script at all.
+Label the `nav` — `aria-label="On this page"` — because a page with a toc has at least two navs and they have to be told apart. Put `role="list"` on the `ul`, which is what keeps it a list where the reset removes the markers. The current section's link carries `aria-current="true"`; the color and the bar are the visible half of the same fact, never the only half. The module owns that attribute on these links: it sets and clears `aria-current="true"` and strips any other `aria-current` value an author puts on a toc link. The links are ordinary same-page links, so the keyboard reaches them in order and Enter follows one with no script at all.
 
 Children:
 - > ul: at least 1, at most 1. The links, one per li, with role="list".
@@ -2188,9 +2175,9 @@ Tokens:
 - --yeti-weight-strong — Weight of the current link.
 - --yeti-duration-fast — How long the mark takes to move.
 - --yeti-ease — The curve of that transition.
-- --yeti-color-primary — The default variant's colour, when data-variant is absent.
+- --yeti-color-primary — The default variant's color, when data-variant is absent.
 - --yeti-color-primary-subtle — The default variant's hover tint.
-- --yeti-color-primary-text — The default variant's text colour.
+- --yeti-color-primary-text — The default variant's text color.
 
 Accessibility contract:
 Required: aria-label | aria-labelledby
@@ -2213,7 +2200,7 @@ The component wraps a trigger and a bubble. The bubble is hidden until the trigg
 
 Where anchor positioning exists the bubble is fixed and anchored to the trigger, so a scrolling ancestor cannot clip it, and `data-placement` moves it to any of the four sides. Where it is missing the bubble falls back to absolute positioning above the trigger, which is fine until it sits inside something that scrolls.
 
-A caret bridges the gap between the bubble and the trigger, on whichever side the bubble sits. It is anchored to the trigger rather than to the bubble, because a bubble near the edge of the viewport slides sideways to stay on screen and a caret carried along with it would end up pointing at nothing. It takes the bubble's colour and needs no markup of its own.
+A caret bridges the gap between the bubble and the trigger, on whichever side the bubble sits. It is anchored to the trigger rather than to the bubble, because a bubble near the edge of the viewport slides sideways to stay on screen and a caret carried along with it would end up pointing at nothing. It takes the bubble's color and needs no markup of its own.
 
 ```html
 <span class="tooltip" data-placement="end">
@@ -2484,7 +2471,7 @@ Two rules in two media queries. `only`, which is what you get when the attribute
 
 This is the one place in Yeti where a media query is the right tool. Every width in the framework is a container query, because a rule that switches on the window breaks the moment its element moves into a narrower box. A medium is not a width — no container is ever printed at a different medium from the page around it — so there is no box to measure here and nothing a container query could say.
 
-Print styling stops there. Yeti does not set page margins, force a colour scheme, or break pages for you; `@page`, `break-inside` and the rest are yours to write, and this utility is only about which elements are on the sheet at all.
+Print styling stops there. Yeti does not set page margins, force a color scheme, or break pages for you; `@page`, `break-inside` and the rest are yours to write, and this utility is only about which elements are on the sheet at all.
 
 ### Accessibility
 
@@ -2497,7 +2484,7 @@ A screen-only control is not on the page a reader prints. Nothing on paper may d
 `print` and `visually-hidden` do not combine on one element: on screen `print` removes it outright, so there is nothing left for `visually-hidden` to keep announced, and on paper the clip `visually-hidden` applies leaves a blank pixel where the printed content should be.
 
 Accessibility contract:
-Both states are display: none in the medium they are not for, which takes the element out of the accessibility tree there as well. That is correct for this job and worth saying out loud: a paper-only line is not read out on screen, so it must never carry anything a reader on screen needs, and a screen-only control is not on the page a reader prints, so nothing on paper may depend on it. Text a screen reader should hear but nobody should see is visually-hidden, not this. A printed page is also a page with no colour guarantee, so never let the print state be the only thing carrying a meaning.
+Both states are display: none in the medium they are not for, which takes the element out of the accessibility tree there as well. That is correct for this job and worth saying out loud: a paper-only line is not read out on screen, so it must never carry anything a reader on screen needs, and a screen-only control is not on the page a reader prints, so nothing on paper may depend on it. Text a screen reader should hear but nobody should see is visually-hidden, not this. A printed page is also a page with no color guarantee, so never let the print state be the only thing carrying a meaning.
 
 ## visually-hidden (utility, class="visually-hidden")
 
@@ -2655,9 +2642,9 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-weight-normal (weight): 400 — Body weight.
 - --yeti-weight-bold (weight): 700 — Headings, th, strong and b. Separate from --yeti-weight-strong so display text and control labels can be tuned apart.
 - --yeti-weight-strong (weight): 600 — Labels, headers, buttons.
-- --yeti-shadow-color (shadow): black at 14% in light, 55% in dark — The colour every shadow is drawn in; a theme changes offsets without losing the scheme flip.
+- --yeti-shadow-color (shadow): black at 14% in light, 55% in dark — The color every shadow is drawn in; a theme changes offsets without losing the scheme flip.
 - --yeti-shadow-sm (shadow): 0 1px 2px (black at 14% light, 55% dark) — Raised cards.
-- --yeti-shadow-md (shadow): 0 4px 12px (the same colour) — Floating surfaces; phase 4's menus and dialogs.
+- --yeti-shadow-md (shadow): 0 4px 12px (the same color) — Floating surfaces; phase 4's menus and dialogs.
 - --yeti-control-size (control): 2.5rem — Minimum block size of a button or input at data-size="md".
 - --yeti-control-radius (control): var(--yeti-radius-sm) — Corner of inputs.
 - --yeti-control-border (control): var(--yeti-color-border) — Border of inputs at rest.
@@ -2693,7 +2680,7 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-accordion-border (accordion): var(--yeti-color-border) — The line between one panel and the next, and around the set.
 - --yeti-accordion-padding (accordion): var(--yeti-space-md) — Padding of a summary and of its panel.
 - --yeti-accordion-surface (accordion): var(--yeti-color-surface) — Background of the set, and so of an open panel.
-- --yeti-accordion-summary (accordion): color-mix(in oklch, var(--yeti-accordion-surface) 88%, var(--yeti-color-text)) — Background of a summary row, set apart from the panel below it. Mixed toward the text colour, so it darkens the row in light and lifts it in dark.
+- --yeti-accordion-summary (accordion): color-mix(in oklch, var(--yeti-accordion-surface) 88%, var(--yeti-color-text)) — Background of a summary row, set apart from the panel below it. Mixed toward the text color, so it darkens the row in light and lifts it in dark.
 - --yeti-accordion-summary-hover (accordion): color-mix(in oklch, var(--yeti-accordion-surface) 80%, var(--yeti-color-text)) — Background of a summary under the pointer, one step further from the panel than at rest.
 - --yeti-tabs-border (tabs): var(--yeti-color-border) — The line under the tab list.
 - --yeti-tabs-padding (tabs): var(--yeti-space-sm) var(--yeti-space-md) — Padding of one tab.
@@ -2706,11 +2693,11 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-dialog-surface (dialog): var(--yeti-color-surface-raised) — Background of the dialog.
 - --yeti-dialog-radius (dialog): var(--yeti-radius-lg) — Corner of the dialog.
 - --yeti-dialog-padding (dialog): var(--yeti-space-lg) — Padding inside the dialog.
-- --yeti-dialog-backdrop (dialog): black at 60% — The backdrop behind an open dialog. Black rather than a theme colour, because a backdrop dims what is behind it in every theme.
+- --yeti-dialog-backdrop (dialog): black at 60% — The backdrop behind an open dialog. Black rather than a theme color, because a backdrop dims what is behind it in every theme.
 - --yeti-tooltip-surface (tooltip): var(--yeti-color-text) — Background of the bubble, inverted so it reads over anything.
 - --yeti-tooltip-text (tooltip): var(--yeti-color-surface) — Text of the bubble.
 - --yeti-tooltip-radius (tooltip): var(--yeti-radius-sm) — Corner of the bubble.
-- --yeti-carousel-dot (carousel): var(--yeti-color-border-strong) — Colour of a slide dot.
+- --yeti-carousel-dot (carousel): var(--yeti-color-border-strong) — Color of a slide dot.
 - --yeti-carousel-dot-size (carousel): 0.75rem — Diameter of a slide dot.
 - --yeti-carousel-scroll (carousel): smooth, and auto under reduced motion — How the track scrolls when a dot is followed. A components-layer declaration outranks the reset, so the preference reaches the track through this token.
 - --yeti-toc-scroll (toc): smooth, and auto under reduced motion — How the page scrolls when a link in a toc is followed. A components-layer declaration outranks the reset, so the preference reaches the page through this token.
@@ -2732,7 +2719,7 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-attention-distance (attention): 0.35rem — How far a shake throws the element to each side.
 - --yeti-attention-scale (attention): 1.06 — How large a pulse swells the element at its peak.
 - --yeti-fit-width (fit): var(--yeti-width-md) — The container width at which a line carrying billboard reaches the top of its pair; below it the size is in proportion, above it the clamp holds.
-- --yeti-white (color): oklch(1 0 0) — White, in both schemes and under every theme. One of the three colours that never move.
+- --yeti-white (color): oklch(1 0 0) — White, in both schemes and under every theme. One of the three colors that never move.
 - --yeti-black (color): oklch(0 0 0) — Black, in both schemes and under every theme.
 - --yeti-grey (color): oklch(0.565 0 0) — 18% reflectance, the photographic middle grey, in both schemes and under every theme.
 - --yeti-grey-0 (color): 0% from surface to text — The page surface, as the first step of the greyscale.
@@ -2745,7 +2732,7 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-grey-70 (color): 70% from surface to text — 70% of the way from the page surface to its text. Near the text in both schemes when the number is high.
 - --yeti-grey-80 (color): 80% from surface to text — 80% of the way from the page surface to its text. Near the text in both schemes when the number is high.
 - --yeti-grey-90 (color): 90% from surface to text — 90% of the way from the page surface to its text. Near the text in both schemes when the number is high.
-- --yeti-grey-100 (color): 100% from surface to text — The page text colour, as the last step of the greyscale.
+- --yeti-grey-100 (color): 100% from surface to text — The page text color, as the last step of the greyscale.
 - --yeti-color-primary-0 (color): grey-0 at the primary hue — The primary hue at the lightness of --yeti-grey-0; flips with the scheme as the grey does.
 - --yeti-color-primary-10 (color): grey-10 at the primary hue — The primary hue at the lightness of --yeti-grey-10; flips with the scheme as the grey does.
 - --yeti-color-primary-20 (color): grey-20 at the primary hue — The primary hue at the lightness of --yeti-grey-20; flips with the scheme as the grey does.

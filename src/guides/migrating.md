@@ -49,7 +49,7 @@ Version 6 had a class for each of these. Most of them are the browser's job, and
 | `.button`, `.button.primary`, <br> `.hollow`, `.clear` | `button` with `data-variant` and `data-emphasis` | emphasis replaces hollow and clear |
 | `.button-group` | `buttons` | a named group of buttons |
 | `.callout` | `alert` for a message, `box` with `data-border` for a plain panel | the callout did two jobs |
-| `.callout.primary`, `.callout.secondary` and the other coloured callouts | `alert` with `data-variant` for a message; `data-paint` on any element for a coloured panel | a colour by name, on anything |
+| `.callout.primary`, `.callout.secondary` and the other colored callouts | `alert` with `data-variant` for a message; `data-paint` on any element for a colored panel | a color by name, on anything |
 | `.card` | `card` | the figure bleeds on its own; `data-stretch` for a whole-card link |
 | `.label` and `.badge` | `badge` | one component, sized by `data-size` |
 | `.table`, `.hover`, `.stack` | `table` with `data-hover`, `data-striped`; a `scroller` for width | the stacking table is gone, a table stays a table |

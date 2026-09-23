@@ -1,5 +1,5 @@
 /* Badge: a small inline label for a status or a count. Quiet by default:
-   a subtle tint with the hue's text colour. */
+   a subtle tint with the hue's text color. */
 @layer yeti.components {
 	.badge {
 		display: inline-flex;

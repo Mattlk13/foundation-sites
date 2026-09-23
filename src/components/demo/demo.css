@@ -21,7 +21,7 @@
 	   to the smallest height stop. The box has a real border, and the iframe fills the
 	   content box inside it: an inset shadow was tried instead, but it
 	   paints beneath the box's own content, and a framed example's document
-	   is opaque (Yeti's own surface colour), so in the framed case — the
+	   is opaque (Yeti's own surface color), so in the framed case — the
 	   docs case — the edge would never show through. The width and height
 	   tokens name the box's content size, because that is what @container
 	   measures and what the markup inside sees, so data-width="md" reads
@@ -99,7 +99,7 @@
 		border-block-end-color: var(--yeti-control-border);
 	}
 	/* Once the code is open the pre sits right under the summary, and a rule
-	   there would read as the pre's top edge, so only the colour change stays. */
+	   there would read as the pre's top edge, so only the color change stays. */
 	.demo > details[open] > summary:is(:hover, :focus-visible) { border-block-end-color: transparent; }
 	/* The summary sits tight under the box and the code tight under it, so
 	   the whole thing reads as one object; the base prose rhythm would put a
@@ -160,7 +160,7 @@
 		margin-inline-end: calc(var(--yeti-space-sm) - var(--_yeti-demo-inset));
 		padding: 0 var(--yeti-space-xs);
 		border-radius: var(--yeti-demo-radius);
-		/* Mixed toward the text colour so the pill stands off the bar in both
+		/* Mixed toward the text color so the pill stands off the bar in both
 		   schemes; a second surface token sits too close to the bar in the dark. */
 		background-color: color-mix(in oklch, var(--yeti-demo-label) 82%, var(--yeti-color-text));
 		color: var(--yeti-color-text-muted);

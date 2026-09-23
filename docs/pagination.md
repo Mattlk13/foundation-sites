@@ -85,12 +85,12 @@ Label the `nav` `aria-label="Pagination"`. The current page's link carries `aria
 | --- | --- |
 | `--yeti-pagination-radius` | Corner of each target. |
 | `--yeti-control-size` | Minimum size of each target. |
-| `--yeti-color-primary` | The default variant's colour, when data-variant is absent. |
+| `--yeti-color-primary` | The default variant's color, when data-variant is absent. |
 | `--yeti-color-primary-subtle` | The default variant's tint. |
 | `--yeti-color-primary-soft` | The default variant's soft stop. |
 | `--yeti-color-primary-strong` | The default variant's strong stop. |
-| `--yeti-color-primary-text` | The default variant's text colour. |
-| `--yeti-on-primary` | Text on the default variant's colour. |
+| `--yeti-color-primary-text` | The default variant's text color. |
+| `--yeti-on-primary` | Text on the default variant's color. |
 | `--yeti-text-md` | Text size when data-size is absent. |
 | `--yeti-space-sm` | The space step when data-size is absent; a target's inline padding follows it. |
 | `--yeti-space-xs` | Gap between targets. |

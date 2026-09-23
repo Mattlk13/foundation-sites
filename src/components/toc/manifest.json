@@ -90,7 +90,7 @@
     {
       "name": "--yeti-color-primary",
       "public": true,
-      "description": "The default variant's colour, when data-variant is absent."
+      "description": "The default variant's color, when data-variant is absent."
     },
     {
       "name": "--yeti-color-primary-subtle",
@@ -100,7 +100,7 @@
     {
       "name": "--yeti-color-primary-text",
       "public": true,
-      "description": "The default variant's text colour."
+      "description": "The default variant's text color."
     },
     {
       "name": "--_yeti-variant",

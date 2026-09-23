@@ -25,7 +25,7 @@
     { "name": "--yeti-card-radius", "public": true, "description": "Corner radius." },
     { "name": "--yeti-card-padding", "public": true, "description": "Padding inside the card; the figure bleeds through it." },
     { "name": "--yeti-card-gap", "public": true, "description": "Space between the card's parts." },
-    { "name": "--yeti-card-border", "public": true, "description": "Border colour." },
+    { "name": "--yeti-card-border", "public": true, "description": "Border color." },
     { "name": "--yeti-card-surface", "public": true, "description": "Background." },
     { "name": "--yeti-shadow-sm", "public": true, "description": "The shadow when raised." },
     { "name": "--yeti-color-text", "public": true, "description": "The card's text, and a caption laid over the figure." },

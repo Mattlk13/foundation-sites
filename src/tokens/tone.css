@@ -5,8 +5,8 @@
    without declaring any, and the hued tones take each grey's lightness and
    put the hue's angle and chroma under it, so a theme that moves a hue moves
    its eleven tones with it. Both flip with the scheme because the poles do.
-   A grey names a distance from the page, not a colour: grey-20 is near the
-   page in light mode and in dark mode. The constants are the only colours in
+   A grey names a distance from the page, not a color: grey-20 is near the
+   page in light mode and in dark mode. The constants are the only colors in
    Yeti that mean the same thing in both schemes and under every theme.
    Steps are percentages so a step can be added later without renaming. */
 @layer yeti.base {

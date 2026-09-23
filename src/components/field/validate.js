@@ -65,7 +65,7 @@ document.addEventListener('submit', (event) => {
 // input for what is typed, change for what is picked. The mark goes the moment
 // the control is valid again, rather than waiting for the next submit, because
 // a red box that stays red after it has been fixed teaches a reader to ignore
-// the colour.
+// the color.
 const clear = (event) => {
 	const control = event.target;
 	if (!control?.willValidate) return;

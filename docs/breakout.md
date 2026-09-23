@@ -102,7 +102,7 @@ Attributes that descendants carry, not the root.
 | `--yeti-width-md` | The default column width, chosen under the base measure so paragraphs fill it. |
 | `--yeti-space-md` | The default gutter and row gap. |
 | `--yeti-text-sm` | The note's text size. |
-| `--yeti-color-text-muted` | The note's text colour. |
+| `--yeti-color-text-muted` | The note's text color. |
 
 </div>
 

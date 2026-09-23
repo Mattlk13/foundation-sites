@@ -25,4 +25,4 @@ There is no corner radius, on purpose. A box is square. A rounded panel that lif
 
 ## Why this name
 
-There is no plainer word for a padded rectangle. Foundation 6's Callout was a styled box with a colour scheme; the plain one had no name.
+There is no plainer word for a padded rectangle. Foundation 6's Callout was a styled box with a color scheme; the plain one had no name.

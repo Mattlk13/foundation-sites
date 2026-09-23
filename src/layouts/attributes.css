@@ -227,13 +227,13 @@
 	@container (inline-size >= 80rem) { [data-hide="2xl"] { display: none; } }
 }
 
-/* data-paint and data-text: a colour by name on any element, the first on
+/* data-paint and data-text: a color by name on any element, the first on
    the background and the second on the words. Markers declared on box, since
    the box is where surfaces already live, and in the utilities layer so the
-   colour outranks whatever background or colour the element's own component
+   color outranks whatever background or color the element's own component
    gave it. data-surface stays what it is, a role of the page; this is a
-   colour picked from the list in schema/vocabulary.json.
-   A painted hue takes the text the base colour was made for, on-<hue>. A
+   color picked from the list in schema/vocabulary.json.
+   A painted hue takes the text the base color was made for, on-<hue>. A
    painted grey takes the page text up to grey-40 and the page surface from
    grey-50: half-way toward the text is where the text stops reading, and
    the rule holds in both schemes because the greys do. The constants take
@@ -283,9 +283,9 @@
 	[data-text="grey-90"] { color: var(--yeti-grey-90); }
 	[data-text="grey-100"] { color: var(--yeti-grey-100); }
 
-	/* A plain link and a caption set their own colour in the base layer, so
+	/* A plain link and a caption set their own color in the base layer, so
 	   inside a painted band a link was primary on primary and a caption was
-	   muted on black. Both take the band's colour instead; a link that is a
+	   muted on black. Both take the band's color instead; a link that is a
 	   button keeps its own. */
 	[data-paint] :is(a:not([class]), figcaption),
 	[data-text] :is(a:not([class]), figcaption) { color: inherit; }

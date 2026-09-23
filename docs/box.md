@@ -56,7 +56,7 @@ There is no corner radius, on purpose. A box is square. A rounded panel that lif
 
 ## Why this name
 
-There is no plainer word for a padded rectangle. Foundation 6's Callout was a styled box with a colour scheme; the plain one had no name.
+There is no plainer word for a padded rectangle. Foundation 6's Callout was a styled box with a color scheme; the plain one had no name.
 
 ## Attributes
 
@@ -66,7 +66,7 @@ There is no plainer word for a padded rectangle. Foundation 6's Callout was a st
 | --- | --- | --- | --- | --- |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `md` | Padding on every side. |
 | `data-surface` | enum | `base`, `raised`, `sunken` |  | Fill the box with one of the three surface tones, making it a visible panel. Absent, the box is transparent and only its padding does anything. |
-| `data-border` | boolean |  |  | Draw a border of the border width, in the border colour. |
+| `data-border` | boolean |  |  | Draw a border of the border width, in the border color. |
 
 </div>
 
@@ -78,8 +78,8 @@ Attributes that descendants carry, not the root.
 
 | Attribute | Type | Values | On | Description |
 | --- | --- | --- | --- | --- |
-| `data-paint` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral`, `white`, `black`, `grey`, `grey-0`, `grey-10`, `grey-20`, `grey-30`, `grey-40`, `grey-50`, `grey-60`, `grey-70`, `grey-80`, `grey-90`, `grey-100` | `*` | Fill this element with a colour by name: a hue at its base step with the text made for it, a constant, or a step of the greyscale. Up to grey-40 the text stays the page text; from grey-50 it becomes the page surface. |
-| `data-text` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral`, `white`, `black`, `grey`, `grey-0`, `grey-10`, `grey-20`, `grey-30`, `grey-40`, `grey-50`, `grey-60`, `grey-70`, `grey-80`, `grey-90`, `grey-100` | `*` | Colour this element's words by name, from the same list. On an element that is also painted it wins over the automatic text colour. |
+| `data-paint` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral`, `white`, `black`, `grey`, `grey-0`, `grey-10`, `grey-20`, `grey-30`, `grey-40`, `grey-50`, `grey-60`, `grey-70`, `grey-80`, `grey-90`, `grey-100` | `*` | Fill this element with a color by name: a hue at its base step with the text made for it, a constant, or a step of the greyscale. Up to grey-40 the text stays the page text; from grey-50 it becomes the page surface. |
+| `data-text` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral`, `white`, `black`, `grey`, `grey-0`, `grey-10`, `grey-20`, `grey-30`, `grey-40`, `grey-50`, `grey-60`, `grey-70`, `grey-80`, `grey-90`, `grey-100` | `*` | Color this element's words by name, from the same list. On an element that is also painted it wins over the automatic text color. |
 
 </div>
 

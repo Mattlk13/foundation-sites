@@ -12,7 +12,7 @@ nav_order: 7
 
 ## Durations collapse, end states stay
 
-Yeti never removes an effect for a reader who has asked for less motion. It shortens it. Every animation and transition in the framework reads `--yeti-duration-fast` or `--yeti-duration-base`, and under `prefers-reduced-motion: reduce` both collapse to `0.01ms`. A dialog still opens, a card still lifts, a `lift` still changes colour. They simply arrive rather than travel.
+Yeti never removes an effect for a reader who has asked for less motion. It shortens it. Every animation and transition in the framework reads `--yeti-duration-fast` or `--yeti-duration-base`, and under `prefers-reduced-motion: reduce` both collapse to `0.01ms`. A dialog still opens, a card still lifts, a `lift` still changes color. They simply arrive rather than travel.
 
 That is a deliberate choice over `animation: none`. An effect switched off mid-way can strand an element somewhere its layout did not put it, and the reader is left looking at a half-open panel or nothing at all. A collapsed duration always ends where the CSS says it ends.
 

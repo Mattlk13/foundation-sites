@@ -45,7 +45,7 @@
 	   so. It is generated with empty alternative text, the way the breadcrumbs
 	   separator is, so the name is announced and the dash is not. Only in a
 	   figure, and only after the quotation: a caption under a picture is a
-	   caption. The muted colour and the small size are already every
+	   caption. The muted color and the small size are already every
 	   figcaption's, at the top of this file. */
 	figure > blockquote + figcaption::before {
 		content: "— " / "";

@@ -48,7 +48,7 @@
 		border-color: var(--yeti-color-border-strong);
 	}
 
-	/* Checkbox and radio, redrawn so the checked colour is the variant's. */
+	/* Checkbox and radio, redrawn so the checked color is the variant's. */
 	.field input:is([type="checkbox"], [type="radio"]) {
 		appearance: none;
 		inline-size: 1.25em;
@@ -69,7 +69,7 @@
 	}
 
 	/* A switch: a checkbox with role="switch", drawn as a track with a thumb
-	   that slides to the end and a track that takes the variant colour. */
+	   that slides to the end and a track that takes the variant color. */
 	.field input[type="checkbox"][role="switch"] {
 		inline-size: 2.25em;
 		border-radius: var(--yeti-radius-full);
@@ -88,7 +88,7 @@
 		box-shadow: none;
 	}
 
-	/* A range: a thin track and a round thumb in the variant colour. The
+	/* A range: a thin track and a round thumb in the variant color. The
 	   engine pseudo-elements take physical sizes; the input itself is a
 	   full control's height so the thumb is a comfortable target.
 

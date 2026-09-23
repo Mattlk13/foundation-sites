@@ -4,7 +4,7 @@ A long page a reader scrolls rather than clicks through: a guide, a reference, a
 
 ## How it works
 
-A column of links, each pointing at the id of a heading on the same page. The current one carries `aria-current="true"` and takes the variant's colour, a strong weight, and a bar down its start edge; the bar is on every link and transparent until then, so nothing shifts as the mark moves. `data-variant` picks the hue and `data-size` steps the text.
+A column of links, each pointing at the id of a heading on the same page. The current one carries `aria-current="true"` and takes the variant's color, a strong weight, and a bar down its start edge; the bar is on every link and transparent until then, so nothing shifts as the mark moves. `data-variant` picks the hue and `data-size` steps the text.
 
 `toc.js` moves the mark. It watches the linked headings with one `IntersectionObserver` and marks the link of whichever heading is topmost in view, dispatching `yeti:current` on the `.toc` with the link and the heading each time it moves. Between two headings nothing is in view, and the last mark stays rather than flickering off. Without the module the list is a working list of links, and a page that knows its own current section can simply ship the attribute in its HTML.
 
@@ -21,4 +21,4 @@ Following a link scrolls smoothly, from `--yeti-toc-scroll` applied to the page 
 
 ## Accessibility
 
-Label the `nav` — `aria-label="On this page"` — because a page with a toc has at least two navs and they have to be told apart. Put `role="list"` on the `ul`, which is what keeps it a list where the reset removes the markers. The current section's link carries `aria-current="true"`; the colour and the bar are the visible half of the same fact, never the only half. The module owns that attribute on these links: it sets and clears `aria-current="true"` and strips any other `aria-current` value an author puts on a toc link. The links are ordinary same-page links, so the keyboard reaches them in order and Enter follows one with no script at all.
+Label the `nav` — `aria-label="On this page"` — because a page with a toc has at least two navs and they have to be told apart. Put `role="list"` on the `ul`, which is what keeps it a list where the reset removes the markers. The current section's link carries `aria-current="true"`; the color and the bar are the visible half of the same fact, never the only half. The module owns that attribute on these links: it sets and clears `aria-current="true"` and strips any other `aria-current` value an author puts on a toc link. The links are ordinary same-page links, so the keyboard reaches them in order and Enter follows one with no script at all.

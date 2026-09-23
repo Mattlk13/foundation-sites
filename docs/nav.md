@@ -132,12 +132,12 @@ Attributes that descendants carry, not the root.
 | `--yeti-color-text` | The bar's text, and the open panel's. |
 | `--yeti-border-width` | Width of the bar's bottom edge, and of the sheet's. |
 | `--yeti-space-sm` | The default gap; a link's inline padding and the close item's inset follow it. |
-| `--yeti-color-primary` | The default variant's colour, when data-variant is absent. |
+| `--yeti-color-primary` | The default variant's color, when data-variant is absent. |
 | `--yeti-color-primary-subtle` | The default variant's tint. |
 | `--yeti-color-primary-soft` | The default variant's soft stop. |
 | `--yeti-color-primary-strong` | The default variant's strong stop. |
-| `--yeti-color-primary-text` | The default variant's text colour. |
-| `--yeti-on-primary` | Text on the default variant's colour. |
+| `--yeti-color-primary-text` | The default variant's text color. |
+| `--yeti-on-primary` | Text on the default variant's color. |
 | `--yeti-weight-strong` | Weight of the brand, and of the current page's link. |
 | `--yeti-space-xs` | Block padding of a link, and of the close button. |
 | `--yeti-duration-fast` | How long the panel takes to open. |

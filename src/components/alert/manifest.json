@@ -3,7 +3,7 @@
   "name": "alert",
   "kind": "component",
   "group": "Feedback",
-  "description": "A message in a hue: a tinted box with a coloured edge, an optional icon, and an optional close button that the module wires up.",
+  "description": "A message in a hue: a tinted box with a colored edge, an optional icon, and an optional close button that the module wires up.",
   "class": "alert",
   "attributes": [
     { "name": "data-variant", "type": "enum", "vocabulary": "variant", "default": "primary", "description": "Which hue: success for done, warning for careful, danger for wrong (alert is the same ladder under its Foundation 6 name), primary for news." },
@@ -25,12 +25,12 @@
     { "name": "--yeti-border-width", "public": true, "description": "The border; the start edge is four of them." },
     { "name": "--yeti-space-sm", "public": true, "description": "Gap between the icon, the body, and the close button." },
     { "name": "--yeti-color-text", "public": true, "description": "The body text." },
-    { "name": "--yeti-color-primary", "public": true, "description": "The default variant's colour, when data-variant is absent." },
+    { "name": "--yeti-color-primary", "public": true, "description": "The default variant's color, when data-variant is absent." },
     { "name": "--yeti-color-primary-subtle", "public": true, "description": "The default variant's tint." },
     { "name": "--yeti-color-primary-soft", "public": true, "description": "The default variant's soft stop." },
     { "name": "--yeti-color-primary-strong", "public": true, "description": "The default variant's strong stop." },
-    { "name": "--yeti-color-primary-text", "public": true, "description": "The default variant's text colour." },
-    { "name": "--yeti-on-primary", "public": true, "description": "Text on the default variant's colour." },
+    { "name": "--yeti-color-primary-text", "public": true, "description": "The default variant's text color." },
+    { "name": "--yeti-on-primary", "public": true, "description": "Text on the default variant's color." },
     { "name": "--yeti-duration-fast", "public": true, "description": "How long the alert takes to fade out when alert.js dismisses it." },
     { "name": "--_yeti-variant", "public": false },
     { "name": "--_yeti-variant-subtle", "public": false },
@@ -39,7 +39,7 @@
     { "name": "--_yeti-on-variant", "public": false },
     { "name": "--_yeti-variant-soft", "public": false }
   ],
-  "a11y": { "requiredAttributes": [], "keyboard": [ { "key": "Enter / Space", "action": "On the close button, removes the alert." } ], "notes": "Use role=\"status\" for the usual notice, which is announced politely, and role=\"alert\" only for something urgent, which interrupts. Content present at page load is not announced by either role; the roles matter for alerts inserted later. Meaning carried by the colour must also be in the words. The close button needs a name. Without the module the button does nothing, so leave it out on pages that do not load alert.js." },
+  "a11y": { "requiredAttributes": [], "keyboard": [ { "key": "Enter / Space", "action": "On the close button, removes the alert." } ], "notes": "Use role=\"status\" for the usual notice, which is announced politely, and role=\"alert\" only for something urgent, which interrupts. Content present at page load is not announced by either role; the roles matter for alerts inserted later. Meaning carried by the color must also be in the words. The close button needs a name. Without the module the button does nothing, so leave it out on pages that do not load alert.js." },
   "js": [{ "module": "alert.js", "optional": true, "events": [
     { "name": "yeti:close", "description": "Dispatched on the .alert after the fade and before it is removed, while it is still in the page." }
   ] }],

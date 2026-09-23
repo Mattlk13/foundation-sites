@@ -8,7 +8,7 @@
 // The framed document is a whole Yeti page: the host page's own Yeti
 // stylesheet, found by its file name, unless the figure names another with
 // data-stylesheet, and yeti.js from the folder beside it, so an example that
-// needs a module has it. A host page in someone else's colours points at a
+// needs a module has it. A host page in someone else's colors points at a
 // plain yeti.css that way; host yeti.js next to it.
 // Safe on pages with no demo, and demos added later are filled as they land.
 const stylesheetFor = (figure) => figure.dataset.stylesheet

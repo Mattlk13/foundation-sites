@@ -10,7 +10,7 @@
 		   labels and buttons at 600 and leave display text at 700, or the reverse. */
 		--yeti-weight-bold: 700;
 
-		/* Shadows are one colour and two offsets, so a theme can retune either. */
+		/* Shadows are one color and two offsets, so a theme can retune either. */
 		--yeti-shadow-color: light-dark(oklch(0 0 0 / 0.14), oklch(0 0 0 / 0.55));
 		--yeti-shadow-sm: 0 1px 2px var(--yeti-shadow-color);
 		--yeti-shadow-md: 0 4px 12px var(--yeti-shadow-color);
@@ -18,7 +18,7 @@
 		/* Controls: the smallest a button or input gets, and its corner. */
 		--yeti-control-size: 2.5rem;
 		--yeti-control-radius: var(--yeti-radius-sm);
-		/* Not the divider colour. A text field, an unchecked box and an off
+		/* Not the divider color. A text field, an unchecked box and an off
 		   switch are identified by this border alone, so it has to clear 3:1
 		   against the surface; the divider sits at 1.4:1 and is meant to. */
 		--yeti-control-border: light-dark(oklch(0.58 var(--_yeti-c-neutral) var(--yeti-hue-neutral)), oklch(0.55 var(--_yeti-c-neutral) var(--yeti-hue-neutral)));

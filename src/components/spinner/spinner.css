@@ -19,7 +19,7 @@
 	.spinner:not([data-variant]) { --_yeti-variant: var(--yeti-color-primary); --_yeti-variant-subtle: var(--yeti-color-primary-subtle); --_yeti-variant-soft: var(--yeti-color-primary-soft); --_yeti-variant-strong: var(--yeti-color-primary-strong); --_yeti-variant-text: var(--yeti-color-primary-text); --_yeti-on-variant: var(--yeti-on-primary); }
 	.spinner:not([data-size]) { --_yeti-size-text: var(--yeti-text-md); --_yeti-size-space: var(--yeti-space-sm); }
 
-	/* In a busy button the ring is drawn from the button's own text colour,
+	/* In a busy button the ring is drawn from the button's own text color,
 	   so it reads on every emphasis; the button's gap spaces it. */
 	.button[aria-busy="true"]::after {
 		content: "";

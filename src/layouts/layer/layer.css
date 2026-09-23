@@ -22,7 +22,7 @@
 	.layer > :not([data-justify-self]) { --_yeti-justify-self: auto; }
 
 	/* A caption over a picture needs a scrim to stay readable, and it is not
-	   the aside a caption under one is, so it drops the muted colour too. The
+	   the aside a caption under one is, so it drops the muted color too. The
 	   card has said this since the start, for a figure.layer that is its first
 	   child; the same markup outside a card was left unreadable. Only a figure's
 	   caption, because that is the case: a layer is otherwise a stacking

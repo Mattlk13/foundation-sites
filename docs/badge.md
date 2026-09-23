@@ -40,7 +40,7 @@ An inline box one step smaller than the text around it, with a pill corner by de
 
 ## Accessibility
 
-Colour is decoration here; the word is the meaning, so "Live" and "Draft" work with no colour at all. A count beside a button or a tab is read as separate text, which is rarely what you want; put it into the control's `aria-label` instead. Text over every tint meets AA in both schemes.
+Color is decoration here; the word is the meaning, so "Live" and "Draft" work with no color at all. A count beside a button or a tab is read as separate text, which is rarely what you want; put it into the control's `aria-label` instead. Text over every tint meets AA in both schemes.
 
 ## Attributes
 
@@ -69,12 +69,12 @@ Colour is decoration here; the word is the meaning, so "Live" and "Draft" work w
 | `--yeti-space-xs` | Gap between the icon and the text. |
 | `--yeti-leading-tight` | Line height. |
 | `--yeti-border-width` | Border width. |
-| `--yeti-color-primary` | The default variant's colour, when data-variant is absent. |
+| `--yeti-color-primary` | The default variant's color, when data-variant is absent. |
 | `--yeti-color-primary-subtle` | The default variant's tint. |
 | `--yeti-color-primary-soft` | The default variant's soft stop. |
 | `--yeti-color-primary-strong` | The default variant's strong stop. |
-| `--yeti-color-primary-text` | The default variant's text colour. |
-| `--yeti-on-primary` | Text on the default variant's colour. |
+| `--yeti-color-primary-text` | The default variant's text color. |
+| `--yeti-on-primary` | Text on the default variant's color. |
 | `--yeti-text-md` | Text size when data-size is absent. |
 | `--yeti-space-sm` | The space step when data-size is absent. |
 
@@ -95,7 +95,7 @@ Colour is decoration here; the word is the meaning, so "Live" and "Draft" work w
 
 ## Accessibility
 
-- A badge is text. If the colour carries meaning, the text must carry it too. A count that belongs to a control goes into that control's accessible name, not beside it.
+- A badge is text. If the color carries meaning, the text must carry it too. A count that belongs to a control goes into that control's accessible name, not beside it.
 
 ## Browser support
 

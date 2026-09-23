@@ -130,7 +130,7 @@ Attributes that descendants carry, not the root.
 | `--yeti-space-xs` | Clearance direct markup keeps from the box's resize grip; the bar's block padding; the stop label's offset and inline padding. |
 | `--yeti-space-sm` | The bar's inline padding, and the stop label's inset from the end. |
 | `--yeti-text-sm` | Text size of the caption, the bar, the stop label, and the summary. |
-| `--yeti-color-text-muted` | The caption's colour, the stop label's, and the summary's at rest. |
+| `--yeti-color-text-muted` | The caption's color, the stop label's, and the summary's at rest. |
 | `--yeti-font-mono` | The stop label's typeface, so it reads as a readout, not prose. |
 | `--yeti-leading-md` | Line height of the bar and the stop label. |
 

@@ -41,7 +41,7 @@
 		--yeti-accordion-border: var(--yeti-color-border);
 		--yeti-accordion-padding: var(--yeti-space-md);
 		--yeti-accordion-surface: var(--yeti-color-surface);
-		/* Mixed toward the text colour rather than picked off the surface ramp,
+		/* Mixed toward the text color rather than picked off the surface ramp,
 		   because the ramp's own steps are too small to read here: a summary and
 		   its answer came out three hundredths of a lightness apart in dark and
 		   the rows vanished into the panel. Mixing toward text also moves the
@@ -66,8 +66,8 @@
 		--yeti-dialog-surface: var(--yeti-color-surface-raised);
 		--yeti-dialog-radius: var(--yeti-radius-lg);
 		--yeti-dialog-padding: var(--yeti-space-lg);
-		/* Black, not the text colour. A backdrop's job is to dim what is behind
-		   it, and mixing the text colour inverts with the theme: on a dark
+		/* Black, not the text color. A backdrop's job is to dim what is behind
+		   it, and mixing the text color inverts with the theme: on a dark
 		   theme the text is near-white, so the wash came out at brightness 227
 		   over a page at 16 and lit the page up instead of dimming it. */
 		--yeti-dialog-backdrop: color-mix(in oklch, black 60%, transparent);
@@ -127,7 +127,7 @@
 		--yeti-lift-shadow: var(--yeti-shadow-md);
 		/* Its own duration rather than the shared fast one, because a hover on
 		   a large tile wants longer than a hover on a control, and a consumer
-		   that changes a card's colours on the same hover has to be able to
+		   that changes a card's colors on the same hover has to be able to
 		   match this exactly or the two halves arrive apart. */
 		--yeti-lift-duration: var(--yeti-duration-fast);
 		--yeti-lift-ease: var(--yeti-ease);

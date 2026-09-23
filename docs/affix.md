@@ -39,7 +39,7 @@ A price with its currency, a distance with its unit, a search box with its butto
 
 ## How it works
 
-A flex row. Every control grows; a `span` becomes a labelled box on the sunken surface; a `button` keeps its own colours. Inner corners are squared and each border overlaps the next by one width, so the seam is a single line. The group sets no size of its own: it reads the field around it, so `data-size` on the field scales the whole row.
+A flex row. Every control grows; a `span` becomes a labelled box on the sunken surface; a `button` keeps its own colors. Inner corners are squared and each border overlaps the next by one width, so the seam is a single line. The group sets no size of its own: it reads the field around it, so `data-size` on the field scales the whole row.
 
 ```html
 <div class="field" data-size="lg">

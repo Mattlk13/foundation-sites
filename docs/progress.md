@@ -66,12 +66,12 @@ No structural requirements.
 | --- | --- |
 | `--yeti-progress-radius` | Corner of the bar and of its value. |
 | `--yeti-color-surface-sunken` | The track. |
-| `--yeti-color-primary` | The default variant's colour, when data-variant is absent. |
+| `--yeti-color-primary` | The default variant's color, when data-variant is absent. |
 | `--yeti-color-primary-subtle` | The default variant's tint. |
 | `--yeti-color-primary-soft` | The default variant's soft stop. |
 | `--yeti-color-primary-strong` | The default variant's strong stop. |
-| `--yeti-color-primary-text` | The default variant's text colour. |
-| `--yeti-on-primary` | Text on the default variant's colour. |
+| `--yeti-color-primary-text` | The default variant's text color. |
+| `--yeti-on-primary` | Text on the default variant's color. |
 | `--yeti-text-md` | The text step when data-size is absent. |
 | `--yeti-space-sm` | The space step when data-size is absent; the bar's height follows it. |
 | `--yeti-duration-base` | How long the value takes to move; one cycle of the indeterminate sweep is four of it. |

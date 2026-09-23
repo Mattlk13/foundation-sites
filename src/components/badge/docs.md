@@ -12,4 +12,4 @@ An inline box one step smaller than the text around it, with a pill corner by de
 
 ## Accessibility
 
-Colour is decoration here; the word is the meaning, so "Live" and "Draft" work with no colour at all. A count beside a button or a tab is read as separate text, which is rarely what you want; put it into the control's `aria-label` instead. Text over every tint meets AA in both schemes.
+Color is decoration here; the word is the meaning, so "Live" and "Draft" work with no color at all. A count beside a button or a tab is read as separate text, which is rarely what you want; put it into the control's `aria-label` instead. Text over every tint meets AA in both schemes.

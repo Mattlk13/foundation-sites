@@ -27,7 +27,7 @@ Each section ends with the public tokens its rules read, copied from the CSS by 
 	<h4>A fourth</h4>
 	<h5>A fifth, the size of body text</h5>
 	<h6>A sixth, one step smaller</h6>
-	<p>Running text sits at the body size on the body leading, and wraps with <code>text-wrap: pretty</code>, so a paragraph is never left with one word on its last line. A <a href="#type">link</a> takes the primary colour and an underline that skips the descenders, and it deepens to the strong step of the same hue on hover.</p>
+	<p>Running text sits at the body size on the body leading, and wraps with <code>text-wrap: pretty</code>, so a paragraph is never left with one word on its last line. A <a href="#type">link</a> takes the primary color and an underline that skips the descenders, and it deepens to the strong step of the same hue on hover.</p>
 	<p><strong>Strong text</strong> takes the bold weight, and <small>small text</small> takes one step down the scale.</p>
 </section>
 
@@ -39,14 +39,14 @@ Each section ends with the public tokens its rules read, copied from the CSS by 
 	<h4>A fourth</h4>
 	<h5>A fifth, the size of body text</h5>
 	<h6>A sixth, one step smaller</h6>
-	<p>Running text sits at the body size on the body leading, and wraps with <code>text-wrap: pretty</code>, so a paragraph is never left with one word on its last line. A <a href="#type">link</a> takes the primary colour and an underline that skips the descenders, and it deepens to the strong step of the same hue on hover.</p>
+	<p>Running text sits at the body size on the body leading, and wraps with <code>text-wrap: pretty</code>, so a paragraph is never left with one word on its last line. A <a href="#type">link</a> takes the primary color and an underline that skips the descenders, and it deepens to the strong step of the same hue on hover.</p>
 	<p><strong>Strong text</strong> takes the bold weight, and <small>small text</small> takes one step down the scale.</p>
 </section>
 ```
 
 Headings take the type scale by level, and the only thing that differs from one level to the next is the size: `h1` is `--yeti-text-3xl`, `h2` is `2xl`, `h3` is `xl`, `h4` is `lg`, `h5` is `md` — the same size as body text — and `h6` is `sm`, one step below it. Everything else about a heading is shared: the bold weight, the tight leading, and `text-wrap: balance` so a two-line headline breaks evenly. Hierarchy is therefore one token change away, because the steps are the same progression space uses; retune `--yeti-base` or `--yeti-ratio` and the headings move with the gaps between them rather than drifting apart from them. See the [theming guide](theming.md) for the two inputs.
 
-The font family, the text colour and the page background are set on `html`; the size and leading are set on `body` rather than on `html`, so `rem` keeps the visitor's own root default and every `rem`-based token resolves the same on every element.
+The font family, the text color and the page background are set on `html`; the size and leading are set on `body` rather than on `html`, so `rem` keeps the visitor's own root default and every `rem`-based token resolves the same on every element.
 
 Prose is also held to a measure. `p`, `li`, `dd`, `dt`, `blockquote`, `figcaption` and every heading get `max-inline-size: var(--yeti-measure)`, 70ch by default. `pre` and `table` are not in that list, because code and data are read by scanning across rather than by returning to a left margin.
 
@@ -172,7 +172,7 @@ HTML allows a second shape for the same list, with each pair wrapped in a `div` 
 
 A quotation is set off by a rule on its leading edge and padded away from it. The rule is four pixels in `--yeti-color-border-strong`, the emphasised border rather than the divider one, because it is a mark and not a hairline; the four is a literal in the CSS and not a token, which is the one measurement in this group a theme cannot move.
 
-A caption under a quotation is an attribution, and the dash is what says so. It is generated only for `figure > blockquote + figcaption`, never for a caption under a picture, and it carries empty alternative text — `content: "— " / ""` — so a screen reader announces the name and not the dash. Both kinds of caption share the small size and the muted colour.
+A caption under a quotation is an attribution, and the dash is what says so. It is generated only for `figure > blockquote + figcaption`, never for a caption under a picture, and it carries empty alternative text — `content: "— " / ""` — so a screen reader announces the name and not the dash. Both kinds of caption share the small size and the muted color.
 
 **Tokens:** `--yeti-text-sm`, `--yeti-color-text-muted`, `--yeti-space-md`, `--yeti-color-border-strong`.
 
@@ -201,7 +201,7 @@ A block's leading is `--yeti-leading-sm`, a plain ratio, where running text uses
 ## Rules and disclosures
 
 <section class="box" data-border>
-	<p>A horizontal rule is one line in the border colour and nothing else: no height, no shading, no margin of its own.</p>
+	<p>A horizontal rule is one line in the border color and nothing else: no height, no shading, no margin of its own.</p>
 	<hr>
 	<details>
 		<summary>What the base layer dresses</summary>
@@ -219,7 +219,7 @@ A block's leading is `--yeti-leading-sm`, a plain ratio, where running text uses
 
 ```html
 <section class="box" data-border>
-	<p>A horizontal rule is one line in the border colour and nothing else: no height, no shading, no margin of its own.</p>
+	<p>A horizontal rule is one line in the border color and nothing else: no height, no shading, no margin of its own.</p>
 	<hr>
 	<details>
 		<summary>What the base layer dresses</summary>
@@ -290,7 +290,7 @@ Text-like inputs, `select` and `textarea` fill their container's width and take 
 
 Buttons, and the three input types that act as buttons, take the same padding and border on the raised surface with `cursor: default`. Anything disabled drops to `--yeti-opacity-muted`.
 
-Say it plainly: this is a reset with manners, not a design. `input`, `select` and `button` come out tidy here and take their real face from the components. A [field](../field.md) gives a control the control-sized target, the `--yeti-control-border` colour that clears 3:1 against the surface, the checkbox and radio and switch and range faces, the hint, and the error that appears on `:user-invalid`. A [button](../button.md) gives an action a hue from `data-variant`, a loudness from `data-emphasis`, a size from `data-size`, and `cursor: pointer` in place of the base's `default`. Neither is needed for a page to be usable; both are needed for it to look decided.
+Say it plainly: this is a reset with manners, not a design. `input`, `select` and `button` come out tidy here and take their real face from the components. A [field](../field.md) gives a control the control-sized target, the `--yeti-control-border` color that clears 3:1 against the surface, the checkbox and radio and switch and range faces, the hint, and the error that appears on `:user-invalid`. A [button](../button.md) gives an action a hue from `data-variant`, a loudness from `data-emphasis`, a size from `data-size`, and `cursor: pointer` in place of the base's `default`. Neither is needed for a page to be usable; both are needed for it to look decided.
 
 **Tokens:** `--yeti-weight-strong`, `--yeti-space-xs`, `--yeti-space-sm`, `--yeti-space-md`, `--yeti-border-width`, `--yeti-color-border`, `--yeti-radius-sm`, `--yeti-color-surface`, `--yeti-color-surface-raised`, `--yeti-opacity-muted`.
 
@@ -363,7 +363,7 @@ The reset is the sublayer under the base, and it is protective rather than opini
 - **Box sizing** includes padding and border, on every element and both generated boxes, because that is what everyone means by width.
 - **Margins start at zero** on everything except `dialog`, whose native centring depends on its own margins. Space belongs to containers, which is the rule the [Flow](#flow) section is the first instance of.
 - **Media are blocks** that never overflow: `img`, `picture`, `video`, `canvas` and `svg` get `display: block`, `max-inline-size: 100%` and `block-size: auto`, so an image is fluid and never stretched.
-- **Form controls inherit** the font, the colour and the letter spacing instead of taking the platform's own, and a handful of WebKit-only control pseudo-elements are normalised with them.
+- **Form controls inherit** the font, the color and the letter spacing instead of taking the platform's own, and a handful of WebKit-only control pseudo-elements are normalised with them.
 - **`sub` and `sup`** are set at 75% with a zeroed line height and shifted with `inset-block-start`, so a footnote marker never opens up the line it sits on.
 - **Tables collapse** their borders and zero their spacing, so one border token draws a grid.
 - **`[hidden]` wins over everything.** `[hidden] { display: none !important }` is the single `!important` in the whole framework, and the validator enforces that it stays single. Without it a component's own `display` would outrank the attribute, and `hidden` would silently stop working on a `card` or a `nav` item.
@@ -400,7 +400,7 @@ Every claim below was checked against the CSS rather than remembered.
 
 **Almost nothing is positioned.** Three rules in the whole base use `position`, and they are all named on this page: `sub` and `sup` take `position: relative` to shift off the baseline, and the skip link takes `absolute` while it is hidden and `fixed` with `z-index: 2` while it is focused. Nothing floats, nothing is sticky, and no other rule in the base sets a `z-index`.
 
-**No font is loaded and no colour is guessed.** `--yeti-font-sans` is `system-ui, sans-serif` and `--yeti-font-mono` is `ui-monospace, monospace`; there is no `@font-face` anywhere in Yeti. There is no `:visited` style, no `text-transform`, no letter spacing, and no colour on a heading beyond the inherited text colour.
+**No font is loaded and no color is guessed.** `--yeti-font-sans` is `system-ui, sans-serif` and `--yeti-font-mono` is `ui-monospace, monospace`; there is no `@font-face` anywhere in Yeti. There is no `:visited` style, no `text-transform`, no letter spacing, and no color on a heading beyond the inherited text color.
 
 **No element sets its own outer margin.** Every margin the base adds is between two siblings inside a flow container, plus the `dd` indent and the space above a definition term or a wrapped pair. Take the surrounding container away and every element in the base collapses back to zero.
 

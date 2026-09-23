@@ -38,7 +38,7 @@ Deep pages: a doc inside a section inside a manual, a product inside a category.
 
 ## How it works
 
-A wrapping row of steps at a small gap. Every step after the first is preceded by a separator drawn by CSS from `--yeti-breadcrumbs-separator`, a slash by default, which a theme may change to a chevron. Links are muted until hovered; the current step is the text colour in a strong weight. `data-size` steps the text.
+A wrapping row of steps at a small gap. Every step after the first is preceded by a separator drawn by CSS from `--yeti-breadcrumbs-separator`, a slash by default, which a theme may change to a chevron. Links are muted until hovered; the current step is the text color in a strong weight. `data-size` steps the text.
 
 ```html
 <nav class="breadcrumbs" aria-label="Breadcrumb" data-size="sm">

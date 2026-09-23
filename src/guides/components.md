@@ -89,7 +89,7 @@ No component invents a state attribute. Every state a person sees is one the bro
 | Disabled | `:disabled`, or `[aria-disabled="true"]` on a link acting as a button. |
 | Pressed | `[aria-pressed="true"]` on a toggle button. |
 | Busy | `[aria-busy="true"]`, set together with `aria-disabled="true"` while a button waits on a request. |
-| Checked | `:checked` — a checkbox or radio redrawn to the field's `data-variant` colour. |
+| Checked | `:checked` — a checkbox or radio redrawn to the field's `data-variant` color. |
 | Invalid | `:user-invalid`, or `[aria-invalid="true"]` after a server round trip. |
 
 Set the attribute the state actually means — `aria-pressed`, `required`, `disabled` — and the look follows. There is nothing else to set.

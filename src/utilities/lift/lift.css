@@ -4,11 +4,11 @@
    answer different from everything else's. */
 @layer yeti.utilities {
 	.lift {
-		/* Colour is in the list because a lifted thing is nearly always tinted
+		/* Color is in the list because a lifted thing is nearly always tinted
 		   on the same hover, and transition is a shorthand: a consumer adding its
-		   own colour transition would replace this one and stop the shadow
+		   own color transition would replace this one and stop the shadow
 		   animating, which is exactly what happened the first time this was used.
-		   Listing the four here means a consumer sets colours and nothing else. */
+		   Listing the four here means a consumer sets colors and nothing else. */
 		transition:
 			translate var(--yeti-lift-duration) var(--yeti-lift-ease),
 			box-shadow var(--yeti-lift-duration) var(--yeti-lift-ease),
