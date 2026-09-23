@@ -124,6 +124,8 @@
 		   from up there. Reduced motion takes the distance to zero below and
 		   leaves the shadow, which is why the two are separate tokens. */
 		--yeti-lift-distance: 0.125rem;
+		/* How much a tile grows at data-lift="scale"; reduced motion takes it to one. */
+		--yeti-lift-scale: 1.02;
 		--yeti-lift-shadow: var(--yeti-shadow-md);
 		/* Its own duration rather than the shared fast one, because a hover on
 		   a large tile wants longer than a hover on a control, and a consumer
@@ -173,6 +175,7 @@
 			   movement away instead and leaves the deepened shadow to carry the
 			   whole hover, which is a change of appearance and not of position. */
 			--yeti-lift-distance: 0rem;
+			--yeti-lift-scale: 1;
 		}
 	}
 }

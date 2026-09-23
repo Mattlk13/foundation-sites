@@ -15,6 +15,8 @@ A transition on `translate` and `box-shadow`, and one rule that raises the eleme
 
 `translate` rather than `transform`, so an element that its own component already scales or rotates keeps that.
 
+`data-lift="scale"` grows the element by `--yeti-lift-scale` instead of raising it, with the same deepened shadow. Reach for it on a tile in a row of tiles, where a rise would lift one out of the line; a growth keeps the line and still says "this one". Reduced motion takes the growth to one the way it takes the distance to zero.
+
 ## Accessibility
 
 The lift sits on top of a focus ring; it never replaces one. The ring comes from the reset and nothing here touches it.

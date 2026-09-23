@@ -11,6 +11,7 @@
 		   Listing the four here means a consumer sets colors and nothing else. */
 		transition:
 			translate var(--yeti-lift-duration) var(--yeti-lift-ease),
+			scale var(--yeti-lift-duration) var(--yeti-lift-ease),
 			box-shadow var(--yeti-lift-duration) var(--yeti-lift-ease),
 			background-color var(--yeti-lift-duration) var(--yeti-lift-ease),
 			border-color var(--yeti-lift-duration) var(--yeti-lift-ease);
@@ -26,6 +27,16 @@
 		   scaled or rotated by its own component keeps that. */
 		translate: 0 calc(-1 * var(--yeti-lift-distance));
 		box-shadow: var(--yeti-lift-shadow);
+	}
+	/* data-lift="scale": the element grows a little instead of rising, for a
+	   tile in a grid where a rise would break the row's line. The shadow
+	   still deepens; reduced motion takes the growth to one the way it takes
+	   the distance to zero. */
+	.lift[data-lift="scale"]:hover,
+	.lift[data-lift="scale"]:focus-visible,
+	.lift[data-lift="scale"]:has(:focus-visible) {
+		translate: none;
+		scale: var(--yeti-lift-scale);
 	}
 
 	/* Reduced motion is handled in tokens/components.css by taking

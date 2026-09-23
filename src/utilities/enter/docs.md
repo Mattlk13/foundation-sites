@@ -8,6 +8,8 @@ One animation, one run, ending exactly where the layout already put the element.
 
 `data-enter` picks the arrival. `fade` is the default and is the quietest. `rise` starts `--yeti-enter-distance` below its place, which is the one to reach for when the element is a card or a panel arriving into a row. `scale` starts at `--yeti-enter-scale` of its size, for something that should feel like it landed rather than slid.
 
+`fall` is the rise's opposite, from `--yeti-enter-distance` above, for something that drops into place from a bar or a heading. `slide` comes in from the side, the start edge unless `data-side="end"` says otherwise, and the sides are logical: in a right-to-left page the start edge is the right one, and the slide follows without the markup changing.
+
 `data-stagger` moves the animation down one level: the element itself no longer animates and each of its children does, every one `--yeti-enter-stagger` behind the one before it. Put it on the layout that holds the row, not on the items.
 
 ```html

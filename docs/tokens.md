@@ -611,6 +611,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | Token | Default | Description |
 | --- | --- | --- |
 | `--yeti-lift-distance` | `0.25rem` | How far the element rises under the pointer. Collapses to 0 under prefers-reduced-motion, so the hover keeps its deeper shadow and loses only the movement. |
+| `--yeti-lift-scale` | `1.02` | How much the element grows at data-lift="scale"; reduced motion takes it to one. |
 | `--yeti-lift-shadow` | `var(--yeti-shadow-md)` | The shadow the element casts once lifted. |
 | `--yeti-lift-duration` | `var(--yeti-duration-fast)` | How long the lift takes; a consumer tinting the same hover matches it to this. |
 | `--yeti-lift-ease` | `var(--yeti-ease)` | The curve a lift runs on. |

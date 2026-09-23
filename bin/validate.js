@@ -627,7 +627,7 @@ const MAPPED = {
 // data-print is here because its value sets no property at all: it decides
 // which of two media a rule applies in, and a custom property cannot carry a
 // media query.
-const READ_DIRECTLY = new Set(['data-side', 'data-emphasis', 'data-shape', 'data-edge', 'data-panel', 'data-orientation', 'data-placement', 'data-trigger', 'data-resize', 'data-enter', 'data-attention', 'data-surface', 'data-fit', 'data-print']);
+const READ_DIRECTLY = new Set(['data-side', 'data-emphasis', 'data-shape', 'data-edge', 'data-panel', 'data-orientation', 'data-placement', 'data-trigger', 'data-resize', 'data-enter', 'data-attention', 'data-surface', 'data-fit', 'data-print', 'data-lift']);
 
 /** Every value of every mapped vocabulary must have a rule in layouts/attributes.css,
  *  and every manifest attribute that references a vocabulary must be checked against

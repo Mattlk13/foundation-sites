@@ -1,7 +1,7 @@
 ---
 raw: true
 title: "Lift"
-description: "Raises the element slightly and deepens its shadow while the pointer is on it or a keyboard is inside it."
+description: "Raises the element slightly, or grows it a little, and deepens its shadow while the pointer is on it or a keyboard is inside it."
 nav_group: "Motion"
 nav_order: 3
 ---
@@ -9,7 +9,7 @@ nav_order: 3
 
 # Lift
 
-<p class="lede">Raises the element slightly and deepens its shadow while the pointer is on it or a keyboard is inside it.</p>
+<p class="lede">Raises the element slightly, or grows it a little, and deepens its shadow while the pointer is on it or a keyboard is inside it.</p>
 
 ## Example
 
@@ -52,6 +52,8 @@ A transition on `translate` and `box-shadow`, and one rule that raises the eleme
 
 `translate` rather than `transform`, so an element that its own component already scales or rotates keeps that.
 
+`data-lift="scale"` grows the element by `--yeti-lift-scale` instead of raising it, with the same deepened shadow. Reach for it on a tile in a row of tiles, where a rise would lift one out of the line; a growth keeps the line and still says "this one". Reduced motion takes the growth to one the way it takes the distance to zero.
+
 ## Accessibility
 
 The lift sits on top of a focus ring; it never replaces one. The ring comes from the reset and nothing here touches it.
@@ -60,7 +62,13 @@ Reduced motion is answered differently here from everywhere else in Yeti, and on
 
 ## Attributes
 
-None. This is configured through its children and tokens only.
+<div class="scroller" role="region" aria-label="Lift attributes" tabindex="0" markdown="1">
+
+| Attribute | Type | Values | Default | Description |
+| --- | --- | --- | --- | --- |
+| `data-lift` | enum | `rise`, `scale` | `rise` | Which gesture: rise by --yeti-lift-distance, or scale by --yeti-lift-scale, for a tile in a row where a rise would break the line. |
+
+</div>
 
 ## Children
 
@@ -75,6 +83,7 @@ No structural requirements.
 | `--yeti-lift-ease` | The curve the lift runs on. |
 | `--yeti-lift-duration` | How long the lift takes; match a tinted hover to it. |
 | `--yeti-lift-distance` | How far the element rises; reduced motion takes it to zero. |
+| `--yeti-lift-scale` | How much the element grows at data-lift="scale"; reduced motion takes it to one. |
 | `--yeti-lift-shadow` | The shadow the element casts once lifted. |
 
 </div>

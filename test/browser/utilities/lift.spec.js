@@ -20,6 +20,20 @@ test.describe('lift', () => {
 		expect(await style(page, '#card', 'box-shadow')).not.toBe(shadowBefore);
 	});
 
+	test('data-lift="scale" grows the card instead of raising it', async ({ page }) => {
+		await open(page);
+		const before = await rect(page, '#scaled');
+		expect(await style(page, '#scaled', 'scale')).toBe('none');
+		await page.hover('#scaled');
+		await painted(page);
+		const after = await rect(page, '#scaled');
+		expect(await style(page, '#scaled', 'scale')).toBe('1.02');
+		expect(await style(page, '#scaled', 'translate')).toBe('none');
+		// Grown about its centre: wider and taller, top edge a little higher.
+		expect(after.width).toBeGreaterThan(before.width);
+		expect(after.top).toBeLessThan(before.top);
+	});
+
 	test('a keyboard inside the card lifts it too', async ({ page, browserName }) => {
 		// Headless WebKit mirrors Safari's "Full Keyboard Access off" default
 		// and does not move focus on Tab at all, the same reason button.spec

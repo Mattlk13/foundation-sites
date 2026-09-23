@@ -17,6 +17,20 @@
 	.enter[data-enter="rise"][data-stagger] > * { animation-name: yeti-enter-rise; }
 	.enter[data-enter="scale"]:not([data-stagger]),
 	.enter[data-enter="scale"][data-stagger] > * { animation-name: yeti-enter-scale; }
+	/* fall is rise's opposite. slide comes from the side data-side names,
+	   start unless said otherwise, and the sides are logical: in a
+	   right-to-left page the start edge is the right one, so :dir(rtl) swaps
+	   the two keyframe lists rather than the markup having to know. */
+	.enter[data-enter="fall"]:not([data-stagger]),
+	.enter[data-enter="fall"][data-stagger] > * { animation-name: yeti-enter-fall; }
+	.enter[data-enter="slide"]:not([data-stagger]),
+	.enter[data-enter="slide"][data-stagger] > * { animation-name: yeti-enter-slide-start; }
+	.enter[data-enter="slide"][data-side="end"]:not([data-stagger]),
+	.enter[data-enter="slide"][data-side="end"][data-stagger] > * { animation-name: yeti-enter-slide-end; }
+	.enter[data-enter="slide"]:dir(rtl):not([data-stagger]),
+	.enter[data-enter="slide"]:dir(rtl)[data-stagger] > * { animation-name: yeti-enter-slide-end; }
+	.enter[data-enter="slide"][data-side="end"]:dir(rtl):not([data-stagger]),
+	.enter[data-enter="slide"][data-side="end"]:dir(rtl)[data-stagger] > * { animation-name: yeti-enter-slide-start; }
 
 	/* Each child a step later than the last. Eight rules and a floor, rather
 	   than sibling-index(), which is neither Baseline nor in WebKit, and
@@ -86,5 +100,14 @@
 	}
 	@keyframes yeti-enter-scale {
 		from { opacity: 0; scale: var(--yeti-enter-scale); }
+	}
+	@keyframes yeti-enter-fall {
+		from { opacity: 0; translate: 0 calc(-1 * var(--yeti-enter-distance)); }
+	}
+	@keyframes yeti-enter-slide-start {
+		from { opacity: 0; translate: calc(-1 * var(--yeti-enter-distance)) 0; }
+	}
+	@keyframes yeti-enter-slide-end {
+		from { opacity: 0; translate: var(--yeti-enter-distance) 0; }
 	}
 }

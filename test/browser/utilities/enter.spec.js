@@ -16,6 +16,11 @@ test.describe('enter', () => {
 		expect(await style(page, '#fade', 'animation-name')).toBe('yeti-enter-fade');
 		expect(await style(page, '#rise', 'animation-name')).toBe('yeti-enter-rise');
 		expect(await style(page, '#scale', 'animation-name')).toBe('yeti-enter-scale');
+		expect(await style(page, '#fall', 'animation-name')).toBe('yeti-enter-fall');
+		expect(await style(page, '#slide', 'animation-name')).toBe('yeti-enter-slide-start');
+		expect(await style(page, '#slide-end', 'animation-name')).toBe('yeti-enter-slide-end');
+		// Logical sides: the start edge of a right-to-left page is the right one.
+		expect(await style(page, '#slide-rtl', 'animation-name')).toBe('yeti-enter-slide-end');
 		expect(await style(page, '#rise', 'animation-iteration-count')).toBe('1');
 	});
 
@@ -26,12 +31,12 @@ test.describe('enter', () => {
 		// browser that cannot run the animation is in, and the whole design
 		// rests on it being visible: an .enter { opacity: 0 } outside the
 		// keyframes would read 0 here and strand every such reader.
-		const bare = await page.evaluate(() => ['fade', 'rise', 'scale', 'view'].map((id) => {
+		const bare = await page.evaluate(() => ['fade', 'rise', 'scale', 'fall', 'slide', 'view'].map((id) => {
 			const el = document.getElementById(id);
 			for (const animation of el.getAnimations()) animation.cancel();
 			return getComputedStyle(el).opacity;
 		}));
-		expect(bare).toEqual(['1', '1', '1', '1']);
+		expect(bare).toEqual(['1', '1', '1', '1', '1', '1']);
 	});
 
 	test('a risen element ends exactly where the layout put it', async ({ page }) => {

@@ -40,6 +40,8 @@ One animation, one run, ending exactly where the layout already put the element.
 
 `data-enter` picks the arrival. `fade` is the default and is the quietest. `rise` starts `--yeti-enter-distance` below its place, which is the one to reach for when the element is a card or a panel arriving into a row. `scale` starts at `--yeti-enter-scale` of its size, for something that should feel like it landed rather than slid.
 
+`fall` is the rise's opposite, from `--yeti-enter-distance` above, for something that drops into place from a bar or a heading. `slide` comes in from the side, the start edge unless `data-side="end"` says otherwise, and the sides are logical: in a right-to-left page the start edge is the right one, and the slide follows without the markup changing.
+
 `data-stagger` moves the animation down one level: the element itself no longer animates and each of its children does, every one `--yeti-enter-stagger` behind the one before it. Put it on the layout that holds the row, not on the items.
 
 ```html
@@ -66,7 +68,8 @@ Under reduced motion both `--yeti-enter-duration` and `--yeti-enter-stagger` col
 
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
-| `data-enter` | enum | `fade`, `rise`, `scale` | `fade` | Which arrival: a fade, a rise from below, or a growth from slightly small. |
+| `data-enter` | enum | `fade`, `rise`, `fall`, `slide`, `scale` | `fade` | Which arrival: a fade, a rise from below, a fall from above, a slide from the side data-side names, or a growth from slightly small. |
+| `data-side` | enum | `start`, `end` | `start` | Which side a slide comes from. The sides are logical, so start is the right edge in a right-to-left page. |
 | `data-stagger` | boolean |  |  | Animate the element's children one after another instead of the element itself, each a step later than the last. |
 | `data-view` | boolean |  |  | Play as the element scrolls into view instead of on load. Where a scroll timeline is unsupported, or the reader has asked for less motion, it plays on load instead. |
 
@@ -97,7 +100,7 @@ No structural requirements.
 
 ## Browser support
 
-- Used without guards: individual transform properties
+- Used without guards: individual transform properties, :dir()
 - Behind `@supports`: animation-timeline: view()
 
 ## JavaScript
