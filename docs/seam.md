@@ -14,7 +14,7 @@ nav_order: 7
 ## Example
 
 <figure class="demo" data-height="md">
-<div data-preview="Seam"><iframe title="Seam, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;section class=&quot;box&quot; data-surface=&quot;raised&quot; data-gap=&quot;sm&quot;&gt;&#10;	&lt;p&gt;A plain section above.&lt;/p&gt;&#10;&lt;/section&gt;&#10;&lt;section class=&quot;seam box&quot; data-shape=&quot;wave&quot; data-surface=&quot;sunken&quot; data-gap=&quot;sm&quot;&gt;&#10;	&lt;p&gt;A wave cut from this section&#39;s own background, so what is behind shows through it.&lt;/p&gt;&#10;&lt;/section&gt;&#10;&lt;section class=&quot;box&quot; data-surface=&quot;raised&quot; data-gap=&quot;sm&quot;&gt;&#10;	&lt;p&gt;And a plain section below.&lt;/p&gt;&#10;&lt;/section&gt;"></iframe></div>
+<div data-preview="Seam"><iframe title="Seam, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;section class=&quot;box&quot; data-surface=&quot;raised&quot; data-gap=&quot;sm&quot;&gt;&#10;	&lt;p&gt;A plain section above.&lt;/p&gt;&#10;&lt;/section&gt;&#10;&lt;section class=&quot;seam box&quot; data-shape=&quot;wave&quot; data-paint=&quot;primary&quot; data-gap=&quot;sm&quot;&gt;&#10;	&lt;p&gt;A wave cut from this section&#39;s own background, so what is behind shows through it.&lt;/p&gt;&#10;&lt;/section&gt;&#10;&lt;section class=&quot;box&quot; data-surface=&quot;raised&quot; data-gap=&quot;sm&quot;&gt;&#10;	&lt;p&gt;And a plain section below.&lt;/p&gt;&#10;&lt;/section&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
@@ -23,7 +23,7 @@ nav_order: 7
 <section class="box" data-surface="raised" data-gap="sm">
 	<p>A plain section above.</p>
 </section>
-<section class="seam box" data-shape="wave" data-surface="sunken" data-gap="sm">
+<section class="seam box" data-shape="wave" data-paint="primary" data-gap="sm">
 	<p>A wave cut from this section's own background, so what is behind shows through it.</p>
 </section>
 <section class="box" data-surface="raised" data-gap="sm">
