@@ -3,7 +3,7 @@ raw: true
 title: "What is stable"
 description: "What 7.0.0-beta means: the names that will not change before 7.0.0, and the things that still may."
 nav_group: "Guides"
-nav_order: 10
+nav_order: 11
 ---
 
 # What is stable
