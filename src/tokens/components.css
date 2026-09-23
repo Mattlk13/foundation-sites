@@ -123,7 +123,7 @@
 		/* Lift: how far a card rises under the pointer, and the shadow it casts
 		   from up there. Reduced motion takes the distance to zero below and
 		   leaves the shadow, which is why the two are separate tokens. */
-		--yeti-lift-distance: 0.25rem;
+		--yeti-lift-distance: 0.125rem;
 		--yeti-lift-shadow: var(--yeti-shadow-md);
 		/* Its own duration rather than the shared fast one, because a hover on
 		   a large tile wants longer than a hover on a control, and a consumer
