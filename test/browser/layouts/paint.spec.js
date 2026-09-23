@@ -66,6 +66,9 @@ for (const scheme of ['light', 'dark']) {
 			expect(rgb(await fg(page, '#paint-link'))).toEqual(rgb(await fg(page, '#paint-primary')));
 			expect(rgb(await fg(page, '#paint-link'))).not.toEqual(rgb(await bg(page, '#paint-primary')));
 			expect(rgb(await fg(page, '#paint-caption'))).toEqual([255, 255, 255]);
+			// A caption that names its own colour keeps it; the inherit rule steps aside.
+			expect(rgb(await fg(page, '#paint-caption-own'))).toEqual(rgb(await bg(page, '#paint-grey')));
+			expect(rgb(await fg(page, '#paint-caption-own'))).not.toEqual([255, 255, 255]);
 		});
 
 		test('data-text wins over the automatic text colour, and works alone', async ({ page }) => {
@@ -86,6 +89,15 @@ for (const scheme of ['light', 'dark']) {
 			expect(Math.abs(luminance(hued) - luminance(grey))).toBeLessThan(0.08);
 			// A grey has three equal channels; a hued tone does not.
 			expect(hued[0] === hued[2]).toBe(false);
+		});
+
+		test('a painted element keeps its background on paper', async ({ page }) => {
+			await open(page, scheme);
+			const adjust = await page.evaluate(() => getComputedStyle(document.querySelector('#paint-primary')).getPropertyValue('print-color-adjust'));
+			expect(adjust).toBe('exact');
+			// Falsification: an unpainted element has the default.
+			const plain = await page.evaluate(() => getComputedStyle(document.querySelector('#text-alert')).getPropertyValue('print-color-adjust'));
+			expect(plain).toBe('economy');
 		});
 
 		test('has no accessibility violations', async ({ page }) => {

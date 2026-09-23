@@ -287,6 +287,11 @@
 	   inside a painted band a link was primary on primary and a caption was
 	   muted on black. Both take the band's color instead; a link that is a
 	   button keeps its own. */
-	[data-paint] :is(a:not([class]), figcaption),
-	[data-text] :is(a:not([class]), figcaption) { color: inherit; }
+	[data-paint] :is(a:not([class]), figcaption):not([data-text]),
+	[data-text] :is(a:not([class]), figcaption):not([data-text]) { color: inherit; }
+	/* Browsers drop backgrounds when printing unless told otherwise, and a
+	   painted band's words were chosen for that background: white on primary
+	   prints as white on paper. Painted elements keep their colour on paper;
+	   the reader's own print setting can still take it away. */
+	[data-paint] { print-color-adjust: exact; }
 }

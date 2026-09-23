@@ -40,7 +40,7 @@
     "validate": "node bin/validate.js",
     "validate:html": "node bin/validate-html.js",
     "shots": "node bin/shots.js",
-    "docs": "node bin/gen-docs.js",
+    "docs": "node bin/gen-docs.js && node bin/gen-llms.js",
     "test": "npm run validate && npm run test:tools && npm run test:browser",
     "test:tools": "node --test test/tools/*.test.js",
     "test:browser": "playwright test",
