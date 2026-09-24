@@ -2440,6 +2440,7 @@ Nothing here changes what an element is. A billboard `h1` is an `h1`; the class 
 
 Tokens:
 - --yeti-fit-width — The container width at which a fitted line reaches the top of its pair; below it the size is in proportion.
+- --yeti-tracking-heading — letter-spacing of the billboard.
 - --yeti-text-xs — The xs end of a pair.
 - --yeti-text-sm — The sm end of a pair.
 - --yeti-text-md — The md end of a pair, and the floor when no pair is given.
@@ -2721,6 +2722,7 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-stretch-text (font): normal — font-stretch of the body: the width axis of a variable font, as a keyword or a percentage.
 - --yeti-stretch-heading (font): normal — font-stretch of the headings, set apart from the text so a theme can pair narrow text with a wide title in one family.
 - --yeti-stretch-small (font): var(--yeti-stretch-text) — font-stretch of small lettering: captions, small print, a nav's links, a badge. The text width unless a theme narrows it.
+- --yeti-tracking-heading (text): normal — letter-spacing of every heading level and the billboard. Set in em so a large heading tightens more than a small one; a page may set it on one level.
 - --yeti-duration-fast (motion): 150ms — Quick transitions; hover and focus. Collapses to 0.01ms under prefers-reduced-motion.
 - --yeti-duration-base (motion): 250ms — Standard transitions; open and close. Collapses under prefers-reduced-motion.
 - --yeti-ease (motion): cubic-bezier(0.2, 0, 0, 1) — Default easing; fast out, gentle in.

@@ -74,6 +74,8 @@ Yeti ships no web fonts. `--yeti-font-sans` and `--yeti-font-mono` default to th
 
 A variable font with a width axis has three more knobs: `--yeti-stretch-text`, `--yeti-stretch-heading`, and `--yeti-stretch-small` (captions, small print, a nav's links, a badge), `normal` by default, each a keyword or a percentage. Narrow text and a wide title in one family is one line each.
 
+`--yeti-tracking-heading` sets the letter-spacing of every heading level and the billboard together, `normal` by default and set in em so a large heading tightens more than a small one.
+
 ## Make a theme
 
 Everything above sets tokens inline, in your own `<style>` block. A theme is the same idea moved into its own file: a stylesheet of token values on `:root` and nothing else, loaded after `yeti.css` so its values win.

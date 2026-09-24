@@ -20,6 +20,7 @@
 		font-weight: var(--yeti-weight-bold);
 		line-height: var(--yeti-leading-tight);
 		font-stretch: var(--yeti-stretch-heading);
+		letter-spacing: var(--yeti-tracking-heading);
 		text-wrap: balance;
 	}
 	h1 { font-size: var(--yeti-text-3xl); }

@@ -47,6 +47,11 @@
 		   narrows it. */
 		--yeti-stretch-small: var(--yeti-stretch-text);
 
+		/* Display type is often set a touch tighter than text: one value for
+		   every heading level and the billboard, in em so a large heading
+		   loses more than a small one. A page can set it on one level. */
+		--yeti-tracking-heading: normal;
+
 		--yeti-font-sans: system-ui, sans-serif;
 		--yeti-font-mono: ui-monospace, monospace;
 	}

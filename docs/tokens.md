@@ -116,6 +116,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-list-gap` | `0.25rem` | Space between one item of a prose list and the next. |
 | `--yeti-lede-size` | `var(--yeti-text-lg)` | How large a lede reads. |
 | `--yeti-lede-measure` | `50ch` | A lede's line length. Moves with --yeti-lede-size, since ch is a unit of the font. |
+| `--yeti-tracking-heading` | `normal` | letter-spacing of every heading level and the billboard. Set in em so a large heading tightens more than a small one; a page may set it on one level. |
 
 </div>
 

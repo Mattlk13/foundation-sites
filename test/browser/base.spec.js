@@ -28,6 +28,14 @@ test.describe('base typography and prose', () => {
 		expect(await style(page, 'p', 'font-stretch')).toBe('100%');
 	});
 
+	test('headings read one tracking token', async ({ page }) => {
+		expect(await style(page, '#h1', 'letter-spacing')).toBe('normal');
+		await page.addStyleTag({ content: ':root { --yeti-tracking-heading: -0.03em; }' });
+		const size = await px(page, '#h1', 'fontSize');
+		expect(await px(page, '#h1', 'letterSpacing')).toBeCloseTo(-0.03 * size, 1);
+		expect(await style(page, 'p', 'letter-spacing')).toBe('normal');
+	});
+
 	test('prose rhythm: default gap, heading hug, and heading lead-in', async ({ page }) => {
 		expect(await px(page, '#second', 'marginTop')).toBeCloseTo(await token(page, '--yeti-space-md'), 1);
 		expect(await px(page, '#lead', 'marginTop')).toBeCloseTo(await token(page, '--yeti-space-sm'), 1);
