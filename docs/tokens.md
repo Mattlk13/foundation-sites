@@ -498,7 +498,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | Token | Default | Description |
 | --- | --- | --- |
 | `--yeti-progress-radius` | `var(--yeti-radius-full)` | Corner of the bar and of its value. |
-| `--yeti-progress-size` | calc(size space step / 2) (override only) | Thickness of the bar, a length. Read with a fallback to half the size's space step; a hairline reading bar sets 2px. |
+| `--yeti-progress-size` | half the size's space step (override only) | Thickness of the bar, a length. Read with a fallback to half the size's space step; a hairline reading bar sets 2px. |
 
 </div>
 

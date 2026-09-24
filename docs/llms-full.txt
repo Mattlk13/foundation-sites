@@ -2823,7 +2823,7 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-alert-radius (alert): var(--yeti-radius-md) — Corner of an alert.
 - --yeti-alert-padding (alert): var(--yeti-space-md) — Padding inside an alert.
 - --yeti-progress-radius (progress): var(--yeti-radius-full) — Corner of the bar and of its value.
-- --yeti-progress-size (progress): calc(size space step / 2) — Thickness of the bar, a length. Read with a fallback to half the size's space step; a hairline reading bar sets 2px.
+- --yeti-progress-size (progress): half the size's space step — Thickness of the bar, a length. Read with a fallback to half the size's space step; a hairline reading bar sets 2px.
 - --yeti-spinner-duration (spinner): 0.8s — One turn of the ring; reduced motion stops it.
 - --yeti-spinner-width (spinner): 0.15em — Thickness of the ring.
 - --yeti-accordion-border (accordion): var(--yeti-color-border) — The line between one panel and the next, and around the set.
