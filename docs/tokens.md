@@ -152,6 +152,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 
 | Token | Default | Description |
 | --- | --- | --- |
+| `--yeti-color-scheme` | `light dark` | The color schemes the page offers: light dark follows the visitor; light or dark pins the page to one. A theme file may set it, which a plain color-scheme declaration cannot. |
 | `--yeti-color-primary` | `ladder base of the primary hue` | The brand color: buttons, links, focus. |
 | `--yeti-color-primary-subtle` | `ladder subtle` | Tinted background; hover on surfaces, selection. |
 | `--yeti-color-primary-soft` | `ladder soft` | Borders and dividers in the primary hue. |

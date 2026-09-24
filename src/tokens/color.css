@@ -17,7 +17,10 @@
 
 @layer yeti.base {
 	:root {
-		color-scheme: light dark;
+		/* A theme may pin the scheme: a paper page that stays light, a cinema
+		   page that stays dark. The default follows the visitor. */
+		--yeti-color-scheme: light dark;
+		color-scheme: var(--yeti-color-scheme);
 
 		/* Public inputs */
 		--yeti-hue-primary: 250;

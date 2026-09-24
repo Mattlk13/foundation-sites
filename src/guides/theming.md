@@ -51,6 +51,8 @@ The comment beside each color token in `yeti.css` gives its hex equivalent in li
 
 `:root` declares `color-scheme: light dark`, so Yeti follows the visitor's preference and every color token is written once with `light-dark()`. To force one scheme for a whole page or a single panel, set `color-scheme: light` or `color-scheme: dark` on that element; everything inside it flips.
 
+A page that must stay one way, a paper sheet that is always light, sets `--yeti-color-scheme: light` (or `dark`). It is a token so a theme file can say it; a theme has no selectors but `:root` and no properties but tokens, and `color-scheme` is neither.
+
 ## The scale
 
 Type and space share one geometric scale. Two knobs cover most needs:

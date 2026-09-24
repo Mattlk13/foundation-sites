@@ -2637,6 +2637,7 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-hue-alert (hue): 25 — Alert hue; 25 is red.
 - --yeti-hue-neutral (hue): var(--yeti-hue-primary) — Hue that faintly tints surfaces, text, and borders. Follows the primary hue unless set.
 - --yeti-chroma (hue): 0.15 — Accent saturation. Lower for a calmer palette; 0.2 and above may clip on very saturated hues.
+- --yeti-color-scheme (color): light dark — The color schemes the page offers: light dark follows the visitor; light or dark pins the page to one. A theme file may set it, which a plain color-scheme declaration cannot.
 - --yeti-color-primary (color): ladder base of the primary hue — The brand color: buttons, links, focus.
 - --yeti-color-primary-subtle (color): ladder subtle — Tinted background; hover on surfaces, selection.
 - --yeti-color-primary-soft (color): ladder soft — Borders and dividers in the primary hue.
