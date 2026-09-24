@@ -173,6 +173,8 @@
 			   still hand the third card a 400ms wait and then pop it into place,
 			   which is a staggered arrival with the smooth part taken out. */
 			--yeti-enter-stagger: 0s;
+			/* A delayed element that is invisible for three seconds is the opposite of less motion. */
+			--yeti-enter-delay: 0s;
 			--yeti-attention-duration: 0.01ms;
 			/* A hover lift is the one piece of motion here that is not a one-shot,
 			   and collapsing its duration is the wrong answer: the element would

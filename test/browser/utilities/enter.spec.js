@@ -120,6 +120,14 @@ test.describe('enter', () => {
 		expect(new Set(await delays(page, '#stagger > *'))).toEqual(new Set([0]));
 	});
 
+	test('reduced motion collapses a lone element\'s delay, so a delayed element is present at once', async ({ page }) => {
+		await page.emulateMedia({ reducedMotion: 'reduce' });
+		await open(page);
+		expect(await style(page, '#delayed', 'animation-delay')).toBe('0s');
+		await settled(page);
+		expect(await style(page, '#delayed', 'opacity')).toBe('1');
+	});
+
 	test('has no accessibility violations', async ({ page }) => {
 		await open(page);
 		await painted(page);

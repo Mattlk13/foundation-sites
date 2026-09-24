@@ -2456,7 +2456,7 @@ Past the ninth child the delay stops growing and every remaining child shares th
 
 Nothing here changes reading order, focus order, or what any element is. The only way an element is ever hidden is the animation's own backwards fill, so a browser that cannot run the animation shows the content instead of swallowing it.
 
-Under reduced motion both `--yeti-enter-duration` and `--yeti-enter-stagger` collapse, so every element is simply present at once — the step collapses too, because a stagger with the smooth part removed is still a row of boxes popping into place one after another. The scroll-driven form is switched off outright for the same reader, and they get the collapsed load-timed animation instead.
+Under reduced motion both `--yeti-enter-duration` and `--yeti-enter-stagger` collapse, so every element is simply present at once — the step collapses too, because a stagger with the smooth part removed is still a row of boxes popping into place one after another. The delay collapses as well, even one set on the element itself, so a delayed element is simply present. The scroll-driven form is switched off outright for the same reader, and they get the collapsed load-timed animation instead.
 
 Tokens:
 - --yeti-enter-ease — The curve the entrance runs on.
