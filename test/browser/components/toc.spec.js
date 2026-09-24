@@ -1,5 +1,5 @@
 import { test, expect } from 'playwright/test';
-import { stage, style, axe, withoutModule, token } from '../lib/layout.js';
+import { stage, style, axe, withoutModule, token, px } from '../lib/layout.js';
 
 const open = async (page, width = 1000) => {
 	const response = await page.goto('/test/browser/fixtures/components/toc.html');
@@ -61,6 +61,14 @@ test.describe('toc', () => {
 		// The heading lands a scroll padding below the top, not flush against it (see --yeti-scroll-padding).
 		const padding = await token(page, '--yeti-scroll-padding');
 		await expect.poll(async () => Math.abs((await page.evaluate(() => document.getElementById('three').getBoundingClientRect().top)) - padding), { timeout: 2000 }).toBeLessThanOrEqual(1);
+	});
+
+	test('--yeti-toc-padding sets the rows\' density on one toc alone', async ({ page }) => {
+		await open(page);
+		expect(await px(page, '#link-two', 'padding-top')).toBeCloseTo(await token(page, '--yeti-space-xs'), 1);
+		await page.addStyleTag({ content: '#toc { --yeti-toc-padding: 2px; }' });
+		expect(await px(page, '#link-two', 'padding-top')).toBe(2);
+		expect(await px(page, '#n-two', 'padding-top')).toBeCloseTo(await token(page, '--yeti-space-xs'), 1);
 	});
 
 	test('has no accessibility violations', async ({ page }) => {

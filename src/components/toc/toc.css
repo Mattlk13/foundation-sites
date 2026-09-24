@@ -28,7 +28,7 @@
 	.toc > ul > li { margin: 0; }
 	.toc a {
 		display: block;
-		padding-block: var(--yeti-space-xs);
+		padding-block: var(--yeti-toc-padding);
 		padding-inline: var(--_yeti-size-space);
 		/* The bar is on every link, transparent until the link is current, so
 		   the text never shifts sideways as the mark moves down the list. */
