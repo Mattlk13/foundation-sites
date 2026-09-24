@@ -3,6 +3,7 @@
 	figcaption {
 		font-size: var(--yeti-text-sm);
 		color: var(--yeti-color-text-muted);
+		font-stretch: var(--yeti-stretch-small);
 	}
 
 	code, kbd, samp {

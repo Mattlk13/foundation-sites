@@ -17,6 +17,7 @@
   "tokens": [
     { "name": "--yeti-badge-radius", "public": true, "description": "Corner radius; full makes a pill." },
     { "name": "--yeti-badge-weight", "public": true, "description": "Text weight." },
+    { "name": "--yeti-stretch-small", "public": true, "description": "font-stretch of the badge." },
     { "name": "--yeti-space-xs", "public": true, "description": "Gap between the icon and the text." },
     { "name": "--yeti-leading-tight", "public": true, "description": "Line height." },
     { "name": "--yeti-border-width", "public": true, "description": "Border width." },

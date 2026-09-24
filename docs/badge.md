@@ -72,6 +72,7 @@ Color is decoration here; the word is the meaning, so "Live" and "Draft" work wi
 | --- | --- |
 | `--yeti-badge-radius` | Corner radius; full makes a pill. |
 | `--yeti-badge-weight` | Text weight. |
+| `--yeti-stretch-small` | font-stretch of the badge. |
 | `--yeti-space-xs` | Gap between the icon and the text. |
 | `--yeti-leading-tight` | Line height. |
 | `--yeti-border-width` | Border width. |

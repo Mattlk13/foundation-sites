@@ -129,6 +129,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-font-mono` | `ui-monospace, monospace` | Code face. |
 | `--yeti-stretch-text` | `normal` | font-stretch of the body: the width axis of a variable font, as a keyword or a percentage. |
 | `--yeti-stretch-heading` | `normal` | font-stretch of the headings, set apart from the text so a theme can pair narrow text with a wide title in one family. |
+| `--yeti-stretch-small` | `var(--yeti-stretch-text)` | font-stretch of small lettering: captions, small print, a nav's links, a badge. The text width unless a theme narrows it. |
 
 </div>
 

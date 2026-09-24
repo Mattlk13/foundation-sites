@@ -35,6 +35,7 @@
 
 	small {
 		font-size: var(--yeti-text-sm);
+		font-stretch: var(--yeti-stretch-small);
 	}
 
 	strong, b {

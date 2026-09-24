@@ -1162,6 +1162,7 @@ Children:
 Tokens:
 - --yeti-badge-radius — Corner radius; full makes a pill.
 - --yeti-badge-weight — Text weight.
+- --yeti-stretch-small — font-stretch of the badge.
 - --yeti-space-xs — Gap between the icon and the text.
 - --yeti-leading-tight — Line height.
 - --yeti-border-width — Border width.
@@ -1899,6 +1900,7 @@ Tokens:
 - --yeti-nav-brand-weight — Weight of the brand.
 - --yeti-nav-brand-size — Size of the brand; 1em keeps the bar's.
 - --yeti-nav-link — Color of a plain link in the bar; the bar's own color unless set. Current and hover keep the variant's tints, and the open panel resets it to its own text color.
+- --yeti-stretch-small — font-stretch of a link.
 - --yeti-control-size — Minimum height of the bar, the toggle, and each link.
 - --yeti-shadow-md — The open panel's shadow.
 - --yeti-shadow-color — The drawer's backdrop.
@@ -2718,6 +2720,7 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-font-mono (font): ui-monospace, monospace — Code face.
 - --yeti-stretch-text (font): normal — font-stretch of the body: the width axis of a variable font, as a keyword or a percentage.
 - --yeti-stretch-heading (font): normal — font-stretch of the headings, set apart from the text so a theme can pair narrow text with a wide title in one family.
+- --yeti-stretch-small (font): var(--yeti-stretch-text) — font-stretch of small lettering: captions, small print, a nav's links, a badge. The text width unless a theme narrows it.
 - --yeti-duration-fast (motion): 150ms — Quick transitions; hover and focus. Collapses to 0.01ms under prefers-reduced-motion.
 - --yeti-duration-base (motion): 250ms — Standard transitions; open and close. Collapses under prefers-reduced-motion.
 - --yeti-ease (motion): cubic-bezier(0.2, 0, 0, 1) — Default easing; fast out, gentle in.

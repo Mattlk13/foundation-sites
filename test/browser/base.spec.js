@@ -21,6 +21,13 @@ test.describe('base typography and prose', () => {
 		expect(await style(page, '#h1', 'fontWeight')).toBe(await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--yeti-weight-bold').trim()));
 	});
 
+	test('small lettering reads its own width axis', async ({ page }) => {
+		expect(await style(page, '#caption', 'font-stretch')).toBe('100%');
+		await page.addStyleTag({ content: ':root { --yeti-stretch-small: 75%; }' });
+		expect(await style(page, '#caption', 'font-stretch')).toBe('75%');
+		expect(await style(page, 'p', 'font-stretch')).toBe('100%');
+	});
+
 	test('prose rhythm: default gap, heading hug, and heading lead-in', async ({ page }) => {
 		expect(await px(page, '#second', 'marginTop')).toBeCloseTo(await token(page, '--yeti-space-md'), 1);
 		expect(await px(page, '#lead', 'marginTop')).toBeCloseTo(await token(page, '--yeti-space-sm'), 1);

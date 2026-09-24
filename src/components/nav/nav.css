@@ -75,6 +75,7 @@
 		border-radius: var(--yeti-nav-radius);
 		background-color: transparent;
 		color: var(--_yeti-nav-link, var(--yeti-nav-link));
+		font-stretch: var(--yeti-stretch-small);
 		text-decoration: none;
 		cursor: pointer;
 	}

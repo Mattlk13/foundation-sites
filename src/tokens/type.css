@@ -42,6 +42,10 @@
 		   family. normal until a theme with such a face says otherwise. */
 		--yeti-stretch-text: normal;
 		--yeti-stretch-heading: normal;
+		/* The third role a variable-width face is set in: captions, small
+		   print, a bar's links, a badge. The text width unless a theme
+		   narrows it. */
+		--yeti-stretch-small: var(--yeti-stretch-text);
 
 		--yeti-font-sans: system-ui, sans-serif;
 		--yeti-font-mono: ui-monospace, monospace;
