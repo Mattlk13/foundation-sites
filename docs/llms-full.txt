@@ -762,7 +762,7 @@ Attributes:
 - data-gap: none | xs | sm | md | lg (default) | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between copy and figure.
 - data-ratio: 1/1 | 4/3 (default) | 3/2 | 16/9 | 21/9 — The figure's aspect ratio.
 - data-align: start | center (default) | end | stretch | baseline — Vertical alignment of copy and figure when side by side.
-- data-side: start | end — Force the figure to the start or the end regardless of source order. Moves it visually only; reading order stays as written.
+- data-side: start | end — Put the figure at the start or the end of the row regardless of source order. Once stacked, source order rules: write the copy first to meet the headline first on a phone. Moves it visually only; reading order stays as written.
 - data-height: sm | md | lg | xl | half | full (default) — The band's least height: a stop of the height scale, half the viewport, or the whole of it, as a cover takes it. Content taller than the band grows it.
 
 On children:
@@ -770,7 +770,7 @@ On children:
 
 ### When to use it
 
-The opening of a landing page: a headline and a call to action on one side, a picture on the other, filling the first screen, or a shorter band with `data-height`, as a cover takes it. Below the threshold the two become rows and the band grows to fit. Put the picture first or last as you want it read; `data-side` moves it without changing the source. The copy must not have an img, video, or picture as a direct child (it would be taken for a second figure).
+The opening of a landing page: a headline and a call to action on one side, a picture on the other, filling the first screen, or a shorter band with `data-height`, as a cover takes it. Below the threshold the two become rows and the band grows to fit. Write the copy first, so a phone meets the headline before the picture, and use `data-side` to put the picture on the side you want while the two share a row; once stacked the source order holds. The copy must not have an img, video, or picture as a direct child (it would be taken for a second figure).
 
 The two halves share the row equally unless a child says otherwise: `data-span="3"` on the picture beside `data-span="2"` on the copy gives the picture three fifths, the same marker `columns` uses. Below the threshold both are full width.
 
@@ -825,7 +825,7 @@ Tokens:
 - --yeti-color-text-muted — The caption.
 
 Accessibility contract:
-When the hero is the page's opening, keep the h1 inside the copy. data-side changes where the figure sits, not where it is read.
+When the hero is the page's opening, keep the h1 inside the copy and write the copy first: data-side changes where the figure sits in the row, not where it is read, and not the stacked order.
 
 ## media (recipe, class="media")
 
@@ -836,7 +836,7 @@ Attributes:
 - data-ratio: 1/1 (default) | 4/3 | 3/2 | 16/9 | 21/9 — The figure's aspect ratio.
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the figure and the text.
 - data-align: start | center | end | stretch (default) | baseline — Vertical alignment of figure and text when side by side.
-- data-side: start | end — Force the figure to the start or the end regardless of source order. Moves it visually only; reading order stays as written.
+- data-side: start | end — Put the figure at the start or the end while side by side, regardless of source order. Stacked, the source order holds.
 
 ### When to use it
 
@@ -858,7 +858,7 @@ A recipe is a shortcut, not a new idea. The same result is three layouts you alr
 </div>
 ```
 
-The one-class form renders the same geometry, and its test proves it. Its attributes are the ones the primitives take. Its CSS is its own file, so a project that prefers the composed form can leave `css/recipes/media/media.css` out of a hand-built bundle. One difference: the sidebar's `data-side` picks which child is the sidebar, while the recipe's `data-side` moves the figure with `order`, which changes where it sits but not where it is read.
+The one-class form renders the same geometry, and its test proves it. Its attributes are the ones the primitives take. Its CSS is its own file, so a project that prefers the composed form can leave `css/recipes/media/media.css` out of a hand-built bundle. One difference: the sidebar's `data-side` picks which child is the sidebar, while the recipe's `data-side` reverses the row, which changes where the figure sits beside the text but not where it is read, and does nothing once the two have stacked.
 
 ### Why this name
 

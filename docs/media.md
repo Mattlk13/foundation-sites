@@ -52,7 +52,7 @@ A recipe is a shortcut, not a new idea. The same result is three layouts you alr
 </div>
 ```
 
-The one-class form renders the same geometry, and its test proves it. Its attributes are the ones the primitives take. Its CSS is its own file, so a project that prefers the composed form can leave `css/recipes/media/media.css` out of a hand-built bundle. One difference: the sidebar's `data-side` picks which child is the sidebar, while the recipe's `data-side` moves the figure with `order`, which changes where it sits but not where it is read.
+The one-class form renders the same geometry, and its test proves it. Its attributes are the ones the primitives take. Its CSS is its own file, so a project that prefers the composed form can leave `css/recipes/media/media.css` out of a hand-built bundle. One difference: the sidebar's `data-side` picks which child is the sidebar, while the recipe's `data-side` reverses the row, which changes where the figure sits beside the text but not where it is read, and does nothing once the two have stacked.
 
 ## Why this name
 
@@ -68,7 +68,7 @@ Nicole Sullivan named the media object in 2010 and the name stuck across a decad
 | `data-ratio` | enum | `1/1`, `4/3`, `3/2`, `16/9`, `21/9` | `1/1` | The figure's aspect ratio. |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `md` | Space between the figure and the text. |
 | `data-align` | enum | `start`, `center`, `end`, `stretch`, `baseline` | `stretch` | Vertical alignment of figure and text when side by side. |
-| `data-side` | enum | `start`, `end` |  | Force the figure to the start or the end regardless of source order. Moves it visually only; reading order stays as written. |
+| `data-side` | enum | `start`, `end` |  | Put the figure at the start or the end while side by side, regardless of source order. Stacked, the source order holds. |
 
 </div>
 

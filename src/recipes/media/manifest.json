@@ -10,7 +10,7 @@
     { "name": "data-ratio", "type": "enum", "vocabulary": "ratio", "default": "1/1", "description": "The figure's aspect ratio." },
     { "name": "data-gap", "type": "enum", "vocabulary": "gap", "default": "md", "description": "Space between the figure and the text." },
     { "name": "data-align", "type": "enum", "vocabulary": "align", "default": "stretch", "description": "Vertical alignment of figure and text when side by side." },
-    { "name": "data-side", "type": "enum", "vocabulary": "side", "description": "Force the figure to the start or the end regardless of source order. Moves it visually only; reading order stays as written." }
+    { "name": "data-side", "type": "enum", "vocabulary": "side", "description": "Put the figure at the start or the end while side by side, regardless of source order. Stacked, the source order holds." }
   ],
   "classes": [],
   "children": [

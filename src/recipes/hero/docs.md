@@ -1,6 +1,6 @@
 ## When to use it
 
-The opening of a landing page: a headline and a call to action on one side, a picture on the other, filling the first screen, or a shorter band with `data-height`, as a cover takes it. Below the threshold the two become rows and the band grows to fit. Put the picture first or last as you want it read; `data-side` moves it without changing the source. The copy must not have an img, video, or picture as a direct child (it would be taken for a second figure).
+The opening of a landing page: a headline and a call to action on one side, a picture on the other, filling the first screen, or a shorter band with `data-height`, as a cover takes it. Below the threshold the two become rows and the band grows to fit. Write the copy first, so a phone meets the headline before the picture, and use `data-side` to put the picture on the side you want while the two share a row; once stacked the source order holds. The copy must not have an img, video, or picture as a direct child (it would be taken for a second figure).
 
 The two halves share the row equally unless a child says otherwise: `data-span="3"` on the picture beside `data-span="2"` on the copy gives the picture three fifths, the same marker `columns` uses. Below the threshold both are full width.
 
