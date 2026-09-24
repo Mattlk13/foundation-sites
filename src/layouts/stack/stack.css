@@ -29,13 +29,18 @@
 	   keeps the position rule at zero specificity so a child that positions
 	   itself wins; a child that already uses ::before for something loses the
 	   line, which the docs say. The line sits at half the gap before this
-	   child: the stack's own, or the one data-space named. */
+	   child: the stack's own, or the one data-space named. The ruled stack
+	   exports that offset under a name only ruled stacks set, so a child
+	   that is itself a stack, and so sets its own gap, still gets the line
+	   placed by its parent's. A ruled stack inside a ruled stack reads its
+	   own value, the same limit data-space has. */
+	.stack[data-rule] { --_yeti-rule-at: calc(-0.5 * var(--_yeti-gap)); }
 	:where(.stack[data-rule] > * + *) { position: relative; }
 	.stack[data-rule] > * + *::before {
 		content: "";
 		position: absolute;
 		inset-inline: 0;
-		inset-block-start: calc(-0.5 * var(--_yeti-stack-gap));
+		inset-block-start: var(--_yeti-rule-at);
 		border-block-start: var(--yeti-border-width) solid var(--yeti-color-border);
 		pointer-events: none;
 	}
