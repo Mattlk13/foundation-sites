@@ -4,7 +4,7 @@ A scroller is for a row that should stay a row: a strip of photos, a set of rela
 
 ## How it works
 
-A flex row that does not wrap, with `overflow-x: auto`. Children are told not to shrink, so the row overflows and the container scrolls. `data-snap` adds scroll snapping so items land cleanly at the start edge; `data-width` gives every item the same width so the strip reads as a sequence of equal frames. Because a scrolling region is an interactive one, the markup carries `tabindex="0"` and an accessible name; the validator insists.
+A flex row that does not wrap, with `overflow-x: auto`. Children are told not to shrink, so the row overflows and the container scrolls. `data-snap` adds scroll snapping so items land cleanly, at their start edge unless `data-justify` says `center` or `end`; `data-width` gives every item the same width so the strip reads as a sequence of equal frames. Because a scrolling region is an interactive one, the markup carries `tabindex="0"` and an accessible name; the validator insists.
 
 ## Why this name
 

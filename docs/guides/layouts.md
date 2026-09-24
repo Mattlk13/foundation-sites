@@ -102,7 +102,7 @@ Every layout is configured with a small set of `data-*` attributes, drawn from a
 | `data-height` | `sm`, `md`, `lg`, `xl`, `half`, `full` | cover, hero |
 | `data-hide` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | container (*) |
 | `data-intrinsic` | boolean | center |
-| `data-justify` | `start`, `center`, `end`, `between`, `around`, `evenly` | cluster, columns |
+| `data-justify` | `start`, `center`, `end`, `between`, `around`, `evenly` | cluster, columns, scroller |
 | `data-justify-self` | `start`, `center`, `end`, `stretch` | layer (> *) |
 | `data-max` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | breakout, center |
 | `data-min` | `none`, `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | grid, masonry |

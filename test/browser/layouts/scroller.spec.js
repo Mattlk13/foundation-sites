@@ -18,6 +18,20 @@ test.describe('scroller', () => {
 		expect((await rect(page, '#n1')).width).toBeCloseTo(await token(page, '--yeti-width-xs'), 1);
 	});
 
+	test('data-justify says where a snapping item settles', async ({ page }) => {
+		await open(page, 'scroller', 400);
+		expect(await style(page, '#n2', 'scroll-snap-align')).toBe('start');
+		expect(await style(page, '#c2', 'scroll-snap-align')).toBe('center');
+		expect(await style(page, '#e2', 'scroll-snap-align')).toBe('end');
+		// The setting only matters with data-snap: the plain track's children have none.
+		expect(await style(page, '#s2', 'scroll-snap-align')).toBe('none');
+		// And it takes effect: scrolled to the third item, a centring track settles it in the middle.
+		await page.evaluate(() => { const t = document.getElementById('centred'); t.scrollLeft = document.getElementById('c3').offsetLeft; });
+		await page.evaluate(() => new Promise((r) => setTimeout(r, 400)));
+		const [track, c3] = await Promise.all([rect(page, '#centred'), rect(page, '#c3')]);
+		expect((c3.left + c3.right) / 2).toBeCloseTo((track.left + track.right) / 2, 0);
+	});
+
 	test('receives focus from the keyboard', async ({ page }) => {
 		await open(page, 'scroller', 400);
 		await page.keyboard.press('Tab');
