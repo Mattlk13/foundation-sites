@@ -77,7 +77,7 @@ test.describe('toc', () => {
 		await expect.poll(() => style(page, '#link-two', 'background-color')).toBe('rgba(0, 0, 0, 0)');
 	});
 
-	test('data-numbered counts the entries, nested ones too, in the muted colour', async ({ page }) => {
+	test('data-numbered counts the entries, nested ones too, in the muted color', async ({ page }) => {
 		await open(page);
 		const before = (id) => page.evaluate((i) => { const cs = getComputedStyle(document.getElementById(i), '::before'); return { content: cs.content, color: cs.color, width: parseFloat(cs.minWidth) }; }, id);
 		// Chromium reports a counter's content as the unresolved function, so the rule is asserted by its text and its effect by geometry.
@@ -89,7 +89,9 @@ test.describe('toc', () => {
 		expect(await offset('n-two')).toBeGreaterThan((await offset('link-two')) + 8);
 		const muted = await page.evaluate(() => { const p = document.createElement('span'); p.style.color = 'var(--yeti-color-text-muted)'; document.body.append(p); const v = getComputedStyle(p).color; p.remove(); return v; });
 		expect((await before('n-two')).color).toBe(muted);
-		expect(await page.evaluate(() => document.getElementById('n-two').textContent.trim())).toBe('The stylesheet');
+		// The number is not part of the link's name: exact-name lookup finds the link without it.
+		await expect(page.locator('#numbered').getByRole('link', { name: 'The stylesheet', exact: true })).toHaveCount(1);
+		await expect(page.locator('#numbered').getByRole('link', { name: '2. The stylesheet', exact: true })).toHaveCount(0);
 		expect(await axe(page)).toEqual([]);
 	});
 });

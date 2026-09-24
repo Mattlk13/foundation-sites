@@ -51,7 +51,7 @@
 
 	/* data-numbered: a contents list. Every list resets a counter and every
 	   item counts, so nested entries read 2.1; the number sits before the link
-	   in the muted colour with tabular figures, wide enough that the link text
+	   in the muted color with tabular figures, wide enough that the link text
 	   lines up. The number carries empty alternative text: a contents list is
 	   a list of links, and the digits are for the eye. */
 	.toc[data-numbered] ul { counter-reset: toc; }
