@@ -87,8 +87,11 @@ test.describe('toc', () => {
 		const offset = (id) => page.evaluate((i) => { const a = document.getElementById(i); const r = document.createRange(); r.selectNodeContents(a); return r.getBoundingClientRect().left - a.getBoundingClientRect().left; }, id);
 		// The link text starts after the number's box; a plain toc's text starts at its padding.
 		expect(await offset('n-two')).toBeGreaterThan((await offset('link-two')) + 8);
-		// A nested "2.1." is wider than "2.", so its text starts further in.
-		expect(await offset('n-two-one')).toBeGreaterThan(await offset('n-two'));
+		// The number's box is 3ch in the link's own font: room for a two-figure count or a nested 2.1.
+		const threeCh = await page.evaluate(() => { const p = document.createElement('span'); p.style.cssText = 'display: inline-block; inline-size: 3ch'; document.getElementById('n-two').append(p); const w = p.getBoundingClientRect().width; p.remove(); return w; });
+		expect((await before('n-two')).width).toBeCloseTo(threeCh, 1);
+		// The number box fits a nested count, so nested text lines up with its parent's.
+		expect(await offset('n-two-one')).toBeCloseTo(await offset('n-two'), 0);
 		const muted = await page.evaluate(() => { const p = document.createElement('span'); p.style.color = 'var(--yeti-color-text-muted)'; document.body.append(p); const v = getComputedStyle(p).color; p.remove(); return v; });
 		expect((await before('n-two')).color).toBe(muted);
 		// The number is not part of the link's name: exact-name lookup finds the link without it.
