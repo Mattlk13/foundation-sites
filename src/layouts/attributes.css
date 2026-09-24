@@ -407,4 +407,8 @@
 	   prints as white on paper. Painted elements keep their colour on paper;
 	   the reader's own print setting can still take it away. */
 	[data-paint] { print-color-adjust: exact; }
+
+	/* data-numeric: figures that line up, on any element. A table's cells
+	   also end-align; that half stays with the table. */
+	[data-numeric] { font-variant-numeric: tabular-nums; }
 }

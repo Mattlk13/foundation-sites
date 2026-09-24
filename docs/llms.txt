@@ -418,7 +418,7 @@ Attributes:
 - data-border (boolean) — Borders around every cell instead of lines between rows, as a box draws its border.
 
 On children:
-- data-numeric on td, th (boolean) — A cell of numbers: end-aligned with tabular figures.
+- data-numeric on * (boolean) — Tabular figures, so digits line up, on any element; on a table's cells and headers the column is end-aligned too.
 
 ## tabs (component, class="tabs")
 

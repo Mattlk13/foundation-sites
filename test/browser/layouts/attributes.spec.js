@@ -1,5 +1,5 @@
 import { test, expect } from 'playwright/test';
-import { open, rect, token, axe } from '../lib/layout.js';
+import { open, rect, token, style, axe } from '../lib/layout.js';
 
 test.describe('attribute vocabulary', () => {
 	test('single stops resolve to their token', async ({ page }) => {
@@ -22,6 +22,12 @@ test.describe('attribute vocabulary', () => {
 		expect((await rect(page, '#gap-sm-lg')).width).toBeCloseTo(await token(page, '--yeti-space-sm-static'), 1);
 		await page.setViewportSize({ width: 1280, height: 800 });
 		expect((await rect(page, '#gap-sm-lg')).width).toBeCloseTo(await token(page, '--yeti-space-lg'), 1);
+	});
+
+	test('data-numeric gives any element tabular figures', async ({ page }) => {
+		await open(page, 'attributes');
+		expect(await style(page, '#numeric', 'font-variant-numeric')).toBe('tabular-nums');
+		expect(await style(page, '#not-numeric', 'font-variant-numeric')).toBe('normal');
 	});
 
 	test('has no accessibility violations', async ({ page }) => {
