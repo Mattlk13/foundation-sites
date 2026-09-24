@@ -25,10 +25,10 @@ test.describe('scroller', () => {
 		expect(await style(page, '#e2', 'scroll-snap-align')).toBe('end');
 		// The setting only matters with data-snap: the plain track's children have none.
 		expect(await style(page, '#s2', 'scroll-snap-align')).toBe('none');
-		// And it takes effect: scrolled to the third item, a centring track settles it in the middle.
-		await page.evaluate(() => { const t = document.getElementById('centred'); t.scrollLeft = document.getElementById('c3').offsetLeft; });
+		// And it takes effect: scrolled to the third item, a centering track settles it in the middle.
+		await page.evaluate(() => { const t = document.getElementById('centered'); t.scrollLeft = document.getElementById('c3').offsetLeft; });
 		await page.evaluate(() => new Promise((r) => setTimeout(r, 400)));
-		const [track, c3] = await Promise.all([rect(page, '#centred'), rect(page, '#c3')]);
+		const [track, c3] = await Promise.all([rect(page, '#centered'), rect(page, '#c3')]);
 		expect((c3.left + c3.right) / 2).toBeCloseTo((track.left + track.right) / 2, 0);
 	});
 
