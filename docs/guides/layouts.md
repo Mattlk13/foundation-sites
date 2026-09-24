@@ -116,7 +116,7 @@ Every layout is configured with a small set of `data-*` attributes, drawn from a
 | `data-side` | `start`, `end` | hero, media, sidebar |
 | `data-snap` | boolean | scroller |
 | `data-space` | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | stack (> *) |
-| `data-span` | `1`, `2`, `3`, `4`, `5`, `6` | columns (> *) |
+| `data-span` | `1`, `2`, `3`, `4`, `5`, `6` | columns (> *), hero (> *) |
 | `data-split` | boolean | stack (> *) |
 | `data-sticky` | boolean | shell (> div > :is(nav, aside)), sidebar (> *), stack (> *) |
 | `data-surface` | `base`, `raised`, `sunken` | box |

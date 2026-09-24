@@ -195,6 +195,9 @@ Attributes:
 - data-side: start | end — Force the figure to the start or the end regardless of source order. Moves it visually only; reading order stays as written.
 - data-height: sm | md | lg | xl | half | full (default) — The band's least height: a stop of the height scale, half the viewport, or the whole of it, as a cover takes it. Content taller than the band grows it.
 
+On children:
+- data-span on > *: 1 | 2 | 3 | 4 | 5 | 6 — How many shares of the row this child takes; the other child's default is 1.
+
 ## media (recipe, class="media")
 
 Puts a figure beside a block of text and stacks them when the text would drop below half the width; the one-class form of a sidebar holding a frame and a stack.

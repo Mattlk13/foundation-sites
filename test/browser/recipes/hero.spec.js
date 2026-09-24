@@ -48,6 +48,16 @@ test.describe('hero recipe', () => {
 		expect(band.height).toBeCloseTo(400, 0);
 	});
 
+	test('data-span on the children divides the row unequally, and stacks like the rest', async ({ page }) => {
+		await open(page, 1000);
+		const [copy, figure] = await Promise.all([rect(page, '#sp-copy'), rect(page, '#sp-figure')]);
+		expect(figure.width / (figure.width + copy.width)).toBeCloseTo(0.6, 1);
+		await open(page, 400);
+		const [c, f] = await Promise.all([rect(page, '#sp-copy'), rect(page, '#sp-figure')]);
+		expect(f.top).toBeGreaterThanOrEqual(c.bottom);
+		expect(f.width).toBeCloseTo(c.width, 0);
+	});
+
 	test('children have no margins', async ({ page }) => {
 		await open(page);
 		await expectNoChildMargins(page, '.hero');

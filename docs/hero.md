@@ -37,6 +37,8 @@ nav_order: 4
 
 The opening of a landing page: a headline and a call to action on one side, a picture on the other, filling the first screen, or a shorter band with `data-height`, as a cover takes it. Below the threshold the two become rows and the band grows to fit. Put the picture first or last as you want it read; `data-side` moves it without changing the source. The copy must not have an img, video, or picture as a direct child (it would be taken for a second figure).
 
+The two halves share the row equally unless a child says otherwise: `data-span="3"` on the picture beside `data-span="2"` on the copy gives the picture three fifths, the same marker `columns` uses. Below the threshold both are full width.
+
 A headline that should grow with the band can carry the [billboard](billboard.md) utility. Make the copy a `container` first, so the line is sized by the column it is in and not by the whole band:
 
 ```html
@@ -90,9 +92,22 @@ The one-class form does the same in one element: a wrapping row whose lines are 
 
 </div>
 
+## Markers
+
+Attributes that descendants carry, not the root.
+
+<div class="scroller" role="region" aria-label="Hero markers" tabindex="0" markdown="1">
+
+| Attribute | Type | Values | On | Description |
+| --- | --- | --- | --- | --- |
+| `data-span` | enum | `1`, `2`, `3`, `4`, `5`, `6` | `> *` | How many shares of the row this child takes; the other child's default is 1. |
+
+</div>
+
 ## Children
 
 - `> *`: exactly 2. Exactly two: the copy and the figure (an img, video, or picture, or an element wrapping one); the copy (the body) must not have an img, video, or picture as a direct child (it would be taken for a second figure). A figure with a figcaption keeps its caption below the picture.
+- `> [data-span]`: 0 to 2. A child that takes several shares of the row: data-span="3" beside a "2" is three fifths. Below the threshold both stack full width.
 
 ## Tokens
 
