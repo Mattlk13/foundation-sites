@@ -295,19 +295,18 @@ test.describe('base scroll padding', () => {
 	});
 
 	test('a fragment jump stops the heading a sticky offset below the top', async ({ page }) => {
+		const offset = await token(page, '--yeti-sticky-offset');
 		await page.evaluate(() => { location.hash = '#two'; });
-		await page.evaluate(() => new Promise(requestAnimationFrame));
-		const [heading, offset] = await Promise.all([rect(page, '#two'), token(page, '--yeti-sticky-offset')]);
-		expect(heading.top).toBeCloseTo(offset, 0);
+		// A scroll landing is measured in device pixels: at a ratio of 2 (the WebKit project) half a CSS pixel is one step, so within a pixel is the test.
+		await expect.poll(async () => Math.abs((await rect(page, '#two')).top - offset), { timeout: 2000 }).toBeLessThanOrEqual(1);
 	});
 
 	test('the offset is the bar\'s height when a page sets it, so the heading lands under the bar\'s edge', async ({ page }) => {
 		await page.addStyleTag({ content: 'html { --yeti-sticky-offset: 48px; }' });
 		await page.evaluate(() => { location.hash = '#three'; });
-		await page.evaluate(() => new Promise(requestAnimationFrame));
-		const [heading, bar] = await Promise.all([rect(page, '#three'), rect(page, '#bar')]);
-		expect(heading.top).toBeCloseTo(bar.bottom, 0);
+		// A scroll landing is measured in device pixels: at a ratio of 2 (the WebKit project) half a CSS pixel is one step, so within a pixel is the test.
+		await expect.poll(async () => Math.abs((await rect(page, '#three')).top - (await rect(page, '#bar')).bottom), { timeout: 2000 }).toBeLessThanOrEqual(1);
 		// Falsification: the bar is really pinned at the top while the page is scrolled this far.
-		expect(bar.top).toBeCloseTo(0, 0);
+		expect((await rect(page, '#bar')).top).toBeCloseTo(0, 0);
 	});
 });
