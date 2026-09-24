@@ -56,6 +56,7 @@ A dot that walks a curve as the page scrolls: an SVG draws the path, and the mar
 ```css
 .marker {
 	offset-path: path("M0,20 Q100,0 200,20 T400,20");
+	offset-distance: 100%;
 }
 
 @supports (animation-timeline: scroll()) {
@@ -73,9 +74,10 @@ A dot that walks a curve as the page scrolls: an SVG draws the path, and the mar
 @media (prefers-reduced-motion: reduce) {
 	.marker {
 		animation: none;
-		offset-distance: 100%;
 	}
 }
 ```
 
-The path is repeated from the SVG, not read from it: CSS has no way to reference an element's `d`, so the same coordinates live in both places and a change to one is a change to the other. Reduced motion does not collapse the duration here, because a scroll-driven animation never reads one; instead the rule turns the animation off outright and sets `offset-distance` to where the walk would have ended, so the dot reads as arrived rather than stranded at the start.
+The base rule puts the marker at the end of the walk, and only the animation inside `@supports` starts it at 0%. Where scroll timelines are missing, or motion is reduced, the dot rests at the end: a marker parked at the start would claim the reader had not moved, the same reason the reading bar is not shown at all without a timeline. Reduced motion does not collapse the duration here, because a scroll-driven animation never reads one; instead the rule turns the animation off outright, and the dot falls back to that resting place, reading as arrived rather than stranded at the start.
+
+The path is repeated from the SVG, not read from it: CSS has no way to reference an element's `d`, so the same coordinates live in both places and a change to one is a change to the other. The `path()` coordinates are CSS pixels of the marker's containing block, so an SVG that scales through its `viewBox` needs the path scaled with it, or the marker drifts off the drawn line.
