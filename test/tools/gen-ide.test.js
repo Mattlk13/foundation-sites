@@ -94,6 +94,12 @@ test('every enumerated attribute references a value set that exists', () => {
 // The fixture cannot prove the generator handles the real manifest's shapes:
 // the inline-values enum that shipped without a value set passed every test
 // above. This runs the generator over what the package actually ships.
+//
+// A name two components share for different value lists (data-justify: the
+// full vocabulary on cluster and columns, three values on scroller) makes the
+// shared set a superset of any one reader's own list, not an exact match:
+// editor completion cannot know which class an element carries, so it offers
+// every value any reader accepts. The check is containment, not equality.
 test('every enumerated attribute in the real manifest carries a value set holding its values', () => {
 	const schema = loadSchema(path.join(REPO_ROOT, 'schema/manifest.schema.json'));
 	const vocab = loadVocabulary(path.join(REPO_ROOT, 'schema/vocabulary.json'));
@@ -109,11 +115,35 @@ test('every enumerated attribute in the real manifest carries a value set holdin
 			const where = `${component.name} ${attr.name}`;
 			const set = emitted.get(attr.name).valueSet;
 			assert.ok(set, where);
-			assert.deepEqual(sets.get(set), attr.values, where);
+			for (const v of attr.values) assert.ok(sets.get(set).includes(v), `${where}: ${v} missing from its value set`);
 			checked += 1;
 		}
 	}
 	assert.ok(checked > 50, `only ${checked} enumerated attributes and markers were checked`);
+});
+
+test('collectAttributes merges an enum shared by two components into the union of their values', () => {
+	const withVocabFirst = {
+		cluster: {
+			name: 'cluster', kind: 'layout', class: 'cluster', description: 'A cluster.',
+			attributes: [{ name: 'data-justify', type: 'enum', vocabulary: 'justify', values: ['start', 'center', 'end', 'between', 'around', 'evenly'], description: 'Main-axis alignment.' }],
+			classes: [], children: [], tokens: [], a11y: { requiredAttributes: [], keyboard: [] }, js: null, support: { unguarded: [], guarded: [] }, since: '7.0.0', example: 'example.html',
+		},
+		scroller: {
+			name: 'scroller', kind: 'layout', class: 'scroller', description: 'A scroller.',
+			attributes: [{ name: 'data-justify', type: 'enum', values: ['start', 'center', 'end'], description: 'Where each item settles.' }],
+			classes: [], children: [], tokens: [], a11y: { requiredAttributes: [], keyboard: [] }, js: null, support: { unguarded: [], guarded: [] }, since: '7.0.0', example: 'example.html',
+		},
+	};
+	// The narrower reader first, so the union only holds if merging appends
+	// rather than only ever keeping whichever attribute is seen first.
+	const withValuesFirst = { scroller: withVocabFirst.scroller, cluster: withVocabFirst.cluster };
+	for (const merged of [withVocabFirst, withValuesFirst]) {
+		const out = htmlData(merged, { justify: ['start', 'center', 'end', 'between', 'around', 'evenly'] });
+		const attr = out.globalAttributes.find((a) => a.name === 'data-justify');
+		assert.equal(out.globalAttributes.filter((a) => a.name === 'data-justify').length, 1);
+		assert.deepEqual(out.valueSets.find((s) => s.name === attr.valueSet).values.map((v) => v.name), ['start', 'center', 'end', 'between', 'around', 'evenly']);
+	}
 });
 
 test('an enum with inline values and no vocabulary still gets a value set', () => {
