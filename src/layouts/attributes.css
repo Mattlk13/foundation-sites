@@ -299,6 +299,12 @@
 	[data-sticky] {
 		position: sticky;
 		inset-block-start: var(--yeti-sticky-offset);
+		/* Above what scrolls under it, by definition, and above the level a
+		   card's controls, the affix and a tooltip take, so a card scrolled under
+		   a pinned bar cannot take the click. The skip link, first in the
+		   document and so losing any tie, sits one higher; the top layer is
+		   above all of it. */
+		z-index: 2;
 	}
 }
 

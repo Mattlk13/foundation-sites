@@ -49,3 +49,36 @@ A page transition is a whole-page crossfade and nothing more. Carrying one eleme
 ## Scroll-driven
 
 Two things in Yeti are paced by the scroll rather than the clock: an `enter` with `data-view` plays its arrival as the element comes into view, and a `progress` with `data-scroll` fills as the page is read. Both use `animation-timeline`, which is below Baseline, so both are guarded by `@supports`, and each fallback is honest: the arrival plays on load, and the reading bar is not shown. They answer reduced motion differently, on purpose. The arrival is switched off, because a scroll-paced animation ignores the collapsed duration and would move content a reader asked not to see move. The reading bar stays, because nothing in it moves on its own; it only mirrors the reader's hand.
+
+### A marker along a path
+
+A dot that walks a curve as the page scrolls: an SVG draws the path, and the marker's `offset-path` repeats the same `d`, so a circle riding it can be paced by `animation-timeline: scroll(root)` instead of the clock.
+
+```css
+.marker {
+	offset-path: path("M0,20 Q100,0 200,20 T400,20");
+	offset-distance: 100%;
+}
+
+@supports (animation-timeline: scroll()) {
+	.marker {
+		animation: walk linear both;
+		animation-timeline: scroll(root);
+	}
+}
+
+@keyframes walk {
+	from { offset-distance: 0%; }
+	to { offset-distance: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.marker {
+		animation: none;
+	}
+}
+```
+
+The base rule puts the marker at the end of the walk, and only the animation inside `@supports` starts it at 0%. Where scroll timelines are missing, or motion is reduced, the dot rests at the end: a marker parked at the start would claim the reader had not moved, the same reason the reading bar is not shown at all without a timeline. Reduced motion does not collapse the duration here, because a scroll-driven animation never reads one; instead the rule turns the animation off outright, and the dot falls back to that resting place, reading as arrived rather than stranded at the start.
+
+The path is repeated from the SVG, not read from it: CSS has no way to reference an element's `d`, so the same coordinates live in both places and a change to one is a change to the other. The `path()` coordinates are CSS pixels of the marker's containing block, so an SVG that scales through its `viewBox` needs the path scaled with it, or the marker drifts off the drawn line.

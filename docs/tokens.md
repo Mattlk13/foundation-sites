@@ -309,6 +309,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | --- | --- | --- |
 | `--yeti-cover-height` | `100dvh` | Minimum block size of a cover layout or a filled stack. Set to auto for one that is only as tall as its content. |
 | `--yeti-sticky-offset` | `var(--yeti-space-md)` | How far from the leading edge of the scrollport a child carrying data-sticky stops. Set it to a sticky bar's height on whatever holds the things that stick below it. |
+| `--yeti-scroll-padding` | `var(--yeti-sticky-offset)` | Where a scroll-into-view stops below the top edge: a fragment jump, scrollIntoView, a focused control. The sticky offset by default; set it alone for more room above a jumped-to heading than the things that stick need. Root-level: it is read by the root's scroll padding. |
 
 </div>
 
@@ -371,6 +372,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-button-radius` | `var(--yeti-radius-md)` | Corner of buttons. |
 | `--yeti-button-weight` | `var(--yeti-weight-strong)` | Weight of button text. |
 | `--yeti-button-padding` | `2` | Inline padding as a multiple of the size's space step. |
+| `--yeti-button-padding-block` | `0.25` | Block padding as a multiple of the size's space step. The control height still sets the minimum, so this shows on a wrapped label, and a theme raises it for roomier buttons. |
 
 </div>
 
@@ -475,6 +477,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | Token | Default | Description |
 | --- | --- | --- |
 | `--yeti-toc-scroll` | `smooth, and auto under reduced motion` | How the page scrolls when a link in a toc, or an in-page link in a nav, is followed. A components-layer declaration outranks the reset, so the preference reaches the page through this token. The name keeps the toc it started with. |
+| `--yeti-toc-hover` | var(--_yeti-variant-subtle) (override only) | Background of a toc link under the pointer. Read with a fallback to the variant's subtle tint; set transparent for an underline-only list. |
 
 </div>
 
@@ -496,6 +499,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | Token | Default | Description |
 | --- | --- | --- |
 | `--yeti-progress-radius` | `var(--yeti-radius-full)` | Corner of the bar and of its value. |
+| `--yeti-progress-size` | half the size's space step (override only) | Thickness of the bar, a length. Read with a fallback to half the size's space step; a hairline reading bar sets 2px. |
 
 </div>
 

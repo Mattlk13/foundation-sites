@@ -37,6 +37,14 @@
 				</div>
 				<div class="item" id="card-tall">A tall column that scrolls past the pinned card.</div>
 			</div>
+			<div class="stack" id="painted" data-gap="none">
+				<div class="item" id="bar" data-sticky style="block-size: 12px; padding: 0">A pinned bar</div>
+				<div class="item" id="filtered" style="filter: grayscale(1); block-size: 1600px">A filtered block that forms a stacking context and scrolls up under the bar.</div>
+			</div>
+			<div class="stack" id="carded" data-gap="none">
+				<nav class="item" id="carded-nav" data-sticky aria-label="Pinned" style="block-size: 40px; padding: 0">A pinned nav</nav>
+				<div class="card" id="under-card" style="block-size: 1600px"><button class="button" type="button" id="card-button">A card's button</button><p>Scrolls under the pinned nav.</p></div>
+			</div>
 		</div>
 		<section id="nav-section">
 			<nav class="nav" id="pinned-nav" data-sticky aria-label="Site">

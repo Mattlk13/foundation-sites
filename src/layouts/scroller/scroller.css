@@ -14,5 +14,11 @@
 	}
 	.scroller[data-width] > * { inline-size: var(--_yeti-width); }
 	.scroller[data-snap] { scroll-snap-type: x mandatory; }
-	.scroller[data-snap] > * { scroll-snap-align: start; }
+	/* Where each item settles along the track when it snaps: its start edge
+	   by default, or its center or end. data-justify, because that is the
+	   main-axis word everywhere else; the shared mapping resolves to flex
+	   keywords scroll-snap does not take, so the scroller maps its own. */
+	.scroller[data-snap] > * { scroll-snap-align: var(--_yeti-snap, start); }
+	.scroller[data-justify="center"] { --_yeti-snap: center; }
+	.scroller[data-justify="end"] { --_yeti-snap: end; }
 }

@@ -7,8 +7,11 @@
 		align-items: center;
 		justify-content: center;
 		gap: var(--yeti-space-xs);
-		min-block-size: var(--yeti-control-size);
-		padding: 0 calc(var(--_yeti-size-space) * var(--yeti-button-padding));
+		/* The field's height formula, so a large button and a large field match
+		   in a row: the control size, plus whatever the size's space step
+		   exceeds the default by. Small is clamped to the control size. */
+		min-block-size: calc(var(--yeti-control-size) + max(0px, var(--_yeti-size-space) - var(--yeti-space-sm)));
+		padding: calc(var(--_yeti-size-space) * var(--yeti-button-padding-block)) calc(var(--_yeti-size-space) * var(--yeti-button-padding));
 		font: inherit;
 		font-size: var(--_yeti-size-text);
 		font-weight: var(--yeti-button-weight);

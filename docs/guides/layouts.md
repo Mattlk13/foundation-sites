@@ -103,6 +103,7 @@ Every layout is configured with a small set of `data-*` attributes, drawn from a
 | `data-hide` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | container (*) |
 | `data-intrinsic` | boolean | center |
 | `data-justify` | `start`, `center`, `end`, `between`, `around`, `evenly` | cluster, columns |
+| `data-justify` | `start`, `center`, `end` | scroller |
 | `data-justify-self` | `start`, `center`, `end`, `stretch` | layer (> *) |
 | `data-max` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | breakout, center |
 | `data-min` | `none`, `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | grid, masonry |
@@ -136,7 +137,7 @@ For the sizing attributes the mapping rule is always the same: a value is a toke
 
 Gap alone also takes a fluid pair. `data-gap="sm-lg"` does not jump between the two: it runs from the `sm` stop at the narrow end of the viewport to the `lg` stop at the wide end, the same way the type scale itself is fluid. `none` never anchors a pair, so any smaller of the remaining seven sized stops can pair with any larger one, which is what makes twenty-one pairs out of seven.
 
-`data-sticky` is the odd one in the table. Every other name there sets a private property for a layout to read; this one sets two properties on the child itself, `position: sticky` and the offset. A third is needed in a row and only in a row: an item stretched to the full height of its row has nowhere left to move and never sticks, so `sidebar` and the `shell`'s body row take their sticky children out of that stretch in their own stylesheets. A `stack` stretches sideways instead, which costs a sticky child nothing, so a sticky child of a stack keeps the full width of the column.
+`data-sticky` is the odd one in the table. Every other name there sets a private property for a layout to read; this one sets two properties on the child itself, `position: sticky` and the offset. A third is needed in a row and only in a row: an item stretched to the full height of its row has nowhere left to move and never sticks, so `sidebar` and the `shell`'s body row take their sticky children out of that stretch in their own stylesheets. A `stack` stretches sideways instead, which costs a sticky child nothing, so a sticky child of a stack keeps the full width of the column. A sticky child also takes a stacking level above the page's own and above a card's controls, so it paints over the content that scrolls under it. A second token, `--yeti-scroll-padding`, sets the root's `scroll-padding-block-start` so a fragment jump or a focused control stops below the bar rather than behind it; it defaults to the sticky offset, so a page with a bar sets one number, and can be set alone for more room.
 
 Type can answer a container too. The [billboard](../billboard.md) utility's `data-fit` names a pair of type steps and clamps a font size between them, reading `cqi` in between, so a headline is sized by the column it is in rather than by the window. It needs a size container above it, which is what `container` is for.
 

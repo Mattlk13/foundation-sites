@@ -35,6 +35,11 @@
       "description": "Corner of the bar and of its value."
     },
     {
+      "name": "--yeti-progress-size",
+      "public": true,
+      "description": "Thickness of the bar; overrides the size step."
+    },
+    {
       "name": "--yeti-color-surface-sunken",
       "public": true,
       "description": "The track."

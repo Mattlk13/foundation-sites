@@ -250,13 +250,24 @@ export const GUIDE_TABLES = [
 	{ file: 'guides/components.md', kinds: ['component', 'utility'], label: 'Component attributes' },
 ];
 
-/** One row per attribute of the given kinds: its values, and every component that reads it. */
+/** The part of an attribute's identity that distinguishes its value list: the
+ *  resolved values for an enum (vocabulary references are already resolved
+ *  into values by the time a manifest reaches here), or just its type for
+ *  anything else, since a non-enum has no value list to differ by. */
+const valueKey = (attr) => (attr.type === 'enum' ? attr.values.join(',') : attr.type);
+
+/** One row per attribute name and value list of the given kinds: its values,
+ *  and every component that reads exactly that list. Two components that
+ *  declare the same attribute with different value lists (a shared name but a
+ *  narrower enum, say) get their own rows rather than one row silently
+ *  showing only the first manifest's list. */
 export function renderAttributeTable({ merged, kinds, label }) {
 	const rows = new Map();
 	const add = (attr, reader) => {
-		const row = rows.get(attr.name) ?? { attr, readers: [] };
+		const key = `${attr.name}|${valueKey(attr)}`;
+		const row = rows.get(key) ?? { attr, readers: [] };
 		row.readers.push(reader);
-		rows.set(attr.name, row);
+		rows.set(key, row);
 	};
 	for (const name of Object.keys(merged).sort()) {
 		const m = merged[name];
@@ -267,9 +278,16 @@ export function renderAttributeTable({ merged, kinds, label }) {
 		// comma of its own, and the readers are comma-separated.
 		for (const marker of m.markers ?? []) add(marker, `${name} (${marker.on ?? 'a descendant'})`);
 	}
-	return table(label, ['Attribute', 'Values', 'Read by'], [...rows.keys()].sort().map((name) => {
-		const { attr, readers } = rows.get(name);
-		return [code(name), attr.type === 'enum' ? attr.values.map(code).join(', ') : attr.type, readers.join(', ')];
+	// Sorted by attribute name; Array#sort is stable, so rows that share a name
+	// keep the order they were first seen in (the order manifests were merged).
+	const keys = [...rows.keys()].sort((a, b) => {
+		const nameA = rows.get(a).attr.name;
+		const nameB = rows.get(b).attr.name;
+		return nameA < nameB ? -1 : nameA > nameB ? 1 : 0;
+	});
+	return table(label, ['Attribute', 'Values', 'Read by'], keys.map((key) => {
+		const { attr, readers } = rows.get(key);
+		return [code(attr.name), attr.type === 'enum' ? attr.values.map(code).join(', ') : attr.type, readers.join(', ')];
 	}));
 }
 

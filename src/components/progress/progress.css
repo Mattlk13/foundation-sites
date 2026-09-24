@@ -5,7 +5,9 @@
 		appearance: none;
 		display: block;
 		inline-size: 100%;
-		block-size: calc(var(--_yeti-size-space) / 2);
+		/* Read with a fallback, so a per-element --yeti-progress-size still wins
+		   over the size step; a hairline reading bar sets 2px on itself. */
+		block-size: var(--yeti-progress-size, calc(var(--_yeti-size-space) / 2));
 		border: 0;
 		border-radius: var(--yeti-progress-radius);
 		background-color: var(--yeti-color-surface-sunken);

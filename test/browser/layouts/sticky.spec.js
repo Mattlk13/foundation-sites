@@ -70,4 +70,23 @@ test.describe('data-sticky', () => {
 		const after = await rect(page, '#pinned-nav');
 		expect(after.top).toBeCloseTo(await token(page, '--yeti-sticky-offset'), 0);
 	});
+
+	test('a pinned element paints above a later element that forms a stacking context', async ({ page }) => {
+		await open(page);
+		const top = await page.evaluate(() => document.getElementById('painted').getBoundingClientRect().top + window.scrollY);
+		await scrollTo(page, top + 400);
+		const bar = await rect(page, '#bar');
+		const hit = await page.evaluate(([x, y]) => document.elementFromPoint(x, y)?.id, [bar.left + 20, bar.top + bar.height / 2]);
+		expect(hit).toBe('bar');
+	});
+
+	test('a pinned element sits above a card\'s controls scrolled under it', async ({ page }) => {
+		await open(page);
+		const top = await page.evaluate(() => document.getElementById('carded').getBoundingClientRect().top + window.scrollY);
+		// Scroll so the card's button sits exactly under the pinned nav.
+		await scrollTo(page, top + 40 + 4);
+		const nav = await rect(page, '#carded-nav');
+		const hit = await page.evaluate(([x, y]) => document.elementFromPoint(x, y)?.id, [nav.left + 30, nav.top + nav.height / 2]);
+		expect(hit).toBe('carded-nav');
+	});
 });

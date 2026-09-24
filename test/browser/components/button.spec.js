@@ -32,6 +32,19 @@ test.describe('button', () => {
 		expect(lg.width).toBeGreaterThan(md.width);
 	});
 
+	test('height follows the size like a field, and block padding fills above the minimum', async ({ page }) => {
+		await open(page);
+		const [control, sm, md, lg] = await Promise.all([token(page, '--yeti-control-size'), rect(page, '#sm'), rect(page, '#md'), rect(page, '#lg')]);
+		const [spaceSm, spaceMd] = await Promise.all([token(page, '--yeti-space-sm'), token(page, '--yeti-space-md')]);
+		expect(md.height).toBeCloseTo(control, 0);
+		expect(sm.height).toBeCloseTo(control, 0);
+		expect(lg.height).toBeCloseTo(control + (spaceMd - spaceSm), 0);
+		// A wrapped label gets block padding: taller than the minimum, by two quarter-steps plus the second line.
+		const wrapped = await rect(page, '#wrapped');
+		expect(wrapped.height).toBeGreaterThan(control);
+		expect(await px(page, '#wrapped', 'padding-top')).toBeCloseTo(spaceSm * 0.25, 0);
+	});
+
 	test('emphasis changes the fill and hover steps along the ladder', async ({ page }) => {
 		await open(page);
 		expect(await style(page, '#medium', 'background-color')).toBe('rgba(0, 0, 0, 0)');

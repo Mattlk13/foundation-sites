@@ -264,6 +264,8 @@ test.describe('base skip link', () => {
 		expect(await style(page, '#skip', 'backgroundColor')).toBe(await colour(page, '--yeti-color-surface-raised'));
 		expect(await style(page, '#skip', 'outlineStyle')).toBe('solid');
 		expect(await px(page, '#skip', 'outlineWidth')).toBe(2);
+		// Above the sticky bars at 2 and the affixed controls at 1.
+		expect(await style(page, '#skip', 'zIndex')).toBe('3');
 	});
 
 	test('a link that is not the body\'s first child is an ordinary link', async ({ page }) => {
@@ -282,5 +284,38 @@ test.describe('base skip link', () => {
 
 	test('has no accessibility violations', async ({ page }) => {
 		expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+	});
+});
+
+test.describe('base scroll padding', () => {
+	test.beforeEach(async ({ page }) => {
+		await page.setViewportSize({ width: 1024, height: 700 });
+		const response = await page.goto('/test/browser/fixtures/base-jump.html');
+		expect(response.status()).toBe(200);
+	});
+
+	test('a fragment jump stops the heading a sticky offset below the top', async ({ page }) => {
+		const offset = await token(page, '--yeti-sticky-offset');
+		await page.evaluate(() => { location.hash = '#two'; });
+		// A scroll landing is measured in device pixels: at a ratio of 2 (the WebKit project) half a CSS pixel is one step, so within a pixel is the test.
+		await expect.poll(async () => Math.abs((await rect(page, '#two')).top - offset), { timeout: 2000 }).toBeLessThanOrEqual(1);
+	});
+
+	test('the offset is the bar\'s height when a page sets it, so the heading lands under the bar\'s edge', async ({ page }) => {
+		await page.addStyleTag({ content: 'html { --yeti-sticky-offset: 48px; }' });
+		await page.evaluate(() => { location.hash = '#three'; });
+		// A scroll landing is measured in device pixels: at a ratio of 2 (the WebKit project) half a CSS pixel is one step, so within a pixel is the test.
+		await expect.poll(async () => Math.abs((await rect(page, '#three')).top - (await rect(page, '#bar')).bottom), { timeout: 2000 }).toBeLessThanOrEqual(1);
+		// Falsification: the bar is really pinned at the top while the page is scrolled this far.
+		expect((await rect(page, '#bar')).top).toBeCloseTo(0, 0);
+	});
+
+	test('--yeti-scroll-padding sets the stop on its own, leaving sticky things where they were', async ({ page }) => {
+		await page.addStyleTag({ content: 'html { --yeti-scroll-padding: 80px; }' });
+		await page.evaluate(() => { location.hash = '#two'; });
+		// A scroll landing is measured in device pixels: at a ratio of 2 (the WebKit project) half a CSS pixel is one step, so within a pixel is the test.
+		await expect.poll(async () => Math.abs((await rect(page, '#two')).top - 80), { timeout: 2000 }).toBeLessThanOrEqual(1);
+		// The bar reads the sticky offset, not this token: it stays on the edge.
+		expect((await rect(page, '#bar')).top).toBeCloseTo(0, 0);
 	});
 });

@@ -38,12 +38,30 @@
 		transition: color var(--yeti-duration-fast) var(--yeti-ease), border-color var(--yeti-duration-fast) var(--yeti-ease);
 	}
 	.toc a:hover {
-		background-color: var(--_yeti-variant-subtle);
+		/* Read with a fallback, so a per-element --yeti-toc-hover still wins over
+		   whichever variant is set here, and transparent turns the fill off. */
+		background-color: var(--yeti-toc-hover, var(--_yeti-variant-subtle));
 		color: var(--yeti-color-text);
 	}
 	.toc a[aria-current] {
 		border-inline-start-color: var(--_yeti-variant);
 		color: var(--_yeti-variant-text);
 		font-weight: var(--yeti-weight-strong);
+	}
+
+	/* data-numbered: a contents list. Every list resets a counter and every
+	   item counts, so nested entries read 2.1; the number sits before the link
+	   in the muted color with tabular figures, wide enough for a two-figure
+	   count or a nested 2.1, so the link text lines up. The number carries empty alternative text: a contents list is
+	   a list of links, and the digits are for the eye. */
+	.toc[data-numbered] ul { counter-reset: toc; }
+	.toc[data-numbered] li { counter-increment: toc; }
+	.toc[data-numbered] a::before {
+		content: counters(toc, ".") "." / "";
+		display: inline-block;
+		min-inline-size: 3ch;
+		margin-inline-end: var(--yeti-space-xs);
+		color: var(--yeti-color-text-muted);
+		font-variant-numeric: tabular-nums;
 	}
 }

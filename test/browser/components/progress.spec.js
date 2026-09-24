@@ -80,4 +80,12 @@ test.describe('progress', () => {
 		await open(page);
 		expect(await axe(page)).toEqual([]);
 	});
+
+	test('--yeti-progress-size sets the thickness, on the element itself', async ({ page }) => {
+		await open(page);
+		await page.evaluate(() => document.getElementById('bar').style.setProperty('--yeti-progress-size', '2px'));
+		expect((await rect(page, '#bar')).height).toBeCloseTo(2, 0);
+		// Set on one element, not the root: the next bar keeps its size-step default.
+		expect((await rect(page, '#lg')).height).toBeCloseTo((await token(page, '--yeti-space-md')) / 2, 0);
+	});
 });

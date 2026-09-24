@@ -10,16 +10,32 @@ import { fileURLToPath } from 'node:url';
 import { loadSchema, loadAndMerge, loadVocabulary } from './lib/manifest.js';
 import { readPackage } from './build.js';
 
-/** Every distinct data-* name across attributes and markers, with who uses it. */
+/** Every distinct data-* name across attributes and markers, with who uses it.
+ *  Editor completion cannot key off a class, so a name two components share
+ *  offers every value any of them accepts: an enum already seen gets any new
+ *  reader's values appended, in the order each was first seen, rather than
+ *  keeping only the first reader's list. The first reader's own type and
+ *  vocabulary name (used only to name the shared value set) stay put. */
 export function collectAttributes(merged) {
 	const map = new Map();
 	for (const component of Object.values(merged)) {
 		const own = component.attributes.map((a) => ({ ...a, on: null }));
 		const markers = (component.markers ?? []).map((m) => ({ ...m, on: m.on ?? '> *' }));
 		for (const attr of [...own, ...markers]) {
-			const entry = map.get(attr.name) ?? { type: attr.type, vocabulary: attr.vocabulary ?? null, values: attr.values ?? null, uses: [] };
-			entry.uses.push({ component: component.name, on: attr.on, description: attr.description });
-			map.set(attr.name, entry);
+			const entry = map.get(attr.name);
+			if (entry) {
+				// A fresh array: entry.values (like attr.values) may still be the
+				// manifest's own array, and mutating it in place would leak the
+				// union back into that component's own declared values.
+				if (attr.type === 'enum' && attr.values) {
+					const values = entry.values ? [...entry.values] : [];
+					for (const v of attr.values) if (!values.includes(v)) values.push(v);
+					entry.values = values;
+				}
+				entry.uses.push({ component: component.name, on: attr.on, description: attr.description });
+				continue;
+			}
+			map.set(attr.name, { type: attr.type, vocabulary: attr.vocabulary ?? null, values: attr.values ? [...attr.values] : null, uses: [{ component: component.name, on: attr.on, description: attr.description }] });
 		}
 	}
 	return map;
@@ -51,9 +67,11 @@ function valueSetName(name, entry) {
 export function htmlData(merged, vocabulary) {
 	const map = collectAttributes(merged);
 	const sets = new Map();
+	// entry.values already holds the resolved (and, for a shared name, merged)
+	// list: reading the raw vocabulary by name here instead would give back
+	// only the first reader's list on a name a later reader adds values to.
 	for (const [name, entry] of map.entries()) {
-		if (entry.vocabulary) sets.set(valueSetName(name, entry), vocabulary[entry.vocabulary].map((v) => ({ name: v })));
-		else if (entry.values) sets.set(valueSetName(name, entry), entry.values.map((v) => ({ name: v })));
+		if (entry.values) sets.set(valueSetName(name, entry), entry.values.map((v) => ({ name: v })));
 	}
 	const valueSets = [...sets.entries()].sort(([a], [b]) => a.localeCompare(b)).map(([name, values]) => ({ name, values }));
 	const globalAttributes = [...map.entries()].sort(([a], [b]) => a.localeCompare(b)).map(([name, entry]) => {
@@ -69,10 +87,10 @@ export function webTypes(merged, vocabulary, pkg) {
 	const attributes = [...map.entries()].sort(([a], [b]) => a.localeCompare(b)).map(([name, entry]) => {
 		const out = { name, description: describe(entry) };
 		if (entry.type === 'boolean') out.value = { kind: 'plain', type: 'boolean' };
-		else if (entry.vocabulary) {
-			out.value = { kind: 'plain', type: 'string' };
-			out.values = vocabulary[entry.vocabulary].map((v) => ({ name: v }));
-		} else if (entry.values) {
+		// Same reasoning as htmlData: entry.values is already the resolved,
+		// merged list, so it is read the same way whether the first reader
+		// named a vocabulary or gave inline values.
+		else if (entry.values) {
 			out.value = { kind: 'plain', type: 'string' };
 			out.values = entry.values.map((v) => ({ name: v }));
 		} else out.value = { kind: 'plain', type: entry.type === 'number' ? 'number' : 'string' };

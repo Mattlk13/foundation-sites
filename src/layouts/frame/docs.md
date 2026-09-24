@@ -14,6 +14,14 @@ A frame that wants an edge, a map's neatline, a photo on a light page, takes `da
 </div>
 ```
 
+A toned plate is a `filter` on the frame's media, the page's own art direction:
+
+```html
+<div class="frame" data-ratio="4/3">
+	<img src="map.png" alt="The route from the car park to the summit" style="filter: grayscale(1)">
+</div>
+```
+
 ## Why this name
 
 It is what a picture frame does: fix the shape and crop what is inside it. Foundation 6 had `.responsive-embed` for video ratios only; a frame does the same for anything.

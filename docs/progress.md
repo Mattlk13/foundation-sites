@@ -66,6 +66,8 @@ The native `progress` element, with its own drawing switched off and a thin roun
 
 It is guarded by `@supports`, and where a scroll timeline is missing the bar is not shown at all: a bar that never moved would say the reader had not started. It is not switched off under reduced motion, because nothing in it moves on its own; the fill follows the reader's hand and stops when they do.
 
+A reading bar at the top of the page usually wants to sit on the edge and be thin: set `--yeti-sticky-offset: 0` and `--yeti-progress-size: 2px` on the bar itself. It paints above the page as it scrolls.
+
 ## Accessibility
 
 A `progress` element is a progress bar to assistive tech already; it needs a name, from `aria-label` or `aria-labelledby`. Keep the text between the tags current, since some readers announce that rather than the value. An indeterminate bar is announced as busy with no percentage, which is right.
@@ -93,6 +95,7 @@ No structural requirements.
 | Token | Description |
 | --- | --- |
 | `--yeti-progress-radius` | Corner of the bar and of its value. |
+| `--yeti-progress-size` | Thickness of the bar; overrides the size step. |
 | `--yeti-color-surface-sunken` | The track. |
 | `--yeti-color-primary` | The default variant's color, when data-variant is absent. |
 | `--yeti-color-primary-subtle` | The default variant's tint. |

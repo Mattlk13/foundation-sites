@@ -6,6 +6,8 @@ Anything the visitor does: submit, save, open, dismiss. Put the class on a `butt
 
 Three attributes and no classes. `data-variant` picks a hue from the palette and the button reads that hue's ladder for its fill, its hover step, and its outline text. `data-emphasis` picks how much of the ladder shows: `high` fills, `medium` outlines, `low` is text that tints on hover. `data-size` scales the text and the padding together so the shape holds. Hover, active, focus, disabled, pressed, and busy come from the element's own state, so nothing needs a script to look right.
 
+A button is at least the control height, and a large one grows by the same step a large field does, so the two match in a row. Above that minimum, `--yeti-button-padding-block` and `--yeti-button-padding` set the padding as multiples of the size's space step.
+
 Two values of `data-variant` are not hues: `black` and `white`. They do not follow the theme and do not flip with the scheme, which is what a button on a painted band needs, where the band's own hue would vanish into itself. They keep every state: black steps to a dark grey under the pointer, its outline and text forms wash with a translucent black, and white mirrors it.
 
 ```html
