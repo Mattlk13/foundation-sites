@@ -69,7 +69,7 @@ The words are the same as `data-paint` uses below, and that is the point: this i
 </div>
 ```
 
-`data-variant` also takes `black` and `white`. They are the constants, not hues: a black button is black in dark mode too. Reach for them on a painted band, where a control in the band's own hue would disappear.
+`data-variant` also takes `black` and `white`. They are the constants, not hues: a black button is black in dark mode too. Reach for them on a painted band, where a control in the band's own hue would disappear. That is what they are for: on the plain page one of them disappears in one scheme, white on a light page and black on a dark one, so they are not a substitute for `neutral`.
 
 ## A color by name
 

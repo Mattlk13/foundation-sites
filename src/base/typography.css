@@ -81,8 +81,9 @@
 		color: var(--yeti-color-text);
 	}
 
-	/* The link above is out of sight but still in flow, so the prose rhythm
-	   would otherwise put a whole gap above the first thing the reader sees. */
+	/* The link above is absolutely positioned, so it takes no room, but it is
+	   still the preceding sibling the prose rhythm counts, which would
+	   otherwise put a whole gap above the first thing the reader sees. */
 	body > a[href^="#"]:first-child + * {
 		margin-block-start: 0;
 	}

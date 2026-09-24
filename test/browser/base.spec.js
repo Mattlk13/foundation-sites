@@ -272,8 +272,9 @@ test.describe('base skip link', () => {
 	});
 
 	test('the element after it starts at the top of the page', async ({ page }) => {
-		// The link is out of sight but still in flow, so without a rule the
-		// prose rhythm would put a whole gap above the first visible element.
+		// The link is absolutely positioned and takes no room, but it is still
+		// the preceding sibling the prose rhythm counts, so without a rule
+		// there would be a whole gap above the first visible element.
 		const [body, header] = await Promise.all([rect(page, 'body'), rect(page, 'header')]);
 		expect(header.top).toBeCloseTo(body.top, 0);
 		expect(await px(page, 'header', 'margin-top')).toBe(0);
