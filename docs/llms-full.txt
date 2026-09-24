@@ -1806,6 +1806,8 @@ The panel changes shape with the nav. In the bar it is the dropdown's usual card
 
 `data-sticky` keeps the bar at the top of the scrollport as the page scrolls, `--yeti-sticky-offset` from the edge. Everything else on the page that sticks stops at that same offset and would slide under the bar, so set the token to the bar's own height plus the gap you want on whatever holds them — the shell's body row, say — and leave the nav itself reading the default.
 
+Links that point down the same page (`href="#pricing"`) turn on smooth scrolling for the page, through `--yeti-toc-scroll`, the same switch a `toc` uses; under reduced motion it goes back to the browser's jump.
+
 ### Accessibility
 
 Give the `nav` an `aria-label`, since a page often has more than one. The toggle needs a name, from `aria-label` or visible text; the browser sets its expanded state. Mark the current page's link with `aria-current="page"`. Put `role="list"` on the `ul`: Yeti's reset only removes list markers where that role says the list is decorative. The open panel follows the toggle in the tab order, so Tab from the toggle reaches the first link; Escape closes the panel and returns focus to the toggle.
@@ -2199,7 +2201,7 @@ Children:
 - li: at least 1. One entry, holding a link whose href is the id of a heading on this page.
 
 Tokens:
-- --yeti-toc-scroll — How the page scrolls when a link is followed.
+- --yeti-toc-scroll — How the page scrolls to a heading; also read by a nav with in-page links.
 - --yeti-color-text-muted — A link that is not the current one.
 - --yeti-color-text — A link under the pointer.
 - --yeti-space-xs — Gap between links, and their block padding.
@@ -2744,7 +2746,7 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-carousel-dot (carousel): var(--yeti-color-border-strong) — Color of a slide dot.
 - --yeti-carousel-dot-size (carousel): 0.75rem — Diameter of a slide dot.
 - --yeti-carousel-scroll (carousel): smooth, and auto under reduced motion — How the track scrolls when a dot is followed. A components-layer declaration outranks the reset, so the preference reaches the track through this token.
-- --yeti-toc-scroll (toc): smooth, and auto under reduced motion — How the page scrolls when a link in a toc is followed. A components-layer declaration outranks the reset, so the preference reaches the page through this token.
+- --yeti-toc-scroll (toc): smooth, and auto under reduced motion — How the page scrolls when a link in a toc, or an in-page link in a nav, is followed. A components-layer declaration outranks the reset, so the preference reaches the page through this token. The name keeps the toc it started with.
 - --yeti-range-value (field): 0% — The filled share of a range's track. Set it on the input, inline or from your own script, since CSS cannot read the value. Not a theme value.
 - --yeti-demo-border (demo): var(--yeti-color-border) — The preview box's edge.
 - --yeti-demo-radius (demo): var(--yeti-radius-md) — The preview box's corner, the summary's, and the stop label's.

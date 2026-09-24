@@ -40,7 +40,7 @@
     {
       "name": "--yeti-toc-scroll",
       "public": true,
-      "description": "How the page scrolls when a link is followed."
+      "description": "How the page scrolls to a heading; also read by a nav with in-page links."
     },
     {
       "name": "--yeti-color-text-muted",

@@ -83,7 +83,7 @@ Label the `nav` — `aria-label="On this page"` — because a page with a toc ha
 
 | Token | Description |
 | --- | --- |
-| `--yeti-toc-scroll` | How the page scrolls when a link is followed. |
+| `--yeti-toc-scroll` | How the page scrolls to a heading; also read by a nav with in-page links. |
 | `--yeti-color-text-muted` | A link that is not the current one. |
 | `--yeti-color-text` | A link under the pointer. |
 | `--yeti-space-xs` | Gap between links, and their block padding. |

@@ -110,6 +110,18 @@ test.describe('nav', () => {
 		expect(await style(page, '#toggle', 'display')).toBe('none');
 	});
 
+	test('a nav with in-page links turns on smooth scrolling, and reduced motion turns it off', async ({ page }) => {
+		await open(page);
+		expect(await style(page, 'html', 'scroll-behavior')).toBe('smooth');
+		await page.emulateMedia({ reducedMotion: 'reduce' });
+		await open(page);
+		expect(await style(page, 'html', 'scroll-behavior')).toBe('auto');
+		// Falsification: a page with neither a toc nor in-page nav links scrolls as the browser does.
+		await page.emulateMedia({ reducedMotion: 'no-preference' });
+		expect((await page.goto('/test/browser/fixtures/layouts/stack.html')).status()).toBe(200);
+		expect(await style(page, 'html', 'scroll-behavior')).toBe('auto');
+	});
+
 	test('has no accessibility violations, closed and open', async ({ page }) => {
 		await open(page, 400);
 		expect(await axe(page)).toEqual([]);
