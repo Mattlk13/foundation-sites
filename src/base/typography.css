@@ -66,13 +66,13 @@
 		white-space: nowrap;
 	}
 	/* Fixed, so it stays at the corner of the window on a page already
-	   scrolled, and above the sticky bars and affixed controls that take
-	   z-index: 1, which would otherwise paint over it: it is the first element
-	   in the body, so everything else is painted after it. The ring is the
-	   one every focusable element gets, from the rule below. */
+	   scrolled, and above the sticky bars at 2 and the affixed controls at 1,
+	   which would otherwise paint over it: it is the first element in the
+	   body, so everything else is painted after it. The ring is the one every
+	   focusable element gets, from the rule below. */
 	body > a[href^="#"]:first-child:focus-visible {
 		position: fixed;
-		z-index: 2;
+		z-index: 3;
 		inset-block-start: var(--yeti-space-sm);
 		inset-inline-start: var(--yeti-space-sm);
 		padding: var(--yeti-space-sm) var(--yeti-space-md);

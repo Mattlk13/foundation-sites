@@ -264,6 +264,8 @@ test.describe('base skip link', () => {
 		expect(await style(page, '#skip', 'backgroundColor')).toBe(await colour(page, '--yeti-color-surface-raised'));
 		expect(await style(page, '#skip', 'outlineStyle')).toBe('solid');
 		expect(await px(page, '#skip', 'outlineWidth')).toBe(2);
+		// Above the sticky bars at 2 and the affixed controls at 1.
+		expect(await style(page, '#skip', 'zIndex')).toBe('3');
 	});
 
 	test('a link that is not the body\'s first child is an ordinary link', async ({ page }) => {

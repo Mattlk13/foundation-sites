@@ -399,7 +399,7 @@ Every claim below was checked against the CSS rather than remembered.
 
 **An image is fluid and unframed.** The reset makes it a block that never overflows its container and keeps its own ratio. No border, no radius, no crop, no aspect ratio, no object fit. When images of unpredictable shape must present as the same shape, that is [frame](../frame.md).
 
-**Almost nothing is positioned.** Three rules in the whole base use `position`, and they are all named on this page: `sub` and `sup` take `position: relative` to shift off the baseline, and the skip link takes `absolute` while it is hidden and `fixed` with `z-index: 2` while it is focused. Nothing floats, nothing is sticky, and no other rule in the base sets a `z-index`.
+**Almost nothing is positioned.** Three rules in the whole base use `position`, and they are all named on this page: `sub` and `sup` take `position: relative` to shift off the baseline, and the skip link takes `absolute` while it is hidden and `fixed` with `z-index: 3` while it is focused. Nothing floats, nothing is sticky, and no other rule in the base sets a `z-index`.
 
 **No font is loaded and no color is guessed.** `--yeti-font-sans` is `system-ui, sans-serif` and `--yeti-font-mono` is `ui-monospace, monospace`; there is no `@font-face` anywhere in Yeti. There is no `:visited` style, no `text-transform`, no letter spacing, and no color on a heading beyond the inherited text color.
 
