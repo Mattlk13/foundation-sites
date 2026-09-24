@@ -286,3 +286,28 @@ test.describe('base skip link', () => {
 		expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
 	});
 });
+
+test.describe('base scroll padding', () => {
+	test.beforeEach(async ({ page }) => {
+		await page.setViewportSize({ width: 1024, height: 700 });
+		const response = await page.goto('/test/browser/fixtures/base-jump.html');
+		expect(response.status()).toBe(200);
+	});
+
+	test('a fragment jump stops the heading a sticky offset below the top', async ({ page }) => {
+		await page.evaluate(() => { location.hash = '#two'; });
+		await page.evaluate(() => new Promise(requestAnimationFrame));
+		const [heading, offset] = await Promise.all([rect(page, '#two'), token(page, '--yeti-sticky-offset')]);
+		expect(heading.top).toBeCloseTo(offset, 0);
+	});
+
+	test('the offset is the bar\'s height when a page sets it, so the heading lands under the bar\'s edge', async ({ page }) => {
+		await page.addStyleTag({ content: 'html { --yeti-sticky-offset: 48px; }' });
+		await page.evaluate(() => { location.hash = '#three'; });
+		await page.evaluate(() => new Promise(requestAnimationFrame));
+		const [heading, bar] = await Promise.all([rect(page, '#three'), rect(page, '#bar')]);
+		expect(heading.top).toBeCloseTo(bar.bottom, 0);
+		// Falsification: the bar is really pinned at the top while the page is scrolled this far.
+		expect(bar.top).toBeCloseTo(0, 0);
+	});
+});

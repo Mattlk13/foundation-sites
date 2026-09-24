@@ -4,6 +4,12 @@
 		font-family: var(--yeti-font-sans);
 		color: var(--yeti-color-text);
 		background-color: var(--yeti-color-surface);
+		/* Where a scroll-into-view stops: a fragment jump, a script's
+		   scrollIntoView, a control pulled into view by focus. The same token
+		   that keeps a pinned thing below a sticky bar keeps a jumped-to heading
+		   below it too, so a page sets one number. Without a bar it is a breath
+		   of space above the heading instead of the heading kissing the edge. */
+		scroll-padding-block-start: var(--yeti-sticky-offset);
 	}
 
 	/* Type size lives on body, not html, so rem keeps the visitor's root
