@@ -94,4 +94,13 @@ A small theme can change a lot. This one shifts the accent hue, opens up the cor
 }
 ```
 
+One check every theme should make: a link is text. The default link colour is the primary at its base step, which reads on the page for the hues Yeti ships but not for a light brand colour. If your primary is light, point the links at the hue's text step:
+
+```css
+:root {
+	--yeti-link-color: var(--yeti-color-primary-text);
+	--yeti-link-color-hover: var(--yeti-color-primary-strong);
+}
+```
+
 Yeti ships two such files in `dist/themes/` as worked examples: `soft`, round and warm with pill buttons and roomy cards, and `sharp`, square and mono with thick borders. Neither needs any markup beyond ordinary Yeti classes — a theme changes what a component looks like, never what element or attribute you reach for to use it.

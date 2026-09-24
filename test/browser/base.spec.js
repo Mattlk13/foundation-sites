@@ -59,6 +59,22 @@ test.describe('base typography and prose', () => {
 	test('has no accessibility violations', async ({ page }) => {
 		expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
 	});
+
+	test('links read the link tokens', async ({ page }) => {
+		const probe = (name) => page.evaluate((n) => {
+			const el = document.createElement('span');
+			el.style.color = `var(${n})`;
+			document.body.append(el);
+			const v = getComputedStyle(el).color;
+			el.remove();
+			return v;
+		}, name);
+		expect(await style(page, 'a', 'color')).toBe(await probe('--yeti-color-primary'));
+		await page.addStyleTag({ content: ':root { --yeti-link-color: rgb(1, 2, 3); --yeti-link-color-hover: rgb(4, 5, 6); }' });
+		expect(await style(page, 'a', 'color')).toBe('rgb(1, 2, 3)');
+		await page.hover('a');
+		await expect.poll(() => style(page, 'a', 'color')).toBe('rgb(4, 5, 6)');
+	});
 });
 
 test.describe('base controls and media', () => {

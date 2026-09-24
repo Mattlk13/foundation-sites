@@ -31,6 +31,12 @@
 		--yeti-lede-size: var(--yeti-text-lg);
 		--yeti-lede-measure: 50ch;
 
+		/* Links. The primary by default; a theme whose primary is a light
+		   brand colour points these at the hue's text step instead, since a
+		   link is text and has to read on the page. */
+		--yeti-link-color: var(--yeti-color-primary);
+		--yeti-link-color-hover: var(--yeti-color-primary-strong);
+
 		--yeti-font-sans: system-ui, sans-serif;
 		--yeti-font-mono: ui-monospace, monospace;
 	}

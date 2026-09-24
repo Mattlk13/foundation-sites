@@ -38,13 +38,13 @@
 	}
 
 	a {
-		color: var(--yeti-color-primary);
+		color: var(--yeti-link-color);
 		text-decoration: underline;
 		text-decoration-skip-ink: auto;
 		text-underline-offset: 0.15em;
 	}
 	a:hover {
-		color: var(--yeti-color-primary-strong);
+		color: var(--yeti-link-color-hover);
 	}
 
 	/* The skip link: the first link in the body, jumping past the furniture to
