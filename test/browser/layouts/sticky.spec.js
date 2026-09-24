@@ -70,4 +70,13 @@ test.describe('data-sticky', () => {
 		const after = await rect(page, '#pinned-nav');
 		expect(after.top).toBeCloseTo(await token(page, '--yeti-sticky-offset'), 0);
 	});
+
+	test('a pinned element paints above a later element that forms a stacking context', async ({ page }) => {
+		await open(page);
+		const top = await page.evaluate(() => document.getElementById('painted').getBoundingClientRect().top + window.scrollY);
+		await scrollTo(page, top + 400);
+		const bar = await rect(page, '#bar');
+		const hit = await page.evaluate(([x, y]) => document.elementFromPoint(x, y)?.id, [bar.left + 20, bar.top + bar.height / 2]);
+		expect(hit).toBe('bar');
+	});
 });

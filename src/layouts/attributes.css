@@ -299,6 +299,10 @@
 	[data-sticky] {
 		position: sticky;
 		inset-block-start: var(--yeti-sticky-offset);
+		/* Above what scrolls under it, by definition. The same level the affix
+		   and a card's controls take; the skip link sits at 2, and the top layer
+		   above all of it. */
+		z-index: 1;
 	}
 }
 
