@@ -90,7 +90,7 @@ Every layout is configured with a small set of `data-*` attributes, drawn from a
 | `data-align-self` | `start`, `center`, `end`, `stretch`, `baseline` | layer (> *) |
 | `data-alternate` | boolean | timeline |
 | `data-bleed` | boolean | breakout (> *) |
-| `data-border` | boolean | box |
+| `data-border` | boolean | box (*) |
 | `data-center` | boolean | cover (> *) |
 | `data-columns` | `1`, `2`, `3`, `4`, `5`, `6` | columns, grid, masonry |
 | `data-fill` | boolean | overlay (> [data-over]), stack |

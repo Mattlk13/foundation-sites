@@ -26,6 +26,8 @@ test.describe('table', () => {
 		await open(page);
 		expect(await px(page, '#g1', 'border-left-width')).toBeGreaterThan(0);
 		expect(await px(page, '#g1', 'padding-top')).toBeLessThan(await px(page, '#n1', 'padding-top'));
+		// The table's data-border means cell borders; the generic border marker must not add an outer one.
+		expect(await px(page, '#gridded', 'border-top-width')).toBe(0);
 	});
 
 	test('the header rule survives data-border', async ({ page }) => {

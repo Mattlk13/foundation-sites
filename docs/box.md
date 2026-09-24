@@ -35,7 +35,7 @@ A box is the thing to reach for when content needs breathing room from its edges
 
 ## How it works
 
-`padding` on all four sides from `data-gap`, a border of `--yeti-border-width` in `--yeti-color-border` when `data-border` is present, and a fill from `data-surface`. Nothing else. Unlike the spacing layouts, a box does not reset its children's margins, so paragraphs inside it keep their prose rhythm.
+`padding` on all four sides from `data-gap`, a border of `--yeti-border-width` in `--yeti-color-border` when `data-border` is present (the marker works on any element, not only a box), and a fill from `data-surface`. Nothing else. Unlike the spacing layouts, a box does not reset its children's margins, so paragraphs inside it keep their prose rhythm.
 
 `data-surface` takes the three surface tones. `raised` is a step above the page and is what a panel usually wants; `sunken` is a step below, for a well that content sits in; `base` is the page's own surface, for a panel inside a sunken area that should not change tone. Without it a box is transparent and only its padding does anything, which is right when the thing behind it is already a surface.
 
@@ -70,7 +70,6 @@ There is no plainer word for a padded rectangle. Foundation 6's Callout was a st
 | `data-gap-inline` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` |  | Padding on the two sides only, over whatever data-gap set: a band wide at the sides and ordinary top and bottom. |
 | `data-gap-block` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` |  | Padding top and bottom only, over whatever data-gap set. |
 | `data-surface` | enum | `base`, `raised`, `sunken` |  | Fill the box with one of the three surface tones, making it a visible panel. Absent, the box is transparent and only its padding does anything. |
-| `data-border` | boolean |  |  | Draw a border of the border width, in the border color. |
 
 </div>
 
@@ -82,6 +81,7 @@ Attributes that descendants carry, not the root.
 
 | Attribute | Type | Values | On | Description |
 | --- | --- | --- | --- | --- |
+| `data-border` | boolean |  | `*` | Draw a border of the border width, in the border color. Works on any element; it is a box's most common marker, which is why it is listed here. |
 | `data-paint` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral`, `white`, `black`, `grey`, `grey-0`, `grey-10`, `grey-20`, `grey-30`, `grey-40`, `grey-50`, `grey-60`, `grey-70`, `grey-80`, `grey-90`, `grey-100` | `*` | Fill this element with a color by name: a hue at its base step with the text made for it, a constant, or a step of the greyscale. Up to grey-40 the text stays the page text; from grey-50 it becomes the page surface. |
 | `data-text` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral`, `white`, `black`, `grey`, `grey-0`, `grey-10`, `grey-20`, `grey-30`, `grey-40`, `grey-50`, `grey-60`, `grey-70`, `grey-80`, `grey-90`, `grey-100` | `*` | Color this element's words by name, from the same list. On an element that is also painted it wins over the automatic text color. |
 
@@ -98,8 +98,6 @@ No structural requirements.
 | Token | Description |
 | --- | --- |
 | `--yeti-space-md` | The default padding. |
-| `--yeti-color-border` | The border color when data-border is set. |
-| `--yeti-border-width` | Width of the border when data-border is set. |
 | `--yeti-color-surface` | The fill at data-surface="base"; the page's own surface. |
 | `--yeti-color-surface-raised` | The fill at data-surface="raised", a step above the page. |
 | `--yeti-color-surface-sunken` | The fill at data-surface="sunken", a step below the page. |

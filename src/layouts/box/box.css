@@ -7,7 +7,6 @@
 	   and ordinary top and bottom says data-gap-inline="xl" and nothing else. */
 	.box[data-gap-inline] { padding-inline: var(--_yeti-gap-inline); }
 	.box[data-gap-block] { padding-block: var(--_yeti-gap-block); }
-	.box[data-border] { border: var(--yeti-border-width) solid var(--yeti-color-border); }
 	/* The three surface tokens, which until now almost nothing read. A box is
 	   where they belong: it is the padded rectangle, and a padded rectangle you
 	   can see is a panel. base is the page's own surface, for a panel that sits

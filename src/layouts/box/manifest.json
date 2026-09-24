@@ -30,16 +30,17 @@
       "type": "enum",
       "vocabulary": "surface",
       "description": "Fill the box with one of the three surface tones, making it a visible panel. Absent, the box is transparent and only its padding does anything."
-    },
-    {
-      "name": "data-border",
-      "type": "boolean",
-      "description": "Draw a border of the border width, in the border color."
     }
   ],
   "classes": [],
   "children": [],
   "markers": [
+    {
+      "name": "data-border",
+      "type": "boolean",
+      "on": "*",
+      "description": "Draw a border of the border width, in the border color. Works on any element; it is a box's most common marker, which is why it is listed here."
+    },
     {
       "name": "data-paint",
       "type": "enum",
@@ -60,16 +61,6 @@
       "name": "--yeti-space-md",
       "public": true,
       "description": "The default padding."
-    },
-    {
-      "name": "--yeti-color-border",
-      "public": true,
-      "description": "The border color when data-border is set."
-    },
-    {
-      "name": "--yeti-border-width",
-      "public": true,
-      "description": "Width of the border when data-border is set."
     },
     {
       "name": "--yeti-color-surface",
