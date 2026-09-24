@@ -116,6 +116,11 @@ test.describe('nav', () => {
 		await page.emulateMedia({ reducedMotion: 'reduce' });
 		await open(page);
 		expect(await style(page, 'html', 'scroll-behavior')).toBe('auto');
+		// Placeholders alone do not count.
+		await page.emulateMedia({ reducedMotion: 'no-preference' });
+		await open(page);
+		await page.evaluate(() => document.querySelector('a[href="#about"]').setAttribute('href', '#'));
+		expect(await style(page, 'html', 'scroll-behavior')).toBe('auto');
 		// Falsification: a page with neither a toc nor in-page nav links scrolls as the browser does.
 		await page.emulateMedia({ reducedMotion: 'no-preference' });
 		expect((await page.goto('/test/browser/fixtures/layouts/stack.html')).status()).toBe(200);
