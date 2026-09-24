@@ -1857,7 +1857,7 @@ The panel changes shape with the nav. In the bar it is the dropdown's usual card
 
 Links that point down the same page (`href="#pricing"`) turn on smooth scrolling for the page, through `--yeti-toc-scroll`, the same switch a `toc` uses; a bare `href="#"` placeholder does not count, and under reduced motion the page goes back to the browser's jump.
 
-The brand is a wordmark, so it has tokens of its own: `--yeti-nav-brand-weight` and `--yeti-nav-brand-size`. Plain links take `--yeti-nav-link`, the page's text color by default; on a painted bar set it to the color that reads there. The current link and a hovered link keep the variant's tints.
+The brand is a wordmark, so it has tokens of its own: `--yeti-nav-brand-weight` and `--yeti-nav-brand-size`. Plain links take `--yeti-nav-link`, the bar's own color by default; on a painted bar set it to the color that reads there. The current link and a hovered link keep the variant's tints, and the open panel resets it to its own text color.
 
 ### Accessibility
 
@@ -1880,7 +1880,7 @@ Tokens:
 - --yeti-nav-panel — Background of the open panel.
 - --yeti-nav-brand-weight — Weight of the brand.
 - --yeti-nav-brand-size — Size of the brand; 1em keeps the bar's.
-- --yeti-nav-link — Color of a plain link in the bar; current and hover keep the variant's tints.
+- --yeti-nav-link — Color of a plain link in the bar; the bar's own color unless set. Current and hover keep the variant's tints, and the open panel resets it to its own text color.
 - --yeti-control-size — Minimum height of the bar, the toggle, and each link.
 - --yeti-shadow-md — The open panel's shadow.
 - --yeti-shadow-color — The drawer's backdrop.
@@ -2781,7 +2781,7 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-nav-panel (nav): var(--yeti-color-surface-raised) — Background of the open panel.
 - --yeti-nav-brand-weight (nav): var(--yeti-weight-strong) — Weight of the nav's brand.
 - --yeti-nav-brand-size (nav): 1em — Size of the nav's brand; 1em is the bar's own size.
-- --yeti-nav-link (nav): var(--yeti-color-text) — Color of a plain link in the bar. The current link and a hovered link keep the variant's tints.
+- --yeti-nav-link (nav): currentColor — Color of a plain link in the bar; the bar's own color unless set. The current link and a hovered link keep the variant's tints, and the open panel resets it to its own text color.
 - --yeti-breadcrumbs-separator (breadcrumbs): "/" — The string between crumbs; a theme may prefer "›".
 - --yeti-pagination-radius (pagination): var(--yeti-radius-md) — Corner of each page target.
 - --yeti-alert-radius (alert): var(--yeti-radius-md) — Corner of an alert.

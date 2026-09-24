@@ -144,7 +144,7 @@
     {
       "name": "--yeti-nav-link",
       "public": true,
-      "description": "Color of a plain link in the bar; current and hover keep the variant's tints."
+      "description": "Color of a plain link in the bar; the bar's own color unless set. Current and hover keep the variant's tints, and the open panel resets it to its own text color."
     },
     {
       "name": "--yeti-control-size",
@@ -262,6 +262,10 @@
     },
     {
       "name": "--_yeti-on-variant",
+      "public": false
+    },
+    {
+      "name": "--_yeti-nav-link",
       "public": false
     }
   ],

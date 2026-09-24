@@ -133,12 +133,32 @@ test.describe('nav', () => {
 		const navSize = await style(page, '.nav', 'font-size');
 		expect(await style(page, '#brand', 'font-size')).toBe(navSize);
 		expect(await style(page, '#plain', 'color')).toBe(await style(page, '.nav', 'color'));
+		// A nav colored by page CSS passes that color on to its plain links.
+		await page.addStyleTag({ content: '#nav { color: rgb(200, 0, 0); }' });
+		expect(await style(page, '#plain', 'color')).toBe('rgb(200, 0, 0)');
 		await page.addStyleTag({ content: ':root { --yeti-nav-brand-weight: 400; --yeti-nav-brand-size: 24px; --yeti-nav-link: rgb(1, 2, 3); }' });
 		expect(await style(page, '#brand', 'font-weight')).toBe('400');
 		expect(await style(page, '#brand', 'font-size')).toBe('24px');
 		expect(await style(page, '#plain', 'color')).toBe('rgb(1, 2, 3)');
 		// The current link keeps its variant tint; the token colors plain links only.
 		expect(await style(page, '#current', 'color')).not.toBe('rgb(1, 2, 3)');
+	});
+
+	test('on a painted bar a dropdown trigger takes the same color as the links and the bar', async ({ page }) => {
+		await open(page, 1000);
+		const [trigger, link, nav] = await Promise.all([style(page, '#painted-trigger', 'color'), style(page, '#painted-link', 'color'), style(page, '#painted', 'color')]);
+		expect(trigger).toBe(link);
+		expect(trigger).toBe(nav);
+	});
+
+	test('a link color set for the bar does not follow the links into the open panel', async ({ page }) => {
+		await open(page, 400);
+		await page.addStyleTag({ content: ':root { --yeti-nav-link: rgb(255, 255, 255); }' });
+		await page.click('#toggle');
+		await settle(page, '#menu');
+		const [link, panel] = await Promise.all([style(page, '#plain', 'color'), style(page, '#menu', 'color')]);
+		expect(link).toBe(panel);
+		expect(link).not.toBe('rgb(255, 255, 255)');
 	});
 
 	test('has no accessibility violations, closed and open', async ({ page }) => {

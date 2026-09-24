@@ -74,7 +74,7 @@
 		border: 0;
 		border-radius: var(--yeti-nav-radius);
 		background-color: transparent;
-		color: var(--yeti-nav-link);
+		color: var(--_yeti-nav-link, var(--yeti-nav-link));
 		text-decoration: none;
 		cursor: pointer;
 	}
@@ -83,6 +83,9 @@
 		color: var(--_yeti-variant-text);
 		font-weight: var(--yeti-weight-strong);
 	}
+	/* The panel sits on its own surface, so a link color chosen for the bar
+	   must not follow the links into it. */
+	.nav > ul[popover]:popover-open { --_yeti-nav-link: currentColor; }
 
 	/* The panel: the open list below the threshold. The user agent gives a
 	   popover inset 0, margin auto, a border, and fit-content sizes; the

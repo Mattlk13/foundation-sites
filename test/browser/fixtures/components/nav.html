@@ -57,6 +57,22 @@
 					<li><a href="#">Blog</a></li>
 				</ul>
 			</nav>
+			<nav class="nav" data-paint="primary" id="painted" aria-label="Painted">
+				<a href="#" data-brand>Yeti</a>
+				<button type="button" popovertarget="painted-menu" aria-label="Menu">☰</button>
+				<ul id="painted-menu" popover role="list">
+					<li><a href="#" id="painted-link">Docs</a></li>
+					<li>
+						<div class="dropdown">
+							<button type="button" popovertarget="painted-more" id="painted-trigger">More</button>
+							<div id="painted-more" popover>
+								<a href="#">Changelog</a>
+								<a href="#">Status</a>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</nav>
 			<p>Content below the bar.</p>
 		</div>
 	</main>

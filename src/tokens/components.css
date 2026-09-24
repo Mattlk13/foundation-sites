@@ -28,8 +28,9 @@
 		/* The brand is a wordmark; a theme sets it apart from the links here. */
 		--yeti-nav-brand-weight: var(--yeti-weight-strong);
 		--yeti-nav-brand-size: 1em;
-		/* Plain links in the bar. The current and hovered links keep the variant's tints. */
-		--yeti-nav-link: var(--yeti-color-text);
+		/* Plain links in the bar: the bar's own color unless a theme says
+		   otherwise. The current and hovered links keep the variant's tints. */
+		--yeti-nav-link: currentColor;
 
 		--yeti-breadcrumbs-separator: "/";
 
