@@ -16,6 +16,10 @@
 		font-size: var(--_yeti-size-text);
 		font-weight: var(--yeti-button-weight);
 		line-height: var(--yeti-leading-tight);
+		/* letter-spacing inherits as an absolute length, so a button sitting in
+		   a tracked heading would otherwise inherit its tightening at its own,
+		   smaller size. */
+		letter-spacing: normal;
 		text-decoration: none;
 		border: var(--yeti-border-width) solid var(--_yeti-variant);
 		border-radius: var(--yeti-button-radius);

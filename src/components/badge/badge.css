@@ -10,6 +10,10 @@
 		font-stretch: var(--yeti-stretch-small);
 		font-weight: var(--yeti-badge-weight);
 		line-height: var(--yeti-leading-tight);
+		/* letter-spacing inherits as an absolute length, so a badge sitting in
+		   a tracked heading would otherwise inherit its tightening at its own,
+		   smaller size. */
+		letter-spacing: normal;
 		white-space: nowrap;
 		border: var(--yeti-border-width) solid transparent;
 		border-radius: var(--yeti-badge-radius);

@@ -34,6 +34,17 @@ test.describe('base typography and prose', () => {
 		const size = await px(page, '#h1', 'fontSize');
 		expect(await px(page, '#h1', 'letterSpacing')).toBeCloseTo(-0.03 * size, 1);
 		expect(await style(page, 'p', 'letter-spacing')).toBe('normal');
+		// letter-spacing inherits as an absolute length, so under a tightened
+		// heading a badge sitting in it must not inherit that tightening at
+		// its own, smaller size.
+		await page.evaluate(() => {
+			const h2 = document.createElement('h2');
+			h2.id = 'h-track';
+			h2.innerHTML = 'Title <span class="badge" id="badge-in-heading">New</span>';
+			document.querySelector('main').append(h2);
+		});
+		expect(await style(page, '#badge-in-heading', 'letter-spacing')).toBe('normal');
+		expect(parseFloat(await style(page, '#h-track', 'letter-spacing'))).toBeLessThan(0);
 	});
 
 	test('the browser\'s own form colours follow the palette', async ({ page }) => {
