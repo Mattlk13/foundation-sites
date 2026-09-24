@@ -2695,6 +2695,8 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-cover-height (layout): 100dvh — Minimum block size of a cover layout or a filled stack. Set to auto for one that is only as tall as its content.
 - --yeti-sticky-offset (layout): var(--yeti-space-md) — How far from the leading edge of the scrollport a child carrying data-sticky stops. Set it to a sticky bar's height on whatever holds the things that stick below it.
 - --yeti-border-width (border): 1px — Width of every border a component draws.
+- --yeti-quote-border (border): 4px — Width of the bar beside a blockquote; 0 removes it.
+- --yeti-quote-color (color): var(--yeti-color-border-strong) — Colour of the bar beside a blockquote.
 - --yeti-weight-normal (weight): 400 — Body weight.
 - --yeti-weight-bold (weight): 700 — Headings, th, strong and b. Separate from --yeti-weight-strong so display text and control labels can be tuned apart.
 - --yeti-weight-strong (weight): 600 — Labels, headers, buttons.

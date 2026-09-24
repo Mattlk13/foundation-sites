@@ -83,6 +83,13 @@ test.describe('base typography and prose', () => {
 		expect(await style(page, 'p', 'font-stretch')).toBe('87.5%');
 		expect(await style(page, 'h1', 'font-stretch')).toBe('112.5%');
 	});
+
+	test('the quotation bar reads its two tokens', async ({ page }) => {
+		expect(await px(page, 'blockquote', 'border-left-width')).toBe(4);
+		await page.addStyleTag({ content: ':root { --yeti-quote-border: 1px; --yeti-quote-color: rgb(1, 2, 3); }' });
+		expect(await px(page, 'blockquote', 'border-left-width')).toBe(1);
+		expect(await style(page, 'blockquote', 'border-left-color')).toBe('rgb(1, 2, 3)');
+	});
 });
 
 test.describe('base controls and media', () => {

@@ -202,6 +202,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-color-focus` | `var(--yeti-color-primary)` | Focus ring color. |
 | `--yeti-link-color` | `var(--yeti-color-primary)` | Text colour of a link at rest. A theme whose primary is too light to read as text points this at the hue's text step, --yeti-color-primary-text. |
 | `--yeti-link-color-hover` | `var(--yeti-color-primary-strong)` | Text colour of a link under the pointer. |
+| `--yeti-quote-color` | `var(--yeti-color-border-strong)` | Colour of the bar beside a blockquote. |
 | `--yeti-white` | `oklch(1 0 0)` | White, in both schemes and under every theme. One of the three colors that never move. |
 | `--yeti-black` | `oklch(0 0 0)` | Black, in both schemes and under every theme. |
 | `--yeti-grey` | `oklch(0.565 0 0)` | 18% reflectance, the photographic middle grey, in both schemes and under every theme. |
@@ -318,6 +319,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | Token | Default | Description |
 | --- | --- | --- |
 | `--yeti-border-width` | `1px` | Width of every border a component draws. |
+| `--yeti-quote-border` | `4px` | Width of the bar beside a blockquote; 0 removes it. |
 
 </div>
 
