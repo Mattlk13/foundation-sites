@@ -42,7 +42,7 @@ A long page a reader scrolls rather than clicks through: a guide, a reference, a
 
 ## How it works
 
-A column of links, each pointing at the id of a heading on the same page. The current one carries `aria-current="true"` and takes the variant's color, a strong weight, and a bar down its start edge; the bar is on every link and transparent until then, so nothing shifts as the mark moves. `data-variant` picks the hue and `data-size` steps the text.
+A column of links, each pointing at the id of a heading on the same page. The current one carries `aria-current="true"` and takes the variant's color, a strong weight, and a bar down its start edge; the bar is on every link and transparent until then, so nothing shifts as the mark moves. `data-variant` picks the hue and `data-size` steps the text. A link under the pointer takes `--yeti-toc-hover`, read with a fallback to the variant's own subtle tint, so setting it to transparent turns the fill off without touching the variant.
 
 `toc.js` moves the mark. It watches the linked headings with one `IntersectionObserver` and marks the link of whichever heading is topmost in view, dispatching `yeti:current` on the `.toc` with the link and the heading each time it moves. Between two headings nothing is in view, and the last mark stays rather than flickering off. Without the module the list is a working list of links, and a page that knows its own current section can simply ship the attribute in its HTML.
 
@@ -86,6 +86,7 @@ Label the `nav` — `aria-label="On this page"` — because a page with a toc ha
 | `--yeti-toc-scroll` | How the page scrolls to a heading; also read by a nav with in-page links. |
 | `--yeti-color-text-muted` | A link that is not the current one. |
 | `--yeti-color-text` | A link under the pointer. |
+| `--yeti-toc-hover` | The hover fill; transparent turns it off. |
 | `--yeti-space-xs` | Gap between links, and their block padding. |
 | `--yeti-space-sm` | The space step when data-size is absent. |
 | `--yeti-text-md` | Text size when data-size is absent. |

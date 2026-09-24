@@ -62,4 +62,15 @@ test.describe('toc', () => {
 		await open(page);
 		expect(await axe(page)).toEqual([]);
 	});
+
+	test('the hover fill reads --yeti-toc-hover, with the variant tint as its fallback', async ({ page }) => {
+		await open(page);
+		await page.hover('#link-two');
+		const tinted = await style(page, '#link-two', 'background-color');
+		expect(tinted).not.toBe('rgba(0, 0, 0, 0)');
+		await page.addStyleTag({ content: '#toc { --yeti-toc-hover: transparent; }' });
+		await page.hover('#link-one');
+		await page.hover('#link-two');
+		await expect.poll(() => style(page, '#link-two', 'background-color')).toBe('rgba(0, 0, 0, 0)');
+	});
 });

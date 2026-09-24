@@ -476,6 +476,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | Token | Default | Description |
 | --- | --- | --- |
 | `--yeti-toc-scroll` | `smooth, and auto under reduced motion` | How the page scrolls when a link in a toc, or an in-page link in a nav, is followed. A components-layer declaration outranks the reset, so the preference reaches the page through this token. The name keeps the toc it started with. |
+| `--yeti-toc-hover` | var(--_yeti-variant-subtle) (override only) | Background of a toc link under the pointer. Read with a fallback to the variant's subtle tint; set transparent for an underline-only list. |
 
 </div>
 

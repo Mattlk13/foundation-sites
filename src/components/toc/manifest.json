@@ -53,6 +53,11 @@
       "description": "A link under the pointer."
     },
     {
+      "name": "--yeti-toc-hover",
+      "public": true,
+      "description": "The hover fill; transparent turns it off."
+    },
+    {
       "name": "--yeti-space-xs",
       "public": true,
       "description": "Gap between links, and their block padding."
