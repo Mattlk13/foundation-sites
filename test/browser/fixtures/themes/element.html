@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Element theme fixture</title>
+	<link rel="stylesheet" href="../../../../src/yeti.css">
+	<style>
+		@layer yeti.theme {
+			h2 { text-transform: uppercase; }
+			a { color: rgb(200, 0, 0); }
+			a:hover { color: rgb(0, 0, 200); }
+			p { margin-block: 3rem; }
+		}
+	</style>
+</head>
+<body>
+	<main class="center">
+		<h1>Element theme fixture</h1>
+		<h2 id="bare">A bare heading the theme sets in capitals</h2>
+		<p>A bare paragraph with <a id="plain" href="#bare">a plain link</a> the theme colors.</p>
+		<p><a class="button" id="cta" href="#bare">A link that is a button</a></p>
+		<div class="stack" id="stack">
+			<p id="p1">The first paragraph in a stack, which owns the gap between its children.</p>
+			<p id="p2">The second paragraph in the stack.</p>
+		</div>
+	</main>
+</body>
+</html>
