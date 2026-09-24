@@ -1,6 +1,7 @@
 /* Media: a figure beside text. The one-class form of a sidebar holding a
    frame and a stack. The figure is whichever child is, or wraps, the
-   picture, so source order decides the side; data-side overrides it. */
+   picture, so source order decides the side; data-side overrides it while
+   side by side. */
 @layer yeti.layouts {
 	.media {
 		display: flex;

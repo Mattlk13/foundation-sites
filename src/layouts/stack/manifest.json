@@ -82,7 +82,7 @@
     {
       "name": "--yeti-color-border",
       "public": true,
-      "description": "Colour of the data-rule line."
+      "description": "Color of the data-rule line."
     },
     {
       "name": "--_yeti-gap",

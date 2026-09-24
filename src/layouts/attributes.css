@@ -419,7 +419,7 @@
 	   also end-align; that half stays with the table. */
 	[data-numeric] { font-variant-numeric: tabular-nums; }
 
-	/* data-border: the border width in the border colour, on any element. The
+	/* data-border: the border width in the border color, on any element. The
 	   table is left out: its data-border means borders on every cell, and an
 	   outer line on top of those would double the edge. */
 	[data-border]:not(.table) { border: var(--yeti-border-width) solid var(--yeti-color-border); }

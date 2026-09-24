@@ -144,7 +144,7 @@
     {
       "name": "--yeti-nav-link",
       "public": true,
-      "description": "Colour of a plain link in the bar; current and hover keep the variant's tints."
+      "description": "Color of a plain link in the bar; current and hover keep the variant's tints."
     },
     {
       "name": "--yeti-control-size",

@@ -36,7 +36,7 @@ Use a frame wherever images of unpredictable shape must present as the same shap
 
 `aspect-ratio` sizes the frame from its width, and `overflow: hidden` clips. An image, video, `picture`, `iframe`, `embed` or `object` child is stretched to both dimensions with `object-fit: cover`, so it fills without distortion and loses only the overflow. Any other child, a placeholder or an icon, is centered with flexbox.
 
-A frame that wants an edge, a map's neatline, a photo on a light page, takes `data-border`, which draws the border width in the border colour around any element. For a different colour set `--yeti-color-border` on the frame itself.
+A frame that wants an edge, a map's neatline, a photo on a light page, takes `data-border`, which draws the border width in the border color around any element. For a different color set `--yeti-color-border` on the frame itself.
 
 ```html
 <div class="frame" data-ratio="4/3" data-border style="--yeti-color-border: var(--yeti-color-text)">

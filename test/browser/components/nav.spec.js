@@ -137,7 +137,7 @@ test.describe('nav', () => {
 		expect(await style(page, '#brand', 'font-weight')).toBe('400');
 		expect(await style(page, '#brand', 'font-size')).toBe('24px');
 		expect(await style(page, '#plain', 'color')).toBe('rgb(1, 2, 3)');
-		// The current link keeps its variant tint; the token colours plain links only.
+		// The current link keeps its variant tint; the token colors plain links only.
 		expect(await style(page, '#current', 'color')).not.toBe('rgb(1, 2, 3)');
 	});
 

@@ -339,7 +339,7 @@ Use a frame wherever images of unpredictable shape must present as the same shap
 
 `aspect-ratio` sizes the frame from its width, and `overflow: hidden` clips. An image, video, `picture`, `iframe`, `embed` or `object` child is stretched to both dimensions with `object-fit: cover`, so it fills without distortion and loses only the overflow. Any other child, a placeholder or an icon, is centered with flexbox.
 
-A frame that wants an edge, a map's neatline, a photo on a light page, takes `data-border`, which draws the border width in the border colour around any element. For a different colour set `--yeti-color-border` on the frame itself.
+A frame that wants an edge, a map's neatline, a photo on a light page, takes `data-border`, which draws the border width in the border color around any element. For a different color set `--yeti-color-border` on the frame itself.
 
 ```html
 <div class="frame" data-ratio="4/3" data-border style="--yeti-color-border: var(--yeti-color-text)">
@@ -698,7 +698,7 @@ The gap is the stack's, but one child can ask for a different gap before it. `da
 </div>
 ```
 
-`data-rule` on the stack draws a line between each pair of children, the border width in the border colour, in the middle of the gap; the gap itself does not change, and `data-space` moves the line with it. A legend, a settings list, a run of plan features: anywhere rows want separating without boxing. The line is a `::before` on each child after the first, so a child that already draws its own `::before` keeps its own and loses the line. A child that is itself a stack still has its line placed by the ruled stack's gap, but a ruled stack directly inside another ruled stack places its line by its own gap, the same limit `data-space` has; give it a plain wrapper.
+`data-rule` on the stack draws a line between each pair of children, the border width in the border color, in the middle of the gap; the gap itself does not change, and `data-space` moves the line with it. A legend, a settings list, a run of plan features: anywhere rows want separating without boxing. The line is a `::before` on each child after the first, so a child that already draws its own `::before` keeps its own and loses the line. A child that is itself a stack still has its line placed by the ruled stack's gap, but a ruled stack directly inside another ruled stack places its line by its own gap, the same limit `data-space` has; give it a plain wrapper.
 
 ```html
 <dl class="stack" data-rule data-gap="sm">
@@ -721,7 +721,7 @@ Tokens:
 - --yeti-space-md — The default gap.
 - --yeti-cover-height — The minimum block size when data-fill is set.
 - --yeti-border-width — Width of the data-rule line.
-- --yeti-color-border — Colour of the data-rule line.
+- --yeti-color-border — Color of the data-rule line.
 
 Accessibility contract:
 Purely visual. Reading order is source order.
@@ -1853,7 +1853,7 @@ The panel changes shape with the nav. In the bar it is the dropdown's usual card
 
 Links that point down the same page (`href="#pricing"`) turn on smooth scrolling for the page, through `--yeti-toc-scroll`, the same switch a `toc` uses; a bare `href="#"` placeholder does not count, and under reduced motion the page goes back to the browser's jump.
 
-The brand is a wordmark, so it has tokens of its own: `--yeti-nav-brand-weight` and `--yeti-nav-brand-size`. Plain links take `--yeti-nav-link`, the page's text colour by default; on a painted bar set it to the colour that reads there. The current link and a hovered link keep the variant's tints.
+The brand is a wordmark, so it has tokens of its own: `--yeti-nav-brand-weight` and `--yeti-nav-brand-size`. Plain links take `--yeti-nav-link`, the page's text color by default; on a painted bar set it to the color that reads there. The current link and a hovered link keep the variant's tints.
 
 ### Accessibility
 
@@ -1876,7 +1876,7 @@ Tokens:
 - --yeti-nav-panel — Background of the open panel.
 - --yeti-nav-brand-weight — Weight of the brand.
 - --yeti-nav-brand-size — Size of the brand; 1em keeps the bar's.
-- --yeti-nav-link — Colour of a plain link in the bar; current and hover keep the variant's tints.
+- --yeti-nav-link — Color of a plain link in the bar; current and hover keep the variant's tints.
 - --yeti-control-size — Minimum height of the bar, the toggle, and each link.
 - --yeti-shadow-md — The open panel's shadow.
 - --yeti-shadow-color — The drawer's backdrop.
@@ -2777,7 +2777,7 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-nav-panel (nav): var(--yeti-color-surface-raised) — Background of the open panel.
 - --yeti-nav-brand-weight (nav): var(--yeti-weight-strong) — Weight of the nav's brand.
 - --yeti-nav-brand-size (nav): 1em — Size of the nav's brand; 1em is the bar's own size.
-- --yeti-nav-link (nav): var(--yeti-color-text) — Colour of a plain link in the bar. The current link and a hovered link keep the variant's tints.
+- --yeti-nav-link (nav): var(--yeti-color-text) — Color of a plain link in the bar. The current link and a hovered link keep the variant's tints.
 - --yeti-breadcrumbs-separator (breadcrumbs): "/" — The string between crumbs; a theme may prefer "›".
 - --yeti-pagination-radius (pagination): var(--yeti-radius-md) — Corner of each page target.
 - --yeti-alert-radius (alert): var(--yeti-radius-md) — Corner of an alert.

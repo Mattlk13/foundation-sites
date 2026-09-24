@@ -75,7 +75,7 @@ The panel changes shape with the nav. In the bar it is the dropdown's usual card
 
 Links that point down the same page (`href="#pricing"`) turn on smooth scrolling for the page, through `--yeti-toc-scroll`, the same switch a `toc` uses; a bare `href="#"` placeholder does not count, and under reduced motion the page goes back to the browser's jump.
 
-The brand is a wordmark, so it has tokens of its own: `--yeti-nav-brand-weight` and `--yeti-nav-brand-size`. Plain links take `--yeti-nav-link`, the page's text colour by default; on a painted bar set it to the colour that reads there. The current link and a hovered link keep the variant's tints.
+The brand is a wordmark, so it has tokens of its own: `--yeti-nav-brand-weight` and `--yeti-nav-brand-size`. Plain links take `--yeti-nav-link`, the page's text color by default; on a painted bar set it to the color that reads there. The current link and a hovered link keep the variant's tints.
 
 ## Accessibility
 
@@ -132,7 +132,7 @@ Attributes that descendants carry, not the root.
 | `--yeti-nav-panel` | Background of the open panel. |
 | `--yeti-nav-brand-weight` | Weight of the brand. |
 | `--yeti-nav-brand-size` | Size of the brand; 1em keeps the bar's. |
-| `--yeti-nav-link` | Colour of a plain link in the bar; current and hover keep the variant's tints. |
+| `--yeti-nav-link` | Color of a plain link in the bar; current and hover keep the variant's tints. |
 | `--yeti-control-size` | Minimum height of the bar, the toggle, and each link. |
 | `--yeti-shadow-md` | The open panel's shadow. |
 | `--yeti-shadow-color` | The drawer's backdrop. |

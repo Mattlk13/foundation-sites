@@ -97,7 +97,7 @@ A small theme can change a lot. This one shifts the accent hue, opens up the cor
 }
 ```
 
-One check every theme should make: a link is text. The default link colour is the primary at its base step, which reads on the page for the hues Yeti ships but not for a light brand colour. If your primary is light, point the links at the hue's text step:
+One check every theme should make: a link is text. The default link color is the primary at its base step, which reads on the page for the hues Yeti ships but not for a light brand color. If your primary is light, point the links at the hue's text step:
 
 ```css
 :root {
