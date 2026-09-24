@@ -39,7 +39,22 @@ test.describe('base typography and prose', () => {
 	test('the browser\'s own form colours follow the palette', async ({ page }) => {
 		const probe = (v) => page.evaluate((n) => { const el = document.createElement('span'); el.style.color = `var(${n})`; document.body.append(el); const c = getComputedStyle(el).color; el.remove(); return c; }, v);
 		expect(await style(page, 'html', 'accent-color')).toBe(await probe('--yeti-color-primary'));
-		expect(await style(page, 'html', 'caret-color')).toBe(await probe('--yeti-color-text'));
+		// The caret is left at auto, so it follows the text it sits in rather
+		// than a value resolved once at the root: an input in a data-paint
+		// band takes that band's own white text, not the page's dark one, so
+		// the caret is never dark on a dark background.
+		const darkCaret = await page.evaluate(() => {
+			const box = document.createElement('div');
+			box.dataset.paint = 'black';
+			const input = document.createElement('input');
+			input.id = 'dark-input';
+			box.append(input);
+			document.body.append(box);
+			const c = getComputedStyle(input).caretColor;
+			box.remove();
+			return c;
+		});
+		expect(darkCaret).toBe(await probe('--yeti-white'));
 		await page.addStyleTag({ content: ':root { --yeti-hue-primary: 30; }' });
 		expect(await style(page, 'html', 'accent-color')).toBe(await probe('--yeti-color-primary'));
 		expect(await style(page, 'html', 'accent-color')).not.toBe('auto');
