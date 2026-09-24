@@ -366,6 +366,32 @@ test('renderAttributeTable gives one row per attribute with its values and its r
 	assert.ok(table.indexOf('`data-count`') < table.indexOf('`data-gap`'));
 });
 
+test('renderAttributeTable gives readers with a different value list their own row', () => {
+	const merged = {
+		cluster: validManifest({
+			name: 'cluster', class: 'cluster',
+			attributes: [{ name: 'data-justify', type: 'enum', values: ['start', 'center', 'end', 'between', 'around', 'evenly'], description: 'Main-axis alignment.' }],
+		}),
+		columns: validManifest({
+			name: 'columns', class: 'columns',
+			attributes: [{ name: 'data-justify', type: 'enum', values: ['start', 'center', 'end', 'between', 'around', 'evenly'], description: 'Main-axis alignment.' }],
+		}),
+		scroller: validManifest({
+			name: 'scroller', class: 'scroller',
+			attributes: [{ name: 'data-justify', type: 'enum', values: ['start', 'center', 'end'], description: 'Where each item settles when data-snap is set.' }],
+		}),
+	};
+	const table = renderAttributeTable({ merged, kinds: ['layout'], label: 'Layout attributes' });
+	// Same attribute name, two rows: the full vocabulary's readers on one, the
+	// scroller's narrower list on the other, right after it.
+	assert.ok(table.includes('| `data-justify` | `start`, `center`, `end`, `between`, `around`, `evenly` | cluster, columns |'));
+	assert.ok(table.includes('| `data-justify` | `start`, `center`, `end` | scroller |'));
+	assert.equal(table.indexOf('`data-justify` | `start`, `center`, `end` |'), table.lastIndexOf('`data-justify` | `start`, `center`, `end` |'));
+	const fullRow = table.indexOf('cluster, columns');
+	const narrowRow = table.indexOf('| scroller |');
+	assert.ok(fullRow < narrowRow, 'the full-vocabulary row comes first, the narrower one right after');
+});
+
 test('renderAttributeTable names the element a marker is carried on', () => {
 	const merged = {
 		rail: validManifest({ markers: [{ name: 'data-split', type: 'boolean', on: '> *', description: 'Pinned to the end.' }] }),
