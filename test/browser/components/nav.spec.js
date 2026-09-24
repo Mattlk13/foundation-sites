@@ -144,6 +144,14 @@ test.describe('nav', () => {
 		expect(await style(page, '#current', 'color')).not.toBe('rgb(1, 2, 3)');
 	});
 
+	test('a link reads the small lettering width axis, and the brand does not', async ({ page }) => {
+		await open(page);
+		expect(await style(page, '#plain', 'font-stretch')).toBe('100%');
+		await page.addStyleTag({ content: ':root { --yeti-stretch-small: 75%; }' });
+		expect(await style(page, '#plain', 'font-stretch')).toBe('75%');
+		expect(await style(page, '#brand', 'font-stretch')).toBe('100%');
+	});
+
 	test('on a painted bar a dropdown trigger takes the same color as the links and the bar', async ({ page }) => {
 		await open(page, 1000);
 		const [trigger, link, nav] = await Promise.all([style(page, '#painted-trigger', 'color'), style(page, '#painted-link', 'color'), style(page, '#painted', 'color')]);

@@ -286,6 +286,8 @@ Both durations here are tokens, and that is what honours a reader who asked for 
 
 A `label` and a `legend` are blocks in the strong weight, so a label always sits above its control. A `fieldset` is a padded, bordered group; it is also one of the flow containers, which is why the controls inside it are spaced and why everything in the sample above is inside it — a `form` itself is **not** a flow container, because a real form's spacing belongs to `stack` and `field` rather than to the base.
 
+A native control's own colours follow the palette too: a bare checkbox or radio's fill, a range thumb, and a progress bar take the primary, through `accent-color` set once on the root — so a section that changes its own primary hue recolours its text and buttons but not a bare native control, which keeps the root's. The caret is left to follow the text it sits in instead, which is what a dark band or a forced-dark section needs.
+
 Text-like inputs, `select` and `textarea` fill their container's width and take a hairline border in `--yeti-color-border` with the small radius. The selector deliberately excludes `checkbox`, `radio`, `range`, `color`, `submit`, `button`, `reset`, `file` and `image`, all of which are the wrong shape for a full-width box. A `textarea` gets `min-block-size: 4lh` and vertical resizing, and where the engine supports `field-sizing: content` — a `@supports` guard in the reset — it grows with what is typed.
 
 Buttons, and the three input types that act as buttons, take the same padding and border on the raised surface with `cursor: default`. Anything disabled drops to `--yeti-opacity-muted`.

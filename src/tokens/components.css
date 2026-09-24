@@ -98,6 +98,10 @@
 		   below can collapse. */
 		--yeti-toc-scroll: smooth;
 
+		/* The rows' block padding: a control's density by default, a book's
+		   contents page sets it smaller. */
+		--yeti-toc-padding: var(--yeti-space-xs);
+
 		/* Per element, not per theme: the filled share of a range's track. */
 		--yeti-range-value: 0%;
 

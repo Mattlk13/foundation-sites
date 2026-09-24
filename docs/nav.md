@@ -139,6 +139,7 @@ Attributes that descendants carry, not the root.
 | `--yeti-nav-brand-weight` | Weight of the brand. |
 | `--yeti-nav-brand-size` | Size of the brand; 1em keeps the bar's. |
 | `--yeti-nav-link` | Color of a plain link in the bar; the bar's own color unless set. Current and hover keep the variant's tints, and the open panel resets it to its own text color. |
+| `--yeti-stretch-small` | font-stretch of a link. |
 | `--yeti-control-size` | Minimum height of the bar, the toggle, and each link. |
 | `--yeti-shadow-md` | The open panel's shadow. |
 | `--yeti-shadow-color` | The drawer's backdrop. |

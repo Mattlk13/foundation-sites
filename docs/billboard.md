@@ -77,6 +77,7 @@ No structural requirements.
 | Token | Description |
 | --- | --- |
 | `--yeti-fit-width` | The container width at which a fitted line reaches the top of its pair; below it the size is in proportion. |
+| `--yeti-tracking-heading` | letter-spacing of the billboard. |
 | `--yeti-text-xs` | The xs end of a pair. |
 | `--yeti-text-sm` | The sm end of a pair. |
 | `--yeti-text-md` | The md end of a pair, and the floor when no pair is given. |

@@ -21,6 +21,56 @@ test.describe('base typography and prose', () => {
 		expect(await style(page, '#h1', 'fontWeight')).toBe(await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--yeti-weight-bold').trim()));
 	});
 
+	test('small lettering reads its own width axis', async ({ page }) => {
+		expect(await style(page, '#caption', 'font-stretch')).toBe('100%');
+		await page.addStyleTag({ content: ':root { --yeti-stretch-small: 75%; }' });
+		expect(await style(page, '#caption', 'font-stretch')).toBe('75%');
+		expect(await style(page, 'p', 'font-stretch')).toBe('100%');
+	});
+
+	test('headings read one tracking token', async ({ page }) => {
+		expect(await style(page, '#h1', 'letter-spacing')).toBe('normal');
+		await page.addStyleTag({ content: ':root { --yeti-tracking-heading: -0.03em; }' });
+		const size = await px(page, '#h1', 'fontSize');
+		expect(await px(page, '#h1', 'letterSpacing')).toBeCloseTo(-0.03 * size, 1);
+		expect(await style(page, 'p', 'letter-spacing')).toBe('normal');
+		// letter-spacing inherits as an absolute length, so under a tightened
+		// heading a badge sitting in it must not inherit that tightening at
+		// its own, smaller size.
+		await page.evaluate(() => {
+			const h2 = document.createElement('h2');
+			h2.id = 'h-track';
+			h2.innerHTML = 'Title <span class="badge" id="badge-in-heading">New</span>';
+			document.querySelector('main').append(h2);
+		});
+		expect(await style(page, '#badge-in-heading', 'letter-spacing')).toBe('normal');
+		expect(parseFloat(await style(page, '#h-track', 'letter-spacing'))).toBeLessThan(0);
+	});
+
+	test('the browser\'s own form colours follow the palette', async ({ page }) => {
+		const probe = (v) => page.evaluate((n) => { const el = document.createElement('span'); el.style.color = `var(${n})`; document.body.append(el); const c = getComputedStyle(el).color; el.remove(); return c; }, v);
+		expect(await style(page, 'html', 'accent-color')).toBe(await probe('--yeti-color-primary'));
+		// The caret is left at auto, so it follows the text it sits in rather
+		// than a value resolved once at the root: an input in a data-paint
+		// band takes that band's own white text, not the page's dark one, so
+		// the caret is never dark on a dark background.
+		const darkCaret = await page.evaluate(() => {
+			const box = document.createElement('div');
+			box.dataset.paint = 'black';
+			const input = document.createElement('input');
+			input.id = 'dark-input';
+			box.append(input);
+			document.body.append(box);
+			const c = getComputedStyle(input).caretColor;
+			box.remove();
+			return c;
+		});
+		expect(darkCaret).toBe(await probe('--yeti-white'));
+		await page.addStyleTag({ content: ':root { --yeti-hue-primary: 30; }' });
+		expect(await style(page, 'html', 'accent-color')).toBe(await probe('--yeti-color-primary'));
+		expect(await style(page, 'html', 'accent-color')).not.toBe('auto');
+	});
+
 	test('prose rhythm: default gap, heading hug, and heading lead-in', async ({ page }) => {
 		expect(await px(page, '#second', 'marginTop')).toBeCloseTo(await token(page, '--yeti-space-md'), 1);
 		expect(await px(page, '#lead', 'marginTop')).toBeCloseTo(await token(page, '--yeti-space-sm'), 1);

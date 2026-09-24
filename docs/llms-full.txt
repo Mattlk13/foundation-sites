@@ -1162,6 +1162,7 @@ Children:
 Tokens:
 - --yeti-badge-radius — Corner radius; full makes a pill.
 - --yeti-badge-weight — Text weight.
+- --yeti-stretch-small — font-stretch of the badge.
 - --yeti-space-xs — Gap between the icon and the text.
 - --yeti-leading-tight — Line height.
 - --yeti-border-width — Border width.
@@ -1899,6 +1900,7 @@ Tokens:
 - --yeti-nav-brand-weight — Weight of the brand.
 - --yeti-nav-brand-size — Size of the brand; 1em keeps the bar's.
 - --yeti-nav-link — Color of a plain link in the bar; the bar's own color unless set. Current and hover keep the variant's tints, and the open panel resets it to its own text color.
+- --yeti-stretch-small — font-stretch of a link.
 - --yeti-control-size — Minimum height of the bar, the toggle, and each link.
 - --yeti-shadow-md — The open panel's shadow.
 - --yeti-shadow-color — The drawer's backdrop.
@@ -2259,6 +2261,8 @@ A column of links, each pointing at the id of a heading on the same page. The cu
 
 Following a link scrolls smoothly, from `--yeti-toc-scroll` applied to the page — the token collapses to `auto` under `prefers-reduced-motion`, which a plain `scroll-behavior` in this layer could not, since it would outrank the reset's own rule.
 
+Each row's block padding is `--yeti-toc-padding`, a control's density by default; set it smaller on one `.toc` for a book's own contents page.
+
 `data-numbered` turns the list into a contents list. Every `ul` resets a CSS counter and every `li` counts, so a nested list picks up where its parent left off and reads `2.1` rather than starting over at `1`. The number sits before the link, in the muted color, with tabular figures, in a box wide enough for a two-figure count or a nested 2.1, so the link text lines up.
 
 ```html
@@ -2291,6 +2295,7 @@ Children:
 
 Tokens:
 - --yeti-toc-scroll — How the page scrolls to a heading; also read by a nav with in-page links.
+- --yeti-toc-padding — The rows' block padding.
 - --yeti-color-text-muted — A link that is not the current one.
 - --yeti-color-text — A link under the pointer.
 - --yeti-toc-hover — The hover fill; transparent turns it off.
@@ -2438,6 +2443,7 @@ Nothing here changes what an element is. A billboard `h1` is an `h1`; the class 
 
 Tokens:
 - --yeti-fit-width — The container width at which a fitted line reaches the top of its pair; below it the size is in proportion.
+- --yeti-tracking-heading — letter-spacing of the billboard.
 - --yeti-text-xs — The xs end of a pair.
 - --yeti-text-sm — The sm end of a pair.
 - --yeti-text-md — The md end of a pair, and the floor when no pair is given.
@@ -2718,6 +2724,8 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-font-mono (font): ui-monospace, monospace — Code face.
 - --yeti-stretch-text (font): normal — font-stretch of the body: the width axis of a variable font, as a keyword or a percentage.
 - --yeti-stretch-heading (font): normal — font-stretch of the headings, set apart from the text so a theme can pair narrow text with a wide title in one family.
+- --yeti-stretch-small (font): var(--yeti-stretch-text) — font-stretch of small lettering: captions, small print, a nav's links, a badge. The text width unless a theme narrows it.
+- --yeti-tracking-heading (text): normal — letter-spacing of every heading level and the billboard. Set in em so a large heading tightens more than a small one; a page may set it on one level.
 - --yeti-duration-fast (motion): 150ms — Quick transitions; hover and focus. Collapses to 0.01ms under prefers-reduced-motion.
 - --yeti-duration-base (motion): 250ms — Standard transitions; open and close. Collapses under prefers-reduced-motion.
 - --yeti-ease (motion): cubic-bezier(0.2, 0, 0, 1) — Default easing; fast out, gentle in.
@@ -2852,6 +2860,7 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-carousel-dot-size (carousel): 0.75rem — Diameter of a slide dot.
 - --yeti-carousel-scroll (carousel): smooth, and auto under reduced motion — How the track scrolls when a dot is followed. A components-layer declaration outranks the reset, so the preference reaches the track through this token.
 - --yeti-toc-scroll (toc): smooth, and auto under reduced motion — How the page scrolls when a link in a toc, or an in-page link in a nav, is followed. A components-layer declaration outranks the reset, so the preference reaches the page through this token. The name keeps the toc it started with.
+- --yeti-toc-padding (toc): var(--yeti-space-xs) — The rows' block padding: a control's density by default, a book's contents page sets it smaller.
 - --yeti-toc-hover (toc): var(--_yeti-variant-subtle) — Background of a toc link under the pointer. Read with a fallback to the variant's subtle tint; set transparent for an underline-only list.
 - --yeti-range-value (field): 0% — The filled share of a range's track. Set it on the input, inline or from your own script, since CSS cannot read the value. Not a theme value.
 - --yeti-demo-border (demo): var(--yeti-color-border) — The preview box's edge.

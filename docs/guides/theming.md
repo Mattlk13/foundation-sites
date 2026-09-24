@@ -73,7 +73,9 @@ Sizes are named `xs sm md lg xl 2xl 3xl`, with `md` as the base step, and the sa
 
 Yeti ships no web fonts. `--yeti-font-sans` and `--yeti-font-mono` default to the system stacks; set them to yours and load the font files however you prefer.
 
-A variable font with a width axis has two more knobs: `--yeti-stretch-text` and `--yeti-stretch-heading`, `normal` by default, each a keyword or a percentage. Narrow text and a wide title in one family is one line each.
+A variable font with a width axis has three more knobs: `--yeti-stretch-text`, `--yeti-stretch-heading`, and `--yeti-stretch-small` (captions, small print, a nav's links, a badge), `normal` by default, each a keyword or a percentage. Narrow text and a wide title in one family is one line each.
+
+`--yeti-tracking-heading` sets the letter-spacing of every heading level and the billboard together, `normal` by default and set in em so a large heading tightens more than a small one.
 
 ## Make a theme
 

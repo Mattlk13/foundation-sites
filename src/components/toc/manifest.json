@@ -48,6 +48,11 @@
       "description": "How the page scrolls to a heading; also read by a nav with in-page links."
     },
     {
+      "name": "--yeti-toc-padding",
+      "public": true,
+      "description": "The rows' block padding."
+    },
+    {
       "name": "--yeti-color-text-muted",
       "public": true,
       "description": "A link that is not the current one."

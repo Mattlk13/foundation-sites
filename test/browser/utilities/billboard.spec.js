@@ -1,5 +1,5 @@
 import { test, expect } from 'playwright/test';
-import { px, token, axe, painted } from '../lib/layout.js';
+import { px, token, style, axe, painted } from '../lib/layout.js';
 
 const open = async (page) => {
 	const response = await page.goto('/test/browser/fixtures/utilities/billboard.html');
@@ -53,6 +53,14 @@ test.describe('billboard', () => {
 		await page.setViewportSize({ width: 360, height: 800 });
 		const narrow = await px(page, '#bare-title', 'font-size');
 		expect(narrow).toBeLessThan(wide);
+	});
+
+	test('reads the heading tracking token', async ({ page }) => {
+		await open(page);
+		expect(await style(page, '#prose-board', 'letter-spacing')).toBe('normal');
+		await page.addStyleTag({ content: ':root { --yeti-tracking-heading: -0.03em; }' });
+		const size = await px(page, '#prose-board', 'font-size');
+		expect(await px(page, '#prose-board', 'letter-spacing')).toBeCloseTo(-0.03 * size, 1);
 	});
 
 	test('has no accessibility violations', async ({ page }) => {

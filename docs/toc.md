@@ -48,6 +48,8 @@ A column of links, each pointing at the id of a heading on the same page. The cu
 
 Following a link scrolls smoothly, from `--yeti-toc-scroll` applied to the page — the token collapses to `auto` under `prefers-reduced-motion`, which a plain `scroll-behavior` in this layer could not, since it would outrank the reset's own rule.
 
+Each row's block padding is `--yeti-toc-padding`, a control's density by default; set it smaller on one `.toc` for a book's own contents page.
+
 `data-numbered` turns the list into a contents list. Every `ul` resets a CSS counter and every `li` counts, so a nested list picks up where its parent left off and reads `2.1` rather than starting over at `1`. The number sits before the link, in the muted color, with tabular figures, in a box wide enough for a two-figure count or a nested 2.1, so the link text lines up.
 
 ```html
@@ -98,6 +100,7 @@ Label the `nav` — `aria-label="On this page"` — because a page with a toc ha
 | Token | Description |
 | --- | --- |
 | `--yeti-toc-scroll` | How the page scrolls to a heading; also read by a nav with in-page links. |
+| `--yeti-toc-padding` | The rows' block padding. |
 | `--yeti-color-text-muted` | A link that is not the current one. |
 | `--yeti-color-text` | A link under the pointer. |
 | `--yeti-toc-hover` | The hover fill; transparent turns it off. |

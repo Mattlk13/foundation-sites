@@ -116,6 +116,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-list-gap` | `0.25rem` | Space between one item of a prose list and the next. |
 | `--yeti-lede-size` | `var(--yeti-text-lg)` | How large a lede reads. |
 | `--yeti-lede-measure` | `50ch` | A lede's line length. Moves with --yeti-lede-size, since ch is a unit of the font. |
+| `--yeti-tracking-heading` | `normal` | letter-spacing of every heading level and the billboard. Set in em so a large heading tightens more than a small one; a page may set it on one level. |
 
 </div>
 
@@ -129,6 +130,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-font-mono` | `ui-monospace, monospace` | Code face. |
 | `--yeti-stretch-text` | `normal` | font-stretch of the body: the width axis of a variable font, as a keyword or a percentage. |
 | `--yeti-stretch-heading` | `normal` | font-stretch of the headings, set apart from the text so a theme can pair narrow text with a wide title in one family. |
+| `--yeti-stretch-small` | `var(--yeti-stretch-text)` | font-stretch of small lettering: captions, small print, a nav's links, a badge. The text width unless a theme narrows it. |
 
 </div>
 
@@ -477,6 +479,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | Token | Default | Description |
 | --- | --- | --- |
 | `--yeti-toc-scroll` | `smooth, and auto under reduced motion` | How the page scrolls when a link in a toc, or an in-page link in a nav, is followed. A components-layer declaration outranks the reset, so the preference reaches the page through this token. The name keeps the toc it started with. |
+| `--yeti-toc-padding` | `var(--yeti-space-xs)` | The rows' block padding: a control's density by default, a book's contents page sets it smaller. |
 | `--yeti-toc-hover` | var(--_yeti-variant-subtle) (override only) | Background of a toc link under the pointer. Read with a fallback to the variant's subtle tint; set transparent for an underline-only list. |
 
 </div>

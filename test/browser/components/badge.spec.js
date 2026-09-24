@@ -31,6 +31,13 @@ test.describe('badge', () => {
 		});
 	}
 
+	test('reads the small lettering width axis', async ({ page }) => {
+		await open(page);
+		expect(await style(page, '#medium', 'font-stretch')).toBe('100%');
+		await page.addStyleTag({ content: ':root { --yeti-stretch-small: 75%; }' });
+		expect(await style(page, '#medium', 'font-stretch')).toBe('75%');
+	});
+
 	test('has no accessibility violations', async ({ page }) => {
 		await open(page);
 		expect(await axe(page)).toEqual([]);

@@ -24,6 +24,11 @@
       "description": "The container width at which a fitted line reaches the top of its pair; below it the size is in proportion."
     },
     {
+      "name": "--yeti-tracking-heading",
+      "public": true,
+      "description": "letter-spacing of the billboard."
+    },
+    {
       "name": "--yeti-text-xs",
       "public": true,
       "description": "The xs end of a pair."

@@ -6,6 +6,12 @@
 		background-color: var(--yeti-color-surface);
 		/* Where a scroll-into-view stops; see --yeti-scroll-padding. */
 		scroll-padding-block-start: var(--yeti-scroll-padding);
+		/* The browser's own form colours follow the palette: a bare checkbox,
+		   radio, range or progress takes the primary. The caret is left at
+		   auto on purpose: it follows the text it sits in, which is what a
+		   dark band or a forced-dark section needs, and a root value would
+		   not. */
+		accent-color: var(--yeti-color-primary);
 	}
 
 	/* Type size lives on body, not html, so rem keeps the visitor's root
@@ -20,6 +26,7 @@
 		font-weight: var(--yeti-weight-bold);
 		line-height: var(--yeti-leading-tight);
 		font-stretch: var(--yeti-stretch-heading);
+		letter-spacing: var(--yeti-tracking-heading);
 		text-wrap: balance;
 	}
 	h1 { font-size: var(--yeti-text-3xl); }
@@ -35,6 +42,7 @@
 
 	small {
 		font-size: var(--yeti-text-sm);
+		font-stretch: var(--yeti-stretch-small);
 	}
 
 	strong, b {
