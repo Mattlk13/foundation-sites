@@ -46,6 +46,25 @@ test.describe('stack', () => {
 		expect(bottom.bottom).toBeCloseTo(fill.bottom, 1);
 	});
 
+	test('data-rule draws a line in the middle of each gap and keeps the gap', async ({ page }) => {
+		await open(page, 'stack');
+		const [lg, xs, width] = await Promise.all([token(page, '--yeti-space-lg'), token(page, '--yeti-space-xs'), token(page, '--yeti-border-width')]);
+		const [r1, r2, r3] = await Promise.all(['#r1', '#r2', '#r3'].map((s) => rect(page, s)));
+		expect(r2.top - r1.bottom).toBeCloseTo(lg, 1);
+		expect(r3.top - r2.bottom).toBeCloseTo(xs, 1);
+		const line = (id) => page.evaluate((i) => {
+			const cs = getComputedStyle(document.getElementById(i), '::before');
+			return { width: parseFloat(cs.borderTopWidth), top: parseFloat(cs.top), content: cs.content };
+		}, id);
+		const first = await line('r1');
+		expect(first.content).toBe('none');
+		const second = await line('r2');
+		expect(second.width).toBe(width);
+		expect(second.top).toBeCloseTo(-lg / 2, 1);
+		const third = await line('r3');
+		expect(third.top).toBeCloseTo(-xs / 2, 1);
+	});
+
 	test('children have no margins', async ({ page }) => {
 		await open(page, 'stack');
 		await expectNoChildMargins(page, '.stack', '[data-split], [data-center], [data-space]');

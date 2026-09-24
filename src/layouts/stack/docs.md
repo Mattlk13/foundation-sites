@@ -25,6 +25,15 @@ The gap is the stack's, but one child can ask for a different gap before it. `da
 </div>
 ```
 
+`data-rule` on the stack draws a line between each pair of children, the border width in the border colour, in the middle of the gap; the gap itself does not change, and `data-space` moves the line with it. A legend, a settings list, a run of plan features: anywhere rows want separating without boxing. The line is a `::before` on each child after the first, so a child that already draws its own `::before` keeps its own and loses the line.
+
+```html
+<dl class="stack" data-rule data-gap="sm">
+	<div class="cluster" data-justify="between"><dt>Distance</dt><dd data-numeric>14.2 km</dd></div>
+	<div class="cluster" data-justify="between"><dt>Ascent</dt><dd data-numeric>1,120 m</dd></div>
+</dl>
+```
+
 A child carrying `data-sticky` stays at `--yeti-sticky-offset` from the top of the scrollport while the rest of the stack scrolls past it, and keeps the full width of the column while it does. A stack stretches its children sideways, and sideways is not the direction a sticky child moves in, so nothing has to be taken away for it to work — which is not true in a row, where the same marker costs the child the row's height.
 
 ## Why this name

@@ -23,4 +23,21 @@
 	.stack > * + [data-space] { margin-block-start: calc(var(--_yeti-space) - var(--_yeti-stack-gap)); }
 	.stack > [data-split] { margin-block-start: auto; }
 	.stack[data-fill] { min-block-size: var(--yeti-cover-height); }
+	/* data-rule: a line between children, in the middle of each gap. Drawn
+	   by a pseudo-element hung above every child but the first, so the gap
+	   itself is untouched and data-space and data-split keep working. :where
+	   keeps the position rule at zero specificity so a child that positions
+	   itself wins; a child that already uses ::before for something loses the
+	   line, which the docs say. The line sits at half the gap before this
+	   child: the stack's own, or the one data-space named. */
+	:where(.stack[data-rule] > * + *) { position: relative; }
+	.stack[data-rule] > * + *::before {
+		content: "";
+		position: absolute;
+		inset-inline: 0;
+		inset-block-start: calc(-0.5 * var(--_yeti-stack-gap));
+		border-block-start: var(--yeti-border-width) solid var(--yeti-color-border);
+		pointer-events: none;
+	}
+	.stack[data-rule] > * + [data-space]::before { inset-block-start: calc(-0.5 * var(--_yeti-space)); }
 }
