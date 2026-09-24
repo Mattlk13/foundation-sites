@@ -37,6 +37,11 @@
 		--yeti-link-color: var(--yeti-color-primary);
 		--yeti-link-color-hover: var(--yeti-color-primary-strong);
 
+		/* The width axis of a variable font: narrow labels, a wide title, one
+		   family. normal until a theme with such a face says otherwise. */
+		--yeti-stretch-text: normal;
+		--yeti-stretch-heading: normal;
+
 		--yeti-font-sans: system-ui, sans-serif;
 		--yeti-font-mono: ui-monospace, monospace;
 	}

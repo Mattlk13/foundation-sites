@@ -73,6 +73,8 @@ Sizes are named `xs sm md lg xl 2xl 3xl`, with `md` as the base step, and the sa
 
 Yeti ships no web fonts. `--yeti-font-sans` and `--yeti-font-mono` default to the system stacks; set them to yours and load the font files however you prefer.
 
+A variable font with a width axis has two more knobs: `--yeti-stretch-text` and `--yeti-stretch-heading`, `normal` by default, each a keyword or a percentage. Narrow text and a wide title in one family is one line each.
+
 ## Make a theme
 
 Everything above sets tokens inline, in your own `<style>` block. A theme is the same idea moved into its own file: a stylesheet of token values on `:root` and nothing else, loaded after `yeti.css` so its values win.

@@ -127,6 +127,8 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | --- | --- | --- |
 | `--yeti-font-sans` | `system-ui, sans-serif` | Default text face. Yeti ships no web fonts; override this to use yours. |
 | `--yeti-font-mono` | `ui-monospace, monospace` | Code face. |
+| `--yeti-stretch-text` | `normal` | font-stretch of the body: the width axis of a variable font, as a keyword or a percentage. |
+| `--yeti-stretch-heading` | `normal` | font-stretch of the headings, set apart from the text so a theme can pair narrow text with a wide title in one family. |
 
 </div>
 

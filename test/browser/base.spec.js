@@ -75,6 +75,14 @@ test.describe('base typography and prose', () => {
 		await page.hover('a');
 		await expect.poll(() => style(page, 'a', 'color')).toBe('rgb(4, 5, 6)');
 	});
+
+	test('the width axis reads two tokens and is normal by default', async ({ page }) => {
+		expect(await style(page, 'body', 'font-stretch')).toBe('100%');
+		expect(await style(page, 'h1', 'font-stretch')).toBe('100%');
+		await page.addStyleTag({ content: ':root { --yeti-stretch-text: 87.5%; --yeti-stretch-heading: 112.5%; }' });
+		expect(await style(page, 'p', 'font-stretch')).toBe('87.5%');
+		expect(await style(page, 'h1', 'font-stretch')).toBe('112.5%');
+	});
 });
 
 test.describe('base controls and media', () => {
