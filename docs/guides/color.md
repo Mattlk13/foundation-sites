@@ -159,6 +159,14 @@ A button inside a painted band keeps its own colors, and on a band in the brand 
 
 Yeti declares `color-scheme: light dark` on the root, so the page follows the reader's setting and every color above resolves for the scheme in use. To force one, set `color-scheme: light` or `dark` on any element and everything below it flips: the hues, the page roles, the greys and the tones. Force it on the root to opt a whole site out of dark mode; force it on a section to keep a photograph's caption band dark on a light page.
 
+```css
+@layer yeti.theme {
+	html { color-scheme: light; }
+}
+```
+
+A page pinned to one scheme sets `color-scheme` on the root, and every color in Yeti follows because each is a `light-dark()` pair; `dark` pins it the other way; forcing a scheme on any other element still flips everything below it.
+
 Two things to know. The inputs, the hues and the chroma, only take effect on the root, because the ladder is computed there; so are the greys and the tones. A derived color, `--yeti-color-primary` or `--yeti-color-surface`, can be set on any element, and every role that reads it there follows; the greys do not, because they were mixed at the root from the poles the root had. If a section needs its own greys, force its scheme rather than its surface.
 
 ## In your own CSS

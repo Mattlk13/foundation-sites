@@ -52,7 +52,13 @@ The comment beside each color token in `yeti.css` gives its hex equivalent in li
 
 `:root` declares `color-scheme: light dark`, so Yeti follows the visitor's preference and every color token is written once with `light-dark()`. To force one scheme for a whole page or a single panel, set `color-scheme: light` or `color-scheme: dark` on that element; everything inside it flips.
 
-A page that must stay one way, a paper sheet that is always light, sets `--yeti-color-scheme: light` (or `dark`). It is a token so a theme file can say it; a theme has no selectors but `:root` and no properties but tokens, and `color-scheme` is neither. A theme that pins the scheme still has its own `@media (prefers-color-scheme: dark)` blocks applied for a visitor who prefers dark, because the query reads the visitor and not the page, so a pinned theme should not carry any.
+```css
+@layer yeti.theme {
+	html { color-scheme: light; }
+}
+```
+
+A page pinned to one scheme sets `color-scheme` on the root, and every color in Yeti follows because each is a `light-dark()` pair; `dark` pins it the other way; forcing a scheme on any other element still flips everything below it. A theme that pins the scheme still has its own `@media (prefers-color-scheme: dark)` blocks applied for a visitor who prefers dark, because the query reads the visitor and not the page, so a pinned theme should not carry any.
 
 ## The scale
 

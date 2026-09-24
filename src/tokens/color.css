@@ -17,10 +17,10 @@
 
 @layer yeti.base {
 	:root {
-		/* A theme may pin the scheme: a paper page that stays light, a cinema
-		   page that stays dark. The default follows the visitor. */
-		--yeti-color-scheme: light dark;
-		color-scheme: var(--yeti-color-scheme);
+		/* The page follows the visitor. A page pins one scheme with
+		   html { color-scheme: light } (in a theme's yeti.theme layer, or its
+		   own CSS); every color follows because each is a light-dark() pair. */
+		color-scheme: light dark;
 
 		/* Public inputs */
 		--yeti-hue-primary: 250;
