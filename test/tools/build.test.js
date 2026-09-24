@@ -19,7 +19,7 @@ test('bundle writes a header and each file in cascade order with source comments
 	const rail = r.css.indexOf('/* src/layouts/rail/rail.css */');
 	const entry = r.css.indexOf('/* src/yeti.css */');
 	assert.ok(layers > 0 && layers < rail && rail < entry);
-	assert.ok(r.css.includes('@layer yeti.reset, yeti.base, yeti.layouts, yeti.components, yeti.utilities;'));
+	assert.ok(r.css.includes('@layer yeti.reset, yeti.base, yeti.theme, yeti.layouts, yeti.components, yeti.utilities;'));
 	assert.ok(!r.css.includes('@import'));
 });
 

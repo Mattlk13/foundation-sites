@@ -3,6 +3,7 @@
 export const LAYER_NAMES = [
 	'yeti.reset',
 	'yeti.base',
+	'yeti.theme',
 	'yeti.layouts',
 	'yeti.components',
 	'yeti.utilities',
