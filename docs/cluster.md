@@ -51,6 +51,16 @@ A cluster is a wrapping flex row with a `gap`. `data-justify` distributes the it
 </ul>
 ```
 
+A term and its value on one line, parted to the two ends, is a cluster with `data-justify="between"`. A `div` may wrap a `dt` and its `dd`, so a whole legend is a `dl` that is a `stack` whose rows are clusters; add `data-rule` to the stack for a line between them and `data-numeric` to the values so the digits line up.
+
+```html
+<dl class="stack" data-gap="xs">
+	<div class="cluster" data-justify="between"><dt>Distance</dt><dd data-numeric>14.2 km</dd></div>
+	<div class="cluster" data-justify="between"><dt>Ascent</dt><dd data-numeric>1,120 m</dd></div>
+	<div class="cluster" data-justify="between"><dt>Time</dt><dd data-numeric>5 h 30</dd></div>
+</dl>
+```
+
 ## Why this name
 
 The word is exact: items gather, they do not line up in columns. Foundation 6 reached for `.button-group` or a menu for the same job.
