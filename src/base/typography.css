@@ -6,6 +6,11 @@
 		background-color: var(--yeti-color-surface);
 		/* Where a scroll-into-view stops; see --yeti-scroll-padding. */
 		scroll-padding-block-start: var(--yeti-scroll-padding);
+		/* The browser's own form colours, a native checkbox or radio, a range
+		   thumb, a progress bar, the caret, follow the palette, as the
+		   selection colour below already does. */
+		accent-color: var(--yeti-color-primary);
+		caret-color: var(--yeti-color-text);
 	}
 
 	/* Type size lives on body, not html, so rem keeps the visitor's root

@@ -36,6 +36,15 @@ test.describe('base typography and prose', () => {
 		expect(await style(page, 'p', 'letter-spacing')).toBe('normal');
 	});
 
+	test('the browser\'s own form colours follow the palette', async ({ page }) => {
+		const probe = (v) => page.evaluate((n) => { const el = document.createElement('span'); el.style.color = `var(${n})`; document.body.append(el); const c = getComputedStyle(el).color; el.remove(); return c; }, v);
+		expect(await style(page, 'html', 'accent-color')).toBe(await probe('--yeti-color-primary'));
+		expect(await style(page, 'html', 'caret-color')).toBe(await probe('--yeti-color-text'));
+		await page.addStyleTag({ content: ':root { --yeti-hue-primary: 30; }' });
+		expect(await style(page, 'html', 'accent-color')).toBe(await probe('--yeti-color-primary'));
+		expect(await style(page, 'html', 'accent-color')).not.toBe('auto');
+	});
+
 	test('prose rhythm: default gap, heading hug, and heading lead-in', async ({ page }) => {
 		expect(await px(page, '#second', 'marginTop')).toBeCloseTo(await token(page, '--yeti-space-md'), 1);
 		expect(await px(page, '#lead', 'marginTop')).toBeCloseTo(await token(page, '--yeti-space-sm'), 1);
