@@ -75,6 +75,8 @@ The panel changes shape with the nav. In the bar it is the dropdown's usual card
 
 Links that point down the same page (`href="#pricing"`) turn on smooth scrolling for the page, through `--yeti-toc-scroll`, the same switch a `toc` uses; a bare `href="#"` placeholder does not count, and under reduced motion the page goes back to the browser's jump.
 
+The brand is a wordmark, so it has tokens of its own: `--yeti-nav-brand-weight` and `--yeti-nav-brand-size`. Plain links take `--yeti-nav-link`, the page's text colour by default; on a painted bar set it to the colour that reads there. The current link and a hovered link keep the variant's tints.
+
 ## Accessibility
 
 Give the `nav` an `aria-label`, since a page often has more than one. The toggle needs a name, from `aria-label` or visible text; the browser sets its expanded state. Mark the current page's link with `aria-current="page"`. Put `role="list"` on the `ul`: Yeti's reset only removes list markers where that role says the list is decorative. The open panel follows the toggle in the tab order, so Tab from the toggle reaches the first link; Escape closes the panel and returns focus to the toggle.
@@ -128,6 +130,9 @@ Attributes that descendants carry, not the root.
 | `--yeti-nav-border` | The bar's bottom edge, and the sheet's. |
 | `--yeti-nav-surface` | Background of the bar. |
 | `--yeti-nav-panel` | Background of the open panel. |
+| `--yeti-nav-brand-weight` | Weight of the brand. |
+| `--yeti-nav-brand-size` | Size of the brand; 1em keeps the bar's. |
+| `--yeti-nav-link` | Colour of a plain link in the bar; current and hover keep the variant's tints. |
 | `--yeti-control-size` | Minimum height of the bar, the toggle, and each link. |
 | `--yeti-shadow-md` | The open panel's shadow. |
 | `--yeti-shadow-color` | The drawer's backdrop. |

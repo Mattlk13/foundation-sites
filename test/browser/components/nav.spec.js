@@ -127,6 +127,20 @@ test.describe('nav', () => {
 		expect(await style(page, 'html', 'scroll-behavior')).toBe('auto');
 	});
 
+	test('the brand and the links read their tokens', async ({ page }) => {
+		await open(page);
+		expect(await style(page, '#brand', 'font-weight')).toBe('600');
+		const navSize = await style(page, '.nav', 'font-size');
+		expect(await style(page, '#brand', 'font-size')).toBe(navSize);
+		expect(await style(page, '#plain', 'color')).toBe(await style(page, '.nav', 'color'));
+		await page.addStyleTag({ content: ':root { --yeti-nav-brand-weight: 400; --yeti-nav-brand-size: 24px; --yeti-nav-link: rgb(1, 2, 3); }' });
+		expect(await style(page, '#brand', 'font-weight')).toBe('400');
+		expect(await style(page, '#brand', 'font-size')).toBe('24px');
+		expect(await style(page, '#plain', 'color')).toBe('rgb(1, 2, 3)');
+		// The current link keeps its variant tint; the token colours plain links only.
+		expect(await style(page, '#current', 'color')).not.toBe('rgb(1, 2, 3)');
+	});
+
 	test('has no accessibility violations, closed and open', async ({ page }) => {
 		await open(page, 400);
 		expect(await axe(page)).toEqual([]);

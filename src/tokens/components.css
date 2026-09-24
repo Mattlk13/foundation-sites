@@ -25,6 +25,11 @@
 		--yeti-nav-border: var(--yeti-color-border);
 		--yeti-nav-surface: var(--yeti-color-surface);
 		--yeti-nav-panel: var(--yeti-color-surface-raised);
+		/* The brand is a wordmark; a theme sets it apart from the links here. */
+		--yeti-nav-brand-weight: var(--yeti-weight-strong);
+		--yeti-nav-brand-size: 1em;
+		/* Plain links in the bar. The current and hovered links keep the variant's tints. */
+		--yeti-nav-link: var(--yeti-color-text);
 
 		--yeti-breadcrumbs-separator: "/";
 

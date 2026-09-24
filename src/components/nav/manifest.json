@@ -132,6 +132,21 @@
       "description": "Background of the open panel."
     },
     {
+      "name": "--yeti-nav-brand-weight",
+      "public": true,
+      "description": "Weight of the brand."
+    },
+    {
+      "name": "--yeti-nav-brand-size",
+      "public": true,
+      "description": "Size of the brand; 1em keeps the bar's."
+    },
+    {
+      "name": "--yeti-nav-link",
+      "public": true,
+      "description": "Colour of a plain link in the bar; current and hover keep the variant's tints."
+    },
+    {
       "name": "--yeti-control-size",
       "public": true,
       "description": "Minimum height of the bar, the toggle, and each link."

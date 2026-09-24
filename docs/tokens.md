@@ -440,6 +440,9 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-nav-border` | `var(--yeti-color-border)` | The bar's bottom edge, and the sheet's. |
 | `--yeti-nav-surface` | `var(--yeti-color-surface)` | Background of the bar. |
 | `--yeti-nav-panel` | `var(--yeti-color-surface-raised)` | Background of the open panel. |
+| `--yeti-nav-brand-weight` | `var(--yeti-weight-strong)` | Weight of the nav's brand. |
+| `--yeti-nav-brand-size` | `1em` | Size of the nav's brand; 1em is the bar's own size. |
+| `--yeti-nav-link` | `var(--yeti-color-text)` | Colour of a plain link in the bar. The current link and a hovered link keep the variant's tints. |
 
 </div>
 
