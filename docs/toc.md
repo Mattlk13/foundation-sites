@@ -48,6 +48,19 @@ A column of links, each pointing at the id of a heading on the same page. The cu
 
 Following a link scrolls smoothly, from `--yeti-toc-scroll` applied to the page — the token collapses to `auto` under `prefers-reduced-motion`, which a plain `scroll-behavior` in this layer could not, since it would outrank the reset's own rule.
 
+`data-numbered` turns the list into a contents list. Every `ul` resets a CSS counter and every `li` counts, so a nested list picks up where its parent left off and reads `2.1` rather than starting over at `1`. The number sits before the link, in the muted color, with tabular figures so the digits do not jostle the text beside them.
+
+```html
+<nav class="toc" aria-label="Contents" data-numbered>
+	<ul role="list">
+		<li><a href="#one">Getting the files</a></li>
+		<li><a href="#two">The stylesheet</a>
+			<ul role="list"><li><a href="#two">Linking it</a></li></ul>
+		</li>
+	</ul>
+</nav>
+```
+
 ```html
 <nav class="toc" aria-label="On this page" data-variant="secondary" data-size="sm">
 	<ul role="list">
@@ -69,6 +82,7 @@ Label the `nav` — `aria-label="On this page"` — because a page with a toc ha
 | --- | --- | --- | --- | --- |
 | `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `danger`, `neutral`, `black`, `white` | `primary` | The hue of the current link and its edge bar. |
 | `data-size` | enum | `sm`, `md`, `lg` | `md` | The text step, and the inset of each link with it. |
+| `data-numbered` | boolean |  |  | Number the entries before their links, nested ones as 2.1, in the muted color. |
 
 </div>
 

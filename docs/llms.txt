@@ -443,6 +443,7 @@ A column of links to the headings on the page, with the one being read marked as
 Attributes:
 - data-variant: primary (default) | secondary | success | warning | alert | danger | neutral | black | white — The hue of the current link and its edge bar.
 - data-size: sm | md (default) | lg — The text step, and the inset of each link with it.
+- data-numbered (boolean) — Number the entries before their links, nested ones as 2.1, in the muted color.
 
 module: toc.js (optional)
 - event yeti:current with detail { link, heading } — Dispatched on the .toc when the mark moves to another link.

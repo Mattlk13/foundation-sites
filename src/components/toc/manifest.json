@@ -19,6 +19,11 @@
       "vocabulary": "size-control",
       "default": "md",
       "description": "The text step, and the inset of each link with it."
+    },
+    {
+      "name": "data-numbered",
+      "type": "boolean",
+      "description": "Number the entries before their links, nested ones as 2.1, in the muted color."
     }
   ],
   "classes": [],

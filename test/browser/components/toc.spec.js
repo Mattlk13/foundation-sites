@@ -18,7 +18,10 @@ test.describe('toc', () => {
 		await open(page);
 		await expect.poll(() => current(page)).toBe('link-one');
 		const caught = await page.evaluate(() => new Promise((resolve) => {
-			document.addEventListener('yeti:current', (event) => resolve({
+			// Scoped to #toc: the fixture also carries a second, unrelated
+			// numbered toc pointed at the same headings, and a document-level
+			// listener would race between the two instances' own dispatches.
+			document.getElementById('toc').addEventListener('yeti:current', (event) => resolve({
 				target: event.target.id,
 				bubbles: event.bubbles,
 				composed: event.composed,
@@ -72,5 +75,21 @@ test.describe('toc', () => {
 		await page.hover('#link-one');
 		await page.hover('#link-two');
 		await expect.poll(() => style(page, '#link-two', 'background-color')).toBe('rgba(0, 0, 0, 0)');
+	});
+
+	test('data-numbered counts the entries, nested ones too, in the muted colour', async ({ page }) => {
+		await open(page);
+		const before = (id) => page.evaluate((i) => { const cs = getComputedStyle(document.getElementById(i), '::before'); return { content: cs.content, color: cs.color, width: parseFloat(cs.minWidth) }; }, id);
+		// Chromium reports a counter's content as the unresolved function, so the rule is asserted by its text and its effect by geometry.
+		expect((await before('n-two')).content).toContain('counters(toc, ".")');
+		expect((await before('n-two-one')).content).toContain('counters(toc, ".")');
+		expect((await before('link-two')).content).toBe('none');
+		const offset = (id) => page.evaluate((i) => { const a = document.getElementById(i); const r = document.createRange(); r.selectNodeContents(a); return r.getBoundingClientRect().left - a.getBoundingClientRect().left; }, id);
+		// The link text starts after the number's box; a plain toc's text starts at its padding.
+		expect(await offset('n-two')).toBeGreaterThan((await offset('link-two')) + 8);
+		const muted = await page.evaluate(() => { const p = document.createElement('span'); p.style.color = 'var(--yeti-color-text-muted)'; document.body.append(p); const v = getComputedStyle(p).color; p.remove(); return v; });
+		expect((await before('n-two')).color).toBe(muted);
+		expect(await page.evaluate(() => document.getElementById('n-two').textContent.trim())).toBe('The stylesheet');
+		expect(await axe(page)).toEqual([]);
 	});
 });
