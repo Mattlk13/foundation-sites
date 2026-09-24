@@ -52,6 +52,8 @@ One animation, one run, ending exactly where the layout already put the element.
 </ul>
 ```
 
+An element on its own can also be timed: set `--yeti-enter-delay` on it and it waits that long before it arrives. That is how a legend's rows land in time with markers drawn on a map, an order a stagger's count cannot express.
+
 Past the ninth child the delay stops growing and every remaining child shares the ninth's. A stagger that kept counting would turn a list of thirty into a ten-second wait, and the gesture is long over by then.
 
 `data-view` waits for the element to scroll into view instead of playing on load, so an arrival below the fold happens where the reader is rather than before they arrive. It is guarded twice, and both fallbacks land on the same place: the element plays its arrival on load. Once for `@supports`, because `animation-timeline: view()` is not yet Baseline — Chromium and Safari have it, Firefox does not, and that line will move; and once for `prefers-reduced-motion`, because a scroll-driven animation is paced by the scroll and never reads `animation-duration`, so the collapsed token that stills everything else in Yeti would sail straight past this one.
@@ -86,7 +88,7 @@ No structural requirements.
 | Token | Description |
 | --- | --- |
 | `--yeti-enter-ease` | The curve the entrance runs on. |
-| `--yeti-enter-delay` | How long the staggered run waits before its first child moves. |
+| `--yeti-enter-delay` | How long an element waits before it arrives; for a staggered run, how long before its first child moves. |
 | `--yeti-enter-duration` | How long one arrival takes; reduced motion collapses it. |
 | `--yeti-enter-distance` | How far below its place a rising element starts. |
 | `--yeti-enter-scale` | How small a scaling element starts. |

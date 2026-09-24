@@ -13,6 +13,10 @@
 	.enter[data-stagger] > * {
 		animation: yeti-enter-fade var(--yeti-enter-duration) var(--yeti-enter-ease) backwards;
 	}
+	/* An element on its own can be told when to arrive, through the same
+	   token the stagger starts from. Written after the shorthand, which
+	   resets the delay. */
+	.enter:not([data-stagger]) { animation-delay: var(--yeti-enter-delay); }
 	.enter[data-enter="rise"]:not([data-stagger]),
 	.enter[data-enter="rise"][data-stagger] > * { animation-name: yeti-enter-rise; }
 	.enter[data-enter="scale"]:not([data-stagger]),

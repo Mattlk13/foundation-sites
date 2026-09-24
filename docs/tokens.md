@@ -609,7 +609,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-enter-distance` | `2rem` | How far below its place a rising element starts. |
 | `--yeti-enter-scale` | `0.94` | How small a scaling element starts. |
 | `--yeti-enter-stagger` | `200ms` | The wait between one staggered child and the next; every child's delay is a multiple of it. Collapses to 0s under prefers-reduced-motion. |
-| `--yeti-enter-delay` | `0s` | How long a staggered run waits before its first child moves. |
+| `--yeti-enter-delay` | `0s` | How long an element waits before it arrives, or a staggered run before its first child moves. Set it on one element to time that element alone. |
 | `--yeti-enter-ease` | `var(--yeti-ease)` | The curve a staggered entrance runs on. |
 
 </div>
