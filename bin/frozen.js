@@ -27,7 +27,13 @@ export function surfaceAt(root, ref) {
 		const m = JSON.parse(fileAt(root, ref, file));
 		out.classes.add(m.class);
 		for (const a of m.attributes ?? []) out.attributes.set(`${m.class} ${a.name}`, new Set(values(a)));
-		for (const k of m.markers ?? []) out.markers.set(`${m.class} ${k.name}`, new Set(values(k)));
+		for (const k of m.markers ?? []) {
+			out.markers.set(`${m.class} ${k.name}`, new Set(values(k)));
+			// A marker on * is writable on the element itself, so it is also that
+			// class's attribute: an attribute that becomes such a marker has not
+			// gone anywhere a page could notice.
+			if (k.on === '*') out.attributes.set(`${m.class} ${k.name}`, new Set(values(k)));
+		}
 		for (const j of m.js ?? []) {
 			out.modules.add(j.module);
 			for (const e of j.events ?? []) out.events.add(`${m.class} ${typeof e === 'string' ? e : e.name}`);
