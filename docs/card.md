@@ -72,7 +72,7 @@ Do not wrap a card in a link. Put the link on the heading and add `data-stretch`
 
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
-| `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `danger`, `neutral` |  | Tints the border and adds a bar along the top; the body stays plain. |
+| `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `danger`, `neutral`, `black`, `white` |  | Tints the border and adds a bar along the top; the body stays plain. |
 | `data-threshold` | enum | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `md` | The card's own width from which the picture sits beside the text instead of on top. |
 | `data-ratio` | enum | `1/1`, `4/3`, `3/2`, `16/9`, `21/9` | `16/9` | The picture's aspect ratio while it sits on top of the body. Past data-threshold the picture moves beside the body and fills that column, and the ratio stops applying. |
 | `data-raised` | boolean |  |  | A shadow instead of a border. |

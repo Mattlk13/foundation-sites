@@ -79,6 +79,8 @@ The words are the same as `data-paint` uses below, and that is the point: this i
 </details>
 </figure>
 
+`data-variant` also takes `black` and `white`. They are the constants, not hues: a black button is black in dark mode too. Reach for them on a painted band, where a control in the band's own hue would disappear.
+
 ## A color by name
 
 Anything can be painted. `data-paint` sets the background of any element, and the words on it, from one list: the six hues at their base step, three constants, and the eleven steps of the greyscale. `data-text` sets the words alone, from the same list, and on an element that is also painted it wins over the automatic color. Neither needs a class, and both outrank whatever background or color the element's own component gave it, so a `card` or a `button` can be painted too.

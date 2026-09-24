@@ -246,6 +246,13 @@
 	[data-variant="danger"] { --_yeti-variant: var(--yeti-color-alert); --_yeti-variant-subtle: var(--yeti-color-alert-subtle); --_yeti-variant-soft: var(--yeti-color-alert-soft); --_yeti-variant-strong: var(--yeti-color-alert-strong); --_yeti-variant-text: var(--yeti-color-alert-text); --_yeti-on-variant: var(--yeti-on-alert); }
 	[data-variant="neutral"] { --_yeti-variant: var(--yeti-color-neutral); --_yeti-variant-subtle: var(--yeti-color-neutral-subtle); --_yeti-variant-soft: var(--yeti-color-neutral-soft); --_yeti-variant-strong: var(--yeti-color-neutral-strong); --_yeti-variant-text: var(--yeti-color-neutral-text); --_yeti-on-variant: var(--yeti-on-neutral); }
 
+	/* black and white: the two constants as a ladder, for a control on a
+	   painted band that must stay ink or paper whatever the scheme. Neither
+	   follows the hue or flips. The washes are translucent so the quiet
+	   emphases tint whatever surface they sit on. */
+	[data-variant="black"] { --_yeti-variant: var(--yeti-black); --_yeti-variant-subtle: oklch(0 0 0 / 0.08); --_yeti-variant-soft: oklch(0 0 0 / 0.18); --_yeti-variant-strong: oklch(0.25 0 0); --_yeti-variant-text: var(--yeti-black); --_yeti-on-variant: var(--yeti-white); }
+	[data-variant="white"] { --_yeti-variant: var(--yeti-white); --_yeti-variant-subtle: oklch(1 0 0 / 0.12); --_yeti-variant-soft: oklch(1 0 0 / 0.24); --_yeti-variant-strong: oklch(0.88 0 0); --_yeti-variant-text: var(--yeti-white); --_yeti-on-variant: var(--yeti-black); }
+
 	/* data-size on components: a text step and the space step one below it */
 	[data-size="sm"] { --_yeti-size-text: var(--yeti-text-sm); --_yeti-size-space: var(--yeti-space-xs); }
 	[data-size="md"] { --_yeti-size-text: var(--yeti-text-md); --_yeti-size-space: var(--yeti-space-sm); }

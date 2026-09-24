@@ -38,6 +38,8 @@ An inline box one step smaller than the text around it, with a pill corner by de
 <h3>Release notes <span class="badge" data-emphasis="high">New</span></h3>
 ```
 
+On a painted band use `data-variant="black"` or `"white"`, the two constants, which read the same in both schemes.
+
 ## Accessibility
 
 Color is decoration here; the word is the meaning, so "Live" and "Draft" work with no color at all. A count beside a button or a tab is read as separate text, which is rarely what you want; put it into the control's `aria-label` instead. Text over every tint meets AA in both schemes.
@@ -48,7 +50,7 @@ Color is decoration here; the word is the meaning, so "Live" and "Draft" work wi
 
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
-| `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `danger`, `neutral` | `primary` | Which hue tints the badge. |
+| `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `danger`, `neutral`, `black`, `white` | `primary` | Which hue tints the badge. |
 | `data-emphasis` | enum | `high`, `medium`, `low` | `medium` | medium is a subtle tint with dark text, high a solid fill, low text alone. |
 | `data-size` | enum | `sm`, `md`, `lg` | `md` | The text size the badge sits beside; the badge renders one step smaller. |
 

@@ -57,7 +57,7 @@ The close button is a `button` carrying `data-close`. Yeti's `alert.js`, loaded 
 
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
-| `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `danger`, `neutral` | `primary` | Which hue: success for done, warning for careful, danger for wrong (alert is the same ladder under its Foundation 6 name), primary for news. |
+| `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `danger`, `neutral`, `black`, `white` | `primary` | Which hue: success for done, warning for careful, danger for wrong (alert is the same ladder under its Foundation 6 name), primary for news. |
 | `data-emphasis` | enum | `high`, `medium`, `low` | `medium` | How loud: medium is a tint, high a solid fill, low the border alone. |
 
 </div>

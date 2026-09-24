@@ -114,4 +114,27 @@ test.describe('button', () => {
 		await open(page);
 		expect(await axe(page)).toEqual([]);
 	});
+
+	// style() reads getComputedStyle().getPropertyValue() raw, and a page
+	// authored in oklch has Chromium serialise it back as oklch (see the
+	// comment in ../lib/contrast.js), not as rgb(), even for a color that is
+	// exactly black or white. window.__yeti.bg/fg (from PAGE_HELPERS, the same
+	// canvas-normalising helper the contrast suite uses) resolves the used
+	// sRGB quadruple regardless of the authoring color space.
+	const bg = (page, selector) => page.evaluate((s) => window.__yeti.bg(s), selector);
+	const fg = (page, selector) => page.evaluate((s) => window.__yeti.fg(s), selector);
+
+	test('black and white are constant in both schemes and still step on hover', async ({ page }) => {
+		for (const scheme of ['light', 'dark']) {
+			await page.emulateMedia({ colorScheme: scheme });
+			await open(page);
+			expect(await bg(page, '#black')).toEqual([0, 0, 0, 255]);
+			expect(await fg(page, '#black')).toEqual([255, 255, 255, 255]);
+			expect(await bg(page, '#white')).toEqual([255, 255, 255, 255]);
+			expect(await fg(page, '#white')).toEqual([0, 0, 0, 255]);
+			expect(await fg(page, '#black-medium')).toEqual([0, 0, 0, 255]);
+			await page.hover('#black');
+			await expect.poll(() => bg(page, '#black')).not.toEqual([0, 0, 0, 255]);
+		}
+	});
 });

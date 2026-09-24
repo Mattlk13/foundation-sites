@@ -67,7 +67,7 @@ Label the `nav` — `aria-label="On this page"` — because a page with a toc ha
 
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
-| `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `danger`, `neutral` | `primary` | The hue of the current link and its edge bar. |
+| `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `danger`, `neutral`, `black`, `white` | `primary` | The hue of the current link and its edge bar. |
 | `data-size` | enum | `sm`, `md`, `lg` | `md` | The text step, and the inset of each link with it. |
 
 </div>
