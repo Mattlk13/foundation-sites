@@ -79,6 +79,12 @@
 		color: var(--yeti-color-text);
 	}
 
+	/* The link above is out of sight but still in flow, so the prose rhythm
+	   would otherwise put a whole gap above the first thing the reader sees. */
+	body > a[href^="#"]:first-child + * {
+		margin-block-start: 0;
+	}
+
 	:focus-visible {
 		outline: 2px solid var(--yeti-color-focus);
 		outline-offset: 2px;

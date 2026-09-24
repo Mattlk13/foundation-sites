@@ -1,5 +1,6 @@
 import { test, expect } from 'playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { rect } from './lib/layout.js';
 
 const px = (page, selector, prop) => page.evaluate(([s, p]) => parseFloat(getComputedStyle(document.querySelector(s))[p]), [selector, prop]);
 const style = (page, selector, prop) => page.evaluate(([s, p]) => getComputedStyle(document.querySelector(s))[p], [selector, prop]);
@@ -231,6 +232,14 @@ test.describe('base skip link', () => {
 	test('a link that is not the body\'s first child is an ordinary link', async ({ page }) => {
 		expect(await style(page, '#second', 'position')).toBe('static');
 		expect(await page.evaluate(() => document.getElementById('second').getBoundingClientRect().width)).toBeGreaterThan(1);
+	});
+
+	test('the element after it starts at the top of the page', async ({ page }) => {
+		// The link is out of sight but still in flow, so without a rule the
+		// prose rhythm would put a whole gap above the first visible element.
+		const [body, header] = await Promise.all([rect(page, 'body'), rect(page, 'header')]);
+		expect(header.top).toBeCloseTo(body.top, 0);
+		expect(await px(page, 'header', 'margin-top')).toBe(0);
 	});
 
 	test('has no accessibility violations', async ({ page }) => {
