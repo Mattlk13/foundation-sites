@@ -1230,6 +1230,8 @@ Anything the visitor does: submit, save, open, dismiss. Put the class on a `butt
 
 Three attributes and no classes. `data-variant` picks a hue from the palette and the button reads that hue's ladder for its fill, its hover step, and its outline text. `data-emphasis` picks how much of the ladder shows: `high` fills, `medium` outlines, `low` is text that tints on hover. `data-size` scales the text and the padding together so the shape holds. Hover, active, focus, disabled, pressed, and busy come from the element's own state, so nothing needs a script to look right.
 
+A button is at least the control height, and a large one grows by the same step a large field does, so the two match in a row. Above that minimum, `--yeti-button-padding-block` and `--yeti-button-padding` set the padding as multiples of the size's space step.
+
 Two values of `data-variant` are not hues: `black` and `white`. They do not follow the theme and do not flip with the scheme, which is what a button on a painted band needs, where the band's own hue would vanish into itself. They keep every state: black steps to a dark grey under the pointer, its outline and text forms wash with a translucent black, and white mirrors it.
 
 ```html
@@ -1259,6 +1261,7 @@ Tokens:
 - --yeti-button-radius — Corner radius.
 - --yeti-button-weight — Text weight.
 - --yeti-button-padding — Inline padding as a multiple of the size's space step.
+- --yeti-button-padding-block — Block padding as a multiple of the size's space step.
 - --yeti-control-size — Minimum height.
 - --yeti-border-width — Border width.
 - --yeti-space-xs — Gap between the icon and the label.
@@ -2763,6 +2766,7 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-button-radius (button): var(--yeti-radius-md) — Corner of buttons.
 - --yeti-button-weight (button): var(--yeti-weight-strong) — Weight of button text.
 - --yeti-button-padding (button): 2 — Inline padding as a multiple of the size's space step.
+- --yeti-button-padding-block (button): 0.25 — Block padding as a multiple of the size's space step. The control height still sets the minimum, so this shows on a wrapped label, and a theme raises it for roomier buttons.
 - --yeti-badge-radius (badge): var(--yeti-radius-full) — Corner of badges; full makes a pill.
 - --yeti-badge-weight (badge): var(--yeti-weight-strong) — Weight of badge text.
 - --yeti-card-radius (card): var(--yeti-radius-md) — Corner of cards.

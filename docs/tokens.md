@@ -371,6 +371,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-button-radius` | `var(--yeti-radius-md)` | Corner of buttons. |
 | `--yeti-button-weight` | `var(--yeti-weight-strong)` | Weight of button text. |
 | `--yeti-button-padding` | `2` | Inline padding as a multiple of the size's space step. |
+| `--yeti-button-padding-block` | `0.25` | Block padding as a multiple of the size's space step. The control height still sets the minimum, so this shows on a wrapped label, and a theme raises it for roomier buttons. |
 
 </div>
 

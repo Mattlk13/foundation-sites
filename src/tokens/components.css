@@ -5,6 +5,11 @@
 		--yeti-button-radius: var(--yeti-radius-md);
 		--yeti-button-weight: var(--yeti-weight-strong);
 		--yeti-button-padding: 2;
+		/* Block padding as a multiple of the size's space step, like the inline
+		   one. A quarter step: small enough that a one-line label at any size
+		   is still held by the minimum height, so a button keeps matching a
+		   field; a wrapped label gets air, and a theme raises it. */
+		--yeti-button-padding-block: 0.25;
 
 		--yeti-badge-radius: var(--yeti-radius-full);
 		--yeti-badge-weight: var(--yeti-weight-strong);
