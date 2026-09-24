@@ -70,6 +70,9 @@ test.describe('base typography and prose', () => {
 			return v;
 		}, name);
 		expect(await style(page, 'a', 'color')).toBe(await probe('--yeti-color-primary'));
+		// A section that sets its own primary colors its own links, and only those.
+		expect(await style(page, '#sect-link', 'color')).toBe('rgb(0, 128, 0)');
+		expect(await style(page, '#link', 'color')).not.toBe('rgb(0, 128, 0)');
 		await page.addStyleTag({ content: ':root { --yeti-link-color: rgb(1, 2, 3); --yeti-link-color-hover: rgb(4, 5, 6); }' });
 		expect(await style(page, 'a', 'color')).toBe('rgb(1, 2, 3)');
 		await page.hover('a');
@@ -86,6 +89,9 @@ test.describe('base typography and prose', () => {
 
 	test('the quotation bar reads its two tokens', async ({ page }) => {
 		expect(await px(page, 'blockquote', 'border-left-width')).toBe(4);
+		// A section that sets its own strong border colors its own quotation bar.
+		expect(await style(page, '#sect-quote', 'border-left-color')).toBe('rgb(0, 128, 0)');
+		expect(await style(page, '#quote', 'border-left-color')).not.toBe('rgb(0, 128, 0)');
 		await page.addStyleTag({ content: ':root { --yeti-quote-border: 1px; --yeti-quote-color: rgb(1, 2, 3); }' });
 		expect(await px(page, 'blockquote', 'border-left-width')).toBe(1);
 		expect(await style(page, 'blockquote', 'border-left-color')).toBe('rgb(1, 2, 3)');

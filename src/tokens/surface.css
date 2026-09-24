@@ -6,9 +6,10 @@
 
 		/* The bar beside a quotation. Heavier than the border width on purpose,
 		   so a quotation reads as set off and not as boxed; a one-weight theme
-		   sets it to the border width, or to 0 to take it away. */
+		   sets it to the border width, or to 0 to take it away. Its color,
+		   --yeti-quote-color, is read with a fallback and never declared, like
+		   --yeti-base, so a section's own strong border still colors it. */
 		--yeti-quote-border: 4px;
-		--yeti-quote-color: var(--yeti-color-border-strong);
 
 		--yeti-weight-normal: 400;
 		--yeti-weight-strong: 600;

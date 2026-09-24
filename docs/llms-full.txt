@@ -2737,13 +2737,13 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-color-border-strong (color): L 0.75 light, 0.40 dark — Emphasised border: focused inputs, blockquote rule.
 - --yeti-color-scrim (color): the surface at 85% — A wash over content so something on top of it can be read: a caption over a picture, a veil over a form. Thinned surface, so it dims with the theme rather than tinting.
 - --yeti-color-focus (color): var(--yeti-color-primary) — Focus ring color.
-- --yeti-link-color (color): var(--yeti-color-primary) — Text colour of a link at rest. A theme whose primary is too light to read as text points this at the hue's text step, --yeti-color-primary-text.
-- --yeti-link-color-hover (color): var(--yeti-color-primary-strong) — Text colour of a link under the pointer.
+- --yeti-link-color (color): var(--yeti-color-primary) — Text color of a link at rest. Read with a fallback, so a section's own primary still colors its links. A theme whose primary is too light to read as text points this at the hue's text step, --yeti-color-primary-text.
+- --yeti-link-color-hover (color): var(--yeti-color-primary-strong) — Text color of a link under the pointer. Read with a fallback, so a section's own primary still colors its links.
 - --yeti-cover-height (layout): 100dvh — Minimum block size of a cover layout or a filled stack. Set to auto for one that is only as tall as its content.
 - --yeti-sticky-offset (layout): var(--yeti-space-md) — How far from the leading edge of the scrollport a child carrying data-sticky stops. Set it to a sticky bar's height on whatever holds the things that stick below it.
 - --yeti-border-width (border): 1px — Width of every border a component draws.
 - --yeti-quote-border (border): 4px — Width of the bar beside a blockquote; 0 removes it.
-- --yeti-quote-color (color): var(--yeti-color-border-strong) — Colour of the bar beside a blockquote.
+- --yeti-quote-color (color): var(--yeti-color-border-strong) — Color of the bar beside a blockquote. Read with a fallback, so a section's own strong border still colors it.
 - --yeti-weight-normal (weight): 400 — Body weight.
 - --yeti-weight-bold (weight): 700 — Headings, th, strong and b. Separate from --yeti-weight-strong so display text and control labels can be tuned apart.
 - --yeti-weight-strong (weight): 600 — Labels, headers, buttons.

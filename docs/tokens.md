@@ -200,9 +200,9 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-color-border-strong` | `L 0.75 light, 0.40 dark` | Emphasised border: focused inputs, blockquote rule. |
 | `--yeti-color-scrim` | `the surface at 85%` | A wash over content so something on top of it can be read: a caption over a picture, a veil over a form. Thinned surface, so it dims with the theme rather than tinting. |
 | `--yeti-color-focus` | `var(--yeti-color-primary)` | Focus ring color. |
-| `--yeti-link-color` | `var(--yeti-color-primary)` | Text colour of a link at rest. A theme whose primary is too light to read as text points this at the hue's text step, --yeti-color-primary-text. |
-| `--yeti-link-color-hover` | `var(--yeti-color-primary-strong)` | Text colour of a link under the pointer. |
-| `--yeti-quote-color` | `var(--yeti-color-border-strong)` | Colour of the bar beside a blockquote. |
+| `--yeti-link-color` | var(--yeti-color-primary) (override only) | Text color of a link at rest. Read with a fallback, so a section's own primary still colors its links. A theme whose primary is too light to read as text points this at the hue's text step, --yeti-color-primary-text. |
+| `--yeti-link-color-hover` | var(--yeti-color-primary-strong) (override only) | Text color of a link under the pointer. Read with a fallback, so a section's own primary still colors its links. |
+| `--yeti-quote-color` | var(--yeti-color-border-strong) (override only) | Color of the bar beside a blockquote. Read with a fallback, so a section's own strong border still colors it. |
 | `--yeti-white` | `oklch(1 0 0)` | White, in both schemes and under every theme. One of the three colors that never move. |
 | `--yeti-black` | `oklch(0 0 0)` | Black, in both schemes and under every theme. |
 | `--yeti-grey` | `oklch(0.565 0 0)` | 18% reflectance, the photographic middle grey, in both schemes and under every theme. |

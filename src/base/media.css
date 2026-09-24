@@ -38,7 +38,7 @@
 
 	blockquote {
 		padding-inline: var(--yeti-space-md);
-		border-inline-start: var(--yeti-quote-border) solid var(--yeti-quote-color);
+		border-inline-start: var(--yeti-quote-border) solid var(--yeti-quote-color, var(--yeti-color-border-strong));
 	}
 
 	/* A caption under a quotation is an attribution, and the dash is what says
