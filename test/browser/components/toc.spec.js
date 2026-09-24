@@ -87,11 +87,16 @@ test.describe('toc', () => {
 		const offset = (id) => page.evaluate((i) => { const a = document.getElementById(i); const r = document.createRange(); r.selectNodeContents(a); return r.getBoundingClientRect().left - a.getBoundingClientRect().left; }, id);
 		// The link text starts after the number's box; a plain toc's text starts at its padding.
 		expect(await offset('n-two')).toBeGreaterThan((await offset('link-two')) + 8);
+		// A nested "2.1." is wider than "2.", so its text starts further in.
+		expect(await offset('n-two-one')).toBeGreaterThan(await offset('n-two'));
 		const muted = await page.evaluate(() => { const p = document.createElement('span'); p.style.color = 'var(--yeti-color-text-muted)'; document.body.append(p); const v = getComputedStyle(p).color; p.remove(); return v; });
 		expect((await before('n-two')).color).toBe(muted);
 		// The number is not part of the link's name: exact-name lookup finds the link without it.
 		await expect(page.locator('#numbered').getByRole('link', { name: 'The stylesheet', exact: true })).toHaveCount(1);
 		await expect(page.locator('#numbered').getByRole('link', { name: '2. The stylesheet', exact: true })).toHaveCount(0);
+		// The current mark still works on a numbered toc.
+		await page.evaluate(() => window.scrollTo(0, document.getElementById('one').offsetTop));
+		await expect.poll(() => page.evaluate(() => document.querySelector('#numbered a[aria-current]')?.id)).toBe('n-one');
 		expect(await axe(page)).toEqual([]);
 	});
 });

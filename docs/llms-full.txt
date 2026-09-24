@@ -2265,7 +2265,7 @@ Following a link scrolls smoothly, from `--yeti-toc-scroll` applied to the page 
 	<ul role="list">
 		<li><a href="#one">Getting the files</a></li>
 		<li><a href="#two">The stylesheet</a>
-			<ul role="list"><li><a href="#two">Linking it</a></li></ul>
+			<ul role="list"><li><a href="#linking">Linking it</a></li></ul>
 		</li>
 	</ul>
 </nav>
