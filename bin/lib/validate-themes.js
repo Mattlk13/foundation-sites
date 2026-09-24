@@ -45,12 +45,16 @@ function splitSelectorList(list) {
 
 /** Why a yeti.theme selector list is refused, one message per offending selector; empty
  *  when every selector is built only from HTML type selectors, descendant and child
- *  combinators, the user-action pseudo-classes and the allowed pseudo-elements. */
+ *  combinators, the user-action pseudo-classes and the allowed pseudo-elements, or is
+ *  one allowed pseudo-element alone. */
 export function checkElementSelector(list) {
 	const refused = (detail) => `theme element rules may only select bare HTML elements (${detail})`;
 	const problems = [];
 	for (const part of splitSelectorList(list)) {
 		const found = refused(`found "${part}"`);
+		// A lone allowed pseudo-element (::selection) is the idiomatic whole-page form.
+		const lone = /^::([a-z-]+)$/i.exec(part);
+		if (lone && PSEUDO_ELEMENTS.has(lone[1].toLowerCase())) continue;
 		if (!part || /[.#[\]*+~|\\]/.test(part) || /:[\w-]+\(/.test(part)) { problems.push(found); continue; }
 		const compounds = part.split(/\s*>\s*|\s+/);
 		let problem = null;

@@ -593,6 +593,13 @@ test('validateThemes accepts bare element rules inside @layer yeti.theme', () =>
 	assert.deepEqual(run(elementThemeTree(theme)).lines, []);
 });
 
+test('validateThemes accepts a bare allowed pseudo-element as a whole selector inside @layer yeti.theme', () => {
+	const theme = '@layer yeti.theme {\n\t::selection { background: yellow; }\n\t::placeholder, ::marker { color: gray; }\n}\n';
+	assert.deepEqual(run(elementThemeTree(theme)).lines, []);
+	assert.deepEqual(run(elementThemeTree('@layer yeti.theme {\n\t::before { color: red; }\n}\n')).lines, ['src/themes/round.css:2: theme element rules may only select bare HTML elements (found "::before")']);
+	assert.deepEqual(run(elementThemeTree('@layer yeti.theme {\n\t::selection p { color: red; }\n}\n')).lines, ['src/themes/round.css:2: theme element rules may only select bare HTML elements (found "::selection p")']);
+});
+
 test('validateThemes refuses anything but bare element selectors inside @layer yeti.theme', () => {
 	const refused = (sel) => run(elementThemeTree(`@layer yeti.theme {\n\t${sel} { color: red; }\n}\n`)).lines;
 	for (const sel of ['.card', '[data-x]', '*', 'h1:has(a)', '#main', 'p .card', 'h1 + p', 'a:focus', ':hover']) {
