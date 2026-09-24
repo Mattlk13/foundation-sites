@@ -1,5 +1,5 @@
 import { test, expect } from 'playwright/test';
-import { stage, style, axe, withoutModule } from '../lib/layout.js';
+import { stage, style, axe, withoutModule, token } from '../lib/layout.js';
 
 const open = async (page, width = 1000) => {
 	const response = await page.goto('/test/browser/fixtures/components/toc.html');
@@ -58,7 +58,9 @@ test.describe('toc', () => {
 		expect(await current(page)).toBe(null);
 		await page.click('#link-three');
 		expect(await page.evaluate(() => location.hash)).toBe('#three');
-		await expect.poll(() => page.evaluate(() => Math.round(document.getElementById('three').getBoundingClientRect().top))).toBeLessThan(5);
+		// The heading lands a scroll padding below the top, not flush against it (see --yeti-scroll-padding).
+		const padding = await token(page, '--yeti-scroll-padding');
+		await expect.poll(async () => Math.abs((await page.evaluate(() => document.getElementById('three').getBoundingClientRect().top)) - padding), { timeout: 2000 }).toBeLessThanOrEqual(1);
 	});
 
 	test('has no accessibility violations', async ({ page }) => {
