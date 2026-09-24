@@ -51,6 +51,8 @@ The comment beside each color token in `yeti.css` gives its hex equivalent in li
 
 `:root` declares `color-scheme: light dark`, so Yeti follows the visitor's preference and every color token is written once with `light-dark()`. To force one scheme for a whole page or a single panel, set `color-scheme: light` or `color-scheme: dark` on that element; everything inside it flips.
 
+A page that must stay one way, a paper sheet that is always light, sets `--yeti-color-scheme: light` (or `dark`). It is a token so a theme file can say it; a theme has no selectors but `:root` and no properties but tokens, and `color-scheme` is neither. A theme that pins the scheme still has its own `@media (prefers-color-scheme: dark)` blocks applied for a visitor who prefers dark, because the query reads the visitor and not the page, so a pinned theme should not carry any.
+
 ## The scale
 
 Type and space share one geometric scale. Two knobs cover most needs:
@@ -69,6 +71,8 @@ Sizes are named `xs sm md lg xl 2xl 3xl`, with `md` as the base step, and the sa
 ## Fonts
 
 Yeti ships no web fonts. `--yeti-font-sans` and `--yeti-font-mono` default to the system stacks; set them to yours and load the font files however you prefer.
+
+A variable font with a width axis has two more knobs: `--yeti-stretch-text` and `--yeti-stretch-heading`, `normal` by default, each a keyword or a percentage. Narrow text and a wide title in one family is one line each.
 
 ## Make a theme
 
@@ -89,6 +93,15 @@ A small theme can change a lot. This one shifts the accent hue, opens up the cor
 	--yeti-radius-md: 1rem;
 	--yeti-radius-lg: 1.5rem;
 	--yeti-button-radius: var(--yeti-radius-full);
+}
+```
+
+One check every theme should make: a link is text. The default link color is the primary at its base step, which reads on the page for the hues Yeti ships but not for a light brand color. If your primary is light, point the links at the hue's text step:
+
+```css
+:root {
+	--yeti-link-color: var(--yeti-color-primary-text);
+	--yeti-link-color-hover: var(--yeti-color-primary-strong);
 }
 ```
 

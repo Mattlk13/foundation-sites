@@ -33,5 +33,31 @@ window.__yeti = {
 	},
 	bg(selector) { return this.rgb(getComputedStyle(document.querySelector(selector)).backgroundColor); },
 	fg(selector) { return this.rgb(getComputedStyle(document.querySelector(selector)).color); },
+	// Walks from a node upward collecting every painted background, stopping
+	// once an opaque one is found (or the tree runs out), then composites
+	// them with the standard "over" operator, page-white as the base, so a
+	// translucent wash (black/white's quiet emphases, tinting whatever
+	// surface they sit on) reads as blended with what is beneath it instead
+	// of as a color in its own right.
+	background(node) {
+		const layers = [];
+		while (node) {
+			const c = this.rgb(getComputedStyle(node).backgroundColor);
+			if (c[3] !== 0) {
+				layers.push(c);
+				if (c[3] === 255) break;
+			}
+			node = node.parentElement;
+		}
+		let [r, g, b] = [255, 255, 255];
+		for (let i = layers.length - 1; i >= 0; i -= 1) {
+			const [lr, lg, lb, la] = layers[i];
+			const a = la / 255;
+			r = lr * a + r * (1 - a);
+			g = lg * a + g * (1 - a);
+			b = lb * a + b * (1 - a);
+		}
+		return [r, g, b, 255];
+	},
 };
 `;

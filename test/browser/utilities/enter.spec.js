@@ -51,6 +51,16 @@ test.describe('enter', () => {
 		expect(risen.left).toBeCloseTo(twin.left, 0);
 	});
 
+	test('an element on its own reads --yeti-enter-delay, and a stagger\'s count is unchanged', async ({ page }) => {
+		await open(page);
+		expect(await style(page, '#delayed', 'animation-delay')).toBe('0.8s');
+		expect(await style(page, '#fade', 'animation-delay')).toBe('0s');
+		// A staggered parent's children are still counted from the parent's delay; find the fixture's stagger container.
+		const counted = await delays(page, '[data-stagger] > *');
+		expect(counted.length).toBeGreaterThan(2);
+		expect(counted[1] - counted[0]).toBeCloseTo(0.2, 2);
+	});
+
 	test('data-stagger animates the children instead of the element', async ({ page }) => {
 		await open(page);
 		expect(await style(page, '#stagger', 'animation-name')).toBe('none');
@@ -108,6 +118,14 @@ test.describe('enter', () => {
 		// The step goes with it, or the last card still waits most of a second
 		// and then pops into place.
 		expect(new Set(await delays(page, '#stagger > *'))).toEqual(new Set([0]));
+	});
+
+	test('reduced motion collapses a lone element\'s delay, so a delayed element is present at once', async ({ page }) => {
+		await page.emulateMedia({ reducedMotion: 'reduce' });
+		await open(page);
+		expect(await style(page, '#delayed', 'animation-delay')).toBe('0s');
+		await settled(page);
+		expect(await style(page, '#delayed', 'opacity')).toBe('1');
 	});
 
 	test('has no accessibility violations', async ({ page }) => {

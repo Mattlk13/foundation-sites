@@ -38,6 +38,15 @@ Anything the visitor does: submit, save, open, dismiss. Put the class on a `butt
 
 Three attributes and no classes. `data-variant` picks a hue from the palette and the button reads that hue's ladder for its fill, its hover step, and its outline text. `data-emphasis` picks how much of the ladder shows: `high` fills, `medium` outlines, `low` is text that tints on hover. `data-size` scales the text and the padding together so the shape holds. Hover, active, focus, disabled, pressed, and busy come from the element's own state, so nothing needs a script to look right.
 
+Two values of `data-variant` are not hues: `black` and `white`. They do not follow the theme and do not flip with the scheme, which is what a button on a painted band needs, where the band's own hue would vanish into itself. They keep every state: black steps to a dark grey under the pointer, its outline and text forms wash with a translucent black, and white mirrors it.
+
+```html
+<section class="box" data-paint="warning">
+	<h2>Start the season early</h2>
+	<a class="button" href="#" data-variant="black">Book a place</a>
+</section>
+```
+
 ```html
 <a class="button" href="/docs" data-variant="secondary" data-emphasis="medium" data-size="lg">
 	<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
@@ -57,7 +66,7 @@ A `button` is a button and an `a` is a link; the class changes the look, not the
 
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
-| `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `danger`, `neutral` | `primary` | Which hue's ladder the button uses. |
+| `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `danger`, `neutral`, `black`, `white` | `primary` | Which hue's ladder the button uses. |
 | `data-emphasis` | enum | `high`, `medium`, `low` | `high` | How loud: high is a solid fill, medium an outline, low text alone. |
 | `data-size` | enum | `sm`, `md`, `lg` | `md` | Scales the text and the padding together. |
 

@@ -48,7 +48,7 @@ Standing alone, give the spinner `role="status"` and an `aria-label` such as "Lo
 
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
-| `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `danger`, `neutral` | `primary` | The hue of the bright edge. |
+| `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `danger`, `neutral`, `black`, `white` | `primary` | The hue of the bright edge. |
 | `data-size` | enum | `sm`, `md`, `lg` | `md` | The ring is one em of the size's text step. |
 
 </div>

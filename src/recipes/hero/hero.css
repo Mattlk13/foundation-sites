@@ -20,6 +20,8 @@
 		flex-grow: 1;
 		flex-basis: calc((var(--_yeti-threshold) - 100%) * 999);
 	}
+	/* data-span: a child's share of the row, as columns has it. */
+	.hero > [data-span] { flex-grow: var(--_yeti-span); }
 
 	/* The figure */
 	.hero > :is(img, video, picture),
@@ -62,9 +64,16 @@
 	}
 	.hero > :not(:is(img, video, picture), :has(> :is(img, video, picture))) > * { margin: 0; }
 
-	/* data-side */
-	.hero[data-side="start"] > :is(img, video, picture),
-	.hero[data-side="start"] > :has(> :is(img, video, picture)) { order: -1; }
-	.hero[data-side="end"] > :is(img, video, picture),
-	.hero[data-side="end"] > :has(> :is(img, video, picture)) { order: 1; }
+	/* data-side: which side the figure takes while the two share a row. Done
+	   by reversing the row's direction when the figure is not already on the
+	   asked side, rather than with order: a reversed wrapped row reverses the
+	   items within a line and leaves the lines in source order, so once the
+	   hero has stacked the source order is the visual order, and a phone
+	   meets the headline first if the copy is written first. :has() cannot
+	   nest inside :has(), so the wrapped figure is matched as the first
+	   child having a media child, a second relative selector in the list. */
+	.hero[data-side="start"]:not(:has(> :first-child:is(img, video, picture), > :first-child > :is(img, video, picture))),
+	.hero[data-side="end"]:has(> :first-child:is(img, video, picture), > :first-child > :is(img, video, picture)) {
+		flex-direction: row-reverse;
+	}
 }

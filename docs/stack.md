@@ -60,6 +60,15 @@ The gap is the stack's, but one child can ask for a different gap before it. `da
 </div>
 ```
 
+`data-rule` on the stack draws a line between each pair of children, the border width in the border color, in the middle of the gap; the gap itself does not change, and `data-space` moves the line with it. A legend, a settings list, a run of plan features: anywhere rows want separating without boxing. The line is a `::before` on each child after the first, so a child that already draws its own `::before` keeps its own and loses the line. The line is lost too on a child that clips its overflow, a card, a frame, an accordion or a progress bar, and on a replaced element such as an image, which has no `::before` to draw. A child that is itself a stack still has its line placed by the ruled stack's gap, but a ruled stack directly inside another ruled stack places its line by its own gap, the same limit `data-space` has; give it a plain wrapper.
+
+```html
+<dl class="stack" data-rule data-gap="sm">
+	<div class="cluster" data-justify="between"><dt>Distance</dt><dd data-numeric>14.2 km</dd></div>
+	<div class="cluster" data-justify="between"><dt>Ascent</dt><dd data-numeric>1,120 m</dd></div>
+</dl>
+```
+
 A child carrying `data-sticky` stays at `--yeti-sticky-offset` from the top of the scrollport while the rest of the stack scrolls past it, and keeps the full width of the column while it does. A stack stretches its children sideways, and sideways is not the direction a sticky child moves in, so nothing has to be taken away for it to work — which is not true in a row, where the same marker costs the child the row's height.
 
 ## Why this name
@@ -75,6 +84,7 @@ No other word says it as plainly: things stacked, one on another. Foundation 6 h
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `md` | Space between children. A pair such as sm-lg grows fluidly from the first stop to the second. |
 | `data-align` | enum | `start`, `center`, `end`, `stretch`, `baseline` | `stretch` | Horizontal alignment of the children. |
 | `data-fill` | boolean |  |  | Make the stack at least as tall as the viewport, so a child carrying data-split reaches the bottom. |
+| `data-rule` | boolean |  |  | A line between children, of the border width in the border color, in the middle of each gap. The gap is unchanged. |
 
 </div>
 
@@ -105,6 +115,8 @@ Attributes that descendants carry, not the root.
 | --- | --- |
 | `--yeti-space-md` | The default gap. |
 | `--yeti-cover-height` | The minimum block size when data-fill is set. |
+| `--yeti-border-width` | Width of the data-rule line. |
+| `--yeti-color-border` | Color of the data-rule line. |
 
 </div>
 
@@ -113,6 +125,7 @@ Attributes that descendants carry, not the root.
 - `--_yeti-gap`
 - `--_yeti-align`
 - `--_yeti-stack-gap`
+- `--_yeti-rule-at`
 
 </details>
 

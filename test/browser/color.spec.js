@@ -49,6 +49,16 @@ for (const scheme of ['light', 'dark']) {
 			expect(bg).not.toEqual([0, 0, 0]);
 			expect(await ratio(page, '#primary')).toBeGreaterThanOrEqual(4.5);
 		});
+
+		test('--yeti-color-scheme pins the scheme whatever the visitor prefers', async ({ page }) => {
+			expect(await page.evaluate(() => getComputedStyle(document.documentElement).colorScheme)).toBe('light dark');
+			const pinned = scheme === 'light' ? 'dark' : 'light';
+			await page.addStyleTag({ content: `:root { --yeti-color-scheme: ${pinned}; }` });
+			expect(await page.evaluate(() => getComputedStyle(document.documentElement).colorScheme)).toBe(pinned);
+			// The derived colors follow: the page is light when pinned light, dark when pinned dark.
+			const [bg, fg] = await pair(page, '#page');
+			expect(luminance(bg) > luminance(fg)).toBe(pinned === 'light');
+		});
 	});
 
 	test(`hue sweep holds contrast in ${scheme}`, async ({ page }) => {

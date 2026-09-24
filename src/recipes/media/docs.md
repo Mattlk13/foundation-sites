@@ -18,7 +18,7 @@ A recipe is a shortcut, not a new idea. The same result is three layouts you alr
 </div>
 ```
 
-The one-class form renders the same geometry, and its test proves it. Its attributes are the ones the primitives take. Its CSS is its own file, so a project that prefers the composed form can leave `css/recipes/media/media.css` out of a hand-built bundle. One difference: the sidebar's `data-side` picks which child is the sidebar, while the recipe's `data-side` moves the figure with `order`, which changes where it sits but not where it is read.
+The one-class form renders the same geometry, and its test proves it. Its attributes are the ones the primitives take. Its CSS is its own file, so a project that prefers the composed form can leave `css/recipes/media/media.css` out of a hand-built bundle. One difference: the sidebar's `data-side` picks which child is the sidebar, while the recipe's `data-side` reverses the row, which changes where the figure sits beside the text but not where it is read, and does nothing once the two have stacked.
 
 ## Why this name
 

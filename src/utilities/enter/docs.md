@@ -20,6 +20,8 @@ One animation, one run, ending exactly where the layout already put the element.
 </ul>
 ```
 
+An element on its own can also be timed: set `--yeti-enter-delay` on it and it waits that long before it arrives. That is how a legend's rows land in time with markers drawn on a map, an order a stagger's count cannot express.
+
 Past the ninth child the delay stops growing and every remaining child shares the ninth's. A stagger that kept counting would turn a list of thirty into a ten-second wait, and the gesture is long over by then.
 
 `data-view` waits for the element to scroll into view instead of playing on load, so an arrival below the fold happens where the reader is rather than before they arrive. It is guarded twice, and both fallbacks land on the same place: the element plays its arrival on load. Once for `@supports`, because `animation-timeline: view()` is not yet Baseline — Chromium and Safari have it, Firefox does not, and that line will move; and once for `prefers-reduced-motion`, because a scroll-driven animation is paced by the scroll and never reads `animation-duration`, so the collapsed token that stills everything else in Yeti would sail straight past this one.
@@ -28,4 +30,4 @@ Past the ninth child the delay stops growing and every remaining child shares th
 
 Nothing here changes reading order, focus order, or what any element is. The only way an element is ever hidden is the animation's own backwards fill, so a browser that cannot run the animation shows the content instead of swallowing it.
 
-Under reduced motion both `--yeti-enter-duration` and `--yeti-enter-stagger` collapse, so every element is simply present at once — the step collapses too, because a stagger with the smooth part removed is still a row of boxes popping into place one after another. The scroll-driven form is switched off outright for the same reader, and they get the collapsed load-timed animation instead.
+Under reduced motion both `--yeti-enter-duration` and `--yeti-enter-stagger` collapse, so every element is simply present at once — the step collapses too, because a stagger with the smooth part removed is still a row of boxes popping into place one after another. The delay collapses as well, even one set on the element itself, so a delayed element is simply present. The scroll-driven form is switched off outright for the same reader, and they get the collapsed load-timed animation instead.

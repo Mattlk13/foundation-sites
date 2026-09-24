@@ -39,6 +39,17 @@ test.describe('media recipe', () => {
 		expect(ff.left).toBeGreaterThan(fb.right);
 	});
 
+	test('data-side moves the figure in the row only; stacked, the source order holds', async ({ page }) => {
+		await open(page, 1000);
+		const [fsb, fsf] = await Promise.all([rect(page, '#fs-body'), rect(page, '#fs-figure')]);
+		expect(fsf.right).toBeLessThanOrEqual(fsb.left);
+		await open(page, 300);
+		const [b, f] = await Promise.all([rect(page, '#fs-body'), rect(page, '#fs-figure')]);
+		expect(f.top).toBeGreaterThanOrEqual(b.bottom);
+		const [fb, ff] = await Promise.all([rect(page, '#f-body'), rect(page, '#f-figure')]);
+		expect(fb.top).toBeGreaterThanOrEqual(ff.bottom);
+	});
+
 	test('the fill reaches an img inside a picture inside a wrapped figure', async ({ page }) => {
 		await open(page, 1000);
 		const [figure, img] = await Promise.all([rect(page, '#w-figure'), rect(page, '#w-figure img')]);

@@ -24,7 +24,6 @@
 	}
 	.table [data-numeric] {
 		text-align: end;
-		font-variant-numeric: tabular-nums;
 	}
 	.table[data-striped] > tbody > tr:nth-child(even) { background-color: var(--yeti-table-stripe); }
 	.table[data-hover] > tbody > tr:hover { background-color: var(--yeti-color-surface-sunken); }

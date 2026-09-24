@@ -24,7 +24,8 @@
       "name": "data-fill",
       "type": "boolean",
       "description": "Make the stack at least as tall as the viewport, so a child carrying data-split reaches the bottom."
-    }
+    },
+    { "name": "data-rule", "type": "boolean", "description": "A line between children, of the border width in the border color, in the middle of each gap. The gap is unchanged." }
   ],
   "classes": [],
   "children": [
@@ -74,6 +75,16 @@
       "description": "The minimum block size when data-fill is set."
     },
     {
+      "name": "--yeti-border-width",
+      "public": true,
+      "description": "Width of the data-rule line."
+    },
+    {
+      "name": "--yeti-color-border",
+      "public": true,
+      "description": "Color of the data-rule line."
+    },
+    {
       "name": "--_yeti-gap",
       "public": false
     },
@@ -83,6 +94,10 @@
     },
     {
       "name": "--_yeti-stack-gap",
+      "public": false
+    },
+    {
+      "name": "--_yeti-rule-at",
       "public": false
     }
   ],

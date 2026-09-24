@@ -48,7 +48,7 @@ Those three are the ones that repeat. Here is the whole list, every attribute th
 | `data-justify` | `start`, `center`, `end`, `between`, `around`, `evenly` | pagination |
 | `data-lift` | `rise`, `scale` | lift |
 | `data-max` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | dialog |
-| `data-numeric` | boolean | table (td, th) |
+| `data-numeric` | boolean | table (*) |
 | `data-orientation` | `horizontal`, `vertical` | tabs |
 | `data-panel` | `sheet`, `drawer`, `screen` | nav |
 | `data-placement` | `top`, `bottom`, `start`, `end` | tooltip |
@@ -71,7 +71,7 @@ Those three are the ones that repeat. Here is the whole list, every attribute th
 | `data-threshold` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | card, nav, pagination |
 | `data-track` | boolean | carousel (> *) |
 | `data-trigger` | `click`, `hover` | dropdown |
-| `data-variant` | `primary`, `secondary`, `success`, `warning`, `alert`, `danger`, `neutral` | alert, badge, button, card, field, nav, pagination, progress, spinner, tabs, toc |
+| `data-variant` | `primary`, `secondary`, `success`, `warning`, `alert`, `danger`, `neutral`, `black`, `white` | alert, badge, button, card, field, nav, pagination, progress, spinner, tabs, toc |
 | `data-view` | boolean | enter |
 | `data-width` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | demo |
 

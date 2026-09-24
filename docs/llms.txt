@@ -11,9 +11,9 @@ Attributes:
 - data-gap-inline: none | xs | sm | md | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Padding on the two sides only, over whatever data-gap set: a band wide at the sides and ordinary top and bottom.
 - data-gap-block: none | xs | sm | md | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Padding top and bottom only, over whatever data-gap set.
 - data-surface: base | raised | sunken — Fill the box with one of the three surface tones, making it a visible panel. Absent, the box is transparent and only its padding does anything.
-- data-border (boolean) — Draw a border of the border width, in the border color.
 
 On children:
+- data-border on * (boolean) — Draw a border of the border width, in the border color. Works on any element; it is a box's most common marker, which is why it is listed here.
 - data-paint on *: primary | secondary | success | warning | alert | neutral | white | black | grey | grey-0 | grey-10 | grey-20 | grey-30 | grey-40 | grey-50 | grey-60 | grey-70 | grey-80 | grey-90 | grey-100 — Fill this element with a color by name: a hue at its base step with the text made for it, a constant, or a step of the greyscale. Up to grey-40 the text stays the page text; from grey-50 it becomes the page surface.
 - data-text on *: primary | secondary | success | warning | alert | neutral | white | black | grey | grey-0 | grey-10 | grey-20 | grey-30 | grey-40 | grey-50 | grey-60 | grey-70 | grey-80 | grey-90 | grey-100 — Color this element's words by name, from the same list. On an element that is also painted it wins over the automatic text color.
 
@@ -168,6 +168,7 @@ Attributes:
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between children. A pair such as sm-lg grows fluidly from the first stop to the second.
 - data-align: start | center | end | stretch (default) | baseline — Horizontal alignment of the children.
 - data-fill (boolean) — Make the stack at least as tall as the viewport, so a child carrying data-split reaches the bottom.
+- data-rule (boolean) — A line between children, of the border width in the border color, in the middle of each gap. The gap is unchanged.
 
 On children:
 - data-split on > * (boolean) — Pushes the child and everything after it to the end of the stack when the stack is taller than its content.
@@ -191,8 +192,11 @@ Attributes:
 - data-gap: none | xs | sm | md | lg (default) | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between copy and figure.
 - data-ratio: 1/1 | 4/3 (default) | 3/2 | 16/9 | 21/9 — The figure's aspect ratio.
 - data-align: start | center (default) | end | stretch | baseline — Vertical alignment of copy and figure when side by side.
-- data-side: start | end — Force the figure to the start or the end regardless of source order. Moves it visually only; reading order stays as written.
+- data-side: start | end — Put the figure at the start or the end of the row regardless of source order. Once stacked, source order rules: write the copy first to meet the headline first on a phone. Moves it visually only; reading order stays as written.
 - data-height: sm | md | lg | xl | half | full (default) — The band's least height: a stop of the height scale, half the viewport, or the whole of it, as a cover takes it. Content taller than the band grows it.
+
+On children:
+- data-span on > *: 1 | 2 | 3 | 4 | 5 | 6 — How many shares of the row this child takes; the other child's default is 1.
 
 ## media (recipe, class="media")
 
@@ -203,7 +207,7 @@ Attributes:
 - data-ratio: 1/1 (default) | 4/3 | 3/2 | 16/9 | 21/9 — The figure's aspect ratio.
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the figure and the text.
 - data-align: start | center | end | stretch (default) | baseline — Vertical alignment of figure and text when side by side.
-- data-side: start | end — Force the figure to the start or the end regardless of source order. Moves it visually only; reading order stays as written.
+- data-side: start | end — Put the figure at the start or the end while side by side, regardless of source order. Stacked, the source order holds.
 
 ## shell (recipe, class="shell")
 
@@ -229,7 +233,7 @@ Joins a control with what belongs beside it, a unit, a symbol, a button, or anot
 A message in a hue: a tinted box with a colored edge, an optional icon, and an optional close button that the module wires up.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — Which hue: success for done, warning for careful, danger for wrong (alert is the same ladder under its Foundation 6 name), primary for news.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral | black | white — Which hue: success for done, warning for careful, danger for wrong (alert is the same ladder under its Foundation 6 name), primary for news.
 - data-emphasis: high | medium (default) | low — How loud: medium is a tint, high a solid fill, low the border alone.
 
 On children:
@@ -243,7 +247,7 @@ module: alert.js (optional)
 A small inline label for a status or a count, tinted by a hue.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — Which hue tints the badge.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral | black | white — Which hue tints the badge.
 - data-emphasis: high | medium (default) | low — medium is a subtle tint with dark text, high a solid fill, low text alone.
 - data-size: sm | md (default) | lg — The text size the badge sits beside; the badge renders one step smaller.
 
@@ -259,7 +263,7 @@ Attributes:
 An action with a face: a hue, an emphasis, and a size, with every state taken from the element itself.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — Which hue's ladder the button uses.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral | black | white — Which hue's ladder the button uses.
 - data-emphasis: high (default) | medium | low — How loud: high is a solid fill, medium an outline, low text alone.
 - data-size: sm | md (default) | lg — Scales the text and the padding together.
 
@@ -276,7 +280,7 @@ Attributes:
 A bordered surface for one thing: an optional figure that bleeds to the edges, a body, and a footer that sits at the bottom; a row with the picture beside the text once the card's content reaches the md width.
 
 Attributes:
-- data-variant: primary | secondary | success | warning | alert | danger | neutral — Tints the border and adds a bar along the top; the body stays plain.
+- data-variant: primary | secondary | success | warning | alert | danger | neutral | black | white — Tints the border and adds a bar along the top; the body stays plain.
 - data-threshold: 2xs | xs | sm | md (default) | lg | xl | 2xl — The card's own width from which the picture sits beside the text instead of on top.
 - data-ratio: 1/1 | 4/3 | 3/2 | 16/9 (default) | 21/9 — The picture's aspect ratio while it sits on top of the body. Past data-threshold the picture moves beside the body and fills that column, and the ratio stops applying.
 - data-raised (boolean) — A shadow instead of a border.
@@ -341,7 +345,7 @@ module: hover.js (optional)
 One form control with its label, an optional hint, and an error that shows itself when the control is invalid.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — The color of a checked checkbox or radio.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral | black | white — The color of a checked checkbox or radio.
 - data-size: sm | md (default) | lg — Scales the control's height and text.
 - data-inline (boolean) — Put the label beside the control. Checkboxes and radios are inline without it.
 
@@ -359,7 +363,7 @@ module: validate.js (optional)
 A bar with a brand, a list of links, and actions, that collapses the links behind a toggle at its own width and opens them as a sheet, a drawer, or a screen.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — The hue of the current link and of the hover tint.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral | black | white — The hue of the current link and of the hover tint.
 - data-threshold: 2xs | xs | sm | md (default) | lg | xl | 2xl — The nav's own width at or above which the links sit in the bar; below it they are behind the toggle.
 - data-panel: sheet (default) | drawer | screen — The shape of the open list below the threshold: a sheet under the bar, a drawer from the start edge, or the whole screen.
 - data-gap: none | xs | sm (default) | md | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the bar's parts and between the links.
@@ -375,7 +379,7 @@ On children:
 Links to the pages of a long list, each a square target, the current one filled, shrinking to Previous, the current page, and Next when it is narrow.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — The hue of the current page and of the hover tint.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral | black | white — The hue of the current page and of the hover tint.
 - data-size: sm | md (default) | lg — The text step.
 - data-threshold: 2xs | xs | sm (default) | md | lg | xl | 2xl — The pagination's own width below which only Previous, the current page, and Next remain.
 - data-justify: start (default) | center | end | between | around | evenly — Where the links sit in the row.
@@ -385,7 +389,7 @@ Attributes:
 The native progress element as a thin bar in a hue, filled to its value, or striped and moving when it has none.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — The hue of the filled part.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral | black | white — The hue of the filled part.
 - data-size: sm | md (default) | lg — The bar's thickness: half the size's space step.
 - data-scroll (boolean) — Fill with how far the nearest scroll container has been scrolled, the page when the bar is at its top, instead of with a value: a reading-progress bar. On a block with the class, not a progress element, and hidden from assistive tech; where a scroll timeline is unsupported the bar is not shown.
 
@@ -404,7 +408,7 @@ Attributes:
 A turning ring in a hue, the size of the text, for waiting with no known end; a busy button shows the same ring after its label.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — The hue of the bright edge.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral | black | white — The hue of the bright edge.
 - data-size: sm | md (default) | lg — The ring is one em of the size's text step.
 
 ## table (component, class="table")
@@ -418,14 +422,14 @@ Attributes:
 - data-border (boolean) — Borders around every cell instead of lines between rows, as a box draws its border.
 
 On children:
-- data-numeric on td, th (boolean) — A cell of numbers: end-aligned with tabular figures.
+- data-numeric on * (boolean) — Tabular figures, so digits line up, on any element; on a table's cells and headers the column is end-aligned too.
 
 ## tabs (component, class="tabs")
 
 A row of tabs over their panels, showing one at a time when its module is loaded and all of them when it is not.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — The hue of the selected tab and its edge.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral | black | white — The hue of the selected tab and its edge.
 - data-orientation: horizontal (default) | vertical — Whether the tab list runs along the top or down the side.
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the list and the panels.
 
@@ -437,7 +441,7 @@ module: tabs.js (optional)
 A column of links to the headings on the page, with the one being read marked as the reader scrolls.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — The hue of the current link and its edge bar.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral | black | white — The hue of the current link and its edge bar.
 - data-size: sm | md (default) | lg — The text step, and the inset of each link with it.
 
 module: toc.js (optional)

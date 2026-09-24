@@ -25,6 +25,12 @@
 		--yeti-nav-border: var(--yeti-color-border);
 		--yeti-nav-surface: var(--yeti-color-surface);
 		--yeti-nav-panel: var(--yeti-color-surface-raised);
+		/* The brand is a wordmark; a theme sets it apart from the links here. */
+		--yeti-nav-brand-weight: var(--yeti-weight-strong);
+		--yeti-nav-brand-size: 1em;
+		/* Plain links in the bar: the bar's own color unless a theme says
+		   otherwise. The current and hovered links keep the variant's tints. */
+		--yeti-nav-link: currentColor;
 
 		--yeti-breadcrumbs-separator: "/";
 
@@ -167,6 +173,8 @@
 			   still hand the third card a 400ms wait and then pop it into place,
 			   which is a staggered arrival with the smooth part taken out. */
 			--yeti-enter-stagger: 0s;
+			/* A delayed element that is invisible for three seconds is the opposite of less motion. */
+			--yeti-enter-delay: 0s;
 			--yeti-attention-duration: 0.01ms;
 			/* A hover lift is the one piece of motion here that is not a one-shot,
 			   and collapsing its duration is the wrong answer: the element would

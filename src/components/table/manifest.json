@@ -19,7 +19,7 @@
     { "selector": "[data-numeric]", "min": 0, "max": null, "description": "A cell (or header cell) of numbers: end-aligned with tabular figures." }
   ],
   "markers": [
-    { "name": "data-numeric", "type": "boolean", "on": "td, th", "description": "A cell of numbers: end-aligned with tabular figures." }
+    { "name": "data-numeric", "type": "boolean", "on": "*", "description": "Tabular figures, so digits line up, on any element; on a table's cells and headers the column is end-aligned too." }
   ],
   "tokens": [
     { "name": "--yeti-table-stripe", "public": true, "description": "Fill of even rows with data-striped." },

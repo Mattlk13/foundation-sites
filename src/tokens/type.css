@@ -31,6 +31,18 @@
 		--yeti-lede-size: var(--yeti-text-lg);
 		--yeti-lede-measure: 50ch;
 
+		/* Links: --yeti-link-color and --yeti-link-color-hover are read with a
+		   fallback and never declared, like --yeti-base, so the primary they
+		   fall back to is the one where the link is, and a section that sets
+		   its own primary colors its own links. A theme whose primary is a
+		   light brand color points them at the hue's text step instead, since
+		   a link is text and has to read on the page. */
+
+		/* The width axis of a variable font: narrow labels, a wide title, one
+		   family. normal until a theme with such a face says otherwise. */
+		--yeti-stretch-text: normal;
+		--yeti-stretch-heading: normal;
+
 		--yeti-font-sans: system-ui, sans-serif;
 		--yeti-font-mono: ui-monospace, monospace;
 	}

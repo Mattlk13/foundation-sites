@@ -3,9 +3,10 @@
    is is state, and state is native or ARIA, never a class. toc.js moves it;
    without the module the list is a list of links and every one still works. */
 @layer yeti.components {
-	/* Only a page that has one, so a site-wide stylesheet does not change how
-	   every other page scrolls. */
-	html:has(.toc) { scroll-behavior: var(--yeti-toc-scroll); }
+	/* Only a page that jumps within itself, a toc or a nav whose links point
+	   down the page (a bare # is a placeholder, not a jump), so a site-wide
+	   stylesheet does not change how every other page scrolls. */
+	html:has(.toc, .nav a[href^="#"]:not([href="#"])) { scroll-behavior: var(--yeti-toc-scroll); }
 
 	.toc:not([data-variant]) {
 		--_yeti-variant: var(--yeti-color-primary);

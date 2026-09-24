@@ -127,6 +127,8 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | --- | --- | --- |
 | `--yeti-font-sans` | `system-ui, sans-serif` | Default text face. Yeti ships no web fonts; override this to use yours. |
 | `--yeti-font-mono` | `ui-monospace, monospace` | Code face. |
+| `--yeti-stretch-text` | `normal` | font-stretch of the body: the width axis of a variable font, as a keyword or a percentage. |
+| `--yeti-stretch-heading` | `normal` | font-stretch of the headings, set apart from the text so a theme can pair narrow text with a wide title in one family. |
 
 </div>
 
@@ -152,6 +154,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 
 | Token | Default | Description |
 | --- | --- | --- |
+| `--yeti-color-scheme` | `light dark` | The color schemes the page offers: light dark follows the visitor; light or dark pins the page to one. A theme file may set it, which a plain color-scheme declaration cannot. |
 | `--yeti-color-primary` | `ladder base of the primary hue` | The brand color: buttons, links, focus. |
 | `--yeti-color-primary-subtle` | `ladder subtle` | Tinted background; hover on surfaces, selection. |
 | `--yeti-color-primary-soft` | `ladder soft` | Borders and dividers in the primary hue. |
@@ -197,6 +200,9 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-color-border-strong` | `L 0.75 light, 0.40 dark` | Emphasised border: focused inputs, blockquote rule. |
 | `--yeti-color-scrim` | `the surface at 85%` | A wash over content so something on top of it can be read: a caption over a picture, a veil over a form. Thinned surface, so it dims with the theme rather than tinting. |
 | `--yeti-color-focus` | `var(--yeti-color-primary)` | Focus ring color. |
+| `--yeti-link-color` | var(--yeti-color-primary) (override only) | Text color of a link at rest. Read with a fallback, so a section's own primary still colors its links. A theme whose primary is too light to read as text points this at the hue's text step, --yeti-color-primary-text. |
+| `--yeti-link-color-hover` | var(--yeti-color-primary-strong) (override only) | Text color of a link under the pointer. Read with a fallback, so a section's own primary still colors its links. |
+| `--yeti-quote-color` | var(--yeti-color-border-strong) (override only) | Color of the bar beside a blockquote. Read with a fallback, so a section's own strong border still colors it. |
 | `--yeti-white` | `oklch(1 0 0)` | White, in both schemes and under every theme. One of the three colors that never move. |
 | `--yeti-black` | `oklch(0 0 0)` | Black, in both schemes and under every theme. |
 | `--yeti-grey` | `oklch(0.565 0 0)` | 18% reflectance, the photographic middle grey, in both schemes and under every theme. |
@@ -313,6 +319,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | Token | Default | Description |
 | --- | --- | --- |
 | `--yeti-border-width` | `1px` | Width of every border a component draws. |
+| `--yeti-quote-border` | `4px` | Width of the bar beside a blockquote; 0 removes it. |
 
 </div>
 
@@ -435,6 +442,9 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-nav-border` | `var(--yeti-color-border)` | The bar's bottom edge, and the sheet's. |
 | `--yeti-nav-surface` | `var(--yeti-color-surface)` | Background of the bar. |
 | `--yeti-nav-panel` | `var(--yeti-color-surface-raised)` | Background of the open panel. |
+| `--yeti-nav-brand-weight` | `var(--yeti-weight-strong)` | Weight of the nav's brand. |
+| `--yeti-nav-brand-size` | `1em` | Size of the nav's brand; 1em is the bar's own size. |
+| `--yeti-nav-link` | `currentColor` | Color of a plain link in the bar; the bar's own color unless set. The current link and a hovered link keep the variant's tints, and the open panel resets it to its own text color. |
 
 </div>
 
@@ -464,7 +474,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 
 | Token | Default | Description |
 | --- | --- | --- |
-| `--yeti-toc-scroll` | `smooth, and auto under reduced motion` | How the page scrolls when a link in a toc is followed. A components-layer declaration outranks the reset, so the preference reaches the page through this token. |
+| `--yeti-toc-scroll` | `smooth, and auto under reduced motion` | How the page scrolls when a link in a toc, or an in-page link in a nav, is followed. A components-layer declaration outranks the reset, so the preference reaches the page through this token. The name keeps the toc it started with. |
 
 </div>
 
@@ -599,7 +609,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-enter-distance` | `2rem` | How far below its place a rising element starts. |
 | `--yeti-enter-scale` | `0.94` | How small a scaling element starts. |
 | `--yeti-enter-stagger` | `200ms` | The wait between one staggered child and the next; every child's delay is a multiple of it. Collapses to 0s under prefers-reduced-motion. |
-| `--yeti-enter-delay` | `0s` | How long a staggered run waits before its first child moves. |
+| `--yeti-enter-delay` | `0s` | How long an element waits before it arrives, or a staggered run before its first child moves. Set it on one element to time that element alone. |
 | `--yeti-enter-ease` | `var(--yeti-ease)` | The curve a staggered entrance runs on. |
 
 </div>

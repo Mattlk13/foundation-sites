@@ -76,7 +76,7 @@ A `progress` element is a progress bar to assistive tech already; it needs a nam
 
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
-| `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `danger`, `neutral` | `primary` | The hue of the filled part. |
+| `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `danger`, `neutral`, `black`, `white` | `primary` | The hue of the filled part. |
 | `data-size` | enum | `sm`, `md`, `lg` | `md` | The bar's thickness: half the size's space step. |
 | `data-scroll` | boolean |  |  | Fill with how far the nearest scroll container has been scrolled, the page when the bar is at its top, instead of with a value: a reading-progress bar. On a block with the class, not a progress element, and hidden from assistive tech; where a scroll timeline is unsupported the bar is not shown. |
 

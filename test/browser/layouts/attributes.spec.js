@@ -1,5 +1,5 @@
 import { test, expect } from 'playwright/test';
-import { open, rect, token, axe } from '../lib/layout.js';
+import { open, rect, token, style, px, axe } from '../lib/layout.js';
 
 test.describe('attribute vocabulary', () => {
 	test('single stops resolve to their token', async ({ page }) => {
@@ -22,6 +22,20 @@ test.describe('attribute vocabulary', () => {
 		expect((await rect(page, '#gap-sm-lg')).width).toBeCloseTo(await token(page, '--yeti-space-sm-static'), 1);
 		await page.setViewportSize({ width: 1280, height: 800 });
 		expect((await rect(page, '#gap-sm-lg')).width).toBeCloseTo(await token(page, '--yeti-space-lg'), 1);
+	});
+
+	test('data-numeric gives any element tabular figures', async ({ page }) => {
+		await open(page, 'attributes');
+		expect(await style(page, '#numeric', 'font-variant-numeric')).toBe('tabular-nums');
+		expect(await style(page, '#not-numeric', 'font-variant-numeric')).toBe('normal');
+	});
+
+	test('data-border draws the border on any element', async ({ page }) => {
+		await open(page, 'attributes');
+		const width = await token(page, '--yeti-border-width');
+		expect(await px(page, '#framed', 'border-top-width')).toBe(width);
+		expect(await px(page, '#bordered-text', 'border-top-width')).toBe(width);
+		expect(await px(page, '#no-attr', 'border-top-width')).toBe(0);
 	});
 
 	test('has no accessibility violations', async ({ page }) => {

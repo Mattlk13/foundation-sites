@@ -38,7 +38,7 @@
       "name": "data-side",
       "type": "enum",
       "vocabulary": "side",
-      "description": "Force the figure to the start or the end regardless of source order. Moves it visually only; reading order stays as written."
+      "description": "Put the figure at the start or the end of the row regardless of source order. Once stacked, source order rules: write the copy first to meet the headline first on a phone. Moves it visually only; reading order stays as written."
     },
     {
       "name": "data-height",
@@ -55,7 +55,11 @@
       "min": 2,
       "max": 2,
       "description": "Exactly two: the copy and the figure (an img, video, or picture, or an element wrapping one); the copy (the body) must not have an img, video, or picture as a direct child (it would be taken for a second figure). A figure with a figcaption keeps its caption below the picture."
-    }
+    },
+    { "selector": "> [data-span]", "min": 0, "max": 2, "description": "A child that takes several shares of the row: data-span=\"3\" beside a \"2\" is three fifths. Below the threshold both stack full width." }
+  ],
+  "markers": [
+    { "name": "data-span", "type": "enum", "vocabulary": "span", "on": "> *", "description": "How many shares of the row this child takes; the other child's default is 1." }
   ],
   "tokens": [
     {
@@ -112,7 +116,7 @@
   "a11y": {
     "requiredAttributes": [],
     "keyboard": [],
-    "notes": "When the hero is the page's opening, keep the h1 inside the copy. data-side changes where the figure sits, not where it is read."
+    "notes": "When the hero is the page's opening, keep the h1 inside the copy and write the copy first: data-side changes where the figure sits in the row, not where it is read, and not the stacked order."
   },
   "js": null,
   "support": {

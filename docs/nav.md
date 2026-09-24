@@ -73,6 +73,10 @@ The panel changes shape with the nav. In the bar it is the dropdown's usual card
 
 `data-sticky` keeps the bar at the top of the scrollport as the page scrolls, `--yeti-sticky-offset` from the edge. Everything else on the page that sticks stops at that same offset and would slide under the bar, so set the token to the bar's own height plus the gap you want on whatever holds them — the shell's body row, say — and leave the nav itself reading the default.
 
+Links that point down the same page (`href="#pricing"`) turn on smooth scrolling for the page, through `--yeti-toc-scroll`, the same switch a `toc` uses; a bare `href="#"` placeholder does not count, and under reduced motion the page goes back to the browser's jump.
+
+The brand is a wordmark, so it has tokens of its own: `--yeti-nav-brand-weight` and `--yeti-nav-brand-size`. Plain links take `--yeti-nav-link`, the bar's own color by default; on a painted bar set it to the color that reads there. The current link and a hovered link keep the variant's tints, and the open panel resets it to its own text color.
+
 ## Accessibility
 
 Give the `nav` an `aria-label`, since a page often has more than one. The toggle needs a name, from `aria-label` or visible text; the browser sets its expanded state. Mark the current page's link with `aria-current="page"`. Put `role="list"` on the `ul`: Yeti's reset only removes list markers where that role says the list is decorative. The open panel follows the toggle in the tab order, so Tab from the toggle reaches the first link; Escape closes the panel and returns focus to the toggle.
@@ -83,7 +87,7 @@ Give the `nav` an `aria-label`, since a page often has more than one. The toggle
 
 | Attribute | Type | Values | Default | Description |
 | --- | --- | --- | --- | --- |
-| `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `danger`, `neutral` | `primary` | The hue of the current link and of the hover tint. |
+| `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `danger`, `neutral`, `black`, `white` | `primary` | The hue of the current link and of the hover tint. |
 | `data-threshold` | enum | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `md` | The nav's own width at or above which the links sit in the bar; below it they are behind the toggle. |
 | `data-panel` | enum | `sheet`, `drawer`, `screen` | `sheet` | The shape of the open list below the threshold: a sheet under the bar, a drawer from the start edge, or the whole screen. |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `sm` | Space between the bar's parts and between the links. |
@@ -126,6 +130,9 @@ Attributes that descendants carry, not the root.
 | `--yeti-nav-border` | The bar's bottom edge, and the sheet's. |
 | `--yeti-nav-surface` | Background of the bar. |
 | `--yeti-nav-panel` | Background of the open panel. |
+| `--yeti-nav-brand-weight` | Weight of the brand. |
+| `--yeti-nav-brand-size` | Size of the brand; 1em keeps the bar's. |
+| `--yeti-nav-link` | Color of a plain link in the bar; the bar's own color unless set. Current and hover keep the variant's tints, and the open panel resets it to its own text color. |
 | `--yeti-control-size` | Minimum height of the bar, the toggle, and each link. |
 | `--yeti-shadow-md` | The open panel's shadow. |
 | `--yeti-shadow-color` | The drawer's backdrop. |
@@ -156,6 +163,7 @@ Attributes that descendants carry, not the root.
 - `--_yeti-variant-soft`
 - `--_yeti-variant-strong`
 - `--_yeti-on-variant`
+- `--_yeti-nav-link`
 
 </details>
 

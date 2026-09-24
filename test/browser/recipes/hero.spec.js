@@ -41,11 +41,34 @@ test.describe('hero recipe', () => {
 		expect((await rect(page, '#xl-band')).height).not.toBeCloseTo((await rect(page, '#classed')).height, 0);
 	});
 
-	test('data-side="start" moves a last-in-source figure to the start', async ({ page }) => {
+	test('data-side places the figure only while the two share a row', async ({ page }) => {
+		const cases = [
+			['scf', 'start'], ['sff', 'start'], ['ecf', 'end'], ['eff', 'end'],
+		];
 		await open(page, 1000);
-		const [copy, figure, band] = await Promise.all([rect(page, '#f-copy'), rect(page, '#f-figure'), rect(page, '#forced')]);
-		expect(figure.right).toBeLessThan(copy.left);
-		expect(band.height).toBeCloseTo(400, 0);
+		for (const [p, side] of cases) {
+			const [copy, figure] = await Promise.all([rect(page, `#${p}-copy`), rect(page, `#${p}-figure`)]);
+			if (side === 'start') expect(figure.right, p).toBeLessThanOrEqual(copy.left);
+			else expect(figure.left, p).toBeGreaterThanOrEqual(copy.right);
+		}
+		// Stacked: source order, whatever data-side says.
+		await open(page, 400);
+		for (const [p] of cases) {
+			const [copy, figure] = await Promise.all([rect(page, `#${p}-copy`), rect(page, `#${p}-figure`)]);
+			const figureFirst = p === 'sff' || p === 'eff';
+			if (figureFirst) expect(copy.top, p).toBeGreaterThanOrEqual(figure.bottom);
+			else expect(figure.top, p).toBeGreaterThanOrEqual(copy.bottom);
+		}
+	});
+
+	test('data-span on the children divides the row unequally, and stacks like the rest', async ({ page }) => {
+		await open(page, 1000);
+		const [copy, figure] = await Promise.all([rect(page, '#sp-copy'), rect(page, '#sp-figure')]);
+		expect(figure.width / (figure.width + copy.width)).toBeCloseTo(0.6, 1);
+		await open(page, 400);
+		const [c, f] = await Promise.all([rect(page, '#sp-copy'), rect(page, '#sp-figure')]);
+		expect(f.top).toBeGreaterThanOrEqual(c.bottom);
+		expect(f.width).toBeCloseTo(c.width, 0);
 	});
 
 	test('children have no margins', async ({ page }) => {

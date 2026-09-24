@@ -11,9 +11,9 @@ Attributes:
 - data-gap-inline: none | xs | sm | md | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Padding on the two sides only, over whatever data-gap set: a band wide at the sides and ordinary top and bottom.
 - data-gap-block: none | xs | sm | md | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Padding top and bottom only, over whatever data-gap set.
 - data-surface: base | raised | sunken — Fill the box with one of the three surface tones, making it a visible panel. Absent, the box is transparent and only its padding does anything.
-- data-border (boolean) — Draw a border of the border width, in the border color.
 
 On children:
+- data-border on * (boolean) — Draw a border of the border width, in the border color. Works on any element; it is a box's most common marker, which is why it is listed here.
 - data-paint on *: primary | secondary | success | warning | alert | neutral | white | black | grey | grey-0 | grey-10 | grey-20 | grey-30 | grey-40 | grey-50 | grey-60 | grey-70 | grey-80 | grey-90 | grey-100 — Fill this element with a color by name: a hue at its base step with the text made for it, a constant, or a step of the greyscale. Up to grey-40 the text stays the page text; from grey-50 it becomes the page surface.
 - data-text on *: primary | secondary | success | warning | alert | neutral | white | black | grey | grey-0 | grey-10 | grey-20 | grey-30 | grey-40 | grey-50 | grey-60 | grey-70 | grey-80 | grey-90 | grey-100 — Color this element's words by name, from the same list. On an element that is also painted it wins over the automatic text color.
 
@@ -23,7 +23,7 @@ A box is the thing to reach for when content needs breathing room from its edges
 
 ### How it works
 
-`padding` on all four sides from `data-gap`, a border of `--yeti-border-width` in `--yeti-color-border` when `data-border` is present, and a fill from `data-surface`. Nothing else. Unlike the spacing layouts, a box does not reset its children's margins, so paragraphs inside it keep their prose rhythm.
+`padding` on all four sides from `data-gap`, a border of `--yeti-border-width` in `--yeti-color-border` when `data-border` is present (the marker works on any element, not only a box), and a fill from `data-surface`. Nothing else. Unlike the spacing layouts, a box does not reset its children's margins, so paragraphs inside it keep their prose rhythm.
 
 `data-surface` takes the three surface tones. `raised` is a step above the page and is what a panel usually wants; `sunken` is a step below, for a well that content sits in; `base` is the page's own surface, for a panel inside a sunken area that should not change tone. Without it a box is transparent and only its padding does anything, which is right when the thing behind it is already a surface.
 
@@ -50,8 +50,6 @@ There is no plainer word for a padded rectangle. Foundation 6's Callout was a st
 
 Tokens:
 - --yeti-space-md — The default padding.
-- --yeti-color-border — The border color when data-border is set.
-- --yeti-border-width — Width of the border when data-border is set.
 - --yeti-color-surface — The fill at data-surface="base"; the page's own surface.
 - --yeti-color-surface-raised — The fill at data-surface="raised", a step above the page.
 - --yeti-color-surface-sunken — The fill at data-surface="sunken", a step below the page.
@@ -165,6 +163,16 @@ A cluster is a wrapping flex row with a `gap`. `data-justify` distributes the it
 	<li>layout</li>
 	<li>intrinsic</li>
 </ul>
+```
+
+A term and its value on one line, parted to the two ends, is a cluster with `data-justify="between"`. A `div` may wrap a `dt` and its `dd`, so a whole legend is a `dl` that is a `stack` whose rows are clusters; add `data-rule` to the stack for a line between them and `data-numeric` to the values so the digits line up.
+
+```html
+<dl class="stack" data-gap="xs">
+	<div class="cluster" data-justify="between"><dt>Distance</dt><dd data-numeric>14.2 km</dd></div>
+	<div class="cluster" data-justify="between"><dt>Ascent</dt><dd data-numeric>1,120 m</dd></div>
+	<div class="cluster" data-justify="between"><dt>Time</dt><dd data-numeric>5 h 30</dd></div>
+</dl>
 ```
 
 ### Why this name
@@ -330,6 +338,14 @@ Use a frame wherever images of unpredictable shape must present as the same shap
 ### How it works
 
 `aspect-ratio` sizes the frame from its width, and `overflow: hidden` clips. An image, video, `picture`, `iframe`, `embed` or `object` child is stretched to both dimensions with `object-fit: cover`, so it fills without distortion and loses only the overflow. Any other child, a placeholder or an icon, is centered with flexbox.
+
+A frame that wants an edge, a map's neatline, a photo on a light page, takes `data-border`, which draws the border width in the border color around any element. For a different color set `--yeti-color-border` on the frame itself.
+
+```html
+<div class="frame" data-ratio="4/3" data-border style="--yeti-color-border: var(--yeti-color-text)">
+	<img src="map.png" alt="The route from the car park to the summit">
+</div>
+```
 
 ### Why this name
 
@@ -648,6 +664,7 @@ Attributes:
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between children. A pair such as sm-lg grows fluidly from the first stop to the second.
 - data-align: start | center | end | stretch (default) | baseline — Horizontal alignment of the children.
 - data-fill (boolean) — Make the stack at least as tall as the viewport, so a child carrying data-split reaches the bottom.
+- data-rule (boolean) — A line between children, of the border width in the border color, in the middle of each gap. The gap is unchanged.
 
 On children:
 - data-split on > * (boolean) — Pushes the child and everything after it to the end of the stack when the stack is taller than its content.
@@ -681,6 +698,15 @@ The gap is the stack's, but one child can ask for a different gap before it. `da
 </div>
 ```
 
+`data-rule` on the stack draws a line between each pair of children, the border width in the border color, in the middle of the gap; the gap itself does not change, and `data-space` moves the line with it. A legend, a settings list, a run of plan features: anywhere rows want separating without boxing. The line is a `::before` on each child after the first, so a child that already draws its own `::before` keeps its own and loses the line. The line is lost too on a child that clips its overflow, a card, a frame, an accordion or a progress bar, and on a replaced element such as an image, which has no `::before` to draw. A child that is itself a stack still has its line placed by the ruled stack's gap, but a ruled stack directly inside another ruled stack places its line by its own gap, the same limit `data-space` has; give it a plain wrapper.
+
+```html
+<dl class="stack" data-rule data-gap="sm">
+	<div class="cluster" data-justify="between"><dt>Distance</dt><dd data-numeric>14.2 km</dd></div>
+	<div class="cluster" data-justify="between"><dt>Ascent</dt><dd data-numeric>1,120 m</dd></div>
+</dl>
+```
+
 A child carrying `data-sticky` stays at `--yeti-sticky-offset` from the top of the scrollport while the rest of the stack scrolls past it, and keeps the full width of the column while it does. A stack stretches its children sideways, and sideways is not the direction a sticky child moves in, so nothing has to be taken away for it to work — which is not true in a row, where the same marker costs the child the row's height.
 
 ### Why this name
@@ -694,6 +720,8 @@ Children:
 Tokens:
 - --yeti-space-md — The default gap.
 - --yeti-cover-height — The minimum block size when data-fill is set.
+- --yeti-border-width — Width of the data-rule line.
+- --yeti-color-border — Color of the data-rule line.
 
 Accessibility contract:
 Purely visual. Reading order is source order.
@@ -744,12 +772,17 @@ Attributes:
 - data-gap: none | xs | sm | md | lg (default) | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between copy and figure.
 - data-ratio: 1/1 | 4/3 (default) | 3/2 | 16/9 | 21/9 — The figure's aspect ratio.
 - data-align: start | center (default) | end | stretch | baseline — Vertical alignment of copy and figure when side by side.
-- data-side: start | end — Force the figure to the start or the end regardless of source order. Moves it visually only; reading order stays as written.
+- data-side: start | end — Put the figure at the start or the end of the row regardless of source order. Once stacked, source order rules: write the copy first to meet the headline first on a phone. Moves it visually only; reading order stays as written.
 - data-height: sm | md | lg | xl | half | full (default) — The band's least height: a stop of the height scale, half the viewport, or the whole of it, as a cover takes it. Content taller than the band grows it.
+
+On children:
+- data-span on > *: 1 | 2 | 3 | 4 | 5 | 6 — How many shares of the row this child takes; the other child's default is 1.
 
 ### When to use it
 
-The opening of a landing page: a headline and a call to action on one side, a picture on the other, filling the first screen, or a shorter band with `data-height`, as a cover takes it. Below the threshold the two become rows and the band grows to fit. Put the picture first or last as you want it read; `data-side` moves it without changing the source. The copy must not have an img, video, or picture as a direct child (it would be taken for a second figure).
+The opening of a landing page: a headline and a call to action on one side, a picture on the other, filling the first screen, or a shorter band with `data-height`, as a cover takes it. Below the threshold the two become rows and the band grows to fit. Write the copy first, so a phone meets the headline before the picture, and use `data-side` to put the picture on the side you want while the two share a row; once stacked the source order holds. The copy must not have an img, video, or picture as a direct child (it would be taken for a second figure).
+
+The two halves share the row equally unless a child says otherwise: `data-span="3"` on the picture beside `data-span="2"` on the copy gives the picture three fifths, the same marker `columns` uses. Below the threshold both are full width.
 
 A headline that should grow with the band can carry the [billboard](billboard.md) utility. Make the copy a `container` first, so the line is sized by the column it is in and not by the whole band:
 
@@ -791,6 +824,7 @@ The one-class form does the same in one element: a wrapping row whose lines are 
 
 Children:
 - > *: at least 2, at most 2. Exactly two: the copy and the figure (an img, video, or picture, or an element wrapping one); the copy (the body) must not have an img, video, or picture as a direct child (it would be taken for a second figure). A figure with a figcaption keeps its caption below the picture.
+- > [data-span]: at least 0, at most 2. A child that takes several shares of the row: data-span="3" beside a "2" is three fifths. Below the threshold both stack full width.
 
 Tokens:
 - --yeti-cover-height — The least height with no data-height, and at data-height="full".
@@ -801,7 +835,7 @@ Tokens:
 - --yeti-color-text-muted — The caption.
 
 Accessibility contract:
-When the hero is the page's opening, keep the h1 inside the copy. data-side changes where the figure sits, not where it is read.
+When the hero is the page's opening, keep the h1 inside the copy and write the copy first: data-side changes where the figure sits in the row, not where it is read, and not the stacked order.
 
 ## media (recipe, class="media")
 
@@ -812,7 +846,7 @@ Attributes:
 - data-ratio: 1/1 (default) | 4/3 | 3/2 | 16/9 | 21/9 — The figure's aspect ratio.
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the figure and the text.
 - data-align: start | center | end | stretch (default) | baseline — Vertical alignment of figure and text when side by side.
-- data-side: start | end — Force the figure to the start or the end regardless of source order. Moves it visually only; reading order stays as written.
+- data-side: start | end — Put the figure at the start or the end while side by side, regardless of source order. Stacked, the source order holds.
 
 ### When to use it
 
@@ -834,7 +868,7 @@ A recipe is a shortcut, not a new idea. The same result is three layouts you alr
 </div>
 ```
 
-The one-class form renders the same geometry, and its test proves it. Its attributes are the ones the primitives take. Its CSS is its own file, so a project that prefers the composed form can leave `css/recipes/media/media.css` out of a hand-built bundle. One difference: the sidebar's `data-side` picks which child is the sidebar, while the recipe's `data-side` moves the figure with `order`, which changes where it sits but not where it is read.
+The one-class form renders the same geometry, and its test proves it. Its attributes are the ones the primitives take. Its CSS is its own file, so a project that prefers the composed form can leave `css/recipes/media/media.css` out of a hand-built bundle. One difference: the sidebar's `data-side` picks which child is the sidebar, while the recipe's `data-side` reverses the row, which changes where the figure sits beside the text but not where it is read, and does nothing once the two have stacked.
 
 ### Why this name
 
@@ -1028,7 +1062,7 @@ A prefix or suffix that carries meaning (a currency, a unit) must reach the cont
 A message in a hue: a tinted box with a colored edge, an optional icon, and an optional close button that the module wires up.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — Which hue: success for done, warning for careful, danger for wrong (alert is the same ladder under its Foundation 6 name), primary for news.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral | black | white — Which hue: success for done, warning for careful, danger for wrong (alert is the same ladder under its Foundation 6 name), primary for news.
 - data-emphasis: high | medium (default) | low — How loud: medium is a tint, high a solid fill, low the border alone.
 
 On children:
@@ -1087,7 +1121,7 @@ Use role="status" for the usual notice, which is announced politely, and role="a
 A small inline label for a status or a count, tinted by a hue.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — Which hue tints the badge.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral | black | white — Which hue tints the badge.
 - data-emphasis: high | medium (default) | low — medium is a subtle tint with dark text, high a solid fill, low text alone.
 - data-size: sm | md (default) | lg — The text size the badge sits beside; the badge renders one step smaller.
 
@@ -1101,6 +1135,12 @@ An inline box one step smaller than the text around it, with a pill corner by de
 
 ```html
 <h3>Release notes <span class="badge" data-emphasis="high">New</span></h3>
+```
+
+On a painted band use `data-variant="black"` or `"white"`, the two constants, which read the same in both schemes.
+
+```html
+<div class="box" data-paint="primary">Build status <span class="badge" data-variant="white">Passing</span></div>
 ```
 
 ### Accessibility
@@ -1178,7 +1218,7 @@ Put aria-label="Breadcrumb" on the nav. The last step carries aria-current="page
 An action with a face: a hue, an emphasis, and a size, with every state taken from the element itself.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — Which hue's ladder the button uses.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral | black | white — Which hue's ladder the button uses.
 - data-emphasis: high (default) | medium | low — How loud: high is a solid fill, medium an outline, low text alone.
 - data-size: sm | md (default) | lg — Scales the text and the padding together.
 
@@ -1189,6 +1229,15 @@ Anything the visitor does: submit, save, open, dismiss. Put the class on a `butt
 ### How it works
 
 Three attributes and no classes. `data-variant` picks a hue from the palette and the button reads that hue's ladder for its fill, its hover step, and its outline text. `data-emphasis` picks how much of the ladder shows: `high` fills, `medium` outlines, `low` is text that tints on hover. `data-size` scales the text and the padding together so the shape holds. Hover, active, focus, disabled, pressed, and busy come from the element's own state, so nothing needs a script to look right.
+
+Two values of `data-variant` are not hues: `black` and `white`. They do not follow the theme and do not flip with the scheme, which is what a button on a painted band needs, where the band's own hue would vanish into itself. They keep every state: black steps to a dark grey under the pointer, its outline and text forms wash with a translucent black, and white mirrors it.
+
+```html
+<section class="box" data-paint="warning">
+	<h2>Start the season early</h2>
+	<a class="button" href="#" data-variant="black">Book a place</a>
+</section>
+```
 
 ```html
 <a class="button" href="/docs" data-variant="secondary" data-emphasis="medium" data-size="lg">
@@ -1273,7 +1322,7 @@ role="group" with a name, so the set is announced as one thing. A segmented togg
 A bordered surface for one thing: an optional figure that bleeds to the edges, a body, and a footer that sits at the bottom; a row with the picture beside the text once the card's content reaches the md width.
 
 Attributes:
-- data-variant: primary | secondary | success | warning | alert | danger | neutral — Tints the border and adds a bar along the top; the body stays plain.
+- data-variant: primary | secondary | success | warning | alert | danger | neutral | black | white — Tints the border and adds a bar along the top; the body stays plain.
 - data-threshold: 2xs | xs | sm | md (default) | lg | xl | 2xl — The card's own width from which the picture sits beside the text instead of on top.
 - data-ratio: 1/1 | 4/3 | 3/2 | 16/9 (default) | 21/9 — The picture's aspect ratio while it sits on top of the body. Past data-threshold the picture moves beside the body and fills that column, and the ratio stops applying.
 - data-raised (boolean) — A shadow instead of a border.
@@ -1648,7 +1697,7 @@ With data-trigger="hover" the module adds opening under the pointer and changes 
 One form control with its label, an optional hint, and an error that shows itself when the control is invalid.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — The color of a checked checkbox or radio.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral | black | white — The color of a checked checkbox or radio.
 - data-size: sm | md (default) | lg — Scales the control's height and text.
 - data-inline (boolean) — Put the label beside the control. Checkboxes and radios are inline without it.
 
@@ -1765,7 +1814,7 @@ The label's for must match the control's id; the validator checks it. Reference 
 A bar with a brand, a list of links, and actions, that collapses the links behind a toggle at its own width and opens them as a sheet, a drawer, or a screen.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — The hue of the current link and of the hover tint.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral | black | white — The hue of the current link and of the hover tint.
 - data-threshold: 2xs | xs | sm | md (default) | lg | xl | 2xl — The nav's own width at or above which the links sit in the bar; below it they are behind the toggle.
 - data-panel: sheet (default) | drawer | screen — The shape of the open list below the threshold: a sheet under the bar, a drawer from the start edge, or the whole screen.
 - data-gap: none | xs | sm (default) | md | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the bar's parts and between the links.
@@ -1806,6 +1855,10 @@ The panel changes shape with the nav. In the bar it is the dropdown's usual card
 
 `data-sticky` keeps the bar at the top of the scrollport as the page scrolls, `--yeti-sticky-offset` from the edge. Everything else on the page that sticks stops at that same offset and would slide under the bar, so set the token to the bar's own height plus the gap you want on whatever holds them — the shell's body row, say — and leave the nav itself reading the default.
 
+Links that point down the same page (`href="#pricing"`) turn on smooth scrolling for the page, through `--yeti-toc-scroll`, the same switch a `toc` uses; a bare `href="#"` placeholder does not count, and under reduced motion the page goes back to the browser's jump.
+
+The brand is a wordmark, so it has tokens of its own: `--yeti-nav-brand-weight` and `--yeti-nav-brand-size`. Plain links take `--yeti-nav-link`, the bar's own color by default; on a painted bar set it to the color that reads there. The current link and a hovered link keep the variant's tints, and the open panel resets it to its own text color.
+
 ### Accessibility
 
 Give the `nav` an `aria-label`, since a page often has more than one. The toggle needs a name, from `aria-label` or visible text; the browser sets its expanded state. Mark the current page's link with `aria-current="page"`. Put `role="list"` on the `ul`: Yeti's reset only removes list markers where that role says the list is decorative. The open panel follows the toggle in the tab order, so Tab from the toggle reaches the first link; Escape closes the panel and returns focus to the toggle.
@@ -1825,6 +1878,9 @@ Tokens:
 - --yeti-nav-border — The bar's bottom edge, and the sheet's.
 - --yeti-nav-surface — Background of the bar.
 - --yeti-nav-panel — Background of the open panel.
+- --yeti-nav-brand-weight — Weight of the brand.
+- --yeti-nav-brand-size — Size of the brand; 1em keeps the bar's.
+- --yeti-nav-link — Color of a plain link in the bar; the bar's own color unless set. Current and hover keep the variant's tints, and the open panel resets it to its own text color.
 - --yeti-control-size — Minimum height of the bar, the toggle, and each link.
 - --yeti-shadow-md — The open panel's shadow.
 - --yeti-shadow-color — The drawer's backdrop.
@@ -1856,7 +1912,7 @@ Give the nav an aria-label, since a page often has more than one. The toggle nee
 Links to the pages of a long list, each a square target, the current one filled, shrinking to Previous, the current page, and Next when it is narrow.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — The hue of the current page and of the hover tint.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral | black | white — The hue of the current page and of the hover tint.
 - data-size: sm | md (default) | lg — The text step.
 - data-threshold: 2xs | xs | sm (default) | md | lg | xl | 2xl — The pagination's own width below which only Previous, the current page, and Next remain.
 - data-justify: start (default) | center | end | between | around | evenly — Where the links sit in the row.
@@ -1911,7 +1967,7 @@ Put aria-label="Pagination" on the nav. The current page's link carries aria-cur
 The native progress element as a thin bar in a hue, filled to its value, or striped and moving when it has none.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — The hue of the filled part.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral | black | white — The hue of the filled part.
 - data-size: sm | md (default) | lg — The bar's thickness: half the size's space step.
 - data-scroll (boolean) — Fill with how far the nearest scroll container has been scrolled, the page when the bar is at its top, instead of with a value: a reading-progress bar. On a block with the class, not a progress element, and hidden from assistive tech; where a scroll timeline is unsupported the bar is not shown.
 
@@ -2004,7 +2060,7 @@ Decorative only; nothing changes for assistive tech. The seam adds its depth as 
 A turning ring in a hue, the size of the text, for waiting with no known end; a busy button shows the same ring after its label.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — The hue of the bright edge.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral | black | white — The hue of the bright edge.
 - data-size: sm | md (default) | lg — The ring is one em of the size's text step.
 
 ### When to use it
@@ -2050,7 +2106,7 @@ Attributes:
 - data-border (boolean) — Borders around every cell instead of lines between rows, as a box draws its border.
 
 On children:
-- data-numeric on td, th (boolean) — A cell of numbers: end-aligned with tabular figures.
+- data-numeric on * (boolean) — Tabular figures, so digits line up, on any element; on a table's cells and headers the column is end-aligned too.
 
 ### When to use it
 
@@ -2058,7 +2114,7 @@ Rows and columns of data: prices, results, comparisons. If the content is a list
 
 ### How it works
 
-The class goes on the `table`. Cells get padding from `data-size` and a line beneath each row; the header row gets a stronger rule. `data-striped` tints every other row, `data-hover` the row under the pointer, `data-border` draws every cell. Mark a column of numbers with `data-numeric` on its cells and header: they align to the end with tabular figures, so the digits line up. A table that is wider than its container goes inside a `scroller`, which scrolls it sideways while the table itself stays a table.
+The class goes on the `table`. Cells get padding from `data-size` and a line beneath each row; the header row gets a stronger rule. `data-striped` tints every other row, `data-hover` the row under the pointer, `data-border` draws every cell. Mark a column of numbers with `data-numeric` on its cells and header: they align to the end with tabular figures, so the digits line up. The marker works on any element, a price or a legend's values, where it gives the figures alone. A table that is wider than its container goes inside a `scroller`, which scrolls it sideways while the table itself stays a table.
 
 ```html
 <div class="scroller" role="region" aria-label="Quarterly results" tabindex="0">
@@ -2098,7 +2154,7 @@ Give the table a caption, or aria-label / aria-labelledby. Header cells carry sc
 A row of tabs over their panels, showing one at a time when its module is loaded and all of them when it is not.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — The hue of the selected tab and its edge.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral | black | white — The hue of the selected tab and its edge.
 - data-orientation: horizontal (default) | vertical — Whether the tab list runs along the top or down the side.
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the list and the panels.
 
@@ -2163,7 +2219,7 @@ Give the tablist a name with aria-label or aria-labelledby. Every tab is a butto
 A column of links to the headings on the page, with the one being read marked as the reader scrolls.
 
 Attributes:
-- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral — The hue of the current link and its edge bar.
+- data-variant: primary (default) | secondary | success | warning | alert | danger | neutral | black | white — The hue of the current link and its edge bar.
 - data-size: sm | md (default) | lg — The text step, and the inset of each link with it.
 
 module: toc.js (optional)
@@ -2199,7 +2255,7 @@ Children:
 - li: at least 1. One entry, holding a link whose href is the id of a heading on this page.
 
 Tokens:
-- --yeti-toc-scroll — How the page scrolls when a link is followed.
+- --yeti-toc-scroll — How the page scrolls to a heading; also read by a nav with in-page links.
 - --yeti-color-text-muted — A link that is not the current one.
 - --yeti-color-text — A link under the pointer.
 - --yeti-space-xs — Gap between links, and their block padding.
@@ -2390,6 +2446,8 @@ One animation, one run, ending exactly where the layout already put the element.
 </ul>
 ```
 
+An element on its own can also be timed: set `--yeti-enter-delay` on it and it waits that long before it arrives. That is how a legend's rows land in time with markers drawn on a map, an order a stagger's count cannot express.
+
 Past the ninth child the delay stops growing and every remaining child shares the ninth's. A stagger that kept counting would turn a list of thirty into a ten-second wait, and the gesture is long over by then.
 
 `data-view` waits for the element to scroll into view instead of playing on load, so an arrival below the fold happens where the reader is rather than before they arrive. It is guarded twice, and both fallbacks land on the same place: the element plays its arrival on load. Once for `@supports`, because `animation-timeline: view()` is not yet Baseline — Chromium and Safari have it, Firefox does not, and that line will move; and once for `prefers-reduced-motion`, because a scroll-driven animation is paced by the scroll and never reads `animation-duration`, so the collapsed token that stills everything else in Yeti would sail straight past this one.
@@ -2398,11 +2456,11 @@ Past the ninth child the delay stops growing and every remaining child shares th
 
 Nothing here changes reading order, focus order, or what any element is. The only way an element is ever hidden is the animation's own backwards fill, so a browser that cannot run the animation shows the content instead of swallowing it.
 
-Under reduced motion both `--yeti-enter-duration` and `--yeti-enter-stagger` collapse, so every element is simply present at once — the step collapses too, because a stagger with the smooth part removed is still a row of boxes popping into place one after another. The scroll-driven form is switched off outright for the same reader, and they get the collapsed load-timed animation instead.
+Under reduced motion both `--yeti-enter-duration` and `--yeti-enter-stagger` collapse, so every element is simply present at once — the step collapses too, because a stagger with the smooth part removed is still a row of boxes popping into place one after another. The delay collapses as well, even one set on the element itself, so a delayed element is simply present. The scroll-driven form is switched off outright for the same reader, and they get the collapsed load-timed animation instead.
 
 Tokens:
 - --yeti-enter-ease — The curve the entrance runs on.
-- --yeti-enter-delay — How long the staggered run waits before its first child moves.
+- --yeti-enter-delay — How long an element waits before it arrives; for a staggered run, how long before its first child moves.
 - --yeti-enter-duration — How long one arrival takes; reduced motion collapses it.
 - --yeti-enter-distance — How far below its place a rising element starts.
 - --yeti-enter-scale — How small a scaling element starts.
@@ -2622,6 +2680,8 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-lede-measure (text): 50ch — A lede's line length. Moves with --yeti-lede-size, since ch is a unit of the font.
 - --yeti-font-sans (font): system-ui, sans-serif — Default text face. Yeti ships no web fonts; override this to use yours.
 - --yeti-font-mono (font): ui-monospace, monospace — Code face.
+- --yeti-stretch-text (font): normal — font-stretch of the body: the width axis of a variable font, as a keyword or a percentage.
+- --yeti-stretch-heading (font): normal — font-stretch of the headings, set apart from the text so a theme can pair narrow text with a wide title in one family.
 - --yeti-duration-fast (motion): 150ms — Quick transitions; hover and focus. Collapses to 0.01ms under prefers-reduced-motion.
 - --yeti-duration-base (motion): 250ms — Standard transitions; open and close. Collapses under prefers-reduced-motion.
 - --yeti-ease (motion): cubic-bezier(0.2, 0, 0, 1) — Default easing; fast out, gentle in.
@@ -2635,6 +2695,7 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-hue-alert (hue): 25 — Alert hue; 25 is red.
 - --yeti-hue-neutral (hue): var(--yeti-hue-primary) — Hue that faintly tints surfaces, text, and borders. Follows the primary hue unless set.
 - --yeti-chroma (hue): 0.15 — Accent saturation. Lower for a calmer palette; 0.2 and above may clip on very saturated hues.
+- --yeti-color-scheme (color): light dark — The color schemes the page offers: light dark follows the visitor; light or dark pins the page to one. A theme file may set it, which a plain color-scheme declaration cannot.
 - --yeti-color-primary (color): ladder base of the primary hue — The brand color: buttons, links, focus.
 - --yeti-color-primary-subtle (color): ladder subtle — Tinted background; hover on surfaces, selection.
 - --yeti-color-primary-soft (color): ladder soft — Borders and dividers in the primary hue.
@@ -2680,9 +2741,13 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-color-border-strong (color): L 0.75 light, 0.40 dark — Emphasised border: focused inputs, blockquote rule.
 - --yeti-color-scrim (color): the surface at 85% — A wash over content so something on top of it can be read: a caption over a picture, a veil over a form. Thinned surface, so it dims with the theme rather than tinting.
 - --yeti-color-focus (color): var(--yeti-color-primary) — Focus ring color.
+- --yeti-link-color (color): var(--yeti-color-primary) — Text color of a link at rest. Read with a fallback, so a section's own primary still colors its links. A theme whose primary is too light to read as text points this at the hue's text step, --yeti-color-primary-text.
+- --yeti-link-color-hover (color): var(--yeti-color-primary-strong) — Text color of a link under the pointer. Read with a fallback, so a section's own primary still colors its links.
 - --yeti-cover-height (layout): 100dvh — Minimum block size of a cover layout or a filled stack. Set to auto for one that is only as tall as its content.
 - --yeti-sticky-offset (layout): var(--yeti-space-md) — How far from the leading edge of the scrollport a child carrying data-sticky stops. Set it to a sticky bar's height on whatever holds the things that stick below it.
 - --yeti-border-width (border): 1px — Width of every border a component draws.
+- --yeti-quote-border (border): 4px — Width of the bar beside a blockquote; 0 removes it.
+- --yeti-quote-color (color): var(--yeti-color-border-strong) — Color of the bar beside a blockquote. Read with a fallback, so a section's own strong border still colors it.
 - --yeti-weight-normal (weight): 400 — Body weight.
 - --yeti-weight-bold (weight): 700 — Headings, th, strong and b. Separate from --yeti-weight-strong so display text and control labels can be tuned apart.
 - --yeti-weight-strong (weight): 600 — Labels, headers, buttons.
@@ -2714,6 +2779,9 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-nav-border (nav): var(--yeti-color-border) — The bar's bottom edge, and the sheet's.
 - --yeti-nav-surface (nav): var(--yeti-color-surface) — Background of the bar.
 - --yeti-nav-panel (nav): var(--yeti-color-surface-raised) — Background of the open panel.
+- --yeti-nav-brand-weight (nav): var(--yeti-weight-strong) — Weight of the nav's brand.
+- --yeti-nav-brand-size (nav): 1em — Size of the nav's brand; 1em is the bar's own size.
+- --yeti-nav-link (nav): currentColor — Color of a plain link in the bar; the bar's own color unless set. The current link and a hovered link keep the variant's tints, and the open panel resets it to its own text color.
 - --yeti-breadcrumbs-separator (breadcrumbs): "/" — The string between crumbs; a theme may prefer "›".
 - --yeti-pagination-radius (pagination): var(--yeti-radius-md) — Corner of each page target.
 - --yeti-alert-radius (alert): var(--yeti-radius-md) — Corner of an alert.
@@ -2744,7 +2812,7 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-carousel-dot (carousel): var(--yeti-color-border-strong) — Color of a slide dot.
 - --yeti-carousel-dot-size (carousel): 0.75rem — Diameter of a slide dot.
 - --yeti-carousel-scroll (carousel): smooth, and auto under reduced motion — How the track scrolls when a dot is followed. A components-layer declaration outranks the reset, so the preference reaches the track through this token.
-- --yeti-toc-scroll (toc): smooth, and auto under reduced motion — How the page scrolls when a link in a toc is followed. A components-layer declaration outranks the reset, so the preference reaches the page through this token.
+- --yeti-toc-scroll (toc): smooth, and auto under reduced motion — How the page scrolls when a link in a toc, or an in-page link in a nav, is followed. A components-layer declaration outranks the reset, so the preference reaches the page through this token. The name keeps the toc it started with.
 - --yeti-range-value (field): 0% — The filled share of a range's track. Set it on the input, inline or from your own script, since CSS cannot read the value. Not a theme value.
 - --yeti-demo-border (demo): var(--yeti-color-border) — The preview box's edge.
 - --yeti-demo-radius (demo): var(--yeti-radius-md) — The preview box's corner, the summary's, and the stop label's.
@@ -2753,7 +2821,7 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-enter-distance (enter): 2rem — How far below its place a rising element starts.
 - --yeti-enter-scale (enter): 0.94 — How small a scaling element starts.
 - --yeti-enter-stagger (enter): 200ms — The wait between one staggered child and the next; every child's delay is a multiple of it. Collapses to 0s under prefers-reduced-motion.
-- --yeti-enter-delay (enter): 0s — How long a staggered run waits before its first child moves.
+- --yeti-enter-delay (enter): 0s — How long an element waits before it arrives, or a staggered run before its first child moves. Set it on one element to time that element alone.
 - --yeti-enter-ease (enter): var(--yeti-ease) — The curve a staggered entrance runs on.
 - --yeti-lift-distance (lift): 0.25rem — How far the element rises under the pointer. Collapses to 0 under prefers-reduced-motion, so the hover keeps its deeper shadow and loses only the movement.
 - --yeti-lift-scale (lift): 1.02 — How much the element grows at data-lift="scale"; reduced motion takes it to one.

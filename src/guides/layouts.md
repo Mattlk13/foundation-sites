@@ -104,6 +104,8 @@ Every layout is configured with a small set of `data-*` attributes, drawn from a
 
 A name in parentheses is the descendant that carries the attribute, not the layout itself: `layer (> *)` means a child of a `layer`. This table is generated from the manifests by `npm run docs`; the paragraphs around it are not.
 
+Three names in the table are not layout at all and work on any element: `data-paint` and `data-text`, which the [color guide](color.md) covers, and `data-border`, which draws the border width in the border color. They are listed under the layout that introduced them, with `(*)` for where they apply; a fourth, `data-numeric`, which lines up digits with tabular figures, is in the [components guide](components.md)'s table. On a control the plain border color outranks the variant's, so `data-border` belongs on surfaces.
+
 For the sizing attributes the mapping rule is always the same: a value is a token suffix. `data-gap="lg"` reads `--yeti-space-lg`; `data-width="sm"` reads `--yeti-width-sm`. The attribute names the property to set; the value names the step on Yeti's scale to set it to. The rest — `data-align`, `data-justify`, `data-ratio`, `data-columns`, `data-side` — name a behaviour rather than a token; `attributes.css` maps each value to the CSS keyword it means.
 
 Gap alone also takes a fluid pair. `data-gap="sm-lg"` does not jump between the two: it runs from the `sm` stop at the narrow end of the viewport to the `lg` stop at the wide end, the same way the type scale itself is fluid. `none` never anchors a pair, so any smaller of the remaining seven sized stops can pair with any larger one, which is what makes twenty-one pairs out of seven.

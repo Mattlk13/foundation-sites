@@ -35,7 +35,9 @@ nav_order: 4
 
 ## When to use it
 
-The opening of a landing page: a headline and a call to action on one side, a picture on the other, filling the first screen, or a shorter band with `data-height`, as a cover takes it. Below the threshold the two become rows and the band grows to fit. Put the picture first or last as you want it read; `data-side` moves it without changing the source. The copy must not have an img, video, or picture as a direct child (it would be taken for a second figure).
+The opening of a landing page: a headline and a call to action on one side, a picture on the other, filling the first screen, or a shorter band with `data-height`, as a cover takes it. Below the threshold the two become rows and the band grows to fit. Write the copy first, so a phone meets the headline before the picture, and use `data-side` to put the picture on the side you want while the two share a row; once stacked the source order holds. The copy must not have an img, video, or picture as a direct child (it would be taken for a second figure).
+
+The two halves share the row equally unless a child says otherwise: `data-span="3"` on the picture beside `data-span="2"` on the copy gives the picture three fifths, the same marker `columns` uses. Below the threshold both are full width.
 
 A headline that should grow with the band can carry the [billboard](billboard.md) utility. Make the copy a `container` first, so the line is sized by the column it is in and not by the whole band:
 
@@ -85,14 +87,27 @@ The one-class form does the same in one element: a wrapping row whose lines are 
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `lg` | Space between copy and figure. |
 | `data-ratio` | enum | `1/1`, `4/3`, `3/2`, `16/9`, `21/9` | `4/3` | The figure's aspect ratio. |
 | `data-align` | enum | `start`, `center`, `end`, `stretch`, `baseline` | `center` | Vertical alignment of copy and figure when side by side. |
-| `data-side` | enum | `start`, `end` |  | Force the figure to the start or the end regardless of source order. Moves it visually only; reading order stays as written. |
+| `data-side` | enum | `start`, `end` |  | Put the figure at the start or the end of the row regardless of source order. Once stacked, source order rules: write the copy first to meet the headline first on a phone. Moves it visually only; reading order stays as written. |
 | `data-height` | enum | `sm`, `md`, `lg`, `xl`, `half`, `full` | `full` | The band's least height: a stop of the height scale, half the viewport, or the whole of it, as a cover takes it. Content taller than the band grows it. |
+
+</div>
+
+## Markers
+
+Attributes that descendants carry, not the root.
+
+<div class="scroller" role="region" aria-label="Hero markers" tabindex="0" markdown="1">
+
+| Attribute | Type | Values | On | Description |
+| --- | --- | --- | --- | --- |
+| `data-span` | enum | `1`, `2`, `3`, `4`, `5`, `6` | `> *` | How many shares of the row this child takes; the other child's default is 1. |
 
 </div>
 
 ## Children
 
 - `> *`: exactly 2. Exactly two: the copy and the figure (an img, video, or picture, or an element wrapping one); the copy (the body) must not have an img, video, or picture as a direct child (it would be taken for a second figure). A figure with a figcaption keeps its caption below the picture.
+- `> [data-span]`: 0 to 2. A child that takes several shares of the row: data-span="3" beside a "2" is three fifths. Below the threshold both stack full width.
 
 ## Tokens
 
@@ -121,7 +136,7 @@ The one-class form does the same in one element: a wrapping row whose lines are 
 
 ## Accessibility
 
-- When the hero is the page's opening, keep the h1 inside the copy. data-side changes where the figure sits, not where it is read.
+- When the hero is the page's opening, keep the h1 inside the copy and write the copy first: data-side changes where the figure sits in the row, not where it is read, and not the stacked order.
 
 ## Browser support
 

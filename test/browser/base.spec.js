@@ -1,5 +1,6 @@
 import { test, expect } from 'playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { rect } from './lib/layout.js';
 
 const px = (page, selector, prop) => page.evaluate(([s, p]) => parseFloat(getComputedStyle(document.querySelector(s))[p]), [selector, prop]);
 const style = (page, selector, prop) => page.evaluate(([s, p]) => getComputedStyle(document.querySelector(s))[p], [selector, prop]);
@@ -57,6 +58,43 @@ test.describe('base typography and prose', () => {
 
 	test('has no accessibility violations', async ({ page }) => {
 		expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+	});
+
+	test('links read the link tokens', async ({ page }) => {
+		const probe = (name) => page.evaluate((n) => {
+			const el = document.createElement('span');
+			el.style.color = `var(${n})`;
+			document.body.append(el);
+			const v = getComputedStyle(el).color;
+			el.remove();
+			return v;
+		}, name);
+		expect(await style(page, 'a', 'color')).toBe(await probe('--yeti-color-primary'));
+		// A section that sets its own primary colors its own links, and only those.
+		expect(await style(page, '#sect-link', 'color')).toBe('rgb(0, 128, 0)');
+		expect(await style(page, '#link', 'color')).not.toBe('rgb(0, 128, 0)');
+		await page.addStyleTag({ content: ':root { --yeti-link-color: rgb(1, 2, 3); --yeti-link-color-hover: rgb(4, 5, 6); }' });
+		expect(await style(page, 'a', 'color')).toBe('rgb(1, 2, 3)');
+		await page.hover('a');
+		await expect.poll(() => style(page, 'a', 'color')).toBe('rgb(4, 5, 6)');
+	});
+
+	test('the width axis reads two tokens and is normal by default', async ({ page }) => {
+		expect(await style(page, 'body', 'font-stretch')).toBe('100%');
+		expect(await style(page, 'h1', 'font-stretch')).toBe('100%');
+		await page.addStyleTag({ content: ':root { --yeti-stretch-text: 87.5%; --yeti-stretch-heading: 112.5%; }' });
+		expect(await style(page, 'p', 'font-stretch')).toBe('87.5%');
+		expect(await style(page, 'h1', 'font-stretch')).toBe('112.5%');
+	});
+
+	test('the quotation bar reads its two tokens', async ({ page }) => {
+		expect(await px(page, 'blockquote', 'border-left-width')).toBe(4);
+		// A section that sets its own strong border colors its own quotation bar.
+		expect(await style(page, '#sect-quote', 'border-left-color')).toBe('rgb(0, 128, 0)');
+		expect(await style(page, '#quote', 'border-left-color')).not.toBe('rgb(0, 128, 0)');
+		await page.addStyleTag({ content: ':root { --yeti-quote-border: 1px; --yeti-quote-color: rgb(1, 2, 3); }' });
+		expect(await px(page, 'blockquote', 'border-left-width')).toBe(1);
+		expect(await style(page, 'blockquote', 'border-left-color')).toBe('rgb(1, 2, 3)');
 	});
 });
 
@@ -231,6 +269,15 @@ test.describe('base skip link', () => {
 	test('a link that is not the body\'s first child is an ordinary link', async ({ page }) => {
 		expect(await style(page, '#second', 'position')).toBe('static');
 		expect(await page.evaluate(() => document.getElementById('second').getBoundingClientRect().width)).toBeGreaterThan(1);
+	});
+
+	test('the element after it starts at the top of the page', async ({ page }) => {
+		// The link is absolutely positioned and takes no room, but it is still
+		// the preceding sibling the prose rhythm counts, so without a rule
+		// there would be a whole gap above the first visible element.
+		const [body, header] = await Promise.all([rect(page, 'body'), rect(page, 'header')]);
+		expect(header.top).toBeCloseTo(body.top, 0);
+		expect(await px(page, 'header', 'margin-top')).toBe(0);
 	});
 
 	test('has no accessibility violations', async ({ page }) => {
