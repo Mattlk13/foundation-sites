@@ -59,5 +59,13 @@
 		   bar of its own sets this to the bar's height on whatever holds the
 		   rest, so the two do not stack on the same line. */
 		--yeti-sticky-offset: var(--yeti-space-md);
+
+		/* Where a scroll-into-view stops: a fragment jump, a script's
+		   scrollIntoView, a control pulled into view by focus. The sticky offset
+		   by default, since both answer how much of the top edge a pinned bar
+		   covers; a page that wants a breath more above a jumped-to heading than
+		   its sidebar needs sets this one alone. Read by the root's scroll
+		   padding, so it is a root-level setting: on a section it does nothing. */
+		--yeti-scroll-padding: var(--yeti-sticky-offset);
 	}
 }

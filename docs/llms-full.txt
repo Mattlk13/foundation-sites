@@ -2780,6 +2780,7 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-link-color-hover (color): var(--yeti-color-primary-strong) — Text color of a link under the pointer. Read with a fallback, so a section's own primary still colors its links.
 - --yeti-cover-height (layout): 100dvh — Minimum block size of a cover layout or a filled stack. Set to auto for one that is only as tall as its content.
 - --yeti-sticky-offset (layout): var(--yeti-space-md) — How far from the leading edge of the scrollport a child carrying data-sticky stops. Set it to a sticky bar's height on whatever holds the things that stick below it.
+- --yeti-scroll-padding (layout): var(--yeti-sticky-offset) — Where a scroll-into-view stops below the top edge: a fragment jump, scrollIntoView, a focused control. The sticky offset by default; set it alone for more room above a jumped-to heading than the things that stick need. Root-level: it is read by the root's scroll padding.
 - --yeti-border-width (border): 1px — Width of every border a component draws.
 - --yeti-quote-border (border): 4px — Width of the bar beside a blockquote; 0 removes it.
 - --yeti-quote-color (color): var(--yeti-color-border-strong) — Color of the bar beside a blockquote. Read with a fallback, so a section's own strong border still colors it.

@@ -309,4 +309,13 @@ test.describe('base scroll padding', () => {
 		// Falsification: the bar is really pinned at the top while the page is scrolled this far.
 		expect((await rect(page, '#bar')).top).toBeCloseTo(0, 0);
 	});
+
+	test('--yeti-scroll-padding sets the stop on its own, leaving sticky things where they were', async ({ page }) => {
+		await page.addStyleTag({ content: 'html { --yeti-scroll-padding: 80px; }' });
+		await page.evaluate(() => { location.hash = '#two'; });
+		// A scroll landing is measured in device pixels: at a ratio of 2 (the WebKit project) half a CSS pixel is one step, so within a pixel is the test.
+		await expect.poll(async () => Math.abs((await rect(page, '#two')).top - 80), { timeout: 2000 }).toBeLessThanOrEqual(1);
+		// The bar reads the sticky offset, not this token: it stays on the edge.
+		expect((await rect(page, '#bar')).top).toBeCloseTo(0, 0);
+	});
 });
