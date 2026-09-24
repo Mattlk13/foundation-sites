@@ -80,4 +80,11 @@ test.describe('progress', () => {
 		await open(page);
 		expect(await axe(page)).toEqual([]);
 	});
+
+	test('--yeti-progress-size sets the thickness, on the element itself', async ({ page }) => {
+		await open(page);
+		await page.evaluate(() => document.getElementById('scroll').style.setProperty('--yeti-progress-size', '2px'));
+		expect((await rect(page, '#scroll')).height).toBeCloseTo(2, 0);
+		expect((await rect(page, '#bar')).height).toBeCloseTo((await token(page, '--yeti-space-sm')) / 2, 0);
+	});
 });
