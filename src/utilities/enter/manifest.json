@@ -29,6 +29,11 @@
       "name": "data-view",
       "type": "boolean",
       "description": "Play as the element scrolls into view instead of on load. Where a scroll timeline is unsupported, or the reader has asked for less motion, it plays on load instead."
+    },
+    {
+      "name": "data-once",
+      "type": "boolean",
+      "description": "Arrive once, the first time the element comes into view. Needs enter.js; without it the element arrives on load."
     }
   ],
   "classes": [],
@@ -68,13 +73,20 @@
   "a11y": {
     "requiredAttributes": [],
     "keyboard": [],
-    "notes": "Purely visual, and safe by default: the element is only ever hidden by the animation's own backwards fill, so an element whose animation never runs is visible rather than stranded, and nothing here changes reading order or focus order. Under reduced motion the duration and the stagger step both collapse, so everything is simply present at once; the scroll-driven form is switched off entirely for the same reader, because a scroll timeline paces itself and would ignore a collapsed duration."
+    "notes": "Purely visual, and safe by default: the element is only ever hidden by the animation's own backwards fill, so an element whose animation never runs is visible rather than stranded, and nothing here changes reading order or focus order. Under reduced motion the duration and the stagger step both collapse, so everything is simply present at once; the scroll-driven form is switched off entirely for the same reader, because a scroll timeline paces itself and would ignore a collapsed duration. data-once only pauses and resumes the same collapsed animation, so it needs no reduced-motion branch of its own."
   },
-  "js": null,
+  "js": [
+    {
+      "module": "enter.js",
+      "optional": true,
+      "events": []
+    }
+  ],
   "support": {
     "unguarded": [
       "individual transform properties",
-      ":dir()"
+      ":dir()",
+      "IntersectionObserver"
     ],
     "guarded": [
       "animation-timeline: view()"

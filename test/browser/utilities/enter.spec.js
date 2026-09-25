@@ -1,5 +1,5 @@
 import { test, expect } from 'playwright/test';
-import { stage, style, rect, axe, painted } from '../lib/layout.js';
+import { stage, style, rect, axe, painted, withoutModule } from '../lib/layout.js';
 
 const open = async (page, width = 1000) => {
 	const response = await page.goto('/test/browser/fixtures/utilities/enter.html');
@@ -126,6 +126,41 @@ test.describe('enter', () => {
 		expect(await style(page, '#delayed', 'animation-delay')).toBe('0s');
 		await settled(page);
 		expect(await style(page, '#delayed', 'opacity')).toBe('1');
+	});
+
+	test('data-once pauses an off-screen arrival until it is first seen, and does not replay it', async ({ page }) => {
+		await open(page);
+		// Below the fold, like #view, so the paused state is worth something.
+		expect((await rect(page, '#once')).top).toBeGreaterThan(page.viewportSize().height);
+		const state = (page) => page.evaluate(() => {
+			const animation = document.getElementById('once').getAnimations()[0];
+			return animation && { playState: animation.playState, currentTime: animation.currentTime };
+		});
+		// enter.js pauses it from an 'animationstart' listener, which the
+		// browser dispatches on its own rendering schedule rather than in
+		// script order, so the pause can land a frame or two after load.
+		await expect.poll(async () => (await state(page))?.playState).toBe('paused');
+		await page.evaluate(() => document.getElementById('once').scrollIntoView());
+		await settled(page);
+		await painted(page);
+		expect(['running', 'finished']).toContain((await state(page))?.playState ?? 'finished');
+		expect(await style(page, '#once', 'opacity')).toBe('1');
+		const afterFirstView = (await state(page))?.currentTime;
+		// Away, then back: a second crossing must not restart what already ran.
+		await page.evaluate(() => window.scrollTo(0, 0));
+		await settled(page);
+		await page.evaluate(() => document.getElementById('once').scrollIntoView());
+		await settled(page);
+		const afterReturn = await state(page);
+		if (afterReturn) expect(afterReturn.currentTime).toBeGreaterThanOrEqual(afterFirstView ?? 0);
+		expect(await style(page, '#once', 'opacity')).toBe('1');
+	});
+
+	test('without the module, data-once arrives on load like any other .enter', async ({ page }) => {
+		await withoutModule(page, 'enter');
+		await open(page);
+		await painted(page);
+		expect(await style(page, '#once', 'opacity')).toBe('1');
 	});
 
 	test('has no accessibility violations', async ({ page }) => {

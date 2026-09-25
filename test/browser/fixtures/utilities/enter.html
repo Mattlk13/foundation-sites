@@ -5,7 +5,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Enter fixture</title>
 	<link rel="stylesheet" href="../../../../src/yeti.css">
-	<style>#stage { inline-size: 100%; } #spacer { block-size: 120vh; }</style>
+	<script type="module" src="../../../../src/utilities/enter/enter.js"></script>
+	<style>#stage { inline-size: 100%; } #spacer, #once-spacer { block-size: 120vh; }</style>
 </head>
 <body>
 	<main>
@@ -38,6 +39,9 @@
 
 				<div id="spacer"></div>
 				<p class="enter" id="view" data-enter="rise" data-view>Waits for the viewport where a scroll timeline exists.</p>
+
+				<div id="once-spacer"></div>
+				<p class="enter" id="once" data-once>Arrives once, the first time it is scrolled into view.</p>
 			</div>
 		</div>
 	</main>

@@ -52,6 +52,7 @@ Those three are the ones that repeat. Here is the whole list, every attribute th
 | `data-nowrap` | boolean | table, table (th, td) |
 | `data-numbered` | boolean | toc |
 | `data-numeric` | boolean | table (*) |
+| `data-once` | boolean | enter |
 | `data-orientation` | `horizontal`, `vertical` | tabs |
 | `data-panel` | `sheet`, `drawer`, `screen` | nav |
 | `data-placement` | `top`, `bottom`, `start`, `end` | tooltip |
