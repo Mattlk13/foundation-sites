@@ -63,13 +63,14 @@
 	/* A link under the pointer. */
 	/* --yeti-link-color-hover: var(--yeti-color-primary-strong); */
 
-	/* Shape. The radii default to a quarter, a half and all of the body text size. */
+	/* Shape. Each radius is a fraction of the body text size and grows with it;
+	   the value shown is about what it comes to at the smallest size. */
 
-	/* Small corners: inputs, code, badges. */
+	/* Small corners: inputs, code, badges. A quarter of the body size, about 0.25rem. */
 	/* --yeti-radius-sm: 0.25rem; */
-	/* Medium corners: cards, dialogs. */
+	/* Medium corners: cards, dialogs. Half the body size, about 0.5rem. */
 	/* --yeti-radius-md: 0.5rem; */
-	/* Large corners: hero panels. */
+	/* Large corners: hero panels. The body size, about 1rem. */
 	/* --yeti-radius-lg: 1rem; */
 	/* Every border a component draws. */
 	/* --yeti-border-width: 1px; */

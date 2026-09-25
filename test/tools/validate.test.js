@@ -673,6 +673,17 @@ test('validateThemes sees a rule hidden between comment markers inside strings',
 	assert.deepEqual(run(elementThemeTree(theme)).lines, ['src/themes/round.css:4: themes may only set --yeti-* tokens on :root (found ".card")']);
 });
 
+test('validateThemes reports leftover text at the end of a layer or nested at-rule block', () => {
+	assert.deepEqual(run(elementThemeTree('@layer yeti.theme {\n\th1 { color: red; }\n\tcolor: blue;\n}\n')).lines, ['src/themes/round.css:3: theme blocks may only hold rules (found "color: blue;")']);
+	assert.deepEqual(run(elementThemeTree('@layer yeti.theme {\n\t@media (width > 40rem) {\n\t\th1 { color: red; }\n\t\t@import "x.css";\n\t}\n}\n')).lines, ['src/themes/round.css:4: theme blocks may only hold rules (found "@import "x.css";")']);
+});
+
+test('validateThemes refuses a rule or at-rule nested inside an element rule', () => {
+	const message = (found) => `nest @media or @supports around the rule, not inside it; nested selectors are not allowed (found "${found}")`;
+	assert.deepEqual(run(elementThemeTree('@layer yeti.theme {\n\ta { color: red;\n\t\t&:hover { color: blue; }\n\t}\n}\n')).lines, [`src/themes/round.css:3: ${message('&:hover')}`]);
+	assert.deepEqual(run(elementThemeTree('@layer yeti.theme {\n\th1 {\n\t\t@media (width > 40rem) { font-size: 2rem; }\n\t}\n}\n')).lines, [`src/themes/round.css:3: ${message('@media (width > 40rem)')}`]);
+});
+
 const markerTree = (example) => layoutTree({
 	'src/layouts/rail/manifest.json': validManifest({
 		markers: [

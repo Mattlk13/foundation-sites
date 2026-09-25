@@ -123,7 +123,10 @@ export function validateThemes(root, files = themeFiles(root)) {
 				// A block opened inside a declaration block (nesting) has its prelude after the last ';'.
 				const sel = (inDeclarations() ? decls.slice(decls.lastIndexOf(';') + 1) : selector).trim();
 				const top = stack.at(-1)?.kind;
-				if (top === 'layer' || top === 'at') {
+				if (top === 'rule') {
+					errors.push({ file, line: selectorLine, message: `nest @media or @supports around the rule, not inside it; nested selectors are not allowed (found "${sel}")` });
+					stack.push({ kind: 'other' });
+				} else if (top === 'layer' || top === 'at') {
 					if (/^@(media|supports)\b/.test(sel)) {
 						stack.push({ kind: 'at' });
 					} else {
@@ -146,6 +149,11 @@ export function validateThemes(root, files = themeFiles(root)) {
 				selector = ''; decls = '';
 			} else if (ch === '}') {
 				const block = stack.pop();
+				// Text left over at the end of a block that holds rules (a statement
+				// such as @import, a stray declaration) is neither rule nor block.
+				if (['layer', 'at', 'media'].includes(block?.kind) && selector.trim()) {
+					errors.push({ file, line: selectorLine, message: `theme blocks may only hold rules (found "${selector.trim()}")` });
+				}
 				const declarations = sanitizeDeclarations(decls).split(';').map((d) => d.split(':')[0].trim()).filter(Boolean);
 				if (block?.kind === 'root') {
 					for (const prop of declarations) {
