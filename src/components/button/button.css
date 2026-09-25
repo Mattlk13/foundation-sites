@@ -117,6 +117,9 @@
 		clip-path: inset(50%);
 		white-space: nowrap;
 	}
+	/* The label holds its hidden input, so focusing it never scrolls the
+	   page to wherever an absolute box would otherwise land. */
+	.button:has(> input:is([type="radio"], [type="checkbox"])) { position: relative; }
 	.button:has(> input:focus-visible) {
 		outline: 2px solid var(--yeti-color-focus);
 		outline-offset: 2px;
