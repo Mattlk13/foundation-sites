@@ -1,5 +1,6 @@
 import { test, expect } from 'playwright/test';
-import { stage, rect, style, axe, withoutModule } from '../lib/layout.js';
+import { stage, rect, style, axe, withoutModule, painted } from '../lib/layout.js';
+import { PAGE_HELPERS } from '../lib/contrast.js';
 
 const open = async (page, width = 1000, hash = '') => {
 	const response = await page.goto(`/test/browser/fixtures/components/tabs.html${hash}`);
@@ -8,15 +9,22 @@ const open = async (page, width = 1000, hash = '') => {
 };
 const hidden = (page, id) => page.evaluate((i) => document.getElementById(i).hidden, id);
 const selected = (page, id) => page.evaluate((i) => document.getElementById(i).getAttribute('aria-selected'), id);
-/** Resolves a color token by giving a probe element that token as its background. */
+/** Resolves a color token to sRGB bytes, via a probe element carrying it as a
+ *  background. Comparing painted bytes rather than the computed color's raw
+ *  serialization is what makes this portable: the same oklch value reaches
+ *  the tab's `color` through an extra custom-property indirection than the
+ *  probe's `background-color` does, and Firefox serializes the computed
+ *  value as oklab with a rounding difference between the two paths, even
+ *  though the painted color is identical. */
 const colorOf = (page, name) => page.evaluate((n) => {
 	const probe = document.createElement('div');
 	probe.style.cssText = `background-color: var(${n})`;
 	document.body.append(probe);
-	const value = getComputedStyle(probe).backgroundColor;
+	const value = window.__yeti.rgb(getComputedStyle(probe).backgroundColor);
 	probe.remove();
 	return value;
 }, name);
+const rgbOf = (page, selector, prop) => page.evaluate(([s, p]) => window.__yeti.rgb(getComputedStyle(document.querySelector(s))[p]), [selector, prop]);
 
 test.describe('tabs', () => {
 	test('without the module every panel is readable', async ({ page }) => {
@@ -77,13 +85,18 @@ test.describe('tabs', () => {
 	});
 
 	test('data-emphasis="high" fills the selected tab with the variant', async ({ page }) => {
+		await page.addInitScript(PAGE_HELPERS);
 		await open(page);
+		// The tab's color (unlike its background-color) transitions, and the
+		// initial selection at load starts that transition; read after it
+		// settles, the way the contrast suite does for the same reason.
+		await painted(page);
 		const variant = await colorOf(page, '--yeti-color-primary');
 		const onVariant = await colorOf(page, '--yeti-on-primary');
-		expect(await style(page, '#f1', 'background-color')).toBe(variant);
-		expect(await style(page, '#f1', 'color')).toBe(onVariant);
+		expect(await rgbOf(page, '#f1', 'backgroundColor')).toEqual(variant);
+		expect(await rgbOf(page, '#f1', 'color')).toEqual(onVariant);
 		// The unselected tab is not filled.
-		expect(await style(page, '#f2', 'background-color')).not.toBe(variant);
+		expect(await rgbOf(page, '#f2', 'backgroundColor')).not.toEqual(variant);
 	});
 
 	test('has no accessibility violations', async ({ page }) => {
