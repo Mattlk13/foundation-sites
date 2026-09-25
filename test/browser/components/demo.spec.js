@@ -7,15 +7,19 @@ const open = async (page, width = 1000) => {
 	await stage(page, width);
 	await painted(page);
 };
-// Drag the browser's own resize grip, which sits in the box's bottom end corner.
-// The fixture stacks five boxes, so a lower one's grip can sit below the
-// viewport; scrolling it into view first keeps the drag on-screen.
+// Drag the grip the module puts on the box's end edge. The fixture stacks
+// several boxes, so a lower one's grip can sit below the viewport; scrolling
+// it into view first keeps the drag on-screen.
+const gripOf = (selector) => `${selector} + [role="separator"]`;
 const dragGrip = async (page, selector, dx) => {
-	await page.locator(selector).scrollIntoViewIfNeeded();
-	const r = await rect(page, selector);
-	await page.mouse.move(r.right - 4, r.bottom - 4);
+	const grip = gripOf(selector);
+	await page.locator(grip).scrollIntoViewIfNeeded();
+	const r = await rect(page, grip);
+	const x = r.left + r.width / 2;
+	const y = r.top + r.height / 2;
+	await page.mouse.move(x, y);
 	await page.mouse.down();
-	await page.mouse.move(r.right - 4 + dx, r.bottom - 4, { steps: 10 });
+	await page.mouse.move(x + dx, y, { steps: 10 });
 	await page.mouse.up();
 };
 // The box is box-sizing: content-box, so its rect is bigger than the width
@@ -29,17 +33,14 @@ const content = async (page, sel) => {
 };
 
 // WebKit on Linux, which is what CI runs, does not resize a box from a
-// synthetic pointer on the grip: the drag lands and nothing moves. The four
-// tests that depend on a real drag are skipped there; the other engines, and
-// WebKit on a Mac, cover them.
+// synthetic pointer on the browser's own corner: the drag lands and nothing
+// moves. Only the height drag uses that corner now, and it is skipped there.
 const dragless = ({ browserName }) => browserName === 'webkit' && process.platform === 'linux';
 
 test.describe('demo', () => {
-	test('the preview is a size container the reader can drag narrower', async ({ page, browserName }) => {
-		test.skip(dragless({ browserName }), 'Linux WebKit ignores a drag on the resize grip');
+	test('the preview is a size container the reader can drag narrower', async ({ page }) => {
 		await open(page);
 		expect(await style(page, '#framed-preview', 'container-type')).toBe('inline-size');
-		expect(await style(page, '#framed-preview', 'resize')).toBe('horizontal');
 		const before = await rect(page, '#framed-preview');
 		await dragGrip(page, '#framed-preview', -300);
 		const after = await rect(page, '#framed-preview');
@@ -72,7 +73,7 @@ test.describe('demo', () => {
 	test('data-resize="both" lets the reader drag the box taller, but not shorter than the sm height', async ({ page, browserName }) => {
 		test.skip(dragless({ browserName }), 'Linux WebKit ignores a drag on the resize grip');
 		await open(page);
-		expect(await style(page, '#tall-preview', 'resize')).toBe('both');
+		expect(await style(page, '#tall-preview', 'resize')).toBe('vertical');
 		// The xl box is taller than the default viewport, and Firefox loses a drag
 		// that leaves the viewport, so make room for the box and the drag below it.
 		await page.setViewportSize({ width: 1280, height: 1100 });
@@ -88,8 +89,7 @@ test.describe('demo', () => {
 		expect((await content(page, '#tall-preview')).height).toBeCloseTo(await token(page, '--yeti-height-sm'), 0);
 	});
 
-	test('a direct card changes shape as the box is dragged below md', async ({ page, browserName }) => {
-		test.skip(dragless({ browserName }), 'Linux WebKit ignores a drag on the resize grip');
+	test('a direct card changes shape as the box is dragged below md', async ({ page }) => {
 		await open(page);
 		// At lg the card is a row: the picture is a fraction of its width.
 		const wide = await Promise.all([rect(page, '#direct-card'), rect(page, '#direct-img')]);
@@ -180,6 +180,10 @@ test.describe('demo', () => {
 		await withoutModule(page, 'demo');
 		await open(page);
 		expect(await page.getAttribute('#scripted-frame', 'srcdoc')).toBeNull();
+		// No grip either: the browser's own corner resizes the width.
+		expect(await page.locator('.demo [role="separator"]').count()).toBe(0);
+		expect(await style(page, '#direct-preview', 'resize')).toBe('horizontal');
+		expect(await style(page, '#tall-preview', 'resize')).toBe('both');
 		expect(await page.evaluate(() => document.getElementById('created-box').childElementCount)).toBe(0);
 		await page.click('#scripted summary');
 		expect((await rect(page, '#scripted-code')).height).toBeGreaterThan(0);
@@ -198,12 +202,11 @@ test.describe('demo', () => {
 		id,
 	);
 
-	test('the label names the width stop the box is at and follows a drag', async ({ page, browserName }) => {
-		test.skip(dragless({ browserName }), 'Linux WebKit ignores a drag on the resize grip');
+	test('the label names the width stop the box is at and follows a drag', async ({ page }) => {
 		await open(page, 1400);
-		// The stage is wider than the default 1280px viewport, so the box's own
-		// resize grip would sit off-screen and undraggable; widen the viewport
-		// to fit the whole box before reading and dragging its corner.
+		// The stage is wider than the default 1280px viewport, so the grip on
+		// the box's end edge would sit off-screen and undraggable; widen the
+		// viewport to fit the whole box before reading and dragging it.
 		await page.setViewportSize({ width: 1500, height: 900 });
 		// Full width at 1400px is past 2xl (80rem = 1280px).
 		expect(await label(page, 'framed-preview')).toBe('2xl');
@@ -234,5 +237,101 @@ test.describe('demo', () => {
 		await page.evaluate(() => { document.getElementById('narrow-preview').style.inlineSize = '300px'; });
 		await painted(page);
 		expect(await label(page, 'narrow-preview')).toBe('xs');
+	});
+
+	// The grip. Its logic (drag clamping, stepping, stop names) is unit-tested
+	// in test/tools/demo.test.js; these check the wiring's end states.
+	const width = async (page, sel) => (await content(page, sel)).width;
+	const attrs = (page, sel) => page.evaluate((s) => {
+		const el = document.querySelector(s);
+		return Object.fromEntries(['aria-orientation', 'aria-label', 'tabindex', 'aria-valuemin', 'aria-valuemax', 'aria-valuenow', 'aria-valuetext'].map((a) => [a, el.getAttribute(a)]));
+	}, sel);
+
+	test('every box gets one grip, a separator named from the marker and valued in pixels', async ({ page }) => {
+		await open(page);
+		const counts = await page.evaluate(() => [...document.querySelectorAll('.demo')].map((f) => f.querySelectorAll(':scope > [role="separator"]').length));
+		expect(counts.every((n) => n === 1)).toBe(true);
+		const a = await attrs(page, gripOf('#direct-preview'));
+		expect(a['aria-orientation']).toBe('vertical');
+		expect(a['aria-label']).toBe('Resize Direct card');
+		expect(a.tabindex).toBe('0');
+		const lg = await token(page, '--yeti-width-lg');
+		expect(Number(a['aria-valuenow'])).toBeCloseTo(lg, 0);
+		expect(Number(a['aria-valuemin'])).toBeCloseTo(await token(page, '--yeti-width-xs'), 0);
+		expect(Number(a['aria-valuemax'])).toBeGreaterThan(lg);
+		expect(a['aria-valuetext']).toBe(`lg, ${Math.round(lg)} pixels`);
+	});
+
+	test('the grip sits on the box\'s end edge, centred on its height', async ({ page }) => {
+		await open(page);
+		for (const id of ['#direct-preview', '#framed-preview', '#mid-preview']) {
+			const [box, grip] = await Promise.all([rect(page, id), rect(page, gripOf(id))]);
+			expect(grip.left + grip.width / 2, id).toBeCloseTo(box.right, 0);
+			expect(grip.top + grip.height / 2, id).toBeCloseTo(box.top + box.height / 2, 0);
+		}
+	});
+
+	test('a box with the grip leaves the width to it', async ({ page }) => {
+		await open(page);
+		expect(await style(page, '#direct-preview', 'resize')).toBe('none');
+		expect(await style(page, '#tall-preview', 'resize')).toBe('vertical');
+	});
+
+	test('dragging the grip moves the box\'s edge by the travel, and the label and value follow', async ({ page }) => {
+		await open(page);
+		const before = await width(page, '#direct-preview');
+		await dragGrip(page, '#direct-preview', -300);
+		const after = await width(page, '#direct-preview');
+		expect(Math.abs(after - (before - 300))).toBeLessThanOrEqual(1);
+		// 768 - 300 = 468px, which is at or above sm (384) and below md (512).
+		expect(await label(page, 'direct-preview')).toBe('sm');
+		expect((await attrs(page, gripOf('#direct-preview')))['aria-valuetext']).toBe(`sm, ${Math.round(after)} pixels`);
+		// The grip went with the edge.
+		const [box, grip] = await Promise.all([rect(page, '#direct-preview'), rect(page, gripOf('#direct-preview'))]);
+		expect(grip.left + grip.width / 2).toBeCloseTo(box.right, 0);
+	});
+
+	test('dragging the grip of a framed box works, and the frame takes the pointer back after', async ({ page }) => {
+		await open(page);
+		const before = await width(page, '#framed-preview');
+		await dragGrip(page, '#framed-preview', -200);
+		expect(Math.abs(await width(page, '#framed-preview') - (before - 200))).toBeLessThanOrEqual(1);
+		expect(await style(page, '#frame', 'pointer-events')).toBe('auto');
+	});
+
+	test('arrow keys step between width stops; Home and End reach the min and the max', async ({ page }) => {
+		await open(page);
+		const md = await token(page, '--yeti-width-md');
+		await page.evaluate((w) => { document.getElementById('framed-preview').style.inlineSize = `${w}px`; }, md);
+		const grip = gripOf('#framed-preview');
+		await page.focus(grip);
+		await page.keyboard.press('ArrowRight');
+		expect(await width(page, '#framed-preview')).toBeCloseTo(await token(page, '--yeti-width-lg'), 0);
+		expect((await attrs(page, grip))['aria-valuetext']).toMatch(/^lg, /);
+		await page.keyboard.press('ArrowLeft');
+		await page.keyboard.press('ArrowLeft');
+		expect(await width(page, '#framed-preview')).toBeCloseTo(await token(page, '--yeti-width-sm'), 0);
+		await page.keyboard.press('Home');
+		expect(await width(page, '#framed-preview')).toBeCloseTo(await token(page, '--yeti-width-xs'), 0);
+		await page.keyboard.press('End');
+		const [stageBox, border] = await Promise.all([rect(page, '#stage'), px(page, '#framed-preview', 'border-left-width')]);
+		expect(await width(page, '#framed-preview')).toBeCloseTo(stageBox.width - 2 * border, 0);
+		expect(Number((await attrs(page, grip))['aria-valuenow'])).toBe(Math.round(stageBox.width - 2 * border));
+	});
+
+	// The one test that matters most in WebKit: Safari draws no resize corner
+	// on the box at all, which is why the grip exists. In the all-engines run
+	// this proves the grip is there and moves the box there too.
+	test('the grip has a size and a key moves the box, in every engine', async ({ page }) => {
+		await open(page);
+		const grip = gripOf('#direct-preview');
+		const r = await rect(page, grip);
+		expect(r.width).toBeGreaterThan(0);
+		expect(r.height).toBeGreaterThan(0);
+		const before = await width(page, '#direct-preview');
+		await page.focus(grip);
+		await page.keyboard.press('ArrowLeft');
+		expect(await width(page, '#direct-preview')).toBeCloseTo(await token(page, '--yeti-width-md'), 0);
+		expect(await width(page, '#direct-preview')).toBeLessThan(before);
 	});
 });

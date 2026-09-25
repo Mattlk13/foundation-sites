@@ -39,10 +39,17 @@
     { "name": "--yeti-color-text-muted", "public": true, "description": "The caption's color, the stop label's, and the summary's at rest." },
     { "name": "--yeti-font-mono", "public": true, "description": "The stop label's typeface, so it reads as a readout, not prose." },
     { "name": "--yeti-leading-md", "public": true, "description": "Line height of the bar and the stop label." },
+    { "name": "--yeti-color-border-strong", "public": true, "description": "The grip at rest." },
+    { "name": "--yeti-color-focus", "public": true, "description": "The grip and the box's end edge while the grip is hovered, focused or dragged." },
+    { "name": "--yeti-color-surface", "public": true, "description": "The two short lines across the grip." },
+    { "name": "--yeti-radius-full", "public": true, "description": "The grip's pill shape." },
+    { "name": "--yeti-duration-fast", "public": true, "description": "The grip's and the edge's color change when engaged." },
     { "name": "--_yeti-width", "public": false },
     { "name": "--_yeti-height", "public": false },
     { "name": "--_yeti-demo-inset", "public": false },
-    { "name": "--_yeti-demo-max", "public": false }
+    { "name": "--_yeti-demo-max", "public": false },
+    { "name": "--_yeti-demo-grip", "public": false },
+    { "name": "--_yeti-demo-edge", "public": false }
   ],
   "a11y": {
     "requiredAttributes": [],

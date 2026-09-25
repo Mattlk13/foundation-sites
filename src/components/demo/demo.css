@@ -1,11 +1,12 @@
 /* Demo: a live example in a box the reader can drag narrower and wider,
    and taller when the demo allows it. The box is a size container, so whatever Yeti markup is inside
    responds the way it would on a real page; the demo is the framework's own
-   model applied to itself, not a picture of it. The resize handle is the
-   browser's, which is why there is no script here and why it works with a
-   mouse or trackpad only; the docs say so. A bar across the top of the box
-   names the example and, at its end, the width stop the box is at; that
-   label is in this file's second half. */
+   model applied to itself, not a picture of it. Without demo.js the resize
+   handle is the browser's, which works with a mouse or trackpad only; with
+   it, a grip on the box's end edge takes over the width for mouse, touch and
+   keyboard, and is drawn at the end of this file. A bar across the top of
+   the box names the example and, at its end, the width stop the box is at;
+   that label is in this file's second half. */
 @layer yeti.components {
 	.demo > * { margin: 0; }
 	.demo > figcaption {
@@ -176,4 +177,69 @@
 	@container (inline-size >= 64rem) { .demo > [data-preview]::after { content: "xl"; } }
 	/* --yeti-width-2xl (80rem) */
 	@container (inline-size >= 80rem) { .demo > [data-preview]::after { content: "2xl"; } }
+
+	/* The grip, which demo.js inserts right after the box as a separator.
+	   Where it sits: the box scrolls, so anything inside it is clipped at the
+	   padding edge and could never straddle the border, and would scroll away
+	   with direct markup. So the grip is the box's sibling, and the figure
+	   becomes a one-column grid in which the box and the grip share one
+	   area: centred on the block axis of that area, the grip is centred on
+	   the box, which has a fixed height, so it stays in view whatever
+	   scrolls inside, and at mid-height it is clear of the bar and the stop
+	   label at the top. On the inline axis it starts at the area's start and
+	   is pushed along by the box's outer width, which the module writes to
+	   --_yeti-demo-edge whenever the box changes size, less half its own
+	   width, so its middle is on the edge in either direction. None of this
+	   applies without the module: no grip, no grid. */
+	.demo:has(> [data-preview] + [role="separator"]) {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+		grid-template-areas: "caption" "preview" "code";
+	}
+	.demo:has(> [data-preview] + [role="separator"]) > figcaption { grid-area: caption; }
+	.demo:has(> [data-preview] + [role="separator"]) > details { grid-area: code; }
+	/* The grip takes the width; the native corner keeps only height, and
+	   only where the demo allows it, so no second grip appears. */
+	.demo > [data-preview]:has(+ [role="separator"]) {
+		grid-area: preview;
+		justify-self: start;
+		resize: none;
+		transition: border-color var(--yeti-duration-fast);
+	}
+	.demo[data-resize="both"] > [data-preview]:has(+ [role="separator"]) { resize: vertical; }
+	.demo > [data-preview] + [role="separator"] {
+		--_yeti-demo-grip: var(--yeti-color-border-strong);
+		/* The box's outer width, which the module writes inline on the grip;
+		   the area's full width until it does. */
+		--_yeti-demo-edge: 100%;
+		grid-area: preview;
+		justify-self: start;
+		align-self: center;
+		position: relative;
+		z-index: 1;
+		inline-size: 0.375rem;
+		block-size: 2.5rem;
+		margin-inline-start: calc(var(--_yeti-demo-edge) - 0.1875rem);
+		border-radius: var(--yeti-radius-full);
+		/* Two short lines across the pill, in the surface color. */
+		background:
+			linear-gradient(var(--yeti-color-surface) 0 0) 50% calc(50% - 0.125rem) / 50% 1px no-repeat,
+			linear-gradient(var(--yeti-color-surface) 0 0) 50% calc(50% + 0.125rem) / 50% 1px no-repeat,
+			var(--_yeti-demo-grip);
+		cursor: col-resize;
+		touch-action: none;
+		user-select: none;
+		transition: background-color var(--yeti-duration-fast);
+	}
+	/* The pill is narrow to look at and wider to hit, for a finger. */
+	.demo > [data-preview] + [role="separator"]::before {
+		content: "";
+		position: absolute;
+		inset: -0.5rem -0.625rem;
+	}
+	/* Engaged, under the pointer, focused from the keyboard or held in a
+	   drag, the pill and the box's whole end edge take the focus color, so
+	   the edge reads as the thing that moves. */
+	.demo > [data-preview] + [role="separator"]:is(:hover, :focus-visible, :active) { --_yeti-demo-grip: var(--yeti-color-focus); }
+	.demo > [data-preview]:has(+ [role="separator"]:is(:hover, :focus-visible, :active)) { border-inline-end-color: var(--yeti-color-focus); }
 }
