@@ -69,13 +69,16 @@
 	}
 
 	/* A switch: a checkbox with role="switch", drawn as a track with a thumb
-	   that slides to the end and a track that takes the variant color. */
+	   that slides to the end and a track that takes the variant color. The
+	   off track and thumb have their own tokens, so a theme that darkens the
+	   control border can keep off distinct from on; the on thumb is the
+	   control surface whatever they are. */
 	.field input[type="checkbox"][role="switch"] {
 		inline-size: 2.25em;
 		border-radius: var(--yeti-radius-full);
-		background-color: var(--yeti-control-border);
-		border-color: var(--yeti-control-border);
-		background-image: radial-gradient(circle, var(--yeti-control-surface) 0 0.4em, transparent 0.45em);
+		background-color: var(--yeti-switch-track);
+		border-color: var(--yeti-switch-track);
+		background-image: radial-gradient(circle, var(--yeti-switch-thumb) 0 0.4em, transparent 0.45em);
 		background-size: 1.25em 1.25em;
 		background-repeat: no-repeat;
 		background-position: 0% 50%;
@@ -84,6 +87,7 @@
 	.field input[type="checkbox"][role="switch"]:checked {
 		background-color: var(--_yeti-variant);
 		border-color: var(--_yeti-variant);
+		background-image: radial-gradient(circle, var(--yeti-control-surface) 0 0.4em, transparent 0.45em);
 		background-position: 100% 50%;
 		box-shadow: none;
 	}
