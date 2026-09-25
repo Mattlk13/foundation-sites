@@ -156,6 +156,29 @@ test.describe('enter', () => {
 		expect(await style(page, '#once', 'opacity')).toBe('1');
 	});
 
+	test('a staggered data-once list is never paused a second time once it has been released', async ({ page }) => {
+		await open(page);
+		expect((await rect(page, '#once-stagger')).top).toBeGreaterThan(page.viewportSize().height);
+		// Brief enough that most of the nine children have not yet reached
+		// their own delayed 'animationstart': only the earliest ones are
+		// paused-and-resumed here, the rest are still silently ticking
+		// through a delay enter.js has not touched yet.
+		await page.evaluate(() => document.getElementById('once-stagger').scrollIntoView());
+		await page.waitForTimeout(150);
+		await page.evaluate(() => window.scrollTo(0, 0));
+		// Long enough for every child's own delay and duration to have run
+		// its course (the ninth waits 1.6s and then takes 0.6s), whether or
+		// not the page is looking at it: once released, enter.js must leave
+		// every one of them alone rather than catching a late
+		// 'animationstart' and pausing it with nothing left to resume it.
+		await page.waitForTimeout(3000);
+		await page.evaluate(() => document.getElementById('once-stagger').scrollIntoView());
+		await settled(page);
+		await painted(page);
+		const opacities = await page.evaluate(() => [1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => getComputedStyle(document.getElementById(`os${n}`)).opacity));
+		expect(opacities).toEqual(Array(9).fill('1'));
+	});
+
 	test('without the module, data-once arrives on load like any other .enter', async ({ page }) => {
 		await withoutModule(page, 'enter');
 		await open(page);

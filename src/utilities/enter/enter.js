@@ -27,23 +27,39 @@
 // already collapsed the animation's duration to nothing under that
 // preference, so pausing it and playing it back later still leaves the
 // element settled at once, exactly as an ordinary .enter would.
+const released = new WeakSet();
 const once = new IntersectionObserver((entries) => {
 	for (const entry of entries) {
 		if (!entry.isIntersecting) continue;
 		for (const animation of entry.target.getAnimations({ subtree: true })) animation.play();
-		// One arrival, ever: seen once is done, so nothing here watches for a
-		// second crossing.
+		// Released, not just unobserved: pinning currentTime back to 0 below
+		// can put a delayed child before its own delay again, so playing it
+		// here can still end with one more 'animationstart' arriving later,
+		// on its own, once that delay runs out a second time. unobserve()
+		// alone stops this callback firing again; it does nothing about that
+		// later event reaching the listener below and pausing a child no
+		// longer being watched. released does: the listener checks it first
+		// and leaves a released element alone for good, seen once or not.
+		released.add(entry.target);
 		once.unobserve(entry.target);
 	}
 }, { threshold: 0.15 }); // a sliver over the edge is not yet something the reader can see
 
 const watching = new WeakSet();
+// Paused once each: the same currentTime rewind can, on a delayed child,
+// put it back before its own delay and so queue up exactly the later,
+// unrequested 'animationstart' the comment above describes. Between that
+// and release, pausing the same animation a second time would only rewind
+// it again for no reason.
+const paused = new WeakSet();
 document.addEventListener('animationstart', (event) => {
 	const el = event.target.closest('.enter[data-once]');
 	if (!el) return;
+	if (released.has(el) || paused.has(event.animation)) return;
 	const r = el.getBoundingClientRect();
 	const inView = r.bottom > 0 && r.right > 0 && r.top < window.innerHeight && r.left < window.innerWidth;
 	if (inView) return;
+	paused.add(event.animation);
 	event.animation.pause();
 	// Pinned back to the very start: 'animationstart' can fire a few
 	// milliseconds into the active phase, and left there the element would

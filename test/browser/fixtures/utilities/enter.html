@@ -6,7 +6,10 @@
 	<title>Enter fixture</title>
 	<link rel="stylesheet" href="../../../../src/yeti.css">
 	<script type="module" src="../../../../src/utilities/enter/enter.js"></script>
-	<style>#stage { inline-size: 100%; } #spacer, #once-spacer { block-size: 120vh; }</style>
+	<style>
+		#stage { inline-size: 100%; }
+		#spacer, #once-spacer, #once-stagger-spacer { block-size: 120vh; }
+	</style>
 </head>
 <body>
 	<main>
@@ -42,6 +45,19 @@
 
 				<div id="once-spacer"></div>
 				<p class="enter" id="once" data-once>Arrives once, the first time it is scrolled into view.</p>
+
+				<div id="once-stagger-spacer"></div>
+				<ul class="cluster enter" id="once-stagger" data-enter="rise" data-once data-stagger data-gap="sm" role="list">
+					<li class="card" id="os1"><p>One</p></li>
+					<li class="card" id="os2"><p>Two</p></li>
+					<li class="card" id="os3"><p>Three</p></li>
+					<li class="card" id="os4"><p>Four</p></li>
+					<li class="card" id="os5"><p>Five</p></li>
+					<li class="card" id="os6"><p>Six</p></li>
+					<li class="card" id="os7"><p>Seven</p></li>
+					<li class="card" id="os8"><p>Eight</p></li>
+					<li class="card" id="os9"><p>Nine</p></li>
+				</ul>
 			</div>
 		</div>
 	</main>
