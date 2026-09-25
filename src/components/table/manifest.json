@@ -10,7 +10,8 @@
     { "name": "data-striped", "type": "boolean", "description": "Tint every other body row." },
     { "name": "data-hover", "type": "boolean", "description": "Tint the row under the pointer." },
     { "name": "data-border", "type": "boolean", "description": "Borders around every cell instead of lines between rows, as a box draws its border." },
-    { "name": "data-nowrap", "type": "boolean", "description": "Every cell keeps its line; put the table in a scroller." }
+    { "name": "data-nowrap", "type": "boolean", "description": "Every cell keeps its line; put the table in a scroller." },
+    { "name": "data-fixed", "type": "boolean", "description": "Fixed table layout: the columns share the width equally, whatever their content. A width on a first-row header cell makes that column wider and the rest share what is left." }
   ],
   "classes": [],
   "children": [
@@ -21,7 +22,8 @@
   ],
   "markers": [
     { "name": "data-numeric", "type": "boolean", "on": "*", "description": "Tabular figures, so digits line up, on any element; on a table's cells and headers the column is end-aligned too." },
-    { "name": "data-nowrap", "type": "boolean", "on": "th, td", "description": "This cell keeps its line." }
+    { "name": "data-nowrap", "type": "boolean", "on": "th, td", "description": "This cell keeps its line." },
+    { "name": "data-align", "type": "enum", "values": ["start", "center", "end"], "on": "th, td, tr", "description": "Aligns the text of this cell, or of every cell in this row. A cell's own data-align or data-numeric outranks its row's." }
   ],
   "tokens": [
     { "name": "--yeti-table-stripe", "public": true, "description": "Fill of even rows with data-striped." },

@@ -431,10 +431,12 @@ Attributes:
 - data-hover (boolean) — Tint the row under the pointer.
 - data-border (boolean) — Borders around every cell instead of lines between rows, as a box draws its border.
 - data-nowrap (boolean) — Every cell keeps its line; put the table in a scroller.
+- data-fixed (boolean) — Fixed table layout: the columns share the width equally, whatever their content. A width on a first-row header cell makes that column wider and the rest share what is left.
 
 On children:
 - data-numeric on * (boolean) — Tabular figures, so digits line up, on any element; on a table's cells and headers the column is end-aligned too.
 - data-nowrap on th, td (boolean) — This cell keeps its line.
+- data-align on th, td, tr: start | center | end — Aligns the text of this cell, or of every cell in this row. A cell's own data-align or data-numeric outranks its row's.
 
 ## tabs (component, class="tabs")
 

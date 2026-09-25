@@ -58,6 +58,24 @@ test.describe('table', () => {
 		expect(await style(page, '#g2', 'white-space')).toBe('normal');
 	});
 
+	test('data-fixed shares the width equally between the columns', async ({ page }) => {
+		await open(page);
+		const widths = (await rects(page, '#fixed > thead th')).map((r) => r.width);
+		for (const w of widths) expect(w).toBeCloseTo(widths[0], 0);
+	});
+
+	test('data-align aligns a cell, or a row\'s cells, and an icon centers with it', async ({ page }) => {
+		await open(page);
+		expect(await style(page, '#one-cell', 'text-align')).toBe('center');
+		expect(await style(page, '#end-cell', 'text-align')).toBe('end');
+		expect(await style(page, '#centered', 'text-align')).toBe('center');
+		// A cell's own value and data-numeric outrank the row's.
+		expect(await style(page, '#feature', 'text-align')).toBe('start');
+		expect(await style(page, '#numbered', 'text-align')).toBe('end');
+		const [cell, tick] = await Promise.all([rect(page, '#ticked'), rect(page, '#tick')]);
+		expect(tick.left + tick.width / 2).toBeCloseTo(cell.left + cell.width / 2, 0);
+	});
+
 	test('a sticky head pins with a surface and keeps its rule', async ({ page }) => {
 		await open(page);
 		await page.evaluate(() => { const t = document.getElementById('pinned'); window.scrollTo(0, t.getBoundingClientRect().top + window.scrollY + 300); });
