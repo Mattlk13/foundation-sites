@@ -19,7 +19,7 @@ test('bundle writes a header and each file in cascade order with source comments
 	const rail = r.css.indexOf('/* src/layouts/rail/rail.css */');
 	const entry = r.css.indexOf('/* src/yeti.css */');
 	assert.ok(layers > 0 && layers < rail && rail < entry);
-	assert.ok(r.css.includes('@layer yeti.reset, yeti.base, yeti.layouts, yeti.components, yeti.utilities;'));
+	assert.ok(r.css.includes('@layer yeti.reset, yeti.base, yeti.theme, yeti.layouts, yeti.components, yeti.utilities;'));
 	assert.ok(!r.css.includes('@import'));
 });
 
@@ -168,4 +168,14 @@ test('build copies themes to dist/themes', () => {
 	assert.deepEqual(r.errors, []);
 	assert.equal(fs.readFileSync(path.join(root, 'dist/themes/round.css'), 'utf8'), ':root { --yeti-radius-md: 0; }\n');
 	assert.ok(!fs.existsSync(path.join(root, 'dist/css/themes')));
+});
+
+test('build copies the starter to dist/starter and not into dist/css', () => {
+	const root = makeTree(treeWithPkg({ 'src/starter/index.html': '<!doctype html>\n<title>x</title>\n', 'src/starter/theme.css': '/* :root { } */\n' }));
+	const r = build({ root });
+	assert.deepEqual(r.errors, []);
+	assert.equal(fs.readFileSync(path.join(root, 'dist/starter/index.html'), 'utf8'), '<!doctype html>\n<title>x</title>\n');
+	assert.equal(fs.readFileSync(path.join(root, 'dist/starter/theme.css'), 'utf8'), '/* :root { } */\n');
+	assert.ok(r.outputs.includes('starter/index.html') && r.outputs.includes('starter/theme.css'));
+	assert.ok(!fs.existsSync(path.join(root, 'dist/css/starter')));
 });

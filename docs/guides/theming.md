@@ -52,7 +52,13 @@ The comment beside each color token in `yeti.css` gives its hex equivalent in li
 
 `:root` declares `color-scheme: light dark`, so Yeti follows the visitor's preference and every color token is written once with `light-dark()`. To force one scheme for a whole page or a single panel, set `color-scheme: light` or `color-scheme: dark` on that element; everything inside it flips.
 
-A page that must stay one way, a paper sheet that is always light, sets `--yeti-color-scheme: light` (or `dark`). It is a token so a theme file can say it; a theme has no selectors but `:root` and no properties but tokens, and `color-scheme` is neither. A theme that pins the scheme still has its own `@media (prefers-color-scheme: dark)` blocks applied for a visitor who prefers dark, because the query reads the visitor and not the page, so a pinned theme should not carry any.
+```css
+@layer yeti.theme {
+	html { color-scheme: light; }
+}
+```
+
+A page pinned to one scheme sets `color-scheme` on the root, and every color in Yeti follows because each is a `light-dark()` pair; `dark` pins it the other way; forcing a scheme on any other element still flips everything below it. A theme that pins the scheme still has its own `@media (prefers-color-scheme: dark)` blocks applied for a visitor who prefers dark, because the query reads the visitor and not the page, so a pinned theme should not carry any.
 
 ## The scale
 
@@ -79,14 +85,37 @@ A variable font with a width axis has three more knobs: `--yeti-stretch-text`, `
 
 ## Make a theme
 
-Everything above sets tokens inline, in your own `<style>` block. A theme is the same idea moved into its own file: a stylesheet of token values on `:root` and nothing else, loaded after `yeti.css` so its values win.
+Everything above sets tokens inline, in your own `<style>` block. A theme is the same idea moved into its own file: a stylesheet of token values on `:root`, and optionally a few rules for bare HTML elements, loaded after `yeti.css` so its values win.
 
 ```html
 <link rel="stylesheet" href="/css/yeti.css">
 <link rel="stylesheet" href="/css/themes/soft.css">
 ```
 
-A theme file has no selectors but `:root` (optionally split by `@media (prefers-color-scheme: …)` for a value that should only change in one scheme), and no properties but `--yeti-*` public tokens — the validator refuses a theme that sets a class, an element, or a token it doesn't recognise. Beyond the hues, chroma, and scale already covered above, each component publishes a few tokens of its own as its skin surface: `--yeti-button-radius`, `--yeti-card-padding`, `--yeti-badge-radius`, and the rest are listed on the [Tokens](../tokens.md) page. Setting those, rather than editing a component's CSS, is what makes a theme portable: it is data, not code, so it survives an upgrade to a newer Yeti untouched.
+A theme file has two parts. The first is tokens: `:root` blocks (optionally split by `@media (prefers-color-scheme: …)` for a value that should only change in one scheme) setting `--yeti-*` public tokens, outside any layer. The second is element rules, inside `@layer yeti.theme { … }`: rules that style bare HTML elements, `h1`, `p`, `a`, `figcaption`, `blockquote` and the rest, with descendant and child combinators, the `:hover`, `:focus-visible`, `:active` and `:visited` states, and the `::selection`, `::marker`, `::placeholder`, `::first-line` and `::first-letter` pseudo-elements, nesting `@media` and `@supports` as needed. The validator refuses a class, id or attribute selector, `*`, the sibling combinators `+` and `~`, `:is()`, `:where()`, `:has()` or `:not()`, any pseudo-class other than `:hover`, `:focus-visible`, `:active` and `:visited`, a custom property inside the layer, a rule outside it, and a token it doesn't recognize.
+
+This theme uses both. The tokens set the accent and space out the headings' letters, as capitals want; the element rules set headings in engraved capitals, italicize captions, and draw the quotation's bar at the border width instead of its heavier default:
+
+```css
+@layer yeti.reset, yeti.base, yeti.theme, yeti.layouts, yeti.components, yeti.utilities;
+
+:root {
+	--yeti-hue-primary: 200;
+	--yeti-tracking-heading: 0.04em;
+}
+
+@layer yeti.theme {
+	h1, h2, h3 { text-transform: uppercase; }
+	figcaption { font-style: italic; }
+	blockquote { border-inline-start-width: var(--yeti-border-width); }
+}
+```
+
+The first line repeats Yeti's layer order, the one statement a theme may make besides its blocks: a browser fixes the order of layers when it first meets them, so a theme that loads before `yeti.css` without it would put its element rules below the base instead of above it.
+
+A component's skin stays token-only: a class name belongs to Yeti, and a theme that restyled one would break when its internals change and could flatten its states. The layer sits above the base, so a theme's `h1` rule beats Yeti's, and below every layout, component and utility, so a theme's `a { color }` never repaints a link that is a button and its `p` margins never reach inside a `stack`; to change what a layout or component defines, set its tokens.
+
+Beyond the hues, chroma, and scale already covered above, each component publishes a few tokens of its own as its skin surface: `--yeti-button-radius`, `--yeti-card-padding`, `--yeti-badge-radius`, and the rest are listed on the [Tokens](../tokens.md) page. Setting those, rather than editing a component's CSS, is what makes a theme portable: it is data, not code, so it survives an upgrade to a newer Yeti untouched.
 
 A small theme can change a lot. This one shifts the accent hue, opens up the corners, and turns buttons into pills:
 

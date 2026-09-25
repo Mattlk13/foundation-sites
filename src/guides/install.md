@@ -12,11 +12,34 @@ nav_order: 1
 
 The examples on these pages are live: each is a `demo`, a box you can drag from its bottom corner to watch the component change shape, with the code beneath it. The label in the corner names the width stop the box is at.
 
+## Start a page
+
+Yeti ships two files to begin a site from: [`index.html`](https://github.com/foundation/yeti/blob/develop/src/starter/index.html), a complete page that is correct by construction, and [`theme.css`](https://github.com/foundation/yeti/blob/develop/src/starter/theme.css), the essential settings with their defaults, every one commented out. Both ship in the package under `dist/starter/`. Copy both. They are a place to delete from, not a showcase.
+
+The page is the skeleton most sites share: a skip link, a sticky nav that folds behind a toggle on a phone, a hero, a grid of cards, a little running text, and a footer.
+
+```html
+<body class="shell" data-gap="xl">
+	<a href="#content">Skip to content</a>
+	<!-- nav.nav with data-sticky and a sticky offset of 0: the brand, the toggle, the links, one button -->
+	<main id="content" class="stack" data-gap="3xl">
+		<section class="center" aria-labelledby="headline">
+			<!-- div.hero: the headline, a lede, two buttons, and a figure -->
+		</section>
+		<section class="center" aria-labelledby="features-heading">…</section>
+		<section class="center" data-max="md" aria-labelledby="about-heading">…</section>
+	</main>
+	<footer class="box" data-surface="raised">…</footer>
+</body>
+```
+
+It links `../yeti.css`, so it opens straight from the package; moved anywhere else, point the link at the CDN copy its comment gives. Edit the values in `theme.css` before you write any CSS of your own: the hues, the scale, the fonts and the corners are most of what makes a site look like itself, and the [theming guide](theming.md) explains each.
+
 ## Getting the files
 
 Yeti is not released yet. There is no package on npm and nothing to download, so there is nothing to install today. This section will describe npm, the zip on the GitHub release page and a CDN path once there is a release to describe.
 
-Everything below is written the way it will work then. The package will ship `dist/`: the bundled `yeti.css` and its minified twin `yeti.min.css`, the same source tree unbundled under `css/`, the nine modules under `js/` and all of them in one `yeti.js` with `yeti.min.js` beside it, the two example themes under `themes/`, and the machine-readable files described further down.
+Everything below is written the way it will work then. The package will ship `dist/`: the bundled `yeti.css` and its minified twin `yeti.min.css`, the same source tree unbundled under `css/`, the nine modules under `js/` and all of them in one `yeti.js` with `yeti.min.js` beside it, the two example themes under `themes/`, the starter page and theme under `starter/`, and the machine-readable files described further down.
 
 To try Yeti before the release, clone the repository and run `npm run build`. That writes the same `dist/` the package will ship, so read `dist/` wherever a path below says `node_modules/yeti-css/dist/`.
 

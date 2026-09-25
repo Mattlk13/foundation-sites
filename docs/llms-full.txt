@@ -2,6 +2,8 @@
 
 Yeti is a plain-CSS framework. Three rules cover every component: identity is a class (`class="card"`), configuration is a `data-*` attribute with a fixed value list (`data-gap="md"`), and state is native or ARIA (`open`, `aria-current`), never a class. Layouts arrange, recipes compose layouts, components are styled things. Every attribute below is validated: a value not in its list is an error. Docs: https://foundationcss.com/yeti/
 
+To begin a page, start from dist/starter/index.html, a complete and valid page (skip link, sticky nav, hero, card grid, prose, footer), and dist/starter/theme.css, the essential theme settings with their defaults, commented out. Copy both and delete what the page does not need.
+
 ## box (layout, class="box")
 
 Pads its content on all sides, with an optional border and an optional surface.
@@ -2739,7 +2741,6 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-hue-alert (hue): 25 — Alert hue; 25 is red.
 - --yeti-hue-neutral (hue): var(--yeti-hue-primary) — Hue that faintly tints surfaces, text, and borders. Follows the primary hue unless set.
 - --yeti-chroma (hue): 0.15 — Accent saturation. Lower for a calmer palette; 0.2 and above may clip on very saturated hues.
-- --yeti-color-scheme (color): light dark — The color schemes the page offers: light dark follows the visitor; light or dark pins the page to one. A theme file may set it, which a plain color-scheme declaration cannot.
 - --yeti-color-primary (color): ladder base of the primary hue — The brand color: buttons, links, focus.
 - --yeti-color-primary-subtle (color): ladder subtle — Tinted background; hover on surfaces, selection.
 - --yeti-color-primary-soft (color): ladder soft — Borders and dividers in the primary hue.
@@ -2791,8 +2792,6 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-sticky-offset (layout): var(--yeti-space-md) — How far from the leading edge of the scrollport a child carrying data-sticky stops. Set it to a sticky bar's height on whatever holds the things that stick below it.
 - --yeti-scroll-padding (layout): var(--yeti-sticky-offset) — Where a scroll-into-view stops below the top edge: a fragment jump, scrollIntoView, a focused control. The sticky offset by default; set it alone for more room above a jumped-to heading than the things that stick need. Root-level: it is read by the root's scroll padding.
 - --yeti-border-width (border): 1px — Width of every border a component draws.
-- --yeti-quote-border (border): 4px — Width of the bar beside a blockquote; 0 removes it.
-- --yeti-quote-color (color): var(--yeti-color-border-strong) — Color of the bar beside a blockquote. Read with a fallback, so a section's own strong border still colors it.
 - --yeti-weight-normal (weight): 400 — Body weight.
 - --yeti-weight-bold (weight): 700 — Headings, th, strong and b. Separate from --yeti-weight-strong so display text and control labels can be tuned apart.
 - --yeti-weight-strong (weight): 600 — Labels, headers, buttons.

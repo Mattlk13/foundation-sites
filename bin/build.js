@@ -94,7 +94,7 @@ export function build({ root, pkg = readPackage(root) }) {
 
 	fs.cpSync(srcDir, path.join(distDir, 'css'), {
 		recursive: true,
-		filter: (src) => !path.basename(src).startsWith('.') && path.relative(srcDir, src).split(path.sep)[0] !== 'themes',
+		filter: (src) => !path.basename(src).startsWith('.') && !['themes', 'starter'].includes(path.relative(srcDir, src).split(path.sep)[0]),
 	});
 	outputs.push('css/');
 
@@ -103,6 +103,18 @@ export function build({ root, pkg = readPackage(root) }) {
 		for (const file of walkFiles(themesDir).filter((f) => f.endsWith('.css'))) {
 			const rel = `themes/${path.basename(file)}`;
 			fs.mkdirSync(path.join(distDir, 'themes'), { recursive: true });
+			fs.copyFileSync(file, path.join(distDir, rel));
+			outputs.push(rel);
+		}
+	}
+
+	// The starter page and theme, copied as they are: two files a designer
+	// copies to begin a site. The page links ../yeti.css, so it opens from here.
+	const starterDir = path.join(srcDir, 'starter');
+	if (fs.existsSync(starterDir)) {
+		for (const file of walkFiles(starterDir).filter((f) => !path.basename(f).startsWith('.'))) {
+			const rel = `starter/${path.relative(starterDir, file).split(path.sep).join('/')}`;
+			fs.mkdirSync(path.dirname(path.join(distDir, rel)), { recursive: true });
 			fs.copyFileSync(file, path.join(distDir, rel));
 			outputs.push(rel);
 		}

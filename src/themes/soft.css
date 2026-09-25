@@ -1,4 +1,5 @@
-/* Soft: round, warm, roomy. A theme is values only; load it after yeti.css. */
+/* Soft: round, warm, roomy. A theme is token values, optionally with element rules in
+   its yeti.theme layer; load it after yeti.css. */
 :root {
 	--yeti-hue-primary: 30;
 	--yeti-hue-secondary: 340;

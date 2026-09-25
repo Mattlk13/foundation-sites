@@ -47,6 +47,16 @@ and say what changed in the commit message. A commit that re-blesses with no vis
 
 **Accessibility is part of the contract.** Every component's manifest states its role, required attributes, and keyboard behaviour, and the fixture tests them.
 
+## When a token earns its place
+
+Tokens are the essential settings a designer reaches for to build a site: they guide, not just expose. Every public token is catalogue weight and, from beta, permanent API, so a new one has to pass at least one of three tests:
+
+- **(A) A theme must set it and could not otherwise.** A component's skin is token-only, so a component value a theme should reach is a token. Bare-element typography is not a reason on its own: a theme styles bare elements with rules in its `yeti.theme` layer.
+- **(B) The framework must coordinate it.** It is read by several components, or reset where it would otherwise break something.
+- **(C) A designer would expect it as part of a standard set.** Link color, and the font controls (family, weight, width, tracking), are what anyone customizing a site looks for first; a set missing one of its members feels broken. A set stands or falls as a whole.
+
+A value that passes none of them, a pass-through to one property on one element, is a literal declaration in the base, and a theme that wants it different writes an element rule.
+
 ## Branches
 
 We use git-flow. Work happens on `feature/*` branches cut from `develop` and merged back by pull request. Releases go through `release/*` to `master` and are tagged `v7.x.y`. Foundation for Sites 6 maintenance happens on `v6`.

@@ -5,9 +5,31 @@ import path from 'node:path';
 
 const IMPORT_RE = /^@import\s+(?:url\(\s*)?(["'])([^"']+)\1\s*\)?\s*([^;]*);/;
 
-/** Replaces every comment with spaces of the same length, so offsets and line numbers are unchanged. */
+/** Replaces every comment with spaces of the same length, so offsets and line numbers are unchanged.
+ *  One scan that steps over quoted strings (and their escapes), so a slash-star inside
+ *  content: "…" never opens a comment and a string inside a comment is still comment. */
 export function stripComments(css) {
-	return css.replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, ' '));
+	let out = '';
+	let i = 0;
+	while (i < css.length) {
+		const ch = css[i];
+		if (ch === '/' && css[i + 1] === '*') {
+			const end = css.indexOf('*/', i + 2);
+			const stop = end === -1 ? css.length : end + 2;
+			out += css.slice(i, stop).replace(/[^\n]/g, ' ');
+			i = stop;
+		} else if (ch === '"' || ch === "'") {
+			let j = i + 1;
+			while (j < css.length && css[j] !== ch && css[j] !== '\n') j += css[j] === '\\' ? 2 : 1;
+			const stop = Math.min(j + 1, css.length);
+			out += css.slice(i, stop);
+			i = stop;
+		} else {
+			out += ch;
+			i += 1;
+		}
+	}
+	return out;
 }
 
 function lineAt(text, index) {

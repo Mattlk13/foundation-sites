@@ -37,9 +37,12 @@
 		border-block-start: var(--yeti-border-width) solid var(--yeti-color-border);
 	}
 
+	/* The bar is heavier than the border width on purpose, so a quotation reads
+	   as set off and not as boxed. A theme changes it with a blockquote rule in
+	   its yeti.theme layer. */
 	blockquote {
 		padding-inline: var(--yeti-space-md);
-		border-inline-start: var(--yeti-quote-border) solid var(--yeti-quote-color, var(--yeti-color-border-strong));
+		border-inline-start: 4px solid var(--yeti-color-border-strong);
 	}
 
 	/* A caption under a quotation is an attribution, and the dash is what says

@@ -137,14 +137,20 @@ test.describe('base typography and prose', () => {
 		expect(await style(page, 'h1', 'font-stretch')).toBe('112.5%');
 	});
 
-	test('the quotation bar reads its two tokens', async ({ page }) => {
-		expect(await px(page, 'blockquote', 'border-left-width')).toBe(4);
+	test('the quotation bar is 4px in the strong border color, and a theme element rule changes it', async ({ page }) => {
+		expect(await px(page, '#quote', 'border-left-width')).toBe(4);
+		const strong = await page.evaluate(() => {
+			const probe = document.body.appendChild(document.createElement('span'));
+			probe.style.color = 'var(--yeti-color-border-strong)';
+			const color = getComputedStyle(probe).color;
+			probe.remove();
+			return color;
+		});
+		expect(await style(page, '#quote', 'border-left-color')).toBe(strong);
 		// A section that sets its own strong border colors its own quotation bar.
 		expect(await style(page, '#sect-quote', 'border-left-color')).toBe('rgb(0, 128, 0)');
-		expect(await style(page, '#quote', 'border-left-color')).not.toBe('rgb(0, 128, 0)');
-		await page.addStyleTag({ content: ':root { --yeti-quote-border: 1px; --yeti-quote-color: rgb(1, 2, 3); }' });
-		expect(await px(page, 'blockquote', 'border-left-width')).toBe(1);
-		expect(await style(page, 'blockquote', 'border-left-color')).toBe('rgb(1, 2, 3)');
+		await page.addStyleTag({ content: '@layer yeti.theme { blockquote { border-inline-start-width: 1px; } }' });
+		expect(await px(page, '#quote', 'border-left-width')).toBe(1);
 	});
 });
 

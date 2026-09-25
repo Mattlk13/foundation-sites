@@ -50,10 +50,10 @@ for (const scheme of ['light', 'dark']) {
 			expect(await ratio(page, '#primary')).toBeGreaterThanOrEqual(4.5);
 		});
 
-		test('--yeti-color-scheme pins the scheme whatever the visitor prefers', async ({ page }) => {
+		test('a theme element rule pins the scheme whatever the visitor prefers', async ({ page }) => {
 			expect(await page.evaluate(() => getComputedStyle(document.documentElement).colorScheme)).toBe('light dark');
 			const pinned = scheme === 'light' ? 'dark' : 'light';
-			await page.addStyleTag({ content: `:root { --yeti-color-scheme: ${pinned}; }` });
+			await page.addStyleTag({ content: `@layer yeti.theme { html { color-scheme: ${pinned}; } }` });
 			expect(await page.evaluate(() => getComputedStyle(document.documentElement).colorScheme)).toBe(pinned);
 			// The derived colors follow: the page is light when pinned light, dark when pinned dark.
 			const [bg, fg] = await pair(page, '#page');

@@ -7,6 +7,7 @@ import {
 	validateVocabulary, validateNoMediaQueries, validateDocsFragments, validateFields, validateThemes, validateMotion, validateAnchorsAndContainers, validateTokenReads, validateModules,
 } from '../../bin/validate.js';
 import { parseHtml } from '../../bin/lib/html.js';
+import { LAYER_STATEMENT } from '../../bin/lib/layers.js';
 import { makeTree, validManifest, validTree, REPO_ROOT, TOKENS_SCHEMA_PATH, VOCABULARY_PATH } from './helpers.js';
 
 const run = (files) => {
@@ -140,7 +141,7 @@ test('the layer statement must match exactly and yeti.css must import it first',
 	assert.match(wrongOrder.lines[0], /^src\/layers\.css:1: must contain exactly: @layer yeti\.reset/);
 	const noImport = run(validTree({ 'src/yeti.css': '.x {}\n' }));
 	assert.deepEqual(noImport.lines, ['src/yeti.css:1: must begin with @import "layers.css";']);
-	const commented = run(validTree({ 'src/layers.css': '/* order */\n@layer yeti.reset,\n  yeti.base, yeti.layouts, yeti.components, yeti.utilities;\n' }));
+	const commented = run(validTree({ 'src/layers.css': '/* order */\n@layer yeti.reset,\n  yeti.base, yeti.theme, yeti.layouts, yeti.components, yeti.utilities;\n' }));
 	assert.deepEqual(commented.lines, []);
 });
 
@@ -566,7 +567,8 @@ test('validateThemes rejects a bare at-rule statement with no block', () => {
 		'src/yeti.css': '@import "layers.css";\n@import "tokens/radius.css";\n@import "layouts/attributes.css";\n@import "layouts/rail/rail.css";\n@import "components/tag/tag.css";\n',
 		'src/themes/round.css': theme,
 	});
-	assert.deepEqual(run(tree('@layer theme;\n')).lines, ['src/themes/round.css:1: themes may only set --yeti-* tokens on :root (found "@layer theme;")']);
+	assert.deepEqual(run(tree('@layer theme;\n')).lines, ['src/themes/round.css:1: the only @layer statement a theme may make is Yeti\'s own order, first in the file: @layer yeti.reset, yeti.base, yeti.theme, yeti.layouts, yeti.components, yeti.utilities; (found "@layer theme;")']);
+	assert.deepEqual(run(tree('@import "x.css";\n:root { --yeti-radius-md: 0; }\n')).lines, ['src/themes/round.css:1: themes may only set --yeti-* tokens on :root (found "@import "x.css";")']);
 });
 
 test('validateThemes rejects a media block nested inside another', () => {
@@ -578,6 +580,108 @@ test('validateThemes rejects a media block nested inside another', () => {
 		'src/themes/round.css': theme,
 	});
 	assert.deepEqual(run(tree('@media (prefers-color-scheme: dark) {\n\t@media (prefers-color-scheme: dark) {\n\t}\n}\n')).lines, ['src/themes/round.css:2: themes may only set --yeti-* tokens on :root (found "@media (prefers-color-scheme: dark)")']);
+});
+
+const elementThemeTree = (theme) => componentTree({
+	'src/tokens/tokens.json': [{ name: '--yeti-radius-md', group: 'radius', public: true, default: '0.5rem', description: 'x' }],
+	'schema/tokens.schema.json': fs.readFileSync(TOKENS_SCHEMA_PATH, 'utf8'),
+	'src/tokens/radius.css': '@layer yeti.base { :root { --yeti-radius-md: 0.5rem; } }\n',
+	'src/yeti.css': '@import "layers.css";\n@import "tokens/radius.css";\n@import "layouts/attributes.css";\n@import "layouts/rail/rail.css";\n@import "components/tag/tag.css";\n',
+	'src/themes/round.css': theme,
+});
+
+test('validateThemes accepts bare element rules inside @layer yeti.theme', () => {
+	const theme = ':root { --yeti-radius-md: 0; }\n@layer yeti.theme {\n\th1, h2 { text-transform: uppercase; }\n\ta:hover { color: red; }\n\tfigure > figcaption, blockquote p { font-style: italic; }\n\tli::marker { color: red; }\n\t@media (width > 40rem) {\n\t\t@supports (text-wrap: balance) {\n\t\t\th1 { text-wrap: balance; }\n\t\t}\n\t}\n}\n';
+	assert.deepEqual(run(elementThemeTree(theme)).lines, []);
+});
+
+test('validateThemes accepts a bare allowed pseudo-element as a whole selector inside @layer yeti.theme', () => {
+	const theme = '@layer yeti.theme {\n\t::selection { background: yellow; }\n\t::placeholder, ::marker { color: gray; }\n}\n';
+	assert.deepEqual(run(elementThemeTree(theme)).lines, []);
+	assert.deepEqual(run(elementThemeTree('@layer yeti.theme {\n\t::before { color: red; }\n}\n')).lines, ['src/themes/round.css:2: theme element rules may only select bare HTML elements (found "::before")']);
+	assert.deepEqual(run(elementThemeTree('@layer yeti.theme {\n\t::selection p { color: red; }\n}\n')).lines, ['src/themes/round.css:2: theme element rules may only select bare HTML elements (found "::selection p")']);
+});
+
+test('validateThemes refuses anything but bare element selectors inside @layer yeti.theme', () => {
+	const refused = (sel) => run(elementThemeTree(`@layer yeti.theme {\n\t${sel} { color: red; }\n}\n`)).lines;
+	for (const sel of ['.card', '[data-x]', '*', 'h1:has(a)', '#main', 'p .card', 'h1 + p', 'a:focus', ':hover']) {
+		assert.deepEqual(refused(sel), [`src/themes/round.css:2: theme element rules may only select bare HTML elements (found "${sel}")`], sel);
+	}
+	assert.deepEqual(refused('h1, .card'), ['src/themes/round.css:2: theme element rules may only select bare HTML elements (found ".card")']);
+	assert.deepEqual(refused('card p'), ['src/themes/round.css:2: theme element rules may only select bare HTML elements ("card" is not an HTML element)']);
+});
+
+test('validateThemes refuses a custom property inside @layer yeti.theme', () => {
+	assert.deepEqual(run(elementThemeTree('@layer yeti.theme {\n\th1 { color: red; --yeti-x: 1; }\n}\n')).lines, [
+		'src/themes/round.css:2: theme element rules may not set custom properties; set tokens on :root (found "--yeti-x")',
+	]);
+});
+
+test('validateThemes refuses any other layer, and element rules outside yeti.theme', () => {
+	assert.deepEqual(run(elementThemeTree('@layer other {\n}\n')).lines, ['src/themes/round.css:1: themes may only open @layer yeti.theme (found "@layer other")']);
+	assert.deepEqual(run(elementThemeTree('h1 { text-transform: uppercase; }\n')).lines, ['src/themes/round.css:1: themes may only set --yeti-* tokens on :root (found "h1")']);
+	assert.deepEqual(run(elementThemeTree('@media (prefers-color-scheme: dark) {\n\t@layer yeti.theme {\n\t}\n}\n')).lines, ['src/themes/round.css:2: themes may only set --yeti-* tokens on :root (found "@layer yeti.theme")']);
+});
+
+test('validateThemes checks the starter theme as well as src/themes', () => {
+	const tree = elementThemeTree(':root { --yeti-radius-md: 0; }\n');
+	assert.deepEqual(run({ ...tree, 'src/starter/theme.css': '/* :root { --yeti-radius-md: 0; } */\n' }).lines, []);
+	assert.deepEqual(run({ ...tree, 'src/starter/theme.css': '.card { color: red; }\n' }).lines, ['src/starter/theme.css:1: themes may only set --yeti-* tokens on :root (found ".card")']);
+});
+
+test('the starter page is checked against the manifests, like an example', () => {
+	const r = run(validTree({ 'src/starter/index.html': '<!doctype html>\n<html lang="en">\n<body>\n<div class="rail" data-nope="1"><p>x</p></div>\n</body>\n</html>\n' }));
+	assert.deepEqual(r.lines, ['src/starter/index.html:4: .rail <div>: unknown attribute data-nope']);
+});
+
+test('the starter theme may set tokens outside src/tokens/, like a theme', () => {
+	const tree = elementThemeTree(':root { --yeti-radius-md: 0; }\n');
+	assert.deepEqual(run({ ...tree, 'src/starter/theme.css': ':root { --yeti-radius-md: 1rem; }\n' }).lines, []);
+});
+
+test('validateImportOrder rejects the starter imported into yeti.css', () => {
+	const r = run(validTree({
+		'src/tokens/scale.css': ':root { --yeti-base-min: 1rem; }\n',
+		'src/starter/theme.css': ':root { --yeti-base-min: 2rem; }\n',
+		'src/yeti.css': '@import "layers.css";\n@import "tokens/scale.css";\n@import "layouts/rail/rail.css";\n@import "starter/theme.css";\n',
+	}));
+	assert.deepEqual(r.lines, ['src/yeti.css:4: the starter is copied, not bundled, and must not be imported into yeti.css (found "starter/theme.css")']);
+});
+
+test('no framework file ships rules in the yeti.theme layer', () => {
+	const r = run(validTree({
+		'src/layouts/rail/rail.css': '@layer yeti.layouts {\n  .rail { display: flex; }\n}\n@layer yeti.theme {\n  h1 { color: red; }\n}\n',
+		'src/themes/round.css': null,
+	}));
+	assert.deepEqual(r.lines, ['src/layouts/rail/rail.css:4: Yeti ships nothing in the yeti.theme layer; it belongs to a theme (found "@layer yeti.theme")']);
+	const statement = run(validTree({ 'src/base/extra.css': '@layer yeti.base, yeti.theme;\n', 'src/yeti.css': '@import "layers.css";\n@import "base/extra.css";\n@import "layouts/rail/rail.css";\n' }));
+	assert.deepEqual(statement.lines, ['src/base/extra.css:1: Yeti ships nothing in the yeti.theme layer; it belongs to a theme (found "@layer yeti.base, yeti.theme")']);
+});
+
+test('validateThemes accepts Yeti\'s layer order repeated first in the file, and no other layer statement', () => {
+	const body = '@layer yeti.theme {\n\th1 { text-transform: uppercase; }\n}\n';
+	assert.deepEqual(run(elementThemeTree(`${LAYER_STATEMENT}\n:root { --yeti-radius-md: 0; }\n${body}`)).lines, []);
+	assert.deepEqual(run(elementThemeTree(`/* order */\n@layer yeti.reset,\n\tyeti.base, yeti.theme, yeti.layouts, yeti.components, yeti.utilities;\n${body}`)).lines, []);
+	const refused = (statement) => `the only @layer statement a theme may make is Yeti's own order, first in the file: ${LAYER_STATEMENT} (found "${statement}")`;
+	const wrongOrder = '@layer yeti.reset, yeti.theme, yeti.base, yeti.layouts, yeti.components, yeti.utilities;';
+	assert.deepEqual(run(elementThemeTree(`${wrongOrder}\n${body}`)).lines, [`src/themes/round.css:1: ${refused(wrongOrder)}`]);
+	assert.deepEqual(run(elementThemeTree(`:root { --yeti-radius-md: 0; }\n${LAYER_STATEMENT}\n`)).lines, [`src/themes/round.css:2: ${refused(LAYER_STATEMENT)}`]);
+});
+
+test('validateThemes sees a rule hidden between comment markers inside strings', () => {
+	const theme = '@layer yeti.theme {\n\tq { quotes: "/*" "x"; }\n}\n.card { color: red; }\n@layer yeti.theme {\n\tq { quotes: "*/" "x"; }\n}\n';
+	assert.deepEqual(run(elementThemeTree(theme)).lines, ['src/themes/round.css:4: themes may only set --yeti-* tokens on :root (found ".card")']);
+});
+
+test('validateThemes reports leftover text at the end of a layer or nested at-rule block', () => {
+	assert.deepEqual(run(elementThemeTree('@layer yeti.theme {\n\th1 { color: red; }\n\tcolor: blue;\n}\n')).lines, ['src/themes/round.css:3: theme blocks may only hold rules (found "color: blue;")']);
+	assert.deepEqual(run(elementThemeTree('@layer yeti.theme {\n\t@media (width > 40rem) {\n\t\th1 { color: red; }\n\t\t@import "x.css";\n\t}\n}\n')).lines, ['src/themes/round.css:4: theme blocks may only hold rules (found "@import "x.css";")']);
+});
+
+test('validateThemes refuses a rule or at-rule nested inside an element rule', () => {
+	const message = (found) => `nest @media or @supports around the rule, not inside it; nested selectors are not allowed (found "${found}")`;
+	assert.deepEqual(run(elementThemeTree('@layer yeti.theme {\n\ta { color: red;\n\t\t&:hover { color: blue; }\n\t}\n}\n')).lines, [`src/themes/round.css:3: ${message('&:hover')}`]);
+	assert.deepEqual(run(elementThemeTree('@layer yeti.theme {\n\th1 {\n\t\t@media (width > 40rem) { font-size: 2rem; }\n\t}\n}\n')).lines, [`src/themes/round.css:3: ${message('@media (width > 40rem)')}`]);
 });
 
 const markerTree = (example) => layoutTree({

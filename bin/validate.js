@@ -138,6 +138,13 @@ export function validateFixtures(fixturesDir, merged) {
 	return errors;
 }
 
+/** The starter page is markup a designer copies, so it is held to the manifests like an example. */
+export function validateStarter(srcDir, merged) {
+	const file = path.join(srcDir, 'starter', 'index.html');
+	if (!fs.existsSync(file)) return [];
+	return validateElementTree(parseHtml(fs.readFileSync(file, 'utf8')), merged, file);
+}
+
 export function validateExamples(entries, merged) {
 	const errors = [];
 	for (const entry of entries) {
@@ -328,6 +335,7 @@ export function validateImportOrder(srcDir) {
 	// make its tokens the default for everyone.
 	for (const imp of imports) {
 		if (imp.href.startsWith('themes/')) errors.push({ file: entryFile, line: imp.line, message: `themes are opt-in and must not be imported into yeti.css (found "${imp.href}")` });
+		if (imp.href.startsWith('starter/')) errors.push({ file: entryFile, line: imp.line, message: `the starter is copied, not bundled, and must not be imported into yeti.css (found "${imp.href}")` });
 	}
 	// Report the first import that has something of a lower group after it.
 	for (let i = 0; i < imports.length; i++) {
@@ -423,8 +431,9 @@ export function validateTokens(root, manifestEntries = []) {
 	}
 
 	const srcDir = path.join(root, 'src');
-	const themesDir = path.join(root, 'src', 'themes');
-	for (const file of walkFiles(srcDir).filter((f) => f.endsWith('.css') && !f.startsWith(tokensDir + path.sep) && !f.startsWith(themesDir + path.sep))) {
+	// Themes and the starter theme set public tokens; that is what they are for.
+	const settingDirs = ['themes', 'starter'].map((d) => path.join(root, 'src', d) + path.sep);
+	for (const file of walkFiles(srcDir).filter((f) => f.endsWith('.css') && !f.startsWith(tokensDir + path.sep) && !settingDirs.some((d) => f.startsWith(d)))) {
 		for (const name of declaredTokens(fs.readFileSync(file, 'utf8'))) {
 			errors.push({ file, message: `${name} is a public token declared outside src/tokens/; public tokens live in src/tokens/ and the catalogue` });
 		}
@@ -671,6 +680,22 @@ export function validateNoMediaQueries(srcDir) {
 	return errors;
 }
 
+/** yeti.theme is declared in layers.css so its place is fixed, and belongs to themes: Yeti ships nothing in it. */
+export function validateThemeLayerUse(srcDir) {
+	if (!fs.existsSync(srcDir)) return [];
+	const own = ['themes', 'starter'].map((d) => path.join(srcDir, d) + path.sep);
+	const layersFile = path.join(srcDir, 'layers.css');
+	const errors = [];
+	for (const file of walkFiles(srcDir).filter((f) => f.endsWith('.css') && f !== layersFile && !own.some((d) => f.startsWith(d)))) {
+		const text = stripComments(fs.readFileSync(file, 'utf8'));
+		for (const m of text.matchAll(/@layer\b([^{;]*)/g)) {
+			if (!m[1].split(',').map((n) => n.trim()).includes('yeti.theme')) continue;
+			errors.push({ file, line: lineOf(text, m.index), message: `Yeti ships nothing in the yeti.theme layer; it belongs to a theme (found "${m[0].trim()}")` });
+		}
+	}
+	return errors;
+}
+
 export function validate({ root }) {
 	const srcDir = path.join(root, 'src');
 	const guidesDir = path.join(root, 'src', 'guides');
@@ -681,6 +706,7 @@ export function validate({ root }) {
 	const all = [
 		...errors,
 		...validateExamples(entries, merged),
+		...validateStarter(srcDir, merged),
 		...validateGuides(guidesDir, merged, entries),
 		...validateFixtures(path.join(root, 'test', 'browser', 'fixtures'), merged),
 		...validateSpacing(entries),
@@ -698,6 +724,7 @@ export function validate({ root }) {
 		...validateDocsFragments(entries),
 		...validateFields(entries, guidesDir, path.join(root, 'test', 'browser', 'fixtures')),
 		...validateThemes(root),
+		...validateThemeLayerUse(srcDir),
 	];
 	return { errors: all, count: Object.keys(merged).length };
 }

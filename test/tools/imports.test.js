@@ -4,6 +4,12 @@ import path from 'node:path';
 import { stripComments, splitImports, resolveImports } from '../../bin/lib/imports.js';
 import { makeTree } from './helpers.js';
 
+test('stripComments leaves comment markers inside quoted strings alone', () => {
+	assert.equal(stripComments('a { content: "/*"; }\n.b {}\nc { content: \'*/\'; }'), 'a { content: "/*"; }\n.b {}\nc { content: \'*/\'; }');
+	assert.equal(stripComments('a { content: "x\\"/*"; } /* gone */ b'), 'a { content: "x\\"/*"; }            b');
+	assert.equal(stripComments('/* "not a string */ b'), `${' '.repeat(19)} b`);
+});
+
 test('stripComments keeps line numbers intact', () => {
 	const out = stripComments('a /* one\ntwo */ b');
 	assert.equal(out.split('\n').length, 2);
