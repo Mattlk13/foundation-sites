@@ -1097,3 +1097,9 @@ test('validate prints the warning and still exits 0', async () => {
 	assert.match(result.stderr + result.stdout, /^warning: src\/layouts\/rail\/example\.html:1: data-show on <p>/m);
 	assert.match(result.stdout, /validate: ok/);
 });
+
+test('a thresholded cluster that is an item of another cluster is a warning', () => {
+	const r = warned(example('<div class="rail"><div class="cluster">\n<div class="cluster" data-threshold="sm"><a href="#">a</a></div></div></div>\n'));
+	assert.deepEqual(r.warnings, ['src/layouts/rail/example.html:2: .cluster[data-threshold] is an item of another .cluster, so it has no width of its own to measure; give it one, or flex-grow']);
+	assert.deepEqual(warned(example('<div class="rail"><div class="stack"><div class="cluster" data-threshold="sm"><a href="#">a</a></div></div></div>\n')).warnings, []);
+});

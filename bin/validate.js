@@ -678,12 +678,33 @@ export function findLooseVisibility(tree, file, lineOffset = 0) {
 	return warnings;
 }
 
-/** Runs findLooseVisibility over examples, fixtures, guide and docs demos, and the starter. */
-export function validateVisibilityContainers(root, entries) {
+/**
+ * A warning: a cluster with data-threshold is a size container, so it cannot
+ * take its width from its content, and as an item of another cluster (a flex
+ * row that sizes items by their content) it has no width to measure and
+ * collapses. It needs a width of its own, or flex-grow.
+ */
+export function findNestedThresholdClusters(tree, file, lineOffset = 0) {
 	const warnings = [];
-	const html = (file) => warnings.push(...findLooseVisibility(parseHtml(fs.readFileSync(file, 'utf8')), file));
+	walkElements(tree, (el) => {
+		if (!classList(el).includes('cluster') || !attributes(el).has('data-threshold')) return;
+		const parent = el.parentNode;
+		if (!parent?.tagName || !classList(parent).includes('cluster')) return;
+		const line = el.sourceCodeLocation ? el.sourceCodeLocation.startLine + lineOffset : undefined;
+		warnings.push({ file, line, message: '.cluster[data-threshold] is an item of another .cluster, so it has no width of its own to measure; give it one, or flex-grow' });
+	});
+	return warnings;
+}
+
+const MARKUP_WARNINGS = [findLooseVisibility, findNestedThresholdClusters];
+
+/** Runs the markup warnings over examples, fixtures, guide and docs demos, and the starter. */
+export function validateMarkupWarnings(root, entries) {
+	const warnings = [];
+	const check = (tree, file, lineOffset = 0) => { for (const find of MARKUP_WARNINGS) warnings.push(...find(tree, file, lineOffset)); };
+	const html = (file) => check(parseHtml(fs.readFileSync(file, 'utf8')), file);
 	const markdown = (file) => {
-		for (const block of extractHtmlBlocks(fs.readFileSync(file, 'utf8'))) warnings.push(...findLooseVisibility(parseHtml(block.html), file, block.line - 1));
+		for (const block of extractHtmlBlocks(fs.readFileSync(file, 'utf8'))) check(parseHtml(block.html), file, block.line - 1);
 	};
 	for (const entry of entries) {
 		const example = path.join(entry.dir, 'example.html');
@@ -811,7 +832,7 @@ export function validate({ root }) {
 		...validateThemes(root),
 		...validateThemeLayerUse(srcDir),
 	];
-	const warnings = validateVisibilityContainers(root, entries);
+	const warnings = validateMarkupWarnings(root, entries);
 	return { errors: all, warnings, count: Object.keys(merged).length };
 }
 
