@@ -14,14 +14,14 @@ The examples on these pages are live: each is a `demo`, a box you can drag from 
 
 ## Start a page
 
-Yeti ships two files to begin a site from, in `dist/starter/`: [`index.html`](https://cdn.jsdelivr.net/npm/yeti-css@7/dist/starter/index.html), a complete page that is correct by construction, and [`theme.css`](https://cdn.jsdelivr.net/npm/yeti-css@7/dist/starter/theme.css), the essential settings with their defaults, every one commented out. Copy both. They are a place to delete from, not a showcase.
+Yeti ships two files to begin a site from: [`index.html`](https://github.com/foundation/yeti/blob/develop/src/starter/index.html), a complete page that is correct by construction, and [`theme.css`](https://github.com/foundation/yeti/blob/develop/src/starter/theme.css), the essential settings with their defaults, every one commented out. Both ship in the package under `dist/starter/`. Copy both. They are a place to delete from, not a showcase.
 
 The page is the skeleton most sites share: a skip link, a sticky nav that folds behind a toggle on a phone, a hero, a grid of cards, a little running text, and a footer.
 
 ```html
 <body class="shell" data-gap="xl">
 	<a href="#content">Skip to content</a>
-	<!-- nav.nav with data-sticky: the brand, the toggle, the links, one button -->
+	<!-- nav.nav with data-sticky and a sticky offset of 0: the brand, the toggle, the links, one button -->
 	<main id="content" class="stack" data-gap="3xl">
 		<section class="center" aria-labelledby="headline">
 			<!-- div.hero: the headline, a lede, two buttons, and a figure -->

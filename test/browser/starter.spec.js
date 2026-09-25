@@ -44,6 +44,12 @@ test.describe('starter page', () => {
 		expect(await visible(page, '.nav a[href="#features"]')).toBe(true);
 	});
 
+	test('the nav sits on the top edge once the page scrolls', async ({ page }) => {
+		await open(page, 1280);
+		await page.evaluate(() => window.scrollTo(0, 600));
+		await expect.poll(() => page.evaluate(() => Math.abs(document.querySelector('.nav').getBoundingClientRect().top))).toBeLessThanOrEqual(1);
+	});
+
 	for (const scheme of ['light', 'dark']) {
 		test(`has no accessibility violations in ${scheme}`, async ({ page }) => {
 			await page.emulateMedia({ colorScheme: scheme });

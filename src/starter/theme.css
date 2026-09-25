@@ -72,7 +72,7 @@
 
 	/* Scrolling. */
 
-	/* How far below the top a sticky bar stops; 0 pins the nav to the edge. */
+	/* How far below the top a sticky element stops. The starter's nav sets its own to 0. */
 	/* --yeti-sticky-offset: var(--yeti-space-md); */
 	/* Where a jump to a heading stops; the sticky offset unless set. */
 	/* --yeti-scroll-padding: var(--yeti-sticky-offset); */
