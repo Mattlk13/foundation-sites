@@ -98,7 +98,12 @@ export function validateElementTree(root, merged, file, lineOffset = 0, allowed 
 					else if (start + span - 1 > tracks) report(`data-start="${start}" data-span="${span}" on <${child.tagName}> runs to track ${start + span - 1} of ${tracks}`);
 				}
 			}
-			for (const required of m.a11y.requiredAttributes) {
+			// A group whose parent is a fieldset with a legend is already a named
+			// group, so the role and the name the contract asks for would only
+			// announce the same set twice.
+			const inFieldset = m.a11y.role === 'group' && el.parentNode?.tagName === 'fieldset'
+				&& elementChildren(el.parentNode).some((c) => c.tagName === 'legend');
+			for (const required of inFieldset ? [] : m.a11y.requiredAttributes) {
 				// "aria-label | aria-labelledby": any one of them satisfies the entry.
 				const options = required.split('|').map((r) => r.trim());
 				if (!options.some((r) => attrs.has(r))) {

@@ -22,7 +22,7 @@
 		border-end-end-radius: 0;
 	}
 	/* A focused member rises above its neighbours so its ring is whole. */
-	.buttons[data-affix] > .button:focus-visible {
+	.buttons[data-affix] > .button:is(:focus-visible, :has(> input:focus-visible)) {
 		position: relative;
 		z-index: 1;
 	}

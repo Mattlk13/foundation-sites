@@ -1,6 +1,7 @@
 /* Button: an action with a face. data-variant picks the hue's ladder,
    data-emphasis how loud, data-size scales padding and text together.
-   State is native: hover, active, focus-visible, disabled, aria-pressed. */
+   State is native: hover, active, focus-visible, disabled, aria-pressed, and
+   for a label wrapping a radio or checkbox, the input's own checked. */
 @layer yeti.components {
 	.button {
 		display: inline-flex;
@@ -70,37 +71,57 @@
 
 	/* A pressed medium or low toggle keeps its pressed fill on hover, instead
 	   of stepping down to the emphasis hover rules above. */
-	.button:is([data-emphasis="medium"], [data-emphasis="low"])[aria-pressed="true"]:is(:hover, :active) {
+	.button:is([data-emphasis="medium"], [data-emphasis="low"]):is([aria-pressed="true"], :has(> input:checked)):is(:hover, :active) {
 		background-color: var(--_yeti-variant-strong);
 		border-color: var(--_yeti-variant-strong);
 		color: var(--_yeti-on-variant);
 	}
 
-	/* Pressed toggles, busy, and disabled, from the attributes that mean them. */
-	.button[aria-pressed="true"] {
+	/* Pressed toggles, busy, and disabled, from the attributes that mean them.
+	   A label.button wrapping a radio or checkbox is a toggle too, pressed
+	   while its input is checked and disabled while its input is. */
+	.button:is([aria-pressed="true"], :has(> input:checked)) {
 		background-color: var(--_yeti-variant-strong);
 		border-color: var(--_yeti-variant-strong);
 		color: var(--_yeti-on-variant);
 	}
-	.button:is(:disabled, [aria-disabled="true"]) {
+	.button:is(:disabled, [aria-disabled="true"], :has(> input:disabled)) {
 		opacity: var(--yeti-opacity-muted);
 		cursor: not-allowed;
 	}
-	.button:is(:disabled, [aria-disabled="true"]):is(:hover, :active) {
+	.button:is(:disabled, [aria-disabled="true"], :has(> input:disabled)):is(:hover, :active) {
 		background-color: var(--_yeti-variant);
 		border-color: var(--_yeti-variant);
 		color: var(--_yeti-on-variant);
 	}
-	.button[data-emphasis="medium"]:is(:disabled, [aria-disabled="true"]):is(:hover, :active) {
+	.button[data-emphasis="medium"]:is(:disabled, [aria-disabled="true"], :has(> input:disabled)):is(:hover, :active) {
 		background-color: transparent;
 		border-color: var(--_yeti-variant);
 		color: var(--_yeti-variant-text);
 	}
-	.button[data-emphasis="low"]:is(:disabled, [aria-disabled="true"]):is(:hover, :active) {
+	.button[data-emphasis="low"]:is(:disabled, [aria-disabled="true"], :has(> input:disabled)):is(:hover, :active) {
 		background-color: transparent;
 		border-color: transparent;
 		color: var(--_yeti-variant-text);
 	}
+	/* The toggle's input: out of sight by the visually-hidden technique and
+	   still in Tab order, so the arrow keys move a radio group's choice as
+	   they always do. The label draws the page's ring for it, since the
+	   input's own ring is clipped away with the input. */
+	.button > input:is([type="radio"], [type="checkbox"]) {
+		position: absolute;
+		inline-size: 1px;
+		block-size: 1px;
+		margin: 0;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
+	.button:has(> input:focus-visible) {
+		outline: 2px solid var(--yeti-color-focus);
+		outline-offset: 2px;
+	}
+
 	/* Busy is checked after disabled so a busy button (which also carries
 	   aria-disabled, since it cannot be pressed again mid-request) keeps its
 	   progress cursor instead of the disabled rule's not-allowed. */

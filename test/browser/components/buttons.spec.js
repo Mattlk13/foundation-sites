@@ -1,5 +1,5 @@
 import { test, expect } from 'playwright/test';
-import { stage, rect, style, px, token, axe } from '../lib/layout.js';
+import { stage, rect, style, px, token, axe, painted } from '../lib/layout.js';
 import { PAGE_HELPERS, expectAA } from '../lib/contrast.js';
 
 const open = async (page, width = 1000) => {
@@ -37,6 +37,30 @@ test.describe('buttons', () => {
 		await page.keyboard.press('Tab');
 		expect(await page.evaluate(() => document.activeElement.id)).toBe('a2');
 		expect(await style(page, '#a2', 'z-index')).toBe('1');
+	});
+
+	test('a label.button over a radio is pressed while checked, as a pressed button is', async ({ page }) => {
+		await open(page);
+		await page.click('#s2');
+		expect(await page.isChecked('#s2-input')).toBe(true);
+		await page.mouse.move(0, 0);
+		await painted(page);
+		expect(await style(page, '#s2', 'background-color')).toBe(await style(page, '#pressed', 'background-color'));
+		expect(await style(page, '#s1', 'background-color')).not.toBe(await style(page, '#pressed', 'background-color'));
+		// A disabled input dims its label as a disabled button is dimmed.
+		expect(await style(page, '#s3', 'opacity')).toBe(await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--yeti-opacity-muted').trim()));
+	});
+
+	test('the arrow keys move the choice, and the focused label rises and draws the ring', async ({ page }) => {
+		await open(page);
+		await page.focus('#s1-input');
+		await page.keyboard.press('ArrowRight');
+		expect(await page.isChecked('#s2-input')).toBe(true);
+		expect(await page.isChecked('#s1-input')).toBe(false);
+		expect(await page.evaluate(() => document.activeElement.id)).toBe('s2-input');
+		expect(await style(page, '#s2', 'outline-style')).toBe('solid');
+		expect(await px(page, '#s2', 'outline-width')).toBe(2);
+		expect(await style(page, '#s2', 'z-index')).toBe('1');
 	});
 
 	test('has no accessibility violations', async ({ page }) => {

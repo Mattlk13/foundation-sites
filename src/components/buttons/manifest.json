@@ -18,7 +18,7 @@
     { "name": "--yeti-border-width", "public": true, "description": "The width the joined members overlap by." },
     { "name": "--_yeti-gap", "public": false }
   ],
-  "a11y": { "role": "group", "requiredAttributes": ["role", "aria-label | aria-labelledby"], "keyboard": [], "notes": "role=\"group\" with a name, so the set is announced as one thing. A segmented toggle sets aria-pressed on each member; a set of tabs is the tabs component, not this." },
+  "a11y": { "role": "group", "requiredAttributes": ["role", "aria-label | aria-labelledby"], "keyboard": [ { "key": "Arrow keys", "action": "In a segmented control of radios, move the choice to the previous or next option." } ], "notes": "role=\"group\" with a name, so the set is announced as one thing. Inside a fieldset with a legend the fieldset is the named group and the div needs neither. A segmented control is label.button members wrapping radios that share one name, inside such a fieldset: the arrow keys move the choice natively. A toggle of buttons sets aria-pressed on each member and needs a script to move it; a set of tabs is the tabs component, not this." },
   "js": null,
   "support": { "unguarded": ["flexbox gap", "logical border radii"], "guarded": [] },
   "since": "7.0.0",

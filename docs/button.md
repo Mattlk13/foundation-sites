@@ -14,7 +14,7 @@ nav_order: 2
 ## Example
 
 <figure class="demo" data-height="sm">
-<div data-preview="Button"><iframe title="Button, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;buttons&quot; role=&quot;group&quot; aria-label=&quot;Emphasis&quot;&gt;&#10;	&lt;button class=&quot;button&quot; type=&quot;button&quot;&gt;Save&lt;/button&gt;&#10;	&lt;button class=&quot;button&quot; type=&quot;button&quot; data-emphasis=&quot;medium&quot;&gt;Preview&lt;/button&gt;&#10;	&lt;button class=&quot;button&quot; type=&quot;button&quot; data-emphasis=&quot;low&quot;&gt;Cancel&lt;/button&gt;&#10;&lt;/div&gt;"></iframe></div>
+<div data-preview="Button"><iframe title="Button, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;buttons&quot; role=&quot;group&quot; aria-label=&quot;Emphasis&quot;&gt;&#10;	&lt;button class=&quot;button&quot; type=&quot;button&quot;&gt;Save&lt;/button&gt;&#10;	&lt;button class=&quot;button&quot; type=&quot;button&quot; data-emphasis=&quot;medium&quot;&gt;Preview&lt;/button&gt;&#10;	&lt;button class=&quot;button&quot; type=&quot;button&quot; data-emphasis=&quot;low&quot;&gt;Cancel&lt;/button&gt;&#10;&lt;/div&gt;&#10;&lt;div class=&quot;buttons&quot; role=&quot;group&quot; aria-label=&quot;Map options&quot;&gt;&#10;	&lt;label class=&quot;button&quot; data-emphasis=&quot;medium&quot;&gt;&lt;input type=&quot;checkbox&quot; name=&quot;example-offline&quot; checked&gt; Offline&lt;/label&gt;&#10;	&lt;label class=&quot;button&quot; data-emphasis=&quot;medium&quot;&gt;&lt;input type=&quot;checkbox&quot; name=&quot;example-contours&quot;&gt; Contours&lt;/label&gt;&#10;&lt;/div&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
@@ -24,6 +24,10 @@ nav_order: 2
 	<button class="button" type="button">Save</button>
 	<button class="button" type="button" data-emphasis="medium">Preview</button>
 	<button class="button" type="button" data-emphasis="low">Cancel</button>
+</div>
+<div class="buttons" role="group" aria-label="Map options">
+	<label class="button" data-emphasis="medium"><input type="checkbox" name="example-offline" checked> Offline</label>
+	<label class="button" data-emphasis="medium"><input type="checkbox" name="example-contours"> Contours</label>
 </div>
 ```
 
@@ -56,11 +60,20 @@ Two values of `data-variant` are not hues: `black` and `white`. They do not foll
 </a>
 ```
 
+A toggle needs no script when it is a native input. Put the class on a `label` wrapping a `radio` or `checkbox`: the input is hidden from sight but stays in Tab order, the label is filled while the input is checked, exactly as a pressed button is, draws the focus ring when the input has it, and dims when the input is disabled. The checked state submits with a form and, for radios sharing a name, the arrow keys move it. A real `<button aria-pressed>` looks the same, but moving `aria-pressed` from one button to the next is your script's job.
+
+```html
+<label class="button" data-emphasis="medium">
+	<input type="checkbox" name="offline" checked>
+	Keep maps offline
+</label>
+```
+
 A link that is a button, `<a class="button">`, is drawn as a button and never underlined, since Yeti sets that inside its layer. A stylesheet of your own that underlines links on hover sits outside every layer and outranks it, so exclude buttons there: `a:hover:not(.button)`.
 
 ## Accessibility
 
-A `button` is a button and an `a` is a link; the class changes the look, not the role, so use the element that matches what happens. An icon-only button needs an `aria-label`. A toggle carries `aria-pressed`, and the pressed look follows it. A button that is waiting on a request carries `aria-busy="true"` and `aria-disabled="true"` together: it dims, shows a progress cursor, and your handler ignores presses until the request returns. The focus ring is the page's ring and is never removed. Text over every fill meets AA in both color schemes; the test suite checks each variant.
+A `button` is a button and an `a` is a link; the class changes the look, not the role, so use the element that matches what happens. An icon-only button needs an `aria-label`. A toggle is either a `label.button` wrapping a native radio or checkbox, whose own checked state is what a screen reader announces, or a button carrying `aria-pressed`, and the pressed look follows either. A button that is waiting on a request carries `aria-busy="true"` and `aria-disabled="true"` together: it dims, shows a progress cursor, and your handler ignores presses until the request returns. The focus ring is the page's ring and is never removed. Text over every fill meets AA in both color schemes; the test suite checks each variant.
 
 ## Attributes
 
@@ -77,6 +90,7 @@ A `button` is a button and an `a` is a link; the class changes the look, not the
 ## Children
 
 - `> svg`: 0 to 1. An optional icon, sized to the text.
+- `> input`: 0 to 1. On a label.button, the radio or checkbox that makes it a toggle: hidden from sight, still focusable, pressed while checked.
 
 ## Tokens
 
@@ -103,6 +117,7 @@ A `button` is a button and an `a` is a link; the class changes the look, not the
 | `--yeti-text-md` | Text size when data-size is absent. |
 | `--yeti-space-sm` | The space step when data-size is absent. |
 | `--yeti-opacity-muted` | Opacity when disabled or busy. |
+| `--yeti-color-focus` | The focus ring a label.button toggle draws for its hidden input. |
 
 </div>
 
@@ -121,13 +136,14 @@ A `button` is a button and an `a` is a link; the class changes the look, not the
 
 ## Accessibility
 
-- Put the class on a button, an a, or a submit input, nothing else. Use button for actions and a for navigation. An icon-only button needs an aria-label. A toggle sets aria-pressed; a button that is waiting sets aria-busy="true" together with aria-disabled="true", and your handler ignores presses while it waits.
+- Put the class on a button, an a, a submit input, or a label wrapping a radio or checkbox, nothing else. Use button for actions and a for navigation. An icon-only button needs an aria-label. A toggle is a label wrapping a native radio or checkbox, which needs no script, or a button with aria-pressed, which needs your script to move it; a button that is waiting sets aria-busy="true" together with aria-disabled="true", and your handler ignores presses while it waits.
 
 <div class="scroller" role="region" aria-label="Button keyboard shortcuts" tabindex="0" markdown="1">
 
 | Key | Action |
 | --- | --- |
 | `Enter / Space` | Activates a button element; Enter follows a link. |
+| `Space / Arrow keys` | On a label.button toggle, Space checks its input; the arrow keys move the choice within a radio group. |
 
 </div>
 

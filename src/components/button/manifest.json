@@ -12,7 +12,8 @@
   ],
   "classes": [],
   "children": [
-    { "selector": "> svg", "min": 0, "max": 1, "description": "An optional icon, sized to the text." }
+    { "selector": "> svg", "min": 0, "max": 1, "description": "An optional icon, sized to the text." },
+    { "selector": "> input", "min": 0, "max": 1, "description": "On a label.button, the radio or checkbox that makes it a toggle: hidden from sight, still focusable, pressed while checked." }
   ],
   "tokens": [
     { "name": "--yeti-button-radius", "public": true, "description": "Corner radius." },
@@ -34,6 +35,7 @@
     { "name": "--yeti-text-md", "public": true, "description": "Text size when data-size is absent." },
     { "name": "--yeti-space-sm", "public": true, "description": "The space step when data-size is absent." },
     { "name": "--yeti-opacity-muted", "public": true, "description": "Opacity when disabled or busy." },
+    { "name": "--yeti-color-focus", "public": true, "description": "The focus ring a label.button toggle draws for its hidden input." },
     { "name": "--_yeti-variant", "public": false },
     { "name": "--_yeti-variant-subtle", "public": false },
     { "name": "--_yeti-variant-strong", "public": false },
@@ -43,7 +45,7 @@
     { "name": "--_yeti-size-space", "public": false },
     { "name": "--_yeti-variant-soft", "public": false }
   ],
-  "a11y": { "requiredAttributes": [], "keyboard": [ { "key": "Enter / Space", "action": "Activates a button element; Enter follows a link." } ], "notes": "Put the class on a button, an a, or a submit input, nothing else. Use button for actions and a for navigation. An icon-only button needs an aria-label. A toggle sets aria-pressed; a button that is waiting sets aria-busy=\"true\" together with aria-disabled=\"true\", and your handler ignores presses while it waits." },
+  "a11y": { "requiredAttributes": [], "keyboard": [ { "key": "Enter / Space", "action": "Activates a button element; Enter follows a link." }, { "key": "Space / Arrow keys", "action": "On a label.button toggle, Space checks its input; the arrow keys move the choice within a radio group." } ], "notes": "Put the class on a button, an a, a submit input, or a label wrapping a radio or checkbox, nothing else. Use button for actions and a for navigation. An icon-only button needs an aria-label. A toggle is a label wrapping a native radio or checkbox, which needs no script, or a button with aria-pressed, which needs your script to move it; a button that is waiting sets aria-busy=\"true\" together with aria-disabled=\"true\", and your handler ignores presses while it waits." },
   "js": null,
   "support": { "unguarded": ["inline flexbox", "logical properties"], "guarded": [] },
   "since": "7.0.0",

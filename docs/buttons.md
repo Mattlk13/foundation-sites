@@ -14,7 +14,7 @@ nav_order: 3
 ## Example
 
 <figure class="demo" data-height="sm">
-<div data-preview="Buttons"><iframe title="Buttons, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;buttons&quot; role=&quot;group&quot; aria-label=&quot;Text style&quot; data-affix&gt;&#10;	&lt;button class=&quot;button&quot; type=&quot;button&quot; data-emphasis=&quot;medium&quot; aria-pressed=&quot;true&quot;&gt;Bold&lt;/button&gt;&#10;	&lt;button class=&quot;button&quot; type=&quot;button&quot; data-emphasis=&quot;medium&quot; aria-pressed=&quot;false&quot;&gt;Italic&lt;/button&gt;&#10;	&lt;button class=&quot;button&quot; type=&quot;button&quot; data-emphasis=&quot;medium&quot; aria-pressed=&quot;false&quot;&gt;Underline&lt;/button&gt;&#10;&lt;/div&gt;"></iframe></div>
+<div data-preview="Buttons"><iframe title="Buttons, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;buttons&quot; role=&quot;group&quot; aria-label=&quot;Text style&quot; data-affix&gt;&#10;	&lt;button class=&quot;button&quot; type=&quot;button&quot; data-emphasis=&quot;medium&quot; aria-pressed=&quot;true&quot;&gt;Bold&lt;/button&gt;&#10;	&lt;button class=&quot;button&quot; type=&quot;button&quot; data-emphasis=&quot;medium&quot; aria-pressed=&quot;false&quot;&gt;Italic&lt;/button&gt;&#10;	&lt;button class=&quot;button&quot; type=&quot;button&quot; data-emphasis=&quot;medium&quot; aria-pressed=&quot;false&quot;&gt;Underline&lt;/button&gt;&#10;&lt;/div&gt;&#10;&lt;fieldset&gt;&#10;	&lt;legend&gt;Billing&lt;/legend&gt;&#10;	&lt;div class=&quot;buttons&quot; data-affix&gt;&#10;		&lt;label class=&quot;button&quot; data-emphasis=&quot;medium&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;example-billing&quot; value=&quot;monthly&quot; checked&gt; Monthly&lt;/label&gt;&#10;		&lt;label class=&quot;button&quot; data-emphasis=&quot;medium&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;example-billing&quot; value=&quot;yearly&quot;&gt; Yearly&lt;/label&gt;&#10;	&lt;/div&gt;&#10;&lt;/fieldset&gt;"></iframe></div>
 
 <details markdown="1">
 <summary>View Code</summary>
@@ -25,6 +25,13 @@ nav_order: 3
 	<button class="button" type="button" data-emphasis="medium" aria-pressed="false">Italic</button>
 	<button class="button" type="button" data-emphasis="medium" aria-pressed="false">Underline</button>
 </div>
+<fieldset>
+	<legend>Billing</legend>
+	<div class="buttons" data-affix>
+		<label class="button" data-emphasis="medium"><input type="radio" name="example-billing" value="monthly" checked> Monthly</label>
+		<label class="button" data-emphasis="medium"><input type="radio" name="example-billing" value="yearly"> Yearly</label>
+	</div>
+</fieldset>
 ```
 
 </details>
@@ -45,9 +52,23 @@ Loose is a wrapping flex row at `data-gap`. `data-affix` removes the gap, square
 </div>
 ```
 
+A segmented control, one choice of several, is an affixed group of `label.button` members wrapping radios that share one name, inside a `fieldset` whose `legend` names it. The checked one is filled, the arrow keys move the choice, and it submits with the form, all with no script. The fieldset is the named group here, so the div inside it needs no role or label of its own.
+
+```html
+<fieldset>
+	<legend>Billing</legend>
+	<div class="buttons" data-affix>
+		<label class="button" data-emphasis="medium"><input type="radio" name="billing" value="monthly" checked> Monthly</label>
+		<label class="button" data-emphasis="medium"><input type="radio" name="billing" value="yearly"> Yearly</label>
+	</div>
+</fieldset>
+```
+
+A row of real `<button aria-pressed>` members draws the same way; it suits a toolbar where each button acts at once, but moving `aria-pressed` from one member to the next is your script's job.
+
 ## Accessibility
 
-The group carries `role="group"` and a name, so a screen reader announces the set once. A segmented toggle puts `aria-pressed` on each button and the pressed look follows. Do not use an affixed group as tabs; tabs have their own roles and keyboard behaviour and are a separate component.
+The group carries `role="group"` and a name, so a screen reader announces the set once. A segmented control of radios inside a fieldset is named by its legend and announced as radio buttons, one checked; a toggle of buttons puts `aria-pressed` on each and the pressed look follows. Do not use an affixed group as tabs; tabs have their own roles and keyboard behaviour and are a separate component.
 
 ## Attributes
 
@@ -85,7 +106,15 @@ The group carries `role="group"` and a name, so a screen reader announces the se
 
 - Role: `group`
 - Required attributes: `role`, `aria-label` or `aria-labelledby`
-- role="group" with a name, so the set is announced as one thing. A segmented toggle sets aria-pressed on each member; a set of tabs is the tabs component, not this.
+- role="group" with a name, so the set is announced as one thing. Inside a fieldset with a legend the fieldset is the named group and the div needs neither. A segmented control is label.button members wrapping radios that share one name, inside such a fieldset: the arrow keys move the choice natively. A toggle of buttons sets aria-pressed on each member and needs a script to move it; a set of tabs is the tabs component, not this.
+
+<div class="scroller" role="region" aria-label="Buttons keyboard shortcuts" tabindex="0" markdown="1">
+
+| Key | Action |
+| --- | --- |
+| `Arrow keys` | In a segmented control of radios, move the choice to the previous or next option. |
+
+</div>
 
 ## Browser support
 

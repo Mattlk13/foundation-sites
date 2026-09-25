@@ -840,6 +840,16 @@ test('validateManifestTokens counts a token the JS module reads as read', () => 
 	assert.deepEqual(withJs.lines, []);
 });
 
+test('a group inside a fieldset with a legend is named by the fieldset', () => {
+	const tree = (html) => validTree({
+		'src/layouts/rail/manifest.json': validManifest({ a11y: { role: 'group', requiredAttributes: ['role', 'aria-label | aria-labelledby'], keyboard: [] } }),
+		'src/layouts/rail/example.html': html,
+	});
+	assert.deepEqual(run(tree('<fieldset><legend>Rails</legend><div class="rail"><p>x</p></div></fieldset>')).lines, []);
+	assert.equal(run(tree('<fieldset><div class="rail"><p>x</p></div></fieldset>')).errors.length, 2);
+	assert.equal(run(tree('<div class="rail"><p>x</p></div>')).errors.length, 2);
+});
+
 test('a required attribute written as an alternation is satisfied by any one of its options', () => {
 	const tree = (html) => validTree({
 		'src/layouts/rail/manifest.json': validManifest({ a11y: { requiredAttributes: ['aria-label | aria-labelledby'], keyboard: [] } }),

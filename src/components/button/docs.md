@@ -24,8 +24,17 @@ Two values of `data-variant` are not hues: `black` and `white`. They do not foll
 </a>
 ```
 
+A toggle needs no script when it is a native input. Put the class on a `label` wrapping a `radio` or `checkbox`: the input is hidden from sight but stays in Tab order, the label is filled while the input is checked, exactly as a pressed button is, draws the focus ring when the input has it, and dims when the input is disabled. The checked state submits with a form and, for radios sharing a name, the arrow keys move it. A real `<button aria-pressed>` looks the same, but moving `aria-pressed` from one button to the next is your script's job.
+
+```html
+<label class="button" data-emphasis="medium">
+	<input type="checkbox" name="offline" checked>
+	Keep maps offline
+</label>
+```
+
 A link that is a button, `<a class="button">`, is drawn as a button and never underlined, since Yeti sets that inside its layer. A stylesheet of your own that underlines links on hover sits outside every layer and outranks it, so exclude buttons there: `a:hover:not(.button)`.
 
 ## Accessibility
 
-A `button` is a button and an `a` is a link; the class changes the look, not the role, so use the element that matches what happens. An icon-only button needs an `aria-label`. A toggle carries `aria-pressed`, and the pressed look follows it. A button that is waiting on a request carries `aria-busy="true"` and `aria-disabled="true"` together: it dims, shows a progress cursor, and your handler ignores presses until the request returns. The focus ring is the page's ring and is never removed. Text over every fill meets AA in both color schemes; the test suite checks each variant.
+A `button` is a button and an `a` is a link; the class changes the look, not the role, so use the element that matches what happens. An icon-only button needs an `aria-label`. A toggle is either a `label.button` wrapping a native radio or checkbox, whose own checked state is what a screen reader announces, or a button carrying `aria-pressed`, and the pressed look follows either. A button that is waiting on a request carries `aria-busy="true"` and `aria-disabled="true"` together: it dims, shows a progress cursor, and your handler ignores presses until the request returns. The focus ring is the page's ring and is never removed. Text over every fill meets AA in both color schemes; the test suite checks each variant.

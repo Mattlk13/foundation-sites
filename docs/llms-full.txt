@@ -1297,14 +1297,24 @@ Two values of `data-variant` are not hues: `black` and `white`. They do not foll
 </a>
 ```
 
+A toggle needs no script when it is a native input. Put the class on a `label` wrapping a `radio` or `checkbox`: the input is hidden from sight but stays in Tab order, the label is filled while the input is checked, exactly as a pressed button is, draws the focus ring when the input has it, and dims when the input is disabled. The checked state submits with a form and, for radios sharing a name, the arrow keys move it. A real `<button aria-pressed>` looks the same, but moving `aria-pressed` from one button to the next is your script's job.
+
+```html
+<label class="button" data-emphasis="medium">
+	<input type="checkbox" name="offline" checked>
+	Keep maps offline
+</label>
+```
+
 A link that is a button, `<a class="button">`, is drawn as a button and never underlined, since Yeti sets that inside its layer. A stylesheet of your own that underlines links on hover sits outside every layer and outranks it, so exclude buttons there: `a:hover:not(.button)`.
 
 ### Accessibility
 
-A `button` is a button and an `a` is a link; the class changes the look, not the role, so use the element that matches what happens. An icon-only button needs an `aria-label`. A toggle carries `aria-pressed`, and the pressed look follows it. A button that is waiting on a request carries `aria-busy="true"` and `aria-disabled="true"` together: it dims, shows a progress cursor, and your handler ignores presses until the request returns. The focus ring is the page's ring and is never removed. Text over every fill meets AA in both color schemes; the test suite checks each variant.
+A `button` is a button and an `a` is a link; the class changes the look, not the role, so use the element that matches what happens. An icon-only button needs an `aria-label`. A toggle is either a `label.button` wrapping a native radio or checkbox, whose own checked state is what a screen reader announces, or a button carrying `aria-pressed`, and the pressed look follows either. A button that is waiting on a request carries `aria-busy="true"` and `aria-disabled="true"` together: it dims, shows a progress cursor, and your handler ignores presses until the request returns. The focus ring is the page's ring and is never removed. Text over every fill meets AA in both color schemes; the test suite checks each variant.
 
 Children:
 - > svg: at least 0, at most 1. An optional icon, sized to the text.
+- > input: at least 0, at most 1. On a label.button, the radio or checkbox that makes it a toggle: hidden from sight, still focusable, pressed while checked.
 
 Tokens:
 - --yeti-button-radius — Corner radius.
@@ -1326,10 +1336,12 @@ Tokens:
 - --yeti-text-md — Text size when data-size is absent.
 - --yeti-space-sm — The space step when data-size is absent.
 - --yeti-opacity-muted — Opacity when disabled or busy.
+- --yeti-color-focus — The focus ring a label.button toggle draws for its hidden input.
 
 Accessibility contract:
 - Enter / Space: Activates a button element; Enter follows a link.
-Put the class on a button, an a, or a submit input, nothing else. Use button for actions and a for navigation. An icon-only button needs an aria-label. A toggle sets aria-pressed; a button that is waiting sets aria-busy="true" together with aria-disabled="true", and your handler ignores presses while it waits.
+- Space / Arrow keys: On a label.button toggle, Space checks its input; the arrow keys move the choice within a radio group.
+Put the class on a button, an a, a submit input, or a label wrapping a radio or checkbox, nothing else. Use button for actions and a for navigation. An icon-only button needs an aria-label. A toggle is a label wrapping a native radio or checkbox, which needs no script, or a button with aria-pressed, which needs your script to move it; a button that is waiting sets aria-busy="true" together with aria-disabled="true", and your handler ignores presses while it waits.
 
 ## buttons (component, class="buttons")
 
@@ -1354,9 +1366,23 @@ Loose is a wrapping flex row at `data-gap`. `data-affix` removes the gap, square
 </div>
 ```
 
+A segmented control, one choice of several, is an affixed group of `label.button` members wrapping radios that share one name, inside a `fieldset` whose `legend` names it. The checked one is filled, the arrow keys move the choice, and it submits with the form, all with no script. The fieldset is the named group here, so the div inside it needs no role or label of its own.
+
+```html
+<fieldset>
+	<legend>Billing</legend>
+	<div class="buttons" data-affix>
+		<label class="button" data-emphasis="medium"><input type="radio" name="billing" value="monthly" checked> Monthly</label>
+		<label class="button" data-emphasis="medium"><input type="radio" name="billing" value="yearly"> Yearly</label>
+	</div>
+</fieldset>
+```
+
+A row of real `<button aria-pressed>` members draws the same way; it suits a toolbar where each button acts at once, but moving `aria-pressed` from one member to the next is your script's job.
+
 ### Accessibility
 
-The group carries `role="group"` and a name, so a screen reader announces the set once. A segmented toggle puts `aria-pressed` on each button and the pressed look follows. Do not use an affixed group as tabs; tabs have their own roles and keyboard behaviour and are a separate component.
+The group carries `role="group"` and a name, so a screen reader announces the set once. A segmented control of radios inside a fieldset is named by its legend and announced as radio buttons, one checked; a toggle of buttons puts `aria-pressed` on each and the pressed look follows. Do not use an affixed group as tabs; tabs have their own roles and keyboard behaviour and are a separate component.
 
 Children:
 - > .button: at least 2. The buttons.
@@ -1367,7 +1393,8 @@ Tokens:
 
 Accessibility contract:
 Required: role, aria-label | aria-labelledby
-role="group" with a name, so the set is announced as one thing. A segmented toggle sets aria-pressed on each member; a set of tabs is the tabs component, not this.
+- Arrow keys: In a segmented control of radios, move the choice to the previous or next option.
+role="group" with a name, so the set is announced as one thing. Inside a fieldset with a legend the fieldset is the named group and the div needs neither. A segmented control is label.button members wrapping radios that share one name, inside such a fieldset: the arrow keys move the choice natively. A toggle of buttons sets aria-pressed on each member and needs a script to move it; a set of tabs is the tabs component, not this.
 
 ## card (component, class="card")
 

@@ -20,6 +20,18 @@
 				<button class="button" type="button" id="a2" data-emphasis="medium">Two</button>
 				<button class="button" type="button" id="a3" data-emphasis="medium">Three</button>
 			</div>
+			<div class="buttons" id="pressed-group" role="group" aria-label="Pressed" data-affix>
+				<button class="button" type="button" id="pressed" data-emphasis="medium" aria-pressed="true">Pressed</button>
+				<button class="button" type="button" data-emphasis="medium" aria-pressed="false">Not</button>
+			</div>
+			<fieldset>
+				<legend>Billing</legend>
+				<div class="buttons" id="segmented" data-affix>
+					<label class="button" id="s1" data-emphasis="medium"><input type="radio" id="s1-input" name="billing" value="monthly" checked> Monthly</label>
+					<label class="button" id="s2" data-emphasis="medium"><input type="radio" id="s2-input" name="billing" value="yearly"> Yearly</label>
+					<label class="button" id="s3" data-emphasis="medium"><input type="radio" id="s3-input" name="billing" value="never" disabled> Never</label>
+				</div>
+			</fieldset>
 		</div>
 	</main>
 </body>
