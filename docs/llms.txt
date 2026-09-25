@@ -491,7 +491,7 @@ Attributes:
 - data-side: start (default) | end — Which side a slide comes from. The sides are logical, so start is the right edge in a right-to-left page.
 - data-stagger (boolean) — Animate the element's children one after another instead of the element itself, each a step later than the last.
 - data-view (boolean) — Play as the element scrolls into view instead of on load. Where a scroll timeline is unsupported, or the reader has asked for less motion, it plays on load instead.
-- data-once (boolean) — Arrive once, the first time the element comes into view. Needs enter.js; without it the element arrives on load.
+- data-once (boolean) — Arrives once, as it first comes near the viewport; without enter.js it is simply there, not animated.
 
 module: enter.js (optional)
 

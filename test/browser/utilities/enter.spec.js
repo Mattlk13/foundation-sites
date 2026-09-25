@@ -1,3 +1,7 @@
+// Three engines are allowed for this spec, unlike most of the suite, because
+// scroll position and animation timelines are the thing under test and
+// differ by engine (animation-timeline: view() is Chromium- and WebKit-only
+// as of this writing; scroll rounding differs too).
 import { test, expect } from 'playwright/test';
 import { stage, style, rect, axe, painted, withoutModule } from '../lib/layout.js';
 
@@ -128,26 +132,26 @@ test.describe('enter', () => {
 		expect(await style(page, '#delayed', 'opacity')).toBe('1');
 	});
 
-	test('data-once pauses an off-screen arrival until it is first seen, and does not replay it', async ({ page }) => {
+	test('data-once withholds the animation until the element is first near the viewport', async ({ page }) => {
 		await open(page);
-		// Below the fold, like #view, so the paused state is worth something.
+		// Below the fold, like #view, so the withheld state is worth something.
 		expect((await rect(page, '#once')).top).toBeGreaterThan(page.viewportSize().height);
-		// A short, realistic wait rather than a strict poll for a 'paused'
-		// playState: the pause happens from an 'animationstart' listener on
-		// the browser's own rendering schedule, not in script order, and what
-		// this is really testing is that an unseen element has not arrived
-		// on its own.
-		await page.waitForTimeout(300);
-		expect(await style(page, '#once', 'opacity')).not.toBe('1');
+		expect(await page.evaluate(() => document.getElementById('once').hasAttribute('data-once'))).toBe(true);
+		expect(await style(page, '#once', 'animation-name')).toBe('none');
+		// enter.css's animation: none, not opacity: 0: simply there, visible,
+		// exactly the state a reader without enter.js is left in for good.
+		expect(await style(page, '#once', 'opacity')).toBe('1');
+	});
+
+	test('data-once arrives once the element is first near the viewport, and does not replay it', async ({ page }) => {
+		await open(page);
 		await page.evaluate(() => document.getElementById('once').scrollIntoView());
 		await settled(page);
 		await painted(page);
+		expect(await page.evaluate(() => document.getElementById('once').hasAttribute('data-once'))).toBe(false);
 		expect(await style(page, '#once', 'opacity')).toBe('1');
-		// Away, then back: a real replay is a second 'animationstart', not
-		// merely a currentTime that failed to reset — a finished,
-		// backwards-fill animation drops out of getAnimations() entirely,
-		// which made a currentTime-based guard here close to a no-op: it was
-		// comparing against a value that had already vanished.
+		// Away, then back: nothing here ever puts the attribute back, so a
+		// real replay would show up as a second 'animationstart'.
 		const starts = () => page.evaluate(() => window.__enterStarts.once);
 		const before = await starts();
 		await page.evaluate(() => window.scrollTo(0, 0));
@@ -155,81 +159,42 @@ test.describe('enter', () => {
 		await page.evaluate(() => document.getElementById('once').scrollIntoView());
 		await settled(page);
 		expect(await starts()).toBe(before);
+		expect(await page.evaluate(() => document.getElementById('once').hasAttribute('data-once'))).toBe(false);
 		expect(await style(page, '#once', 'opacity')).toBe('1');
 	});
 
-	test('a staggered data-once list is never paused a second time once it has been released', async ({ page }) => {
+	test('a staggered data-once list arrives in full once it is first near the viewport', async ({ page }) => {
 		await open(page);
 		expect((await rect(page, '#once-stagger')).top).toBeGreaterThan(page.viewportSize().height);
-		// Brief enough that most of the nine children have not yet reached
-		// their own delayed 'animationstart': only the earliest ones are
-		// paused-and-resumed here, the rest are still silently ticking
-		// through a delay enter.js has not touched yet.
-		await page.evaluate(() => document.getElementById('once-stagger').scrollIntoView());
-		await page.waitForTimeout(150);
-		await page.evaluate(() => window.scrollTo(0, 0));
-		// Long enough for every child's own delay and duration to have run
-		// its course (the ninth waits 1.6s and then takes 0.6s), whether or
-		// not the page is looking at it: once released, enter.js must leave
-		// every one of them alone rather than catching a late
-		// 'animationstart' and pausing it with nothing left to resume it.
-		await page.waitForTimeout(3000);
 		await page.evaluate(() => document.getElementById('once-stagger').scrollIntoView());
 		await settled(page);
+		// Every child's own delay and duration has to run its course (the
+		// ninth waits 1.6s and then takes 0.6s); painted() settles on the
+		// real end state rather than a guessed wait.
 		await painted(page);
 		const opacities = await page.evaluate(() => [1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => getComputedStyle(document.getElementById(`os${n}`)).opacity));
 		expect(opacities).toEqual(Array(9).fill('1'));
 	});
 
-	test('data-once defers to data-view where a scroll timeline exists, and still arrives through the fallback', async ({ page }) => {
-		const errors = [];
-		page.on('pageerror', (e) => errors.push(e.message));
-		await open(page);
-		expect((await rect(page, '#view-once')).top).toBeGreaterThan(page.viewportSize().height);
-		// A single scrollIntoView() jump lands past the crossing in one frame,
-		// with the element already plainly on screen by the time
-		// 'animationstart' fires, which never exercises the bug: a gradual
-		// scroll, one small step and a frame at a time, is what actually
-		// catches the animation mid-crossing, the way a reader's own scroll
-		// would.
-		const top = await page.evaluate(() => window.scrollY + document.getElementById('view-once').getBoundingClientRect().top);
-		for (let offset = -350; offset <= 400; offset += 10) {
-			await page.evaluate((y) => window.scrollTo(0, Math.max(0, y)), top - page.viewportSize().height + offset);
-			await settled(page);
-		}
-		await painted(page);
-		// Whichever path drove it there — data-view's own scroll timeline
-		// where it exists, data-once's pause-and-play where it does not —
-		// the element must actually arrive, not strand paused partway, and
-		// must never throw doing it.
-		expect(errors).toEqual([]);
-		expect(Number(await style(page, '#view-once', 'opacity'))).toBeGreaterThan(0.99);
-	});
-
-	test('a tall element arrives however the reader scrolls, whatever its own height', async ({ page }) => {
+	test('a tall element still arrives once any part of it is near the viewport', async ({ page }) => {
 		await open(page);
 		expect((await rect(page, '#tall')).top).toBeGreaterThan(page.viewportSize().height);
-		// A gradual scroll, one small step and a frame at a time, the same
-		// approach the view()-plus-data-once test below uses: an 800vh
-		// element can never show 15% of its own height, the ratio a single
-		// intersectionRatio threshold would have asked for, so this is
-		// really exercising rootMargin's viewport-relative bar instead.
-		const top = await page.evaluate(() => {
-			const el = document.getElementById('tall');
-			return window.scrollY + el.getBoundingClientRect().top;
-		});
-		for (let offset = -350; offset <= 400; offset += 10) {
-			await page.evaluate((y) => window.scrollTo(0, Math.max(0, y)), top - page.viewportSize().height + offset);
-			await settled(page);
-		}
+		// The observer fires as soon as any part of the target is near,
+		// whatever its own height, so scrolling its top edge into view is
+		// enough — unlike the old intersectionRatio-of-the-target's-own-area
+		// approach, an 800vh element needs no special-cased scroll here.
+		await page.evaluate(() => document.getElementById('tall').scrollIntoView());
+		await settled(page);
 		await painted(page);
 		expect(await style(page, '#tall', 'opacity')).toBe('1');
 	});
 
-	test('without the module, data-once arrives on load like any other .enter', async ({ page }) => {
+	test('without the module, data-once keeps the element present but never animated', async ({ page }) => {
 		await withoutModule(page, 'enter');
 		await open(page);
 		await painted(page);
+		expect(await page.evaluate(() => document.getElementById('once').hasAttribute('data-once'))).toBe(true);
+		expect(await style(page, '#once', 'animation-name')).toBe('none');
 		expect(await style(page, '#once', 'opacity')).toBe('1');
 	});
 

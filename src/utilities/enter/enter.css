@@ -100,6 +100,20 @@
 		}
 	}
 
+	/* data-once waits for enter.js to say the element has been seen before
+	   it arrives at all. Until then it is simply there: no animation, so
+	   nothing here can leave it hidden, and no script means it stays this
+	   way, present and unanimated, forever. Written after every rule above
+	   so it wins the ones it ties with on specificity; enter.js removes the
+	   attribute the moment the element is first seen, which drops this rule
+	   out of the match entirely and lets the ordinary rules above it apply
+	   exactly as if data-once had never been there — the animation that
+	   starts then is a new one, not a resumption of anything. */
+	.enter[data-once],
+	.enter[data-once][data-stagger] > * {
+		animation: none;
+	}
+
 	@keyframes yeti-enter-fade {
 		from { opacity: 0; }
 	}
