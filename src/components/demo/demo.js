@@ -136,15 +136,14 @@ function grip(figure) {
 		const start = contentWidth(box);
 		const from = event.clientX;
 		const backwards = rtl();
-		// A frame under the pointer would take the events for its own document.
-		const frame = box.querySelector(':scope > iframe');
-		const framePointer = frame?.style.pointerEvents;
-		if (frame) frame.style.pointerEvents = 'none';
+		// The grip captures the pointer, so a frame under it cannot take the
+		// drag. The frame's pointer-events are left alone: turning them off for
+		// the drag left Chromium sending the wheel to the page, not the frame,
+		// for a while after.
 		const move = (e) => set(widthFromDrag(start, e.clientX - from, backwards, bounds.min, bounds.max));
 		handle.addEventListener('pointermove', move);
 		handle.addEventListener('lostpointercapture', () => {
 			handle.removeEventListener('pointermove', move);
-			if (frame) frame.style.pointerEvents = framePointer;
 		}, { once: true });
 		handle.setPointerCapture(event.pointerId);
 	});

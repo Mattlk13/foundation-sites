@@ -316,12 +316,20 @@ test.describe('demo', () => {
 		expect(grip.left + grip.width / 2).toBeCloseTo(box.right, 0);
 	});
 
-	test('dragging the grip of a framed box works, and the frame takes the pointer back after', async ({ page }) => {
+	test('dragging the grip of a framed box works, and the wheel scrolls the frame after', async ({ page }) => {
 		await open(page);
+		await page.evaluate(() => { document.querySelector('#frame').srcdoc = `<body style="margin:0">${'<p>line</p>'.repeat(200)}`; });
+		await page.waitForFunction(() => document.querySelector('#frame').contentDocument?.body?.childElementCount > 100);
 		const before = await width(page, '#framed-preview');
+		// The drag passes over the frame, which must not take it.
 		await dragGrip(page, '#framed-preview', -200);
 		expect(Math.abs(await width(page, '#framed-preview') - (before - 200))).toBeLessThanOrEqual(1);
-		expect(await style(page, '#frame', 'pointer-events')).toBe('auto');
+		// Chromium sent the wheel to the page, not the frame, after a drag
+		// that turned the frame's pointer-events off and on again.
+		const box = await rect(page, '#framed-preview');
+		await page.mouse.move(box.left + 100, box.top + box.height / 2);
+		await page.mouse.wheel(0, 300);
+		await expect.poll(() => page.evaluate(() => document.querySelector('#frame').contentWindow.scrollY)).toBeGreaterThan(0);
 	});
 
 	test('arrow keys step between width stops; Home and End reach the min and the max', async ({ page }) => {
