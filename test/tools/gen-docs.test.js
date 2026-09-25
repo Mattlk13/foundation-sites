@@ -322,6 +322,12 @@ test('renderDemo takes several stylesheets, so a themed host reuses the cached f
 	assert.ok(out.includes('src=&quot;/yeti/yeti.js&quot;'));
 });
 
+test('renderDemo gives the module bundle the first stylesheet\'s cache key', () => {
+	const out = renderDemo({ title: 'Card', exampleHtml: '<p></p>', stylesheet: ['/yeti/yeti.css?v=abc123', '/css/theme.css?v=abc123'] });
+	assert.ok(out.includes('&lt;base href=&quot;/yeti/&quot;&gt;'));
+	assert.ok(out.includes('src=&quot;/yeti/yeti.js?v=abc123&quot;'));
+});
+
 test('renderDemo keeps the srcdoc on one line, whatever the example does', () => {
 	const out = renderDemo({ title: 'Dialog', exampleHtml: '<p>One</p>\n\n<p>Two</p>\n', stylesheet: '/yeti/yeti.css' });
 	const srcdoc = out.match(/srcdoc="([^"]*)"/);

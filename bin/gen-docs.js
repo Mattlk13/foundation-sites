@@ -93,6 +93,9 @@ export function renderDemo({ title, exampleHtml, stylesheet, height = 'lg', widt
 	const sheets = Array.isArray(stylesheet) ? stylesheet : [stylesheet];
 	const base = `${path.posix.dirname(sheets[0])}/`.replace(/\/+$/, '/');
 	const links = sheets.map((href) => `<link rel="stylesheet" href="${href}">`).join('');
+	// A host that stamps a cache key on the first stylesheet gets the same
+	// key on the bundle, so a frame never keeps an old yeti.js after a release.
+	const key = sheets[0].match(/\?[^#]*/)?.[0] ?? '';
 	// The frame is a whole Yeti page: the stylesheets and, beside the first,
 	// the bundle of every module, so a framed dialog opens, framed tabs switch,
 	// and an example that composes components gets all of their scripts.
@@ -108,7 +111,7 @@ export function renderDemo({ title, exampleHtml, stylesheet, height = 'lg', widt
 	// point is the edge: a seam cut across the full width, a band that runs
 	// out of the box. The reader sees the example reach the frame's border.
 	const padding = bleed ? '0' : 'var(--yeti-space-md)';
-	const doc = `<base href="${base}">${links}<script type="module" src="${base}yeti.js"></script>${inert}<body style="margin:0;padding:${padding}">${exampleHtml.trim()}`;
+	const doc = `<base href="${base}">${links}<script type="module" src="${base}yeti.js${key}"></script>${inert}<body style="margin:0;padding:${padding}">${exampleHtml.trim()}`;
 	const srcdoc = escapeAttribute(doc).replace(/\r?\n/g, '&#10;');
 	return [
 		`<figure class="demo" data-height="${height}"${width ? ` data-width="${width}"` : ''}${resize ? ` data-resize="${resize}"` : ''}>`,
