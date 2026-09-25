@@ -46,6 +46,12 @@ test.describe('scroller', () => {
 		expect(overflow).toBe(true);
 	});
 
+	test('only media are exempt from the cap; a text child keeps the prose measure', async ({ page }) => {
+		await open(page, 'scroller', 1400);
+		const measure = await token(page, '--yeti-measure');
+		expect((await rect(page, '#long-text')).width).toBeLessThanOrEqual(measure + 1);
+	});
+
 	test('a positioned child stays inside the track', async ({ page }) => {
 		await page.setViewportSize({ width: 390, height: 800 });
 		await open(page, 'scroller', 390);

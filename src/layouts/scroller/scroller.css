@@ -16,9 +16,14 @@
 	.scroller > * {
 		margin: 0;
 		flex: 0 0 auto;
-		/* The reset caps media at their container's width, but in a scroller
-		   overflowing the track is the point; data-width sets a child's width
-		   when one is wanted. */
+	}
+	/* The reset caps media at their container's width, but in a scroller
+	   overflowing the track is the point; data-width sets a child's width
+	   when one is wanted. Only media: a text child (a paragraph, a list item)
+	   keeps the prose measure it would have anywhere else, since overflowing
+	   the track is not the point for a caption or a label the way it is for
+	   an oversized image. */
+	.scroller > :is(img, picture, video, canvas, svg) {
 		max-inline-size: none;
 	}
 	.scroller[data-width] > * { inline-size: var(--_yeti-width); }
