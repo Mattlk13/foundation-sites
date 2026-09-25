@@ -4,6 +4,7 @@ import { walkFiles } from './files.js';
 import { stripComments } from './imports.js';
 import { loadSchema } from './manifest.js';
 import { loadCatalogue } from './tokens.js';
+import { LAYER_STATEMENT } from './layers.js';
 
 /** Blanks url(...) contents and quoted strings, preserving length, so a semicolon or colon
  *  inside a token's value (a data: URL, say) is never mistaken for a declaration or
@@ -97,9 +98,28 @@ export function validateThemes(root, files = themeFiles(root)) {
 		let line = 1;
 		let selectorLine = 1;
 		let decls = '';
+		// Anything at the top level yet: the layer statement may only come first.
+		let started = false;
 		const inDeclarations = () => ['root', 'rule'].includes(stack.at(-1)?.kind);
 		for (const ch of text) {
+			if (ch === ';' && stack.length === 0) {
+				// A top-level statement. The one allowed is Yeti's own layer order,
+				// first in the file, so a theme loaded before yeti.css still puts
+				// its element rules in the right place.
+				const statement = `${selector.trim()};`;
+				if (/^@layer\b/.test(statement)) {
+					if (started || statement.replace(/\s+/g, ' ').replace(/\s*,\s*/g, ', ') !== LAYER_STATEMENT) {
+						errors.push({ file, line: selectorLine, message: `the only @layer statement a theme may make is Yeti's own order, first in the file: ${LAYER_STATEMENT} (found "${statement}")` });
+					}
+				} else {
+					errors.push({ file, line: selectorLine, message: `themes may only set --yeti-* tokens on :root (found "${statement}")` });
+				}
+				started = true;
+				selector = '';
+				continue;
+			}
 			if (ch === '{') {
+				if (stack.length === 0) started = true;
 				// A block opened inside a declaration block (nesting) has its prelude after the last ';'.
 				const sel = (inDeclarations() ? decls.slice(decls.lastIndexOf(';') + 1) : selector).trim();
 				const top = stack.at(-1)?.kind;
@@ -144,9 +164,8 @@ export function validateThemes(root, files = themeFiles(root)) {
 				if (ch === '\n') { line++; if (!selector.trim()) selectorLine = line; }
 			}
 		}
-		// A statement at-rule (@import …; or @layer x;) never opens a block, so the
-		// char loop above never sees it: it just keeps accumulating in `selector`
-		// until the file ends. Catch that leftover text here.
+		// Text after the last block that never reached a ; or a { (a statement
+		// missing its semicolon, a stray word) is caught here.
 		if (selector.trim()) {
 			errors.push({ file, line: selectorLine, message: `themes may only set --yeti-* tokens on :root (found "${selector.trim()}")` });
 		}

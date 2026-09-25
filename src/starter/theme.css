@@ -8,6 +8,10 @@
    elements go in the yeti.theme layer, at the end. Components are changed
    through their own tokens, listed on the Tokens page, never by class. */
 
+/* Repeats Yeti's layer order, so element rules land in the right place even
+   if this file loads before yeti.css. */
+@layer yeti.reset, yeti.base, yeti.theme, yeti.layouts, yeti.components, yeti.utilities;
+
 :root {
 	/* Color. Every color in Yeti is worked out from these four. */
 

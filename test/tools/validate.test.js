@@ -7,6 +7,7 @@ import {
 	validateVocabulary, validateNoMediaQueries, validateDocsFragments, validateFields, validateThemes, validateMotion, validateAnchorsAndContainers, validateTokenReads, validateModules,
 } from '../../bin/validate.js';
 import { parseHtml } from '../../bin/lib/html.js';
+import { LAYER_STATEMENT } from '../../bin/lib/layers.js';
 import { makeTree, validManifest, validTree, REPO_ROOT, TOKENS_SCHEMA_PATH, VOCABULARY_PATH } from './helpers.js';
 
 const run = (files) => {
@@ -566,7 +567,8 @@ test('validateThemes rejects a bare at-rule statement with no block', () => {
 		'src/yeti.css': '@import "layers.css";\n@import "tokens/radius.css";\n@import "layouts/attributes.css";\n@import "layouts/rail/rail.css";\n@import "components/tag/tag.css";\n',
 		'src/themes/round.css': theme,
 	});
-	assert.deepEqual(run(tree('@layer theme;\n')).lines, ['src/themes/round.css:1: themes may only set --yeti-* tokens on :root (found "@layer theme;")']);
+	assert.deepEqual(run(tree('@layer theme;\n')).lines, ['src/themes/round.css:1: the only @layer statement a theme may make is Yeti\'s own order, first in the file: @layer yeti.reset, yeti.base, yeti.theme, yeti.layouts, yeti.components, yeti.utilities; (found "@layer theme;")']);
+	assert.deepEqual(run(tree('@import "x.css";\n:root { --yeti-radius-md: 0; }\n')).lines, ['src/themes/round.css:1: themes may only set --yeti-* tokens on :root (found "@import "x.css";")']);
 });
 
 test('validateThemes rejects a media block nested inside another', () => {
@@ -654,6 +656,16 @@ test('no framework file ships rules in the yeti.theme layer', () => {
 	assert.deepEqual(r.lines, ['src/layouts/rail/rail.css:4: Yeti ships nothing in the yeti.theme layer; it belongs to a theme (found "@layer yeti.theme")']);
 	const statement = run(validTree({ 'src/base/extra.css': '@layer yeti.base, yeti.theme;\n', 'src/yeti.css': '@import "layers.css";\n@import "base/extra.css";\n@import "layouts/rail/rail.css";\n' }));
 	assert.deepEqual(statement.lines, ['src/base/extra.css:1: Yeti ships nothing in the yeti.theme layer; it belongs to a theme (found "@layer yeti.base, yeti.theme")']);
+});
+
+test('validateThemes accepts Yeti\'s layer order repeated first in the file, and no other layer statement', () => {
+	const body = '@layer yeti.theme {\n\th1 { text-transform: uppercase; }\n}\n';
+	assert.deepEqual(run(elementThemeTree(`${LAYER_STATEMENT}\n:root { --yeti-radius-md: 0; }\n${body}`)).lines, []);
+	assert.deepEqual(run(elementThemeTree(`/* order */\n@layer yeti.reset,\n\tyeti.base, yeti.theme, yeti.layouts, yeti.components, yeti.utilities;\n${body}`)).lines, []);
+	const refused = (statement) => `the only @layer statement a theme may make is Yeti's own order, first in the file: ${LAYER_STATEMENT} (found "${statement}")`;
+	const wrongOrder = '@layer yeti.reset, yeti.theme, yeti.base, yeti.layouts, yeti.components, yeti.utilities;';
+	assert.deepEqual(run(elementThemeTree(`${wrongOrder}\n${body}`)).lines, [`src/themes/round.css:1: ${refused(wrongOrder)}`]);
+	assert.deepEqual(run(elementThemeTree(`:root { --yeti-radius-md: 0; }\n${LAYER_STATEMENT}\n`)).lines, [`src/themes/round.css:2: ${refused(LAYER_STATEMENT)}`]);
 });
 
 const markerTree = (example) => layoutTree({

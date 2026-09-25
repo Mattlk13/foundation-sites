@@ -71,4 +71,17 @@ test.describe('themes', () => {
 		expect(between).toBeCloseTo(gap, 0);
 		expect(between).not.toBeCloseTo(threeRem, 0);
 	});
+
+	test('a theme loaded before yeti.css still lands in its layer, because it repeats the order', async ({ page }) => {
+		expect((await page.goto('/test/browser/fixtures/themes/element-first.html')).status()).toBe(200);
+		await painted(page);
+		expect(await page.evaluate(() => {
+			let rule = document.styleSheets[0].cssRules[0];
+			return rule instanceof CSSLayerStatementRule ? Array.from(rule.nameList) : null;
+		})).toEqual(['yeti.reset', 'yeti.base', 'yeti.theme', 'yeti.layouts', 'yeti.components', 'yeti.utilities']);
+		expect(await style(page, '#bare', 'text-transform')).toBe('uppercase');
+		// The base colors links too, so this is the reading that shows the theme is above it.
+		expect(await style(page, '#plain', 'color')).toBe('rgb(200, 0, 0)');
+		expect(await style(page, '#cta', 'color')).not.toBe('rgb(200, 0, 0)');
+	});
 });

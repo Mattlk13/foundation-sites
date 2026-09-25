@@ -96,6 +96,8 @@ A theme file has two parts. The first is tokens: `:root` blocks (optionally spli
 This theme uses both. The tokens set the accent and space out the headings' letters, as capitals want; the element rules set headings in engraved capitals, italicize captions, and draw the quotation's bar at the border width instead of its heavier default:
 
 ```css
+@layer yeti.reset, yeti.base, yeti.theme, yeti.layouts, yeti.components, yeti.utilities;
+
 :root {
 	--yeti-hue-primary: 200;
 	--yeti-tracking-heading: 0.04em;
@@ -107,6 +109,8 @@ This theme uses both. The tokens set the accent and space out the headings' lett
 	blockquote { border-inline-start-width: var(--yeti-border-width); }
 }
 ```
+
+The first line repeats Yeti's layer order, the one statement a theme may make besides its blocks: a browser fixes the order of layers when it first meets them, so a theme that loads before `yeti.css` without it would put its element rules below the base instead of above it.
 
 A component's skin stays token-only: a class name belongs to Yeti, and a theme that restyled one would break when its internals change and could flatten its states. The layer sits above the base, so a theme's `h1` rule beats Yeti's, and below every layout, component and utility, so a theme's `a { color }` never repaints a link that is a button and its `p` margins never reach inside a `stack`; to change what a layout or component defines, set its tokens.
 
