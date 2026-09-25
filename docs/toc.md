@@ -50,6 +50,8 @@ Following a link scrolls smoothly, from `--yeti-toc-scroll` applied to the page 
 
 Each row's block padding is `--yeti-toc-padding`, a control's density by default; set it smaller on one `.toc` for a book's own contents page.
 
+The list may itself be a `cluster` instead of a plain `ul`, for a row of contents rather than a column — a settings page's section list beside its narrow rail, say. The toc's own column and gap only apply to a list that is not a cluster, so the layout class wins and the row wraps as any cluster does.
+
 `data-numbered` turns the list into a contents list. Every `ul` resets a CSS counter and every `li` counts, so a nested list picks up where its parent left off and reads `2.1` rather than starting over at `1`. The number sits before the link, in the muted color, with tabular figures, in a box wide enough for a two-figure count or a nested 2.1, so the link text lines up.
 
 ```html
