@@ -1,5 +1,5 @@
 import { test, expect } from 'playwright/test';
-import { stage, rect, style, axe, withoutModule, painted } from '../lib/layout.js';
+import { stage, rect, style, px, token, axe, withoutModule, painted } from '../lib/layout.js';
 import { PAGE_HELPERS } from '../lib/contrast.js';
 
 const open = async (page, width = 1000, hash = '') => {
@@ -97,6 +97,19 @@ test.describe('tabs', () => {
 		expect(await rgbOf(page, '#f1', 'color')).toEqual(onVariant);
 		// The unselected tab is not filled.
 		expect(await rgbOf(page, '#f2', 'backgroundColor')).not.toEqual(variant);
+	});
+
+	test('a vertical filled tab rounds its start corners', async ({ page }) => {
+		await open(page);
+		const radius = await token(page, '--yeti-radius-sm');
+		// The vertical list's edge runs down the inline-end side, so the filled
+		// tab rounds its two inline-start corners instead of its two
+		// block-start ones; in the fixture's ltr, horizontal-tb document those
+		// are the top-left and bottom-left corners, and the top-right corner
+		// (block-start, inline-end) stays square against the divider.
+		expect(await px(page, '#vf1', 'border-top-left-radius')).toBeCloseTo(radius, 0);
+		expect(await px(page, '#vf1', 'border-bottom-left-radius')).toBeCloseTo(radius, 0);
+		expect(await px(page, '#vf1', 'border-top-right-radius')).toBeCloseTo(0, 0);
 	});
 
 	test('has no accessibility violations', async ({ page }) => {
