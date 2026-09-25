@@ -730,7 +730,7 @@ test('a marker value is checked on descendants of the component that declares it
 test('a marker outside its component is left alone', () => {
 	const r = run(componentTree({
 		'src/layouts/rail/manifest.json': validManifest({ markers: [{ name: 'data-span', type: 'enum', vocabulary: 'span', description: 'x' }] }),
-		'src/components/tag/example.html': '<span class="tag" data-span="9">New</span>\n',
+		'src/components/tag/example.html': '<span class="tag" data-span="13">New</span>\n',
 	}));
 	assert.deepEqual(r.lines, []);
 });
