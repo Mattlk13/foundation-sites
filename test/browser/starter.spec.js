@@ -83,7 +83,7 @@ test.describe('starter page', () => {
 	}
 });
 
-test.describe('starter page screenshots', () => {
+test.describe('starter page screenshots @screenshot', () => {
 	test.skip(({ browserName }) => browserName !== 'chromium', 'baselines are captured in Chromium only');
 
 	for (const scheme of ['light', 'dark']) {

@@ -19,7 +19,7 @@ const walk = (dir) => {
 };
 walk(fixturesDir);
 
-test.describe('screenshots', () => {
+test.describe('screenshots @screenshot', () => {
 	test.skip(({ browserName }) => browserName !== 'chromium', 'baselines are captured in Chromium only');
 
 	for (const fixture of fixtures) {
