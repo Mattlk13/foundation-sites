@@ -46,7 +46,25 @@
 				<section role="tabpanel" id="vfp1" aria-labelledby="vf1"><p>General.</p></section>
 				<section role="tabpanel" id="vfp2" aria-labelledby="vf2"><p>Keys.</p></section>
 			</div>
+			<div class="tabs" id="outer">
+				<div role="tablist" aria-label="Outer">
+					<button type="button" role="tab" id="o1" aria-controls="op1">Summary</button>
+					<button type="button" role="tab" id="o2" aria-controls="op2">Sections</button>
+				</div>
+				<section role="tabpanel" id="op1" aria-labelledby="o1"><p>Summary panel.</p></section>
+				<section role="tabpanel" id="op2" aria-labelledby="o2">
+					<div class="tabs" id="inner">
+						<div role="tablist" aria-label="Inner">
+							<button type="button" role="tab" id="i1" aria-controls="ip1">First</button>
+							<button type="button" role="tab" id="i2" aria-controls="ip2">Second</button>
+						</div>
+						<section role="tabpanel" id="ip1" aria-labelledby="i1"><p>First inner panel.</p></section>
+						<section role="tabpanel" id="ip2" aria-labelledby="i2"><p id="deep2">Second inner panel.</p></section>
+					</div>
+				</section>
+			</div>
 			<a href="#deep" id="to-deep">To the second panel</a>
+			<a href="#deep2" id="to-deep2">To the second inner panel</a>
 		</div>
 	</main>
 </body>

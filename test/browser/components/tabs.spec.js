@@ -217,6 +217,60 @@ test.describe('tabs', () => {
 		expect(await hidden(page, 'p2')).toBe(false);
 	});
 
+	test('nested tabs: selecting an outer tab leaves the inner selection alone', async ({ page }) => {
+		await open(page);
+		await page.click('#o2');
+		await page.click('#i2');
+		await page.click('#o1');
+		expect(await selected(page, 'i2')).toBe('true');
+		await page.click('#o2');
+		expect(await selected(page, 'o2')).toBe('true');
+		expect(await selected(page, 'i2')).toBe('true');
+		expect(await selected(page, 'i1')).toBe('false');
+		expect(await hidden(page, 'ip2')).toBe(false);
+		expect(await hidden(page, 'ip1')).toBe(true);
+	});
+
+	test('nested tabs: the arrows move only their own tablist', async ({ page }) => {
+		await open(page);
+		await page.click('#o2');
+		await page.focus('#i1');
+		await page.keyboard.press('ArrowRight');
+		expect(await selected(page, 'i2')).toBe('true');
+		expect(await selected(page, 'o2')).toBe('true');
+		expect(await page.evaluate(() => document.activeElement.id)).toBe('i2');
+		// The outer list has two tabs of its own: from the last, the next is the first.
+		await page.focus('#o2');
+		await page.keyboard.press('ArrowRight');
+		expect(await selected(page, 'o1')).toBe('true');
+		expect(await page.evaluate(() => document.activeElement.id)).toBe('o1');
+		expect(await selected(page, 'i2')).toBe('true');
+		// Only the outer tabs are in the outer roving order.
+		expect(await page.evaluate(() => ['o1', 'o2'].map((id) => document.getElementById(id).tabIndex))).toEqual([0, -1]);
+	});
+
+	test('nested tabs: a hash two levels deep opens every level, without moving focus', async ({ page }) => {
+		await page.addInitScript(() => {
+			window.selected = [];
+			document.addEventListener('yeti:select', (event) => { window.selected.push(event.detail.tab.id); });
+		});
+		await open(page, 1000, '#deep2');
+		expect(await selected(page, 'o2')).toBe('true');
+		expect(await selected(page, 'i2')).toBe('true');
+		await expect(page.locator('#deep2')).toBeVisible();
+		expect(await page.evaluate(() => window.selected)).toEqual(['i2', 'o2']);
+		expect(await page.evaluate(() => document.activeElement === document.body)).toBe(true);
+	});
+
+	test('nested tabs: a link two levels deep opens every level', async ({ page }) => {
+		await open(page);
+		await page.click('#to-deep2');
+		await page.waitForFunction(() => document.getElementById('o2').getAttribute('aria-selected') === 'true');
+		expect(await selected(page, 'i2')).toBe('true');
+		await expect(page.locator('#deep2')).toBeVisible();
+		expect(await page.evaluate(() => document.activeElement.id)).not.toMatch(/^[oi]2$/);
+	});
+
 	test('without the module a hash into a hidden panel still passes', async ({ page }) => {
 		await withoutModule(page, 'tabs');
 		await open(page, 1000, '#deep');
