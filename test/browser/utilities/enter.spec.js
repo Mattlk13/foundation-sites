@@ -132,27 +132,29 @@ test.describe('enter', () => {
 		await open(page);
 		// Below the fold, like #view, so the paused state is worth something.
 		expect((await rect(page, '#once')).top).toBeGreaterThan(page.viewportSize().height);
-		const state = (page) => page.evaluate(() => {
-			const animation = document.getElementById('once').getAnimations()[0];
-			return animation && { playState: animation.playState, currentTime: animation.currentTime };
-		});
-		// enter.js pauses it from an 'animationstart' listener, which the
-		// browser dispatches on its own rendering schedule rather than in
-		// script order, so the pause can land a frame or two after load.
-		await expect.poll(async () => (await state(page))?.playState).toBe('paused');
+		// A short, realistic wait rather than a strict poll for a 'paused'
+		// playState: the pause happens from an 'animationstart' listener on
+		// the browser's own rendering schedule, not in script order, and what
+		// this is really testing is that an unseen element has not arrived
+		// on its own.
+		await page.waitForTimeout(300);
+		expect(await style(page, '#once', 'opacity')).not.toBe('1');
 		await page.evaluate(() => document.getElementById('once').scrollIntoView());
 		await settled(page);
 		await painted(page);
-		expect(['running', 'finished']).toContain((await state(page))?.playState ?? 'finished');
 		expect(await style(page, '#once', 'opacity')).toBe('1');
-		const afterFirstView = (await state(page))?.currentTime;
-		// Away, then back: a second crossing must not restart what already ran.
+		// Away, then back: a real replay is a second 'animationstart', not
+		// merely a currentTime that failed to reset — a finished,
+		// backwards-fill animation drops out of getAnimations() entirely,
+		// which made a currentTime-based guard here close to a no-op: it was
+		// comparing against a value that had already vanished.
+		const starts = () => page.evaluate(() => window.__enterStarts.once);
+		const before = await starts();
 		await page.evaluate(() => window.scrollTo(0, 0));
 		await settled(page);
 		await page.evaluate(() => document.getElementById('once').scrollIntoView());
 		await settled(page);
-		const afterReturn = await state(page);
-		if (afterReturn) expect(afterReturn.currentTime).toBeGreaterThanOrEqual(afterFirstView ?? 0);
+		expect(await starts()).toBe(before);
 		expect(await style(page, '#once', 'opacity')).toBe('1');
 	});
 

@@ -5,6 +5,18 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Enter fixture</title>
 	<link rel="stylesheet" href="../../../../src/yeti.css">
+	<script>
+		// A count of 'animationstart' per element id, for a test to tell a
+		// genuine second start (a replay) from an animation that simply
+		// finished and dropped out of getAnimations(). A classic script, run
+		// before enter.js's deferred module, so the very first dispatch is
+		// never missed.
+		window.__enterStarts = {};
+		document.addEventListener('animationstart', (event) => {
+			if (!event.target.id) return;
+			window.__enterStarts[event.target.id] = (window.__enterStarts[event.target.id] || 0) + 1;
+		});
+	</script>
 	<script type="module" src="../../../../src/utilities/enter/enter.js"></script>
 	<style>
 		#stage { inline-size: 100%; }
