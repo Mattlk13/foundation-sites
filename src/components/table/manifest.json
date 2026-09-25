@@ -15,7 +15,7 @@
   "classes": [],
   "children": [
     { "selector": "> caption", "min": 0, "max": 1, "description": "The table's title." },
-    { "selector": "> thead", "min": 0, "max": 1, "description": "The header row." },
+    { "selector": "> thead", "min": 0, "max": 1, "description": "The header row. With data-sticky it pins at --yeti-sticky-offset as the rows scroll under it, painted with the surface and carrying its rule." },
     { "selector": "> tbody", "min": 1, "max": null, "description": "The rows." },
     { "selector": "[data-numeric]", "min": 0, "max": null, "description": "A cell (or header cell) of numbers: end-aligned with tabular figures." }
   ],
@@ -31,6 +31,7 @@
     { "name": "--yeti-space-sm", "public": true, "description": "The space step when data-size is absent; a cell's inline padding follows it." },
     { "name": "--yeti-weight-strong", "public": true, "description": "Weight of the caption and of header cells." },
     { "name": "--yeti-border-width", "public": true, "description": "Width of the row rules, and of every cell border with data-border." },
+    { "name": "--yeti-color-surface", "public": true, "description": "Background of the head cells when the head is pinned with data-sticky." },
     { "name": "--yeti-color-surface-sunken", "public": true, "description": "Background of a row under the pointer with data-hover." },
     { "name": "--_yeti-size-text", "public": false },
     { "name": "--_yeti-size-space", "public": false }

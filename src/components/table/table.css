@@ -32,4 +32,14 @@
 	.table[data-hover] > tbody > tr:hover { background-color: var(--yeti-color-surface-sunken); }
 	.table[data-border] :is(th, td) { border: var(--yeti-border-width) solid var(--yeti-table-border); }
 	.table[data-border] > thead th { border-block-end-color: var(--yeti-color-border-strong); }
+	/* A head pinned with data-sticky is painted with the page's surface, so
+	   the rows passing under it do not show through. A collapsed border
+	   belongs to the table and stays behind when the head moves, so the rule
+	   under the head is drawn as an inset shadow on its cells instead, and
+	   travels with them. */
+	.table > thead[data-sticky] th {
+		background-color: var(--yeti-color-surface);
+		border-block-end-color: transparent;
+		box-shadow: inset 0 calc(-1 * var(--yeti-border-width)) var(--yeti-color-border-strong);
+	}
 }

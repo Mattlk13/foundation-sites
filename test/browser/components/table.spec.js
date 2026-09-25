@@ -58,6 +58,20 @@ test.describe('table', () => {
 		expect(await style(page, '#g2', 'white-space')).toBe('normal');
 	});
 
+	test('a sticky head pins with a surface and keeps its rule', async ({ page }) => {
+		await open(page);
+		await page.evaluate(() => { const t = document.getElementById('pinned'); window.scrollTo(0, t.getBoundingClientRect().top + window.scrollY + 300); });
+		const offset = await token(page, '--yeti-sticky-offset');
+		expect((await rect(page, '#p-head')).top).toBeCloseTo(offset, 0);
+		expect(await style(page, '#p-head', 'background-color')).not.toBe('rgba(0, 0, 0, 0)');
+		expect(await style(page, '#p-head', 'background-color')).toBe(await page.evaluate(() => getComputedStyle(document.documentElement).backgroundColor));
+		// The rule is the head cell's own inset shadow in the strong border color.
+		const rule = await page.evaluate(() => { const probe = document.createElement('div'); probe.style.color = 'var(--yeti-color-border-strong)'; document.body.append(probe); const c = getComputedStyle(probe).color; probe.remove(); return c; });
+		const shadow = await style(page, '#p-head', 'box-shadow');
+		expect(shadow).toContain('inset');
+		expect(shadow).toContain(rule);
+	});
+
 	test('has no accessibility violations', async ({ page }) => {
 		await open(page);
 		expect(await axe(page)).toEqual([]);
