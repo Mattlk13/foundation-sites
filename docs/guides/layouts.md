@@ -122,7 +122,7 @@ Every layout is configured with a small set of `data-*` attributes, drawn from a
 | `data-sticky` | boolean | shell (> div > :is(nav, aside)), sidebar (> *), stack (> *) |
 | `data-surface` | `base`, `raised`, `sunken` | box |
 | `data-text` | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral`, `white`, `black`, `grey`, `grey-0`, `grey-10`, `grey-20`, `grey-30`, `grey-40`, `grey-50`, `grey-60`, `grey-70`, `grey-80`, `grey-90`, `grey-100` | box (*) |
-| `data-threshold` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | columns, hero |
+| `data-threshold` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | cluster, columns, hero |
 | `data-width` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | media, scroller, shell, sidebar |
 
 </div>
