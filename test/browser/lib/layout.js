@@ -9,19 +9,28 @@ import AxeBuilder from '@axe-core/playwright';
 // the component transitions that property the change is animated, so anything
 // read during it is a value part way between unstyled and real. Waiting for the
 // page's own animations to finish is what makes a reading at rest mean
-// anything. Promise.all([]) resolves at once when nothing is running.
+// anything. A page with nothing running settles on the very first check.
 export function painted(page) {
-	return page.evaluate(() => Promise.all(document.getAnimations()
-		// A spinner runs forever, and an endless animation's finished promise
-		// never settles, so waiting on one hangs instead of resolving. Only the
-		// animations that have an end are worth waiting for; the transitions
-		// this is here to catch are all of them.
-		.filter((animation) => Number.isFinite(animation.effect?.getComputedTiming?.().activeDuration ?? Infinity))
-		// A transition interrupted by a later change to the same property
-		// rejects with AbortError. For this purpose it has reached rest, and
-		// the failure it would otherwise cause has nothing to do with the
-		// assertion that follows.
-		.map((animation) => animation.finished.catch(() => {}))));
+	// Polls rather than collecting each animation's own `finished` promise
+	// once and awaiting them all: enter.js's data-once pauses an off-screen
+	// arrival from an 'animationstart' listener, on the browser's own
+	// rendering schedule rather than in script order, so an animation
+	// sampled as still running can be paused a moment later — and a promise
+	// already awaiting that animation's finish would then wait forever. A
+	// poll simply stops caring about an animation the moment it is no
+	// longer running, paused or finished alike, so a later pause ends the
+	// wait exactly as a finish would.
+	return page.evaluate(() => new Promise((resolve) => {
+		const settled = () => document.getAnimations().every((animation) => (
+			animation.playState !== 'running'
+			// A spinner runs forever and stays 'running' forever; only a
+			// finite-duration animation is worth waiting on at all, so an
+			// endless one never holds this up.
+			|| !Number.isFinite(animation.effect?.getComputedTiming?.().activeDuration ?? Infinity)
+		));
+		const tick = () => { if (settled()) resolve(); else requestAnimationFrame(tick); };
+		tick();
+	}));
 }
 
 export async function stage(page, width) {

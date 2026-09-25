@@ -16,12 +16,20 @@
 	.toc:not([data-size]) { --_yeti-size-text: var(--yeti-text-md); --_yeti-size-space: var(--yeti-space-sm); }
 	.toc > ul {
 		display: flex;
-		flex-direction: column;
-		gap: var(--yeti-space-xs);
 		margin: 0;
 		padding: 0;
 		list-style: none;
 		font-size: var(--_yeti-size-text);
+	}
+	/* Column and gap are scoped off a .cluster list: yeti.components sits in a
+	   later layer than yeti.layouts, so a plain .toc > ul would outrank the
+	   cluster's own row and gap no matter what layout class the page put on
+	   the list, and the list could never become a wrapping row. Every other
+	   rule above still reaches a cluster list, which is why display, margin,
+	   padding and list-style stay unscoped. */
+	.toc > ul:not(.cluster) {
+		flex-direction: column;
+		gap: var(--yeti-space-xs);
 	}
 	/* The prose layer spaces list items with margin-block-start; the column
 	   owns that space through its own gap instead. */

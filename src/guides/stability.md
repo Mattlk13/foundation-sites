@@ -17,7 +17,7 @@ nav_order: 11
 - **Vocabularies.** The named value lists attributes draw from, `gap`, `width`, `height` and the rest; a value may be added, none removed.
 - **Marker names and values.** `data-span` on a column, `data-numeric` on a cell, and the rest.
 - **Public token names.** Every `--yeti-*` in the catalogue. Their default values may still be tuned; their names and meanings will not change.
-- **Module file names.** `alert.js`, `tabs.js`, `dialog.js`, `hover.js`, `carousel.js`, `demo.js`, `range.js`, `validate.js`, `toc.js`, and that each is optional.
+- **Module file names.** `alert.js`, `tabs.js`, `dialog.js`, `hover.js`, `carousel.js`, `demo.js`, `range.js`, `validate.js`, `toc.js`, `enter.js`, and that each is optional.
 - **Event names.** `yeti:close`, `yeti:open`, `yeti:select`, `yeti:slide`, `yeti:invalid`, `yeti:current`, what each is dispatched on, and the keys in its `detail`. An event may be added; none will be renamed or lose a key.
 - **The manifest and token catalogue schemas**, and the package `exports` map, so tooling built on `yeti-css/manifest` and `yeti-css/tokens` keeps working.
 

@@ -1,5 +1,5 @@
 import { test, expect } from 'playwright/test';
-import { stage, style, axe, withoutModule, token, px } from '../lib/layout.js';
+import { stage, style, axe, withoutModule, token, px, rects } from '../lib/layout.js';
 
 const open = async (page, width = 1000) => {
 	const response = await page.goto('/test/browser/fixtures/components/toc.html');
@@ -85,6 +85,15 @@ test.describe('toc', () => {
 		await page.hover('#link-one');
 		await page.hover('#link-two');
 		await expect.poll(() => style(page, '#link-two', 'background-color')).toBe('rgba(0, 0, 0, 0)');
+	});
+
+	test('a cluster list is a row of links; a plain list is still a column', async ({ page }) => {
+		await open(page);
+		expect(await style(page, '#toc > ul', 'flex-direction')).toBe('column');
+		expect(await style(page, '#row-toc > ul', 'flex-direction')).toBe('row');
+		const [one, two] = await rects(page, '#row-toc a');
+		expect(one.top).toBeCloseTo(two.top, 0);
+		expect(await axe(page)).toEqual([]);
 	});
 
 	test('data-numbered counts the entries, nested ones too, in the muted color', async ({ page }) => {

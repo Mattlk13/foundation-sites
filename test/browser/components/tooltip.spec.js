@@ -32,6 +32,30 @@ test.describe('tooltip', () => {
 		expect(await style(page, '#top-tip', 'visibility')).toBe('visible');
 	});
 
+	test('a click leaves the trigger focused but does not hold the tooltip open; hover and keyboard focus still do', async ({ page, browserName }) => {
+		await open(page);
+		await page.click('#top-trigger');
+		await page.mouse.move(2, 2);
+		await settle(page, '#top-tip');
+		// A click focuses the trigger, but :focus-visible does not consider that
+		// focus worth showing, so the tooltip must not follow it.
+		expect(await style(page, '#top-tip', 'visibility')).toBe('hidden');
+		await page.hover('#top-trigger');
+		await settle(page, '#top-tip');
+		expect(await style(page, '#top-tip', 'visibility')).toBe('visible');
+		await page.mouse.move(2, 2);
+		await settle(page, '#top-tip');
+		expect(await style(page, '#top-tip', 'visibility')).toBe('hidden');
+
+		// A fresh page, so the first Tab lands on the trigger with nothing else
+		// having taken focus first.
+		await open(page);
+		await page.keyboard.press(browserName === 'webkit' ? 'Alt+Tab' : 'Tab');
+		expect(await page.evaluate(() => document.activeElement.id)).toBe('top-trigger');
+		await settle(page, '#top-tip');
+		expect(await style(page, '#top-tip', 'visibility')).toBe('visible');
+	});
+
 	test('sits above its trigger by default and beside it when asked', async ({ page }) => {
 		await open(page);
 		await page.hover('#top-trigger');

@@ -49,8 +49,12 @@
 		background-color: var(--yeti-tooltip-surface);
 		clip-path: polygon(0 0, 100% 0, 50% 100%);
 	}
+	/* :has(:focus-visible), not :focus-within: a click leaves focus on the
+	   trigger too, and :focus-within cannot tell that focus apart from a
+	   keyboard's. Only keyboard focus should hold the tooltip open, as every
+	   other focus style in Yeti answers :focus-visible rather than :focus. */
 	.tooltip:hover > [role="tooltip"],
-	.tooltip:focus-within > [role="tooltip"] {
+	.tooltip:has(:focus-visible) > [role="tooltip"] {
 		opacity: 1;
 		visibility: visible;
 	}
