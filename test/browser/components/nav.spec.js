@@ -17,6 +17,15 @@ const settle = (page, selector) => page.evaluate((s) => new Promise((resolve) =>
 const anchored = (page) => page.evaluate(() => CSS.supports('anchor-name: --a') && CSS.supports('anchor-scope: --a'));
 
 test.describe('nav', () => {
+	test('a long brand wraps in a narrow bar instead of overflowing it', async ({ page }) => {
+		await open(page, 320);
+		await page.evaluate(() => { document.querySelector('#brand').textContent = 'Maas Glass Hall of Northern Crafts'; });
+		const overflow = await page.evaluate(() => { const n = document.querySelector('#nav'); return n.scrollWidth - n.clientWidth; });
+		expect(overflow).toBeLessThanOrEqual(0);
+		const lines = await page.evaluate(() => { const r = document.createRange(); r.selectNodeContents(document.querySelector('#brand')); return new Set([...r.getClientRects()].map((x) => Math.round(x.top))).size; });
+		expect(lines).toBeGreaterThan(1);
+	});
+
 	test('at or above the threshold the links sit in the bar and the toggle is gone', async ({ page }) => {
 		await open(page, 1000);
 		expect(await style(page, '#toggle', 'display')).toBe('none');

@@ -30,7 +30,7 @@ The panel changes shape with the nav. In the bar it is the dropdown's usual card
 
 Links that point down the same page (`href="#pricing"`) turn on smooth scrolling for the page, through `--yeti-toc-scroll`, the same switch a `toc` uses; a bare `href="#"` placeholder does not count, and under reduced motion the page goes back to the browser's jump.
 
-The brand is a wordmark, so it has tokens of its own: `--yeti-nav-brand-weight` and `--yeti-nav-brand-size`. Plain links take `--yeti-nav-link`, the bar's own color by default; on a painted bar set it to the color that reads there. The current link and a hovered link keep the variant's tints, and the open panel resets it to its own text color.
+The brand is a wordmark, so it has tokens of its own: `--yeti-nav-brand-weight` and `--yeti-nav-brand-size`. Plain links take `--yeti-nav-link`, the bar's own color by default; on a painted bar set it to the color that reads there. The current link and a hovered link keep the variant's tints, and the open panel resets it to its own text color. A long wordmark in a narrow bar breaks into two balanced lines rather than pushing the bar past its edge.
 
 The actions slot takes anything, not only buttons: a running head, a version, a phone number. It inherits the bar's type, so quiet text is the page's two declarations:
 
