@@ -54,9 +54,11 @@
   "a11y": {
     "requiredAttributes": [],
     "keyboard": [
-      { "key": "Enter / Space", "action": "On the summary, opens or closes the code." }
+      { "key": "Enter / Space", "action": "On the summary, opens or closes the code." },
+      { "key": "Arrow Right / Arrow Left", "action": "On the grip (with the module), widens or narrows the box to the next width stop; mirrored in a right-to-left page." },
+      { "key": "Home / End", "action": "On the grip (with the module), takes the box to its narrowest or widest." }
     ],
-    "notes": "Give the iframe a title. Give a box holding direct markup tabindex=\"0\": markup taller than the box scrolls, and a scrollable region must be reachable from the keyboard. A framed box does not need one, because the iframe fills it exactly and it never scrolls. The resize handle is the browser's and works with a mouse or trackpad; a keyboard or touch reader sees the demo at its starting size and has the code, so a demo must never be the only place the markup appears. The bar and the stop label are generated content and are not announced; the name in data-preview is a visual heading for the box, and the iframe's title carries the same name to assistive tech. A frame the module creates is titled from that name too."
+    "notes": "Give the iframe a title. Give a box holding direct markup tabindex=\"0\": markup taller than the box scrolls, and a scrollable region must be reachable from the keyboard. A framed box does not need one, because the iframe fills it exactly and it never scrolls. With the module, the box's width is moved by a grip, a separator named \"Resize\" and the example's name, valued in pixels with the width stop as its text, that a mouse, a finger or the keyboard can move. Without it the resize handle is the browser's; a keyboard or touch reader then sees the demo at its starting size. Either way the code is there, so a demo must never be the only place the markup appears. The bar and the stop label are generated content and are not announced; the name in data-preview is a visual heading for the box, and the iframe's title carries the same name to assistive tech. A frame the module creates is titled from that name too."
   },
   "js": [{ "module": "demo.js", "optional": true }],
   "support": { "unguarded": ["container size queries", "resize", "iframe srcdoc"], "guarded": [] },
