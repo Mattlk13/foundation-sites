@@ -79,7 +79,7 @@ Long-form pages: an article, a case study, documentation. The text sits in a col
 
 The breakout is a grid of three columns: a gutter, the reading column, and a gutter. The reading column is `data-max` wide, or the container minus two gutters when that is less, and the gutters share whatever remains, so the column is centered. Every child lands in the middle track. A child carrying `data-bleed` spans all three. The rows are separated by the gap, and children's own margins are zeroed, as in every gap-based layout. Prose is also capped at `--yeti-measure`, so a column set wider than the measure is not filled by paragraphs.
 
-Children are spaced by `data-gap`, with one exception taken from the flow: a heading sits an `xl` step below what comes before it and a `sm` step above what it opens, whatever the gap, so a long read in a breakout reads like one in `article`.
+Children are spaced by `data-gap`, with one exception taken from the flow: a heading sits `--yeti-heading-space-before` below what comes before it and `--yeti-heading-space-after` above what it opens, `xl` and `sm` by default, whatever the gap, so a long read in a breakout reads like one in `article`. Set the first to `var(--yeti-space-3xl)` on the breakout for chapters that open wider.
 
 ```html
 <div class="breakout" data-max="md">
@@ -110,8 +110,8 @@ Children:
 Tokens:
 - --yeti-width-md — The default column width, chosen under the base measure so paragraphs fill it.
 - --yeti-space-md — The default gutter and row gap.
-- --yeti-space-xl — The space above a heading, counted from what comes before it.
-- --yeti-space-sm — The space between a heading and what it opens.
+- --yeti-heading-space-before — The space above a heading, counted from what comes before it.
+- --yeti-heading-space-after — The space between a heading and what it opens.
 - --yeti-text-sm — The note's text size.
 - --yeti-color-text-muted — The note's text color.
 
@@ -2839,6 +2839,8 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-leading-tight (text): 1.15 — Heading line height.
 - --yeti-measure (text): 70ch — Maximum line length for prose.
 - --yeti-list-gap (text): 0.25rem — Space between one item of a prose list and the next.
+- --yeti-heading-space-before (text): var(--yeti-space-xl) — Space above a section heading (h2, h3) in flow, from what comes before it. Read by base flow and by breakout.
+- --yeti-heading-space-after (text): var(--yeti-space-sm) — Space between any heading in flow and what it opens. Read by base flow and by breakout.
 - --yeti-lede-size (text): var(--yeti-text-lg) — How large a lede reads.
 - --yeti-lede-measure (text): 50ch — A lede's line length. Moves with --yeti-lede-size, since ch is a unit of the font.
 - --yeti-font-sans (font): system-ui, sans-serif — Default text face. Yeti ships no web fonts; override this to use yours.

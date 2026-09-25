@@ -22,8 +22,8 @@
   "tokens": [
     { "name": "--yeti-width-md", "public": true, "description": "The default column width, chosen under the base measure so paragraphs fill it." },
     { "name": "--yeti-space-md", "public": true, "description": "The default gutter and row gap." },
-    { "name": "--yeti-space-xl", "public": true, "description": "The space above a heading, counted from what comes before it." },
-    { "name": "--yeti-space-sm", "public": true, "description": "The space between a heading and what it opens." },
+    { "name": "--yeti-heading-space-before", "public": true, "description": "The space above a heading, counted from what comes before it." },
+    { "name": "--yeti-heading-space-after", "public": true, "description": "The space between a heading and what it opens." },
     { "name": "--yeti-text-sm", "public": true, "description": "The note's text size." },
     { "name": "--yeti-color-text-muted", "public": true, "description": "The note's text color." },
     { "name": "--_yeti-max", "public": false },

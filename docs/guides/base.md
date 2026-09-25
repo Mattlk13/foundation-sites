@@ -88,8 +88,10 @@ The container owns the space between its children, and the children carry no mar
 Three rules do it, and all three are scoped to the **direct children of a flow container**, so nothing nested in a layout is reached:
 
 - `> * + *` gets `--yeti-space-md`. That is the default.
-- `> :is(h1, h2, h3, h4, h5, h6) + *` gets `--yeti-space-sm` instead. A heading hugs what follows it.
-- `> :not(h1, h2, h3, h4, h5, h6) + :is(h2, h3)` gets `--yeti-space-xl`. A major heading opens up from the content before it.
+- `> :is(h1, h2, h3, h4, h5, h6) + *` gets `--yeti-heading-space-after` instead, `--yeti-space-sm` by default. A heading hugs what follows it.
+- `> :not(h1, h2, h3, h4, h5, h6) + :is(h2, h3)` gets `--yeti-heading-space-before`, `--yeti-space-xl` by default. A major heading opens up from the content before it.
+
+The two heading tokens are the ones to reach for when a design wants more air between sections: set them on `:root` for the whole site, or on one `article` for one long read, and nothing else that uses the space scale moves. A `breakout` reads the same two.
 
 A flow container is one of `body`, `main`, `article`, `section`, `aside`, `header`, `footer`, `blockquote`, `figure`, `dd`, `li`, `details`, `fieldset` and `dialog`. The third rule leaves `dialog` out, because a dialog is short and its heading is its first child anyway.
 
@@ -97,7 +99,7 @@ Two omissions are deliberate. `div` is not a flow container: a `div` is the elem
 
 A prose list — one without `role="list"` on it — gets an indent of `--yeti-space-lg` and `--yeti-list-gap` between items. That gap is `0.25rem` and is not on the space scale on purpose: the scale is geometric and tied to the type steps, and its smallest step is already about two thirds of a line, which would space list items like short paragraphs.
 
-**Tokens:** `--yeti-space-sm`, `--yeti-space-md`, `--yeti-space-lg`, `--yeti-space-xl`, `--yeti-list-gap`.
+**Tokens:** `--yeti-space-md`, `--yeti-space-lg`, `--yeti-heading-space-before`, `--yeti-heading-space-after`, `--yeti-list-gap`.
 
 ## Definitions
 

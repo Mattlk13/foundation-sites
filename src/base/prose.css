@@ -10,12 +10,12 @@
 
 	/* A heading hugs what follows it. */
 	:is(body, main, article, section, aside, header, footer, blockquote, figure, dd, li, details, fieldset, dialog) > :is(h1, h2, h3, h4, h5, h6) + * {
-		margin-block-start: var(--yeti-space-sm);
+		margin-block-start: var(--yeti-heading-space-after);
 	}
 
 	/* Major headings open up from the content before them. */
 	:is(body, main, article, section, aside, header, footer, blockquote, figure, dd, li, details, fieldset) > :not(h1, h2, h3, h4, h5, h6) + :is(h2, h3) {
-		margin-block-start: var(--yeti-space-xl);
+		margin-block-start: var(--yeti-heading-space-before);
 	}
 
 	/* Measure: prose never runs wider than a comfortable line. */

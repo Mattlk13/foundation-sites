@@ -114,6 +114,8 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | `--yeti-leading-tight` | `1.15` | Heading line height. |
 | `--yeti-measure` | `70ch` | Maximum line length for prose. |
 | `--yeti-list-gap` | `0.25rem` | Space between one item of a prose list and the next. |
+| `--yeti-heading-space-before` | `var(--yeti-space-xl)` | Space above a section heading (h2, h3) in flow, from what comes before it. Read by base flow and by breakout. |
+| `--yeti-heading-space-after` | `var(--yeti-space-sm)` | Space between any heading in flow and what it opens. Read by base flow and by breakout. |
 | `--yeti-lede-size` | `var(--yeti-text-lg)` | How large a lede reads. |
 | `--yeti-lede-measure` | `50ch` | A lede's line length. Moves with --yeti-lede-size, since ch is a unit of the font. |
 | `--yeti-tracking-heading` | `normal` | letter-spacing of every heading level and the billboard. Set in em so a large heading tightens more than a small one; a page may set it on one level. |

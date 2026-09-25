@@ -36,6 +36,14 @@ test.describe('breakout', () => {
 		expect(after.top - heading.bottom).toBeCloseTo(await token(page, '--yeti-space-sm'), 0);
 	});
 
+	test('the heading space tokens move a breakout\'s headings, and only there', async ({ page }) => {
+		await open(page, 'breakout', 1000);
+		await page.evaluate(() => { const r = document.querySelector('#read'); r.style.setProperty('--yeti-heading-space-before', 'var(--yeti-space-3xl)'); r.style.setProperty('--yeti-heading-space-after', 'var(--yeti-space-xs)'); });
+		const [before, heading, after] = await Promise.all([rect(page, '#r-before'), rect(page, '#r-heading'), rect(page, '#r-after')]);
+		expect(heading.top - before.bottom).toBeCloseTo(await token(page, '--yeti-space-3xl'), 0);
+		expect(after.top - heading.bottom).toBeCloseTo(await token(page, '--yeti-space-xs'), 0);
+	});
+
 	// Not expectNoChildMargins: its probe holds a heading, and a breakout
 	// gives a heading and what follows it the flow's rhythm on purpose.
 	test('children have no margins, apart from the heading rhythm', async ({ page }) => {

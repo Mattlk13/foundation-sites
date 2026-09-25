@@ -42,7 +42,7 @@ Long-form pages: an article, a case study, documentation. The text sits in a col
 
 The breakout is a grid of three columns: a gutter, the reading column, and a gutter. The reading column is `data-max` wide, or the container minus two gutters when that is less, and the gutters share whatever remains, so the column is centered. Every child lands in the middle track. A child carrying `data-bleed` spans all three. The rows are separated by the gap, and children's own margins are zeroed, as in every gap-based layout. Prose is also capped at `--yeti-measure`, so a column set wider than the measure is not filled by paragraphs.
 
-Children are spaced by `data-gap`, with one exception taken from the flow: a heading sits an `xl` step below what comes before it and a `sm` step above what it opens, whatever the gap, so a long read in a breakout reads like one in `article`.
+Children are spaced by `data-gap`, with one exception taken from the flow: a heading sits `--yeti-heading-space-before` below what comes before it and `--yeti-heading-space-after` above what it opens, `xl` and `sm` by default, whatever the gap, so a long read in a breakout reads like one in `article`. Set the first to `var(--yeti-space-3xl)` on the breakout for chapters that open wider.
 
 ```html
 <div class="breakout" data-max="md">
@@ -103,8 +103,8 @@ Attributes that descendants carry, not the root.
 | --- | --- |
 | `--yeti-width-md` | The default column width, chosen under the base measure so paragraphs fill it. |
 | `--yeti-space-md` | The default gutter and row gap. |
-| `--yeti-space-xl` | The space above a heading, counted from what comes before it. |
-| `--yeti-space-sm` | The space between a heading and what it opens. |
+| `--yeti-heading-space-before` | The space above a heading, counted from what comes before it. |
+| `--yeti-heading-space-after` | The space between a heading and what it opens. |
 | `--yeti-text-sm` | The note's text size. |
 | `--yeti-color-text-muted` | The note's text color. |
 

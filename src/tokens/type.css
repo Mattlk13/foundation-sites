@@ -25,6 +25,13 @@
 		   already two thirds of a line, and a list wants a hair of separation
 		   rather than a gap. Prose rhythm, like the measure above it. */
 		--yeti-list-gap: 0.25rem;
+		/* The space around a section heading in flow: a wide step before it,
+		   from what the last section said, and a small one after, so the
+		   heading belongs to the text it opens. Read by base's flow and by the
+		   breakout, which counts them from its own row gap. Set on :root for a
+		   whole site, or on one container for one long read. */
+		--yeti-heading-space-before: var(--yeti-space-xl);
+		--yeti-heading-space-after: var(--yeti-space-sm);
 		/* A lede is set one step up from the body and on a shorter line. The two
 		   go together: ch is a unit of the font, so a theme that changes the size
 		   changes what the count is worth. */
