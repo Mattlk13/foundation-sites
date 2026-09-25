@@ -24,6 +24,17 @@
 	}
 	.breakout > [data-bleed] { grid-column: full; }
 
+	/* The flow's heading rhythm, on top of the row gap: a long read laid out
+	   here should read like one in article. A heading sits an xl step below
+	   what comes before it and a small step above what it opens, whatever
+	   data-gap is; a note beside the heading's row is left out. */
+	.breakout > :not(h1, h2, h3, h4, h5, h6) + :is(h2, h3) {
+		margin-block-start: calc(var(--yeti-space-xl) - var(--_yeti-gap));
+	}
+	.breakout > :is(h1, h2, h3, h4, h5, h6) + :not([data-note]) {
+		margin-block-start: calc(var(--yeti-space-sm) - var(--_yeti-gap));
+	}
+
 	/* data-note: an aside in the end gutter beside the child it follows,
 	   when the content box is wide enough for a margin (xl, 64rem, so the
 	   gutter beside an md column is at least 16rem); in the column otherwise. */

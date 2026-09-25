@@ -29,9 +29,19 @@ test.describe('breakout', () => {
 		expect((await rect(page, '#bleed')).width).toBeCloseTo(400, 0);
 	});
 
-	test('children have no margins', async ({ page }) => {
+	test('a heading keeps the flow\'s rhythm over the row gap: xl before it, sm after', async ({ page }) => {
+		await open(page, 'breakout', 1000);
+		const [before, heading, after] = await Promise.all([rect(page, '#r-before'), rect(page, '#r-heading'), rect(page, '#r-after')]);
+		expect(heading.top - before.bottom).toBeCloseTo(await token(page, '--yeti-space-xl'), 0);
+		expect(after.top - heading.bottom).toBeCloseTo(await token(page, '--yeti-space-sm'), 0);
+	});
+
+	// Not expectNoChildMargins: its probe holds a heading, and a breakout
+	// gives a heading and what follows it the flow's rhythm on purpose.
+	test('children have no margins, apart from the heading rhythm', async ({ page }) => {
 		await open(page, 'breakout');
-		await expectNoChildMargins(page, '.breakout');
+		const margins = await page.evaluate(() => [...document.querySelectorAll('#breakout > *')].map((c) => { const cs = getComputedStyle(c); return [cs.marginTop, cs.marginRight, cs.marginBottom, cs.marginLeft].join(' '); }));
+		for (const m of margins) expect(m).toBe('0px 0px 0px 0px');
 	});
 
 	test('has no accessibility violations', async ({ page }) => {
