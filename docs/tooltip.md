@@ -109,7 +109,7 @@ The bubble also cannot be dismissed while the trigger stays hovered or focused: 
 
 ## Browser support
 
-- Used without guards: individual transform properties, clip-path: polygon()
+- Used without guards: individual transform properties, clip-path: polygon(), :has()
 - Behind `@supports`: anchor positioning (fallback: the bubble and its caret are placed above the trigger with absolute positioning)
 
 ## JavaScript

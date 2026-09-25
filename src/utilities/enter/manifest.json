@@ -33,7 +33,7 @@
     {
       "name": "data-once",
       "type": "boolean",
-      "description": "Arrive once, the first time the element comes into view. Needs enter.js; without it the element arrives on load."
+      "description": "Arrives once, as it first comes near the viewport; without enter.js it is simply there, not animated."
     }
   ],
   "classes": [],
@@ -73,7 +73,7 @@
   "a11y": {
     "requiredAttributes": [],
     "keyboard": [],
-    "notes": "Purely visual, and safe by default: the element is only ever hidden by the animation's own backwards fill, so an element whose animation never runs is visible rather than stranded, and nothing here changes reading order or focus order. Under reduced motion the duration and the stagger step both collapse, so everything is simply present at once; the scroll-driven form is switched off entirely for the same reader, because a scroll timeline paces itself and would ignore a collapsed duration. data-once only pauses and resumes the same collapsed animation, so it needs no reduced-motion branch of its own."
+    "notes": "Purely visual, and safe by default: the element is only ever hidden by the animation's own backwards fill, so an element whose animation never runs is visible rather than stranded, and nothing here changes reading order or focus order. Under reduced motion the duration and the stagger step both collapse, so everything is simply present at once; the scroll-driven form is switched off entirely for the same reader, because a scroll timeline paces itself and would ignore a collapsed duration. data-once arrives once, as it first comes near the viewport; without enter.js it is simply there, not animated, since enter.css only withholds the animation while the attribute is present."
   },
   "js": [
     {

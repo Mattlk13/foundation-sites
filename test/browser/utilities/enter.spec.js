@@ -1,3 +1,7 @@
+// Three engines are allowed for this spec, unlike most of the suite, because
+// scroll position and animation timelines are the thing under test and
+// differ by engine (animation-timeline: view() is Chromium- and WebKit-only
+// as of this writing; scroll rounding differs too).
 import { test, expect } from 'playwright/test';
 import { stage, style, rect, axe, painted, withoutModule } from '../lib/layout.js';
 
@@ -128,38 +132,69 @@ test.describe('enter', () => {
 		expect(await style(page, '#delayed', 'opacity')).toBe('1');
 	});
 
-	test('data-once pauses an off-screen arrival until it is first seen, and does not replay it', async ({ page }) => {
+	test('data-once withholds the animation until the element is first near the viewport', async ({ page }) => {
 		await open(page);
-		// Below the fold, like #view, so the paused state is worth something.
+		// Below the fold, like #view, so the withheld state is worth something.
 		expect((await rect(page, '#once')).top).toBeGreaterThan(page.viewportSize().height);
-		const state = (page) => page.evaluate(() => {
-			const animation = document.getElementById('once').getAnimations()[0];
-			return animation && { playState: animation.playState, currentTime: animation.currentTime };
-		});
-		// enter.js pauses it from an 'animationstart' listener, which the
-		// browser dispatches on its own rendering schedule rather than in
-		// script order, so the pause can land a frame or two after load.
-		await expect.poll(async () => (await state(page))?.playState).toBe('paused');
+		expect(await page.evaluate(() => document.getElementById('once').hasAttribute('data-once'))).toBe(true);
+		expect(await style(page, '#once', 'animation-name')).toBe('none');
+		// enter.css's animation: none, not opacity: 0: simply there, visible,
+		// exactly the state a reader without enter.js is left in for good.
+		expect(await style(page, '#once', 'opacity')).toBe('1');
+	});
+
+	test('data-once arrives once the element is first near the viewport, and does not replay it', async ({ page }) => {
+		await open(page);
 		await page.evaluate(() => document.getElementById('once').scrollIntoView());
 		await settled(page);
 		await painted(page);
-		expect(['running', 'finished']).toContain((await state(page))?.playState ?? 'finished');
+		expect(await page.evaluate(() => document.getElementById('once').hasAttribute('data-once'))).toBe(false);
 		expect(await style(page, '#once', 'opacity')).toBe('1');
-		const afterFirstView = (await state(page))?.currentTime;
-		// Away, then back: a second crossing must not restart what already ran.
+		// Away, then back: nothing here ever puts the attribute back, so a
+		// real replay would show up as a second 'animationstart'.
+		const starts = () => page.evaluate(() => window.__enterStarts.once);
+		const before = await starts();
 		await page.evaluate(() => window.scrollTo(0, 0));
 		await settled(page);
 		await page.evaluate(() => document.getElementById('once').scrollIntoView());
 		await settled(page);
-		const afterReturn = await state(page);
-		if (afterReturn) expect(afterReturn.currentTime).toBeGreaterThanOrEqual(afterFirstView ?? 0);
+		expect(await starts()).toBe(before);
+		expect(await page.evaluate(() => document.getElementById('once').hasAttribute('data-once'))).toBe(false);
 		expect(await style(page, '#once', 'opacity')).toBe('1');
 	});
 
-	test('without the module, data-once arrives on load like any other .enter', async ({ page }) => {
+	test('a staggered data-once list arrives in full once it is first near the viewport', async ({ page }) => {
+		await open(page);
+		expect((await rect(page, '#once-stagger')).top).toBeGreaterThan(page.viewportSize().height);
+		await page.evaluate(() => document.getElementById('once-stagger').scrollIntoView());
+		await settled(page);
+		// Every child's own delay and duration has to run its course (the
+		// ninth waits 1.6s and then takes 0.6s); painted() settles on the
+		// real end state rather than a guessed wait.
+		await painted(page);
+		const opacities = await page.evaluate(() => [1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => getComputedStyle(document.getElementById(`os${n}`)).opacity));
+		expect(opacities).toEqual(Array(9).fill('1'));
+	});
+
+	test('a tall element still arrives once any part of it is near the viewport', async ({ page }) => {
+		await open(page);
+		expect((await rect(page, '#tall')).top).toBeGreaterThan(page.viewportSize().height);
+		// The observer fires as soon as any part of the target is near,
+		// whatever its own height, so scrolling its top edge into view is
+		// enough — unlike the old intersectionRatio-of-the-target's-own-area
+		// approach, an 800vh element needs no special-cased scroll here.
+		await page.evaluate(() => document.getElementById('tall').scrollIntoView());
+		await settled(page);
+		await painted(page);
+		expect(await style(page, '#tall', 'opacity')).toBe('1');
+	});
+
+	test('without the module, data-once keeps the element present but never animated', async ({ page }) => {
 		await withoutModule(page, 'enter');
 		await open(page);
 		await painted(page);
+		expect(await page.evaluate(() => document.getElementById('once').hasAttribute('data-once'))).toBe(true);
+		expect(await style(page, '#once', 'animation-name')).toBe('none');
 		expect(await style(page, '#once', 'opacity')).toBe('1');
 	});
 
