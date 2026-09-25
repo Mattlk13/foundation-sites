@@ -646,6 +646,16 @@ test('validateImportOrder rejects the starter imported into yeti.css', () => {
 	assert.deepEqual(r.lines, ['src/yeti.css:4: the starter is copied, not bundled, and must not be imported into yeti.css (found "starter/theme.css")']);
 });
 
+test('no framework file ships rules in the yeti.theme layer', () => {
+	const r = run(validTree({
+		'src/layouts/rail/rail.css': '@layer yeti.layouts {\n  .rail { display: flex; }\n}\n@layer yeti.theme {\n  h1 { color: red; }\n}\n',
+		'src/themes/round.css': null,
+	}));
+	assert.deepEqual(r.lines, ['src/layouts/rail/rail.css:4: Yeti ships nothing in the yeti.theme layer; it belongs to a theme (found "@layer yeti.theme")']);
+	const statement = run(validTree({ 'src/base/extra.css': '@layer yeti.base, yeti.theme;\n', 'src/yeti.css': '@import "layers.css";\n@import "base/extra.css";\n@import "layouts/rail/rail.css";\n' }));
+	assert.deepEqual(statement.lines, ['src/base/extra.css:1: Yeti ships nothing in the yeti.theme layer; it belongs to a theme (found "@layer yeti.base, yeti.theme")']);
+});
+
 const markerTree = (example) => layoutTree({
 	'src/layouts/rail/manifest.json': validManifest({
 		markers: [

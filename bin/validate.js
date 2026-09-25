@@ -680,6 +680,22 @@ export function validateNoMediaQueries(srcDir) {
 	return errors;
 }
 
+/** yeti.theme is declared in layers.css so its place is fixed, and belongs to themes: Yeti ships nothing in it. */
+export function validateThemeLayerUse(srcDir) {
+	if (!fs.existsSync(srcDir)) return [];
+	const own = ['themes', 'starter'].map((d) => path.join(srcDir, d) + path.sep);
+	const layersFile = path.join(srcDir, 'layers.css');
+	const errors = [];
+	for (const file of walkFiles(srcDir).filter((f) => f.endsWith('.css') && f !== layersFile && !own.some((d) => f.startsWith(d)))) {
+		const text = stripComments(fs.readFileSync(file, 'utf8'));
+		for (const m of text.matchAll(/@layer\b([^{;]*)/g)) {
+			if (!m[1].split(',').map((n) => n.trim()).includes('yeti.theme')) continue;
+			errors.push({ file, line: lineOf(text, m.index), message: `Yeti ships nothing in the yeti.theme layer; it belongs to a theme (found "${m[0].trim()}")` });
+		}
+	}
+	return errors;
+}
+
 export function validate({ root }) {
 	const srcDir = path.join(root, 'src');
 	const guidesDir = path.join(root, 'src', 'guides');
@@ -708,6 +724,7 @@ export function validate({ root }) {
 		...validateDocsFragments(entries),
 		...validateFields(entries, guidesDir, path.join(root, 'test', 'browser', 'fixtures')),
 		...validateThemes(root),
+		...validateThemeLayerUse(srcDir),
 	];
 	return { errors: all, count: Object.keys(merged).length };
 }
