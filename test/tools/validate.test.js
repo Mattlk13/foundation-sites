@@ -359,6 +359,11 @@ test('a tracks grid child must start on one of its tracks and end inside the gri
 	assert.deepEqual(ok.lines, []);
 });
 
+test('data-tracks and data-fold on one grid is an error', () => {
+	const bad = run(gridTree('<div class="grid" data-tracks="12" data-fold data-columns="4"><p>a</p><p>b</p></div>\n'));
+	assert.deepEqual(bad.lines, ['src/layouts/grid/example.html:1: .grid <div>: data-tracks and data-fold do not mix; a tracks grid places its children itself']);
+});
+
 test('a child marker such as data-split is legal on any element, including a nested layout', () => {
 	const tree = layoutTree({
 		'src/layouts/rail/manifest.json': validManifest({

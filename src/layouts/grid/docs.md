@@ -39,7 +39,7 @@ The fold is one attribute on one element; the nest is two wrappers. Use whicheve
 </div>
 ```
 
-A tracks grid measures itself, so it is a size container. Below `data-threshold` (`md` when absent), every child takes the whole row, in source order, so the wall reads as a column on a phone; at or above it, the placement applies. `data-tracks` replaces the fitted columns, so `data-min` and `data-columns` do nothing alongside it. A grid without `data-tracks` is not a container and none of this applies to it.
+A tracks grid measures itself, so it is a size container. Below `data-threshold` (`md` when absent), every child takes the whole row, in source order, so the wall reads as a column on a phone; at or above it, the placement applies. `data-tracks` replaces the fitted columns, so `data-min` and `data-columns` do nothing alongside it. It does not mix with `data-fold` either: the fold does nothing on a tracks grid, and `npm run validate` refuses the pair. A grid without `data-tracks` is not a container and none of this applies to it.
 
 ## Why this name
 

@@ -112,6 +112,18 @@ test.describe('grid', () => {
 		for (const r of plain) expect(r.width).toBeCloseTo(box.width, 0);
 	});
 
+	test('data-fold does nothing on a tracks grid', async ({ page }) => {
+		await open(page, 'grid', 1000);
+		await page.evaluate(() => { const g = document.getElementById('tracks'); g.setAttribute('data-fold', ''); g.setAttribute('data-columns', '4'); });
+		const [grid, w1, w2, w3] = await rects(page, '#tracks, #tracks > *');
+		const gap = await token(page, '--yeti-space-md');
+		const track = (grid.width - 11 * gap) / 12;
+		expect(w1.left).toBeCloseTo(grid.left + track + gap, 0);
+		expect(w1.width).toBeCloseTo(6 * track + 5 * gap, 0);
+		expect(w2.left).toBeCloseTo(grid.left + 8 * (track + gap), 0);
+		expect(w3.width).toBeCloseTo(track, 0);
+	});
+
 	test('a grid without data-tracks is not a container', async ({ page }) => {
 		await open(page, 'grid', 1000);
 		expect(await style(page, '#grid', 'container-type')).toBe('normal');

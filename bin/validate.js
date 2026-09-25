@@ -82,6 +82,9 @@ export function validateElementTree(root, merged, file, lineOffset = 0, allowed 
 			// A tracks grid places children by line, and a line past the last
 			// track makes an implicit one instead of an error the page can see,
 			// so a placement that does not fit is caught here, not clamped in CSS.
+			if (m.name === 'grid' && attrs.has('data-tracks') && attrs.has('data-fold')) {
+				push('data-tracks and data-fold do not mix; a tracks grid places its children itself');
+			}
 			if (m.name === 'grid' && attrs.has('data-tracks')) {
 				const tracks = Number(attrs.get('data-tracks'));
 				for (const child of elementChildren(el)) {

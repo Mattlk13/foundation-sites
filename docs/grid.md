@@ -73,7 +73,7 @@ The fold is one attribute on one element; the nest is two wrappers. Use whicheve
 </div>
 ```
 
-A tracks grid measures itself, so it is a size container. Below `data-threshold` (`md` when absent), every child takes the whole row, in source order, so the wall reads as a column on a phone; at or above it, the placement applies. `data-tracks` replaces the fitted columns, so `data-min` and `data-columns` do nothing alongside it. A grid without `data-tracks` is not a container and none of this applies to it.
+A tracks grid measures itself, so it is a size container. Below `data-threshold` (`md` when absent), every child takes the whole row, in source order, so the wall reads as a column on a phone; at or above it, the placement applies. `data-tracks` replaces the fitted columns, so `data-min` and `data-columns` do nothing alongside it. It does not mix with `data-fold` either: the fold does nothing on a tracks grid, and `npm run validate` refuses the pair. A grid without `data-tracks` is not a container and none of this applies to it.
 
 ## Why this name
 
@@ -90,7 +90,7 @@ It is a grid and nothing else is. Foundation 6 readers: this replaces the Block 
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `md` | Space between columns and rows. |
 | `data-rows` | enum | `2`, `3`, `4`, `5`, `6` |  | Line up the parts of the children across each row: the value is how many rows each child spans, one per part. |
 | `data-fold` | boolean |  |  | Halve the column count as the grid narrows instead of stepping down one at a time. Needs data-columns 2, 4, or 6 and uses data-min as the width per column. data-min="none" has no meaning with a fold: the count needs a width per column. |
-| `data-tracks` | enum | `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12` |  | A fixed number of equal tracks that children are placed on with data-start and data-span, leaving any track nothing is placed on empty. Replaces the fitted columns, so data-min and data-columns have no effect alongside it. |
+| `data-tracks` | enum | `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12` |  | A fixed number of equal tracks that children are placed on with data-start and data-span, leaving any track nothing is placed on empty. Replaces the fitted columns, so data-min and data-columns have no effect alongside it, and it does not mix with data-fold. |
 | `data-threshold` | enum | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `md` | With data-tracks: the grid's own width below which every child takes the whole row, in source order; at or above it, the placement applies. |
 
 </div>
