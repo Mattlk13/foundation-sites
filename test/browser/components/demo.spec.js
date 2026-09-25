@@ -264,10 +264,15 @@ test.describe('demo', () => {
 
 	test('the grip sits on the box\'s end edge, centred on its height', async ({ page }) => {
 		await open(page);
+		// The module places the grip from a ResizeObserver, which runs at the
+		// next rendering step, and open() narrows the stage just before this
+		// reads; so the reading is polled until it lands, the end state.
 		for (const id of ['#direct-preview', '#framed-preview', '#mid-preview']) {
-			const [box, grip] = await Promise.all([rect(page, id), rect(page, gripOf(id))]);
-			expect(grip.left + grip.width / 2, id).toBeCloseTo(box.right, 0);
-			expect(grip.top + grip.height / 2, id).toBeCloseTo(box.top + box.height / 2, 0);
+			const offset = async () => {
+				const [box, grip] = await Promise.all([rect(page, id), rect(page, gripOf(id))]);
+				return [Math.abs(Math.round(grip.left + grip.width / 2 - box.right)), Math.abs(Math.round(grip.top + grip.height / 2 - (box.top + box.height / 2)))];
+			};
+			await expect.poll(offset, { message: id }).toEqual([0, 0]);
 		}
 	});
 
