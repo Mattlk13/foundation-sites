@@ -23,10 +23,12 @@
 // load, an arrival is left alone entirely, never paused and immediately
 // resumed.
 //
-// prefers-reduced-motion needs no branch of its own here: enter.css has
-// already collapsed the animation's duration to nothing under that
-// preference, so pausing it and playing it back later still leaves the
-// element settled at once, exactly as an ordinary .enter would.
+// prefers-reduced-motion needs no branch of its own here: an unseen element
+// still waits, paused, at its start until it is first seen, reduced motion
+// or not; enter.css has already collapsed the animation's duration to
+// nothing under that preference, so the moment this module plays it back,
+// it simply arrives at once rather than visibly animating. Collapsed means
+// the arrival itself is instant once it happens, not that it happens sooner.
 const released = new WeakSet();
 const once = new IntersectionObserver((entries) => {
 	for (const entry of entries) {
