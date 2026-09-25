@@ -18,17 +18,54 @@
 // a lone element and every one of a stagger's children alike; closest()
 // finds the .enter[data-once] each belongs to.
 //
-// getBoundingClientRect() on that .enter[data-once], not the element the
-// event fired on, decides whether to pause at all: already on screen at
-// load, an arrival is left alone entirely, never paused and immediately
-// resumed.
-//
 // prefers-reduced-motion needs no branch of its own here: an unseen element
 // still waits, paused, at its start until it is first seen, reduced motion
 // or not; enter.css has already collapsed the animation's duration to
 // nothing under that preference, so the moment this module plays it back,
 // it simply arrives at once rather than visibly animating. Collapsed means
 // the arrival itself is instant once it happens, not that it happens sooner.
+
+// --- Pure decisions ---------------------------------------------------------
+// No DOM here at all: these are the small decisions the module makes, kept
+// as plain top-level functions so test/tools/enter.test.js can call them
+// straight, in milliseconds, for every case below instead of driving a
+// browser to prove them.
+
+/**
+ * Whether an arrival should be paused right now.
+ * - timelineIsDocument: false for a scroll-driven (view()) animation, which
+ *   data-view already owns entirely; data-once never touches it — a plain
+ *   time value assigned to a progress-based animation throws in Chromium
+ *   and WebKit.
+ * - released: true once the element has already been seen and let go for
+ *   good; a released element is never paused again.
+ * - alreadyPaused: true if this exact animation has already been paused
+ *   once. Pausing it a second time would only rewind a delayed child's
+ *   currentTime again for nothing.
+ * - inView: true if the element already overlaps the viewport, in which
+ *   case an arrival is left alone entirely, never paused and immediately
+ *   resumed.
+ */
+function shouldPause({ timelineIsDocument, released, alreadyPaused, inView }) {
+	if (!timelineIsDocument) return false;
+	if (released) return false;
+	if (alreadyPaused) return false;
+	if (inView) return false;
+	return true;
+}
+
+/**
+ * Any part of rect overlaps the viewport's visible vertical band, whatever
+ * the element's own height. A straight overlap test, not a ratio of the
+ * target's own area, is what lets a partial overlap — the top of a long
+ * element already scrolled past its own top edge — still count as in view.
+ */
+function isInView(rect, viewportHeight) {
+	return rect.bottom > 0 && rect.top < viewportHeight;
+}
+
+// --- DOM wiring --------------------------------------------------------------
+
 const released = new WeakSet();
 const once = new IntersectionObserver((entries) => {
 	for (const entry of entries) {
@@ -47,8 +84,8 @@ const once = new IntersectionObserver((entries) => {
 		// on its own, once that delay runs out a second time. unobserve()
 		// alone stops this callback firing again; it does nothing about that
 		// later event reaching the listener below and pausing a child no
-		// longer being watched. released does: the listener checks it first
-		// and leaves a released element alone for good, seen once or not.
+		// longer being watched. released does: the decision above leaves a
+		// released element alone for good, seen once or not.
 		released.add(entry.target);
 		once.unobserve(entry.target);
 	}
@@ -59,37 +96,34 @@ const once = new IntersectionObserver((entries) => {
 }, { threshold: [0, 0.15] });
 
 const watching = new WeakSet();
-// Paused once each: the same currentTime rewind can, on a delayed child,
-// put it back before its own delay and so queue up exactly the later,
-// unrequested 'animationstart' the comment above describes. Between that
-// and release, pausing the same animation a second time would only rewind
-// it again for no reason.
+// Paused once each: see shouldPause's alreadyPaused.
 const paused = new WeakSet();
-document.addEventListener('animationstart', (event) => {
-	// data-view wins where a scroll timeline exists: that animation is
-	// already scroll-linked, entirely CSS's own doing, and pausing it here
-	// would only get in the way — currentTime below is a plain time value,
-	// and assigning one to a progress-based animation throws in Chromium and
-	// WebKit, before observe() ever runs, stranding it paused partway.
-	// data-once still covers the fallback: where view() is unsupported, or
-	// the reader has asked for less motion, the animation never leaves the
-	// document timeline and everything below applies as normal.
-	if (event.animation.timeline !== document.timeline) return;
-	const el = event.target.closest('.enter[data-once]');
-	if (!el) return;
-	if (released.has(el) || paused.has(event.animation)) return;
-	const r = el.getBoundingClientRect();
-	const inView = r.bottom > 0 && r.right > 0 && r.top < window.innerHeight && r.left < window.innerWidth;
-	if (inView) return;
-	paused.add(event.animation);
-	event.animation.pause();
+
+/** Applies the pause decision to one animation on one .enter[data-once] element. */
+function maybePause(el, animation) {
+	const rect = el.getBoundingClientRect();
+	const pause = shouldPause({
+		timelineIsDocument: animation.timeline === document.timeline,
+		released: released.has(el),
+		alreadyPaused: paused.has(animation),
+		inView: isInView(rect, window.innerHeight),
+	});
+	if (!pause) return;
+	paused.add(animation);
+	animation.pause();
 	// Pinned back to the very start: 'animationstart' can fire a few
 	// milliseconds into the active phase, and left there the element would
 	// sit at a hair above 0 opacity rather than fully transparent, which is
 	// no different to the eye but is a real, if tiny, contrast value an
 	// automated audit can still catch.
-	event.animation.currentTime = 0;
+	animation.currentTime = 0;
 	if (watching.has(el)) return;
 	watching.add(el);
 	once.observe(el);
+}
+
+document.addEventListener('animationstart', (event) => {
+	const el = event.target.closest('.enter[data-once]');
+	if (!el) return;
+	maybePause(el, event.animation);
 });
