@@ -101,6 +101,11 @@ test.describe('alert', () => {
 		}
 	});
 
+	test('the start edge follows a local border width', async ({ page }) => {
+		await open(page);
+		expect(await px(page, '#local-border', 'border-inline-start-width')).toBeCloseTo(8, 0);
+	});
+
 	test('data-variant="danger" is the alert hue under a name that is not the component', async ({ page }) => {
 		await open(page);
 		const colours = await page.evaluate(() => {

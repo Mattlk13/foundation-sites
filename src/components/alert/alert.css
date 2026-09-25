@@ -8,7 +8,10 @@
 		gap: var(--yeti-space-sm);
 		padding: var(--yeti-alert-padding);
 		border: var(--yeti-border-width) solid var(--_yeti-variant);
-		border-inline-start-width: var(--yeti-alert-edge);
+		/* Undeclared, so a section that sets its own --yeti-border-width still
+		   gets four of its own, not four of the root's; set --yeti-alert-edge
+		   directly to fix the width regardless of the local border. */
+		border-inline-start-width: var(--yeti-alert-edge, calc(var(--yeti-border-width) * 4));
 		border-radius: var(--yeti-alert-radius);
 		background-color: var(--_yeti-variant-subtle);
 		color: var(--yeti-color-text);
