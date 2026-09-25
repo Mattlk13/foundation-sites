@@ -59,6 +59,7 @@
     { "selector": "> [data-span]", "min": 0, "max": 2, "description": "A child that takes several shares of the row: data-span=\"3\" beside a \"2\" is three fifths. Below the threshold both stack full width." }
   ],
   "markers": [
+    { "name": "data-min", "type": "enum", "vocabulary": "width-or-none", "on": "> *", "description": "The narrowest this child may get while the two share a row; the other gives way. Stacked, it has no effect." },
     { "name": "data-span", "type": "enum", "vocabulary": "span", "on": "> *", "description": "How many shares of the row this child takes; the other child's default is 1." }
   ],
   "tokens": [

@@ -206,6 +206,7 @@ Attributes:
 - data-height: sm | md | lg | xl | half | full (default) — The band's least height: a stop of the height scale, half the viewport, or the whole of it, as a cover takes it. Content taller than the band grows it.
 
 On children:
+- data-min on > *: none | 2xs | xs | sm | md | lg | xl | 2xl — The narrowest this child may get while the two share a row; the other gives way. Stacked, it has no effect.
 - data-span on > *: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 — How many shares of the row this child takes; the other child's default is 1.
 
 ## media (recipe, class="media")

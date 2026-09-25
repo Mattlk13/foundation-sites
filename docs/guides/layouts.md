@@ -108,7 +108,7 @@ Every layout is configured with a small set of `data-*` attributes, drawn from a
 | `data-justify` | `start`, `center`, `end` | scroller |
 | `data-justify-self` | `start`, `center`, `end`, `stretch` | layer (> *) |
 | `data-max` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | breakout, center, media |
-| `data-min` | `none`, `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | grid, masonry |
+| `data-min` | `none`, `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | grid, hero (> *), masonry |
 | `data-note` | boolean | breakout (> *) |
 | `data-over` | boolean | overlay (> *) |
 | `data-paint` | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral`, `white`, `black`, `grey`, `grey-0`, `grey-10`, `grey-20`, `grey-30`, `grey-40`, `grey-50`, `grey-60`, `grey-70`, `grey-80`, `grey-90`, `grey-100` | box (*) |

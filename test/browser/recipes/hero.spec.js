@@ -71,6 +71,24 @@ test.describe('hero recipe', () => {
 		expect(f.width).toBeCloseTo(c.width, 0);
 	});
 
+	test('data-min keeps a child at least that wide side by side, and stacking is unchanged', async ({ page }) => {
+		await open(page, 1000);
+		const md = await token(page, '--yeti-width-md');
+		const [row, copy, figure] = await Promise.all([rect(page, '#floored'), rect(page, '#fl-copy'), rect(page, '#fl-figure')]);
+		expect(Math.abs(copy.width - md)).toBeLessThan(1);
+		expect(figure.left).toBeGreaterThanOrEqual(copy.right);
+		expect(figure.right).toBeLessThanOrEqual(row.right + 1);
+		await open(page, 400);
+		const [c, f] = await Promise.all([rect(page, '#fl-copy'), rect(page, '#fl-figure')]);
+		expect(f.top).toBeGreaterThanOrEqual(c.bottom);
+	});
+
+	test('a reversed hero, stacked, keeps a narrow child at the start edge', async ({ page }) => {
+		await open(page, 400);
+		const [row, copy] = await Promise.all([rect(page, '#narrow-start'), rect(page, '#ns-copy')]);
+		expect(Math.round(copy.left)).toBe(Math.round(row.left));
+	});
+
 	test('children have no margins', async ({ page }) => {
 		await open(page);
 		await expectNoChildMargins(page, '.hero');
