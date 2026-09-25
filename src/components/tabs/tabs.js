@@ -34,6 +34,41 @@ for (const root of document.querySelectorAll('.tabs')) {
 	if (tabs.length) select(root, tabs.find((tab) => tab.getAttribute('aria-selected') === 'true') ?? tabs[0]);
 }
 
+// A link elsewhere on the page, or the URL itself, can point at something
+// inside a hidden panel. Opening that panel's tab is what makes the target
+// reachable at all; a reader who did not touch the tabs did not ask to be
+// moved, so this selects and reveals without taking focus the way choose()
+// does for an actual tab activation.
+function reveal() {
+	const hash = location.hash;
+	if (!hash) return;
+	let id;
+	try {
+		id = decodeURIComponent(hash.slice(1));
+	} catch {
+		return;
+	}
+	if (!id) return;
+	const target = document.getElementById(id);
+	if (!target) return;
+	const panel = target.closest('[role="tabpanel"]');
+	if (!panel) return;
+	const root = panel.closest('.tabs');
+	if (!root) return;
+	const tab = root.querySelector(`[role="tab"][aria-controls="${CSS.escape(panel.id)}"]`);
+	if (!tab || tab.getAttribute('aria-selected') === 'true') return;
+	select(root, tab);
+	root.dispatchEvent(new CustomEvent('yeti:select', {
+		bubbles: true,
+		composed: true,
+		detail: { tab, panel: document.getElementById(tab.getAttribute('aria-controls')) },
+	}));
+	target.scrollIntoView();
+}
+
+reveal();
+window.addEventListener('hashchange', reveal);
+
 document.addEventListener('click', (event) => {
 	// The page's own listener ran first and asked for nothing to happen.
 	if (event.defaultPrevented) return;

@@ -1,8 +1,8 @@
 import { test, expect } from 'playwright/test';
 import { stage, rect, style, axe, withoutModule } from '../lib/layout.js';
 
-const open = async (page, width = 1000) => {
-	const response = await page.goto('/test/browser/fixtures/components/tabs.html');
+const open = async (page, width = 1000, hash = '') => {
+	const response = await page.goto(`/test/browser/fixtures/components/tabs.html${hash}`);
 	expect(response.status()).toBe(200);
 	await stage(page, width);
 };
@@ -99,5 +99,55 @@ test.describe('tabs', () => {
 		});
 		await open(page);
 		expect(await page.evaluate(() => window.selects)).toBe(0);
+	});
+
+	test('loading with a hash into a hidden panel selects its tab', async ({ page }) => {
+		await open(page, 1000, '#deep');
+		expect(await selected(page, 't2')).toBe('true');
+		expect(await hidden(page, 'p2')).toBe(false);
+	});
+
+	test('a link into a hidden panel opens its tab without moving focus to it', async ({ page }) => {
+		await open(page);
+		expect(await selected(page, 't1')).toBe('true');
+		await page.evaluate(() => {
+			window.caught = null;
+			document.addEventListener('yeti:select', (event) => {
+				window.caught = { tab: event.detail.tab.id, panel: event.detail.panel.id };
+			}, { once: true });
+		});
+		await page.click('#to-deep');
+		await page.waitForFunction(() => document.getElementById('t2').getAttribute('aria-selected') === 'true');
+		expect(await selected(page, 't2')).toBe('true');
+		expect(await hidden(page, 'p2')).toBe(false);
+		expect(await page.evaluate(() => window.caught)).toEqual({ tab: 't2', panel: 'p2' });
+		expect(await page.evaluate(() => document.activeElement.id)).not.toBe('t2');
+	});
+
+	test('a hash to an element outside any panel leaves the selection unchanged', async ({ page }) => {
+		await open(page, 1000, '#to-deep');
+		expect(await selected(page, 't1')).toBe('true');
+		expect(await hidden(page, 'p1')).toBe(false);
+	});
+
+	test('a hash to a tab itself, not its panel, leaves the selection unchanged and does not throw', async ({ page }) => {
+		const errors = [];
+		page.on('pageerror', (error) => errors.push(error));
+		await open(page, 1000, '#t2');
+		expect(await selected(page, 't1')).toBe('true');
+		expect(errors).toEqual([]);
+	});
+
+	test('a hash with characters needing decoding still finds its target', async ({ page }) => {
+		// %65 decodes to "e", so this points at the same #deep element.
+		await open(page, 1000, '#de%65p');
+		expect(await selected(page, 't2')).toBe('true');
+		expect(await hidden(page, 'p2')).toBe(false);
+	});
+
+	test('without the module a hash into a hidden panel still passes', async ({ page }) => {
+		await withoutModule(page, 'tabs');
+		await open(page, 1000, '#deep');
+		for (const id of ['p1', 'p2', 'p3']) expect(await hidden(page, id), id).toBe(false);
 	});
 });

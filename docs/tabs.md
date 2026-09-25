@@ -45,7 +45,7 @@ Alternative views of one thing: a profile and its billing, a chart and its table
 
 A tab list of buttons over their panels. The CSS styles the list and marks the selected tab with the hue on its edge, and it never hides a panel. That is deliberate: a page that does not load `tabs.js`, or where the script fails, shows every panel under its own tab, so nothing a reader came for is locked away.
 
-Load the module and it pairs every tab with the panel its `aria-controls` names, shows one, hides the rest, and takes over the keyboard: arrows move selection, Home and End jump to the ends, and only the selected tab is in the tab order, so Tab leaves the list rather than walking it.
+Load the module and it pairs every tab with the panel its `aria-controls` names, shows one, hides the rest, and takes over the keyboard: arrows move selection, Home and End jump to the ends, and only the selected tab is in the tab order, so Tab leaves the list rather than walking it. A link into a hidden panel opens its tab: on load and on every `hashchange` the module looks for the URL's fragment inside a panel and, if it finds one, selects that panel's tab and brings the target into view, without moving keyboard focus to the tab.
 
 ```html
 <div class="tabs" data-orientation="vertical">
@@ -145,7 +145,7 @@ Each event bubbles, crosses a shadow boundary, and cannot be cancelled.
 
 | Event | Module | Detail | Description |
 | --- | --- | --- | --- |
-| `yeti:select` | `tabs.js` | `{ tab, panel }` | Dispatched on the .tabs when a click or an arrow key selects a tab; never for the pass at load. |
+| `yeti:select` | `tabs.js` | `{ tab, panel }` | Dispatched on the .tabs when a click, an arrow key, or a hash reveal selects a tab; never for the pass at load that finds no hash to reveal. |
 
 </div>
 
