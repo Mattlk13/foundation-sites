@@ -8,7 +8,8 @@
 	<script type="module" src="../../../../src/utilities/enter/enter.js"></script>
 	<style>
 		#stage { inline-size: 100%; }
-		#spacer, #once-spacer, #once-stagger-spacer, #view-once-spacer { block-size: 120vh; }
+		#spacer, #once-spacer, #once-stagger-spacer, #view-once-spacer, #tall-spacer { block-size: 120vh; }
+		#tall { block-size: 800vh; }
 	</style>
 </head>
 <body>
@@ -61,6 +62,9 @@
 
 				<div id="view-once-spacer"></div>
 				<p class="enter" id="view-once" data-enter="rise" data-view data-once>Waits for the viewport where a scroll timeline exists, once.</p>
+
+				<div id="tall-spacer"></div>
+				<div class="enter" id="tall" data-once>Too tall to ever show 15% of itself.</div>
 			</div>
 		</div>
 	</main>

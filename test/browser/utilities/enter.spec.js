@@ -204,6 +204,27 @@ test.describe('enter', () => {
 		expect(Number(await style(page, '#view-once', 'opacity'))).toBeGreaterThan(0.99);
 	});
 
+	test('an element far taller than the viewport still crosses the threshold and arrives', async ({ page }) => {
+		await open(page);
+		expect((await rect(page, '#tall')).top).toBeGreaterThan(page.viewportSize().height);
+		// A short, realistic wait before scrolling: 'animationstart' fires on
+		// the browser's own schedule, and scrolling before it has fired would
+		// leave the element looking "already in view" to the listener
+		// instead of actually exercising the threshold this test is for.
+		await page.waitForTimeout(300);
+		expect(await style(page, '#tall', 'opacity')).not.toBe('1');
+		// Centred in the viewport: an 800vh element can never show 15% of its
+		// own height, the ratio the old single threshold asked for.
+		await page.evaluate(() => {
+			const el = document.getElementById('tall');
+			const top = window.scrollY + el.getBoundingClientRect().top;
+			window.scrollTo(0, top + el.offsetHeight / 2 - window.innerHeight / 2);
+		});
+		await settled(page);
+		await painted(page);
+		expect(await style(page, '#tall', 'opacity')).toBe('1');
+	});
+
 	test('without the module, data-once arrives on load like any other .enter', async ({ page }) => {
 		await withoutModule(page, 'enter');
 		await open(page);

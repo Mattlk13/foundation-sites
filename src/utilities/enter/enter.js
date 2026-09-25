@@ -30,7 +30,14 @@
 const released = new WeakSet();
 const once = new IntersectionObserver((entries) => {
 	for (const entry of entries) {
-		if (!entry.isIntersecting) continue;
+		// intersectionRatio is of the TARGET's own area, so an element far
+		// taller than the viewport — a long exhibit, a tall hero — can never
+		// show 15% of itself and would never cross a single 0.15 threshold at
+		// all. Asking instead whether the visible slice already fills 15% of
+		// the viewport catches exactly that element the moment it covers the
+		// screen, whatever fraction of its own height that slice is.
+		const enough = entry.intersectionRatio >= 0.15 || (entry.rootBounds && entry.intersectionRect.height >= entry.rootBounds.height * 0.15);
+		if (!enough) continue;
 		for (const animation of entry.target.getAnimations({ subtree: true })) animation.play();
 		// Released, not just unobserved: pinning currentTime back to 0 below
 		// can put a delayed child before its own delay again, so playing it
@@ -43,7 +50,11 @@ const once = new IntersectionObserver((entries) => {
 		released.add(entry.target);
 		once.unobserve(entry.target);
 	}
-}, { threshold: 0.15 }); // a sliver over the edge is not yet something the reader can see
+	// 0, so the callback still fires as soon as a too-tall element crosses
+	// into view at all, for the intersectionRect-vs-viewport check above to
+	// catch; 0.15, so an ordinary element still needs to clear the same bar
+	// the comment above always asked for, not just graze the edge.
+}, { threshold: [0, 0.15] });
 
 const watching = new WeakSet();
 // Paused once each: the same currentTime rewind can, on a delayed child,
