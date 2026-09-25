@@ -73,5 +73,8 @@
 	.media[data-side="start"]:not(:has(> :first-child:is(img, video, picture), > :first-child > :is(img, video, picture))),
 	.media[data-side="end"]:has(> :first-child:is(img, video, picture), > :first-child > :is(img, video, picture)) {
 		flex-direction: row-reverse;
+		/* Reversed, flex-end is the start edge, so a stacked child narrower
+		   than the row sits at the start. See hero.css. */
+		justify-content: flex-end;
 	}
 }

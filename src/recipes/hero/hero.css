@@ -22,6 +22,10 @@
 	}
 	/* data-span: a child's share of the row, as columns has it. */
 	.hero > [data-span] { flex-grow: var(--_yeti-span); }
+	/* data-min: the narrowest a child may get while the two share a row, so
+	   the copy keeps room for its buttons at a middling width and the other
+	   child gives way; never wider than the row, so stacking is unchanged. */
+	.hero > [data-min] { min-inline-size: min(var(--_yeti-min), 100%); }
 
 	/* The figure */
 	.hero > :is(img, video, picture),
@@ -75,5 +79,9 @@
 	.hero[data-side="start"]:not(:has(> :first-child:is(img, video, picture), > :first-child > :is(img, video, picture))),
 	.hero[data-side="end"]:has(> :first-child:is(img, video, picture), > :first-child > :is(img, video, picture)) {
 		flex-direction: row-reverse;
+		/* Reversed, flex-end is the start edge: side by side the children fill
+		   the row and nothing moves, but stacked, a child narrower than the
+		   row sits at the start as it would unreversed. */
+		justify-content: flex-end;
 	}
 }

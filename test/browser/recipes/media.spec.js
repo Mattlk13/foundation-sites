@@ -76,6 +76,12 @@ test.describe('media recipe', () => {
 		expect(b.top).toBeGreaterThanOrEqual(f.bottom);
 	});
 
+	test('a reversed media, stacked, keeps a narrow child at the start edge', async ({ page }) => {
+		await open(page, 300);
+		const [row, body] = await Promise.all([rect(page, '#narrow-start'), rect(page, '#ns-body')]);
+		expect(Math.round(body.left)).toBe(Math.round(row.left));
+	});
+
 	test('children have no margins', async ({ page }) => {
 		await open(page);
 		await expectNoChildMargins(page, '.media');
