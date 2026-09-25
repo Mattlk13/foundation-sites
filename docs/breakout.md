@@ -103,6 +103,8 @@ Attributes that descendants carry, not the root.
 | --- | --- |
 | `--yeti-width-md` | The default column width, chosen under the base measure so paragraphs fill it. |
 | `--yeti-space-md` | The default gutter and row gap. |
+| `--yeti-space-xl` | The space above a heading, counted from what comes before it. |
+| `--yeti-space-sm` | The space between a heading and what it opens. |
 | `--yeti-text-sm` | The note's text size. |
 | `--yeti-color-text-muted` | The note's text color. |
 
