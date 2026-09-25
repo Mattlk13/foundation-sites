@@ -43,6 +43,9 @@
 
 		--yeti-alert-radius: var(--yeti-radius-md);
 		--yeti-alert-padding: var(--yeti-space-md);
+		/* The start edge is a heavier bar than the rest of the border, at
+		   every emphasis; a token so a skin can thin or thicken it. */
+		--yeti-alert-edge: calc(var(--yeti-border-width) * 4);
 
 		--yeti-progress-radius: var(--yeti-radius-full);
 

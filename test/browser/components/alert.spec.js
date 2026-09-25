@@ -91,6 +91,16 @@ test.describe('alert', () => {
 		expect(await page.evaluate(() => window.caught)).toEqual({ target: 'closable', connected: true, bubbles: true, composed: true, cancelable: false, detail: null });
 	});
 
+	test('the start edge\'s width is a token', async ({ page }) => {
+		await open(page);
+		const border = await token(page, '--yeti-border-width');
+		expect(await px(page, '#medium', 'border-inline-start-width')).toBeCloseTo(border * 4, 0);
+		await page.addStyleTag({ content: ':root { --yeti-alert-edge: 1px; }' });
+		for (const id of ['#medium', '#high', '#low']) {
+			expect(await px(page, id, 'border-inline-start-width'), id).toBeCloseTo(1, 0);
+		}
+	});
+
 	test('data-variant="danger" is the alert hue under a name that is not the component', async ({ page }) => {
 		await open(page);
 		const colours = await page.evaluate(() => {

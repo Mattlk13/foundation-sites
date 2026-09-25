@@ -21,8 +21,9 @@
   "tokens": [
     { "name": "--yeti-alert-radius", "public": true, "description": "Corner radius." },
     { "name": "--yeti-alert-padding", "public": true, "description": "Padding inside." },
+    { "name": "--yeti-alert-edge", "public": true, "description": "Width of the start edge, at every emphasis." },
     { "name": "--yeti-control-size", "public": true, "description": "Size of the close button." },
-    { "name": "--yeti-border-width", "public": true, "description": "The border; the start edge is four of them." },
+    { "name": "--yeti-border-width", "public": true, "description": "The border on every side but the start edge." },
     { "name": "--yeti-space-sm", "public": true, "description": "Gap between the icon, the body, and the close button." },
     { "name": "--yeti-color-text", "public": true, "description": "The body text." },
     { "name": "--yeti-color-primary", "public": true, "description": "The default variant's color, when data-variant is absent." },

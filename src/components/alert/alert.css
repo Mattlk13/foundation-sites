@@ -8,7 +8,7 @@
 		gap: var(--yeti-space-sm);
 		padding: var(--yeti-alert-padding);
 		border: var(--yeti-border-width) solid var(--_yeti-variant);
-		border-inline-start-width: calc(var(--yeti-border-width) * 4);
+		border-inline-start-width: var(--yeti-alert-edge);
 		border-radius: var(--yeti-alert-radius);
 		background-color: var(--_yeti-variant-subtle);
 		color: var(--yeti-color-text);

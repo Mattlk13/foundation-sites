@@ -36,7 +36,7 @@ Something the reader should know now: the form was saved, the trial ends on Frid
 
 ## How it works
 
-A flex row: an optional icon, the message, and an optional close button pushed to the end. The hue draws the border and, at `medium` emphasis, a tint behind the text; `high` fills the box for the message that must be seen; `low` keeps the border alone. The start edge is four border widths thick, the same mark the card uses for a variant.
+A flex row: an optional icon, the message, and an optional close button pushed to the end. The hue draws the border and, at `medium` emphasis, a tint behind the text; `high` fills the box for the message that must be seen; `low` keeps the border alone. The start edge is `--yeti-alert-edge` thick, four border widths by default (the same mark the card uses for a variant), at every emphasis.
 
 The close button is a `button` carrying `data-close`. Yeti's `alert.js`, loaded once with `<script type="module" src="…/js/alert.js">`, listens on the document: a click fades the alert over the fast duration and removes it. Without the module the button does nothing, so leave it out on pages that do not load the module.
 
@@ -88,8 +88,9 @@ Attributes that descendants carry, not the root.
 | --- | --- |
 | `--yeti-alert-radius` | Corner radius. |
 | `--yeti-alert-padding` | Padding inside. |
+| `--yeti-alert-edge` | Width of the start edge, at every emphasis. |
 | `--yeti-control-size` | Size of the close button. |
-| `--yeti-border-width` | The border; the start edge is four of them. |
+| `--yeti-border-width` | The border on every side but the start edge. |
 | `--yeti-space-sm` | Gap between the icon, the body, and the close button. |
 | `--yeti-color-text` | The body text. |
 | `--yeti-color-primary` | The default variant's color, when data-variant is absent. |

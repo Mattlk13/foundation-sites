@@ -489,6 +489,7 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | --- | --- | --- |
 | `--yeti-alert-radius` | `var(--yeti-radius-md)` | Corner of an alert. |
 | `--yeti-alert-padding` | `var(--yeti-space-md)` | Padding inside an alert. |
+| `--yeti-alert-edge` | `calc(var(--yeti-border-width) * 4)` | Width of an alert's start edge, at every emphasis. |
 
 </div>
 
