@@ -10,7 +10,7 @@ const open = async (page, width = 1000) => {
 // Drag the grip the module puts on the box's end edge. The fixture stacks
 // several boxes, so a lower one's grip can sit below the viewport; scrolling
 // it into view first keeps the drag on-screen.
-const gripOf = (selector) => `${selector} + [role="separator"]`;
+const gripOf = (selector) => `${selector} ~ [role="separator"]`;
 const dragGrip = async (page, selector, dx) => {
 	const grip = gripOf(selector);
 	await page.locator(grip).scrollIntoViewIfNeeded();
@@ -274,6 +274,26 @@ test.describe('demo', () => {
 			};
 			await expect.poll(offset, { message: id }).toEqual([0, 0]);
 		}
+	});
+
+	test('a page may put its own things between the box and the grip, as the docs site does', async ({ page }) => {
+		await open(page);
+		// The docs site inserts its attribute controls right after the box,
+		// once the grip is already there.
+		await page.evaluate(() => {
+			const strip = document.createElement('div');
+			strip.id = 'strip';
+			strip.style.blockSize = '3rem';
+			document.querySelector('#direct-preview').after(strip);
+		});
+		const offset = async () => {
+			const [box, grip] = await Promise.all([rect(page, '#direct-preview'), rect(page, gripOf('#direct-preview'))]);
+			return [Math.abs(Math.round(grip.left + grip.width / 2 - box.right)), Math.abs(Math.round(grip.top + grip.height / 2 - (box.top + box.height / 2))), grip.width > 0];
+		};
+		await expect.poll(offset).toEqual([0, 0, true]);
+		// The strip stays in the flow, under the box.
+		const [box, strip] = await Promise.all([rect(page, '#direct-preview'), rect(page, '#strip')]);
+		expect(strip.top).toBeGreaterThanOrEqual(box.bottom - 1);
 	});
 
 	test('a box with the grip leaves the width to it', async ({ page }) => {

@@ -49,7 +49,8 @@
     { "name": "--_yeti-demo-inset", "public": false },
     { "name": "--_yeti-demo-max", "public": false },
     { "name": "--_yeti-demo-grip", "public": false },
-    { "name": "--_yeti-demo-edge", "public": false }
+    { "name": "--_yeti-demo-edge", "public": false },
+    { "name": "--_yeti-demo-middle", "public": false }
   ],
   "a11y": {
     "requiredAttributes": [],

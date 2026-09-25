@@ -181,45 +181,35 @@
 	/* The grip, which demo.js inserts right after the box as a separator.
 	   Where it sits: the box scrolls, so anything inside it is clipped at the
 	   padding edge and could never straddle the border, and would scroll away
-	   with direct markup. So the grip is the box's sibling, and the figure
-	   becomes a one-column grid in which the box and the grip share one
-	   area: centred on the block axis of that area, the grip is centred on
-	   the box, which has a fixed height, so it stays in view whatever
-	   scrolls inside, and at mid-height it is clear of the bar and the stop
-	   label at the top. On the inline axis it starts at the area's start and
-	   is pushed along by the box's outer width, which the module writes to
-	   --_yeti-demo-edge whenever the box changes size, less half its own
-	   width, so its middle is on the edge in either direction. None of this
-	   applies without the module: no grip, no grid. */
-	.demo:has(> [data-preview] + [role="separator"]) {
-		display: grid;
-		grid-template-columns: minmax(0, 1fr);
-		grid-template-areas: "caption" "preview" "code";
-	}
-	.demo:has(> [data-preview] + [role="separator"]) > figcaption { grid-area: caption; }
-	.demo:has(> [data-preview] + [role="separator"]) > details { grid-area: code; }
+	   with direct markup. So the grip is the box's sibling, placed absolutely
+	   in the figure at a point the module measures and writes inline whenever
+	   the box or the figure changes size: --_yeti-demo-edge, the box's end
+	   edge from the figure's inline start, and --_yeti-demo-middle, the box's
+	   middle from the figure's top. Its middle sits on the edge in either
+	   direction, halfway down a box of fixed height, so it stays in view
+	   whatever scrolls inside and is clear of the bar and the stop label at
+	   the top. Being out of flow, it leaves the figure's layout alone, so a
+	   page may put its own things after the box; the docs site puts its
+	   attribute controls there. None of this applies without the module. */
+	.demo:has(> [data-preview] ~ [role="separator"]) { position: relative; }
 	/* The grip takes the width; the native corner keeps only height, and
 	   only where the demo allows it, so no second grip appears. */
-	.demo > [data-preview]:has(+ [role="separator"]) {
-		grid-area: preview;
-		justify-self: start;
+	.demo > [data-preview]:has(~ [role="separator"]) {
 		resize: none;
 		transition: border-color var(--yeti-duration-fast);
 	}
-	.demo[data-resize="both"] > [data-preview]:has(+ [role="separator"]) { resize: vertical; }
-	.demo > [data-preview] + [role="separator"] {
+	.demo[data-resize="both"] > [data-preview]:has(~ [role="separator"]) { resize: vertical; }
+	.demo > [data-preview] ~ [role="separator"] {
 		--_yeti-demo-grip: var(--yeti-color-border-strong);
-		/* The box's outer width, which the module writes inline on the grip;
-		   the area's full width until it does. */
+		/* Written inline by the module; the figure's end and middle until it does. */
 		--_yeti-demo-edge: 100%;
-		grid-area: preview;
-		justify-self: start;
-		align-self: center;
-		position: relative;
+		--_yeti-demo-middle: 50%;
+		position: absolute;
 		z-index: 1;
+		inset-inline-start: calc(var(--_yeti-demo-edge) - 0.1875rem);
+		inset-block-start: calc(var(--_yeti-demo-middle) - 1.25rem);
 		inline-size: 0.375rem;
 		block-size: 2.5rem;
-		margin-inline-start: calc(var(--_yeti-demo-edge) - 0.1875rem);
 		border-radius: var(--yeti-radius-full);
 		/* Two short lines across the pill, in the surface color. */
 		background:
@@ -232,7 +222,7 @@
 		transition: background-color var(--yeti-duration-fast);
 	}
 	/* The pill is narrow to look at and wider to hit, for a finger. */
-	.demo > [data-preview] + [role="separator"]::before {
+	.demo > [data-preview] ~ [role="separator"]::before {
 		content: "";
 		position: absolute;
 		inset: -0.5rem -0.625rem;
@@ -240,6 +230,6 @@
 	/* Engaged, under the pointer, focused from the keyboard or held in a
 	   drag, the pill and the box's whole end edge take the focus color, so
 	   the edge reads as the thing that moves. */
-	.demo > [data-preview] + [role="separator"]:is(:hover, :focus-visible, :active) { --_yeti-demo-grip: var(--yeti-color-focus); }
-	.demo > [data-preview]:has(+ [role="separator"]:is(:hover, :focus-visible, :active)) { border-inline-end-color: var(--yeti-color-focus); }
+	.demo > [data-preview] ~ [role="separator"]:is(:hover, :focus-visible, :active) { --_yeti-demo-grip: var(--yeti-color-focus); }
+	.demo > [data-preview]:has(~ [role="separator"]:is(:hover, :focus-visible, :active)) { border-inline-end-color: var(--yeti-color-focus); }
 }

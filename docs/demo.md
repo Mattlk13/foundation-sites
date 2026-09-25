@@ -151,6 +151,7 @@ Attributes that descendants carry, not the root.
 - `--_yeti-demo-max`
 - `--_yeti-demo-grip`
 - `--_yeti-demo-edge`
+- `--_yeti-demo-middle`
 
 </details>
 
