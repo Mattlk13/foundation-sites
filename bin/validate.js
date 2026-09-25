@@ -79,6 +79,22 @@ export function validateElementTree(root, merged, file, lineOffset = 0, allowed 
 			if (m.name === 'grid' && attrs.has('data-fold') && !['2', '4', '6'].includes(attrs.get('data-columns'))) {
 				push('data-fold needs data-columns 2, 4, or 6');
 			}
+			// A tracks grid places children by line, and a line past the last
+			// track makes an implicit one instead of an error the page can see,
+			// so a placement that does not fit is caught here, not clamped in CSS.
+			if (m.name === 'grid' && attrs.has('data-tracks')) {
+				const tracks = Number(attrs.get('data-tracks'));
+				for (const child of elementChildren(el)) {
+					const own = attributes(child);
+					if (!own.has('data-start') || !Number.isFinite(tracks)) continue;
+					const start = Number(own.get('data-start'));
+					const span = own.has('data-span') ? Number(own.get('data-span')) : 1;
+					const at = child.sourceCodeLocation ? child.sourceCodeLocation.startLine + lineOffset : line;
+					const report = (message) => errors.push({ file, line: at, message: `.${cls} <${el.tagName}>: ${message}` });
+					if (start > tracks) report(`data-start="${start}" on <${child.tagName}> is past the last of ${tracks} tracks`);
+					else if (start + span - 1 > tracks) report(`data-start="${start}" data-span="${span}" on <${child.tagName}> runs to track ${start + span - 1} of ${tracks}`);
+				}
+			}
 			for (const required of m.a11y.requiredAttributes) {
 				// "aria-label | aria-labelledby": any one of them satisfies the entry.
 				const options = required.split('|').map((r) => r.trim());

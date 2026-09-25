@@ -328,6 +328,12 @@ const gridTree = (example) => layoutTree({
 		attributes: [
 			{ name: 'data-fold', type: 'boolean', description: 'Fold into a single column below the threshold.' },
 			{ name: 'data-columns', type: 'enum', vocabulary: 'columns', description: 'Maximum column count.' },
+			{ name: 'data-tracks', type: 'enum', vocabulary: 'tracks', description: 'Fixed tracks.' },
+			{ name: 'data-threshold', type: 'enum', vocabulary: 'width', description: 'One column below this.' },
+		],
+		markers: [
+			{ name: 'data-start', type: 'enum', vocabulary: 'start', on: '> *', description: 'Start line.' },
+			{ name: 'data-span', type: 'enum', vocabulary: 'span', on: '> *', description: 'Tracks covered.' },
 		],
 	}),
 	'src/layouts/grid/grid.css': '@layer yeti.layouts {\n\t.grid { display: grid; }\n}\n',
@@ -340,6 +346,16 @@ test('a .grid with data-fold requires data-columns to be 2, 4, or 6', () => {
 	const bad = run(gridTree('<div class="grid" data-fold data-columns="3"><p>a</p><p>b</p></div>\n'));
 	assert.deepEqual(bad.lines, ['src/layouts/grid/example.html:1: .grid <div>: data-fold needs data-columns 2, 4, or 6']);
 	const ok = run(gridTree('<div class="grid" data-fold data-columns="4"><p>a</p><p>b</p></div>\n'));
+	assert.deepEqual(ok.lines, []);
+});
+
+test('a tracks grid child must start on one of its tracks and end inside the grid', () => {
+	const bad = run(gridTree('<div class="grid" data-tracks="4">\n<p data-start="6">a</p>\n<p data-start="3" data-span="4">b</p>\n<p data-start="4">c</p>\n</div>\n'));
+	assert.deepEqual(bad.lines, [
+		'src/layouts/grid/example.html:2: .grid <div>: data-start="6" on <p> is past the last of 4 tracks',
+		'src/layouts/grid/example.html:3: .grid <div>: data-start="3" data-span="4" on <p> runs to track 6 of 4',
+	]);
+	const ok = run(gridTree('<div class="grid" data-tracks="12"><p data-start="2" data-span="6">a</p><p data-start="9" data-span="4">b</p><p data-span="12">c</p><p>d</p></div>\n'));
 	assert.deepEqual(ok.lines, []);
 });
 
