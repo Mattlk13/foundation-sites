@@ -272,6 +272,8 @@ const MAPPINGS = [
 	['data-size', 'size-control', '--_yeti-size-text', () => '0'],
 	['data-span', 'span', '--_yeti-span', (v) => v],
 	['data-rows', 'rows', '--_yeti-rows', (v) => v],
+	['data-tracks', 'tracks', '--_yeti-tracks', (v) => v],
+	['data-start', 'start', '--_yeti-start', (v) => v],
 	['data-slides', 'slides', '--_yeti-slides', (v) => v],
 	['data-show', 'width', '--_yeti-show', (v) => v],
 	['data-hide', 'width', '--_yeti-hide', (v) => v],
@@ -695,9 +697,9 @@ const markerTree = (example) => layoutTree({
 });
 
 test('a marker value is checked on descendants of the component that declares it', () => {
-	const bad = run(markerTree('<div class="rail">\n\t<p data-span="9">x</p>\n\t<p data-split="yes">y</p>\n</div>\n'));
+	const bad = run(markerTree('<div class="rail">\n\t<p data-span="13">x</p>\n\t<p data-split="yes">y</p>\n</div>\n'));
 	assert.deepEqual(bad.lines, [
-		'src/layouts/rail/example.html:2: .rail <div>: attribute data-span="9" on <p> is not one of 1, 2, 3, 4, 5, 6',
+		'src/layouts/rail/example.html:2: .rail <div>: attribute data-span="13" on <p> is not one of 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12',
 		'src/layouts/rail/example.html:3: .rail <div>: attribute data-split on <p> is a boolean attribute and takes no value',
 	]);
 	const ok = run(markerTree('<div class="rail"><p data-span="2">x</p><p data-split>y</p></div>\n'));
@@ -713,7 +715,7 @@ test('a marker outside its component is left alone', () => {
 });
 
 test('a marker inside nested components of one kind is reported once', () => {
-	const r = run(markerTree('<div class="rail"><div class="rail"><p data-span="9">x</p></div></div>\n'));
+	const r = run(markerTree('<div class="rail"><div class="rail"><p data-span="13">x</p></div></div>\n'));
 	assert.equal(r.lines.length, 1);
 });
 

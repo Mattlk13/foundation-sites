@@ -258,13 +258,47 @@
 	[data-size="md"] { --_yeti-size-text: var(--yeti-text-md); --_yeti-size-space: var(--yeti-space-sm); }
 	[data-size="lg"] { --_yeti-size-text: var(--yeti-text-lg); --_yeti-size-space: var(--yeti-space-md); }
 
-	/* data-span: a child's share of a columns row */
+	/* data-span: a child's share of a columns row, or how many tracks a child
+	   of a tracks grid covers */
 	[data-span="1"] { --_yeti-span: 1; }
 	[data-span="2"] { --_yeti-span: 2; }
 	[data-span="3"] { --_yeti-span: 3; }
 	[data-span="4"] { --_yeti-span: 4; }
 	[data-span="5"] { --_yeti-span: 5; }
 	[data-span="6"] { --_yeti-span: 6; }
+	[data-span="7"] { --_yeti-span: 7; }
+	[data-span="8"] { --_yeti-span: 8; }
+	[data-span="9"] { --_yeti-span: 9; }
+	[data-span="10"] { --_yeti-span: 10; }
+	[data-span="11"] { --_yeti-span: 11; }
+	[data-span="12"] { --_yeti-span: 12; }
+
+	/* data-tracks: how many equal tracks a grid has */
+	[data-tracks="2"] { --_yeti-tracks: 2; }
+	[data-tracks="3"] { --_yeti-tracks: 3; }
+	[data-tracks="4"] { --_yeti-tracks: 4; }
+	[data-tracks="5"] { --_yeti-tracks: 5; }
+	[data-tracks="6"] { --_yeti-tracks: 6; }
+	[data-tracks="7"] { --_yeti-tracks: 7; }
+	[data-tracks="8"] { --_yeti-tracks: 8; }
+	[data-tracks="9"] { --_yeti-tracks: 9; }
+	[data-tracks="10"] { --_yeti-tracks: 10; }
+	[data-tracks="11"] { --_yeti-tracks: 11; }
+	[data-tracks="12"] { --_yeti-tracks: 12; }
+
+	/* data-start: the column line a child of a tracks grid begins on */
+	[data-start="1"] { --_yeti-start: 1; }
+	[data-start="2"] { --_yeti-start: 2; }
+	[data-start="3"] { --_yeti-start: 3; }
+	[data-start="4"] { --_yeti-start: 4; }
+	[data-start="5"] { --_yeti-start: 5; }
+	[data-start="6"] { --_yeti-start: 6; }
+	[data-start="7"] { --_yeti-start: 7; }
+	[data-start="8"] { --_yeti-start: 8; }
+	[data-start="9"] { --_yeti-start: 9; }
+	[data-start="10"] { --_yeti-start: 10; }
+	[data-start="11"] { --_yeti-start: 11; }
+	[data-start="12"] { --_yeti-start: 12; }
 
 	/* data-rows: how many rows each child of a grid spans, one per part */
 	[data-rows="2"] { --_yeti-rows: 2; }

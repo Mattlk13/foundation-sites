@@ -148,7 +148,7 @@ test('markers resolve their vocabulary into values and an absent list loads as e
 		'src/layouts/rail/manifest.json': validManifest({ markers: [{ name: 'data-span', type: 'enum', vocabulary: 'span', on: '> *', description: 'x' }] }),
 	}), vocabulary);
 	assert.deepEqual(r.errors, []);
-	assert.deepEqual(r.merged.rail.markers[0].values, ['1', '2', '3', '4', '5', '6']);
+	assert.deepEqual(r.merged.rail.markers[0].values, ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']);
 	assert.deepEqual(load(validTree()).merged.rail.markers, []);
 });
 
