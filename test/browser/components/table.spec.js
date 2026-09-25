@@ -51,6 +51,13 @@ test.describe('table', () => {
 		});
 	}
 
+	test('data-nowrap keeps a table\'s or a cell\'s line', async ({ page }) => {
+		await open(page);
+		expect(await style(page, '#kept-cell', 'white-space')).toBe('nowrap');
+		expect(await style(page, '#g1', 'white-space')).toBe('nowrap');
+		expect(await style(page, '#g2', 'white-space')).toBe('normal');
+	});
+
 	test('has no accessibility violations', async ({ page }) => {
 		await open(page);
 		expect(await axe(page)).toEqual([]);

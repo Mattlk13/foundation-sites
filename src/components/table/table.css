@@ -25,6 +25,9 @@
 	.table [data-numeric] {
 		text-align: end;
 	}
+	/* data-nowrap on the table keeps every cell's line; on a single th/td it
+	   keeps that one cell's line. A wide result goes in a scroller. */
+	.table[data-nowrap] :is(th, td), .table :is(th, td)[data-nowrap] { white-space: nowrap; }
 	.table[data-striped] > tbody > tr:nth-child(even) { background-color: var(--yeti-table-stripe); }
 	.table[data-hover] > tbody > tr:hover { background-color: var(--yeti-color-surface-sunken); }
 	.table[data-border] :is(th, td) { border: var(--yeti-border-width) solid var(--yeti-table-border); }

@@ -9,7 +9,8 @@
     { "name": "data-size", "type": "enum", "vocabulary": "size-control", "default": "md", "description": "Cell padding and text size; sm is the compact table." },
     { "name": "data-striped", "type": "boolean", "description": "Tint every other body row." },
     { "name": "data-hover", "type": "boolean", "description": "Tint the row under the pointer." },
-    { "name": "data-border", "type": "boolean", "description": "Borders around every cell instead of lines between rows, as a box draws its border." }
+    { "name": "data-border", "type": "boolean", "description": "Borders around every cell instead of lines between rows, as a box draws its border." },
+    { "name": "data-nowrap", "type": "boolean", "description": "Every cell keeps its line; put the table in a scroller." }
   ],
   "classes": [],
   "children": [
@@ -19,7 +20,8 @@
     { "selector": "[data-numeric]", "min": 0, "max": null, "description": "A cell (or header cell) of numbers: end-aligned with tabular figures." }
   ],
   "markers": [
-    { "name": "data-numeric", "type": "boolean", "on": "*", "description": "Tabular figures, so digits line up, on any element; on a table's cells and headers the column is end-aligned too." }
+    { "name": "data-numeric", "type": "boolean", "on": "*", "description": "Tabular figures, so digits line up, on any element; on a table's cells and headers the column is end-aligned too." },
+    { "name": "data-nowrap", "type": "boolean", "on": "th, td", "description": "This cell keeps its line." }
   ],
   "tokens": [
     { "name": "--yeti-table-stripe", "public": true, "description": "Fill of even rows with data-striped." },

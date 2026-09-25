@@ -423,9 +423,11 @@ Attributes:
 - data-striped (boolean) — Tint every other body row.
 - data-hover (boolean) — Tint the row under the pointer.
 - data-border (boolean) — Borders around every cell instead of lines between rows, as a box draws its border.
+- data-nowrap (boolean) — Every cell keeps its line; put the table in a scroller.
 
 On children:
 - data-numeric on * (boolean) — Tabular figures, so digits line up, on any element; on a table's cells and headers the column is end-aligned too.
+- data-nowrap on th, td (boolean) — This cell keeps its line.
 
 ## tabs (component, class="tabs")
 
