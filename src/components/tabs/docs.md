@@ -6,7 +6,18 @@ Alternative views of one thing: a profile and its billing, a chart and its table
 
 A tab list of buttons over their panels. The CSS styles the list and marks the selected tab with the hue on its edge, and it never hides a panel. That is deliberate: a page that does not load `tabs.js`, or where the script fails, shows every panel under its own tab, so nothing a reader came for is locked away.
 
-Load the module and it pairs every tab with the panel its `aria-controls` names, shows one, hides the rest, and takes over the keyboard: arrows move selection, Home and End jump to the ends, and only the selected tab is in the tab order, so Tab leaves the list rather than walking it. A link into a hidden panel opens its tab: on load and on every `hashchange` the module looks for the URL's fragment inside a panel and, if it finds one, selects that panel's tab and brings the target into view, without moving keyboard focus to the tab.
+Load the module and it pairs every tab with the panel its `aria-controls` names, shows one, hides the rest, and takes over the keyboard: arrows move selection, Home and End jump to the ends, and only the selected tab is in the tab order, so Tab leaves the list rather than walking it. A link into a hidden panel opens its tab: on load and on every `hashchange` the module looks for the URL's fragment inside a panel and, if it finds one, selects that panel's tab and brings the target into view, without moving keyboard focus to the tab. `data-emphasis="high"` fills the selected tab with the variant instead of underlining it, its top corners (or, in a vertical list, the corners away from the divider) rounded like any other filled control.
+
+```html
+<div class="tabs" data-emphasis="high">
+	<div role="tablist" aria-label="Report">
+		<button type="button" role="tab" id="t-summary" aria-controls="p-summary" aria-selected="true">Summary</button>
+		<button type="button" role="tab" id="t-detail" aria-controls="p-detail">Detail</button>
+	</div>
+	<section role="tabpanel" id="p-summary" aria-labelledby="t-summary"><p>Summary panel.</p></section>
+	<section role="tabpanel" id="p-detail" aria-labelledby="t-detail" hidden><p>Detail panel.</p></section>
+</div>
+```
 
 ```html
 <div class="tabs" data-orientation="vertical">

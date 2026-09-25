@@ -8,6 +8,15 @@ const open = async (page, width = 1000, hash = '') => {
 };
 const hidden = (page, id) => page.evaluate((i) => document.getElementById(i).hidden, id);
 const selected = (page, id) => page.evaluate((i) => document.getElementById(i).getAttribute('aria-selected'), id);
+/** Resolves a color token by giving a probe element that token as its background. */
+const colorOf = (page, name) => page.evaluate((n) => {
+	const probe = document.createElement('div');
+	probe.style.cssText = `background-color: var(${n})`;
+	document.body.append(probe);
+	const value = getComputedStyle(probe).backgroundColor;
+	probe.remove();
+	return value;
+}, name);
 
 test.describe('tabs', () => {
 	test('without the module every panel is readable', async ({ page }) => {
@@ -65,6 +74,16 @@ test.describe('tabs', () => {
 	test('the selected tab is marked with the hue', async ({ page }) => {
 		await open(page);
 		expect(await style(page, '#t1', 'border-bottom-color')).not.toBe(await style(page, '#t2', 'border-bottom-color'));
+	});
+
+	test('data-emphasis="high" fills the selected tab with the variant', async ({ page }) => {
+		await open(page);
+		const variant = await colorOf(page, '--yeti-color-primary');
+		const onVariant = await colorOf(page, '--yeti-on-primary');
+		expect(await style(page, '#f1', 'background-color')).toBe(variant);
+		expect(await style(page, '#f1', 'color')).toBe(onVariant);
+		// The unselected tab is not filled.
+		expect(await style(page, '#f2', 'background-color')).not.toBe(variant);
 	});
 
 	test('has no accessibility violations', async ({ page }) => {
