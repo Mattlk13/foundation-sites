@@ -271,6 +271,17 @@ test.describe('tabs', () => {
 		expect(await page.evaluate(() => document.activeElement.id)).not.toMatch(/^[oi]2$/);
 	});
 
+	test('nested tabs: an inner set keeps its own look inside a vertical, filled outer set', async ({ page }) => {
+		await open(page);
+		await painted(page);
+		expect(await selected(page, 'li1')).toBe('true');
+		expect(await px(page, '#li1', 'border-bottom-width')).toBeGreaterThan(0);
+		expect(await style(page, '#li1', 'background-color')).toBe('rgba(0, 0, 0, 0)');
+		expect(await px(page, '#li1', 'border-right-width')).toBe(0);
+		expect(await style(page, '#lo1', 'background-color')).not.toBe('rgba(0, 0, 0, 0)');
+		expect(await style(page, '#lo1', 'background-color')).toBe(await style(page, '#lo1', 'border-top-color'));
+	});
+
 	test('without the module a hash into a hidden panel still passes', async ({ page }) => {
 		await withoutModule(page, 'tabs');
 		await open(page, 1000, '#deep');
