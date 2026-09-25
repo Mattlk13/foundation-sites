@@ -96,13 +96,30 @@ Four groups always stay, whatever you remove:
 
 Everything else stands alone: each layout, recipe, component and utility is one file, and removing it removes that part and nothing more. Where one part's file mentions another, it is for the two used together, a spinner inside a button or a dropdown inside a nav, and those rules simply match nothing once the other part is gone. Don't reorder the lines you keep: the layers settle which rules win between groups, but inside a group a later file still wins a tie.
 
-You can link `site.css` as it is, and it works: the browser follows each `@import` itself. That is fine while you are trying things, but it is one request per file, so bundle the list into one file before it ships. You need Node, and one command, run from the folder `site.css` is in. With [Lightning CSS](https://lightningcss.dev):
+You can link `site.css` as it is, and it works: the browser follows each `@import` itself. That is fine while you are trying things, but it is one request per file, so bundle the list into one file before it ships. You need Node, and one command, run from the folder `site.css` is in:
 
 ```sh
-npx lightningcss-cli --bundle --minify site.css -o site.min.css
+npx esbuild site.css --bundle --minify --outfile=site.min.css
 ```
 
-`npx` fetches the tool the first time and runs it; there is nothing to configure. Any bundler that follows `@import` does the same job, so a project that already runs esbuild or PostCSS can use that instead. Link `site.min.css` in place of `yeti.css`. Either bundle keeps Yeti's layers and their order, because they are written in the CSS itself, so a theme linked after it still lands where the [theming guide](theming.md) says. Scripts need no build: load only the modules for the components you kept, as [a module](#a-module) below describes.
+`npx` fetches [esbuild](https://esbuild.github.io) the first time and runs it; there is nothing to configure. Link `site.min.css` in place of `yeti.css`. The bundle keeps Yeti's layers and their order, because they are written in the CSS itself, so a theme linked after it still lands where the [theming guide](theming.md) says.
+
+Scripts need no build: load only the modules for the components you kept, one `script` tag each, as [a module](#a-module) below describes. To ship them as one file instead, list them in a `site.js`, using the package's own paths:
+
+```js
+// site.js: the modules for the dialog, the tabs and the contents list
+import "yeti-css/js/dialog.js";
+import "yeti-css/js/tabs.js";
+import "yeti-css/js/toc.js";
+```
+
+and bundle it with the same tool:
+
+```sh
+npx esbuild site.js --bundle --minify --outfile=site.min.js
+```
+
+Load `site.min.js` with `<script type="module">`, as you would `yeti.js`. The paths are `yeti-css/js/…`, not `yeti-css/dist/js/…`: the package exports its modules under `js/`, and a bundler that honors the exports refuses the other.
 
 ## Bare HTML
 
