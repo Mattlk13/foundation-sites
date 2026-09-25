@@ -637,25 +637,35 @@ export function validateModules(entries) {
 }
 
 // A size container is what data-show and data-hide measure; with none above
-// them the query never matches and the element never changes. These are the
-// framework's own containers (their CSS sets container-type), plus any element
-// that sets one inline. Kept in step with the container-type rules in src/.
+// them the query never matches and the element never changes. Each entry is a
+// selector exactly as src/ writes it on a container-type: inline-size rule,
+// with the test that stands in for it on parsed markup; a tools test reads
+// every such rule in src/ and fails when one is missing here. An element that
+// sets a container type inline counts too.
 const MEDIA_FIRST = new Set(['img', 'video', 'picture', 'figure']);
-function isSizeContainer(el) {
-	const classes = classList(el);
-	const attrs = attributes(el);
-	if (['container', 'nav', 'pagination', 'timeline', 'demo'].some((c) => classes.includes(c))) return true;
-	if (classes.includes('grid') && (attrs.has('data-fold') || attrs.has('data-tracks'))) return true;
-	if (classes.includes('cluster') && attrs.has('data-threshold')) return true;
-	if (classes.includes('breakout') && elementChildren(el).some((c) => attributes(c).has('data-note'))) return true;
-	if (classes.includes('card') && MEDIA_FIRST.has(elementChildren(el)[0]?.tagName)) {
-		// A card spanning a data-rows grid's rows is a subgrid, and its CSS
-		// turns containment off there.
+const has = (el, cls) => classList(el).includes(cls);
+const CONTAINER_TESTS = [
+	['.container', (el) => has(el, 'container')],
+	['.nav', (el) => has(el, 'nav')],
+	['.pagination', (el) => has(el, 'pagination')],
+	['.timeline', (el) => has(el, 'timeline')],
+	['.demo > [data-preview]', (el) => attributes(el).has('data-preview') && Boolean(el.parentNode?.tagName) && has(el.parentNode, 'demo')],
+	['.grid[data-fold]:not([data-tracks])', (el) => has(el, 'grid') && attributes(el).has('data-fold') && !attributes(el).has('data-tracks')],
+	['.grid[data-tracks]', (el) => has(el, 'grid') && attributes(el).has('data-tracks')],
+	['.cluster[data-threshold]', (el) => has(el, 'cluster') && attributes(el).has('data-threshold')],
+	['.breakout:has(> [data-note])', (el) => has(el, 'breakout') && elementChildren(el).some((c) => attributes(c).has('data-note'))],
+	// A card spanning a data-rows grid's rows is a subgrid, and its CSS turns
+	// containment off there.
+	['.card:has(> :is(img, video, picture, figure):first-child)', (el) => {
+		if (!has(el, 'card') || !MEDIA_FIRST.has(elementChildren(el)[0]?.tagName)) return false;
 		const parent = el.parentNode;
-		const inRows = parent?.tagName && classList(parent).includes('grid') && attributes(parent).has('data-rows');
-		if (!inRows) return true;
-	}
-	return /(?:^|;)\s*container(?:-type)?\s*:[^;]*\b(?:inline-size|size)\b/.test(attrs.get('style') ?? '');
+		return !(parent?.tagName && has(parent, 'grid') && attributes(parent).has('data-rows'));
+	}],
+];
+export const SIZE_CONTAINERS = CONTAINER_TESTS.map(([selector]) => selector);
+function isSizeContainer(el) {
+	if (CONTAINER_TESTS.some(([, test]) => test(el))) return true;
+	return /(?:^|;)\s*container(?:-type)?\s*:[^;]*\b(?:inline-size|size)\b/.test(attributes(el).get('style') ?? '');
 }
 
 /**
@@ -663,8 +673,14 @@ function isSizeContainer(el) {
  * size container above it. The markup is legal and harmless, but it never
  * hides or shows, which is rarely what its author meant.
  */
+// The show-hide fixture tests the no-container case on purpose: its loose
+// elements are there to prove that data-show and data-hide do nothing
+// without a size container, so warning about them would be noise.
+const LOOSE_ON_PURPOSE = path.join('test', 'browser', 'fixtures', 'layouts', 'show-hide.html');
+
 export function findLooseVisibility(tree, file, lineOffset = 0) {
 	const warnings = [];
+	if (file.endsWith(LOOSE_ON_PURPOSE)) return warnings;
 	walkElements(tree, (el) => {
 		const attrs = attributes(el);
 		const name = ['data-show', 'data-hide'].find((n) => attrs.has(n));
@@ -696,7 +712,27 @@ export function findNestedThresholdClusters(tree, file, lineOffset = 0) {
 	return warnings;
 }
 
-const MARKUP_WARNINGS = [findLooseVisibility, findNestedThresholdClusters];
+/**
+ * A warning: data-threshold on a grid, and data-start or data-span on its
+ * children, only mean something in a tracks grid. data-span stays legal on
+ * the children of columns and hero, which read it themselves.
+ */
+export function findUntrackedGridPlacement(tree, file, lineOffset = 0) {
+	const warnings = [];
+	const at = (el) => (el.sourceCodeLocation ? el.sourceCodeLocation.startLine + lineOffset : undefined);
+	walkElements(tree, (el) => {
+		if (!has(el, 'grid') || attributes(el).has('data-tracks')) return;
+		if (attributes(el).has('data-threshold')) warnings.push({ file, line: at(el), message: 'data-threshold on a .grid without data-tracks does nothing' });
+		for (const child of elementChildren(el)) {
+			for (const name of ['data-start', 'data-span']) {
+				if (attributes(child).has(name)) warnings.push({ file, line: at(child), message: `${name} on <${child.tagName}> does nothing in a .grid without data-tracks` });
+			}
+		}
+	});
+	return warnings;
+}
+
+const MARKUP_WARNINGS = [findLooseVisibility, findNestedThresholdClusters, findUntrackedGridPlacement];
 
 /** Runs the markup warnings over examples, fixtures, guide and docs demos, and the starter. */
 export function validateMarkupWarnings(root, entries) {

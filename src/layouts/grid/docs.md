@@ -30,7 +30,7 @@ The fold is one attribute on one element; the nest is two wrappers. Use whicheve
 
 ## Tracks
 
-`data-tracks` is the other mode: instead of fitting as many columns as there is room for, the grid has exactly that many equal tracks, two to twelve, and each child is placed on them by line. `data-start` on a child is the column line it begins on and `data-span` how many tracks it covers, both one to twelve. A child with neither flows into the next free track and covers one; with only a span it flows and covers that many; with only a start it begins there and covers one. A track nothing is placed on stays empty, which is the point: a wall with a work from line 2 across six tracks and a second from line 9 across four leaves track 1 and track 8 bare.
+`data-tracks` is the other mode: instead of fitting as many columns as there is room for, the grid has exactly that many equal tracks, two to twelve, and each child is placed on them by line. `data-start` on a child is the column line it begins on and `data-span` how many tracks it covers, both one to twelve. A child with neither flows into the next free track after the child before it and covers one; with only a span it flows the same way and covers that many; with only a start it begins there and covers one. A track nothing is placed on stays empty, which is the point: a wall with a work from line 2 across six tracks and a second from line 9 across four leaves track 1 and track 8 bare.
 
 ```html
 <div class="grid" data-tracks="12" data-threshold="md">

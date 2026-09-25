@@ -5,7 +5,11 @@ import path from 'node:path';
 import {
 	validate, formatError, validateElementTree, validateHtmlString, extractHtmlBlocks, findBareMargin, validateLayers, validateImportOrder, validateImportant, validateTokens,
 	validateVocabulary, validateNoMediaQueries, validateDocsFragments, validateFields, validateThemes, validateMotion, validateAnchorsAndContainers, validateTokenReads, validateModules,
+	SIZE_CONTAINERS,
 } from '../../bin/validate.js';
+import { walkFiles } from '../../bin/lib/files.js';
+
+const walkSrcCss = (dir) => walkFiles(dir).filter((f) => f.endsWith('.css'));
 import { parseHtml } from '../../bin/lib/html.js';
 import { LAYER_STATEMENT } from '../../bin/lib/layers.js';
 import { makeTree, validManifest, validTree, REPO_ROOT, TOKENS_SCHEMA_PATH, VOCABULARY_PATH } from './helpers.js';
@@ -1102,4 +1106,40 @@ test('a thresholded cluster that is an item of another cluster is a warning', ()
 	const r = warned(example('<div class="rail"><div class="cluster">\n<div class="cluster" data-threshold="sm"><a href="#">a</a></div></div></div>\n'));
 	assert.deepEqual(r.warnings, ['src/layouts/rail/example.html:2: .cluster[data-threshold] is an item of another .cluster, so it has no width of its own to measure; give it one, or flex-grow']);
 	assert.deepEqual(warned(example('<div class="rail"><div class="stack"><div class="cluster" data-threshold="sm"><a href="#">a</a></div></div></div>\n')).warnings, []);
+});
+
+test('the real tree prints no warnings', () => {
+	assert.deepEqual(validate({ root: REPO_ROOT }).warnings.map((w) => formatError(REPO_ROOT, w)), []);
+});
+
+test('the size containers validate knows cover every container-type: inline-size rule in src', () => {
+	const found = new Set();
+	for (const file of walkSrcCss(path.join(REPO_ROOT, 'src'))) {
+		const css = fs.readFileSync(file, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+		for (const m of css.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+			if (!/(?:^|[;\s])container-type\s*:\s*inline-size/.test(m[2])) continue;
+			const selector = m[1].split(';').pop().trim();
+			for (const one of selector.split(/,(?![^()]*\))/)) found.add(one.trim().replace(/\s+/g, ' '));
+		}
+	}
+	assert.ok(found.size >= 9, `read ${found.size} selectors; the scan is not finding the rules`);
+	const missing = [...found].filter((s) => !SIZE_CONTAINERS.includes(s));
+	assert.deepEqual(missing, []);
+});
+
+test('a demo is a container only at its preview', () => {
+	assert.equal(warned(example('<div class="rail"><div class="demo"><p data-show="md">x</p></div></div>')).warnings.length, 1);
+	assert.deepEqual(warned(example('<div class="rail"><div class="demo"><div data-preview><p data-show="md">x</p></div></div></div>')).warnings, []);
+});
+
+test('grid placement attributes on a grid without data-tracks are a warning', () => {
+	const r = warned(gridTree('<div class="grid" data-threshold="sm">\n<p data-start="2">a</p>\n<p data-span="3">b</p>\n<p>c</p>\n</div>\n'));
+	assert.deepEqual(r.errors, []);
+	assert.deepEqual(r.warnings, [
+		'src/layouts/grid/example.html:1: data-threshold on a .grid without data-tracks does nothing',
+		'src/layouts/grid/example.html:2: data-start on <p> does nothing in a .grid without data-tracks',
+		'src/layouts/grid/example.html:3: data-span on <p> does nothing in a .grid without data-tracks',
+	]);
+	assert.deepEqual(warned(gridTree('<div class="grid" data-tracks="12" data-threshold="sm"><p data-start="2" data-span="3">a</p></div>\n')).warnings, []);
+	assert.deepEqual(warned(example('<div class="rail"><div class="columns"><p data-span="2">a</p><p>b</p></div></div>')).warnings, []);
 });
