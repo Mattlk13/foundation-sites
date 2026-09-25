@@ -1,7 +1,7 @@
 ---
 raw: true
 title: "Installing Yeti"
-description: "Getting the files, loading the stylesheet and a module, and switching on editor completion."
+description: "Getting the files, loading the stylesheet and a module, building only the parts you use, and switching on editor completion."
 nav_group: "Guides"
 nav_order: 1
 ---
@@ -71,6 +71,39 @@ Yeti's rules live in cascade layers, so anything you write outside a layer wins 
 The package's `style` field and its `.` export still point at the readable `yeti.css`, because that is the one worth stepping through in devtools; name the minified file yourself when you want it.
 
 Minified is not transpiled. `light-dark()`, `@starting-style`, container queries, `oklch()` and anchor positioning are left exactly as they are written, because Yeti's floor is Baseline 2025 and every browser at that floor already has them. The minified file and the readable one are the same CSS.
+
+## A custom build
+
+`yeti.css` is every part of Yeti in one file. A site that never shows a demo, a carousel or a tooltip can leave them out. `dist/css/` is the same stylesheet as separate files, and `dist/css/yeti.css` is a list of `@import` lines, one per file, in the order the full build uses. Copy that file into your project, delete the lines you don't want, and point the paths at `node_modules/yeti-css/dist/css/`:
+
+```css
+/* site.css: Yeti without the demo, the carousel or the tooltip */
+@import "../node_modules/yeti-css/dist/css/layers.css";
+@import "../node_modules/yeti-css/dist/css/tokens/scale.css";
+/* ...the rest of the list, as it came... */
+@import "../node_modules/yeti-css/dist/css/components/dialog/dialog.css";
+/* @import ".../components/tooltip/tooltip.css"; */
+/* @import ".../components/carousel/carousel.css"; */
+/* @import ".../components/demo/demo.css"; */
+@import "../node_modules/yeti-css/dist/css/utilities/attention/attention.css";
+```
+
+Four groups always stay, whatever you remove:
+
+- `layers.css`, first. It fixes the order of Yeti's cascade layers before any rule is read, which is what lets the rest of the list arrive in any order and still resolve the same way.
+- Every file under `tokens/`. The tokens are the theme; a part you removed leaves a few unused custom properties behind, which cost nothing.
+- Every file under `base/`: the reset, type, flow and form controls that everything else stands on.
+- `layouts/attributes.css`. It maps the shared attributes, `data-gap`, `data-width`, `data-variant`, `data-size` and the rest, for layouts and components alike, so a page with any layout or component needs it.
+
+Everything else stands alone: each layout, recipe, component and utility is one file, and removing it removes that part and nothing more. Where one part's file mentions another, it is for the two used together, a spinner inside a button or a dropdown inside a nav, and those rules simply match nothing once the other part is gone. Don't reorder the lines you keep: the layers settle which rules win between groups, but inside a group a later file still wins a tie.
+
+A list of `@import`s is one request per file, so bundle it before it ships. Any CSS bundler that follows `@import` does it; with esbuild:
+
+```sh
+npx esbuild site.css --bundle --minify --outfile=site.min.css
+```
+
+The bundle keeps Yeti's layers and its layer order, because they are written in the CSS itself. Scripts need no build: load only the modules for the components you kept, as [a module](#a-module) below describes.
 
 ## Bare HTML
 
