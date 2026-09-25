@@ -11,6 +11,37 @@
 // needs a module has it. A host page in someone else's colors points at a
 // plain yeti.css that way; host yeti.js next to it.
 // Safe on pages with no demo, and demos added later are filled as they land.
+// The resize logic, kept apart from the page so a Node test can call it.
+// Widths are CSS pixels of the box's content box, the size the width tokens
+// and the stop label measure.
+
+// A drag moves the box's end edge with the pointer: rightward in a
+// left-to-right page, leftward in a right-to-left one, never past the box's
+// own min and max.
+function widthFromDrag(startPx, dx, rtl, minPx, maxPx) {
+	return Math.min(maxPx, Math.max(minPx, startPx + (rtl ? -dx : dx)));
+}
+
+// A key steps to the next stop strictly beyond the current width, up
+// (direction 1) or down (-1); past the last stop that fits, the box goes to
+// its max or min. A width a hair off a stop counts as on it.
+function stepWidth(currentPx, direction, stopsPx, minPx, maxPx) {
+	const beyond = direction > 0
+		? stopsPx.filter((stop) => stop > currentPx + 0.5)
+		: stopsPx.filter((stop) => stop < currentPx - 0.5);
+	const next = beyond.length ? (direction > 0 ? Math.min(...beyond) : Math.max(...beyond)) : (direction > 0 ? maxPx : minPx);
+	return Math.min(maxPx, Math.max(minPx, next));
+}
+
+// The stop a width is at, named exactly as the bar's label names it: the
+// largest stop at or below the width, and xs for anything below sm.
+function stopName(px, stops) {
+	const floor = stops.find((stop) => stop.name === 'sm')?.px ?? 0;
+	let name = 'xs';
+	for (const stop of stops) if (stop.px >= floor && px >= stop.px) name = stop.name;
+	return name;
+}
+
 const stylesheetFor = (figure) => figure.dataset.stylesheet
 	|| document.querySelector('link[rel="stylesheet"][href$="yeti.css"]')?.href
 	|| '';
