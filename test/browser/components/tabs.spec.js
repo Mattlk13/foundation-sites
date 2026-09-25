@@ -114,6 +114,11 @@ test.describe('tabs', () => {
 
 	test('has no accessibility violations', async ({ page }) => {
 		await open(page);
+		// The load pass selects a tab in every .tabs, including the filled
+		// ones, and the filled tab's color transitions to the on-variant text;
+		// axe reads contrast from whatever is painted, so a read mid-transition
+		// can catch an under-contrast frame (seen on Firefox as #f1 at 4.27:1).
+		await painted(page);
 		expect(await axe(page)).toEqual([]);
 	});
 
