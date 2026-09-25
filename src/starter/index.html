@@ -1,6 +1,7 @@
 <!doctype html>
-<!-- Jumps and focused controls stop below the bar: set this to at least the bar's height. -->
-<html lang="en" style="--yeti-scroll-padding: 5rem">
+<!-- Jumps and focused controls stop below the bar: this is the bar's own height, so it follows the type scale.
+     The bar is its row (the control size, or a link's line box, 1.5 × the body size, plus its padding, whichever is taller), its own padding and border, and a little air. -->
+<html lang="en" style="--yeti-scroll-padding: calc(max(var(--yeti-control-size), 1.5 * var(--yeti-text-md) + 2 * var(--yeti-space-xs)) + 2 * var(--yeti-space-sm) + var(--yeti-border-width) + var(--yeti-space-xs))">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">

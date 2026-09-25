@@ -50,23 +50,29 @@ test.describe('starter page', () => {
 		await expect.poll(() => page.evaluate(() => Math.abs(document.querySelector('.nav').getBoundingClientRect().top))).toBeLessThanOrEqual(1);
 	});
 
-	test('its own links land below the bar', async ({ page }) => {
-		// A short window, so the page can scroll far enough for a jump to put
-		// its target at the very top, where the bar would cover it.
-		const clearance = (target) => page.evaluate((t) => document.querySelector(t).getBoundingClientRect().top - document.querySelector('.nav').getBoundingClientRect().bottom, target);
-		await open(page, 1280, 400);
-		await page.click('.nav a[href="#about"]');
-		await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
-		await expect.poll(() => clearance('#about-heading')).toBeGreaterThanOrEqual(0);
-		// The skip link, on a fresh load scrolled past the content's start.
-		await open(page, 1280, 400);
-		await page.evaluate(() => window.scrollTo(0, 900));
-		// Focused directly: WebKit leaves links out of Tab order by default.
-		await page.focus('body > a:first-child');
-		await page.keyboard.press('Enter');
-		await expect.poll(() => page.evaluate(() => location.hash)).toBe('#content');
-		await expect.poll(() => clearance('#content')).toBeGreaterThanOrEqual(0);
-	});
+	for (const [label, css] of [['at the default scale', null], ['on a larger type scale', ':root { --yeti-base-max: 1.5rem; --yeti-ratio-max: 1.5 }']]) {
+		test(`its own links land below the bar ${label}`, async ({ page }) => {
+			// A short window, so the page can scroll far enough for a jump to put
+			// its target at the very top, where the bar would cover it.
+			const clearance = (target) => page.evaluate((t) => document.querySelector(t).getBoundingClientRect().top - document.querySelector('.nav').getBoundingClientRect().bottom, target);
+			const load = async () => {
+				await open(page, 1280, 400);
+				if (css) { await page.addStyleTag({ content: css }); await painted(page); }
+			};
+			await load();
+			await page.click('.nav a[href="#about"]');
+			await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
+			await expect.poll(() => clearance('#about-heading')).toBeGreaterThanOrEqual(0);
+			// The skip link, on a fresh load scrolled past the content's start.
+			await load();
+			await page.evaluate(() => window.scrollTo(0, 900));
+			// Focused directly: WebKit leaves links out of Tab order by default.
+			await page.focus('body > a:first-child');
+			await page.keyboard.press('Enter');
+			await expect.poll(() => page.evaluate(() => location.hash)).toBe('#content');
+			await expect.poll(() => clearance('#content')).toBeGreaterThanOrEqual(0);
+		});
+	}
 
 	for (const scheme of ['light', 'dark']) {
 		test(`has no accessibility violations in ${scheme}`, async ({ page }) => {
