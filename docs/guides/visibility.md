@@ -27,6 +27,7 @@ nav_order: 6
 | `details`, `popover`, `dialog` | while shut | while shut | no | the reader asking |
 | `data-show` / `data-hide` | yes | yes | no | the container's width |
 | `print` / `print` with `data-print="none"` | in the other medium | in the other medium | no | the medium |
+| `:has()` on a common ancestor, your own CSS | yes | yes | no | the state of a control elsewhere |
 | a component's own `data-threshold` | it changes shape rather than going | — | — | the container's width |
 
 </div>
@@ -212,6 +213,40 @@ By medium. `print` on its own is for paper and nowhere else; `print` with `data-
 ```
 
 Full page: [print](../print.md).
+
+## Show one of two things from a control
+
+A price that is monthly or yearly, a distance in miles or kilometres, a map or a list: two alternatives in place, and a control somewhere else on the page choosing between them. Put both alternatives in the markup, and let `:has()` on an element that holds the control and the alternatives both read which one is checked. The control is the [segmented control](../buttons.md), native radios, so it submits with a form and the arrow keys move it; the switch is one rule of your own CSS, and there is no script anywhere.
+
+<figure class="demo" data-height="sm">
+<div data-preview="Show one of two things from a control"><iframe title="Show one of two things from a control, live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;style&gt;&#10;	.plans:not(:has([value=&quot;yearly&quot;]:checked)) .yearly,&#10;	.plans:has([value=&quot;yearly&quot;]:checked) .monthly { display: none; }&#10;&lt;/style&gt;&#10;&lt;section class=&quot;plans stack&quot; data-gap=&quot;md&quot;&gt;&#10;	&lt;fieldset&gt;&#10;		&lt;legend&gt;Billing&lt;/legend&gt;&#10;		&lt;div class=&quot;buttons&quot; data-affix&gt;&#10;			&lt;label class=&quot;button&quot; data-emphasis=&quot;medium&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;billing&quot; value=&quot;monthly&quot; checked&gt; Monthly&lt;/label&gt;&#10;			&lt;label class=&quot;button&quot; data-emphasis=&quot;medium&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;billing&quot; value=&quot;yearly&quot;&gt; Yearly&lt;/label&gt;&#10;		&lt;/div&gt;&#10;	&lt;/fieldset&gt;&#10;	&lt;p&gt;Walker: &lt;span class=&quot;monthly&quot;&gt;£3 a month&lt;/span&gt;&lt;span class=&quot;yearly&quot;&gt;£30 a year&lt;/span&gt;&lt;/p&gt;&#10;&lt;/section&gt;"></iframe></div>
+
+<details markdown="1">
+<summary>View Code</summary>
+
+```html
+<style>
+	.plans:not(:has([value="yearly"]:checked)) .yearly,
+	.plans:has([value="yearly"]:checked) .monthly { display: none; }
+</style>
+<section class="plans stack" data-gap="md">
+	<fieldset>
+		<legend>Billing</legend>
+		<div class="buttons" data-affix>
+			<label class="button" data-emphasis="medium"><input type="radio" name="billing" value="monthly" checked> Monthly</label>
+			<label class="button" data-emphasis="medium"><input type="radio" name="billing" value="yearly"> Yearly</label>
+		</div>
+	</fieldset>
+	<p>Walker: <span class="monthly">£3 a month</span><span class="yearly">£30 a year</span></p>
+</section>
+```
+
+</details>
+</figure>
+
+The ancestor is whichever element holds both, and the closer the better: a `:has()` on `body` works, and makes the browser look at the whole page every time anything inside it changes. The hidden alternative is `display: none`, so it is out of the accessibility tree as well as out of sight, and a screen reader reads only the price that applies. It does not announce the change as the radio moves, which is right for a price further down the page: the reader meets the new one when they get there.
+
+Yeti does not ship this as an attribute, a `data-when` naming a control's id and a `data-scope` naming the ancestor, because that would be wiring state between elements the framework knows nothing about: which control, which ancestor, which state of it, and which of its values. Every one of those is a question about your page, and the rule above already answers all four in one line. An attribute would only move the same four answers into markup, where they are harder to read, and add a vocabulary to keep in step with them.
 
 ## Not hiding, but the same family
 
