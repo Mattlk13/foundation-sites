@@ -53,6 +53,15 @@ const watching = new WeakSet();
 // it again for no reason.
 const paused = new WeakSet();
 document.addEventListener('animationstart', (event) => {
+	// data-view wins where a scroll timeline exists: that animation is
+	// already scroll-linked, entirely CSS's own doing, and pausing it here
+	// would only get in the way — currentTime below is a plain time value,
+	// and assigning one to a progress-based animation throws in Chromium and
+	// WebKit, before observe() ever runs, stranding it paused partway.
+	// data-once still covers the fallback: where view() is unsupported, or
+	// the reader has asked for less motion, the animation never leaves the
+	// document timeline and everything below applies as normal.
+	if (event.animation.timeline !== document.timeline) return;
 	const el = event.target.closest('.enter[data-once]');
 	if (!el) return;
 	if (released.has(el) || paused.has(event.animation)) return;

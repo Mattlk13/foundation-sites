@@ -179,6 +179,31 @@ test.describe('enter', () => {
 		expect(opacities).toEqual(Array(9).fill('1'));
 	});
 
+	test('data-once defers to data-view where a scroll timeline exists, and still arrives through the fallback', async ({ page }) => {
+		const errors = [];
+		page.on('pageerror', (e) => errors.push(e.message));
+		await open(page);
+		expect((await rect(page, '#view-once')).top).toBeGreaterThan(page.viewportSize().height);
+		// A single scrollIntoView() jump lands past the crossing in one frame,
+		// with the element already plainly on screen by the time
+		// 'animationstart' fires, which never exercises the bug: a gradual
+		// scroll, one small step and a frame at a time, is what actually
+		// catches the animation mid-crossing, the way a reader's own scroll
+		// would.
+		const top = await page.evaluate(() => window.scrollY + document.getElementById('view-once').getBoundingClientRect().top);
+		for (let offset = -350; offset <= 400; offset += 10) {
+			await page.evaluate((y) => window.scrollTo(0, Math.max(0, y)), top - page.viewportSize().height + offset);
+			await settled(page);
+		}
+		await painted(page);
+		// Whichever path drove it there — data-view's own scroll timeline
+		// where it exists, data-once's pause-and-play where it does not —
+		// the element must actually arrive, not strand paused partway, and
+		// must never throw doing it.
+		expect(errors).toEqual([]);
+		expect(Number(await style(page, '#view-once', 'opacity'))).toBeGreaterThan(0.99);
+	});
+
 	test('without the module, data-once arrives on load like any other .enter', async ({ page }) => {
 		await withoutModule(page, 'enter');
 		await open(page);

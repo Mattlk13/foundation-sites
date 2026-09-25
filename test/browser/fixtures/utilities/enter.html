@@ -8,7 +8,7 @@
 	<script type="module" src="../../../../src/utilities/enter/enter.js"></script>
 	<style>
 		#stage { inline-size: 100%; }
-		#spacer, #once-spacer, #once-stagger-spacer { block-size: 120vh; }
+		#spacer, #once-spacer, #once-stagger-spacer, #view-once-spacer { block-size: 120vh; }
 	</style>
 </head>
 <body>
@@ -58,6 +58,9 @@
 					<li class="card" id="os8"><p>Eight</p></li>
 					<li class="card" id="os9"><p>Nine</p></li>
 				</ul>
+
+				<div id="view-once-spacer"></div>
+				<p class="enter" id="view-once" data-enter="rise" data-view data-once>Waits for the viewport where a scroll timeline exists, once.</p>
 			</div>
 		</div>
 	</main>
