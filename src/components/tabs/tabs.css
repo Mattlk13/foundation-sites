@@ -26,7 +26,11 @@
 		font: inherit;
 		font-weight: var(--yeti-weight-strong);
 		cursor: pointer;
-		transition: color var(--yeti-duration-fast) var(--yeti-ease), border-color var(--yeti-duration-fast) var(--yeti-ease);
+		/* background-color is here too so a filled tab's fill and its text
+		   change together; left out, the background used to snap in at once
+		   while the text color faded, flashing the on-variant text over the
+		   old background for a frame. */
+		transition: color var(--yeti-duration-fast) var(--yeti-ease), background-color var(--yeti-duration-fast) var(--yeti-ease), border-color var(--yeti-duration-fast) var(--yeti-ease);
 	}
 	.tabs [role="tab"]:hover { background-color: var(--_yeti-variant-subtle); }
 	.tabs [role="tab"][aria-selected="true"] {

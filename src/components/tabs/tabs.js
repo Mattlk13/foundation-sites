@@ -38,8 +38,12 @@ for (const root of document.querySelectorAll('.tabs')) {
 // inside a hidden panel. Opening that panel's tab is what makes the target
 // reachable at all; a reader who did not touch the tabs did not ask to be
 // moved, so this selects and reveals without taking focus the way choose()
-// does for an actual tab activation.
-function reveal() {
+// does for an actual tab activation. `instant` is true only for the pass at
+// load: the page has not been seen yet, so landing on the target should be
+// immediate, not a glide the reader watches happen to a page they have not
+// looked at; a later hashchange, from a link they just clicked, keeps the
+// page's own scroll behavior.
+function reveal(instant) {
 	const hash = location.hash;
 	if (!hash) return;
 	let id;
@@ -63,11 +67,11 @@ function reveal() {
 		composed: true,
 		detail: { tab, panel: document.getElementById(tab.getAttribute('aria-controls')) },
 	}));
-	target.scrollIntoView();
+	target.scrollIntoView(instant ? { behavior: 'instant' } : undefined);
 }
 
-reveal();
-window.addEventListener('hashchange', reveal);
+reveal(true);
+window.addEventListener('hashchange', () => reveal(false));
 
 document.addEventListener('click', (event) => {
 	// The page's own listener ran first and asked for nothing to happen.

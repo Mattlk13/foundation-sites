@@ -157,6 +157,28 @@ test.describe('tabs', () => {
 		expect(await hidden(page, 'p2')).toBe(false);
 	});
 
+	test('the filled tab\'s background transitions along with its text', async ({ page }) => {
+		await open(page);
+		const properties = (await style(page, '#f1', 'transition-property')).split(',').map((p) => p.trim());
+		expect(properties).toContain('background-color');
+	});
+
+	test('the initial reveal jumps to the target; a later one may glide', async ({ page }) => {
+		await page.addInitScript(() => {
+			window.__scrollCalls = [];
+			const original = Element.prototype.scrollIntoView;
+			Element.prototype.scrollIntoView = function patched(options) {
+				window.__scrollCalls.push(options ?? null);
+				return original.call(this, options);
+			};
+		});
+		await open(page, 1000, '#deep');
+		expect(await page.evaluate(() => window.__scrollCalls)).toEqual([{ behavior: 'instant' }]);
+		await page.evaluate(() => { window.__scrollCalls.length = 0; location.hash = '#deep3'; });
+		await page.waitForFunction(() => document.getElementById('t3').getAttribute('aria-selected') === 'true');
+		expect(await page.evaluate(() => window.__scrollCalls)).toEqual([null]);
+	});
+
 	test('a link into a hidden panel opens its tab without moving focus to it', async ({ page }) => {
 		await open(page);
 		expect(await selected(page, 't1')).toBe('true');
