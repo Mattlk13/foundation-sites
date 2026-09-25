@@ -4,7 +4,7 @@ Two or more buttons that belong together: a form's submit and cancel, a set of v
 
 ## How it works
 
-Loose is a wrapping flex row at `data-gap`. `data-affix` removes the gap, squares the inner corners, and overlaps each border with the next so the seam is one line wide. A focused member is lifted above its neighbours so its focus ring is not covered.
+Loose is a wrapping flex row at `data-gap`. `data-affix` removes the gap, squares the inner corners, and overlaps each border with the next so the seam is one line wide. A focused member is lifted above its neighbours so its focus ring is not covered. An affixed group is one control, so it never wraps onto a second row: short of room, its members narrow and their labels wrap inside them.
 
 ```html
 <div class="buttons" role="group" aria-label="Form actions">

@@ -217,6 +217,7 @@ Attributes:
 - data-ratio: 1/1 (default) | 4/3 | 3/2 | 16/9 | 21/9 — The figure's aspect ratio.
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the figure and the text.
 - data-align: start | center | end | stretch (default) | baseline — Vertical alignment of figure and text when side by side.
+- data-max: 2xs | xs | sm | md | lg | xl | 2xl — The widest the text may run side by side; the figure takes the rest of a wide row. data-width still sets where the two stack.
 - data-side: start | end — Put the figure at the start or the end while side by side, regardless of source order. Stacked, the source order holds.
 
 ## shell (recipe, class="shell")

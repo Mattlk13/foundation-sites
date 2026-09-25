@@ -63,6 +63,16 @@ test.describe('buttons', () => {
 		expect(await style(page, '#s2', 'z-index')).toBe('1');
 	});
 
+	test('an affixed group short of room stays one row, its labels wrapping inside', async ({ page }) => {
+		await open(page, 1000);
+		// Narrower than the labels need on one line, so a wrapping row would break.
+		const [first, last] = await Promise.all([rect(page, '#s1'), rect(page, '#s3')]);
+		await page.evaluate((w) => { document.querySelector('#segmented').style.inlineSize = `${w}px`; }, Math.round((last.right - first.left) * 0.8));
+		const [a, b, c] = await Promise.all([rect(page, '#s1'), rect(page, '#s2'), rect(page, '#s3')]);
+		expect(Math.round(b.top)).toBe(Math.round(a.top));
+		expect(Math.round(c.top)).toBe(Math.round(a.top));
+	});
+
 	test('has no accessibility violations', async ({ page }) => {
 		await open(page);
 		expect(await axe(page)).toEqual([]);

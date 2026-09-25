@@ -893,11 +893,14 @@ Attributes:
 - data-ratio: 1/1 (default) | 4/3 | 3/2 | 16/9 | 21/9 — The figure's aspect ratio.
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the figure and the text.
 - data-align: start | center | end | stretch (default) | baseline — Vertical alignment of figure and text when side by side.
+- data-max: 2xs | xs | sm | md | lg | xl | 2xl — The widest the text may run side by side; the figure takes the rest of a wide row. data-width still sets where the two stack.
 - data-side: start | end — Put the figure at the start or the end while side by side, regardless of source order. Stacked, the source order holds.
 
 ### When to use it
 
 A comment with an avatar, a product with its thumbnail, a speaker with a headshot: whenever a picture sits beside a few lines of text, this is the shape. It stays side by side while the text keeps at least half the width and stacks when it cannot. Put the picture first for picture-left, last for picture-right; the reading order follows. The body must not have an img, video, or picture as a direct child (it would be taken for a second figure).
+
+`data-width` is the figure's width, and so where the two stack: a smaller figure holds the row down to a narrower window. On a wide row that leaves the text running long, so `data-max` caps the text from the width scale and the figure takes the rest. `<article class="media" data-width="sm" data-max="md">` stays side by side down to a phone and still keeps a reading measure at full width. The text's half of the row wins over the cap.
 
 ### Built from primitives
 
@@ -1357,7 +1360,7 @@ Two or more buttons that belong together: a form's submit and cancel, a set of v
 
 ### How it works
 
-Loose is a wrapping flex row at `data-gap`. `data-affix` removes the gap, squares the inner corners, and overlaps each border with the next so the seam is one line wide. A focused member is lifted above its neighbours so its focus ring is not covered.
+Loose is a wrapping flex row at `data-gap`. `data-affix` removes the gap, squares the inner corners, and overlaps each border with the next so the seam is one line wide. A focused member is lifted above its neighbours so its focus ring is not covered. An affixed group is one control, so it never wraps onto a second row: short of room, its members narrow and their labels wrap inside them.
 
 ```html
 <div class="buttons" role="group" aria-label="Form actions">
