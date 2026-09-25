@@ -4,7 +4,7 @@ A few words about a control whose purpose is not obvious from its face, most oft
 
 ## How it works
 
-The component wraps a trigger and a bubble. The bubble is hidden until the trigger is hovered or focused, which is why it needs no script: `:hover` and `:focus-within` on the wrapper do the whole job. It is deliberately not a `popover`, because nothing but script can open one of those, and a script is exactly what this component should not need.
+The component wraps a trigger and a bubble. The bubble is hidden until the trigger is hovered or reached by keyboard, which is why it needs no script: `:hover` and `:has(:focus-visible)` on the wrapper do the whole job. A click leaves the trigger focused too, but that focus is not the kind `:focus-visible` shows, so a mouse click opens nothing; only Tabbing to the trigger does. It is deliberately not a `popover`, because nothing but script can open one of those, and a script is exactly what this component should not need.
 
 Where anchor positioning exists the bubble is fixed and anchored to the trigger, so a scrolling ancestor cannot clip it, and `data-placement` moves it to any of the four sides. Where it is missing the bubble falls back to absolute positioning above the trigger, which is fine until it sits inside something that scrolls.
 
