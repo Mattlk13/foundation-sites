@@ -97,7 +97,7 @@ function limits(box) {
 
 function grip(figure) {
 	const box = figure.querySelector(':scope > [data-preview]');
-	if (!box || box.nextElementSibling?.matches('[role="separator"]')) return;
+	if (!box || figure.querySelector(':scope > [role="separator"]')) return;
 	const handle = document.createElement('div');
 	handle.setAttribute('role', 'separator');
 	handle.setAttribute('aria-orientation', 'vertical');
@@ -105,6 +105,7 @@ function grip(figure) {
 	handle.tabIndex = 0;
 	box.after(handle);
 	let bounds = limits(box);
+	const rtl = () => getComputedStyle(box).direction === 'rtl';
 	// The values in pixels, and the box's outer edge for the stylesheet to
 	// put the grip on, kept current however the box's size changes.
 	const update = () => {
@@ -113,13 +114,16 @@ function grip(figure) {
 		handle.setAttribute('aria-valuemax', Math.round(bounds.max));
 		handle.setAttribute('aria-valuenow', Math.round(now));
 		handle.setAttribute('aria-valuetext', `${stopName(now, stops())}, ${Math.round(now)} pixels`);
-		handle.style.setProperty('--_yeti-demo-edge', `${box.offsetWidth}px`);
+		// The box's end edge from the figure's inline start, and its middle
+		// from the figure's top; the figure is the grip's containing block.
+		const edge = rtl() ? figure.clientWidth - box.offsetLeft : box.offsetLeft + box.offsetWidth;
+		handle.style.setProperty('--_yeti-demo-edge', `${edge}px`);
+		handle.style.setProperty('--_yeti-demo-middle', `${box.offsetTop + box.offsetHeight / 2}px`);
 	};
 	const set = (px) => {
 		box.style.inlineSize = `${px}px`;
 		update();
 	};
-	const rtl = () => getComputedStyle(box).direction === 'rtl';
 	new ResizeObserver(update).observe(box);
 	// The container changing width moves the max.
 	new ResizeObserver(() => { bounds = limits(box); update(); }).observe(figure);
