@@ -11,6 +11,10 @@
 	.scroller > * {
 		margin: 0;
 		flex: 0 0 auto;
+		/* The reset caps media at their container's width, but in a scroller
+		   overflowing the track is the point; data-width sets a child's width
+		   when one is wanted. */
+		max-inline-size: none;
 	}
 	.scroller[data-width] > * { inline-size: var(--_yeti-width); }
 	.scroller[data-snap] { scroll-snap-type: x mandatory; }

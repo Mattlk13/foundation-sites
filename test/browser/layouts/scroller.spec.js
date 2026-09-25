@@ -38,6 +38,14 @@ test.describe('scroller', () => {
 		expect(await page.evaluate(() => document.activeElement.id)).toBe('scroller');
 	});
 
+	test('a scroller child is exempt from the media cap', async ({ page }) => {
+		await open(page, 'scroller', 400);
+		const width = (await rect(page, '#wide-svg')).width;
+		expect(width).toBeCloseTo(900, 0);
+		const overflow = await page.evaluate(() => { const el = document.getElementById('wide'); return el.scrollWidth > el.clientWidth; });
+		expect(overflow).toBe(true);
+	});
+
 	test('children have no margins', async ({ page }) => {
 		await open(page, 'scroller');
 		await expectNoChildMargins(page, '.scroller');
