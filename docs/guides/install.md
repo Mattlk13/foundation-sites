@@ -97,13 +97,19 @@ Four groups always stay, whatever you remove:
 
 Everything else stands alone: each layout, recipe, component and utility is one file, and removing it removes that part and nothing more. Where one part's file mentions another, it is for the two used together, a spinner inside a button or a dropdown inside a nav, and those rules simply match nothing once the other part is gone. Don't reorder the lines you keep: the layers settle which rules win between groups, but inside a group a later file still wins a tie.
 
-A list of `@import`s is one request per file, so bundle it before it ships. Any CSS bundler that follows `@import` does it; with esbuild:
+You can link `site.css` as it is, and it works: the browser follows each `@import` itself. That is fine while you are trying things, but it is one request per file, so bundle the list into one file before it ships. You need Node, and one command, run from the folder `site.css` is in. With [Lightning CSS](https://lightningcss.dev):
+
+```sh
+npx lightningcss-cli --bundle --minify site.css -o site.min.css
+```
+
+Or with [esbuild](https://esbuild.github.io), if your project already has it:
 
 ```sh
 npx esbuild site.css --bundle --minify --outfile=site.min.css
 ```
 
-The bundle keeps Yeti's layers and its layer order, because they are written in the CSS itself. Scripts need no build: load only the modules for the components you kept, as [a module](#a-module) below describes.
+`npx` fetches the tool the first time and runs it; there is nothing to configure. Link `site.min.css` in place of `yeti.css`. Either bundle keeps Yeti's layers and their order, because they are written in the CSS itself, so a theme linked after it still lands where the [theming guide](theming.md) says. Scripts need no build: load only the modules for the components you kept, as [a module](#a-module) below describes.
 
 ## Bare HTML
 
