@@ -1023,3 +1023,54 @@ test('a module and its declared events agreeing is silent', () => {
 	}));
 	assert.deepEqual(r.lines, []);
 });
+
+const warned = (files) => {
+	const root = makeTree(files);
+	const r = validate({ root });
+	return { root, errors: r.errors.map((e) => formatError(root, e)), warnings: (r.warnings ?? []).map((w) => formatError(root, w)) };
+};
+
+test('data-show with no size container above it is a warning, not an error', () => {
+	const r = warned(example('<div class="rail">\n<div class="box"><p data-show="md">x</p></div></div>\n'));
+	assert.deepEqual(r.errors, []);
+	assert.deepEqual(r.warnings, ['src/layouts/rail/example.html:2: data-show on <p> has no size container above it to measure, so it never changes; put it inside a container']);
+});
+
+test('data-hide inside a container, or any known size container, is silent', () => {
+	for (const html of [
+		'<div class="rail"><div class="container"><div class="box"><p data-hide="md">x</p></div></div></div>',
+		'<div class="rail"><nav class="nav"><a data-show="md" href="#">x</a></nav></div>',
+		'<div class="rail"><div class="grid" data-fold><p data-show="md">x</p></div></div>',
+		'<div class="rail"><div class="grid" data-tracks="12"><p data-show="md">x</p></div></div>',
+		'<div class="rail"><div class="cluster" data-threshold="sm"><p data-show="md">x</p></div></div>',
+		'<div class="rail"><div class="breakout"><p data-note>n</p><p data-show="md">x</p></div></div>',
+		'<div class="rail"><article class="card"><img src="a.png" alt=""><p data-show="md">x</p></article></div>',
+		'<div class="rail"><div style="container-type: inline-size"><p data-show="md">x</p></div></div>',
+		'<div class="rail"><div class="demo"><div data-preview><p data-show="md">x</p></div></div></div>',
+	]) {
+		assert.deepEqual(warned(example(html)).warnings, [], html);
+	}
+});
+
+test('a card without leading media and a breakout without a note are not containers', () => {
+	const r = warned(example('<div class="rail"><article class="card"><h2>t</h2><p data-show="md">x</p></article><div class="breakout"><p data-hide="md">y</p></div></div>'));
+	assert.equal(r.warnings.length, 2);
+});
+
+test('the warning covers fixtures, guide demos and the starter', () => {
+	const r = warned(validTree({
+		'test/browser/fixtures/layouts/loose.html': '<!doctype html><html lang="en"><head><title>x</title></head><body><p data-show="md">x</p></body></html>\n',
+		'src/guides/visibility.md': '# V\n\n```html\n<p data-hide="sm">x</p>\n```\n',
+		'src/starter/index.html': '<!doctype html><html lang="en"><head><title>x</title></head><body><p data-show="lg">x</p></body></html>\n',
+	}));
+	assert.deepEqual(r.warnings.map((w) => w.split(':')[0]).sort(), ['src/guides/visibility.md', 'src/starter/index.html', 'test/browser/fixtures/layouts/loose.html']);
+});
+
+test('validate prints the warning and still exits 0', async () => {
+	const { spawnSync } = await import('node:child_process');
+	const root = makeTree(example('<div class="rail"><p data-show="md">x</p></div>\n'));
+	const result = spawnSync(process.execPath, [path.join(REPO_ROOT, 'bin', 'validate.js')], { cwd: root, encoding: 'utf8' });
+	assert.equal(result.status, 0, result.stderr);
+	assert.match(result.stderr + result.stdout, /^warning: src\/layouts\/rail\/example\.html:1: data-show on <p>/m);
+	assert.match(result.stdout, /validate: ok/);
+});

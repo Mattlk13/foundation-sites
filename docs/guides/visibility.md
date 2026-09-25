@@ -173,6 +173,35 @@ By the space available, measured on the nearest size container rather than on th
 
 They need a size container above them and do nothing without one. [container](../container.md) is what makes a box into one, and lists which layouts already are.
 
+A table is not a size container, so a column that should drop on a phone needs one around the table. Wrap the region in a `container`, and mark the header cell and every body cell of that column with the same `data-show`:
+
+<figure class="demo" data-height="md" data-width="sm">
+<div data-preview="data-show and data-hide (2)"><iframe title="data-show and data-hide (2), live" srcdoc="&lt;base href=&quot;/yeti/&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/yeti/yeti.css&quot;&gt;&lt;script type=&quot;module&quot; src=&quot;/yeti/yeti.js&quot;&gt;&lt;/script&gt;&lt;script&gt;addEventListener(&quot;click&quot;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#39;a[href=&quot;#&quot;]&#39;);if(a)e.preventDefault();});&lt;/script&gt;&lt;body style=&quot;margin:0;padding:var(--yeti-space-md)&quot;&gt;&lt;div class=&quot;container&quot;&gt;&#10;	&lt;table class=&quot;table&quot;&gt;&#10;		&lt;caption&gt;Summits&lt;/caption&gt;&#10;		&lt;thead&gt;&#10;			&lt;tr&gt;&lt;th scope=&quot;col&quot;&gt;Peak&lt;/th&gt;&lt;th scope=&quot;col&quot; data-numeric&gt;Height (m)&lt;/th&gt;&lt;th scope=&quot;col&quot; data-show=&quot;sm&quot;&gt;Range&lt;/th&gt;&lt;/tr&gt;&#10;		&lt;/thead&gt;&#10;		&lt;tbody&gt;&#10;			&lt;tr&gt;&lt;td&gt;Ben Nevis&lt;/td&gt;&lt;td data-numeric&gt;1,345&lt;/td&gt;&lt;td data-show=&quot;sm&quot;&gt;Grampians&lt;/td&gt;&lt;/tr&gt;&#10;			&lt;tr&gt;&lt;td&gt;Snowdon&lt;/td&gt;&lt;td data-numeric&gt;1,085&lt;/td&gt;&lt;td data-show=&quot;sm&quot;&gt;Snowdonia&lt;/td&gt;&lt;/tr&gt;&#10;			&lt;tr&gt;&lt;td&gt;Scafell Pike&lt;/td&gt;&lt;td data-numeric&gt;978&lt;/td&gt;&lt;td data-show=&quot;sm&quot;&gt;Southern Fells&lt;/td&gt;&lt;/tr&gt;&#10;		&lt;/tbody&gt;&#10;	&lt;/table&gt;&#10;&lt;/div&gt;"></iframe></div>
+
+<details markdown="1">
+<summary>View Code</summary>
+
+```html
+<div class="container">
+	<table class="table">
+		<caption>Summits</caption>
+		<thead>
+			<tr><th scope="col">Peak</th><th scope="col" data-numeric>Height (m)</th><th scope="col" data-show="sm">Range</th></tr>
+		</thead>
+		<tbody>
+			<tr><td>Ben Nevis</td><td data-numeric>1,345</td><td data-show="sm">Grampians</td></tr>
+			<tr><td>Snowdon</td><td data-numeric>1,085</td><td data-show="sm">Snowdonia</td></tr>
+			<tr><td>Scafell Pike</td><td data-numeric>978</td><td data-show="sm">Southern Fells</td></tr>
+		</tbody>
+	</table>
+</div>
+```
+
+</details>
+</figure>
+
+`npm run validate` warns about a `data-show` or `data-hide` with no size container above it, since that element would never change.
+
 ### `print`
 
 By medium. `print` on its own is for paper and nowhere else; `print` with `data-print="none"` is for everywhere but paper.

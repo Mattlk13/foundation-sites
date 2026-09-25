@@ -3,12 +3,14 @@
 // and guide snippets against the manifests, component CSS against the
 // spacing-ownership rule, and the layer files against the layer contract.
 // Reports every problem it finds, then exits non-zero if there were any.
+// Warnings (markup that is legal but likely not what was meant) print too
+// and never change the exit code.
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { LAYER_STATEMENT } from './lib/layers.js';
 import { loadSchema, loadAndMerge, loadVocabulary } from './lib/manifest.js';
-import { parseHtml, walkElements, classList, attributes, countMatches } from './lib/html.js';
+import { parseHtml, walkElements, elementChildren, classList, attributes, countMatches } from './lib/html.js';
 import { stripComments, splitImports } from './lib/imports.js';
 import { walkFiles } from './lib/files.js';
 import { declaredTokens, loadCatalogue } from './lib/tokens.js';
@@ -615,6 +617,70 @@ export function validateModules(entries) {
 	return errors;
 }
 
+// A size container is what data-show and data-hide measure; with none above
+// them the query never matches and the element never changes. These are the
+// framework's own containers (their CSS sets container-type), plus any element
+// that sets one inline. Kept in step with the container-type rules in src/.
+const MEDIA_FIRST = new Set(['img', 'video', 'picture', 'figure']);
+function isSizeContainer(el) {
+	const classes = classList(el);
+	const attrs = attributes(el);
+	if (['container', 'nav', 'pagination', 'timeline', 'demo'].some((c) => classes.includes(c))) return true;
+	if (classes.includes('grid') && (attrs.has('data-fold') || attrs.has('data-tracks'))) return true;
+	if (classes.includes('cluster') && attrs.has('data-threshold')) return true;
+	if (classes.includes('breakout') && elementChildren(el).some((c) => attributes(c).has('data-note'))) return true;
+	if (classes.includes('card') && MEDIA_FIRST.has(elementChildren(el)[0]?.tagName)) {
+		// A card spanning a data-rows grid's rows is a subgrid, and its CSS
+		// turns containment off there.
+		const parent = el.parentNode;
+		const inRows = parent?.tagName && classList(parent).includes('grid') && attributes(parent).has('data-rows');
+		if (!inRows) return true;
+	}
+	return /(?:^|;)\s*container(?:-type)?\s*:[^;]*\b(?:inline-size|size)\b/.test(attrs.get('style') ?? '');
+}
+
+/**
+ * Warnings, not errors: an element with data-show or data-hide that has no
+ * size container above it. The markup is legal and harmless, but it never
+ * hides or shows, which is rarely what its author meant.
+ */
+export function findLooseVisibility(tree, file, lineOffset = 0) {
+	const warnings = [];
+	walkElements(tree, (el) => {
+		const attrs = attributes(el);
+		const name = ['data-show', 'data-hide'].find((n) => attrs.has(n));
+		if (!name) return;
+		for (let up = el.parentNode; up; up = up.parentNode) {
+			if (up.tagName && isSizeContainer(up)) return;
+		}
+		const line = el.sourceCodeLocation ? el.sourceCodeLocation.startLine + lineOffset : undefined;
+		warnings.push({ file, line, message: `${name} on <${el.tagName}> has no size container above it to measure, so it never changes; put it inside a container` });
+	});
+	return warnings;
+}
+
+/** Runs findLooseVisibility over examples, fixtures, guide and docs demos, and the starter. */
+export function validateVisibilityContainers(root, entries) {
+	const warnings = [];
+	const html = (file) => warnings.push(...findLooseVisibility(parseHtml(fs.readFileSync(file, 'utf8')), file));
+	const markdown = (file) => {
+		for (const block of extractHtmlBlocks(fs.readFileSync(file, 'utf8'))) warnings.push(...findLooseVisibility(parseHtml(block.html), file, block.line - 1));
+	};
+	for (const entry of entries) {
+		const example = path.join(entry.dir, 'example.html');
+		if (fs.existsSync(example)) html(example);
+		const docs = path.join(entry.dir, 'docs.md');
+		if (fs.existsSync(docs)) markdown(docs);
+	}
+	const guidesDir = path.join(root, 'src', 'guides');
+	if (fs.existsSync(guidesDir)) for (const file of walkFiles(guidesDir).filter((f) => f.endsWith('.md'))) markdown(file);
+	const fixturesDir = path.join(root, 'test', 'browser', 'fixtures');
+	if (fs.existsSync(fixturesDir)) for (const file of walkFiles(fixturesDir).filter((f) => f.endsWith('.html'))) html(file);
+	const starter = path.join(root, 'src', 'starter', 'index.html');
+	if (fs.existsSync(starter)) html(starter);
+	return warnings;
+}
+
 const MAPPED = {
 	'data-gap': 'gap', 'data-align': 'align', 'data-justify': 'justify', 'data-threshold': 'width',
 	'data-width': 'width', 'data-height': 'height', 'data-min': 'width-or-none', 'data-max': 'width', 'data-ratio': 'ratio', 'data-columns': 'columns',
@@ -726,13 +792,16 @@ export function validate({ root }) {
 		...validateThemes(root),
 		...validateThemeLayerUse(srcDir),
 	];
-	return { errors: all, count: Object.keys(merged).length };
+	const warnings = validateVisibilityContainers(root, entries);
+	return { errors: all, warnings, count: Object.keys(merged).length };
 }
 
 const isMain = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
 if (isMain) {
 	const root = process.cwd();
-	const { errors, count } = validate({ root });
+	const { errors, warnings, count } = validate({ root });
+	// Warnings print and never change the exit code.
+	for (const w of warnings) console.error(`warning: ${formatError(root, w)}`);
 	for (const e of errors) console.error(formatError(root, e));
 	if (errors.length) {
 		console.error(`validate: ${errors.length} problem${errors.length === 1 ? '' : 's'}`);
