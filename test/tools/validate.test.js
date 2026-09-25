@@ -668,6 +668,11 @@ test('validateThemes accepts Yeti\'s layer order repeated first in the file, and
 	assert.deepEqual(run(elementThemeTree(`:root { --yeti-radius-md: 0; }\n${LAYER_STATEMENT}\n`)).lines, [`src/themes/round.css:2: ${refused(LAYER_STATEMENT)}`]);
 });
 
+test('validateThemes sees a rule hidden between comment markers inside strings', () => {
+	const theme = '@layer yeti.theme {\n\tq { quotes: "/*" "x"; }\n}\n.card { color: red; }\n@layer yeti.theme {\n\tq { quotes: "*/" "x"; }\n}\n';
+	assert.deepEqual(run(elementThemeTree(theme)).lines, ['src/themes/round.css:4: themes may only set --yeti-* tokens on :root (found ".card")']);
+});
+
 const markerTree = (example) => layoutTree({
 	'src/layouts/rail/manifest.json': validManifest({
 		markers: [
