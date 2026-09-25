@@ -46,6 +46,20 @@ test.describe('scroller', () => {
 		expect(overflow).toBe(true);
 	});
 
+	test('a positioned child stays inside the track', async ({ page }) => {
+		await page.setViewportSize({ width: 390, height: 800 });
+		await open(page, 'scroller', 390);
+		expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(await page.evaluate(() => window.innerWidth));
+		// A child bound to the track's own scrolling area moves with it; one
+		// still positioned against the page would stay put while the track
+		// scrolled away beneath it, landing outside the track's box.
+		await page.evaluate(() => { const el = document.getElementById('hidden-head'); el.scrollLeft = el.scrollWidth; });
+		const track = await rect(page, '#hidden-head');
+		const span = await page.evaluate(() => document.querySelector('#hidden-head .visually-hidden').getBoundingClientRect().toJSON());
+		expect(span.left).toBeGreaterThanOrEqual(track.left - 1);
+		expect(span.right).toBeLessThanOrEqual(track.right + 1);
+	});
+
 	test('children have no margins', async ({ page }) => {
 		await open(page, 'scroller');
 		await expectNoChildMargins(page, '.scroller');
