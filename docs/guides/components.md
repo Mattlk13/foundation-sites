@@ -36,6 +36,7 @@ Those three are the ones that repeat. Here is the whole list, every attribute th
 | `data-dots` | boolean | carousel (> *) |
 | `data-edge` | `top`, `bottom`, `both` | seam |
 | `data-emphasis` | `high`, `medium`, `low` | alert, badge, button |
+| `data-emphasis` | `high` | tabs |
 | `data-enter` | `fade`, `rise`, `fall`, `slide`, `scale` | enter |
 | `data-error` | boolean | field (> *) |
 | `data-fit` | `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `xs-display`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `sm-display`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `md-display`, `lg-xl`, `lg-2xl`, `lg-3xl`, `lg-display`, `xl-2xl`, `xl-3xl`, `xl-display`, `2xl-3xl`, `2xl-display`, `3xl-display` | billboard |
@@ -48,6 +49,7 @@ Those three are the ones that repeat. Here is the whole list, every attribute th
 | `data-justify` | `start`, `center`, `end`, `between`, `around`, `evenly` | pagination |
 | `data-lift` | `rise`, `scale` | lift |
 | `data-max` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | dialog |
+| `data-nowrap` | boolean | table, table (th, td) |
 | `data-numbered` | boolean | toc |
 | `data-numeric` | boolean | table (*) |
 | `data-orientation` | `horizontal`, `vertical` | tabs |

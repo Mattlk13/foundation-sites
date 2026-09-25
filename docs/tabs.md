@@ -45,7 +45,18 @@ Alternative views of one thing: a profile and its billing, a chart and its table
 
 A tab list of buttons over their panels. The CSS styles the list and marks the selected tab with the hue on its edge, and it never hides a panel. That is deliberate: a page that does not load `tabs.js`, or where the script fails, shows every panel under its own tab, so nothing a reader came for is locked away.
 
-Load the module and it pairs every tab with the panel its `aria-controls` names, shows one, hides the rest, and takes over the keyboard: arrows move selection, Home and End jump to the ends, and only the selected tab is in the tab order, so Tab leaves the list rather than walking it.
+Load the module and it pairs every tab with the panel its `aria-controls` names, shows one, hides the rest, and takes over the keyboard: arrows move selection, Home and End jump to the ends, and only the selected tab is in the tab order, so Tab leaves the list rather than walking it. A link into a hidden panel opens its tab: on load and on every `hashchange` the module looks for the URL's fragment inside a panel and, if it finds one, selects that panel's tab and brings the target into view, without moving keyboard focus to the tab. `data-emphasis="high"` fills the selected tab with the variant instead of underlining it, its top corners (or, in a vertical list, the corners away from the divider) rounded like any other filled control.
+
+```html
+<div class="tabs" data-emphasis="high">
+	<div role="tablist" aria-label="Report">
+		<button type="button" role="tab" id="t-summary" aria-controls="p-summary" aria-selected="true">Summary</button>
+		<button type="button" role="tab" id="t-detail" aria-controls="p-detail">Detail</button>
+	</div>
+	<section role="tabpanel" id="p-summary" aria-labelledby="t-summary"><p>Summary panel.</p></section>
+	<section role="tabpanel" id="p-detail" aria-labelledby="t-detail" hidden><p>Detail panel.</p></section>
+</div>
+```
 
 ```html
 <div class="tabs" data-orientation="vertical">
@@ -71,6 +82,7 @@ Name the tablist, since a page may have more than one. Each tab's `aria-controls
 | `data-variant` | enum | `primary`, `secondary`, `success`, `warning`, `alert`, `danger`, `neutral`, `black`, `white` | `primary` | The hue of the selected tab and its edge. |
 | `data-orientation` | enum | `horizontal`, `vertical` | `horizontal` | Whether the tab list runs along the top or down the side. |
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `md` | Space between the list and the panels. |
+| `data-emphasis` | enum | `high` |  | The selected tab is filled with the variant; without it the selected tab is underlined. |
 
 </div>
 
@@ -100,6 +112,7 @@ Name the tablist, since a page may have more than one. Each tab's `aria-controls
 | `--yeti-weight-strong` | Weight of a tab's label. |
 | `--yeti-duration-fast` | How long a tab takes to change color. |
 | `--yeti-ease` | The curve of that transition. |
+| `--yeti-radius-sm` | Corner radius of the selected tab with data-emphasis="high". |
 
 </div>
 
@@ -145,7 +158,7 @@ Each event bubbles, crosses a shadow boundary, and cannot be cancelled.
 
 | Event | Module | Detail | Description |
 | --- | --- | --- | --- |
-| `yeti:select` | `tabs.js` | `{ tab, panel }` | Dispatched on the .tabs when a click or an arrow key selects a tab; never for the pass at load. |
+| `yeti:select` | `tabs.js` | `{ tab, panel }` | Dispatched on the .tabs when a click, an arrow key, or a hash reveal selects a tab; never for the pass at load that finds no hash to reveal. |
 
 </div>
 

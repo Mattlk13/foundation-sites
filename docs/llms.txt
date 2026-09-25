@@ -423,9 +423,11 @@ Attributes:
 - data-striped (boolean) — Tint every other body row.
 - data-hover (boolean) — Tint the row under the pointer.
 - data-border (boolean) — Borders around every cell instead of lines between rows, as a box draws its border.
+- data-nowrap (boolean) — Every cell keeps its line; put the table in a scroller.
 
 On children:
 - data-numeric on * (boolean) — Tabular figures, so digits line up, on any element; on a table's cells and headers the column is end-aligned too.
+- data-nowrap on th, td (boolean) — This cell keeps its line.
 
 ## tabs (component, class="tabs")
 
@@ -435,9 +437,10 @@ Attributes:
 - data-variant: primary (default) | secondary | success | warning | alert | danger | neutral | black | white — The hue of the selected tab and its edge.
 - data-orientation: horizontal (default) | vertical — Whether the tab list runs along the top or down the side.
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between the list and the panels.
+- data-emphasis: high — The selected tab is filled with the variant; without it the selected tab is underlined.
 
 module: tabs.js (optional)
-- event yeti:select with detail { tab, panel } — Dispatched on the .tabs when a click or an arrow key selects a tab; never for the pass at load.
+- event yeti:select with detail { tab, panel } — Dispatched on the .tabs when a click, an arrow key, or a hash reveal selects a tab; never for the pass at load that finds no hash to reveal.
 
 ## toc (component, class="toc")
 

@@ -23,7 +23,11 @@
 			<table class="table" id="gridded" data-border data-size="sm">
 				<caption>Compact</caption>
 				<thead><tr><th scope="col" id="g-head">Head</th><th scope="col">Head</th></tr></thead>
-				<tbody><tr><td id="g1">A</td><td>B</td></tr></tbody>
+				<tbody><tr><td id="g1" data-nowrap>A</td><td id="g2">B</td></tr></tbody>
+			</table>
+			<table class="table" id="kept" data-nowrap>
+				<caption>Kept</caption>
+				<tbody><tr><td id="kept-cell">A single long line of text that would otherwise wrap onto more than one line inside a narrow table cell.</td></tr></tbody>
 			</table>
 			<div class="scroller" id="wide" role="region" aria-label="Wide table" tabindex="0">
 				<table class="table" id="widetable" style="min-inline-size: 900px">

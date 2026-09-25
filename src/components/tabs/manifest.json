@@ -8,7 +8,8 @@
   "attributes": [
     { "name": "data-variant", "type": "enum", "vocabulary": "variant", "default": "primary", "description": "The hue of the selected tab and its edge." },
     { "name": "data-orientation", "type": "enum", "vocabulary": "orientation", "default": "horizontal", "description": "Whether the tab list runs along the top or down the side." },
-    { "name": "data-gap", "type": "enum", "vocabulary": "gap", "default": "md", "description": "Space between the list and the panels." }
+    { "name": "data-gap", "type": "enum", "vocabulary": "gap", "default": "md", "description": "Space between the list and the panels." },
+    { "name": "data-emphasis", "type": "enum", "values": ["high"], "description": "The selected tab is filled with the variant; without it the selected tab is underlined." }
   ],
   "classes": [],
   "children": [
@@ -31,6 +32,7 @@
     { "name": "--yeti-weight-strong", "public": true, "description": "Weight of a tab's label." },
     { "name": "--yeti-duration-fast", "public": true, "description": "How long a tab takes to change color." },
     { "name": "--yeti-ease", "public": true, "description": "The curve of that transition." },
+    { "name": "--yeti-radius-sm", "public": true, "description": "Corner radius of the selected tab with data-emphasis=\"high\"." },
     { "name": "--_yeti-variant", "public": false },
     { "name": "--_yeti-variant-subtle", "public": false },
     { "name": "--_yeti-variant-text", "public": false },
@@ -50,7 +52,7 @@
     "notes": "Give the tablist a name with aria-label or aria-labelledby. Every tab is a button whose aria-controls names its panel, and every panel names its tab back with aria-labelledby; that pairing is what the module reads. With tabs.js loaded one tab is selected, the rest take tabindex=\"-1\" for a roving focus, and the inactive panels are hidden. Without it nothing is hidden and every tab is focusable, which is plainer but never traps content."
   },
   "js": [{ "module": "tabs.js", "optional": true, "events": [
-    { "name": "yeti:select", "detail": "{ tab, panel }", "description": "Dispatched on the .tabs when a click or an arrow key selects a tab; never for the pass at load." }
+    { "name": "yeti:select", "detail": "{ tab, panel }", "description": "Dispatched on the .tabs when a click, an arrow key, or a hash reveal selects a tab; never for the pass at load that finds no hash to reveal." }
   ] }],
   "support": { "unguarded": ["logical properties"], "guarded": [] },
   "since": "7.0.0",
