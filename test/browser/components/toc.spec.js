@@ -9,6 +9,20 @@ const open = async (page, width = 1000) => {
 const current = (page) => page.evaluate(() => document.querySelector('.toc a[aria-current]')?.id ?? null);
 
 test.describe('toc', () => {
+	test('a numbered title that wraps lines up under its first word, not under the number', async ({ page }) => {
+		await open(page);
+		const [first, last, number] = await page.evaluate(() => {
+			const a = document.querySelector('#n-long');
+			const range = document.createRange();
+			range.selectNodeContents(a.lastChild);
+			const lines = [...range.getClientRects()];
+			const before = getComputedStyle(a, '::before');
+			return [lines[0].left, lines.at(-1).left, lines.length > 1 ? a.getBoundingClientRect().left + parseFloat(getComputedStyle(a).paddingLeft) - parseFloat(before.minWidth) - parseFloat(before.marginRight) : null];
+		});
+		expect(number).not.toBeNull();
+		expect(Math.round(last)).toBe(Math.round(first));
+	});
+
 	test('the heading in view at the top of the page is the current link', async ({ page }) => {
 		await open(page);
 		await expect.poll(() => current(page)).toBe('link-one');
@@ -106,9 +120,9 @@ test.describe('toc', () => {
 		const offset = (id) => page.evaluate((i) => { const a = document.getElementById(i); const r = document.createRange(); r.selectNodeContents(a); return r.getBoundingClientRect().left - a.getBoundingClientRect().left; }, id);
 		// The link text starts after the number's box; a plain toc's text starts at its padding.
 		expect(await offset('n-two')).toBeGreaterThan((await offset('link-two')) + 8);
-		// The number's box is 3ch in the link's own font: room for a two-figure count or a nested 2.1.
-		const threeCh = await page.evaluate(() => { const p = document.createElement('span'); p.style.cssText = 'display: inline-block; inline-size: 3ch'; document.getElementById('n-two').append(p); const w = p.getBoundingClientRect().width; p.remove(); return w; });
-		expect((await before('n-two')).width).toBeCloseTo(threeCh, 1);
+		// The number's box is 4ch in the link's own font: room for a two-figure count or a nested 2.1.
+		const fourCh = await page.evaluate(() => { const p = document.createElement('span'); p.style.cssText = 'display: inline-block; inline-size: 4ch'; document.getElementById('n-two').append(p); const w = p.getBoundingClientRect().width; p.remove(); return w; });
+		expect((await before('n-two')).width).toBeCloseTo(fourCh, 1);
 		// The number box fits a nested count, so nested text lines up with its parent's.
 		expect(await offset('n-two-one')).toBeCloseTo(await offset('n-two'), 0);
 		const muted = await page.evaluate(() => { const p = document.createElement('span'); p.style.color = 'var(--yeti-color-text-muted)'; document.body.append(p); const v = getComputedStyle(p).color; p.remove(); return v; });

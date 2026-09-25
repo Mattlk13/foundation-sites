@@ -64,11 +64,20 @@
 	   a list of links, and the digits are for the eye. */
 	.toc[data-numbered] ul { counter-reset: toc; }
 	.toc[data-numbered] li { counter-increment: toc; }
+	/* The number hangs: the link is padded by its width and the first line
+	   pulled back by the same, so a title that wraps lines up under its own
+	   first word, not under the number. A hanging indent rather than a flex
+	   row, so a link holding code or emphasis stays one run of text. */
+	.toc[data-numbered] a {
+		padding-inline-start: calc(var(--_yeti-size-space) + 4ch + var(--yeti-space-xs));
+		text-indent: calc(-4ch - var(--yeti-space-xs));
+	}
 	.toc[data-numbered] a::before {
 		content: counters(toc, ".") "." / "";
 		display: inline-block;
-		min-inline-size: 3ch;
+		min-inline-size: 4ch;
 		margin-inline-end: var(--yeti-space-xs);
+		text-indent: 0;
 		color: var(--yeti-color-text-muted);
 		font-variant-numeric: tabular-nums;
 	}
