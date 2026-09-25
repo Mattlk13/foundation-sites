@@ -69,14 +69,7 @@ function isInView(rect, viewportHeight) {
 const released = new WeakSet();
 const once = new IntersectionObserver((entries) => {
 	for (const entry of entries) {
-		// intersectionRatio is of the TARGET's own area, so an element far
-		// taller than the viewport — a long exhibit, a tall hero — can never
-		// show 15% of itself and would never cross a single 0.15 threshold at
-		// all. Asking instead whether the visible slice already fills 15% of
-		// the viewport catches exactly that element the moment it covers the
-		// screen, whatever fraction of its own height that slice is.
-		const enough = entry.intersectionRatio >= 0.15 || (entry.rootBounds && entry.intersectionRect.height >= entry.rootBounds.height * 0.15);
-		if (!enough) continue;
+		if (!entry.isIntersecting) continue;
 		for (const animation of entry.target.getAnimations({ subtree: true })) animation.play();
 		// Released, not just unobserved: pinning currentTime back to 0 below
 		// can put a delayed child before its own delay again, so playing it
@@ -89,11 +82,13 @@ const once = new IntersectionObserver((entries) => {
 		released.add(entry.target);
 		once.unobserve(entry.target);
 	}
-	// 0, so the callback still fires as soon as a too-tall element crosses
-	// into view at all, for the intersectionRect-vs-viewport check above to
-	// catch; 0.15, so an ordinary element still needs to clear the same bar
-	// the comment above always asked for, not just graze the edge.
-}, { threshold: [0, 0.15] });
+	// rootMargin's bottom edge pulled 15% of the viewport inward makes
+	// isIntersecting turn true exactly when the element has come 15% of the
+	// viewport up from the bottom, whatever its own height — a one-line
+	// paragraph or an 800vh exhibit alike. An intersectionRatio, being of
+	// the target's own area, could never clear 0.15 for anything taller
+	// than the viewport itself.
+}, { rootMargin: '0px 0px -15% 0px', threshold: 0 });
 
 const watching = new WeakSet();
 // Paused once each: see shouldPause's alreadyPaused.
