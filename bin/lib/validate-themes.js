@@ -70,18 +70,27 @@ export function checkElementSelector(list) {
 	return problems;
 }
 
+/** Every file validateThemes checks: the shipped themes, and the starter theme a designer copies. */
+export function themeFiles(root) {
+	const themesDir = path.join(root, 'src', 'themes');
+	const starter = path.join(root, 'src', 'starter', 'theme.css');
+	return [
+		...(fs.existsSync(themesDir) ? walkFiles(themesDir).filter((f) => f.endsWith('.css')) : []),
+		...(fs.existsSync(starter) ? [starter] : []),
+	];
+}
+
 /** A theme is :root blocks of --yeti-* public tokens, outside any layer, plus bare element
  *  rules inside @layer yeti.theme (which may nest @media and @supports). Nothing else. */
-export function validateThemes(root) {
-	const themesDir = path.join(root, 'src', 'themes');
+export function validateThemes(root, files = themeFiles(root)) {
 	const catalogueFile = path.join(root, 'src', 'tokens', 'tokens.json');
-	if (!fs.existsSync(themesDir) || !fs.existsSync(catalogueFile)) return [];
+	if (!files.length || !fs.existsSync(catalogueFile)) return [];
 	const schema = loadSchema(path.join(root, 'schema', 'tokens.schema.json'));
 	const { entries } = loadCatalogue(catalogueFile, schema);
 	const publicNames = new Set(entries.filter((e) => e.public).map((e) => e.name));
 	const notThemable = new Set(entries.filter((e) => e.theme === false).map((e) => e.name));
 	const errors = [];
-	for (const file of walkFiles(themesDir).filter((f) => f.endsWith('.css'))) {
+	for (const file of files) {
 		const text = stripComments(fs.readFileSync(file, 'utf8'));
 		const stack = [];
 		let selector = '';

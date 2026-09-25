@@ -621,6 +621,31 @@ test('validateThemes refuses any other layer, and element rules outside yeti.the
 	assert.deepEqual(run(elementThemeTree('@media (prefers-color-scheme: dark) {\n\t@layer yeti.theme {\n\t}\n}\n')).lines, ['src/themes/round.css:2: themes may only set --yeti-* tokens on :root (found "@layer yeti.theme")']);
 });
 
+test('validateThemes checks the starter theme as well as src/themes', () => {
+	const tree = elementThemeTree(':root { --yeti-radius-md: 0; }\n');
+	assert.deepEqual(run({ ...tree, 'src/starter/theme.css': '/* :root { --yeti-radius-md: 0; } */\n' }).lines, []);
+	assert.deepEqual(run({ ...tree, 'src/starter/theme.css': '.card { color: red; }\n' }).lines, ['src/starter/theme.css:1: themes may only set --yeti-* tokens on :root (found ".card")']);
+});
+
+test('the starter page is checked against the manifests, like an example', () => {
+	const r = run(validTree({ 'src/starter/index.html': '<!doctype html>\n<html lang="en">\n<body>\n<div class="rail" data-nope="1"><p>x</p></div>\n</body>\n</html>\n' }));
+	assert.deepEqual(r.lines, ['src/starter/index.html:4: .rail <div>: unknown attribute data-nope']);
+});
+
+test('the starter theme may set tokens outside src/tokens/, like a theme', () => {
+	const tree = elementThemeTree(':root { --yeti-radius-md: 0; }\n');
+	assert.deepEqual(run({ ...tree, 'src/starter/theme.css': ':root { --yeti-radius-md: 1rem; }\n' }).lines, []);
+});
+
+test('validateImportOrder rejects the starter imported into yeti.css', () => {
+	const r = run(validTree({
+		'src/tokens/scale.css': ':root { --yeti-base-min: 1rem; }\n',
+		'src/starter/theme.css': ':root { --yeti-base-min: 2rem; }\n',
+		'src/yeti.css': '@import "layers.css";\n@import "tokens/scale.css";\n@import "layouts/rail/rail.css";\n@import "starter/theme.css";\n',
+	}));
+	assert.deepEqual(r.lines, ['src/yeti.css:4: the starter is copied, not bundled, and must not be imported into yeti.css (found "starter/theme.css")']);
+});
+
 const markerTree = (example) => layoutTree({
 	'src/layouts/rail/manifest.json': validManifest({
 		markers: [

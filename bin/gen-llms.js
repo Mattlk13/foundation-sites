@@ -33,6 +33,8 @@ function preamble(pkg) {
 		'',
 		`Yeti is a plain-CSS framework. Three rules cover every component: identity is a class (\`class="card"\`), configuration is a \`data-*\` attribute with a fixed value list (\`data-gap="md"\`), and state is native or ARIA (\`open\`, \`aria-current\`), never a class. Layouts arrange, recipes compose layouts, components are styled things. Every attribute below is validated: a value not in its list is an error. Docs: ${pkg.homepage}`,
 		'',
+		'To begin a page, start from dist/starter/index.html, a complete and valid page (skip link, sticky nav, hero, card grid, prose, footer), and dist/starter/theme.css, the essential theme settings with their defaults, commented out. Copy both and delete what the page does not need.',
+		'',
 	];
 }
 
