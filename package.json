@@ -43,8 +43,10 @@
     "docs": "node bin/gen-docs.js && node bin/gen-llms.js",
     "test": "npm run validate && npm run test:tools && npm run test:browser",
     "test:tools": "node --test test/tools/*.test.js",
-    "test:browser": "playwright test",
-    "screenshots:update": "playwright test test/browser/screenshots.spec.js --project=chromium --update-snapshots",
+    "test:browser": "playwright test --project=chromium",
+    "test:browser:all": "playwright test",
+    "test:screenshots": "YETI_SCREENSHOTS=1 playwright test --project=chromium --grep @screenshot",
+    "screenshots:update": "YETI_SCREENSHOTS=1 playwright test --project=chromium --grep @screenshot --update-snapshots",
     "fixtures": "node test/browser/serve.js",
     "release": "node bin/release.js"
   },

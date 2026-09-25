@@ -9,23 +9,38 @@ npm ci                   # install the four dev dependencies
 npx playwright install   # once, for the browser tests
 npm run validate         # manifests, examples, spacing rule, layer contract
 npm run test:tools       # node:test suite for the tooling
-npm run test:browser     # Playwright smoke and accessibility checks
+npm run test:browser     # Playwright in Chromium: the everyday browser run
+npm run test:browser:all # Chromium, Firefox and WebKit: once per branch, before merge
+npm run test:screenshots # screenshot comparisons, Chromium: before a release, or after base or token changes
 npm run build            # writes dist/ (gitignored)
 npm run docs             # regenerates docs/ from the manifests and src/guides/
-npm test                 # validate, tools, browser
+npm test                 # validate, tools, browser (Chromium)
 ```
 
 Node 24 or later. There is nothing to compile.
 
 ### Screenshots
 
-`npm run test:browser` compares every fixture in light and dark against the baselines in `test/browser/screenshots/`, in Chromium only. When you change how something looks on purpose, re-bless in the same commit:
+Screenshot comparisons are opt-in. `npm run test:screenshots` compares every fixture, and the starter page, in light and dark against the baselines in `test/browser/screenshots/`, in Chromium. Run it before a release, and after a change to the base layer or the tokens, where a few pixels can move on every page without any assertion noticing. The everyday runs leave it out: the functional specs already assert geometry, contrast and behaviour, and a screenshot failure after a deliberate change is only a re-bless.
+
+When a change to how something looks is deliberate, re-bless and say why in the commit message:
 
 ```bash
 npm run screenshots:update
 ```
 
-and say what changed in the commit message. A commit that re-blesses with no visible reason is a review question. Baselines are captured on the machine that runs them and depend on its fonts; on another machine the first run will fail and you re-bless locally before you start. That is expected, not a bug. CI runs on Ubuntu, where every baseline differs by a few pixels of text metrics, so its browser job passes `--ignore-snapshots`: the functional suite runs there, the screenshots are compared only where they were taken. To run everything the way CI does plus the screenshots, `bin/runtests.sh`.
+Baselines are captured on the machine that runs them and depend on its fonts; on another machine the first run fails and you re-bless locally before you start. CI does not compare screenshots. `bin/runtests.sh` runs everything, screenshots included.
+
+### What to test where
+
+A test should prove its point in the fewest seconds that can prove it. Twenty lines of JavaScript should not take three browsers and forty minutes.
+
+1. **Logic gets a Node unit test.** Tooling, validators, generators, and the decisions inside a JavaScript module are tested with `node:test`. A module keeps its DOM wiring thin and puts any real decision in a small pure function, which the test loads with `node:vm` (no dependency, and the module stays a plain script with no `import` or `export`). If a module has no decision worth testing, it needs no unit test.
+2. **CSS behaviour gets Playwright in Chromium.** Computed styles, geometry, contrast and axe run in one engine by default.
+3. **All three engines only where engines differ.** Native form controls, focus and keyboard behaviour, scroll timelines and animation timing, popovers. A spec that needs all three says why in a comment at its top; `npm run test:browser:all` runs them, once per branch before merge, and CI runs them on every push.
+4. **Assert where things end up, never how long they took.** "Every card ends visible", "it arrives once", "the column collapses at 390px". No `waitForTimeout` to catch a state mid-animation, no polling a play state. If a browser test does not settle in two attempts, stop and cover the logic with a unit test instead.
+5. **Budgets.** While working, run only the spec you are changing, in Chromium. `--repeat-each` only to chase a named flake, three times at most. The full suite once, before merge.
+6. **Before any script, state the need in one sentence and pick the simplest mechanism that meets it.** The play-once entrance needed "start the CSS animation when the element is near, never restart it", which is one attribute removed by an observer; a first attempt that paused and resumed running animations raced the browser for rounds.
 
 ## The rules that shape every change
 

@@ -17,6 +17,13 @@ export default defineConfig({
 		// green twice on an unchanged tree.
 		toHaveScreenshot: { maxDiffPixels: 25, threshold: 0.1, animations: 'disabled' },
 	},
+	// Screenshot comparisons are opt-in: every test tagged @screenshot is left
+	// out unless YETI_SCREENSHOTS is set, which `npm run test:screenshots` and
+	// `npm run screenshots:update` do. They run before a release, or after a
+	// change to the base layer or the tokens, not on every task: in practice
+	// every failure was an intended change waiting for a re-bless, and the
+	// functional specs already assert geometry, contrast and behaviour.
+	grepInvert: process.env.YETI_SCREENSHOTS ? undefined : /@screenshot/,
 	fullyParallel: true,
 	reporter: process.env.CI ? 'github' : 'list',
 	webServer: {

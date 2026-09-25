@@ -20,8 +20,15 @@ else
   failed=1
 fi
 
-echo "=== Browser tests (Playwright: chromium, firefox, webkit; screenshots in chromium) ==="
-if npm run --silent test:browser 2>&1; then
+echo "=== Browser tests (Playwright: chromium, firefox, webkit) ==="
+if npm run --silent test:browser:all 2>&1; then
+  echo ""
+else
+  failed=1
+fi
+
+echo "=== Screenshots (chromium) ==="
+if npm run --silent test:screenshots 2>&1; then
   echo ""
 else
   failed=1
