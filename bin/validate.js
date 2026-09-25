@@ -3,12 +3,14 @@
 // and guide snippets against the manifests, component CSS against the
 // spacing-ownership rule, and the layer files against the layer contract.
 // Reports every problem it finds, then exits non-zero if there were any.
+// Warnings (markup that is legal but likely not what was meant) print too
+// and never change the exit code.
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { LAYER_STATEMENT } from './lib/layers.js';
 import { loadSchema, loadAndMerge, loadVocabulary } from './lib/manifest.js';
-import { parseHtml, walkElements, classList, attributes, countMatches } from './lib/html.js';
+import { parseHtml, walkElements, elementChildren, classList, attributes, countMatches } from './lib/html.js';
 import { stripComments, splitImports } from './lib/imports.js';
 import { walkFiles } from './lib/files.js';
 import { declaredTokens, loadCatalogue } from './lib/tokens.js';
@@ -76,6 +78,25 @@ export function validateElementTree(root, merged, file, lineOffset = 0, allowed 
 			}
 			if (m.name === 'grid' && attrs.has('data-fold') && !['2', '4', '6'].includes(attrs.get('data-columns'))) {
 				push('data-fold needs data-columns 2, 4, or 6');
+			}
+			// A tracks grid places children by line, and a line past the last
+			// track makes an implicit one instead of an error the page can see,
+			// so a placement that does not fit is caught here, not clamped in CSS.
+			if (m.name === 'grid' && attrs.has('data-tracks') && attrs.has('data-fold')) {
+				push('data-tracks and data-fold do not mix; a tracks grid places its children itself');
+			}
+			if (m.name === 'grid' && attrs.has('data-tracks')) {
+				const tracks = Number(attrs.get('data-tracks'));
+				for (const child of elementChildren(el)) {
+					const own = attributes(child);
+					if (!own.has('data-start') || !Number.isFinite(tracks)) continue;
+					const start = Number(own.get('data-start'));
+					const span = own.has('data-span') ? Number(own.get('data-span')) : 1;
+					const at = child.sourceCodeLocation ? child.sourceCodeLocation.startLine + lineOffset : line;
+					const report = (message) => errors.push({ file, line: at, message: `.${cls} <${el.tagName}>: ${message}` });
+					if (start > tracks) report(`data-start="${start}" on <${child.tagName}> is past the last of ${tracks} tracks`);
+					else if (start + span - 1 > tracks) report(`data-start="${start}" data-span="${span}" on <${child.tagName}> runs to track ${start + span - 1} of ${tracks}`);
+				}
 			}
 			for (const required of m.a11y.requiredAttributes) {
 				// "aria-label | aria-labelledby": any one of them satisfies the entry.
@@ -615,12 +636,133 @@ export function validateModules(entries) {
 	return errors;
 }
 
+// A size container is what data-show and data-hide measure; with none above
+// them the query never matches and the element never changes. Each entry is a
+// selector exactly as src/ writes it on a container-type: inline-size rule,
+// with the test that stands in for it on parsed markup; a tools test reads
+// every such rule in src/ and fails when one is missing here. An element that
+// sets a container type inline counts too.
+const MEDIA_FIRST = new Set(['img', 'video', 'picture', 'figure']);
+const has = (el, cls) => classList(el).includes(cls);
+const CONTAINER_TESTS = [
+	['.container', (el) => has(el, 'container')],
+	['.nav', (el) => has(el, 'nav')],
+	['.pagination', (el) => has(el, 'pagination')],
+	['.timeline', (el) => has(el, 'timeline')],
+	['.demo > [data-preview]', (el) => attributes(el).has('data-preview') && Boolean(el.parentNode?.tagName) && has(el.parentNode, 'demo')],
+	['.grid[data-fold]:not([data-tracks])', (el) => has(el, 'grid') && attributes(el).has('data-fold') && !attributes(el).has('data-tracks')],
+	['.grid[data-tracks]', (el) => has(el, 'grid') && attributes(el).has('data-tracks')],
+	['.cluster[data-threshold]', (el) => has(el, 'cluster') && attributes(el).has('data-threshold')],
+	['.breakout:has(> [data-note])', (el) => has(el, 'breakout') && elementChildren(el).some((c) => attributes(c).has('data-note'))],
+	// A card spanning a data-rows grid's rows is a subgrid, and its CSS turns
+	// containment off there.
+	['.card:has(> :is(img, video, picture, figure):first-child)', (el) => {
+		if (!has(el, 'card') || !MEDIA_FIRST.has(elementChildren(el)[0]?.tagName)) return false;
+		const parent = el.parentNode;
+		return !(parent?.tagName && has(parent, 'grid') && attributes(parent).has('data-rows'));
+	}],
+];
+export const SIZE_CONTAINERS = CONTAINER_TESTS.map(([selector]) => selector);
+function isSizeContainer(el) {
+	if (CONTAINER_TESTS.some(([, test]) => test(el))) return true;
+	return /(?:^|;)\s*container(?:-type)?\s*:[^;]*\b(?:inline-size|size)\b/.test(attributes(el).get('style') ?? '');
+}
+
+/**
+ * Warnings, not errors: an element with data-show or data-hide that has no
+ * size container above it. The markup is legal and harmless, but it never
+ * hides or shows, which is rarely what its author meant.
+ */
+// The show-hide fixture tests the no-container case on purpose: its loose
+// elements are there to prove that data-show and data-hide do nothing
+// without a size container, so warning about them would be noise.
+const LOOSE_ON_PURPOSE = path.join('test', 'browser', 'fixtures', 'layouts', 'show-hide.html');
+
+export function findLooseVisibility(tree, file, lineOffset = 0) {
+	const warnings = [];
+	if (file.endsWith(LOOSE_ON_PURPOSE)) return warnings;
+	walkElements(tree, (el) => {
+		const attrs = attributes(el);
+		const name = ['data-show', 'data-hide'].find((n) => attrs.has(n));
+		if (!name) return;
+		for (let up = el.parentNode; up; up = up.parentNode) {
+			if (up.tagName && isSizeContainer(up)) return;
+		}
+		const line = el.sourceCodeLocation ? el.sourceCodeLocation.startLine + lineOffset : undefined;
+		warnings.push({ file, line, message: `${name} on <${el.tagName}> has no size container above it to measure, so it never changes; put it inside a container` });
+	});
+	return warnings;
+}
+
+/**
+ * A warning: a cluster with data-threshold is a size container, so it cannot
+ * take its width from its content, and as an item of another cluster (a flex
+ * row that sizes items by their content) it has no width to measure and
+ * collapses. It needs a width of its own, or flex-grow.
+ */
+export function findNestedThresholdClusters(tree, file, lineOffset = 0) {
+	const warnings = [];
+	walkElements(tree, (el) => {
+		if (!classList(el).includes('cluster') || !attributes(el).has('data-threshold')) return;
+		const parent = el.parentNode;
+		if (!parent?.tagName || !classList(parent).includes('cluster')) return;
+		const line = el.sourceCodeLocation ? el.sourceCodeLocation.startLine + lineOffset : undefined;
+		warnings.push({ file, line, message: '.cluster[data-threshold] is an item of another .cluster, so it has no width of its own to measure; give it one, or flex-grow' });
+	});
+	return warnings;
+}
+
+/**
+ * A warning: data-threshold on a grid, and data-start or data-span on its
+ * children, only mean something in a tracks grid. data-span stays legal on
+ * the children of columns and hero, which read it themselves.
+ */
+export function findUntrackedGridPlacement(tree, file, lineOffset = 0) {
+	const warnings = [];
+	const at = (el) => (el.sourceCodeLocation ? el.sourceCodeLocation.startLine + lineOffset : undefined);
+	walkElements(tree, (el) => {
+		if (!has(el, 'grid') || attributes(el).has('data-tracks')) return;
+		if (attributes(el).has('data-threshold')) warnings.push({ file, line: at(el), message: 'data-threshold on a .grid without data-tracks does nothing' });
+		for (const child of elementChildren(el)) {
+			for (const name of ['data-start', 'data-span']) {
+				if (attributes(child).has(name)) warnings.push({ file, line: at(child), message: `${name} on <${child.tagName}> does nothing in a .grid without data-tracks` });
+			}
+		}
+	});
+	return warnings;
+}
+
+const MARKUP_WARNINGS = [findLooseVisibility, findNestedThresholdClusters, findUntrackedGridPlacement];
+
+/** Runs the markup warnings over examples, fixtures, guide and docs demos, and the starter. */
+export function validateMarkupWarnings(root, entries) {
+	const warnings = [];
+	const check = (tree, file, lineOffset = 0) => { for (const find of MARKUP_WARNINGS) warnings.push(...find(tree, file, lineOffset)); };
+	const html = (file) => check(parseHtml(fs.readFileSync(file, 'utf8')), file);
+	const markdown = (file) => {
+		for (const block of extractHtmlBlocks(fs.readFileSync(file, 'utf8'))) check(parseHtml(block.html), file, block.line - 1);
+	};
+	for (const entry of entries) {
+		const example = path.join(entry.dir, 'example.html');
+		if (fs.existsSync(example)) html(example);
+		const docs = path.join(entry.dir, 'docs.md');
+		if (fs.existsSync(docs)) markdown(docs);
+	}
+	const guidesDir = path.join(root, 'src', 'guides');
+	if (fs.existsSync(guidesDir)) for (const file of walkFiles(guidesDir).filter((f) => f.endsWith('.md'))) markdown(file);
+	const fixturesDir = path.join(root, 'test', 'browser', 'fixtures');
+	if (fs.existsSync(fixturesDir)) for (const file of walkFiles(fixturesDir).filter((f) => f.endsWith('.html'))) html(file);
+	const starter = path.join(root, 'src', 'starter', 'index.html');
+	if (fs.existsSync(starter)) html(starter);
+	return warnings;
+}
+
 const MAPPED = {
 	'data-gap': 'gap', 'data-align': 'align', 'data-justify': 'justify', 'data-threshold': 'width',
 	'data-width': 'width', 'data-height': 'height', 'data-min': 'width-or-none', 'data-max': 'width', 'data-ratio': 'ratio', 'data-columns': 'columns',
 	'data-align-self': 'align', 'data-justify-self': 'self',
 	'data-variant': 'variant', 'data-size': 'size-control',
-	'data-span': 'span', 'data-rows': 'rows',
+	'data-span': 'span', 'data-rows': 'rows', 'data-tracks': 'tracks', 'data-start': 'start',
 	'data-slides': 'slides',
 	'data-show': 'width', 'data-hide': 'width',
 	'data-paint': 'paint', 'data-text': 'paint',
@@ -726,13 +868,16 @@ export function validate({ root }) {
 		...validateThemes(root),
 		...validateThemeLayerUse(srcDir),
 	];
-	return { errors: all, count: Object.keys(merged).length };
+	const warnings = validateMarkupWarnings(root, entries);
+	return { errors: all, warnings, count: Object.keys(merged).length };
 }
 
 const isMain = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
 if (isMain) {
 	const root = process.cwd();
-	const { errors, count } = validate({ root });
+	const { errors, warnings, count } = validate({ root });
+	// Warnings print and never change the exit code.
+	for (const w of warnings) console.error(`warning: ${formatError(root, w)}`);
 	for (const e of errors) console.error(formatError(root, e));
 	if (errors.length) {
 		console.error(`validate: ${errors.length} problem${errors.length === 1 ? '' : 's'}`);

@@ -5,7 +5,11 @@ import path from 'node:path';
 import {
 	validate, formatError, validateElementTree, validateHtmlString, extractHtmlBlocks, findBareMargin, validateLayers, validateImportOrder, validateImportant, validateTokens,
 	validateVocabulary, validateNoMediaQueries, validateDocsFragments, validateFields, validateThemes, validateMotion, validateAnchorsAndContainers, validateTokenReads, validateModules,
+	SIZE_CONTAINERS,
 } from '../../bin/validate.js';
+import { walkFiles } from '../../bin/lib/files.js';
+
+const walkSrcCss = (dir) => walkFiles(dir).filter((f) => f.endsWith('.css'));
 import { parseHtml } from '../../bin/lib/html.js';
 import { LAYER_STATEMENT } from '../../bin/lib/layers.js';
 import { makeTree, validManifest, validTree, REPO_ROOT, TOKENS_SCHEMA_PATH, VOCABULARY_PATH } from './helpers.js';
@@ -272,6 +276,8 @@ const MAPPINGS = [
 	['data-size', 'size-control', '--_yeti-size-text', () => '0'],
 	['data-span', 'span', '--_yeti-span', (v) => v],
 	['data-rows', 'rows', '--_yeti-rows', (v) => v],
+	['data-tracks', 'tracks', '--_yeti-tracks', (v) => v],
+	['data-start', 'start', '--_yeti-start', (v) => v],
 	['data-slides', 'slides', '--_yeti-slides', (v) => v],
 	['data-show', 'width', '--_yeti-show', (v) => v],
 	['data-hide', 'width', '--_yeti-hide', (v) => v],
@@ -326,6 +332,12 @@ const gridTree = (example) => layoutTree({
 		attributes: [
 			{ name: 'data-fold', type: 'boolean', description: 'Fold into a single column below the threshold.' },
 			{ name: 'data-columns', type: 'enum', vocabulary: 'columns', description: 'Maximum column count.' },
+			{ name: 'data-tracks', type: 'enum', vocabulary: 'tracks', description: 'Fixed tracks.' },
+			{ name: 'data-threshold', type: 'enum', vocabulary: 'width', description: 'One column below this.' },
+		],
+		markers: [
+			{ name: 'data-start', type: 'enum', vocabulary: 'start', on: '> *', description: 'Start line.' },
+			{ name: 'data-span', type: 'enum', vocabulary: 'span', on: '> *', description: 'Tracks covered.' },
 		],
 	}),
 	'src/layouts/grid/grid.css': '@layer yeti.layouts {\n\t.grid { display: grid; }\n}\n',
@@ -339,6 +351,21 @@ test('a .grid with data-fold requires data-columns to be 2, 4, or 6', () => {
 	assert.deepEqual(bad.lines, ['src/layouts/grid/example.html:1: .grid <div>: data-fold needs data-columns 2, 4, or 6']);
 	const ok = run(gridTree('<div class="grid" data-fold data-columns="4"><p>a</p><p>b</p></div>\n'));
 	assert.deepEqual(ok.lines, []);
+});
+
+test('a tracks grid child must start on one of its tracks and end inside the grid', () => {
+	const bad = run(gridTree('<div class="grid" data-tracks="4">\n<p data-start="6">a</p>\n<p data-start="3" data-span="4">b</p>\n<p data-start="4">c</p>\n</div>\n'));
+	assert.deepEqual(bad.lines, [
+		'src/layouts/grid/example.html:2: .grid <div>: data-start="6" on <p> is past the last of 4 tracks',
+		'src/layouts/grid/example.html:3: .grid <div>: data-start="3" data-span="4" on <p> runs to track 6 of 4',
+	]);
+	const ok = run(gridTree('<div class="grid" data-tracks="12"><p data-start="2" data-span="6">a</p><p data-start="9" data-span="4">b</p><p data-span="12">c</p><p>d</p></div>\n'));
+	assert.deepEqual(ok.lines, []);
+});
+
+test('data-tracks and data-fold on one grid is an error', () => {
+	const bad = run(gridTree('<div class="grid" data-tracks="12" data-fold data-columns="4"><p>a</p><p>b</p></div>\n'));
+	assert.deepEqual(bad.lines, ['src/layouts/grid/example.html:1: .grid <div>: data-tracks and data-fold do not mix; a tracks grid places its children itself']);
 });
 
 test('a child marker such as data-split is legal on any element, including a nested layout', () => {
@@ -695,9 +722,9 @@ const markerTree = (example) => layoutTree({
 });
 
 test('a marker value is checked on descendants of the component that declares it', () => {
-	const bad = run(markerTree('<div class="rail">\n\t<p data-span="9">x</p>\n\t<p data-split="yes">y</p>\n</div>\n'));
+	const bad = run(markerTree('<div class="rail">\n\t<p data-span="13">x</p>\n\t<p data-split="yes">y</p>\n</div>\n'));
 	assert.deepEqual(bad.lines, [
-		'src/layouts/rail/example.html:2: .rail <div>: attribute data-span="9" on <p> is not one of 1, 2, 3, 4, 5, 6',
+		'src/layouts/rail/example.html:2: .rail <div>: attribute data-span="13" on <p> is not one of 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12',
 		'src/layouts/rail/example.html:3: .rail <div>: attribute data-split on <p> is a boolean attribute and takes no value',
 	]);
 	const ok = run(markerTree('<div class="rail"><p data-span="2">x</p><p data-split>y</p></div>\n'));
@@ -707,13 +734,13 @@ test('a marker value is checked on descendants of the component that declares it
 test('a marker outside its component is left alone', () => {
 	const r = run(componentTree({
 		'src/layouts/rail/manifest.json': validManifest({ markers: [{ name: 'data-span', type: 'enum', vocabulary: 'span', description: 'x' }] }),
-		'src/components/tag/example.html': '<span class="tag" data-span="9">New</span>\n',
+		'src/components/tag/example.html': '<span class="tag" data-span="13">New</span>\n',
 	}));
 	assert.deepEqual(r.lines, []);
 });
 
 test('a marker inside nested components of one kind is reported once', () => {
-	const r = run(markerTree('<div class="rail"><div class="rail"><p data-span="9">x</p></div></div>\n'));
+	const r = run(markerTree('<div class="rail"><div class="rail"><p data-span="13">x</p></div></div>\n'));
 	assert.equal(r.lines.length, 1);
 });
 
@@ -1022,4 +1049,97 @@ test('a module and its declared events agreeing is silent', () => {
 		'src/layouts/rail/rail.js': "document.dispatchEvent(new CustomEvent('yeti:slide', { detail: { index: 0 } }));\n",
 	}));
 	assert.deepEqual(r.lines, []);
+});
+
+const warned = (files) => {
+	const root = makeTree(files);
+	const r = validate({ root });
+	return { root, errors: r.errors.map((e) => formatError(root, e)), warnings: (r.warnings ?? []).map((w) => formatError(root, w)) };
+};
+
+test('data-show with no size container above it is a warning, not an error', () => {
+	const r = warned(example('<div class="rail">\n<div class="box"><p data-show="md">x</p></div></div>\n'));
+	assert.deepEqual(r.errors, []);
+	assert.deepEqual(r.warnings, ['src/layouts/rail/example.html:2: data-show on <p> has no size container above it to measure, so it never changes; put it inside a container']);
+});
+
+test('data-hide inside a container, or any known size container, is silent', () => {
+	for (const html of [
+		'<div class="rail"><div class="container"><div class="box"><p data-hide="md">x</p></div></div></div>',
+		'<div class="rail"><nav class="nav"><a data-show="md" href="#">x</a></nav></div>',
+		'<div class="rail"><div class="grid" data-fold><p data-show="md">x</p></div></div>',
+		'<div class="rail"><div class="grid" data-tracks="12"><p data-show="md">x</p></div></div>',
+		'<div class="rail"><div class="cluster" data-threshold="sm"><p data-show="md">x</p></div></div>',
+		'<div class="rail"><div class="breakout"><p data-note>n</p><p data-show="md">x</p></div></div>',
+		'<div class="rail"><article class="card"><img src="a.png" alt=""><p data-show="md">x</p></article></div>',
+		'<div class="rail"><div style="container-type: inline-size"><p data-show="md">x</p></div></div>',
+		'<div class="rail"><div class="demo"><div data-preview><p data-show="md">x</p></div></div></div>',
+	]) {
+		assert.deepEqual(warned(example(html)).warnings, [], html);
+	}
+});
+
+test('a card without leading media and a breakout without a note are not containers', () => {
+	const r = warned(example('<div class="rail"><article class="card"><h2>t</h2><p data-show="md">x</p></article><div class="breakout"><p data-hide="md">y</p></div></div>'));
+	assert.equal(r.warnings.length, 2);
+});
+
+test('the warning covers fixtures, guide demos and the starter', () => {
+	const r = warned(validTree({
+		'test/browser/fixtures/layouts/loose.html': '<!doctype html><html lang="en"><head><title>x</title></head><body><p data-show="md">x</p></body></html>\n',
+		'src/guides/visibility.md': '# V\n\n```html\n<p data-hide="sm">x</p>\n```\n',
+		'src/starter/index.html': '<!doctype html><html lang="en"><head><title>x</title></head><body><p data-show="lg">x</p></body></html>\n',
+	}));
+	assert.deepEqual(r.warnings.map((w) => w.split(':')[0]).sort(), ['src/guides/visibility.md', 'src/starter/index.html', 'test/browser/fixtures/layouts/loose.html']);
+});
+
+test('validate prints the warning and still exits 0', async () => {
+	const { spawnSync } = await import('node:child_process');
+	const root = makeTree(example('<div class="rail"><p data-show="md">x</p></div>\n'));
+	const result = spawnSync(process.execPath, [path.join(REPO_ROOT, 'bin', 'validate.js')], { cwd: root, encoding: 'utf8' });
+	assert.equal(result.status, 0, result.stderr);
+	assert.match(result.stderr + result.stdout, /^warning: src\/layouts\/rail\/example\.html:1: data-show on <p>/m);
+	assert.match(result.stdout, /validate: ok/);
+});
+
+test('a thresholded cluster that is an item of another cluster is a warning', () => {
+	const r = warned(example('<div class="rail"><div class="cluster">\n<div class="cluster" data-threshold="sm"><a href="#">a</a></div></div></div>\n'));
+	assert.deepEqual(r.warnings, ['src/layouts/rail/example.html:2: .cluster[data-threshold] is an item of another .cluster, so it has no width of its own to measure; give it one, or flex-grow']);
+	assert.deepEqual(warned(example('<div class="rail"><div class="stack"><div class="cluster" data-threshold="sm"><a href="#">a</a></div></div></div>\n')).warnings, []);
+});
+
+test('the real tree prints no warnings', () => {
+	assert.deepEqual(validate({ root: REPO_ROOT }).warnings.map((w) => formatError(REPO_ROOT, w)), []);
+});
+
+test('the size containers validate knows cover every container-type: inline-size rule in src', () => {
+	const found = new Set();
+	for (const file of walkSrcCss(path.join(REPO_ROOT, 'src'))) {
+		const css = fs.readFileSync(file, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+		for (const m of css.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+			if (!/(?:^|[;\s])container-type\s*:\s*inline-size/.test(m[2])) continue;
+			const selector = m[1].split(';').pop().trim();
+			for (const one of selector.split(/,(?![^()]*\))/)) found.add(one.trim().replace(/\s+/g, ' '));
+		}
+	}
+	assert.ok(found.size >= 9, `read ${found.size} selectors; the scan is not finding the rules`);
+	const missing = [...found].filter((s) => !SIZE_CONTAINERS.includes(s));
+	assert.deepEqual(missing, []);
+});
+
+test('a demo is a container only at its preview', () => {
+	assert.equal(warned(example('<div class="rail"><div class="demo"><p data-show="md">x</p></div></div>')).warnings.length, 1);
+	assert.deepEqual(warned(example('<div class="rail"><div class="demo"><div data-preview><p data-show="md">x</p></div></div></div>')).warnings, []);
+});
+
+test('grid placement attributes on a grid without data-tracks are a warning', () => {
+	const r = warned(gridTree('<div class="grid" data-threshold="sm">\n<p data-start="2">a</p>\n<p data-span="3">b</p>\n<p>c</p>\n</div>\n'));
+	assert.deepEqual(r.errors, []);
+	assert.deepEqual(r.warnings, [
+		'src/layouts/grid/example.html:1: data-threshold on a .grid without data-tracks does nothing',
+		'src/layouts/grid/example.html:2: data-start on <p> does nothing in a .grid without data-tracks',
+		'src/layouts/grid/example.html:3: data-span on <p> does nothing in a .grid without data-tracks',
+	]);
+	assert.deepEqual(warned(gridTree('<div class="grid" data-tracks="12" data-threshold="sm"><p data-start="2" data-span="3">a</p></div>\n')).warnings, []);
+	assert.deepEqual(warned(example('<div class="rail"><div class="columns"><p data-span="2">a</p><p>b</p></div></div>')).warnings, []);
 });

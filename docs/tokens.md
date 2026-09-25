@@ -407,6 +407,8 @@ Public tokens are the theming API: set them in your own stylesheet and everythin
 | Token | Default | Description |
 | --- | --- | --- |
 | `--yeti-field-gap` | `var(--yeti-space-xs)` | Space between a field's label, control, and hint. |
+| `--yeti-switch-track` | `var(--yeti-control-border)` | Fill and border of an off switch's track. Keep it 3:1 against the page surface. |
+| `--yeti-switch-thumb` | `var(--yeti-control-surface)` | The thumb of an off switch. |
 | `--yeti-range-value` | `0%` | The filled share of a range's track. Set it on the input, inline or from your own script, since CSS cannot read the value. Not a theme value. |
 
 </div>

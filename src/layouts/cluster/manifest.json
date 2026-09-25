@@ -8,7 +8,8 @@
   "attributes": [
     { "name": "data-gap", "type": "enum", "vocabulary": "gap", "default": "md", "description": "Space between items, horizontally and between wrapped rows." },
     { "name": "data-align", "type": "enum", "vocabulary": "align", "default": "center", "description": "Vertical alignment of items within a row." },
-    { "name": "data-justify", "type": "enum", "vocabulary": "justify", "default": "start", "description": "How items are distributed along the row." }
+    { "name": "data-justify", "type": "enum", "vocabulary": "justify", "default": "start", "description": "How items are distributed along the row." },
+    { "name": "data-threshold", "type": "enum", "vocabulary": "width", "description": "The cluster's own width below which it is a column of full-width items; at or above it, the wrapping row. Makes the cluster a size container, so it takes the width of its block instead of its content." }
   ],
   "classes": [],
   "children": [

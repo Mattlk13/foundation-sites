@@ -101,6 +101,34 @@ test.describe('field', () => {
 		expect(label.left).toBeGreaterThan(box.right);
 	});
 
+	test('an off switch reads --yeti-switch-track and --yeti-switch-thumb; an on switch does not', async ({ page }) => {
+		await open(page);
+		const color = (name) => page.evaluate((n) => {
+			const probe = document.createElement('div');
+			probe.style.color = `var(${n})`;
+			document.body.append(probe);
+			const value = getComputedStyle(probe).color;
+			probe.remove();
+			return value;
+		}, name);
+		const border = await color('--yeti-control-border');
+		expect(await style(page, '#dark', 'background-color')).toBe(border);
+		expect(await style(page, '#dark', 'border-top-color')).toBe(border);
+		await page.check('#dark');
+		await settleTransitions(page, '#dark');
+		const on = [await style(page, '#dark', 'background-color'), await style(page, '#dark', 'border-top-color'), await style(page, '#dark', 'background-image')];
+		await page.uncheck('#dark');
+		await settleTransitions(page, '#dark');
+		await page.addStyleTag({ content: ':root { --yeti-switch-track: rgb(1, 2, 3); --yeti-switch-thumb: rgb(4, 5, 6); }' });
+		await settleTransitions(page, '#dark');
+		expect(await style(page, '#dark', 'background-color')).toBe('rgb(1, 2, 3)');
+		expect(await style(page, '#dark', 'border-top-color')).toBe('rgb(1, 2, 3)');
+		expect(await style(page, '#dark', 'background-image')).toContain('rgb(4, 5, 6)');
+		await page.check('#dark');
+		await settleTransitions(page, '#dark');
+		expect([await style(page, '#dark', 'background-color'), await style(page, '#dark', 'border-top-color'), await style(page, '#dark', 'background-image')]).toEqual(on);
+	});
+
 	test('range.js fills the track to the thumb and writes the value over it', async ({ page }) => {
 		await open(page);
 		const read = () => page.evaluate(() => {

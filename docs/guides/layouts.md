@@ -74,6 +74,8 @@ Four across, two by two, one is the same question with an extra step, and the an
 </details>
 </figure>
 
+When the cells are not alike and their places are chosen, as on an exhibition wall with a deliberate empty bay, `grid` with `data-tracks` gives a fixed number of tracks and each child a `data-start` line and a `data-span`, and still falls to one column in source order below its `data-threshold`.
+
 The [responsive guide](responsive.md) takes this idea through the whole framework.
 
 ## The vocabulary
@@ -117,12 +119,14 @@ Every layout is configured with a small set of `data-*` attributes, drawn from a
 | `data-side` | `start`, `end` | hero, media, sidebar |
 | `data-snap` | boolean | scroller |
 | `data-space` | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | stack (> *) |
-| `data-span` | `1`, `2`, `3`, `4`, `5`, `6` | columns (> *), hero (> *) |
+| `data-span` | `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12` | columns (> *), grid (> *), hero (> *) |
 | `data-split` | boolean | stack (> *) |
+| `data-start` | `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12` | grid (> *) |
 | `data-sticky` | boolean | shell (> div > :is(nav, aside)), sidebar (> *), stack (> *) |
 | `data-surface` | `base`, `raised`, `sunken` | box |
 | `data-text` | `primary`, `secondary`, `success`, `warning`, `alert`, `neutral`, `white`, `black`, `grey`, `grey-0`, `grey-10`, `grey-20`, `grey-30`, `grey-40`, `grey-50`, `grey-60`, `grey-70`, `grey-80`, `grey-90`, `grey-100` | box (*) |
-| `data-threshold` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | columns, hero |
+| `data-threshold` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | cluster, columns, grid, hero |
+| `data-tracks` | `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12` | grid |
 | `data-width` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | media, scroller, shell, sidebar |
 
 </div>

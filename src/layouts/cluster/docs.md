@@ -24,6 +24,22 @@ A term and its value on one line, parted to the two ends, is a cluster with `dat
 </dl>
 ```
 
+## A column when it is narrow
+
+`data-threshold` takes a width, `2xs` to `2xl`, and turns the cluster into a column of full-width items whenever its own width is below that size; at or above it, the cluster is the wrapping row again. It is for a row of actions or filters that sits in a sidebar or a stacked region, where a ragged wrap reads worse than a clean column.
+
+```html
+<div class="cluster" data-threshold="sm" data-gap="xs">
+	<a class="button" href="#">Save</a>
+	<a class="button" href="#" data-emphasis="medium">Preview</a>
+	<a class="button" href="#" data-emphasis="low">Discard</a>
+</div>
+```
+
+The cluster measures itself to decide, which makes it a size container, and a size container cannot take its width from its content. A thresholded cluster fills the block it is in, so give it one that has a width; a cluster without `data-threshold` is not a container and sizes to its items as before.
+
+The trap is putting one where its width comes from its content. As an item of another cluster, or of any flex row that sizes its items by their content, a thresholded cluster has no content width to offer and collapses to nothing. Give it a width of its own there, or `flex-grow` so it takes the row's spare room; `npm run validate` warns when one sits directly in another cluster.
+
 ## Why this name
 
 The word is exact: items gather, they do not line up in columns. Foundation 6 reached for `.button-group` or a menu for the same job.

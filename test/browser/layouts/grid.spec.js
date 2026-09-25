@@ -76,6 +76,61 @@ test.describe('grid', () => {
 		expect(new Set(paras.map((r) => Math.round(r.top))).size).toBe(1);
 	});
 
+	test('data-tracks places children by column line, leaving a skipped track empty', async ({ page }) => {
+		await open(page, 'grid', 1000);
+		const [grid, w1, w2, w3] = await rects(page, '#tracks, #tracks > *');
+		const gap = await token(page, '--yeti-space-md');
+		const track = (grid.width - 11 * gap) / 12;
+		expect(w1.left).toBeCloseTo(grid.left + track + gap, 0);
+		expect(w1.width).toBeCloseTo(6 * track + 5 * gap, 0);
+		expect(w2.left).toBeCloseTo(grid.left + 8 * (track + gap), 0);
+		expect(w2.width).toBeCloseTo(4 * track + 3 * gap, 0);
+		expect(w2.top).toBeCloseTo(w1.top, 0);
+		// Track one of the first row is empty: nothing in that row starts left of #w1.
+		for (const r of [w1, w2, w3].filter((r) => Math.round(r.top) === Math.round(w1.top))) expect(r.left).toBeGreaterThanOrEqual(w1.left - 0.5);
+		// The unmarked child flows into the next free track and spans one.
+		expect(w3.top).toBeGreaterThan(w1.bottom);
+		expect(w3.left).toBeCloseTo(grid.left, 0);
+		expect(w3.width).toBeCloseTo(track, 0);
+	});
+
+	test('below its threshold a tracks grid is one column, in source order', async ({ page }) => {
+		await open(page, 'grid', 400);
+		const [grid, ...children] = await rects(page, '#tracks, #tracks > *');
+		for (const r of children) {
+			expect(r.width).toBeCloseTo(grid.width, 0);
+			expect(r.left).toBeCloseTo(grid.left, 0);
+		}
+		for (let i = 1; i < children.length; i++) expect(children[i].top).toBeGreaterThan(children[i - 1].bottom);
+		// data-threshold="sm" (24rem) is below a 400px content box, so the placement returns.
+		await page.evaluate(() => document.getElementById('tracks').setAttribute('data-threshold', 'sm'));
+		const [, w1, w2] = await rects(page, '#tracks, #tracks > *');
+		expect(w2.top).toBeCloseTo(w1.top, 0);
+		// No data-threshold means md: 32rem is above 400px, so it is one column again.
+		await page.evaluate(() => document.getElementById('tracks').removeAttribute('data-threshold'));
+		const [box, ...plain] = await rects(page, '#tracks, #tracks > *');
+		for (const r of plain) expect(r.width).toBeCloseTo(box.width, 0);
+	});
+
+	test('data-fold does nothing on a tracks grid', async ({ page }) => {
+		await open(page, 'grid', 1000);
+		await page.evaluate(() => { const g = document.getElementById('tracks'); g.setAttribute('data-fold', ''); g.setAttribute('data-columns', '4'); });
+		const [grid, w1, w2, w3] = await rects(page, '#tracks, #tracks > *');
+		const gap = await token(page, '--yeti-space-md');
+		const track = (grid.width - 11 * gap) / 12;
+		expect(w1.left).toBeCloseTo(grid.left + track + gap, 0);
+		expect(w1.width).toBeCloseTo(6 * track + 5 * gap, 0);
+		expect(w2.left).toBeCloseTo(grid.left + 8 * (track + gap), 0);
+		expect(w3.width).toBeCloseTo(track, 0);
+	});
+
+	test('a grid without data-tracks is not a container', async ({ page }) => {
+		await open(page, 'grid', 1000);
+		expect(await style(page, '#grid', 'container-type')).toBe('normal');
+		expect(await style(page, '#capped', 'container-type')).toBe('normal');
+		expect(await style(page, '#tracks', 'container-type')).toBe('inline-size');
+	});
+
 	test('the nested-columns twin steps through the same counts', async ({ page }) => {
 		await open(page, 'grid', 1100);
 		expect(perRow(await rects(page, '#nest .columns .columns > *'))).toBe(4);

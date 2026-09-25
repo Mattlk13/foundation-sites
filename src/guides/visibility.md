@@ -136,6 +136,26 @@ By the space available, measured on the nearest size container rather than on th
 
 They need a size container above them and do nothing without one. [container](../container.md) is what makes a box into one, and lists which layouts already are.
 
+A table is not a size container, so a column that should drop on a phone needs one around the table. Wrap the region in a `container`, and mark the header cell and every body cell of that column with the same `data-show`:
+
+```html demo md sm
+<div class="container">
+	<table class="table">
+		<caption>Summits</caption>
+		<thead>
+			<tr><th scope="col">Peak</th><th scope="col" data-numeric>Height (m)</th><th scope="col" data-show="sm">Range</th></tr>
+		</thead>
+		<tbody>
+			<tr><td>Ben Nevis</td><td data-numeric>1,345</td><td data-show="sm">Grampians</td></tr>
+			<tr><td>Snowdon</td><td data-numeric>1,085</td><td data-show="sm">Snowdonia</td></tr>
+			<tr><td>Scafell Pike</td><td data-numeric>978</td><td data-show="sm">Southern Fells</td></tr>
+		</tbody>
+	</table>
+</div>
+```
+
+`npm run validate` warns about a `data-show` or `data-hide` with no size container above it, since that element would never change.
+
 ### `print`
 
 By medium. `print` on its own is for paper and nowhere else; `print` with `data-print="none"` is for everywhere but paper.

@@ -55,6 +55,8 @@ Four across, two by two, one is the same question with an extra step, and the an
 </div>
 ```
 
+When the cells are not alike and their places are chosen, as on an exhibition wall with a deliberate empty bay, `grid` with `data-tracks` gives a fixed number of tracks and each child a `data-start` line and a `data-span`, and still falls to one column in source order below its `data-threshold`.
+
 The [responsive guide](responsive.md) takes this idea through the whole framework.
 
 ## The vocabulary

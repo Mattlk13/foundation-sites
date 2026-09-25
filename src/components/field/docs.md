@@ -15,7 +15,7 @@ A tight column: label, control, hint, error. The control is a native element sty
 </fieldset>
 ```
 
-A checkbox with `role="switch"` becomes a switch: a track with a thumb that slides to the end and takes the field's color when on. A `range` input gets a thin track and a round thumb in the field's color, the height of a control so it is easy to grab.
+A checkbox with `role="switch"` becomes a switch: a track with a thumb that slides to the end and takes the field's color when on. Off, the track is `--yeti-switch-track` and the thumb `--yeti-switch-thumb`, the control border and surface by default; a theme that darkens the control border sets these so off stays distinct from on, and the off track must still clear 3:1 against the page surface. A `range` input gets a thin track and a round thumb in the field's color, the height of a control so it is easy to grab.
 
 The filled part of the track is `--yeti-range-value`, how far along the value sits from 0 to 1, because CSS cannot read an input's value. `range.js` keeps it in step, and writes the value into an `output` placed before the input, which is drawn over the thumb. Give the output `aria-hidden`: the input announces its own value and a screen reader should not hear it twice. Leave the output out of a page that does not load the module, or it stays empty.
 

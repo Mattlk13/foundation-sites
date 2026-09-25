@@ -2,7 +2,13 @@
 // them, and moves selection with the arrow keys. Without this module the CSS
 // hides nothing, so every panel is readable; loading it is an enhancement.
 // Tabs added after load are not picked up.
-const tabsOf = (root) => [...root.querySelectorAll('[role="tab"]')];
+// A panel may hold tabs of its own, so a root's tabs are only those in its
+// own tablist: the first one whose nearest .tabs is this root, never one
+// inside a nested .tabs.
+const tabsOf = (root) => {
+	const list = [...root.querySelectorAll('[role="tablist"]')].find((candidate) => candidate.closest('.tabs') === root);
+	return list ? [...list.querySelectorAll('[role="tab"]')] : [];
+};
 
 function select(root, tab) {
 	for (const other of tabsOf(root)) {
@@ -38,11 +44,14 @@ for (const root of document.querySelectorAll('.tabs')) {
 // inside a hidden panel. Opening that panel's tab is what makes the target
 // reachable at all; a reader who did not touch the tabs did not ask to be
 // moved, so this selects and reveals without taking focus the way choose()
-// does for an actual tab activation. `instant` is true only for the pass at
-// load: the page has not been seen yet, so landing on the target should be
-// immediate, not a glide the reader watches happen to a page they have not
-// looked at; a later hashchange, from a link they just clicked, keeps the
-// page's own scroll behavior.
+// does for an actual tab activation. The target may sit in tabs nested inside
+// another tab's panel, so every enclosing panel is opened, walking outward
+// from the target, the outermost last; each tab that changes dispatches
+// yeti:select. `instant` is true only for the pass at load: the page has not
+// been seen yet, so landing on the target should be immediate, not a glide
+// the reader watches happen to a page they have not looked at; a later
+// hashchange, from a link they just clicked, keeps the page's own scroll
+// behavior.
 function reveal(instant) {
 	const hash = location.hash;
 	if (!hash) return;
@@ -55,19 +64,24 @@ function reveal(instant) {
 	if (!id) return;
 	const target = document.getElementById(id);
 	if (!target) return;
-	const panel = target.closest('[role="tabpanel"]');
-	if (!panel) return;
-	const root = panel.closest('.tabs');
-	if (!root) return;
-	const tab = root.querySelector(`[role="tab"][aria-controls="${CSS.escape(panel.id)}"]`);
-	if (!tab || tab.getAttribute('aria-selected') === 'true') return;
-	select(root, tab);
-	root.dispatchEvent(new CustomEvent('yeti:select', {
-		bubbles: true,
-		composed: true,
-		detail: { tab, panel: document.getElementById(tab.getAttribute('aria-controls')) },
-	}));
-	target.scrollIntoView(instant ? { behavior: 'instant' } : undefined);
+	let changed = false;
+	let panel = target.closest('[role="tabpanel"]');
+	while (panel) {
+		const root = panel.closest('.tabs');
+		if (!root) break;
+		const tab = tabsOf(root).find((candidate) => candidate.getAttribute('aria-controls') === panel.id);
+		if (tab && tab.getAttribute('aria-selected') !== 'true') {
+			select(root, tab);
+			changed = true;
+			root.dispatchEvent(new CustomEvent('yeti:select', {
+				bubbles: true,
+				composed: true,
+				detail: { tab, panel },
+			}));
+		}
+		panel = root.parentElement?.closest('[role="tabpanel"]');
+	}
+	if (changed) target.scrollIntoView(instant ? { behavior: 'instant' } : undefined);
 }
 
 reveal(true);

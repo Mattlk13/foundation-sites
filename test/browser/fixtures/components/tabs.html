@@ -46,7 +46,42 @@
 				<section role="tabpanel" id="vfp1" aria-labelledby="vf1"><p>General.</p></section>
 				<section role="tabpanel" id="vfp2" aria-labelledby="vf2"><p>Keys.</p></section>
 			</div>
+			<div class="tabs" id="outer">
+				<div role="tablist" aria-label="Outer">
+					<button type="button" role="tab" id="o1" aria-controls="op1">Summary</button>
+					<button type="button" role="tab" id="o2" aria-controls="op2">Sections</button>
+				</div>
+				<section role="tabpanel" id="op1" aria-labelledby="o1"><p>Summary panel.</p></section>
+				<section role="tabpanel" id="op2" aria-labelledby="o2">
+					<div class="tabs" id="inner">
+						<div role="tablist" aria-label="Inner">
+							<button type="button" role="tab" id="i1" aria-controls="ip1">First</button>
+							<button type="button" role="tab" id="i2" aria-controls="ip2">Second</button>
+						</div>
+						<section role="tabpanel" id="ip1" aria-labelledby="i1"><p>First inner panel.</p></section>
+						<section role="tabpanel" id="ip2" aria-labelledby="i2"><p id="deep2">Second inner panel.</p></section>
+					</div>
+				</section>
+			</div>
+			<div class="tabs" id="look-outer" data-orientation="vertical" data-emphasis="high">
+				<div role="tablist" aria-label="Outer look">
+					<button type="button" role="tab" id="lo1" aria-controls="lop1">Outer</button>
+					<button type="button" role="tab" id="lo2" aria-controls="lop2">Other</button>
+				</div>
+				<section role="tabpanel" id="lop1" aria-labelledby="lo1">
+					<div class="tabs" id="look-inner">
+						<div role="tablist" aria-label="Inner look">
+							<button type="button" role="tab" id="li1" aria-controls="lip1">Plain</button>
+							<button type="button" role="tab" id="li2" aria-controls="lip2">Tab</button>
+						</div>
+						<section role="tabpanel" id="lip1" aria-labelledby="li1"><p>Plain inner panel.</p></section>
+						<section role="tabpanel" id="lip2" aria-labelledby="li2"><p>Second plain inner panel.</p></section>
+					</div>
+				</section>
+				<section role="tabpanel" id="lop2" aria-labelledby="lo2"><p>Other panel.</p></section>
+			</div>
 			<a href="#deep" id="to-deep">To the second panel</a>
+			<a href="#deep2" id="to-deep2">To the second inner panel</a>
 		</div>
 	</main>
 </body>

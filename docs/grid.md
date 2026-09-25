@@ -62,6 +62,19 @@ The fold is one attribute on one element; the nest is two wrappers. Use whicheve
 
 `data-rows` lines up neighbours' parts: with `data-rows="3"` each child is a subgrid of three rows, so every first part sits in row one, every second in row two, and so on, across the row. Give the number of parts the fullest child has; a child with fewer leaves its last rows empty. A card in a grid with rows keeps its picture and footer aligned with its neighbours' and does not switch to its side-by-side row. A child that spans rows cannot also be a size container, because a size container cannot be a subgrid; the card turns its own container off inside such a grid for this reason.
 
+## Tracks
+
+`data-tracks` is the other mode: instead of fitting as many columns as there is room for, the grid has exactly that many equal tracks, two to twelve, and each child is placed on them by line. `data-start` on a child is the column line it begins on and `data-span` how many tracks it covers, both one to twelve. A child with neither flows into the next free track after the child before it and covers one; with only a span it flows the same way and covers that many; with only a start it begins there and covers one. A track nothing is placed on stays empty, which is the point: a wall with a work from line 2 across six tracks and a second from line 9 across four leaves track 1 and track 8 bare.
+
+```html
+<div class="grid" data-tracks="12" data-threshold="md">
+	<figure data-start="2" data-span="6">The first work</figure>
+	<figure data-start="9" data-span="4">The second work</figure>
+</div>
+```
+
+A tracks grid measures itself, so it is a size container. Below `data-threshold` (`md` when absent), every child takes the whole row, in source order, so the wall reads as a column on a phone; at or above it, the placement applies. `data-tracks` replaces the fitted columns, so `data-min` and `data-columns` do nothing alongside it. It does not mix with `data-fold` either: the fold does nothing on a tracks grid, and `npm run validate` refuses the pair. A grid without `data-tracks` is not a container and none of this applies to it.
+
 ## Why this name
 
 It is a grid and nothing else is. Foundation 6 readers: this replaces the Block Grid, and `data-columns="4"` is the intrinsic form of `large-up-4`, with the shrinking at narrow widths handled by the minimum instead of by `small-up-1 medium-up-2`.
@@ -77,12 +90,27 @@ It is a grid and nothing else is. Foundation 6 readers: this replaces the Block 
 | `data-gap` | enum | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `xs-sm`, `xs-md`, `xs-lg`, `xs-xl`, `xs-2xl`, `xs-3xl`, `sm-md`, `sm-lg`, `sm-xl`, `sm-2xl`, `sm-3xl`, `md-lg`, `md-xl`, `md-2xl`, `md-3xl`, `lg-xl`, `lg-2xl`, `lg-3xl`, `xl-2xl`, `xl-3xl`, `2xl-3xl` | `md` | Space between columns and rows. |
 | `data-rows` | enum | `2`, `3`, `4`, `5`, `6` |  | Line up the parts of the children across each row: the value is how many rows each child spans, one per part. |
 | `data-fold` | boolean |  |  | Halve the column count as the grid narrows instead of stepping down one at a time. Needs data-columns 2, 4, or 6 and uses data-min as the width per column. data-min="none" has no meaning with a fold: the count needs a width per column. |
+| `data-tracks` | enum | `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12` |  | A fixed number of equal tracks that children are placed on with data-start and data-span, leaving any track nothing is placed on empty. Replaces the fitted columns, so data-min and data-columns have no effect alongside it, and it does not mix with data-fold. |
+| `data-threshold` | enum | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `md` | With data-tracks: the grid's own width below which every child takes the whole row, in source order; at or above it, the placement applies. |
+
+</div>
+
+## Markers
+
+Attributes that descendants carry, not the root.
+
+<div class="scroller" role="region" aria-label="Grid markers" tabindex="0" markdown="1">
+
+| Attribute | Type | Values | On | Description |
+| --- | --- | --- | --- | --- |
+| `data-start` | enum | `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12` | `> *` | In a tracks grid, the column line the child begins on. Without it the child flows into the next free track. |
+| `data-span` | enum | `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12` | `> *` | In a tracks grid, how many tracks the child covers. Without it the child covers one. |
 
 </div>
 
 ## Children
 
-- `> *`: at least 1. The cells. All are the same width.
+- `> *`: at least 1. The cells. All are the same width, except in a tracks grid, where each covers the tracks it is placed on.
 
 ## Tokens
 

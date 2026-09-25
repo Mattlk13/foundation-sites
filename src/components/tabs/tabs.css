@@ -1,6 +1,8 @@
 /* Tabs: a list of tabs and their panels. The CSS never hides a panel, so a
    page without tabs.js shows every panel under its own tab and nothing is
-   unreachable; the module hides the inactive ones and wires the keys. */
+   unreachable; the module hides the inactive ones and wires the keys. Every
+   tab rule reaches its tabs through the set's own tablist, never as any
+   descendant, so a set nested in a panel keeps its own look. */
 @layer yeti.components {
 	.tabs {
 		display: flex;
@@ -15,7 +17,7 @@
 		gap: var(--yeti-space-xs);
 		border-block-end: var(--yeti-border-width) solid var(--yeti-tabs-border);
 	}
-	.tabs [role="tab"] {
+	.tabs > [role="tablist"] > [role="tab"] {
 		appearance: none;
 		padding: var(--yeti-tabs-padding);
 		border: 0;
@@ -32,8 +34,8 @@
 		   old background for a frame. */
 		transition: color var(--yeti-duration-fast) var(--yeti-ease), background-color var(--yeti-duration-fast) var(--yeti-ease), border-color var(--yeti-duration-fast) var(--yeti-ease);
 	}
-	.tabs [role="tab"]:hover { background-color: var(--_yeti-variant-subtle); }
-	.tabs [role="tab"][aria-selected="true"] {
+	.tabs > [role="tablist"] > [role="tab"]:hover { background-color: var(--_yeti-variant-subtle); }
+	.tabs > [role="tablist"] > [role="tab"][aria-selected="true"] {
 		color: var(--_yeti-variant-text);
 		border-block-end-color: var(--_yeti-variant);
 	}
@@ -42,14 +44,14 @@
 	   underline. Its top corners round like any other filled control; the
 	   vertical list's edge runs down the side, so its filled tab rounds its
 	   leading corners there instead. */
-	.tabs[data-emphasis="high"] [role="tab"][aria-selected="true"] {
+	.tabs[data-emphasis="high"] > [role="tablist"] > [role="tab"][aria-selected="true"] {
 		background-color: var(--_yeti-variant);
 		color: var(--_yeti-on-variant);
 		border-color: var(--_yeti-variant);
 		border-start-start-radius: var(--yeti-radius-sm);
 		border-start-end-radius: var(--yeti-radius-sm);
 	}
-	.tabs[data-emphasis="high"][data-orientation="vertical"] [role="tab"][aria-selected="true"] {
+	.tabs[data-emphasis="high"][data-orientation="vertical"] > [role="tablist"] > [role="tab"][aria-selected="true"] {
 		border-start-end-radius: 0;
 		border-end-start-radius: var(--yeti-radius-sm);
 	}
@@ -62,13 +64,13 @@
 		border-block-end: 0;
 		border-inline-end: var(--yeti-border-width) solid var(--yeti-tabs-border);
 	}
-	.tabs[data-orientation="vertical"] [role="tab"] {
+	.tabs[data-orientation="vertical"] > [role="tablist"] > [role="tab"] {
 		text-align: start;
 		border-block-end: 0;
 		border-inline-end: calc(var(--yeti-border-width) * 2) solid transparent;
 		margin-block-end: 0;
 		margin-inline-end: calc(-1 * var(--yeti-border-width));
 	}
-	.tabs[data-orientation="vertical"] [role="tab"][aria-selected="true"] { border-inline-end-color: var(--_yeti-variant); }
+	.tabs[data-orientation="vertical"] > [role="tablist"] > [role="tab"][aria-selected="true"] { border-inline-end-color: var(--_yeti-variant); }
 	.tabs[data-orientation="vertical"] > [role="tabpanel"] { flex: 1; }
 }

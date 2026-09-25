@@ -119,6 +119,16 @@
       "description": "Border of the control at rest."
     },
     {
+      "name": "--yeti-switch-track",
+      "public": true,
+      "description": "Fill and border of an off switch's track."
+    },
+    {
+      "name": "--yeti-switch-thumb",
+      "public": true,
+      "description": "The thumb of an off switch."
+    },
+    {
       "name": "--yeti-range-value",
       "public": true,
       "description": "How far along a range's track the value sits, 0 to 1. range.js sets it; set it on the input yourself for a static one."

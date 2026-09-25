@@ -150,6 +150,7 @@ Attributes:
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between items, horizontally and between wrapped rows.
 - data-align: start | center (default) | end | stretch | baseline — Vertical alignment of items within a row.
 - data-justify: start (default) | center | end | between | around | evenly — How items are distributed along the row.
+- data-threshold: 2xs | xs | sm | md | lg | xl | 2xl — The cluster's own width below which it is a column of full-width items; at or above it, the wrapping row. Makes the cluster a size container, so it takes the width of its block instead of its content.
 
 ### When to use it
 
@@ -177,6 +178,22 @@ A term and its value on one line, parted to the two ends, is a cluster with `dat
 </dl>
 ```
 
+### A column when it is narrow
+
+`data-threshold` takes a width, `2xs` to `2xl`, and turns the cluster into a column of full-width items whenever its own width is below that size; at or above it, the cluster is the wrapping row again. It is for a row of actions or filters that sits in a sidebar or a stacked region, where a ragged wrap reads worse than a clean column.
+
+```html
+<div class="cluster" data-threshold="sm" data-gap="xs">
+	<a class="button" href="#">Save</a>
+	<a class="button" href="#" data-emphasis="medium">Preview</a>
+	<a class="button" href="#" data-emphasis="low">Discard</a>
+</div>
+```
+
+The cluster measures itself to decide, which makes it a size container, and a size container cannot take its width from its content. A thresholded cluster fills the block it is in, so give it one that has a width; a cluster without `data-threshold` is not a container and sizes to its items as before.
+
+The trap is putting one where its width comes from its content. As an item of another cluster, or of any flex row that sizes its items by their content, a thresholded cluster has no content width to offer and collapses to nothing. Give it a width of its own there, or `flex-grow` so it takes the row's spare room; `npm run validate` warns when one sits directly in another cluster.
+
 ### Why this name
 
 The word is exact: items gather, they do not line up in columns. Foundation 6 reached for `.button-group` or a menu for the same job.
@@ -202,7 +219,7 @@ Attributes:
 - data-columns: 1 | 2 | 3 | 4 | 5 | 6 — The most columns on one row; further children each take a full row.
 
 On children:
-- data-span on > *: 1 | 2 | 3 | 4 | 5 | 6 — How many shares of the row the child takes: 2 is twice a plain sibling. Below the threshold it stacks like the rest.
+- data-span on > *: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 — How many shares of the row the child takes: 2 is twice a plain sibling. Below the threshold it stacks like the rest.
 
 ### When to use it
 
@@ -265,7 +282,7 @@ One declaration: the box becomes a size container. Nothing else. To target it by
 @container slot (inline-size < 30rem) { .cluster { flex-direction: column; } }
 ```
 
-The Yeti layouts that query themselves (`grid` with `data-fold`, `breakout` with notes, `timeline`) do not need one; this is for your own queries and for components that must restyle themselves.
+The Yeti layouts that query themselves (`grid` with `data-fold` or `data-tracks`, `cluster` with `data-threshold`, `breakout` with notes, `timeline`) do not need one; this is for your own queries and for components that must restyle themselves.
 
 Two markers read this box directly. `data-show` shows an element only while the container is at least that wide, and `data-hide` removes it once the container is that wide; both take a width from the same scale as `data-threshold`, and both mean "at or above", so `data-show="md"` is *shown from `md` up* and `data-hide="md"` is the same sentence the other way round. The widths are the tokens' defaults written as literals, because a container condition cannot read a custom property, so a theme that changes `--yeti-width-md` moves `data-threshold="md"` but not `data-show="md"`.
 
@@ -278,7 +295,7 @@ Two markers read this box directly. `data-show` shows an element only while the 
 
 They measure the nearest size container, not the window, which is the whole reason they exist: the same markup in a sidebar and in a full-width section makes two different decisions on one page. A `container` carrying `data-show` or `data-hide` itself is measured against its own nearest ancestor container, never its own box, because an element cannot query itself. Reach for them last. A component that can change shape at its own threshold should do that instead — the two versions of a thing, one shown and one hidden, are two things to keep in step forever — and an element removed this way is removed from the accessibility tree with it, so nothing a reader needs may live only in the narrow version.
 
-With no size container anywhere above it, a container query never matches and neither marker does anything: the element stays visible at every width. That is the failure mode to know. These layouts are size containers with no conditions attached, so anything inside one is already covered: `container`, `nav`, `pagination`, `timeline`, and the preview box inside a `demo`. Three more are containers only in a particular shape — a `grid` with `data-fold`, a `card` whose first child is a figure, and a `breakout` holding a note — and anything else needs a `container` around it.
+With no size container anywhere above it, a container query never matches and neither marker does anything: the element stays visible at every width. That is the failure mode to know. These layouts are size containers with no conditions attached, so anything inside one is already covered: `container`, `nav`, `pagination`, `timeline`, and the preview box inside a `demo`. Five more are containers only in a particular shape — a `grid` with `data-fold` or with `data-tracks`, a `cluster` with `data-threshold`, a `card` whose first child is a figure, and a `breakout` holding a note — and anything else needs a `container` around it.
 
 The [visibility guide](guides/visibility.md) puts these beside the platform's own ways of hiding something, and says which to reach for first.
 
@@ -377,6 +394,12 @@ Attributes:
 - data-gap: none | xs | sm | md (default) | lg | xl | 2xl | 3xl | xs-sm | xs-md | xs-lg | xs-xl | xs-2xl | xs-3xl | sm-md | sm-lg | sm-xl | sm-2xl | sm-3xl | md-lg | md-xl | md-2xl | md-3xl | lg-xl | lg-2xl | lg-3xl | xl-2xl | xl-3xl | 2xl-3xl — Space between columns and rows.
 - data-rows: 2 | 3 | 4 | 5 | 6 — Line up the parts of the children across each row: the value is how many rows each child spans, one per part.
 - data-fold (boolean) — Halve the column count as the grid narrows instead of stepping down one at a time. Needs data-columns 2, 4, or 6 and uses data-min as the width per column. data-min="none" has no meaning with a fold: the count needs a width per column.
+- data-tracks: 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 — A fixed number of equal tracks that children are placed on with data-start and data-span, leaving any track nothing is placed on empty. Replaces the fitted columns, so data-min and data-columns have no effect alongside it, and it does not mix with data-fold.
+- data-threshold: 2xs | xs | sm | md (default) | lg | xl | 2xl — With data-tracks: the grid's own width below which every child takes the whole row, in source order; at or above it, the placement applies.
+
+On children:
+- data-start on > *: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 — In a tracks grid, the column line the child begins on. Without it the child flows into the next free track.
+- data-span on > *: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 — In a tracks grid, how many tracks the child covers. Without it the child covers one.
 
 ### When to use it
 
@@ -408,12 +431,25 @@ The fold is one attribute on one element; the nest is two wrappers. Use whicheve
 
 `data-rows` lines up neighbours' parts: with `data-rows="3"` each child is a subgrid of three rows, so every first part sits in row one, every second in row two, and so on, across the row. Give the number of parts the fullest child has; a child with fewer leaves its last rows empty. A card in a grid with rows keeps its picture and footer aligned with its neighbours' and does not switch to its side-by-side row. A child that spans rows cannot also be a size container, because a size container cannot be a subgrid; the card turns its own container off inside such a grid for this reason.
 
+### Tracks
+
+`data-tracks` is the other mode: instead of fitting as many columns as there is room for, the grid has exactly that many equal tracks, two to twelve, and each child is placed on them by line. `data-start` on a child is the column line it begins on and `data-span` how many tracks it covers, both one to twelve. A child with neither flows into the next free track after the child before it and covers one; with only a span it flows the same way and covers that many; with only a start it begins there and covers one. A track nothing is placed on stays empty, which is the point: a wall with a work from line 2 across six tracks and a second from line 9 across four leaves track 1 and track 8 bare.
+
+```html
+<div class="grid" data-tracks="12" data-threshold="md">
+	<figure data-start="2" data-span="6">The first work</figure>
+	<figure data-start="9" data-span="4">The second work</figure>
+</div>
+```
+
+A tracks grid measures itself, so it is a size container. Below `data-threshold` (`md` when absent), every child takes the whole row, in source order, so the wall reads as a column on a phone; at or above it, the placement applies. `data-tracks` replaces the fitted columns, so `data-min` and `data-columns` do nothing alongside it. It does not mix with `data-fold` either: the fold does nothing on a tracks grid, and `npm run validate` refuses the pair. A grid without `data-tracks` is not a container and none of this applies to it.
+
 ### Why this name
 
 It is a grid and nothing else is. Foundation 6 readers: this replaces the Block Grid, and `data-columns="4"` is the intrinsic form of `large-up-4`, with the shrinking at narrow widths handled by the minimum instead of by `small-up-1 medium-up-2`.
 
 Children:
-- > *: at least 1. The cells. All are the same width.
+- > *: at least 1. The cells. All are the same width, except in a tracks grid, where each covers the tracks it is placed on.
 
 Tokens:
 - --yeti-width-xs — The default minimum column width.
@@ -787,7 +823,7 @@ Attributes:
 - data-height: sm | md | lg | xl | half | full (default) — The band's least height: a stop of the height scale, half the viewport, or the whole of it, as a cover takes it. Content taller than the band grows it.
 
 On children:
-- data-span on > *: 1 | 2 | 3 | 4 | 5 | 6 — How many shares of the row this child takes; the other child's default is 1.
+- data-span on > *: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 — How many shares of the row this child takes; the other child's default is 1.
 
 ### When to use it
 
@@ -1743,7 +1779,7 @@ A tight column: label, control, hint, error. The control is a native element sty
 </fieldset>
 ```
 
-A checkbox with `role="switch"` becomes a switch: a track with a thumb that slides to the end and takes the field's color when on. A `range` input gets a thin track and a round thumb in the field's color, the height of a control so it is easy to grab.
+A checkbox with `role="switch"` becomes a switch: a track with a thumb that slides to the end and takes the field's color when on. Off, the track is `--yeti-switch-track` and the thumb `--yeti-switch-thumb`, the control border and surface by default; a theme that darkens the control border sets these so off stays distinct from on, and the off track must still clear 3:1 against the page surface. A `range` input gets a thin track and a round thumb in the field's color, the height of a control so it is easy to grab.
 
 The filled part of the track is `--yeti-range-value`, how far along the value sits from 0 to 1, because CSS cannot read an input's value. `range.js` keeps it in step, and writes the value into an `output` placed before the input, which is drawn over the thumb. Give the output `aria-hidden`: the input announces its own value and a screen reader should not hear it twice. Leave the output out of a page that does not load the module, or it stays empty.
 
@@ -1797,6 +1833,8 @@ Tokens:
 - --yeti-control-size — Minimum height of the control.
 - --yeti-control-radius — Corner of the control.
 - --yeti-control-border — Border of the control at rest.
+- --yeti-switch-track — Fill and border of an off switch's track.
+- --yeti-switch-thumb — The thumb of an off switch.
 - --yeti-range-value — How far along a range's track the value sits, 0 to 1. range.js sets it; set it on the input yourself for a static one.
 - --yeti-control-surface — Background of the control.
 - --yeti-control-chevron — The select's chevron image.
@@ -2198,7 +2236,7 @@ Alternative views of one thing: a profile and its billing, a chart and its table
 
 A tab list of buttons over their panels. The CSS styles the list and marks the selected tab with the hue on its edge, and it never hides a panel. That is deliberate: a page that does not load `tabs.js`, or where the script fails, shows every panel under its own tab, so nothing a reader came for is locked away.
 
-Load the module and it pairs every tab with the panel its `aria-controls` names, shows one, hides the rest, and takes over the keyboard: arrows move selection, Home and End jump to the ends, and only the selected tab is in the tab order, so Tab leaves the list rather than walking it. A link into a hidden panel opens its tab: on load and on every `hashchange` the module looks for the URL's fragment inside a panel and, if it finds one, selects that panel's tab and brings the target into view, without moving keyboard focus to the tab. `data-emphasis="high"` fills the selected tab with the variant instead of underlining it, its top corners (or, in a vertical list, the corners away from the divider) rounded like any other filled control.
+Load the module and it pairs every tab with the panel its `aria-controls` names, shows one, hides the rest, and takes over the keyboard: arrows move selection, Home and End jump to the ends, and only the selected tab is in the tab order, so Tab leaves the list rather than walking it. A link into a hidden panel opens its tab: on load and on every `hashchange` the module looks for the URL's fragment inside a panel and, if it finds one, selects that panel's tab and brings the target into view, without moving keyboard focus to the tab. Tabs may nest inside another tab's panel: each set keeps its own selection and its own arrow keys, and a link into the inner set opens every enclosing panel on the way. `data-emphasis="high"` fills the selected tab with the variant instead of underlining it, its top corners (or, in a vertical list, the corners away from the divider) rounded like any other filled control.
 
 ```html
 <div class="tabs" data-emphasis="high">
@@ -2832,6 +2870,8 @@ Every public custom property, with its group and default. A theme is a file that
 - --yeti-card-border (card): var(--yeti-color-border) — Border of cards; transparent when raised.
 - --yeti-card-surface (card): var(--yeti-color-surface-raised) — Background of cards.
 - --yeti-field-gap (field): var(--yeti-space-xs) — Space between a field's label, control, and hint.
+- --yeti-switch-track (field): var(--yeti-control-border) — Fill and border of an off switch's track. Keep it 3:1 against the page surface.
+- --yeti-switch-thumb (field): var(--yeti-control-surface) — The thumb of an off switch.
 - --yeti-table-stripe (table): var(--yeti-color-surface-sunken) — Fill of even rows with data-striped.
 - --yeti-table-border (table): var(--yeti-color-border) — Row and cell borders.
 - --yeti-seam-size (seam): twice the size's space step — Depth of the cut; set it to fix the depth for every size.

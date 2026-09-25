@@ -100,7 +100,7 @@ Attributes that descendants carry, not the root.
 
 | Attribute | Type | Values | On | Description |
 | --- | --- | --- | --- | --- |
-| `data-span` | enum | `1`, `2`, `3`, `4`, `5`, `6` | `> *` | How many shares of the row this child takes; the other child's default is 1. |
+| `data-span` | enum | `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12` | `> *` | How many shares of the row this child takes; the other child's default is 1. |
 
 </div>
 

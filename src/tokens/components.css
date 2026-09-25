@@ -21,6 +21,9 @@
 		--yeti-card-surface: var(--yeti-color-surface-raised);
 
 		--yeti-field-gap: var(--yeti-space-xs);
+		/* An off switch: the track's fill and border, and the thumb. */
+		--yeti-switch-track: var(--yeti-control-border);
+		--yeti-switch-thumb: var(--yeti-control-surface);
 
 		--yeti-table-stripe: var(--yeti-color-surface-sunken);
 		--yeti-table-border: var(--yeti-color-border);
