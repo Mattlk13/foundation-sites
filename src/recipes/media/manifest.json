@@ -10,6 +10,7 @@
     { "name": "data-ratio", "type": "enum", "vocabulary": "ratio", "default": "1/1", "description": "The figure's aspect ratio." },
     { "name": "data-gap", "type": "enum", "vocabulary": "gap", "default": "md", "description": "Space between the figure and the text." },
     { "name": "data-align", "type": "enum", "vocabulary": "align", "default": "stretch", "description": "Vertical alignment of figure and text when side by side." },
+    { "name": "data-max", "type": "enum", "vocabulary": "width", "description": "The widest the text may run side by side; the figure takes the rest of a wide row. data-width still sets where the two stack." },
     { "name": "data-side", "type": "enum", "vocabulary": "side", "description": "Put the figure at the start or the end while side by side, regardless of source order. Stacked, the source order holds." }
   ],
   "classes": [],
@@ -18,6 +19,7 @@
   ],
   "tokens": [
     { "name": "--yeti-width-xs", "public": true, "description": "The default figure width." },
+    { "name": "--_yeti-max", "public": false },
     { "name": "--yeti-space-md", "public": true, "description": "The default gap." },
     { "name": "--yeti-space-sm", "public": true, "description": "The gap between the body's children." },
     { "name": "--yeti-text-sm", "public": true, "description": "Text size of the caption." },

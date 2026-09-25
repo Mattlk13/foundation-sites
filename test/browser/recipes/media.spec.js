@@ -64,6 +64,18 @@ test.describe('media recipe', () => {
 		expect(image.width / image.height).toBeCloseTo(1, 1);
 	});
 
+	test('data-max caps the text and the figure takes the rest; data-width still sets the stack point', async ({ page }) => {
+		await open(page, 1000);
+		const md = await token(page, '--yeti-width-md');
+		const [row, figure, body] = await Promise.all([rect(page, '#capped'), rect(page, '#cap-figure'), rect(page, '#cap-body')]);
+		expect(Math.abs(body.width - md)).toBeLessThan(1);
+		expect(figure.width).toBeGreaterThan(await token(page, '--yeti-width-xs') + 50);
+		expect(Math.abs(figure.width + body.width - row.width)).toBeLessThan(await token(page, '--yeti-space-md') + 2);
+		await open(page, 400);
+		const [f, b] = await Promise.all([rect(page, '#cap-figure'), rect(page, '#cap-body')]);
+		expect(b.top).toBeGreaterThanOrEqual(f.bottom);
+	});
+
 	test('children have no margins', async ({ page }) => {
 		await open(page);
 		await expectNoChildMargins(page, '.media');

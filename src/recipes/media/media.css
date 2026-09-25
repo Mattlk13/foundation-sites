@@ -1,7 +1,8 @@
 /* Media: a figure beside text. The one-class form of a sidebar holding a
    frame and a stack. The figure is whichever child is, or wraps, the
    picture, so source order decides the side; data-side overrides it while
-   side by side. */
+   side by side. data-width is the figure's width and so where the two
+   stack; data-max caps the text. */
 @layer yeti.layouts {
 	.media {
 		display: flex;
@@ -13,6 +14,7 @@
 	.media:not([data-width]) { --_yeti-width: var(--yeti-width-xs); }
 	.media:not([data-align]) { --_yeti-align: stretch; }
 	.media:not([data-ratio]) { --_yeti-aspect: 1 / 1; }
+	.media:not([data-max]) { --_yeti-max: none; }
 	.media > * { margin: 0; }
 
 	/* The figure */
@@ -58,6 +60,10 @@
 		flex-basis: 0;
 		flex-grow: 999;
 		min-inline-size: 50%;
+		/* data-max caps the body, so a wide row's spare width goes to the
+		   figure and the text keeps a measure; data-width still sets where the
+		   two stack. The body's half of the row still wins over the cap. */
+		max-inline-size: var(--_yeti-max);
 	}
 	.media > :not(:is(img, video, picture), :has(> :is(img, video, picture))) > * { margin: 0; }
 
